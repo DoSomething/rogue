@@ -16,6 +16,7 @@ class ReportbackLog extends Migration
             $table->increments('id');
             $table->integer('reportback_id')->unsigned();
             $table->foreign('reportback_id')->references('id')->on('reportback')->onDelete('cascade');
+            $table->string('user_id')->comment('The rogue users.id that updated.');
             $table->integer('uid')->comment('The phoenix users.uid that updated.');
             $table->string('op')->nullable()->comment('Operation performed on the reportback.');
             $table->integer('quantity');
