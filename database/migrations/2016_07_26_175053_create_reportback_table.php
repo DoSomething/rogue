@@ -14,9 +14,9 @@ class CreateReportbackTable extends Migration
     {
         Schema::create('reportback', function (Blueprint $table) {
             $table->increments('id')->comment('Primary key. Maps to rbid');
-            $table->string('user_id')->comment('The rogue users.id that correlates to their Northstar id');
-            $table->integer('uid')->comment('The phoenix users.uid that reported back.');
-            $table->integer('nid')->comment('The node.nid that the user has reported back for.');
+            $table->string('northstar_id')->comment('Users northstar id');
+            $table->integer('drupal_id')->comment('The phoenix users.uid that reported back.');
+            $table->integer('node_id')->comment('The node.nid that the user has reported back for.');
             $table->integer('run_nid')->nullable()->comment('The node.run_nid that the user reported back for.');
             $table->integer('quantity')->comment('The quantity of reportback_nouns reportback_verbed.');
             $table->text('why_participated')->nullable()->comment('Why the user participated.');

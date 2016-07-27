@@ -15,7 +15,7 @@ class CreateReportbackItemTable extends Migration
         Schema::create('reportback_item', function (Blueprint $table) {
             $table->integer('reportback_id')->unsigned();
             $table->foreign('reportback_id')->references('id')->on('reportback')->onDelete('cascade');
-            $table->integer('fid')->unsigned();
+            $table->integer('file_id')->unsigned();
             $table->string('caption')->nullable();
             $table->string('status')->nullable()->default('pending');
             $table->integer('reviewed')->unsigned()->nullable();
