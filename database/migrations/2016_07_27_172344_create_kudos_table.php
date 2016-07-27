@@ -14,11 +14,13 @@ class CreateKudosTable extends Migration
     {
         Schema::create('kudos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('northstar_id')->comment('Users northstar id');
-            $table->integer('drupal_id')->comment('The phoenix users.uid that applied the kudos.');
-            $table->integer('file_id')->comment('The reportback_file.fid that this kudos applies to.');
-            $table->integer('taxonomy_id')->comment('The taxonomy_term.tid that this kudos belongs to.');
+            $table->string('northstar_id')->index()->comment('Users northstar id');
+            $table->integer('drupal_id')->index()->comment('The phoenix users.uid that applied the kudos.');
+            $table->integer('file_id')->index()->comment('The reportback_file.fid that this kudos applies to.');
+            $table->integer('taxonomy_id')->index()->comment('The taxonomy_term.tid that this kudos belongs to.');
             $table->timestamps();
+
+            $table->unique(['file_id', 'drupal_id', 'northstar_id', 'taxonomy_id']);
         });
     }
 
