@@ -11,6 +11,5 @@ class ReportbackLog extends Model
      *
      * @var array
      */
-    protected $fillable = [ 'id', 'reportback_id', 'northstar_id', 'drupal_id', 'op', 'quantity', 'why_participated', 'files', 'num_files', 'remote_addr', 'reason'
-    ];
+    protected $fillable = ['id', 'reportback_id', 'northstar_id', 'drupal_id', 'op', 'quantity', 'why_participated', 'files', 'num_files', 'remote_addr', 'reason'];
 }

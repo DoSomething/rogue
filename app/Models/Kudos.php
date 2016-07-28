@@ -11,6 +11,5 @@ class Kudos extends Model
      *
      * @var array
      */
-    protected $fillable = [ 'id', 'northstar_id', 'drupal_id', 'file_id', 'taxonomy_id'
-    ];
+    protected $fillable = ['id', 'northstar_id', 'drupal_id', 'file_id', 'taxonomy_id'];
 }
