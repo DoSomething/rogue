@@ -13,6 +13,7 @@ class CreateReportbackItemsTable extends Migration
     public function up()
     {
         Schema::create('reportback_items', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('reportback_id')->unsigned();
             $table->foreign('reportback_id')->references('id')->on('reportbacks')->onDelete('cascade');
             $table->integer('file_id')->index()->unsigned();
@@ -24,8 +25,6 @@ class CreateReportbackItemsTable extends Migration
             $table->string('source')->nullable()->comment('Source which reportback file was submitted from.');
             $table->ipAddress('remote_addr')->nullable()->comment('The IP address of the user that submitted the file.');
             $table->timestamps();
-
-            $table->primary(['reportback_id', 'file_id']);
         });
     }
 

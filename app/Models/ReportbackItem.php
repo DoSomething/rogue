@@ -7,11 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class ReportbackItem extends Model
 {
     /**
-     * The primary key for this model.
-     */
-    protected $primaryKey = 'reportback_id';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array

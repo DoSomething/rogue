@@ -13,10 +13,11 @@ After the initial Homestead installation `ssh` into the vagrant box, head to the
 $ composer install
 ```
 
-Once all vendor dependencies are installed, run the migrations to setup the database:
+Once all vendor dependencies are installed, run the migrations & seeders to setup the database:
 
 ```shell
 $ php artisan migrate
+$ php artisan db:seed
 ```
 # Laravel PHP Framework
 
