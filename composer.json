@@ -17,8 +17,7 @@
     },
     "autoload": {
         "classmap": [
-            "database",
-            "app/Models"
+            "database"
         ],
         "psr-4": {
             "Rogue\\": "app/"
