@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReportbackItemTable extends Migration
+class CreateReportbackItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class CreateReportbackItemTable extends Migration
      */
     public function up()
     {
-        Schema::create('reportback_item', function (Blueprint $table) {
+        Schema::create('reportback_items', function (Blueprint $table) {
             $table->integer('reportback_id')->unsigned();
-            $table->foreign('reportback_id')->references('id')->on('reportback')->onDelete('cascade');
+            $table->foreign('reportback_id')->references('id')->on('reportbacks')->onDelete('cascade');
             $table->integer('file_id')->index()->unsigned();
             $table->string('caption')->nullable();
             $table->string('status')->index()->nullable()->default('pending');
@@ -36,6 +36,6 @@ class CreateReportbackItemTable extends Migration
      */
     public function down()
     {
-        Schema::drop('reportback_item');
+        Schema::drop('reportback_items');
     }
 }
