@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Rogue\User::class,
+            'model' => Rogue\Models\User::class,
         ],
 
         // 'users' => [
