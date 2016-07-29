@@ -3,7 +3,6 @@
 use Rogue\Models\Reportback;
 use Illuminate\Database\Seeder;
 
-
 class ReportbackSeeder extends Seeder
 {
     /**

@@ -27,10 +27,10 @@ $factory->define(Reportback::class, function (Generator $faker) {
         'quantity'         => $faker->numberBetween(10, 1000),
         'why_participated' => $faker->paragraph(3),
         'num_participants' => $faker->optional(0.1)->numberBetween(2, 20),
-        'flagged'          => NULL,
-        'flagged_reason'   => NULL,
-        'promoted'         => NULL,
-        'promoted_reason'  => NULL,
+        'flagged'          => null,
+        'flagged_reason'   => null,
+        'promoted'         => null,
+        'promoted_reason'  => null,
     ];
 });
 

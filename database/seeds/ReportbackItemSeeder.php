@@ -24,14 +24,14 @@ class ReportbackItemSeeder extends Seeder
                 $reportbackItem = new ReportbackItem;
 
                 $reportbackItem->reportback_id = $reportback->getKey();
-                $reportbackItem->file_id       = $faker->numberBetween(1, 9999);
-                $reportbackItem->caption       = $faker->text(100);
-                $reportbackItem->status        = 'pending';
-                $reportbackItem->reviewed      = NULL;
-                $reportbackItem->reviewer      = NULL;
-                $reportbackItem->review_source = NULL;
-                $reportbackItem->source        = NULL;
-                $reportbackItem->remote_addr   = $faker->randomElement(['100.38.10.249', '207.110.19.130', '96.24.79.91']);
+                $reportbackItem->file_id = $faker->numberBetween(1, 9999);
+                $reportbackItem->caption = $faker->text(100);
+                $reportbackItem->status = 'pending';
+                $reportbackItem->reviewed = null;
+                $reportbackItem->reviewer = null;
+                $reportbackItem->review_source = null;
+                $reportbackItem->source = null;
+                $reportbackItem->remote_addr = $faker->randomElement(['100.38.10.249', '207.110.19.130', '96.24.79.91']);
 
                 $reportback->items()->save($reportbackItem);
             }
