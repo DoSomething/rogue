@@ -18,6 +18,12 @@ Once all vendor dependencies are installed, run the migrations to setup the data
 ```shell
 $ php artisan migrate
 ```
+You can build front-end assets (styles & scripts) with [Webpack](https://github.com/DoSomething/webpack-config):
+
+```shell
+$ npm start
+```
+
 # Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
