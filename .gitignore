@@ -7,5 +7,5 @@ Homestead.json
 
 .DS_Store
 
-public/assets/*
+public/assets/**
 public/dist
