@@ -30,7 +30,7 @@ class ReportbackLogSeeder extends Seeder
             $log->files = $reportback->items->implode('file_id', ',');
             $log->num_files = $reportback->items->count();
             $log->remote_addr = $reportback->remote_addr;
-            $log->reason = NULL;
+            $log->reason = null;
 
             $log->save();
         }

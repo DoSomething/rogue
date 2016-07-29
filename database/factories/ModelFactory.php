@@ -5,7 +5,6 @@ use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackItem;
 use Rogue\Models\Kudo;
 
-
 /*
 |--------------------------------------------------------------------------
 | Model Factories
