@@ -2,6 +2,8 @@
 
 use Faker\Generator;
 use Rogue\Models\Reportback;
+use Rogue\Models\ReportbackItem;
+use Rogue\Models\Kudo;
 
 
 /*
@@ -29,5 +31,17 @@ $factory->define(Reportback::class, function (Generator $faker) {
         'flagged_reason'   => NULL,
         'promoted'         => NULL,
         'promoted_reason'  => NULL,
+    ];
+});
+
+// Kudo Factory
+$factory->define(Kudo::class, function (Generator $faker) {
+    $files = ReportbackItem::all()->pluck('file_id');
+
+    return [
+        'northstar_id'     => str_random(24),
+        'drupal_id'        => $faker->randomNumber(8),
+        'file_id'          => $faker->randomElement($files->toArray()),
+        'taxonomy_id'      => $faker->randomElement([0, 641, 646]),
     ];
 });
