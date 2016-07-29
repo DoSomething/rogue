@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ReportbackLog extends Migration
+class ReportbackLogs extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class ReportbackLog extends Migration
      */
     public function up()
     {
-        Schema::create('reportback_log', function (Blueprint $table) {
+        Schema::create('reportback_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('reportback_id')->unsigned();
-            $table->foreign('reportback_id')->references('id')->on('reportback')->onDelete('cascade');
+            $table->foreign('reportback_id')->references('id')->on('reportbacks')->onDelete('cascade');
             $table->string('northstar_id')->comment('The rogue users.id that updated.');
             $table->integer('drupal_id')->comment('The phoenix users.uid that updated.');
             $table->string('op')->nullable()->comment('Operation performed on the reportback.');
@@ -36,6 +36,6 @@ class ReportbackLog extends Migration
      */
     public function down()
     {
-        Schema::drop('reportback_log');
+        Schema::drop('reportback_logs');
     }
 }

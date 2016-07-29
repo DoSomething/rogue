@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReportbackTable extends Migration
+class CreateReportbacksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateReportbackTable extends Migration
      */
     public function up()
     {
-        Schema::create('reportback', function (Blueprint $table) {
+        Schema::create('reportbacks', function (Blueprint $table) {
             $table->increments('id')->comment('Primary key. Maps to rbid');
             $table->string('northstar_id')->index()->comment('Users northstar id');
             $table->integer('drupal_id')->index()->comment('The phoenix users.uid that reported back.');
@@ -36,6 +36,6 @@ class CreateReportbackTable extends Migration
      */
     public function down()
     {
-        Schema::drop('reportback');
+        Schema::drop('reportbacks');
     }
 }
