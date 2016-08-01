@@ -40,10 +40,9 @@ namespace :deploy do
     run "forever stopall && forever start #{release_path}/bootstrap/react_server.js"
   end
 
-end
+  after :update, :cleanup
+  after :symlink, link_folders
+  after :link_folders, :artisan_migrate
+  after :artisan_migrate, :react_render, :artisan_cache_clear
 
-after "deploy:update", "deploy:cleanup"
-after "deploy:symlink", "deploy:link_folders"
-after "deploy:link_folders", "deploy:artisan_migrate"
-after "deploy:artisan_migrate", "deploy:react_render"
-after "deploy:artisan_migrate", "deploy:artisan_cache_clear"
+end
