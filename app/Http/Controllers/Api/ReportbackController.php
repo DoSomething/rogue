@@ -5,9 +5,8 @@ namespace Rogue\Http\Controllers\Api;
 use Illuminate\Http\Request;
 
 use Rogue\Http\Requests;
-use Rogue\Http\Controllers\Controller as BaseController;
 
-class ReportbackController extends BaseController
+class ReportbackController extends ApiController
 {
     /**
      * Display a listing of the resource.
