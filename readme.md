@@ -19,6 +19,12 @@ Once all vendor dependencies are installed, run the migrations & seeders to setu
 $ php artisan migrate
 $ php artisan db:seed
 ```
+You can build front-end assets (styles & scripts) with [Webpack](https://github.com/DoSomething/webpack-config):
+
+```shell
+$ npm start
+```
+
 # Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)

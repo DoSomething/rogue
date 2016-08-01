@@ -1,12 +1,27 @@
 {
   "private": true,
   "scripts": {
-    "prod": "gulp --production",
-    "dev": "gulp watch"
+    "start": "npm run clean && npm run modernizr && webpack",
+    "build": "npm run clean && npm run modernizr && NODE_ENV=production webpack",
+    "clean": "rm -rf public/dist",
+    "modernizr": "modernizr -c node_modules/@dosomething/forge/modernizr.json -d public/dist/modernizr.js"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
+  "dependencies": {
+    "@dosomething/forge": "^6.7.4",
+    "dosomething-modal": "^0.3.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "laravel-elixir": "^5.0.0",
-    "bootstrap-sass": "^3.3.0"
+    "@dosomething/webpack-config": "^1.1.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "modernizr": "^3.3.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
   }
 }
