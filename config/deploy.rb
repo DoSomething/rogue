@@ -21,15 +21,15 @@ set :linked_dirs, %w{images storage/logs storage/dumps storage/system}
 namespace :deploy do
 
   task :artisan_migrate do
-    sh "cd #{release_path} && php artisan migrate --force"
+    execute "cd #{release_path} && php artisan migrate --force"
   end
 
   task :artisan_cache_clear do
-    sh "cd #{release_path} && php artisan cache:clear"
+    execute "cd #{release_path} && php artisan cache:clear"
   end
 
   task :react_render do
-    sh "forever stopall && forever start #{release_path}/bootstrap/react_server.js"
+    execute "forever stopall && forever start #{release_path}/bootstrap/react_server.js"
   end
 
   before :finishing, :artisan_migrate
