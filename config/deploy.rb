@@ -15,8 +15,6 @@ end
 
 set :keep_releases, 1
 
-default_run_options[:shell] = '/bin/bash'
-
 namespace :deploy do
   folders = %w{logs dumps system}
 
