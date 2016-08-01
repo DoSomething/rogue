@@ -19,20 +19,7 @@ set :linked_files, %w{.env}
 set :linked_dirs, %w{images storage/logs storage/dumps storage/system}
 
 namespace :deploy do
-
-  task :artisan_migrate do
-    execute "cd #{release_path} && php artisan migrate --force"
+  on roles :all do
+    execute "cd #{release_path} && php artisan migrate --force && php artisan cache:clear"
   end
-
-  task :artisan_cache_clear do
-    execute "cd #{release_path} && php artisan cache:clear"
-  end
-
-  task :react_render do
-    execute "forever stopall && forever start #{release_path}/bootstrap/react_server.js"
-  end
-
-  before :finishing, :artisan_migrate
-  after :artisan_migrate, :react_render, :artisan_cache_clear
-
 end
