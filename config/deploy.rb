@@ -3,7 +3,6 @@ lock '3.4.0'
 
 set :application, "rogue"
 set :repo_url, 'git@github.com:DoSomething/rogue.git'
-server  ENV["SERVER_NAME"], :app, :web
 
 set :user, "dosomething"
 set :group, "dosomething"
