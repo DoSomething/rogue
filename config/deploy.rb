@@ -15,18 +15,10 @@ end
 
 set :keep_releases, 1
 
+set :linked_files, %w{.env}
+set :linked_dirs, %w{images storage/logs storage/dumps storage/system}
+
 namespace :deploy do
-  folders = %w{logs dumps system}
-
-  task :link_folders do
-    run "ln -nfs #{shared_path}/.env #{release_path}/"
-    run "ln -nfs #{shared_path}/images #{release_path}/public"
-
-    folders.each do |folder|
-      run "rm -rf #{release_path}/storage/#{folder}"
-      run "ln -nfs #{shared_path}/#{folder} #{release_path}/storage/#{folder}"
-    end
-  end
 
   task :artisan_migrate do
     run "cd #{release_path} && php artisan migrate --force"
@@ -40,8 +32,7 @@ namespace :deploy do
     run "forever stopall && forever start #{release_path}/bootstrap/react_server.js"
   end
 
-  after :symlink, :link_folders
-  after :link_folders, :artisan_migrate
+  before :finishing, :artisan_migrate
   after :artisan_migrate, :react_render, :artisan_cache_clear
 
 end
