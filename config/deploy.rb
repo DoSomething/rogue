@@ -8,9 +8,9 @@ set :user, "dosomething"
 set :group, "dosomething"
 set :use_sudo, false
 
-set :branch, "rogue-deploy"
+set :branch, "master"
 if ENV['branch']
-    set :branch, ENV['branch'] || 'rogue-deploy'
+    set :branch, ENV['branch'] || 'master'
 end
 
 set :keep_releases, 1
