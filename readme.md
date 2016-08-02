@@ -22,6 +22,7 @@ $ php artisan db:seed
 You can build front-end assets (styles & scripts) with [Webpack](https://github.com/DoSomething/webpack-config):
 
 ```shell
+$ npm install
 $ npm start
 ```
 
