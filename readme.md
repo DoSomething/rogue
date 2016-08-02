@@ -23,8 +23,10 @@ You can build front-end assets (styles & scripts) with [Webpack](https://github.
 
 ```shell
 $ npm install
-$ npm start
+$ npm run build
 ```
+
+For development run `npm start` to watch files
 
 # Laravel PHP Framework
 
