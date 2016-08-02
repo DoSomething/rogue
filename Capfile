@@ -4,6 +4,10 @@ require 'capistrano/setup'
 # Includes default deployment tasks
 require 'capistrano/deploy'
 
+# Run Composer and NPM install tasks
+require 'capistrano/composer'
+require 'capistrano/npm'
+
 # Includes tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:

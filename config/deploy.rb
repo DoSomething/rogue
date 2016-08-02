@@ -1,6 +1,4 @@
 # config/deploy.rb file
-require 'capistrano/composer'
-require 'capistrano/npm'
 lock '3.4.0'
 
 set :application, "rogue"
@@ -19,12 +17,3 @@ set :keep_releases, 1
 
 set :linked_files, %w{.env}
 set :linked_dirs, %w{images storage/logs storage/dumps storage/system}
-
-namespace :deploy do
-  on roles :all do
-    execute :composer, "install"
-    execute :npm, "install"
-    execute :npm, "run build"
-    execute "cd #{release_path} && php artisan migrate --force && php artisan cache:clear"
-  end
-end
