@@ -141,9 +141,9 @@ return [
             'whenBackupWasSuccessful'     => ['log', 'slack'],
             'whenCleanupWasSuccessful'    => ['log'],
             'whenHealthyBackupWasFound'   => ['log'],
-            'whenBackupHasFailed'         => ['log', 'slack'],
-            'whenCleanupHasFailed'        => ['log', 'slack'],
-            'whenUnhealthyBackupWasFound' => ['log', 'slack'],
+            'whenBackupHasFailed'         => ['log'],
+            'whenCleanupHasFailed'        => ['log'],
+            'whenUnhealthyBackupWasFound' => ['log'],
         ],
 
         /*
