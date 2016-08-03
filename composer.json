@@ -7,7 +7,10 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "predis/predis": "~1.0"
+        "predis/predis": "~1.0",
+        "spatie/laravel-backup": "^3.8",
+        "maknz/slack": "^1.7",
+        "maknz/slack-laravel": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.6",
