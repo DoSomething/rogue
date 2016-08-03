@@ -5,27 +5,22 @@ namespace Rogue\Http\Controllers\Api;
 use Illuminate\Http\Request;
 
 use Rogue\Http\Requests;
+use Rogue\Models\Reportback;
+use Rogue\Http\Transformers\ReportbackTransformer;
 
 class ReportbackController extends ApiController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @var \Rogue\Http\Transformers\ReportbackTransformer
      */
-    public function index()
-    {
-        return 'show all';
-    }
+    protected $transformer;
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Create new ReportbackController instance.
      */
-    public function create()
+    public function __construct()
     {
-        return 'create';
+        $this->transformer = new ReportbackTransformer;
     }
 
     /**
@@ -36,51 +31,7 @@ class ReportbackController extends ApiController
      */
     public function store(Request $request)
     {
-        return 'store';
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return 'show';
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return 'edit';
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        return 'update';
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        return 'destroy';
+        $reportback = Reportback::find(1);
+        return $this->item($reportback);
     }
 }
