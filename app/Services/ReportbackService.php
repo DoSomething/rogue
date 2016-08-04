@@ -2,19 +2,19 @@
 
 namespace Rogue\Services;
 
-use Rogue\Models\Reportback;
+use Rogue\Repositories\ReportbackRepository;
 
 class ReportbackService
 {
-    protected $test;
+    protected $reportbackRepository;
 
-    public function __construct()
+    public function __construct(ReportbackRepository $reportbackRepository)
     {
-        $this->test = "test";
+        $this->reportbackRepository = $reportbackRepository;
     }
 
     public function create($data) {
-        $reportback = Reportback::create($data);
+        $reportback = $this->reportbackRepository->create($data);
 
         return $reportback;
     }

@@ -11,7 +11,7 @@ class Reportback extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'drupal_id', 'campaign_id', 'campaign_run_id', 'quantity', 'why_participate', 'num_participants', 'flagged', 'flagged_reason', 'promoted', 'promoted_reason'];
+    protected $fillable = ['id', 'northstar_id', 'drupal_id', 'campaign_id', 'campaign_run_id', 'quantity', 'why_participated', 'num_participants', 'flagged', 'flagged_reason', 'promoted', 'promoted_reason'];
 
     /**
      * Get the reportback items associated with this reportback.
