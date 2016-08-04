@@ -35,7 +35,7 @@ return [
                 /*
                  * Determines if symlinks should be followed.
                  */
-                'followLinks' => false,
+                'followLinks' => true,
             ],
 
             /*
@@ -54,6 +54,7 @@ return [
              */
             'disks' => [
                 's3',
+                'local',
             ],
         ],
     ],
@@ -114,14 +115,6 @@ return [
             'storageUsedMayNotBeHigherThanMegabytes' => 5000,
         ],
 
-        /*
-        [
-            'name' => 'name of the second app',
-            'disks' => ['local', 's3'],
-            'newestBackupsShouldNotBeOlderThanDays' => 1,
-            'storageUsedMayNotBeHigherThanMegabytes' => 5000,
-        ],
-        */
     ],
 
     'notifications' => [
@@ -138,20 +131,12 @@ return [
          * Slack requires the installation of the maknz/slack package.
          */
         'events' => [
-            'whenBackupWasSuccessful'     => ['log', 'slack'],
+            'whenBackupWasSuccessful'     => ['log'],
             'whenCleanupWasSuccessful'    => ['log'],
             'whenHealthyBackupWasFound'   => ['log'],
-            'whenBackupHasFailed'         => ['log'],
+            'whenBackupHasFailed'         => ['log', 'slack'],
             'whenCleanupHasFailed'        => ['log'],
-            'whenUnhealthyBackupWasFound' => ['log'],
-        ],
-
-        /*
-         * Here you can specify how emails should be sent.
-         */
-        'mail' => [
-            'from' => 'your@email.com',
-            'to'   => 'your@email.com',
+            'whenUnhealthyBackupWasFound' => ['log', 'slack'],
         ],
 
         /*
@@ -161,18 +146,6 @@ return [
             'channel'  => '#devops',
             'username' => 'Rogue Backup Bot',
             'icon'     => ':robot:',
-        ],
-
-        /*
-         * Here you can specify how messages should be sent to Pushover.
-         */
-        'pushover' => [
-            'token'  => env('PUSHOVER_APP_TOKEN'),
-            'user'   => env('PUSHOVER_USER_KEY'),
-            'sounds' => [
-                'success' => env('PUSHOVER_SOUND_SUCCESS','pushover'),
-                'error'   => env('PUSHOVER_SOUND_ERROR','siren'),
-            ],
         ],
     ]
 ];
