@@ -32,5 +32,4 @@ class ReportbackTransformer extends TransformerAbstract
             'updated_at' => $reportback->updated_at->toIso8601String(),
         ];
     }
-
 }
