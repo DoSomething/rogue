@@ -13,7 +13,8 @@ class ReportbackService
         $this->reportbackRepository = $reportbackRepository;
     }
 
-    public function create($data) {
+    public function create($data)
+    {
         $reportback = $this->reportbackRepository->create($data);
 
         return $reportback;
