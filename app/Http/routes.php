@@ -20,6 +20,6 @@ Route::group(['prefix' => 'api/v1'], function () {
         return 'Rogue API version 1';
     });
 
-    Route::get('reportback', 'Api\ReportbackController@index');
-    Route::post('reportback', 'Api\ReportbackController@store');
+    Route::get('reportbacks', 'Api\ReportbackController@index');
+    Route::post('reportbacks', 'Api\ReportbackController@create');
 });

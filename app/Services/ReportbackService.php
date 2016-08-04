@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Services;
-
-// use Rogue\Repositories\UserRepositoryContract;
+namespace Rogue\Services;
 
 class ReportbackService
 {
+    protected $test;
 
+    public function __construct()
+    {
+        $this->test = "test";
+    }
 }
