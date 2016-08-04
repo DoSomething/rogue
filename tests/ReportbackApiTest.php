@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ReportbackApiTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /**
      * Test if a POST request to /reportbacks creates a new reportback.
      *
@@ -25,9 +27,6 @@ class ReportbackApiTest extends TestCase
             'num_participated' => 5,
         ];
 
-        $this->json('POST', 'api/v1/reportbacks', $reportback)
-             ->seeJsonStructure([
-                'data',
-             ]);
+        $this->json('POST', 'api/v1/reportbacks', $reportback)->assertResponseOk();
     }
 }

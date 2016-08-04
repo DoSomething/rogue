@@ -31,20 +31,7 @@ class ReportbackController extends ApiController
      */
     public function create(Request $request)
     {
-        $reportback = Reportback::create([
-            'northstar_id' => $request->input('northstar_id'),
-            'drupal_id' => $request->input('drupal_id'),
-            'campaign_id' => $request->input('campaign_id'),
-            'campaign_run_id' => $request->input('campaign_run_id'),
-            'quantity' => $request->input('quantity'),
-            'why_participated' => $request->input('why_participated'),
-            'num_participants' => $request->input('num_participants'),
-            'flagged' => $request->input('flagged'),
-            'flagged_reason' => $request->input('flagged_reason'),
-            'promoted' => $request->input('promoted'),
-            'promoted_reason' => $request->input('promoted_reason'),
-        ]);
-        // $this->reportbackService->create($request);
+        $reportback = $this->reportbackService->create($request->all());
 
         return $this->item($reportback);
     }
