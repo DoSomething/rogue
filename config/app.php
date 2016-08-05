@@ -156,6 +156,7 @@ return [
         Rogue\Providers\AppServiceProvider::class,
         Rogue\Providers\AuthServiceProvider::class,
         Rogue\Providers\EventServiceProvider::class,
+        Rogue\Providers\PhoenixServiceProvider::class,
         Rogue\Providers\RouteServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
         Maknz\Slack\Laravel\ServiceProvider::class,
