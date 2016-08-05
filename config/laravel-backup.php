@@ -97,8 +97,9 @@ return [
              * After cleaning up the backups remove the oldest backup until
              * this amount of megabytes has been reached.
              */
-            'deleteOldestBackupsWhenUsingMoreMegabytesThan' => 5000
-        ]
+
+            'deleteOldestBackupsWhenUsingMoreMegabytesThan' => 5000,
+        ],
     ],
 
 
@@ -112,7 +113,7 @@ return [
             'name' => env('APP_URL'),
             'disks' => ['s3'],
             'newestBackupsShouldNotBeOlderThanDays' => 1,
-            'storageUsedMayNotBeHigherThanMegabytes' => 5000,
+            'storageUsedMayNotBeHigherThanMegabytes' => 5000
         ],
 
     ],
@@ -147,5 +148,6 @@ return [
             'username' => 'Rogue Backup Bot',
             'icon'     => ':robot:',
         ],
-    ]
+
+    ],
 ];
