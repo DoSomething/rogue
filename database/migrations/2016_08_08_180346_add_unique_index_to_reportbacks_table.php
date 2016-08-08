@@ -13,7 +13,9 @@ class AddUniqueIndexToReportbacksTable extends Migration
     public function up()
     {
         Schema::table('reportbacks', function (Blueprint $table) {
-            $table->unique(['northstar_id', 'drupal_id', 'campaign_id', 'campaign_run_id'], 'user_campaign_run');
+            $table->unique(['northstar_id', 'campaign_id', 'campaign_run_id'], 'northstar_id_campaign_run');
+
+            $table->unique(['drupal_id', 'campaign_id', 'campaign_run_id'], 'drupal_id_campaign_run');
         });
     }
 
@@ -25,7 +27,8 @@ class AddUniqueIndexToReportbacksTable extends Migration
     public function down()
     {
         Schema::table('reportbacks', function (Blueprint $table) {
-            $table->dropUnique('user_campaign_run');
+            $table->dropUnique('northstar_id_campaign_run');
+            $table->dropUnique('drupal_id_campaign_run');
         });
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Rogue\Models\Reportback;
+use Faker\Generator;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -8,6 +10,11 @@ class ReportbackApiTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /*
+     * Base URL for the Api.
+     */
+    protected $apiBaseUrl = 'api/v1/reportbacks';
+
     /**
      * Test if a POST request to /reportbacks creates a new reportback.
      *
@@ -15,23 +22,21 @@ class ReportbackApiTest extends TestCase
      */
     public function testCreatingNewReportback()
     {
-        // @TODO - use faker.
-        // @TODO - test errors.
         $reportback = [
-            'northstar_id' => 'gibberish',
-            'drupal_id' => '12345',
-            'campaign_id' => '1234',
-            'campaign_run_id' => '567',
-            'quantity' => 100,
-            'why_participated' => 'Because I rock',
-            'num_participated' => NULL,
-            'file_id' => '176',
-            'caption' => 'olympic gold',
+            'northstar_id'     => str_random(24),
+            'drupal_id'        => $this->faker->randomNumber(8),
+            'campaign_id'      => $this->faker->randomNumber(4),
+            'campaign_run_id'  => $this->faker->randomNumber(4),
+            'quantity'         => $this->faker->numberBetween(10, 1000),
+            'why_participated' => $this->faker->paragraph(3),
+            'num_participants' => null,
+            'file_id' => $this->faker->randomNumber(4),
+            'caption' => $this->faker->sentence(),
             'source' => 'runscope',
             'remote_addr' => '207.110.19.130',
         ];
 
-        $response = $this->call('POST', 'api/v1/reportbacks', $reportback);
+        $response = $this->call('POST', $this->apiBaseUrl, $reportback);
 
         $this->assertEquals(200, $response->status());
 
@@ -42,5 +47,31 @@ class ReportbackApiTest extends TestCase
 
         // Make sure we created a record in the reportback log table.
         $this->seeInDatabase('reportback_logs', ['reportback_id' => $response->data->id]);
+    }
+
+    /**
+     * Test if sending a reportback that is already stored throws a 500 error.
+     *
+     * @return void
+     */
+    public function testErrorOnDuplicateReportback()
+    {
+        $reportback = factory(Reportback::class)->create();
+
+        $response = $this->call('POST', $this->apiBaseUrl, [
+            'northstar_id' => $reportback->northstar_id,
+            'drupal_id' => $reportback->drupal_id,
+            'campaign_id' => $reportback->campaign_id,
+            'campaign_run_id' => $reportback->campaign_run_id,
+            'quantity' => $this->faker->numberBetween(10, 1000),
+            'why_participated' => $this->faker->paragraph(3),
+            'num_participated' => null,
+            'file_id' => $this->faker->randomNumber(4),
+            'caption' => $this->faker->sentence(),
+            'source' => 'runscope',
+            'remote_addr' => '207.110.19.130',
+        ]);
+
+        $this->assertEquals(500, $response->status());
     }
 }
