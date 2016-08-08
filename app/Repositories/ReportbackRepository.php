@@ -16,9 +16,7 @@ class ReportbackRepository
     public function create($data)
     {
         // Store reportback
-        $reportback = new Reportback;
-        $reportback->fill($data);
-        $reportback->save();
+        $reportback = Reportback::create($data);
 
 
         // @TODO: Store reportback item.
