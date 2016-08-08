@@ -10,6 +10,25 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
     protected $baseUrl = 'http://localhost';
 
     /**
+     * The Faker generator, for creating test data.
+     *
+     * @var \Faker\Generator
+     */
+    protected $faker;
+
+    /**
+     * Setup the test environment.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        // Get a new Faker generator from Laravel.
+        $this->faker = app(\Faker\Generator::class);
+    }
+
+    /**
      * Creates the application.
      *
      * @return \Illuminate\Foundation\Application
