@@ -3,7 +3,6 @@
 namespace Rogue\Http\Transformers;
 
 use Rogue\Models\Reportback;
-use Rogue\Http\Transformers\ReportbackItemTransformer;
 use League\Fractal\TransformerAbstract;
 
 class ReportbackTransformer extends TransformerAbstract
@@ -15,7 +14,7 @@ class ReportbackTransformer extends TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
-        'reportback_items'
+        'reportback_items',
     ];
 
     /**

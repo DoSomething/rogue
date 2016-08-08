@@ -3,7 +3,6 @@
 namespace Rogue\Repositories;
 
 use Rogue\Models\Reportback;
-use Rogue\Models\ReportbackItem;
 use Rogue\Models\ReportbackLog;
 
 class ReportbackRepository
