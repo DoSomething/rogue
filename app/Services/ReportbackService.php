@@ -14,7 +14,7 @@ class ReportbackService
     }
 
     /*
-     * Handles all steps needed in creating a reportback.
+     * Handles all the logic needed to create a reportback.
      *
      * @param array $data
      * @return \Rogue\Models\Reportback $reportback.

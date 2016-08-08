@@ -9,7 +9,7 @@ use Rogue\Models\ReportbackLog;
 class ReportbackRepository
 {
     /**
-     * Create a new reportback
+     * Create a new reportback.
      *
      * @param  array $data
      * @return \Gladiator\Models\Message
