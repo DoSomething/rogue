@@ -11,6 +11,7 @@ class ReportbackRepository
     /**
      * Create a new reportback.
      *
+     * @todo Handle errors better during creation.
      * @param  array $data
      * @return \Gladiator\Models\Message
      */
@@ -28,6 +29,8 @@ class ReportbackRepository
         $logData = [
             'op' => 'insert',
             'reportback_id' => $reportback->id,
+            'files' => $reportback->items->implode('file_id', ','),
+            'num_files' => $reportback->items->count(),
         ];
 
         $data = array_merge($data, $logData);

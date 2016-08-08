@@ -13,7 +13,7 @@ class ReportbackApiTest extends TestCase
     /*
      * Base URL for the Api.
      */
-    protected $apiBaseUrl = 'api/v1/reportbacks';
+    protected $reportbackApiUrl = 'api/v1/reportbacks';
 
     /**
      * Test if a POST request to /reportbacks creates a new reportback.
@@ -36,7 +36,7 @@ class ReportbackApiTest extends TestCase
             'remote_addr' => '207.110.19.130',
         ];
 
-        $response = $this->call('POST', $this->apiBaseUrl, $reportback);
+        $response = $this->call('POST', $this->reportbackApiUrl, $reportback);
 
         $this->assertEquals(200, $response->status());
 
@@ -58,7 +58,7 @@ class ReportbackApiTest extends TestCase
     {
         $reportback = factory(Reportback::class)->create();
 
-        $response = $this->call('POST', $this->apiBaseUrl, [
+        $response = $this->call('POST', $this->reportbackApiUrl, [
             'northstar_id' => $reportback->northstar_id,
             'drupal_id' => $reportback->drupal_id,
             'campaign_id' => $reportback->campaign_id,

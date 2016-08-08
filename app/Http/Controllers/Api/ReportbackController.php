@@ -25,13 +25,12 @@ class ReportbackController extends ApiController
 
     /**
      * Store a newly created resource in storage.
-     *
+     * @todo upsert reportbacks by default, throw better errors when things fail.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {
-        // @TODO - Check if the reportback already exists, if so, send to an update function?
         $reportback = $this->reportbackService->create($request->all());
 
         return $this->item($reportback);
