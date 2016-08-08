@@ -31,7 +31,7 @@ class ReportbackController extends ApiController
      */
     public function create(Request $request)
     {
-        // @TODO - Check if the reportback already exists, if so, send to and update function?
+        // @TODO - Check if the reportback already exists, if so, send to an update function?
         $reportback = $this->reportbackService->create($request->all());
 
         return $this->item($reportback);

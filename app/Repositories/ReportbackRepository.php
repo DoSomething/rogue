@@ -3,6 +3,7 @@
 namespace Rogue\Repositories;
 
 use Rogue\Models\Reportback;
+use Rogue\Models\ReportbackItem;
 use Rogue\Models\ReportbackLog;
 
 class ReportbackRepository
@@ -18,8 +19,8 @@ class ReportbackRepository
         // Store reportback
         $reportback = Reportback::create($data);
 
-
-        // @TODO: Store reportback item.
+        // Store reportback item.
+        $reportback->items()->create(array_only($data, ['file_id', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
 
         // Record transaction in log table.
         $log = new ReportbackLog;

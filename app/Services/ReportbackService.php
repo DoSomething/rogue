@@ -13,6 +13,12 @@ class ReportbackService
         $this->reportbackRepository = $reportbackRepository;
     }
 
+    /*
+     * Handles all steps needed in creating a reportback.
+     *
+     * @param array $data
+     * @return \Rogue\Models\Reportback $reportback.
+     */
     public function create($data)
     {
         $reportback = $this->reportbackRepository->create($data);

@@ -3,14 +3,25 @@
 namespace Rogue\Http\Transformers;
 
 use Rogue\Models\Reportback;
+use Rogue\Http\Transformers\ReportbackItemTransformer;
 use League\Fractal\TransformerAbstract;
 
 class ReportbackTransformer extends TransformerAbstract
 {
+
+    /**
+     * List of resources to automatically include
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'reportback_items'
+    ];
+
     /**
      * Transform resource data.
      *
-     * @param User $user
+     * @param \Rogue\Models Reportback $reportback
      * @return array
      */
     public function transform(Reportback $reportback)
@@ -31,5 +42,18 @@ class ReportbackTransformer extends TransformerAbstract
             'created_at' => $reportback->created_at->toIso8601String(),
             'updated_at' => $reportback->updated_at->toIso8601String(),
         ];
+    }
+
+    /**
+     * Include Reportback Items
+     *
+     * @param \Rogue\Models Reportback $reportback
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeReportbackItems(Reportback $reportback)
+    {
+        $items = $reportback->items;
+
+        return $this->collection($items, new ReportbackItemTransformer);
     }
 }
