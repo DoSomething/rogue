@@ -25,7 +25,7 @@ class ReportbackController extends ApiController
 
     /**
      * Store a newly created resource in storage.
-     * @todo upsert reportbacks by default, throw better errors when things fail.
+     * @todo upsert reportbacks by default.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
