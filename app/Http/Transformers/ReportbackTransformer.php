@@ -7,7 +7,6 @@ use League\Fractal\TransformerAbstract;
 
 class ReportbackTransformer extends TransformerAbstract
 {
-
     /**
      * List of resources to automatically include
      *
