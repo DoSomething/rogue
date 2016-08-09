@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
-Route::group(['prefix' => 'api/v1'], function () {
+Route::group(['prefix' => 'api/v1', 'middleware' => ['api']], function () {
     Route::get('/', function () {
         return 'Rogue API version 1';
     });
