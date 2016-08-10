@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "181c323536a3240879e5f1ec384d03a0",
-    "content-hash": "7a565887abb3d20335955c20fc6638f1",
+    "hash": "82711e126bb6f3d2859a2ec1f7dac5a7",
+    "content-hash": "ba3c1f59eaab66c69b1bfd17b7d01986",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.18.37",
+            "version": "3.18.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "0d4abd38caf09fbda9177e8c1fd2a9ec73d71d66"
+                "reference": "979470feb19af8b5cd2f7a455407618416cdfadc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0d4abd38caf09fbda9177e8c1fd2a9ec73d71d66",
-                "reference": "0d4abd38caf09fbda9177e8c1fd2a9ec73d71d66",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/979470feb19af8b5cd2f7a455407618416cdfadc",
+                "reference": "979470feb19af8b5cd2f7a455407618416cdfadc",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +85,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-08-04 21:27:47"
+            "time": "2016-08-09 18:09:34"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -298,8 +298,6 @@
             "time": "2015-11-06 14:35:42"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "dosomething/northstar",
             "version": "v1.0.0-rc7",
             "source": {
@@ -341,21 +339,22 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "7.4.5",
+            "version": "7.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "a138adeb07233059c2a8d3caea7b6a6bcbee6765"
+                "reference": "a03f2f7b9c832eed026995182c3a3100dc4d2938"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/a138adeb07233059c2a8d3caea7b6a6bcbee6765",
-                "reference": "a138adeb07233059c2a8d3caea7b6a6bcbee6765",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/a03f2f7b9c832eed026995182c3a3100dc4d2938",
+                "reference": "a03f2f7b9c832eed026995182c3a3100dc4d2938",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "php": ">=5.3"
+                "giggsey/locale": "^1.0",
+                "php": ">=5.3.2"
             },
             "require-dev": {
                 "pear/pear-core-minimal": "^1.9",
@@ -365,9 +364,6 @@
                 "phpunit/phpunit": "~4.0",
                 "satooshi/php-coveralls": "~0.6",
                 "symfony/console": "^2.5"
-            },
-            "suggest": {
-                "ext-intl": "To use the geocoder and carrier mapping"
             },
             "type": "library",
             "extra": {
@@ -401,10 +397,55 @@
                 "phonenumber",
                 "validation"
             ],
-            "time": "2016-07-14 10:56:47"
+            "time": "2016-08-10 09:28:45"
         },
         {
->>>>>>> adds all functions and test, waiting to add to Shae's code when it is pushed up
+            "name": "giggsey/locale",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/giggsey/Locale.git",
+                "reference": "9087acaf8493472fcd129118017fd7e06be3d8fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/giggsey/Locale/zipball/9087acaf8493472fcd129118017fd7e06be3d8fa",
+                "reference": "9087acaf8493472fcd129118017fd7e06be3d8fa",
+                "shasum": ""
+            },
+            "require-dev": {
+                "pear/pear-core-minimal": "^1.9",
+                "pear/pear_exception": "^1.0",
+                "pear/versioncontrol_git": "dev-master",
+                "phing/phing": "~2.7",
+                "phpunit/phpunit": "^4.8|^5.0",
+                "satooshi/php-coveralls": "^1.0",
+                "symfony/console": "^2.8|^3.0",
+                "symfony/filesystem": "^2.8|^3.0",
+                "symfony/finder": "^2.8|^3.0",
+                "symfony/process": "^2.8|^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Giggsey\\Locale\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joshua Gigg",
+                    "email": "giggsey@gmail.com",
+                    "homepage": "http://giggsey.com/"
+                }
+            ],
+            "description": "Locale functions required by libphonenumber-for-php",
+            "time": "2016-08-04 23:02:29"
+        },
+        {
             "name": "guzzlehttp/guzzle",
             "version": "6.2.1",
             "source": {
@@ -576,8 +617,6 @@
             "time": "2016-06-24 23:00:38"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "ircmaxell/random-lib",
             "version": "v1.1.0",
             "source": {
@@ -673,7 +712,6 @@
             "time": "2013-04-30 18:00:34"
         },
         {
->>>>>>> adds all functions and test, waiting to add to Shae's code when it is pushed up
             "name": "jakub-onderka/php-console-color",
             "version": "0.1",
             "source": {
@@ -820,16 +858,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.42",
+            "version": "v5.2.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "d1bf46f359d2ede2d4ef847fb79d3758d868f2b7"
+                "reference": "5490b8f00564bb60839002f86828e27edd1e5610"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/d1bf46f359d2ede2d4ef847fb79d3758d868f2b7",
-                "reference": "d1bf46f359d2ede2d4ef847fb79d3758d868f2b7",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/5490b8f00564bb60839002f86828e27edd1e5610",
+                "reference": "5490b8f00564bb60839002f86828e27edd1e5610",
                 "shasum": ""
             },
             "require": {
@@ -946,7 +984,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-08-08 13:39:44"
+            "time": "2016-08-10 12:23:59"
         },
         {
             "name": "lcobucci/jwt",
@@ -1008,16 +1046,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.26",
+            "version": "1.0.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "fb3b30dca320b36931ea878fea17ebe136fba1b0"
+                "reference": "50e2045ed70a7e75a5e30bc3662904f3b67af8a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/fb3b30dca320b36931ea878fea17ebe136fba1b0",
-                "reference": "fb3b30dca320b36931ea878fea17ebe136fba1b0",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/50e2045ed70a7e75a5e30bc3662904f3b67af8a9",
+                "reference": "50e2045ed70a7e75a5e30bc3662904f3b67af8a9",
                 "shasum": ""
             },
             "require": {
@@ -1087,10 +1125,9 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2016-08-03 09:49:11"
+            "time": "2016-08-10 08:55:11"
         },
         {
-<<<<<<< HEAD
             "name": "league/flysystem-aws-s3-v3",
             "version": "1.0.13",
             "source": {
@@ -1166,7 +1203,41 @@
                 "illuminate/pagination": "The Illuminate Pagination component.",
                 "pagerfanta/pagerfanta": "Pagerfanta Paginator",
                 "zendframework/zend-paginator": "Zend Framework Paginator"
-=======
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.13-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Fractal\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phil Sturgeon",
+                    "email": "me@philsturgeon.uk",
+                    "homepage": "http://philsturgeon.uk/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Handle the output of complex data structures ready for API output.",
+            "homepage": "http://fractal.thephpleague.com/",
+            "keywords": [
+                "api",
+                "json",
+                "league",
+                "rest"
+            ],
+            "time": "2015-10-07 14:48:58"
+        },
+        {
             "name": "league/oauth2-client",
             "version": "1.4.2",
             "source": {
@@ -1192,25 +1263,16 @@
                 "phpunit/phpunit": "~4.0",
                 "satooshi/php-coveralls": "0.6.*",
                 "squizlabs/php_codesniffer": "~2.0"
->>>>>>> adds all functions and test, waiting to add to Shae's code when it is pushed up
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "0.13-dev"
-=======
                     "dev-master": "1.0.x-dev"
->>>>>>> adds all functions and test, waiting to add to Shae's code when it is pushed up
                 }
             },
             "autoload": {
                 "psr-4": {
-<<<<<<< HEAD
-                    "League\\Fractal\\": "src"
-=======
                     "League\\OAuth2\\Client\\": "src/"
->>>>>>> adds all functions and test, waiting to add to Shae's code when it is pushed up
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1219,22 +1281,24 @@
             ],
             "authors": [
                 {
-<<<<<<< HEAD
-                    "name": "Phil Sturgeon",
-                    "email": "me@philsturgeon.uk",
-                    "homepage": "http://philsturgeon.uk/",
+                    "name": "Alex Bilbie",
+                    "email": "hello@alexbilbie.com",
+                    "homepage": "http://www.alexbilbie.com",
                     "role": "Developer"
                 }
             ],
-            "description": "Handle the output of complex data structures ready for API output.",
-            "homepage": "http://fractal.thephpleague.com/",
+            "description": "OAuth 2.0 Client Library",
             "keywords": [
-                "api",
-                "json",
-                "league",
-                "rest"
+                "Authentication",
+                "SSO",
+                "authorization",
+                "identity",
+                "idp",
+                "oauth",
+                "oauth2",
+                "single sign on"
             ],
-            "time": "2015-10-07 14:48:58"
+            "time": "2016-07-28 13:20:43"
         },
         {
             "name": "maknz/slack",
@@ -1325,26 +1389,6 @@
                 "slack"
             ],
             "time": "2016-06-25 06:08:23"
-=======
-                    "name": "Alex Bilbie",
-                    "email": "hello@alexbilbie.com",
-                    "homepage": "http://www.alexbilbie.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "OAuth 2.0 Client Library",
-            "keywords": [
-                "Authentication",
-                "SSO",
-                "authorization",
-                "identity",
-                "idp",
-                "oauth",
-                "oauth2",
-                "single sign on"
-            ],
-            "time": "2016-07-28 13:20:43"
->>>>>>> adds all functions and test, waiting to add to Shae's code when it is pushed up
         },
         {
             "name": "monolog/monolog",
@@ -1670,7 +1714,6 @@
             "time": "2016-03-18 20:34:03"
         },
         {
-<<<<<<< HEAD
             "name": "predis/predis",
             "version": "v1.1.1",
             "source": {
@@ -1732,19 +1775,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
                 "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
-=======
-            "name": "psr/http-message",
-            "version": "1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
->>>>>>> adds all functions and test, waiting to add to Shae's code when it is pushed up
                 "shasum": ""
             },
             "require": {
@@ -1772,10 +1802,7 @@
                 }
             ],
             "description": "Common interface for HTTP messages",
-<<<<<<< HEAD
             "homepage": "https://github.com/php-fig/http-message",
-=======
->>>>>>> adds all functions and test, waiting to add to Shae's code when it is pushed up
             "keywords": [
                 "http",
                 "http-message",
@@ -1784,11 +1811,7 @@
                 "request",
                 "response"
             ],
-<<<<<<< HEAD
             "time": "2016-08-06 14:39:51"
-=======
-            "time": "2015-05-04 20:22:00"
->>>>>>> adds all functions and test, waiting to add to Shae's code when it is pushed up
         },
         {
             "name": "psr/log",
@@ -4220,28 +4243,29 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "1.0.2",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "30eed06dd6bc88410a4ff7f77b6d22f3ce13dbde"
+                "reference": "bb2d123231c095735130cc8f6d31385a44c7b308"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/30eed06dd6bc88410a4ff7f77b6d22f3ce13dbde",
-                "reference": "30eed06dd6bc88410a4ff7f77b6d22f3ce13dbde",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/bb2d123231c095735130cc8f6d31385a44c7b308",
+                "reference": "bb2d123231c095735130cc8f6d31385a44c7b308",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^5.3.3|^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.6"
+                "phpunit/phpunit": "^4.6",
+                "sebastian/version": "^1.0.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -4265,7 +4289,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2015-08-24 13:29:44"
+            "time": "2016-08-09 15:02:57"
         }
     ],
     "aliases": [],
