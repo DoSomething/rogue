@@ -10,13 +10,12 @@ use DoSomething\Northstar\Resources\NorthstarClientCollection;
 use GuzzleHttp\Cookie\CookieJar;
 use Cache;
 
-
 class Phoenix extends RestApiClient
 {
 	/**
-	* Create a new Phoenix API client.
-	* @param array $config
-	*/
+	 * Create a new Phoenix API client.
+	 * @param array $config
+	 */
 	public function __construct()
 	{
         $this->base_uri = config('services.phoenix.uri') . '/api/' . config('services.phoenix.version') . '/';
@@ -30,32 +29,32 @@ class Phoenix extends RestApiClient
 	}
 
 	/**
-	* Returns a token for making authenticated requests to the Drupal API.
-	*
-	* @return array - Cookie & token for authenticated requests
-	*/
-	private function authenticate()
-	{
-		$authentication = Cache::remember('drupal.authentication', 30, function() {
-			$payload = [
-				'username' => env('PHOENIX_USERNAME'),
-				'password' => env('PHOENIX_PASSWORD'),
-			];
+	 * Returns a token for making authenticated requests to the Drupal API.
+	 *
+	 * @return array - Cookie & token for authenticated requests
+	 */
+	 private function authenticate()
+	 {
+	  	 $authentication = Cache::remember('drupal.authentication', 30, function() {
+			 $payload = [
+				 'username' => env('PHOENIX_USERNAME'),
+				 'password' => env('PHOENIX_PASSWORD'),
+			 ];
 
-			$response = $this->post($this->base_uri . 'auth/login', $payload, false);
+			 $response = $this->post($this->base_uri . 'auth/login', $payload, false);
 
-			$body = json_decode($response->getBody()->getContents(), true);
-			$session_name = $body['session_name'];
-			$session_value = $body['sessid'];
+			 $body = json_decode($response->getBody()->getContents(), true);
+			 $session_name = $body['session_name'];
+			 $session_value = $body['sessid'];
 
-			return [
-				'cookie' => [$session_name => $session_value],
-				'token' => $body['token'],
-			];
-		});
+			 return [
+				 'cookie' => [$session_name => $session_value],
+				 'token' => $body['token'],
+		   	 ];
+		 });
 
-		return $authentication;
-	}
+		 return $authentication;
+	 }
 
 	/**
 	* Get the CSRF token for the authenticated API session.

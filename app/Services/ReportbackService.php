@@ -27,6 +27,5 @@ class ReportbackService
         $reportback = $this->reportbackRepository->create($data);
 
         return $reportback;
-
     }
 }

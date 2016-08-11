@@ -7,26 +7,25 @@ use Illuminate\Support\ServiceProvider;
 
 class PhoenixServiceProvider extends ServiceProvider
 {
-	/**
-	* Boostrap the application services.
-	*
-	* @return void
-	*/
-	public function boot()
-	{
-		//
-	}
+    /**
+   * Boostrap the application services.
+   *
+   * @return void
+   */
+  public function boot()
+  {
+      //
+  }
 
-	/**
-	* Register the application services.
-	*
-	* @return void
-	*/
-	public function register()
-	{
-		$this->app->singleton('phoenix', function ($app)
-		{
-			return new Phoenix();
-		});
-	}
+  /**
+   * Register the application services.
+   *
+   * @return void
+   */
+  public function register()
+  {
+	   $this->app->singleton('phoenix', function ($app) {
+	  	   return new Phoenix();
+   	   	   });
+  }
 }
