@@ -1,7 +1,6 @@
 <?php
 
 use Rogue\Models\Reportback;
-use Rogue\Services\Phoenix\Phoenix;
 use Faker\Generator;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -74,31 +73,5 @@ class ReportbackApiTest extends TestCase
         ]);
 
         $this->assertEquals(500, $response->status());
-    }
-
-    /**
-    * Test that reportback successfully posts back to Phoenix.
-    *
-    * @return void
-    */
-    public function testPostingReportback()
-    {
-        // $this->phoenix = $phoenix;
-        $reportback = factory(Reportback::class)->create();
-        $body = [
-            'quantity' => $reportback->quantity,
-            'uid' => $reportback->drupal_id,
-            // we need either file or file_url which are required for this endpoint
-            'file_url' => $reportback->file,
-            'why_participated' => $reportback->why_participated,
-            // 'caption' => $reportback->caption,
-            // 'source' => $reportback->source
-        ];
-
-        $response = $this->call('POST', $phoenix->postReportback($reportback->campaign_id, $body));
-
-        $this->assertTrue($response, 'Response is false');
-        // $response = $phoenix->postReportback(1631, $body);
-
     }
 }

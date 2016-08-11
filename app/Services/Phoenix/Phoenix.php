@@ -42,7 +42,6 @@ class Phoenix extends RestApiClient
 				'password' => env('PHOENIX_PASSWORD'),
 			];
 
-
 			$response = $this->post($this->base_uri . 'auth/login', $payload, false);
 
 			$body = json_decode($response->getBody()->getContents(), true);
@@ -81,21 +80,6 @@ class Phoenix extends RestApiClient
 	}
 
 	/**
-	* Send a POST request to also save a copy of the reportback in Phoenix.
-	*
-	* @param string $nid
-	* @param array $body
-	* @param bool $withAuthorization - Should this request be authorized?
-	* @return object|false
-	*/
-	public function postReportback($nid, $body = [])
-	{
-		$response = $this->post($this->base_uri . 'campaigns/' . $nid . '/reportback', $body, $withAuthorization = true);
-
-		return is_null($response) ? null : $response;
-	}
-
-	/**
 	* Overrides DoSometing\Northstar\Common\RestApiClient to add Cookie and X-CSRF-Token to header.
 	*
 	* @param $method
@@ -114,7 +98,7 @@ class Phoenix extends RestApiClient
 				$options['headers'] = array_merge($this->defaultHeaders, $options['headers'], $authorizationHeader);
 			}
 		}
-		// do we want to use client here?
+
         return $this->client->request($method, $path, $options);
 	}
 }
