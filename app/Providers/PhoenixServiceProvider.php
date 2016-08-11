@@ -5,7 +5,7 @@ namespace Rogue\Providers;
 use Rogue\Services\Phoenix\Phoenix;
 use Illuminate\Support\ServiceProvider;
 
-class PhoenixServiceProvider extends ServiceProvider
+class PhoenixServiceProvider
 {
     /**
    * Boostrap the application services.

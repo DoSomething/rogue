@@ -18,14 +18,9 @@ class Phoenix extends RestApiClient
 	 */
 	public function __construct()
 	{
-        $this->base_uri = config('services.phoenix.uri') . '/api/' . config('services.phoenix.version') . '/';
+        $url = config('services.phoenix.uri') . '/api/' . config('services.phoenix.version') . '/';
 
-        $headers = [
-           'Content-type' => 'application/json',
-           'Accept' => 'application/json',
-        ];
-
-        parent::__construct($this->base_uri, $headers);
+        parent::__construct($url);
 	}
 
 	/**
@@ -41,7 +36,7 @@ class Phoenix extends RestApiClient
 				 'password' => env('PHOENIX_PASSWORD'),
 			 ];
 
-			 $response = $this->post($this->base_uri . 'auth/login', $payload, false);
+			 $response = $this->post($url . 'auth/login', $payload, false);
 
 			 $body = json_decode($response->getBody()->getContents(), true);
 			 $session_name = $body['session_name'];
