@@ -26,17 +26,7 @@ class ReportbackService
     {
         $reportback = $this->reportbackRepository->create($data);
 
-        $body = [
-            'quantity' => $reportback->quantity,
-            'uid' => $reportback->drupal_id,
-            'file_url' => $reportback->file,
-            'why_participated' => $reportback->why_participated,
-            'caption' => $reportback->caption,
-            'source' => $reportback->source
-        ];
+        return $reportback;
 
-        $response = $phoenix->postReportback($reportback->campaign_id, $body);
-
-        return $response;
     }
 }
