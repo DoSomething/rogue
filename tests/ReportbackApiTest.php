@@ -83,30 +83,21 @@ class ReportbackApiTest extends TestCase
     */
     public function testPostingReportback()
     {
+        // $this->phoenix = $phoenix;
         $reportback = factory(Reportback::class)->create();
-
         $body = [
             'quantity' => $reportback->quantity,
             'uid' => $reportback->drupal_id,
+            // we need either file or file_url which are required for this endpoint
             'file_url' => $reportback->file,
             'why_participated' => $reportback->why_participated,
-            'caption' => $reportback->caption,
-            'source' => $reportback->source
+            // 'caption' => $reportback->caption,
+            // 'source' => $reportback->source
         ];
 
         $response = $this->call('POST', $phoenix->postReportback($reportback->campaign_id, $body));
 
         $this->assertTrue($response, 'Response is false');
-        // $phoenix = new Phoenix();
-        // $body = [
-        //     'quantity' => 30,
-        //     'uid' => 1704953,
-        //     'file_url' => 'https://s-media-cache-ak0.pinimg.com/736x/ec/68/65/ec6865940ab8066ef16a41261f2389e1.jpg',
-        //     'why_participated' => 'Test',
-        //     'caption' => 'Test',
-        //     'source' => 'Mobile App'
-        // ];
-
         // $response = $phoenix->postReportback(1631, $body);
 
     }
