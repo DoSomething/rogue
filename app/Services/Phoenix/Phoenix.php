@@ -3,10 +3,6 @@
 namespace Rogue\Services\Phoenix;
 
 use DoSomething\Northstar\Common\RestApiClient;
-use DoSomething\Northstar\Resources\NorthstarClient;
-use DoSomething\Northstar\Resources\NorthstarUser;
-use DoSomething\Northstar\Resources\NorthstarUserCollection;
-use DoSomething\Northstar\Resources\NorthstarClientCollection;
 use GuzzleHttp\Cookie\CookieJar;
 use Cache;
 
