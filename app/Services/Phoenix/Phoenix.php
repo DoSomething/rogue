@@ -14,7 +14,6 @@ class Phoenix extends RestApiClient
 {
 	/**
 	 * Create a new Phoenix API client.
-	 * @param array $config
 	 */
 	public function __construct()
 	{
