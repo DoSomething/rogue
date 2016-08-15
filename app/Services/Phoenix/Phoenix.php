@@ -27,8 +27,8 @@ class Phoenix extends RestApiClient
     {
         $authentication = Cache::remember('drupal.authentication', 30, function () {
             $payload = [
-                'username' => env('PHOENIX_USERNAME'),
-                'password' => env('PHOENIX_PASSWORD'),
+                'username' => config('services.phoenix.username'),
+                'password' => config('services.phoenix.password'),
             ];
 
             $response = $this->post($url . 'auth/login', $payload, false);
