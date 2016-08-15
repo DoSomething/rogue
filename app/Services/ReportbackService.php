@@ -3,14 +3,17 @@
 namespace Rogue\Services;
 
 use Rogue\Repositories\ReportbackRepository;
+use Rogue\Services\Phoenix\Phoenix;
 
 class ReportbackService
 {
     protected $reportbackRepository;
+    protected $phoenix;
 
-    public function __construct(ReportbackRepository $reportbackRepository)
+    public function __construct(ReportbackRepository $reportbackRepository, Phoenix $phoenix)
     {
         $this->reportbackRepository = $reportbackRepository;
+        $this->phoenix = $phoenix;
     }
 
     /*

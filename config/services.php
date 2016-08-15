@@ -23,6 +23,13 @@ return [
         'secret' => env('MANDRILL_SECRET'),
     ],
 
+    'phoenix' => [
+        'uri' => env('PHOENIX_URI'),
+        'version' => env('PHOENIX_API_VERSION'),
+        'username' => env('PHOENIX_USERNAME'),
+        'password' => env('PHOENIX_PASSWORD'),
+    ],
+
     'ses' => [
         'key' => env('SES_KEY'),
         'secret' => env('SES_SECRET'),
