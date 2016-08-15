@@ -21,6 +21,6 @@ class RenameKudosTableToReactionsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::rename('reactions', 'kudos');
     }
 }
