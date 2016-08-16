@@ -28,7 +28,7 @@ return [
         'url' => env('NORTHSTAR_URL'),
         'client_id' => env('NORTHSTAR_CLIENT_ID'),
         'client_secret' => ent('NORTHSTAR_CLIENT_SECRET'),
-        'scope' => ['user', 'admin'],
+        'scope' => ['user', 'role:staff' 'role:admin'],
     ],
 
     'phoenix' => [
