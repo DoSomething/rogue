@@ -34,8 +34,12 @@ class CheckRole
     {
         $roles = array_slice(func_get_args(), 2);
 
-        if (!$this->auth->user()->hasRole($roles)) {
-            return response('Unauthorized.', 401);
+        if ($this->auth->guest() || !$this->auth->user()->hasRole($roles)) {
+            if ($request->ajax()) {
+                return response('Unauthorized.', 401);
+            } else {
+                return view('auth.unauthorized');
+            }
         }
 
         return $next($request);
