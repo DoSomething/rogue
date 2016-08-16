@@ -32,7 +32,7 @@ class User extends Authenticatable
      */
     public function hasRole($roles)
     {
-        $roles = is_array($roles) ? $roles: func_get_args();
+        $roles = is_array($roles) ? $roles : func_get_args();
 
         return in_array($this->role, $roles);
     }
