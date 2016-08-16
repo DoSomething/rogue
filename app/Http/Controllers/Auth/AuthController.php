@@ -44,7 +44,6 @@ class AuthController extends Controller
     public function __construct(Guard $guard)
     {
         $this->guard = $guard;
-
         $this->middleware('role:admin', ['except' => 'logout']);
     }
 
