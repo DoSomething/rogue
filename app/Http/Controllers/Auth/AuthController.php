@@ -45,7 +45,7 @@ class AuthController extends Controller
     {
         $this->guard = $guard;
 
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->middleware('role:admin', ['except' => 'logout']);
     }
 
     /**
