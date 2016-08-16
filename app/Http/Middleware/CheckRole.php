@@ -28,10 +28,8 @@ class CheckRole
      * @param \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, ...$roles)
     {
-        $roles = array_slice(func_get_args(), 2);
-
         if ($this->auth->guest() || ! $this->auth->user()->hasRole($roles)) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
