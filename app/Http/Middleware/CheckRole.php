@@ -5,12 +5,10 @@ namespace Rogue\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-
 class CheckRole
 {
     /**
      * The Guard implementation.
-     *
      */
     protected $auth;
 
@@ -34,7 +32,7 @@ class CheckRole
     {
         $roles = array_slice(func_get_args(), 2);
 
-        if ($this->auth->guest() || !$this->auth->user()->hasRole($roles)) {
+        if ($this->auth->guest() || ! $this->auth->user()->hasRole($roles)) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
