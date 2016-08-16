@@ -27,4 +27,15 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
     }
+
+    /**
+     * The application's route middleware.
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [
+        'auth' => \Rogue\Http\Middleware\Authenicate::class,
+        'role' => \Rogue\Http\Middleware\CheckRole::class,
+        'guest' => \Rogue\Http\Middleware\RedirectIfAuthenticated::class,
+    ];
 }
