@@ -31,17 +31,11 @@ class AuthController extends Controller
     protected $redirectTo = '/';
 
     /**
-     * The authentication guard.
-     *
-     * @var Guard
-     */
-    protected $guard;
-
-    /**
      * Create a new authentication controller instance.
-     * @param Guard $guard
+     *
+     * @return void
      */
-    public function __construct(Guard $guard)
+    public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
