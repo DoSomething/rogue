@@ -19,7 +19,7 @@ class AWS
         $filename = 'uploads/' . env('S3_BUCKET') . '/' . $file_id . '.' . $extension;
 
         // Push file to S3.
-        Storage::disk('s3')->put($filename, file_get_contents($file));
+        // Storage::disk('s3')->put($filename, file_get_contents($file));
 
         // Return 's3.amazon.com/uploads/{bucket}/{file_id}.{extension}'
         return $filename;
