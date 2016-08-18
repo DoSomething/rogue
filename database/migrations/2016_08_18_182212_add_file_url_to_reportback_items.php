@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class AddFileUrlToReportbackItems extends Migration
@@ -12,7 +11,7 @@ class AddFileUrlToReportbackItems extends Migration
      */
     public function up()
     {
-        Schema::table('reportback_items', function($table) {
+        Schema::table('reportback_items', function ($table) {
             $table->string('file_url');
         });
     }
@@ -24,7 +23,7 @@ class AddFileUrlToReportbackItems extends Migration
      */
     public function down()
     {
-        Schema::table('reportback_items', function($table) {
+        Schema::table('reportback_items', function ($table) {
             $table->dropColumn('file_url');
         });
     }
