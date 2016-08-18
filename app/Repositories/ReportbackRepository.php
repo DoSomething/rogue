@@ -4,10 +4,17 @@ namespace Rogue\Repositories;
 
 use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackLog;
-use Rogue\Services\AwsService;
+use Rogue\Services\AWS;
 
 class ReportbackRepository
 {
+    protected $AWS;
+
+    public function __construct(AWS $aws)
+    {
+        $this->aws = $aws;
+    }
+
     /**
      * Create a new reportback.
      *
