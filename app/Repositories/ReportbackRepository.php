@@ -27,7 +27,7 @@ class ReportbackRepository
         // Store reportback
         $reportback = Reportback::create($data);
 
-        // Store reportback item in S3.
+        // Store reportback item photo in S3.
         $data['file_url'] = $this->aws->storeReportbackItem($data['file'], $data['file_id']);
 
         // Store reportback item.

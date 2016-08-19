@@ -16,7 +16,7 @@
         "league/fractal": "^0.13.0",
         "guzzlehttp/guzzle": "^6.2",
         "dosomething/northstar": "1.0.0-rc7",
-        "league/flysystem-aws-s3-v2": "^1.0"
+        "league/flysystem-aws-s3-v3 ~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.6",
