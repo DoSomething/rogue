@@ -4,11 +4,12 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "82711e126bb6f3d2859a2ec1f7dac5a7",
+    "hash": "07528f39d7ec9bde99b18490a557d537",
     "content-hash": "ba3c1f59eaab66c69b1bfd17b7d01986",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
+
             "version": "3.19.2",
             "source": {
                 "type": "git",
@@ -19,6 +20,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/3cb90413129da42c9d3289d542bee0ae1049892c",
                 "reference": "3cb90413129da42c9d3289d542bee0ae1049892c",
+                league/flysystem-aws-s3-v3: ~1.0
                 "shasum": ""
             },
             "require": {
@@ -85,7 +87,10 @@
                 "s3",
                 "sdk"
             ],
+
             "time": "2016-08-23 20:58:48"
+
+            league/flysystem-aws-s3-v3: ~1.0
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -1975,6 +1980,7 @@
         },
         {
             "name": "spatie/laravel-backup",
+<<<<<<< HEAD
             "version": "3.10.2",
             "source": {
                 "type": "git",
@@ -1985,6 +1991,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/1f9f0c55d7643aba7257aef2b2b867f2716ddfaf",
                 "reference": "1f9f0c55d7643aba7257aef2b2b867f2716ddfaf",
+=======
+            "version": "3.10.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-backup.git",
+                "reference": "e17bed15f5b3f5e52421aa83d3608dc2d4d4d63b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/e17bed15f5b3f5e52421aa83d3608dc2d4d4d63b",
+                "reference": "e17bed15f5b3f5e52421aa83d3608dc2d4d4d63b",
+>>>>>>>         league/flysystem-aws-s3-v3: ~1.0
                 "shasum": ""
             },
             "require": {
@@ -2034,7 +2052,11 @@
                 "laravel-backup",
                 "spatie"
             ],
+<<<<<<< HEAD
             "time": "2016-08-24 12:02:50"
+=======
+            "time": "2016-08-16 07:43:54"
+>>>>>>>         league/flysystem-aws-s3-v3: ~1.0
         },
         {
             "name": "swiftmailer/swiftmailer",
