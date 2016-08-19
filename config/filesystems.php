@@ -58,8 +58,10 @@ return [
             'driver' => 's3',
             'key' => env('S3_KEY'),
             'secret' => env('S3_SECRET'),
-            'region' => 'us-east-1',
+            'region' => env('S3_REGION'),
             'bucket' => env('S3_BUCKET'),
+            'base_url' => 'https://s3-external-1.amazonaws.com',
+            'public_url' => env('S3_URL'),
         ],
 
     ],
