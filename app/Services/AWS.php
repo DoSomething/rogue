@@ -2,12 +2,12 @@
 
 namespace Rogue\Services;
 
-use finfo;
-use Illuminate\Contracts\Filesystem\Filesystem;
+// use finfo;
+// use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemManager;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+// use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
+// use Symfony\Component\HttpKernel\Exception\HttpException;
+// use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class AWS
 {
@@ -34,17 +34,15 @@ class AWS
      */
     public function storeReportbackItem($file, $filename)
     {
-        print_r($file);
-        print_r($filename);
-        die();
+        dd('hi');
         // Parse string as a Data URL, or Syfony File class
-        if (is_string($file)) {
-            $data = $this->base64StringToDataString($file);
-            $extension = $this->guessExtension($data);
-        } else {
-            $data = file_get_contents($file->getPathname());
-            $extension = $file->guessExtension();
-        }
+        // if (is_string($file)) {
+        //     $data = $this->base64StringToDataString($file);
+        //     $extension = $this->guessExtension($data);
+        // } else {
+        //     $data = file_get_contents($file->getPathname());
+        //     $extension = $file->guessExtension();
+        // }
 
         // Make sure we're only uploading valid image types
         // if (! in_array($extension, ['jpeg', 'png'])) {
