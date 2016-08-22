@@ -24,6 +24,7 @@ class ReportbackRepository
      */
     public function create($data)
     {
+        dd($data);
         // Store reportback
         $reportback = Reportback::create($data);
 
@@ -46,7 +47,7 @@ class ReportbackRepository
         $data = array_merge($data, $logData);
 
         $log->fill($data);
-        $log->save();
+        // $log->save();
 
         return $reportback;
     }
