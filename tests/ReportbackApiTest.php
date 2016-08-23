@@ -22,6 +22,9 @@ class ReportbackApiTest extends TestCase
      */
     public function testCreatingNewReportback()
     {
+        // Mock sending image to AWS.
+        $this->fileSystem->shouldReceive('put')->andReturn('string');
+
         $reportback = [
             'northstar_id'     => str_random(24),
             'drupal_id'        => $this->faker->randomNumber(8),
@@ -34,6 +37,7 @@ class ReportbackApiTest extends TestCase
             'caption' => $this->faker->sentence(),
             'source' => 'runscope',
             'remote_addr' => '207.110.19.130',
+            'file' => $this->faker->image(null, $width = 640, $height = 480, 'cats', false),
         ];
 
         $response = $this->call('POST', $this->reportbackApiUrl, $reportback);
@@ -44,6 +48,10 @@ class ReportbackApiTest extends TestCase
 
         // Make sure we created a reportback item for the reportback.
         $this->seeInDatabase('reportback_items', ['reportback_id' => $response->data->id]);
+
+        // dd($response->data->reportback_items->data->file_url);
+        // Make sure the file is saved to S3 and the file_url is saved to the database.
+        // $this->seeInDatabase('reportback_items', ['file_url'] => $response->data->reportback_items->data->file_url);
 
         // Make sure we created a record in the reportback log table.
         $this->seeInDatabase('reportback_logs', ['reportback_id' => $response->data->id]);

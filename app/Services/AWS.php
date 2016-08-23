@@ -54,10 +54,10 @@ class AWS
 
         // Push file to S3.
         $success = $this->filesystem->put($path, $data);
-
         if (! $success) {
             throw new HttpException(500, 'Unable to save image to S3.');
         }
+
         return config('filesystems.disks.s3.public_url') . $path;
     }
 
@@ -71,7 +71,6 @@ class AWS
         $f = new finfo();
         $mimeType = $f->buffer($data, FILEINFO_MIME_TYPE);
         $guesser = ExtensionGuesser::getInstance();
-
         return $guesser->guess($mimeType);
     }
 
