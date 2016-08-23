@@ -23,7 +23,7 @@ class ReportbackApiTest extends TestCase
     public function testCreatingNewReportback()
     {
         // Mock sending image to AWS.
-        $this->fileSystem->shouldReceive('put')->andReturn('string');
+        $what = $this->fileSystem->shouldReceive('put')->andReturn(true);
 
         $reportback = [
             'northstar_id'     => str_random(24),
@@ -37,7 +37,7 @@ class ReportbackApiTest extends TestCase
             'caption' => $this->faker->sentence(),
             'source' => 'runscope',
             'remote_addr' => '207.110.19.130',
-            'file' => $this->faker->image(null, $width = 640, $height = 480, 'cats', false),
+            'file' => asset('images/puppy.png'),
         ];
 
         $response = $this->call('POST', $this->reportbackApiUrl, $reportback);
