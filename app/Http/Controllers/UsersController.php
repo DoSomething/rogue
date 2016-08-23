@@ -19,4 +19,12 @@ class UsersController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
     }
+
+    /** Index of all users.
+     * @return Response
+     */
+    public function index()
+    {
+        return "Yay you're allowed in!";
+    }
 }
