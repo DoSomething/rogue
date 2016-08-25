@@ -36,16 +36,20 @@ class AWS
     {
         if (is_string($file)) {
             $data = $this->base64StringToDataString($file);
-            $extension = pathinfo($file, PATHINFO_EXTENSION);
         } else {
             $data = file_get_contents($file->getPathname());
-            $extension = pathinfo($file, PATHINFO_EXTENSION);
+        }
+
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
+        if (empty($extension)) {
+            $extension = $this->guessExtension($data);
         }
 
         // Make sure we're only uploading valid image types
         if (! in_array($extension, ['jpeg', 'png'])) {
             throw new UnprocessableEntityHttpException('Invalid file type. Upload a JPEG or PNG.');
         }
+
         // Add a unique timestamp (e.g. uploads/folder/filename-1456498664.jpeg) to
         // uploads to prevent AWS cache giving the user an old upload.
         $path = '/uploads/' . env('S3_BUCKET') . '/' . $filename . '-' . time() . '.' . $extension;
@@ -58,6 +62,19 @@ class AWS
         }
 
         return config('filesystems.disks.s3.public_url') . $path;
+    }
+
+    /**
+     * Guess the extension from a data buffer string.
+     * @param string $data - Data buffer string
+     * @return string - file extension
+     */
+    protected function guessExtension($data)
+    {
+        $f = new finfo();
+        $mimeType = $f->buffer($data, FILEINFO_MIME_TYPE);
+        $guesser = ExtensionGuesser::getInstance();
+        return $guesser->guess($mimeType);
     }
 
     /**
