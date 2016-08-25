@@ -9,7 +9,10 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
+<<<<<<< HEAD
 
+=======
+>>>>>>> test working
             "version": "3.19.2",
             "source": {
                 "type": "git",
@@ -20,7 +23,10 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/3cb90413129da42c9d3289d542bee0ae1049892c",
                 "reference": "3cb90413129da42c9d3289d542bee0ae1049892c",
+<<<<<<< HEAD
                 league/flysystem-aws-s3-v3: ~1.0
+=======
+>>>>>>> test working
                 "shasum": ""
             },
             "require": {
@@ -87,7 +93,6 @@
                 "s3",
                 "sdk"
             ],
-
             "time": "2016-08-23 20:58:48"
 
             league/flysystem-aws-s3-v3: ~1.0
@@ -1981,6 +1986,7 @@
         {
             "name": "spatie/laravel-backup",
 <<<<<<< HEAD
+<<<<<<< HEAD
             "version": "3.10.2",
             "source": {
                 "type": "git",
@@ -1993,16 +1999,24 @@
                 "reference": "1f9f0c55d7643aba7257aef2b2b867f2716ddfaf",
 =======
             "version": "3.10.1",
+=======
+            "version": "3.10.2",
+>>>>>>> test working
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "e17bed15f5b3f5e52421aa83d3608dc2d4d4d63b"
+                "reference": "1f9f0c55d7643aba7257aef2b2b867f2716ddfaf"
             },
             "dist": {
                 "type": "zip",
+<<<<<<< HEAD
                 "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/e17bed15f5b3f5e52421aa83d3608dc2d4d4d63b",
                 "reference": "e17bed15f5b3f5e52421aa83d3608dc2d4d4d63b",
 >>>>>>>         league/flysystem-aws-s3-v3: ~1.0
+=======
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/1f9f0c55d7643aba7257aef2b2b867f2716ddfaf",
+                "reference": "1f9f0c55d7643aba7257aef2b2b867f2716ddfaf",
+>>>>>>> test working
                 "shasum": ""
             },
             "require": {
@@ -2053,10 +2067,14 @@
                 "spatie"
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2016-08-24 12:02:50"
 =======
             "time": "2016-08-16 07:43:54"
 >>>>>>>         league/flysystem-aws-s3-v3: ~1.0
+=======
+            "time": "2016-08-24 12:02:50"
+>>>>>>> test working
         },
         {
             "name": "swiftmailer/swiftmailer",

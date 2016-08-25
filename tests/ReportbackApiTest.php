@@ -23,7 +23,7 @@ class ReportbackApiTest extends TestCase
     public function testCreatingNewReportback()
     {
         // Mock sending image to AWS.
-        $what = $this->fileSystem->shouldReceive('put')->andReturn(true);
+        $this->fileSystem->shouldReceive('put')->andReturn(true);
 
         $reportback = [
             'northstar_id'     => str_random(24),

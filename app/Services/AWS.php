@@ -34,8 +34,13 @@ class AWS
      */
     public function storeReportbackItem($file, $filename)
     {
-
-        $extension = pathinfo($file, PATHINFO_EXTENSION);
+        if (is_string($file)) {
+            $data = $this->base64StringToDataString($file);
+            $extension = pathinfo($file, PATHINFO_EXTENSION);
+        } else {
+            $data = file_get_contents($file->getPathname());
+            $extension = pathinfo($file, PATHINFO_EXTENSION);
+        }
 
         // Make sure we're only uploading valid image types
         if (! in_array($extension, ['jpeg', 'png'])) {
@@ -53,5 +58,17 @@ class AWS
         }
 
         return config('filesystems.disks.s3.public_url') . $path;
+    }
+
+    /**
+     * Decode Base-64 encoded string into a raw data buffer string.
+     * @param $string - Base-64 encoded string
+     * @return string - raw data
+     */
+    protected function base64StringToDataString($string)
+    {
+        // Trim the mime-type (e.g. `data:image/png;base64,`) from the string
+        $file = last(explode(',', $string));
+        return base64_decode($file);
     }
 }
