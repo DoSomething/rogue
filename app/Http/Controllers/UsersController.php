@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace Rogue\Http\Controllers\Auth;
 
 use DoSomething\Northstar\Northstar;
 
@@ -25,6 +25,7 @@ class UsersController extends Controller
      */
     public function index()
     {
+        // Test for now to make sure northstar auth is working.
         return "Yay you're allowed in!";
     }
 }
