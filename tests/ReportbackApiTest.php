@@ -49,9 +49,8 @@ class ReportbackApiTest extends TestCase
         // Make sure we created a reportback item for the reportback.
         $this->seeInDatabase('reportback_items', ['reportback_id' => $response->data->id]);
 
-        // dd($response->data->reportback_items->data->file_url);
         // Make sure the file is saved to S3 and the file_url is saved to the database.
-        // $this->seeInDatabase('reportback_items', ['file_url'] => $response->data->reportback_items->data->file_url);
+        $this->seeInDatabase('reportback_items', ['file_url' => $response->data->reportback_items->data[0]->file_url]);
 
         // Make sure we created a record in the reportback log table.
         $this->seeInDatabase('reportback_logs', ['reportback_id' => $response->data->id]);
