@@ -31,6 +31,7 @@ class ReportbackController extends ApiController
     public function create(Request $request)
     {
         $reportback = $this->reportbackService->create($request->all());
+
         return $this->item($reportback);
     }
 }

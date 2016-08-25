@@ -39,6 +39,7 @@ class ReportbackApiTest extends TestCase
             'remote_addr' => '207.110.19.130',
             'file' => asset('images/huskycorgi.jpeg'),
         ];
+
         $response = $this->call('POST', $this->reportbackApiUrl, $reportback);
 
         $this->assertEquals(200, $response->status());

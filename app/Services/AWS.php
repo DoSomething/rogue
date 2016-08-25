@@ -74,6 +74,7 @@ class AWS
         $f = new finfo();
         $mimeType = $f->buffer($data, FILEINFO_MIME_TYPE);
         $guesser = ExtensionGuesser::getInstance();
+
         return $guesser->guess($mimeType);
     }
 
@@ -86,6 +87,7 @@ class AWS
     {
         // Trim the mime-type (e.g. `data:image/png;base64,`) from the string
         $file = last(explode(',', $string));
+
         return base64_decode($file);
     }
 }
