@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Auth;
+namespace Rogue\Http\Controllers;
 
 use DoSomething\Northstar\Northstar;
 
