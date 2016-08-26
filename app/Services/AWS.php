@@ -32,7 +32,7 @@ class AWS
      *
      * @return string - URL of stored image
      */
-    public function storeReportbackItem($file, $filename)
+    public function storeImage($file, $filename)
     {
         if (is_string($file)) {
             $data = $this->base64StringToDataString($file);
@@ -49,7 +49,7 @@ class AWS
 
         // Add a unique timestamp (e.g. uploads/folder/filename-1456498664.jpeg) to
         // uploads to prevent AWS cache giving the user an old upload.
-        $path = '/uploads/' . env('S3_BUCKET') . '/' . $filename . '-' . time() . '.' . $extension;
+        $path = '/uploads/reportback-items' . '/' . $filename . '-' . time() . '.' . $extension;
 
         // Push file to S3.
         $success = $this->filesystem->put($path, $data);

@@ -27,13 +27,7 @@ class ReportbackApiTest extends TestCase
         $this->fileSystem->shouldReceive('put')->andReturn(true);
 
         // Create an uploaded file.
-        $path = storage_path('images/huskycorgi.jpeg');
-        $original_name = 'huskycorgi.jpeg';
-        $mime_type = 'image/jpeg';
-        $size = 2476;
-        $error = null;
-        $test = true;
-        $file = new \Illuminate\Http\UploadedFile($path, $original_name, $mime_type, $size, $error, $test);
+        $file = $this->mockFile();
 
         $reportback = [
             'northstar_id'     => str_random(24),

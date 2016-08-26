@@ -65,4 +65,20 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $app;
     }
+
+    /**
+     * Creates a mock file.
+     *
+     * @return mockfile
+     */
+    public function mockFile()
+    {
+        $path = storage_path('images/huskycorgi.jpeg');
+        $original_name = 'huskycorgi.jpeg';
+        $mime_type = 'image/jpeg';
+        $size = 2476;
+        $error = null;
+        $test = true;
+        return new \Illuminate\Http\UploadedFile($path, $original_name, $mime_type, $size, $error, $test);
+    }
 }
