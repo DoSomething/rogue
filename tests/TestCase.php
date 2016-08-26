@@ -17,6 +17,13 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
     protected $faker;
 
     /**
+     * File System dependency.
+     *
+     * @var
+     */
+    protected $fileSystem;
+
+    /**
      * Setup the test environment.
      *
      * @return void
@@ -26,6 +33,23 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         parent::setUp();
         // Get a new Faker generator from Laravel.
         $this->faker = app(\Faker\Generator::class);
+
+        // Setup mocks
+        $this->fileSystem = $this->mock('Illuminate\Filesystem\Filesystem');
+    }
+
+    /**
+     * Mock Container dependencies.
+     *
+     * @param string $class Class to mock
+     *
+     * @return void
+     */
+    public function mock($class)
+    {
+        $mock = Mockery::mock($class);
+        $this->app->instance($class, $mock);
+        return $mock;
     }
 
     /**
@@ -40,5 +64,20 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
+    }
+
+    /**
+     * Creates a mock file.
+     *
+     * @return mockfile
+     */
+    public function mockFile()
+    {
+        $path = storage_path('images/huskycorgi.jpeg');
+        $original_name = 'huskycorgi.jpeg';
+        $mime_type = 'image/jpeg';
+        $error = null;
+        $test = true;
+        return new \Illuminate\Http\UploadedFile($path, $original_name, $mime_type, $error, $test);
     }
 }

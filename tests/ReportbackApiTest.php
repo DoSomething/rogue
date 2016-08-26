@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+
 class ReportbackApiTest extends TestCase
 {
     use DatabaseMigrations;
@@ -22,6 +23,12 @@ class ReportbackApiTest extends TestCase
      */
     public function testCreatingNewReportback()
     {
+        // Mock sending image to AWS.
+        $this->fileSystem->shouldReceive('put')->andReturn(true);
+
+        // Create an uploaded file.
+        $file = $this->mockFile();
+
         $reportback = [
             'northstar_id'     => str_random(24),
             'drupal_id'        => $this->faker->randomNumber(8),
@@ -34,6 +41,7 @@ class ReportbackApiTest extends TestCase
             'caption' => $this->faker->sentence(),
             'source' => 'runscope',
             'remote_addr' => '207.110.19.130',
+            'file' => $file,
         ];
 
         $response = $this->call('POST', $this->reportbackApiUrl, $reportback);
@@ -44,6 +52,9 @@ class ReportbackApiTest extends TestCase
 
         // Make sure we created a reportback item for the reportback.
         $this->seeInDatabase('reportback_items', ['reportback_id' => $response->data->id]);
+
+        // Make sure the file is saved to S3 and the file_url is saved to the database.
+        $this->seeInDatabase('reportback_items', ['file_url' => $response->data->reportback_items->data[0]->file_url]);
 
         // Make sure we created a record in the reportback log table.
         $this->seeInDatabase('reportback_logs', ['reportback_id' => $response->data->id]);

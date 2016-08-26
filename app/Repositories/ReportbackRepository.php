@@ -4,9 +4,17 @@ namespace Rogue\Repositories;
 
 use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackLog;
+use Rogue\Services\AWS;
 
 class ReportbackRepository
 {
+    protected $AWS;
+
+    public function __construct(AWS $aws)
+    {
+        $this->aws = $aws;
+    }
+
     /**
      * Create a new reportback.
      *
@@ -19,8 +27,11 @@ class ReportbackRepository
         // Store reportback
         $reportback = Reportback::create($data);
 
+        // Store reportback item photo in S3.
+        $data['file_url'] = $this->aws->storeImage($data['file'], $data['file_id']);
+
         // Store reportback item.
-        $reportback->items()->create(array_only($data, ['file_id', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
+        $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
 
         // Record transaction in log table.
         $log = new ReportbackLog;
