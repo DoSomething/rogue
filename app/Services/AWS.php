@@ -40,10 +40,7 @@ class AWS
             $data = file_get_contents($file->getPathname());
         }
 
-        $extension = pathinfo($file, PATHINFO_EXTENSION);
-        if (empty($extension)) {
-            $extension = $this->guessExtension($data);
-        }
+        $extension = $this->guessExtension($data);
 
         // Make sure we're only uploading valid image types
         if (! in_array($extension, ['jpeg', 'png'])) {

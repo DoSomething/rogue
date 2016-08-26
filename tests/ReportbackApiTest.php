@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+
 class ReportbackApiTest extends TestCase
 {
     use DatabaseMigrations;
@@ -25,6 +26,15 @@ class ReportbackApiTest extends TestCase
         // Mock sending image to AWS.
         $this->fileSystem->shouldReceive('put')->andReturn(true);
 
+        // Create an uploaded file.
+        $path = storage_path('images/huskycorgi.jpeg');
+        $original_name = 'huskycorgi.jpeg';
+        $mime_type = 'image/jpeg';
+        $size = 2476;
+        $error = null;
+        $test = true;
+        $file = new \Illuminate\Http\UploadedFile($path, $original_name, $mime_type, $size, $error, $test);
+
         $reportback = [
             'northstar_id'     => str_random(24),
             'drupal_id'        => $this->faker->randomNumber(8),
@@ -37,7 +47,7 @@ class ReportbackApiTest extends TestCase
             'caption' => $this->faker->sentence(),
             'source' => 'runscope',
             'remote_addr' => '207.110.19.130',
-            'file' => asset('images/huskycorgi.jpeg'),
+            'file' => $file,
         ];
 
         $response = $this->call('POST', $this->reportbackApiUrl, $reportback);
