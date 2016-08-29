@@ -14,6 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ReportbackSeeder::class);
         $this->call(ReportbackItemSeeder::class);
         $this->call(ReportbackLogSeeder::class);
-        $this->call(KudoSeeder::class);
+        $this->call(ReactionSeeder::class);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-use Rogue\Models\Kudo;
+use Rogue\Models\Reaction;
 use Illuminate\Database\Seeder;
 
-class KudoSeeder extends Seeder
+class ReactionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class KudoSeeder extends Seeder
      */
     public function run()
     {
-        factory(Kudo::class, 10)->create();
+        factory(Reaction::class, 10)->create();
     }
 }
