@@ -69,6 +69,21 @@ class Phoenix extends RestApiClient
     }
 
     /**
+     * Send a POST request to save a copy of the reportback in Phoenix.
+     *
+     * @param string $nid
+     * @param array $body
+     * @param bool $withAuthorization - Should this request be authorized?
+     * @return object|false
+     */
+    public function postReportback($nid, $body = [])
+    {
+        $response = $this->post($this->base_uri . 'campaigns/' . $nid . '/reportback', $body, $withAuthorization= true);
+
+        return is_null($response) ? null : $response;
+    }
+
+    /**
      * Overrides DoSometing\Northstar\Common\RestApiClient to add Cookie and X-CSRF-Token to header.
      *
      * @param $method
