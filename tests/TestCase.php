@@ -36,6 +36,7 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         // Setup mocks
         $this->fileSystem = $this->mock('Illuminate\Filesystem\Filesystem');
+        $this->phoenix = $this->mock('Rogue\Services\Phoenix\Phoenix');
     }
 
     /**

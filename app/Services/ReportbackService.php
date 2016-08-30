@@ -33,26 +33,24 @@ class ReportbackService
     public function create($data)
     {
         $reportback = $this->reportbackRepository->create($data);
-        print_r($reportback['items']);
-        dd($reportback['items']->file_url);
-        dd($reportback['items']);
+
         // POST reportback back to phoenix.
         $body = [
             'uid' => $reportback->drupal_id,
             'nid' => $reportback->campaign_id,
             'quantity' => $reportback->quantity,
             'why_participated' => $reportback->why_participated,
-            'file_url' => $reportback->file,
+            'file_url' => $reportback['items'][0]['file_url'],
             // these are required if file_url is not provided. do we want to send this back?
             // 'file'
             // 'filename'
-            'caption' => $reportback->caption,
-            'source' => $reportback->source
+            'caption' => $reportback['items'][0]['caption'],
+            'source' => $reportback['items'][0]['source']
         ];
 
-        $response = $phoenix->postReportback($reportback->campaign_id, $body);
+        $this->phoenix->postReportback($reportback->campaign_id, $body);
 
-        return $response;
+        return $reportback;
     }
 
     /*

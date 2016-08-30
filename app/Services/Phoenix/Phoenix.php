@@ -78,7 +78,7 @@ class Phoenix extends RestApiClient
      */
     public function postReportback($nid, $body = [])
     {
-        $response = $this->post($this->base_uri . 'campaigns/' . $nid . '/reportback', $body, $withAuthorization= true);
+        $response = $this->post($url . 'campaigns/' . $nid . '/reportback', $body, $withAuthorization= true);
 
         return is_null($response) ? null : $response;
     }
