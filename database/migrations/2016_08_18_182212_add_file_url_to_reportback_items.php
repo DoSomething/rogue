@@ -12,7 +12,7 @@ class AddFileUrlToReportbackItems extends Migration
     public function up()
     {
         Schema::table('reportback_items', function ($table) {
-            $table->string('file_url');
+            $table->string('file_url')->after('file_id');
         });
     }
 
