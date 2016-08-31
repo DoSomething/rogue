@@ -120,7 +120,7 @@ class ReportbackRepository
      *
      * @return \Rogue\Models\Reportback|null
      */
-    public function getUserReportback($campaignId, $campaignRunId, $userId, $type = 'northstar_id')
+    public function getReportbackByUser($campaignId, $campaignRunId, $userId, $type = 'northstar_id')
     {
         try {
             if ($type === 'drupal_id') {

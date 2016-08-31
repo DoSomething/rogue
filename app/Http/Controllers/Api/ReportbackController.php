@@ -3,7 +3,7 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Reportback;
-use Illuminate\Http\Request;
+use Rogue\Http\Requests\ReportbackRequest;
 use Rogue\Services\ReportbackService;
 use Rogue\Http\Transformers\ReportbackTransformer;
 
@@ -30,8 +30,9 @@ class ReportbackController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReportbackRequest $request)
     {
+        // @TODO - instead should probably just have a method that gets northstar_id by default from a drupal_id if that is the only thing provided and then use that to find the reportback.
         $userId = $request['northstar_id'] ? $request['northstar_id'] : $request['drupal_id'];
         $type = $request['northstar_id'] ? 'northstar_id' : 'drupal_id';
 

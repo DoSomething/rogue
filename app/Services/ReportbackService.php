@@ -65,7 +65,7 @@ class ReportbackService
      */
     public function exists($campaignId, $campaignRunId, $userId, $type)
     {
-        $reportback = $this->reportbackRepository->getUserReportback($campaignId, $campaignRunId, $userId, $type);
+        $reportback = $this->reportbackRepository->getReportbackByUser($campaignId, $campaignRunId, $userId, $type);
 
         return $reportback ? $reportback : false;
     }
