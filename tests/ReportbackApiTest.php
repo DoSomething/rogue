@@ -28,7 +28,9 @@ class ReportbackApiTest extends TestCase
         $this->fileSystem->shouldReceive('put')->andReturn(true);
 
         // Mock sending reportback back to Phoenix.
-        $this->phoenix->shouldReceive('post')->andReturn(str_random(3));
+        $this->phoenix->shouldReceive('postReportback')->andReturn([
+            'rbid' => '12345'
+        ]);
 
         // Create an uploaded file.
         $file = $this->mockFile();
@@ -48,20 +50,20 @@ class ReportbackApiTest extends TestCase
             'file' => $file,
         ];
 
-        $response = $this->call('POST', $this->reportbackApiUrl, $reportback);
+        $this->json('POST', $this->reportbackApiUrl, $reportback);
 
-        $this->assertEquals(200, $response->status());
+        $this->assertResponseStatus(200);
 
-        $response = json_decode($response->content());
+        $response = $this->decodeResponseJson();
 
         // Make sure we created a reportback item for the reportback.
-        $this->seeInDatabase('reportback_items', ['reportback_id' => $response->data->id]);
+        $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
 
         // Make sure the file is saved to S3 and the file_url is saved to the database.
-        $this->seeInDatabase('reportback_items', ['file_url' => $response->data->reportback_items->data[0]->media->url]);
+        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['file_url']]);
 
         // Make sure we created a record in the reportback log table.
-        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response->data->id]);
+        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
     }
 
     /**

@@ -41,14 +41,11 @@ class ReportbackService
             'quantity' => $reportback->quantity,
             'why_participated' => $reportback->why_participated,
             'file_url' => $reportback['items'][0]['file_url'],
-            // these are required if file_url is not provided. do we want to send this back?
-            // 'file'
-            // 'filename'
             'caption' => $reportback['items'][0]['caption'],
             'source' => $reportback['items'][0]['source']
         ];
 
-        $this->phoenix->postReportback($reportback->campaign_id, $body);
+        $phoenixResponse = $this->phoenix->postReportback($reportback->campaign_id, $body);
 
         return $reportback;
     }
