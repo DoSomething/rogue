@@ -61,11 +61,11 @@ class ReportbackApiTest extends TestCase
     }
 
     /**
-     * Test if sending a reportback that is already stored throws a 500 error.
+     * Test updating an existing reportback
      *
      * @return void
      */
-    public function testErrorOnDuplicateReportback()
+    public function testUpdatingReportback()
     {
         $reportback = factory(Reportback::class)->create();
 
@@ -74,7 +74,8 @@ class ReportbackApiTest extends TestCase
             'drupal_id' => $reportback->drupal_id,
             'campaign_id' => $reportback->campaign_id,
             'campaign_run_id' => $reportback->campaign_run_id,
-            'quantity' => $this->faker->numberBetween(10, 1000),
+            // Change quanitity.
+            'quantity' => 2000,
             'why_participated' => $this->faker->paragraph(3),
             'num_participated' => null,
             'file_id' => $this->faker->randomNumber(4),
@@ -83,6 +84,10 @@ class ReportbackApiTest extends TestCase
             'remote_addr' => '207.110.19.130',
         ]);
 
-        $this->assertEquals(500, $response->status());
+        $this->assertEquals(200, $response->status());
+
+        $response = json_decode($response->content());
+
+        $this->assertEquals($response->data->quantity, 2000);
     }
 }
