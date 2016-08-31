@@ -28,7 +28,7 @@ class ReportbackApiTest extends TestCase
         $this->fileSystem->shouldReceive('put')->andReturn(true);
 
         // Mock sending reportback back to Phoenix.
-        // $this->phoenix->shouldReceive('postReportback')->andReturn('12345');
+        $this->phoenix->shouldReceive('postReportback')->andReturn('12345');
 
         // Create an uploaded file.
         $file = $this->mockFile();

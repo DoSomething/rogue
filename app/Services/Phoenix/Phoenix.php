@@ -13,9 +13,9 @@ class Phoenix extends RestApiClient
      */
     public function __construct()
     {
-        $url = config('services.phoenix.uri') . '/api/' . config('services.phoenix.version') . '/';
+        $this->url = config('services.phoenix.uri') . '/api/' . config('services.phoenix.version') . '/';
 
-        parent::__construct($url);
+        parent::__construct($this->url);
     }
 
     /**
@@ -31,7 +31,7 @@ class Phoenix extends RestApiClient
                 'password' => config('services.phoenix.password'),
             ];
 
-            $response = $this->post($url . 'auth/login', $payload, false);
+            $response = $this->post($this->url . 'auth/login', $payload, false);
 
             $body = json_decode($response->getBody()->getContents(), true);
             $session_name = $body['session_name'];
@@ -78,7 +78,7 @@ class Phoenix extends RestApiClient
      */
     public function postReportback($nid, $body = [])
     {
-        $response = $this->post($this->base_uri . 'campaigns/' . $nid . '/reportback', $body, $withAuthorization = true);
+        $response = $this->post($this->url . 'campaigns/' . $nid . '/reportback', $body, $withAuthorization = true);
 
         return is_null($response) ? null : $response;
     }
