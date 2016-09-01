@@ -69,7 +69,7 @@ class ApiController extends BaseController
 
         $response = $manager->createData($data)->toArray();
 
-        return response()->json($response, 200, [], JSON_UNESCAPED_SLASHES);
+        return response()->json($response, $code, [], JSON_UNESCAPED_SLASHES);
     }
 
     /**

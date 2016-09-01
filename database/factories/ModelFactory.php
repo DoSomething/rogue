@@ -3,7 +3,7 @@
 use Faker\Generator;
 use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackItem;
-use Rogue\Models\Kudo;
+use Rogue\Models\Reaction;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ $factory->define(Reportback::class, function (Generator $faker) {
 });
 
 // Kudo Factory
-$factory->define(Kudo::class, function (Generator $faker) {
+$factory->define(Reaction::class, function (Generator $faker) {
     $files = ReportbackItem::all()->pluck('file_id');
 
     return [
