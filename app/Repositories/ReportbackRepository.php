@@ -132,10 +132,6 @@ class ReportbackRepository
             'campaign_run_id' => $campaignRunId,
         ];
 
-        try {
-            return Reportback::where($parameters)->firstOrFail();
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return null;
-        }
+        return Reportback::where($parameters)->first();
     }
 }

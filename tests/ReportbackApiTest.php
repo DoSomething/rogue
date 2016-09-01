@@ -84,10 +84,15 @@ class ReportbackApiTest extends TestCase
             'remote_addr' => '207.110.19.130',
         ]);
 
-        $this->assertEquals(200, $response->status());
+        $this->assertResponseStatus(201);
 
-        $response = json_decode($response->content());
+        $this->seeJsonSubset([
+            'data' => [
+                'quantity' => 2000,
+            ],
+        ]);
+        // $response = json_decode($response->content());
 
-        $this->assertEquals($response->data->quantity, 2000);
+        // $this->assertEquals($response->data->quantity, 2000);
     }
 }
