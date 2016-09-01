@@ -63,7 +63,7 @@ class ReportbackService
      *
      * @return \Rogue\Models\Reportback|bool
      */
-    public function exists($campaignId, $campaignRunId, $userId, $type)
+    public function getReportback($campaignId, $campaignRunId, $userId, $type)
     {
         $reportback = $this->reportbackRepository->getReportbackByUser($campaignId, $campaignRunId, $userId, $type);
 

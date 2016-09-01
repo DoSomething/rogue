@@ -36,7 +36,7 @@ class ReportbackController extends ApiController
         $userId = $request['northstar_id'] ? $request['northstar_id'] : $request['drupal_id'];
         $type = $request['northstar_id'] ? 'northstar_id' : 'drupal_id';
 
-        $reportback = $this->reportbackService->exists($request['campaign_id'], $request['campaign_run_id'], $userId, $type);
+        $reportback = $this->reportbackService->getReportback($request['campaign_id'], $request['campaign_run_id'], $userId, $type);
 
         if (! $reportback) {
             $reportback = $this->reportbackService->create($request->all());
