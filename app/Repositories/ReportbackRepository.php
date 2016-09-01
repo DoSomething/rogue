@@ -122,22 +122,18 @@ class ReportbackRepository
      */
     public function getReportbackByUser($campaignId, $campaignRunId, $userId, $type = 'northstar_id')
     {
-        try {
-            if ($type === 'drupal_id') {
-                $reportback = Reportback::where([
-                    ['drupal_id', '=', $userId],
-                    ['campaign_id', '=', $campaignId],
-                    ['campaign_run_id', '=', $campaignRunId],
-                ])->firstOrFail();
-            } else {
-                $reportback = Reportback::where([
-                    ['northstar_id', '=', $userId],
-                    ['campaign_id', '=', $campaignId],
-                    ['campaign_run_id', '=', $campaignRunId],
-                ])->firstOrFail();
-            }
+        if (! in_array($type, ['northstar_id', 'drupal_id'])) {
+            throw new \Exception('Invalid user ID type provided.');
+        }
 
-            return $reportback;
+        $parameters = [
+            $type => $userId,
+            'campaign_id' => $campaignId,
+            'campaign_run_id' => $campaignRunId,
+        ];
+
+        try {
+            return Reportback::where($parameters)->firstOrFail();
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return null;
         }
