@@ -38,14 +38,18 @@ class ReportbackController extends ApiController
 
         $reportback = $this->reportbackService->getReportback($request['campaign_id'], $request['campaign_run_id'], $userId, $type);
 
-        if (! $reportback) {
+        $updating = ! is_null($reportback);
+
+        if (! $updating) {
             $reportback = $this->reportbackService->create($request->all());
 
-            return $this->item($reportback);
+            $code = 200;
         } else {
-            $updatedReportback = $this->reportbackService->update($reportback, $request->all());
+            $reportback = $this->reportbackService->update($reportback, $request->all());
 
-            return $this->item($updatedReportback);
+            $code = 201;
         }
+
+        return $this->item($reportback, $code);
     }
 }

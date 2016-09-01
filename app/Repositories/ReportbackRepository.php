@@ -20,7 +20,7 @@ class ReportbackRepository
      *
      * @todo Handle errors better during creation.
      * @param  array $data
-     * @return \Rogue\Models\Reportback
+     * @return \Rogue\Models\Reportback|null
      */
     public function create($data)
     {

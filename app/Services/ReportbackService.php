@@ -61,12 +61,12 @@ class ReportbackService
      * @param string|int $userId
      * @param string $type
      *
-     * @return \Rogue\Models\Reportback|bool
+     * @return \Rogue\Models\Reportback|null
      */
     public function getReportback($campaignId, $campaignRunId, $userId, $type)
     {
         $reportback = $this->reportbackRepository->getReportbackByUser($campaignId, $campaignRunId, $userId, $type);
 
-        return $reportback ? $reportback : false;
+        return $reportback ? $reportback : null;
     }
 }
