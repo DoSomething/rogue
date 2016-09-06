@@ -32,14 +32,13 @@ class Phoenix extends RestApiClient
             ];
 
             $response = $this->post($this->url . 'auth/login', $payload, false);
-
-            $body = json_decode($response->getBody()->getContents(), true);
-            $session_name = $body['session_name'];
-            $session_value = $body['sessid'];
+            // $body = json_decode($response->getBody()->getContents(), true);
+            $session_name = $response['session_name'];
+            $session_value = $response['sessid'];
 
             return [
                 'cookie' => [$session_name => $session_value],
-                'token' => $body['token'],
+                'token' => $response['token'],
             ];
         });
 
@@ -79,7 +78,6 @@ class Phoenix extends RestApiClient
     public function postReportback($nid, $body = [])
     {
         $response = $this->post($this->url . 'campaigns/' . $nid . '/reportback', $body, $withAuthorization = true);
-
         return is_null($response) ? null : $response;
     }
 
@@ -99,7 +97,7 @@ class Phoenix extends RestApiClient
                 $authorizationHeader = [];
                 $authorizationHeader['X-CSRF-Token'] = $this->getAuthenticationToken();
                 $authorizationHeader['Cookie'] = $this->getAuthenticationCookie();
-                $options['headers'] = array_merge($this->defaultHeaders, $options['headers'], $authorizationHeader);
+                $options['headers'] = array_merge($this->defaultHeaders, $authorizationHeader);
             }
         }
 
