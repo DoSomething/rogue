@@ -96,7 +96,7 @@ class Phoenix extends RestApiClient
             if (! isset($options['token'])) {
                 $authorizationHeader = [];
                 $authorizationHeader['X-CSRF-Token'] = $this->getAuthenticationToken();
-                $authorizationHeader['Cookie'] = $this->getAuthenticationCookie();
+                $options['cookies'] = $this->getAuthenticationCookie();
                 $options['headers'] = array_merge($this->defaultHeaders, $authorizationHeader);
             }
         }
