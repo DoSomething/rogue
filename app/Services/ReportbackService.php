@@ -43,13 +43,13 @@ class ReportbackService
             'why_participated' => $reportback->why_participated,
             'file_url' => $reportback['items'][0]['file_url'],
             'caption' => $reportback['items'][0]['caption'],
-            'source' => $reportback['items'][0]['source']
+            'source' => $reportback['items'][0]['source'],
         ];
 
         $phoenixResponse = $this->phoenix->postReportback($reportback->campaign_id, $body);
 
         // If POST to Phoenix fails, record in failed_logs table.
-        if ($phoenixResponse === FALSE) {
+        if ($phoenixResponse === false) {
             $failedLog = new FailedLog;
 
             $logData = [

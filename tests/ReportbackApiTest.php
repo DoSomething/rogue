@@ -58,7 +58,7 @@ class ReportbackApiTest extends TestCase
         $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
 
         // Make sure the file is saved to S3 and the file_url is saved to the database.
-        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['file_url']]);
+        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
 
         // Make sure we created a record in the reportback log table.
         $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
@@ -90,14 +90,16 @@ class ReportbackApiTest extends TestCase
 
         $this->assertResponseStatus(201);
 
-<<<<<<< HEAD
         $this->seeJsonSubset([
             'data' => [
                 'quantity' => 2000,
             ],
         ]);
         // $response = json_decode($response->content());
-=======
+
+        // $this->assertEquals($response->data->quantity, 2000);
+    }
+
     /**
      * Test that a record is created in the failed log table if Phoenix returns FALSE.
      *
@@ -134,9 +136,5 @@ class ReportbackApiTest extends TestCase
 
         // Make sure we created a record in the reportback log table.
         $this->seeInDatabase('failed_logs', ['drupal_id' => $response['data']['drupal_id']]);
-    }
->>>>>>> adds test to make sure failed post to phoenix gets logged in failed_logs table
-
-        // $this->assertEquals($response->data->quantity, 2000);
     }
 }
