@@ -31,7 +31,8 @@ class Phoenix extends RestApiClient
                 'password' => config('services.phoenix.password'),
             ];
 
-            $response = $this->post('$this->url' . 'auth/login', $payload, false);
+            $response = $this->post($this->url . 'auth/login', $payload, false);
+            // $body = json_decode($response->getBody()->getContents(), true);
             $session_name = $response['session_name'];
             $session_value = $response['sessid'];
 
