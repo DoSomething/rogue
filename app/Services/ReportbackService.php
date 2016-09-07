@@ -4,7 +4,7 @@ namespace Rogue\Services;
 
 use Rogue\Models\Reportback;
 use Rogue\Repositories\ReportbackRepository;
-use Rogue\Services\Phoenix\Phoenix;
+use Rogue\Models\FailedLog;
 
 class ReportbackService
 {
@@ -33,6 +33,38 @@ class ReportbackService
     public function create($data)
     {
         $reportback = $this->reportbackRepository->create($data);
+
+        // POST reportback back to phoenix.
+        $body = [
+            'uid' => $reportback->drupal_id,
+            'nid' => $reportback->campaign_id,
+            'quantity' => $reportback->quantity,
+            'why_participated' => $reportback->why_participated,
+            'file_url' => $reportback->items()->first()->file_url,
+            'caption' => $reportback->items()->first()->caption,
+            'source' => $reportback->items()->first()->source,
+        ];
+
+        $phoenixResponse = $this->phoenix->postReportback($reportback->campaign_id, $body);
+
+        // If POST to Phoenix fails, record in failed_logs table.
+        if ($phoenixResponse === false) {
+            $failedLog = new FailedLog;
+
+            $logData = [
+                'op' => 'POST to Phoenix',
+                'drupal_id' => $body['uid'],
+                'nid' => $body['nid'],
+                'quantity' => $body['quantity'],
+                'why_participated' => $body['why_participated'],
+                'file_url' => $body['file_url'],
+                'caption' => $body['caption'],
+                'source' => $body['source'],
+            ];
+
+            $failedLog->fill($logData);
+            $failedLog->save();
+        }
 
         return $reportback;
     }

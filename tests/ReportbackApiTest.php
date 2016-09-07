@@ -1,6 +1,7 @@
 <?php
 
 use Rogue\Models\Reportback;
+use Rogue\Services\Phoenix\Phoenix;
 use Faker\Generator;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -26,6 +27,9 @@ class ReportbackApiTest extends TestCase
         // Mock sending image to AWS.
         $this->fileSystem->shouldReceive('put')->andReturn(true);
 
+        // Mock sending reportback back to Phoenix.
+        $this->phoenix->shouldReceive('postReportback')->andReturn('12345');
+
         // Create an uploaded file.
         $file = $this->mockFile();
 
@@ -44,20 +48,20 @@ class ReportbackApiTest extends TestCase
             'file' => $file,
         ];
 
-        $response = $this->call('POST', $this->reportbackApiUrl, $reportback);
+        $this->json('POST', $this->reportbackApiUrl, $reportback);
 
-        $this->assertEquals(200, $response->status());
+        $this->assertResponseStatus(200);
 
-        $response = json_decode($response->content());
+        $response = $this->decodeResponseJson();
 
         // Make sure we created a reportback item for the reportback.
-        $this->seeInDatabase('reportback_items', ['reportback_id' => $response->data->id]);
+        $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
 
         // Make sure the file is saved to S3 and the file_url is saved to the database.
-        $this->seeInDatabase('reportback_items', ['file_url' => $response->data->reportback_items->data[0]->media->url]);
+        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
 
         // Make sure we created a record in the reportback log table.
-        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response->data->id]);
+        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
     }
 
     /**
@@ -94,5 +98,43 @@ class ReportbackApiTest extends TestCase
         // $response = json_decode($response->content());
 
         // $this->assertEquals($response->data->quantity, 2000);
+    }
+
+    /**
+     * Test that a record is created in the failed log table if Phoenix returns FALSE.
+     *
+     * @return void
+     */
+    public function testErrorOnPostToPhoenix()
+    {
+        // Mock sending image to AWS.
+        $this->fileSystem->shouldReceive('put')->andReturn(true);
+
+        // Mock sending reportback back to Phoenix.
+        $this->phoenix->shouldReceive('postReportback')->andReturn(FALSE);
+
+        // Create an uploaded file.
+        $file = $this->mockFile();
+
+        $reportback = [
+            'northstar_id'     => str_random(24),
+            'drupal_id'        => $this->faker->randomNumber(8),
+            'campaign_id'      => $this->faker->randomNumber(4),
+            'campaign_run_id'  => $this->faker->randomNumber(4),
+            'quantity'         => $this->faker->numberBetween(10, 1000),
+            'why_participated' => $this->faker->paragraph(3),
+            'num_participants' => null,
+            'file_id' => $this->faker->randomNumber(4),
+            'caption' => $this->faker->sentence(),
+            'source' => 'runscope',
+            'remote_addr' => '207.110.19.130',
+            'file' => $file,
+        ];
+
+        $this->json('POST', $this->reportbackApiUrl, $reportback);
+        $response = $this->decodeResponseJson();
+
+        // Make sure we created a record in the reportback log table.
+        $this->seeInDatabase('failed_logs', ['drupal_id' => $response['data']['drupal_id']]);
     }
 }
