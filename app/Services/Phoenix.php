@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Services\Phoenix;
+namespace Rogue\Services;
 
 use DoSomething\Northstar\Common\RestApiClient;
 use GuzzleHttp\Cookie\CookieJar;
