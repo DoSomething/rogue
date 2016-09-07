@@ -35,7 +35,7 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         $this->faker = app(\Faker\Generator::class);
 
         // Setup mocks
-        $this->fileSystem = $this->mock('Illuminate\Filesystem\Filesystem');
+        $this->fileSystem = $this->mock(Illuminate\Filesystem\Filesystem::class);
         $this->phoenix = $this->mock(Rogue\Services\Phoenix::class);
     }
 
