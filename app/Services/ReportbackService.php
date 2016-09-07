@@ -41,9 +41,9 @@ class ReportbackService
             'nid' => $reportback->campaign_id,
             'quantity' => $reportback->quantity,
             'why_participated' => $reportback->why_participated,
-            'file_url' => $reportback['items'][0]['file_url'],
-            'caption' => $reportback['items'][0]['caption'],
-            'source' => $reportback['items'][0]['source'],
+            'file_url' => $reportback->items()->first()->file_url,
+            'caption' => $reportback->items()->first()->caption,
+            'source' => $reportback->items()->first()->source,
         ];
 
         $phoenixResponse = $this->phoenix->postReportback($reportback->campaign_id, $body);
