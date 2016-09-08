@@ -5,6 +5,7 @@ namespace Rogue\Services;
 use Rogue\Models\Reportback;
 use Rogue\Repositories\ReportbackRepository;
 use Rogue\Models\FailedLog;
+use Rogue\Jobs\SendReportbackToPhoenix;
 
 class ReportbackService
 {
@@ -14,14 +15,14 @@ class ReportbackService
     protected $reportbackRepository;
 
     /*
-     * Instance of \Rogue\Services\Phoenix\Phoenix
+     * Instance of \Rogue\Jobs\SendReportbackToPhoenix
      */
-    protected $phoenix;
+    protected $sendReportbackToPhoenix;
 
-    public function __construct(ReportbackRepository $reportbackRepository, Phoenix $phoenix)
+    public function __construct(ReportbackRepository $reportbackRepository, SendReportbackToPhoenix $sendReportbackToPhoenix)
     {
         $this->reportbackRepository = $reportbackRepository;
-        $this->phoenix = $phoenix;
+        $this->sendReportbackToPhoenix = $sendReportbackToPhoenix;
     }
 
     /*
@@ -45,9 +46,10 @@ class ReportbackService
             'source' => $reportback->items()->first()->source,
         ];
 
-        // $phoenixResponse = $this->phoenix->postReportback($reportback->campaign_id, $body);
+        $nid = $reportback->campaign_id;
 
-        $phoenixResponse = $this->dispatch(new SendReportbackToPhoenix($reportback->campaign_id, $body));
+        // $phoenixResponse = $this->phoenix->postReportback($reportback->campaign_id, $body);
+        $phoenixResponse = dispatch(new SendReportbackToPhoenix($nid, $body));
 
         // If POST to Phoenix fails, record in failed_logs table.
         // if ($phoenixResponse === false) {
