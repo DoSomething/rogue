@@ -45,26 +45,28 @@ class ReportbackService
             'source' => $reportback->items()->first()->source,
         ];
 
-        $phoenixResponse = $this->phoenix->postReportback($reportback->campaign_id, $body);
+        // $phoenixResponse = $this->phoenix->postReportback($reportback->campaign_id, $body);
+
+        $phoenixResponse = $this->dispatch(new SendReportbackToPhoenix($reportback->campaign_id, $body));
 
         // If POST to Phoenix fails, record in failed_logs table.
-        if ($phoenixResponse === false) {
-            $failedLog = new FailedLog;
+        // if ($phoenixResponse === false) {
+        //     $failedLog = new FailedLog;
 
-            $logData = [
-                'op' => 'POST to Phoenix',
-                'drupal_id' => $body['uid'],
-                'nid' => $body['nid'],
-                'quantity' => $body['quantity'],
-                'why_participated' => $body['why_participated'],
-                'file_url' => $body['file_url'],
-                'caption' => $body['caption'],
-                'source' => $body['source'],
-            ];
+        //     $logData = [
+        //         'op' => 'POST to Phoenix',
+        //         'drupal_id' => $body['uid'],
+        //         'nid' => $body['nid'],
+        //         'quantity' => $body['quantity'],
+        //         'why_participated' => $body['why_participated'],
+        //         'file_url' => $body['file_url'],
+        //         'caption' => $body['caption'],
+        //         'source' => $body['source'],
+        //     ];
 
-            $failedLog->fill($logData);
-            $failedLog->save();
-        }
+        //     $failedLog->fill($logData);
+        //     $failedLog->save();
+        // }
 
         return $reportback;
     }
