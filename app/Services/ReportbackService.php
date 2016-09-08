@@ -36,20 +36,7 @@ class ReportbackService
         $reportback = $this->reportbackRepository->create($data);
 
         // POST reportback back to phoenix.
-        $body = [
-            'uid' => $reportback->drupal_id,
-            'nid' => $reportback->campaign_id,
-            'quantity' => $reportback->quantity,
-            'why_participated' => $reportback->why_participated,
-            'file_url' => $reportback->items()->first()->file_url,
-            'caption' => $reportback->items()->first()->caption,
-            'source' => $reportback->items()->first()->source,
-        ];
-
-        $nid = $reportback->campaign_id;
-
-        // $phoenixResponse = $this->phoenix->postReportback($reportback->campaign_id, $body);
-        $phoenixResponse = dispatch(new SendReportbackToPhoenix($nid, $body));
+        $phoenixResponse = dispatch(new SendReportbackToPhoenix($reportback));
 
         // If POST to Phoenix fails, record in failed_logs table.
         // if ($phoenixResponse === false) {

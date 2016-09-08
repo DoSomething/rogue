@@ -7,24 +7,22 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Rogue\Services\Phoenix;
+use Rogue\Models\Reportback;
 
 class SendReportbackToPhoenix extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
-    protected $nid;
-    protected $body;
-
+    protected $reportback;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($nid, $body)
+    public function __construct(Reportback $reportback)
     {
         $this->phoenix = new Phoenix;
-        $this->nid = $nid;
-        $this->body = $body;
+        $this->reportback = $reportback;
     }
 
     /**
@@ -34,7 +32,16 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
      */
     public function handle()
     {
-        dd('made it to the job!');
-        return $this->phoenix->postReportback($this->nid, $this->body);
+        $body = [
+            'uid' => $this->reportback->drupal_id,
+            'nid' => $this->reportback->campaign_id,
+            'quantity' => $this->reportback->quantity,
+            'why_participated' => $this->reportback->why_participated,
+            'file_url' => $this->reportback->items()->first()->file_url,
+            'caption' => $this->reportback->items()->first()->caption,
+            'source' => $this->reportback->items()->first()->source,
+        ];
+
+        return $this->phoenix->postReportback($this->reportback->campaign_id, $body);
     }
 }
