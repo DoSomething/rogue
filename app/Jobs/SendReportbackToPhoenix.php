@@ -44,6 +44,6 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
             'source' => $this->reportback->items()->first()->source,
         ];
 
-        return $phoenix->postReportback($this->reportback->campaign_id, $body);
+        $phoenix->postReportback($this->reportback->campaign_id, $body);
     }
 }

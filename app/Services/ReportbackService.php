@@ -37,7 +37,7 @@ class ReportbackService
 
         // POST reportback back to phoenix.
         // If request fails, record in failed_jobs table.
-        $phoenixResponse = dispatch(new SendReportbackToPhoenix($reportback));
+        dispatch(new SendReportbackToPhoenix($reportback));
 
         return $reportback;
     }
