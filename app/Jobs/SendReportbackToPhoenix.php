@@ -32,6 +32,8 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
      */
     public function handle()
     {
+        $phoenix = new Phoenix;
+
         $body = [
             'uid' => $this->reportback->drupal_id,
             'nid' => $this->reportback->campaign_id,
@@ -42,6 +44,6 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
             'source' => $this->reportback->items()->first()->source,
         ];
 
-        return $this->phoenix->postReportback($this->reportback->campaign_id, $body);
+        return $phoenix->postReportback($this->reportback->campaign_id, $body);
     }
 }

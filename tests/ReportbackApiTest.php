@@ -132,9 +132,10 @@ class ReportbackApiTest extends TestCase
         ];
 
         $this->json('POST', $this->reportbackApiUrl, $reportback);
+        dd($this->json('POST', $this->reportbackApiUrl, $reportback));
         $response = $this->decodeResponseJson();
 
         // Make sure we created a record in the reportback log table.
-        $this->seeInDatabase('failed_logs', ['drupal_id' => $response['data']['drupal_id']]);
+        $this->seeInDatabase('failed_jobs', ['drupal_id' => $response['data']['drupal_id']]);
     }
 }

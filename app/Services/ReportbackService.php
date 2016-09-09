@@ -36,26 +36,8 @@ class ReportbackService
         $reportback = $this->reportbackRepository->create($data);
 
         // POST reportback back to phoenix.
+        // If request fails, record in failed_jobs table.
         $phoenixResponse = dispatch(new SendReportbackToPhoenix($reportback));
-
-        // If POST to Phoenix fails, record in failed_logs table.
-        // if ($phoenixResponse === false) {
-        //     $failedLog = new FailedLog;
-
-        //     $logData = [
-        //         'op' => 'POST to Phoenix',
-        //         'drupal_id' => $body['uid'],
-        //         'nid' => $body['nid'],
-        //         'quantity' => $body['quantity'],
-        //         'why_participated' => $body['why_participated'],
-        //         'file_url' => $body['file_url'],
-        //         'caption' => $body['caption'],
-        //         'source' => $body['source'],
-        //     ];
-
-        //     $failedLog->fill($logData);
-        //     $failedLog->save();
-        // }
 
         return $reportback;
     }
