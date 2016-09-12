@@ -18,10 +18,9 @@ class ReportbackService
      */
     protected $sendReportbackToPhoenix;
 
-    public function __construct(ReportbackRepository $reportbackRepository, SendReportbackToPhoenix $sendReportbackToPhoenix)
+    public function __construct(ReportbackRepository $reportbackRepository)
     {
         $this->reportbackRepository = $reportbackRepository;
-        $this->sendReportbackToPhoenix = $sendReportbackToPhoenix;
     }
 
     /*
