@@ -4,7 +4,7 @@ namespace Rogue\Services;
 
 use Rogue\Models\Reportback;
 use Rogue\Repositories\ReportbackRepository;
-use Rogue\Models\FailedLog;
+use Rogue\Jobs\SendReportbackToPhoenix;
 
 class ReportbackService
 {
@@ -14,14 +14,14 @@ class ReportbackService
     protected $reportbackRepository;
 
     /*
-     * Instance of \Rogue\Services\Phoenix\Phoenix
+     * Instance of \Rogue\Jobs\SendReportbackToPhoenix
      */
-    protected $phoenix;
+    protected $sendReportbackToPhoenix;
 
-    public function __construct(ReportbackRepository $reportbackRepository, Phoenix $phoenix)
+    public function __construct(ReportbackRepository $reportbackRepository, SendReportbackToPhoenix $sendReportbackToPhoenix)
     {
         $this->reportbackRepository = $reportbackRepository;
-        $this->phoenix = $phoenix;
+        $this->sendReportbackToPhoenix = $sendReportbackToPhoenix;
     }
 
     /*
@@ -35,36 +35,8 @@ class ReportbackService
         $reportback = $this->reportbackRepository->create($data);
 
         // POST reportback back to phoenix.
-        $body = [
-            'uid' => $reportback->drupal_id,
-            'nid' => $reportback->campaign_id,
-            'quantity' => $reportback->quantity,
-            'why_participated' => $reportback->why_participated,
-            'file_url' => $reportback->items()->first()->file_url,
-            'caption' => $reportback->items()->first()->caption,
-            'source' => $reportback->items()->first()->source,
-        ];
-
-        $phoenixResponse = $this->phoenix->postReportback($reportback->campaign_id, $body);
-
-        // If POST to Phoenix fails, record in failed_logs table.
-        if ($phoenixResponse === false) {
-            $failedLog = new FailedLog;
-
-            $logData = [
-                'op' => 'POST to Phoenix',
-                'drupal_id' => $body['uid'],
-                'nid' => $body['nid'],
-                'quantity' => $body['quantity'],
-                'why_participated' => $body['why_participated'],
-                'file_url' => $body['file_url'],
-                'caption' => $body['caption'],
-                'source' => $body['source'],
-            ];
-
-            $failedLog->fill($logData);
-            $failedLog->save();
-        }
+        // If request fails, record in failed_jobs table.
+        dispatch(new SendReportbackToPhoenix($reportback));
 
         return $reportback;
     }
