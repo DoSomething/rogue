@@ -2,7 +2,6 @@
 
 namespace Rogue\Jobs;
 
-use Rogue\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,6 +13,7 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     protected $reportback;
+
     /**
      * Create a new job instance.
      *

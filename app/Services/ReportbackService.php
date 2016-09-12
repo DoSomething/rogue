@@ -4,7 +4,6 @@ namespace Rogue\Services;
 
 use Rogue\Models\Reportback;
 use Rogue\Repositories\ReportbackRepository;
-use Rogue\Models\FailedLog;
 use Rogue\Jobs\SendReportbackToPhoenix;
 
 class ReportbackService
