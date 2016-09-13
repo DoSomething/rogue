@@ -21,7 +21,6 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
      */
     public function __construct(Reportback $reportback)
     {
-        $this->phoenix = new Phoenix;
         $this->reportback = $reportback;
     }
 

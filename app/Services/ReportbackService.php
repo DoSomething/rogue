@@ -13,15 +13,9 @@ class ReportbackService
      */
     protected $reportbackRepository;
 
-    /*
-     * Instance of \Rogue\Jobs\SendReportbackToPhoenix
-     */
-    protected $sendReportbackToPhoenix;
-
-    public function __construct(ReportbackRepository $reportbackRepository, SendReportbackToPhoenix $sendReportbackToPhoenix)
+    public function __construct(ReportbackRepository $reportbackRepository)
     {
         $this->reportbackRepository = $reportbackRepository;
-        $this->sendReportbackToPhoenix = $sendReportbackToPhoenix;
     }
 
     /*
