@@ -46,6 +46,10 @@ $ npm run build
 
 For development run `npm start` to watch files
 
+### Testing
+
+In order to run tests, you need to have created the `rogue_test` database. Then, go to the project directory in vagrant and run `vendor/bin/phpunit`.
+
 # Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
