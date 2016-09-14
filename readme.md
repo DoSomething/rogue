@@ -7,6 +7,24 @@ This application is built using the [Laravel](https://laravel.com) Framework.
 ### Getting Started
 Fork and clone this repository, and set it up as a local app running inside [DS Homestead](https://github.com/DoSomething/ds-homestead) or regular [Homestead](https://github.com/laravel/homestead).
 
+Create a `.env` file from `.env.example` and make sure your `.env.local.php` has the correct keys for your dev environment. Reach out to the tech team for the correct keys to use in your dev environment.
+
+Edit your `Homestead.yml` file to include this new project. Making sure the `folders` and `sites` configuration is correct for your local set up. You might need to run `vagrant provision` after you make this update.
+
+Add your app url (rogue.dev) to your `etc/hosts` file i.e. `127.0.0.1 rogue.dev`
+
+Manually create a `rogue` database in Sequel Pro.
+    - Open a `new connection` window and click on the `standard` connection tab
+    - Name the connection
+    - Enter host info: `127.0.0.1`
+    - Username: `homestead`
+    - Enter password from `.env.local.php` file
+    - Port: `33060`
+    - Hit `connect`
+    - In the `choose database` dropdown select `add database`
+    - Name the database `rogue` with UTF-8 encoding.
+    - In order to run tests, make another database called `rogue_test`
+
 After the initial Homestead installation `ssh` into the vagrant box, head to the project directory and run composer to install all the project dependencies:
 
 ```shell
