@@ -13,17 +13,17 @@ Edit your `Homestead.yml` file to include this new project. Making sure the `fol
 
 Add your app url (rogue.dev) to your `etc/hosts` file i.e. `127.0.0.1 rogue.dev`
 
-Manually create a `rogue` database in Sequel Pro. 
-    - Open a `new connection` window and click on the `standard` connection tab 
-    - Name the connection 
-    - Enter host info: `127.0.0.1` 
-    - Username: `homestead` 
-    - Enter password from `.env.local.php` file 
-    - Port: `33060` 
-    - Hit `connect` 
-    - In the `choose database` dropdown select `add database` 
-    - Name the database `rogue` with UTF-8 encoding. 
-    - In order to run tests, make another database called `rogue_test` 
+Manually create a `rogue` database in Sequel Pro.
+  - Open a `new connection` window and click on the `standard` connection tab
+  - Name the connection
+  - Enter host info: `127.0.0.1`
+  - Username: `homestead`
+  - Enter password from `.env.local.php` file
+  - Port: `33060`
+  - Hit `connect`
+  - In the `choose database` dropdown select `add database`
+  - Name the database `rogue` with UTF-8 encoding.
+  - In order to run tests, make another database called `rogue_test`
 
 After the initial Homestead installation `ssh` into the vagrant box, head to the project directory and run composer to install all the project dependencies:
 
