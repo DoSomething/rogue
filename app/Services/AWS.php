@@ -58,7 +58,7 @@ class AWS
             throw new HttpException(500, 'Unable to save image to S3.');
         }
 
-        return config('filesystems.disks.s3.public_url') . $path;
+        return config('filesystems.disks.s3.public_url') . '/ds-rogue-prod' . $path;
     }
 
     /**
