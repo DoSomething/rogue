@@ -67,4 +67,16 @@ class ReportbackService
 
         return $reportback ? $reportback : null;
     }
+
+    /*
+     * Handles all business logic around update a reportbackitem(s).
+     *
+     * @param array $data
+     *
+     * @return
+     */
+    public function updateReportbackItems($data)
+    {
+        $this->reportbackRepository->updateReportbackItems($data);
+    }
 }

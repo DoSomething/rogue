@@ -4,8 +4,10 @@ namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Reportback;
 use Rogue\Http\Requests\ReportbackRequest;
+use Rogue\Http\Requests\ReportbackItemRequest;
 use Rogue\Services\ReportbackService;
 use Rogue\Http\Transformers\ReportbackTransformer;
+use Illuminate\Http\Request;
 
 class ReportbackController extends ApiController
 {
@@ -51,5 +53,16 @@ class ReportbackController extends ApiController
         }
 
         return $this->item($reportback, $code);
+    }
+
+    /**
+     * Update reportbackitem(s) that already exists.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateReportbackItems(Request $request)
+    {
+        $this->reportbackService->updateReportbackItems($request->all());
     }
 }
