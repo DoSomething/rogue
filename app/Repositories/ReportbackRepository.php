@@ -145,7 +145,7 @@ class ReportbackRepository
      */
     public function updateReportbackItems($data)
     {
-        foreach ($data['data'] as $reportbackItem) {
+        foreach ($data as $reportbackItem) {
             $rbItem = ReportbackItem::where(['id' => $reportbackItem['rogue_reportback_item_id']])->first();
             $rbItem->status = $reportbackItem['status'];
             $rbItem->save();
