@@ -159,7 +159,6 @@ class ReportbackRepository
                 } else {
                     return null;
                 }
-
             } else {
                 return null;
             }

@@ -77,6 +77,7 @@ class ReportbackController extends ApiController
 
         if (count($items) === 1) {
             $item = $items[0];
+
             return $this->item($item, $code, $meta, $this->itemTransformer);
         } else {
             return $this->collection($items, $code, $meta, $this->itemTransformer);
