@@ -130,7 +130,7 @@ class ReportbackApiTest extends TestCase
         $rbItem = ReportbackItem::where(['id' => $reportbackItem->id])->first();
 
         // Make sure the status is updated to approved.
-        $this->assertResponseStatus(200);
+        $this->assertResponseStatus(201);
         $this->assertEquals('approved', $rbItem->status);
 
     }
