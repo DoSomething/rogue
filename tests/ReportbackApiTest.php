@@ -1,6 +1,7 @@
 <?php
 
 use Rogue\Models\Reportback;
+use Rogue\Models\ReportbackItem;
 use Rogue\Services\Phoenix\Phoenix;
 use Faker\Generator;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -16,6 +17,7 @@ class ReportbackApiTest extends TestCase
      * Base URL for the Api.
      */
     protected $reportbackApiUrl = 'api/v1/reportbacks';
+    protected $updateReportbackUrl = 'api/v1/items';
 
     /**
      * Test if a POST request to /reportbacks creates a new reportback.
@@ -98,5 +100,39 @@ class ReportbackApiTest extends TestCase
         // $response = json_decode($response->content());
 
         // $this->assertEquals($response->data->quantity, 2000);
+    }
+
+    /**
+     * Test updating an existing reportback item
+     *
+     * @return void
+     */
+    public function testUpdatingReportbackItem()
+    {
+        // Create a reportback item and save to the reportback_items table.
+        $reportback = factory(Reportback::class)->create();
+        $reportbackItem = new ReportbackItem;
+        $reportbackItem->reportback_id = $reportback->id;
+        $reportbackItem->id = $this->faker->randomNumber(4);
+        $reportbackItem->status = 'pending';
+        $reportbackItem->save();
+
+        // dd($reportbackItem->id);
+        $updatesToReportbackItem = [
+            [
+                'rogue_reportback_item_id' => $reportbackItem->id,
+                'status' => 'approved'
+            ]
+        ];
+
+        // Post updated status to /items
+        $this->call('PUT', $this->updateReportbackUrl, $updatesToReportbackItem);
+
+        $rbItem = ReportbackItem::where(['id' => $reportbackItem->id])->first();
+
+        // Make sure the status is updated to approved.
+        $this->assertResponseStatus(200);
+        $this->assertEquals('approved', $rbItem->status);
+
     }
 }
