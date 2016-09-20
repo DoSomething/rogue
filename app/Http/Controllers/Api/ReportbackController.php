@@ -4,7 +4,6 @@ namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Reportback;
 use Rogue\Http\Requests\ReportbackRequest;
-use Rogue\Http\Requests\ReportbackItemRequest;
 use Rogue\Services\ReportbackService;
 use Rogue\Http\Transformers\ReportbackTransformer;
 use Illuminate\Http\Request;
