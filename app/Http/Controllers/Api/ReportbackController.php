@@ -6,6 +6,7 @@ use Rogue\Models\Reportback;
 use Rogue\Http\Requests\ReportbackRequest;
 use Rogue\Services\ReportbackService;
 use Rogue\Http\Transformers\ReportbackTransformer;
+use Rogue\Http\Transformers\ReportbackItemTransformer;
 use Illuminate\Http\Request;
 
 class ReportbackController extends ApiController
@@ -14,6 +15,7 @@ class ReportbackController extends ApiController
      * @var \Rogue\Http\Transformers\ReportbackTransformer
      */
     protected $transformer;
+    protected $itemTransformer;
 
     /**
      * Create new ReportbackController instance.
@@ -22,6 +24,7 @@ class ReportbackController extends ApiController
     {
         $this->reportbackService = $reportbackService;
         $this->transformer = new ReportbackTransformer;
+        $this->itemTransformer = new ReportbackItemTransformer;
     }
 
     /**
@@ -62,6 +65,21 @@ class ReportbackController extends ApiController
      */
     public function updateReportbackItems(Request $request)
     {
-        $this->reportbackService->updateReportbackItems($request->all());
+        $items = $this->reportbackService->updateReportbackItems($request->all());
+
+        if (empty($items)) {
+            $code = 404;
+        } else {
+            $code = 201;
+        }
+
+        $meta = [];
+
+        if (count($items) === 1) {
+            $item = $items[0];
+            return $this->item($item, $code, $meta, $this->itemTransformer);
+        } else {
+            return $this->collection($items, $code, $meta, $this->itemTransformer);
+        }
     }
 }

@@ -145,16 +145,26 @@ class ReportbackRepository
      */
     public function updateReportbackItems($data)
     {
+        $reportbackItems = [];
+
         foreach ($data as $reportbackItem) {
             if ($reportbackItem['rogue_reportback_item_id'] && ! empty($reportbackItem['rogue_reportback_item_id'])) {
                 $rbItem = ReportbackItem::where(['id' => $reportbackItem['rogue_reportback_item_id']])->first();
 
                 if ($reportbackItem['status'] && ! empty($reportbackItem['status'])) {
                     $rbItem->status = $reportbackItem['status'];
+                    $rbItem->save();
+
+                    array_push($reportbackItems, $rbItem);
+                } else {
+                    return null;
                 }
 
-                $rbItem->save();
+            } else {
+                return null;
             }
         }
+
+        return $reportbackItems;
     }
 }

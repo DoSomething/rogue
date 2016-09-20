@@ -77,6 +77,8 @@ class ReportbackService
      */
     public function updateReportbackItems($data)
     {
-        $this->reportbackRepository->updateReportbackItems($data);
+        $items = $this->reportbackRepository->updateReportbackItems($data);
+
+        return $items;
     }
 }

@@ -117,7 +117,6 @@ class ReportbackApiTest extends TestCase
         $reportbackItem->status = 'pending';
         $reportbackItem->save();
 
-        // dd($reportbackItem->id);
         $updatesToReportbackItem = [
             [
                 'rogue_reportback_item_id' => $reportbackItem->id,
