@@ -4,6 +4,7 @@ namespace Rogue\Repositories;
 
 use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackLog;
+use Rogue\Models\ReportbackItem;
 use Rogue\Services\AWS;
 
 class ReportbackRepository
@@ -133,5 +134,36 @@ class ReportbackRepository
         ];
 
         return Reportback::where($parameters)->first();
+    }
+
+    /**
+     * Updates an individual reportbackitem or many reportback items.
+     *
+     * @param array $data
+     *
+     * @return
+     */
+    public function updateReportbackItems($data)
+    {
+        $reportbackItems = [];
+
+        foreach ($data as $reportbackItem) {
+            if ($reportbackItem['rogue_reportback_item_id'] && ! empty($reportbackItem['rogue_reportback_item_id'])) {
+                $rbItem = ReportbackItem::where(['id' => $reportbackItem['rogue_reportback_item_id']])->first();
+
+                if ($reportbackItem['status'] && ! empty($reportbackItem['status'])) {
+                    $rbItem->status = $reportbackItem['status'];
+                    $rbItem->save();
+
+                    array_push($reportbackItems, $rbItem);
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        }
+
+        return $reportbackItems;
     }
 }
