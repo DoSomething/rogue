@@ -76,7 +76,7 @@ class ReportbackApiTest extends TestCase
     {
         $reportback = factory(Reportback::class)->create();
 
-        // Mock job that sends reportback back to Phoenix.
+        // Mock job that sends updated reportback back to Phoenix.
         $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
 
         $response = $this->call('POST', $this->reportbackApiUrl, [

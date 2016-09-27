@@ -48,6 +48,7 @@ class ReportbackController extends ApiController
             $reportback = $this->reportbackService->create($request->all());
 
             $code = 200;
+            dd('hi');
         } else {
             $reportback = $this->reportbackService->update($reportback, $request->all());
 
