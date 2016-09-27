@@ -134,4 +134,38 @@ class ReportbackApiTest extends TestCase
         $this->assertEquals('approved', $rbItem->status);
 
     }
+
+    /**
+     * Test posting a reportback item containing an emoji
+     *
+     * @return void
+     */
+    public function testPostingReportbackWithEmoji()
+    {
+        // Mock job that sends reportback back to Phoenix.
+        $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
+
+        $reportback = [
+            'northstar_id'     => str_random(24),
+            'drupal_id'        => $this->faker->randomNumber(8),
+            'campaign_id'      => $this->faker->randomNumber(4),
+            'campaign_run_id'  => $this->faker->randomNumber(4),
+            'quantity'         => $this->faker->numberBetween(10, 1000),
+            'why_participated' => '🐓',
+            'num_participants' => $this->faker->optional(0.1)->numberBetween(2, 20),
+            'flagged'          => null,
+            'flagged_reason'   => null,
+            'promoted'         => null,
+            'promoted_reason'  => null,
+        ];
+
+        $this->json('POST', $this->reportbackApiUrl, $reportback);
+
+        $this->assertResponseStatus(200);
+
+        $response = $this->decodeResponseJson();
+
+        // Make sure we created a record in the reportback log table.
+        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
+    }
 }
