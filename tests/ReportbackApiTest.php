@@ -136,14 +136,20 @@ class ReportbackApiTest extends TestCase
     }
 
     /**
-     * Test posting a reportback item containing an emoji
+     * Test posting a reportback item containing an unencoded old emoji
      *
      * @return void
      */
-    public function testPostingReportbackWithEmoji()
+    public function testPostingReportbackWithNormalOldEmoji()
     {
+        // Mock sending image to AWS.
+        $this->fileSystem->shouldReceive('put')->andReturn(true);
+
         // Mock job that sends reportback back to Phoenix.
         $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
+
+        // Create an uploaded file.
+        $file = $this->mockFile();
 
         $reportback = [
             'northstar_id'     => str_random(24),
@@ -151,19 +157,179 @@ class ReportbackApiTest extends TestCase
             'campaign_id'      => $this->faker->randomNumber(4),
             'campaign_run_id'  => $this->faker->randomNumber(4),
             'quantity'         => $this->faker->numberBetween(10, 1000),
-            'why_participated' => '🐓',
+            'why_participated' => '🍕',
             'num_participants' => $this->faker->optional(0.1)->numberBetween(2, 20),
             'flagged'          => null,
             'flagged_reason'   => null,
             'promoted'         => null,
             'promoted_reason'  => null,
+            'file_id'          => $this->faker->randomNumber(4),
+            'caption'          => '🐓',
+            'source'           => 'runscope',
+            'remote_addr'      => '207.110.19.130',
+            'file'             => $file,
         ];
-
         $this->json('POST', $this->reportbackApiUrl, $reportback);
 
         $this->assertResponseStatus(200);
 
         $response = $this->decodeResponseJson();
+
+        // Make sure we created a reportback item for the reportback.
+        $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
+
+        // Make sure the file is saved to S3 and the file_url is saved to the database.
+        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
+
+        // Make sure we created a record in the reportback log table.
+        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
+    }
+
+    /**
+     * Test posting a reportback item containing an unencoded ~new~ emoji
+     *
+     * @return void
+     */
+    public function testPostingReportbackWithNormalNewEmoji()
+    {
+        // Mock sending image to AWS.
+        $this->fileSystem->shouldReceive('put')->andReturn(true);
+
+        // Mock job that sends reportback back to Phoenix.
+        $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
+
+        // Create an uploaded file.
+        $file = $this->mockFile();
+
+        $reportback = [
+            'northstar_id'     => str_random(24),
+            'drupal_id'        => $this->faker->randomNumber(8),
+            'campaign_id'      => $this->faker->randomNumber(4),
+            'campaign_run_id'  => $this->faker->randomNumber(4),
+            'quantity'         => $this->faker->numberBetween(10, 1000),
+            'why_participated' => '🍿',
+            'num_participants' => $this->faker->optional(0.1)->numberBetween(2, 20),
+            'flagged'          => null,
+            'flagged_reason'   => null,
+            'promoted'         => null,
+            'promoted_reason'  => null,
+            'file_id'          => $this->faker->randomNumber(4),
+            'caption'          => '🌮',
+            'source'           => 'runscope',
+            'remote_addr'      => '207.110.19.130',
+            'file'             => $file,
+        ];
+        $this->json('POST', $this->reportbackApiUrl, $reportback);
+
+        $this->assertResponseStatus(200);
+
+        $response = $this->decodeResponseJson();
+
+        // Make sure we created a reportback item for the reportback.
+        $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
+
+        // Make sure the file is saved to S3 and the file_url is saved to the database.
+        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
+
+        // Make sure we created a record in the reportback log table.
+        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
+    }
+
+    /**
+     * Test posting a reportback item containing an encoded old emoji
+     *
+     * @return void
+     */
+    public function testPostingReportbackWithEncodedOldEmoji()
+    {
+        // Mock sending image to AWS.
+        $this->fileSystem->shouldReceive('put')->andReturn(true);
+
+        // Mock job that sends reportback back to Phoenix.
+        $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
+
+        // Create an uploaded file.
+        $file = $this->mockFile();
+
+        $reportback = [
+            'northstar_id'     => str_random(24),
+            'drupal_id'        => $this->faker->randomNumber(8),
+            'campaign_id'      => $this->faker->randomNumber(4),
+            'campaign_run_id'  => $this->faker->randomNumber(4),
+            'quantity'         => $this->faker->numberBetween(10, 1000),
+            'why_participated' => json_decode("\uD83C\uDF55"),
+            'num_participants' => $this->faker->optional(0.1)->numberBetween(2, 20),
+            'flagged'          => null,
+            'flagged_reason'   => null,
+            'promoted'         => null,
+            'promoted_reason'  => null,
+            'file_id'          => $this->faker->randomNumber(4),
+            'caption'          => json_decode("\uD83D\uDC13"),
+            'source'           => 'runscope',
+            'remote_addr'      => '207.110.19.130',
+            'file'             => $file,
+        ];
+        $this->json('POST', $this->reportbackApiUrl, $reportback);
+
+        $this->assertResponseStatus(200);
+
+        $response = $this->decodeResponseJson();
+
+        // Make sure we created a reportback item for the reportback.
+        $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
+
+        // Make sure the file is saved to S3 and the file_url is saved to the database.
+        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
+
+        // Make sure we created a record in the reportback log table.
+        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
+    }
+
+    /**
+     * Test posting a reportback item containing an encoded new emoji
+     *
+     * @return void
+     */
+    public function testPostingReportbackWithEncodedNewEmoji()
+    {
+        // Mock sending image to AWS.
+        $this->fileSystem->shouldReceive('put')->andReturn(true);
+
+        // Mock job that sends reportback back to Phoenix.
+        $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
+
+        // Create an uploaded file.
+        $file = $this->mockFile();
+
+        $reportback = [
+            'northstar_id'     => str_random(24),
+            'drupal_id'        => $this->faker->randomNumber(8),
+            'campaign_id'      => $this->faker->randomNumber(4),
+            'campaign_run_id'  => $this->faker->randomNumber(4),
+            'quantity'         => $this->faker->numberBetween(10, 1000),
+            'why_participated' => json_decode("\uD83C\uDF2E"),
+            'num_participants' => $this->faker->optional(0.1)->numberBetween(2, 20),
+            'flagged'          => null,
+            'flagged_reason'   => null,
+            'promoted'         => null,
+            'promoted_reason'  => null,
+            'file_id'          => $this->faker->randomNumber(4),
+            'caption'          => json_decode("\uD83C\uDF7F"),
+            'source'           => 'runscope',
+            'remote_addr'      => '207.110.19.130',
+            'file'             => $file,
+        ];
+        $this->json('POST', $this->reportbackApiUrl, $reportback);
+
+        $this->assertResponseStatus(200);
+
+        $response = $this->decodeResponseJson();
+
+        // Make sure we created a reportback item for the reportback.
+        $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
+
+        // Make sure the file is saved to S3 and the file_url is saved to the database.
+        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
 
         // Make sure we created a record in the reportback log table.
         $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
