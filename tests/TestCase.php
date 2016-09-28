@@ -33,9 +33,6 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         parent::setUp();
         // Get a new Faker generator from Laravel.
         $this->faker = app(\Faker\Generator::class);
-
-        // Setup mocks
-        $this->fileSystem = $this->mock(Illuminate\Filesystem\Filesystem::class);
     }
 
     /**
