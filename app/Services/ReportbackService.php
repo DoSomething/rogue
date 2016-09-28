@@ -47,8 +47,8 @@ class ReportbackService
     {
         $reportback = $this->reportbackRepository->update($reportback, $data);
 
-        // Update reportback in Phoenix.
-        // If request fails, record in the failed_jobs table.
+        // POST reportback update back to Phoenix.
+        // If request fails, record in failed_jobs table.
         dispatch(new SendReportbackToPhoenix($reportback));
 
         return $reportback;
