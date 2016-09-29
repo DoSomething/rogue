@@ -9,6 +9,8 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     protected $baseUrl = 'http://localhost';
 
+    protected $reportbackApiUrl = 'api/v1/reportbacks';
+
     /**
      * The Faker generator, for creating test data.
      *
@@ -79,5 +81,49 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         $error = null;
         $test = true;
         return new \Illuminate\Http\UploadedFile($path, $original_name, $mime_type, $error, $test);
+    }
+
+    /**
+     * Creates the Phoenix mock, image, and array with reportback data to use in tests
+     *
+     * @return array
+     */
+    public function createTestReportback()
+    {
+
+        // Mock job that sends reportback back to Phoenix.
+        $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
+
+        // Create an uploaded file.
+        $file = $this->mockFile();
+
+        $reportback = [
+            'northstar_id'     => str_random(24),
+            'drupal_id'        => $this->faker->randomNumber(8),
+            'campaign_id'      => $this->faker->randomNumber(4),
+            'campaign_run_id'  => $this->faker->randomNumber(4),
+            'quantity'         => $this->faker->numberBetween(10, 1000),
+            'why_participated' => $this->faker->paragraph(3),
+            'num_participants' => null,
+            'file_id'          => $this->faker->randomNumber(4),
+            'caption'          => $this->faker->sentence(),
+            'source'           => 'runscope',
+            'remote_addr'      => '207.110.19.130',
+            'file'             => $file,
+        ];
+
+        return $reportback;
+    }
+
+    /**
+     * Post a reportback and assert successful response
+     *
+     * @return array
+     */
+    public function postReportback($reportback)
+    {
+        $this->json('POST', $this->reportbackApiUrl, $reportback);
+
+        $this->assertResponseStatus(200);
     }
 }

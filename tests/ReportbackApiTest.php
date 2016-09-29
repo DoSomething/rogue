@@ -293,36 +293,18 @@ class ReportbackApiTest extends TestCase
     public function testPostingReportbackWithEncodedNewEmoji()
     {
         // Mock sending image to AWS.
-        $this->fileSystem->shouldReceive('put')->andReturn(true);
+        Storage::shouldReceive('put')
+                    ->andReturn(true);
 
-        // Mock job that sends reportback back to Phoenix.
-        $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
+        // Create test RB with appropriate emoji
+        $reportback = $this->createTestReportback();
+        $reportback['why_participated'] = json_decode("\uD83C\uDF2E");
+        $reportback['caption'] = json_decode("\uD83C\uDF7F");
 
-        // Create an uploaded file.
-        $file = $this->mockFile();
+        // Test posting the reportback
+        $this->postReportback($reportback);
 
-        $reportback = [
-            'northstar_id'     => str_random(24),
-            'drupal_id'        => $this->faker->randomNumber(8),
-            'campaign_id'      => $this->faker->randomNumber(4),
-            'campaign_run_id'  => $this->faker->randomNumber(4),
-            'quantity'         => $this->faker->numberBetween(10, 1000),
-            'why_participated' => json_decode("\uD83C\uDF2E"),
-            'num_participants' => $this->faker->optional(0.1)->numberBetween(2, 20),
-            'flagged'          => null,
-            'flagged_reason'   => null,
-            'promoted'         => null,
-            'promoted_reason'  => null,
-            'file_id'          => $this->faker->randomNumber(4),
-            'caption'          => json_decode("\uD83C\uDF7F"),
-            'source'           => 'runscope',
-            'remote_addr'      => '207.110.19.130',
-            'file'             => $file,
-        ];
-        $this->json('POST', $this->reportbackApiUrl, $reportback);
-
-        $this->assertResponseStatus(200);
-
+        // Get the response to make sure we see the right values in the database
         $response = $this->decodeResponseJson();
 
         // Make sure we created a reportback item for the reportback.
