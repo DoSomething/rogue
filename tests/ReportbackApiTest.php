@@ -144,7 +144,8 @@ class ReportbackApiTest extends TestCase
     public function testPostingReportbackWithNormalOldEmoji()
     {
         // Mock sending image to AWS.
-        $this->fileSystem->shouldReceive('put')->andReturn(true);
+        Storage::shouldReceive('put')
+                    ->andReturn(true);
 
         // Mock job that sends reportback back to Phoenix.
         $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
@@ -194,7 +195,8 @@ class ReportbackApiTest extends TestCase
     public function testPostingReportbackWithNormalNewEmoji()
     {
         // Mock sending image to AWS.
-        $this->fileSystem->shouldReceive('put')->andReturn(true);
+        Storage::shouldReceive('put')
+                    ->andReturn(true);
 
         // Mock job that sends reportback back to Phoenix.
         $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
@@ -244,7 +246,8 @@ class ReportbackApiTest extends TestCase
     public function testPostingReportbackWithEncodedOldEmoji()
     {
         // Mock sending image to AWS.
-        $this->fileSystem->shouldReceive('put')->andReturn(true);
+        Storage::shouldReceive('put')
+                    ->andReturn(true);
 
         // Mock job that sends reportback back to Phoenix.
         $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
@@ -293,10 +296,6 @@ class ReportbackApiTest extends TestCase
      */
     public function testPostingReportbackWithEncodedNewEmoji()
     {
-        // Mock sending image to AWS.
-        Storage::shouldReceive('put')
-                    ->andReturn(true);
-
         // Create test RB with appropriate emoji
         $reportback = $this->createTestReportback();
         $reportback['why_participated'] = json_decode("\uD83C\uDF2E");
@@ -305,16 +304,7 @@ class ReportbackApiTest extends TestCase
         // Test posting the reportback
         $this->postReportback($reportback);
 
-        // Get the response to make sure we see the right values in the database
-        $response = $this->decodeResponseJson();
-
-        // Make sure we created a reportback item for the reportback.
-        $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
-
-        // Make sure the file is saved to S3 and the file_url is saved to the database.
-        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
-
-        // Make sure we created a record in the reportback log table.
-        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
+        // Get the response and make sure we see the right values in the database
+        $this->checkReportbackResponse($this->decodeResponseJson());
     }
 }

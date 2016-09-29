@@ -119,8 +119,29 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function postReportback($reportback)
     {
+        // Mock sending image to AWS.
+        Storage::shouldReceive('put')
+                    ->andReturn(true);
+
         $this->json('POST', $this->reportbackApiUrl, $reportback);
 
         $this->assertResponseStatus(200);
+    }
+
+    /**
+     * After posting a reportback and receiving a response, make sure we see the expected values in the database
+     *
+     * @return array
+     */
+    public function checkReportbackResponse($response)
+    {
+        // Make sure we created a reportback item for the reportback.
+        $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
+
+        // Make sure the file is saved to S3 and the file_url is saved to the database.
+        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
+
+        // Make sure we created a record in the reportback log table.
+        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
     }
 }
