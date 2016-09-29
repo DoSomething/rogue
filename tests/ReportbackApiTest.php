@@ -27,7 +27,8 @@ class ReportbackApiTest extends TestCase
     public function testCreatingNewReportback()
     {
         // Mock sending image to AWS.
-        $this->fileSystem->shouldReceive('put')->andReturn(true);
+        Storage::shouldReceive('put')
+                    ->andReturn(true);
 
         // Mock job that sends reportback back to Phoenix.
         $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
@@ -43,11 +44,11 @@ class ReportbackApiTest extends TestCase
             'quantity'         => $this->faker->numberBetween(10, 1000),
             'why_participated' => $this->faker->paragraph(3),
             'num_participants' => null,
-            'file_id' => $this->faker->randomNumber(4),
-            'caption' => $this->faker->sentence(),
-            'source' => 'runscope',
-            'remote_addr' => '207.110.19.130',
-            'file' => $file,
+            'file_id'          => $this->faker->randomNumber(4),
+            'caption'          => $this->faker->sentence(),
+            'source'           => 'runscope',
+            'remote_addr'      => '207.110.19.130',
+            'file'             => $file,
         ];
 
         $this->json('POST', $this->reportbackApiUrl, $reportback);

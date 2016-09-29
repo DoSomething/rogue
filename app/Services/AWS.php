@@ -3,26 +3,13 @@
 namespace Rogue\Services;
 
 use finfo;
-use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Filesystem\FilesystemManager;
+use Storage;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class AWS
 {
-    /**
-     * The Amazon S3 file system.
-     * @see https://laravel.com/docs/5.2/filesystem
-     * @var Filesystem
-     */
-    protected $filesystem;
-
-    public function __construct(FilesystemManager $filesystem)
-    {
-        $this->filesystem = $filesystem->disk('s3');
-    }
-
     /**
      * Store a reportback item (image) in S3.
      *
@@ -52,7 +39,7 @@ class AWS
         $path = '/uploads/reportback-items' . '/' . $filename . '-' . time() . '.' . $extension;
 
         // Push file to S3.
-        $success = $this->filesystem->put($path, $data);
+        $success = Storage::put($path, $data);
 
         if (! $success) {
             throw new HttpException(500, 'Unable to save image to S3.');
