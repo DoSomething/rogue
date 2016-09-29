@@ -107,11 +107,11 @@ class ReportbackApiTest extends TestCase
     }
 
     /**
-     * Test updating an existing reportback item
+     * Test updating the status of an existing reportback item
      *
      * @return void
      */
-    public function testUpdatingReportbackItem()
+    public function testUpdatingStatusOfReportbackItem()
     {
         // Create a reportback item and save to the reportback_items table.
         $reportback = factory(Reportback::class)->create();
