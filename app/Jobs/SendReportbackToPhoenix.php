@@ -32,6 +32,7 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
     public function handle()
     {
         $phoenix = new Phoenix;
+
         $reportbackItem = $this->reportback->items()->orderBy('created_at', 'desc')->first();
 
         $body = [
