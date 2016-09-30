@@ -43,25 +43,16 @@ class ReportbackApiTest extends TestCase
      */
     public function testUpdatingReportback()
     {
+        // Create a reportback so that one exists
         $reportback = factory(Reportback::class)->create();
 
-        $response = $this->call('POST', $this->reportbackApiUrl, [
-            'northstar_id' => $reportback->northstar_id,
-            'drupal_id' => $reportback->drupal_id,
-            'campaign_id' => $reportback->campaign_id,
-            'campaign_run_id' => $reportback->campaign_run_id,
-            // Change quanitity.
-            'quantity' => 2000,
-            'why_participated' => $this->faker->paragraph(3),
-            'num_participated' => null,
-            'file_id' => $this->faker->randomNumber(4),
-            'caption' => $this->faker->sentence(),
-            'source' => 'runscope',
-            'remote_addr' => '207.110.19.130',
-        ]);
+        // Change the quantity
+        $reportback->quantity = 2000;
 
-        $this->assertResponseStatus(201);
+        // Post the update
+        $this->updateReportback($reportback->toArray());
 
+        // Make sure we see the update in the response
         $this->seeJsonSubset([
             'data' => [
                 'quantity' => 2000,

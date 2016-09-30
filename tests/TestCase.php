@@ -113,7 +113,7 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
     }
 
     /**
-     * Post a reportback and assert successful response
+     * Post a new reportback and assert successful response
      *
      * @return array
      */
@@ -127,6 +127,25 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         $this->assertResponseStatus(200);
     }
+
+    /**
+     * Update an existing reportback and assert successful response
+     *
+     * @return array
+     */
+    public function updateReportback($reportback)
+    {
+        if (array_key_exists('file', $reportback)) {
+            // Mock sending image to AWS.
+            Storage::shouldReceive('put')
+                        ->andReturn(true);
+        }
+
+        $this->json('POST', $this->reportbackApiUrl, $reportback);
+
+        $this->assertResponseStatus(201);
+    }
+
 
     /**
      * After posting a new reportback and receiving a response, make sure we see the expected values in the database
