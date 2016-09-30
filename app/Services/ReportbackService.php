@@ -28,7 +28,7 @@ class ReportbackService
     {
         $reportback = $this->reportbackRepository->create($data);
 
-        // POST reportback back to phoenix.
+        // POST reportback back to Phoenix.
         // If request fails, record in failed_jobs table.
         dispatch(new SendReportbackToPhoenix($reportback));
 
@@ -46,6 +46,10 @@ class ReportbackService
     public function update($reportback, $data)
     {
         $reportback = $this->reportbackRepository->update($reportback, $data);
+
+        // POST reportback update back to Phoenix.
+        // If request fails, record in failed_jobs table.
+        dispatch(new SendReportbackToPhoenix($reportback));
 
         return $reportback;
     }

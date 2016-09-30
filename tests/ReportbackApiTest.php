@@ -76,6 +76,9 @@ class ReportbackApiTest extends TestCase
     {
         $reportback = factory(Reportback::class)->create();
 
+        // Mock job that sends updated reportback back to Phoenix.
+        $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
+
         $response = $this->call('POST', $this->reportbackApiUrl, [
             'northstar_id' => $reportback->northstar_id,
             'drupal_id' => $reportback->drupal_id,
@@ -104,11 +107,11 @@ class ReportbackApiTest extends TestCase
     }
 
     /**
-     * Test updating an existing reportback item
+     * Test updating the status of an existing reportback item
      *
      * @return void
      */
-    public function testUpdatingReportbackItem()
+    public function testUpdatingStatusOfReportbackItem()
     {
         // Create a reportback item and save to the reportback_items table.
         $reportback = factory(Reportback::class)->create();
