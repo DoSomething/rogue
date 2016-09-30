@@ -9,6 +9,8 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     protected $baseUrl = 'http://localhost';
 
+    protected $reportbackApiUrl = 'api/v1/reportbacks';
+
     /**
      * The Faker generator, for creating test data.
      *
@@ -76,5 +78,89 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         $error = null;
         $test = true;
         return new \Illuminate\Http\UploadedFile($path, $original_name, $mime_type, $error, $test);
+    }
+
+    /**
+     * Creates the Phoenix mock, image, and array with reportback data to use in tests
+     *
+     * @return array
+     */
+    public function createTestReportback()
+    {
+
+        // Mock job that sends reportback back to Phoenix.
+        $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
+
+        // Create an uploaded file.
+        $file = $this->mockFile();
+
+        $reportback = [
+            'northstar_id'     => str_random(24),
+            'drupal_id'        => $this->faker->randomNumber(8),
+            'campaign_id'      => $this->faker->randomNumber(4),
+            'campaign_run_id'  => $this->faker->randomNumber(4),
+            'quantity'         => $this->faker->numberBetween(10, 1000),
+            'why_participated' => $this->faker->paragraph(3),
+            'num_participants' => null,
+            'file_id'          => $this->faker->randomNumber(4),
+            'caption'          => $this->faker->sentence(),
+            'source'           => 'runscope',
+            'remote_addr'      => '207.110.19.130',
+            'file'             => $file,
+        ];
+
+        return $reportback;
+    }
+
+    /**
+     * Post a new reportback and assert successful response
+     *
+     * @return array
+     */
+    public function postReportback($reportback)
+    {
+        // Mock sending image to AWS.
+        Storage::shouldReceive('put')
+                    ->andReturn(true);
+
+        $this->json('POST', $this->reportbackApiUrl, $reportback);
+
+        $this->assertResponseStatus(200);
+    }
+
+    /**
+     * Update an existing reportback and assert successful response
+     *
+     * @return array
+     */
+    public function updateReportback($reportback)
+    {
+        if (array_key_exists('file', $reportback)) {
+            // Mock sending image to AWS.
+            Storage::shouldReceive('put')
+                        ->andReturn(true);
+        }
+
+        $this->json('POST', $this->reportbackApiUrl, $reportback);
+
+        $this->assertResponseStatus(201);
+    }
+
+
+    /**
+     * After posting a new reportback and receiving a response, make sure we see the expected values in the database
+     *
+     * @return array
+     */
+    public function checkReportbackResponse($response)
+    {
+        // Make sure we created a reportback item for the reportback.
+        $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
+
+        // Make sure the file is saved to S3 and the file_url is saved to the database.
+        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
+
+        // Make sure we created a record in the reportback log table.
+        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
     }
 }

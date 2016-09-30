@@ -26,45 +26,14 @@ class ReportbackApiTest extends TestCase
      */
     public function testCreatingNewReportback()
     {
-        // Mock sending image to AWS.
-        Storage::shouldReceive('put')
-                    ->andReturn(true);
+        // Create test RB with appropriate emoji
+        $reportback = $this->createTestReportback();
 
-        // Mock job that sends reportback back to Phoenix.
-        $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
+        // Test posting the reportback
+        $this->postReportback($reportback);
 
-        // Create an uploaded file.
-        $file = $this->mockFile();
-
-        $reportback = [
-            'northstar_id'     => str_random(24),
-            'drupal_id'        => $this->faker->randomNumber(8),
-            'campaign_id'      => $this->faker->randomNumber(4),
-            'campaign_run_id'  => $this->faker->randomNumber(4),
-            'quantity'         => $this->faker->numberBetween(10, 1000),
-            'why_participated' => $this->faker->paragraph(3),
-            'num_participants' => null,
-            'file_id'          => $this->faker->randomNumber(4),
-            'caption'          => $this->faker->sentence(),
-            'source'           => 'runscope',
-            'remote_addr'      => '207.110.19.130',
-            'file'             => $file,
-        ];
-
-        $this->json('POST', $this->reportbackApiUrl, $reportback);
-
-        $this->assertResponseStatus(200);
-
-        $response = $this->decodeResponseJson();
-
-        // Make sure we created a reportback item for the reportback.
-        $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
-
-        // Make sure the file is saved to S3 and the file_url is saved to the database.
-        $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
-
-        // Make sure we created a record in the reportback log table.
-        $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
+        // Get the response and make sure we see the right values in the database
+        $this->checkReportbackResponse($this->decodeResponseJson());
     }
 
     /**
@@ -74,28 +43,16 @@ class ReportbackApiTest extends TestCase
      */
     public function testUpdatingReportback()
     {
+        // Create a reportback so that one exists
         $reportback = factory(Reportback::class)->create();
 
-        // Mock job that sends updated reportback back to Phoenix.
-        $this->expectsJobs(Rogue\Jobs\SendReportbackToPhoenix::class);
+        // Change the quantity
+        $reportback->quantity = 2000;
 
-        $response = $this->call('POST', $this->reportbackApiUrl, [
-            'northstar_id' => $reportback->northstar_id,
-            'drupal_id' => $reportback->drupal_id,
-            'campaign_id' => $reportback->campaign_id,
-            'campaign_run_id' => $reportback->campaign_run_id,
-            // Change quanitity.
-            'quantity' => 2000,
-            'why_participated' => $this->faker->paragraph(3),
-            'num_participated' => null,
-            'file_id' => $this->faker->randomNumber(4),
-            'caption' => $this->faker->sentence(),
-            'source' => 'runscope',
-            'remote_addr' => '207.110.19.130',
-        ]);
+        // Post the update
+        $this->updateReportback($reportback->toArray());
 
-        $this->assertResponseStatus(201);
-
+        // Make sure we see the update in the response
         $this->seeJsonSubset([
             'data' => [
                 'quantity' => 2000,
@@ -137,5 +94,81 @@ class ReportbackApiTest extends TestCase
         $this->assertResponseStatus(201);
         $this->assertEquals('approved', $rbItem->status);
 
+    }
+
+    /**
+     * Test posting a reportback item containing an unencoded old emoji
+     *
+     * @return void
+     */
+    public function testPostingReportbackWithNormalOldEmoji()
+    {
+        // Create test RB with appropriate emoji
+        $reportback = $this->createTestReportback();
+        $reportback['why_participated'] = '🍕';
+        $reportback['caption'] = '🐓';
+
+        // Test posting the reportback
+        $this->postReportback($reportback);
+
+        // Get the response and make sure we see the right values in the database
+        $this->checkReportbackResponse($this->decodeResponseJson());
+    }
+
+    /**
+     * Test posting a reportback item containing an unencoded ~new~ emoji
+     *
+     * @return void
+     */
+    public function testPostingReportbackWithNormalNewEmoji()
+    {
+        // Create test RB with appropriate emoji
+        $reportback = $this->createTestReportback();
+        $reportback['why_participated'] = '🍿';
+        $reportback['caption'] = '🌮';
+
+        // Test posting the reportback
+        $this->postReportback($reportback);
+
+        // Get the response and make sure we see the right values in the database
+        $this->checkReportbackResponse($this->decodeResponseJson());
+    }
+
+    /**
+     * Test posting a reportback item containing an encoded old emoji
+     *
+     * @return void
+     */
+    public function testPostingReportbackWithEncodedOldEmoji()
+    {
+        // Create test RB with appropriate emoji
+        $reportback = $this->createTestReportback();
+        $reportback['why_participated'] = json_decode("\uD83C\uDF55");
+        $reportback['caption'] = json_decode("\uD83D\uDC13");
+
+        // Test posting the reportback
+        $this->postReportback($reportback);
+
+        // Get the response and make sure we see the right values in the database
+        $this->checkReportbackResponse($this->decodeResponseJson());
+    }
+
+    /**
+     * Test posting a reportback item containing an encoded new emoji
+     *
+     * @return void
+     */
+    public function testPostingReportbackWithEncodedNewEmoji()
+    {
+        // Create test RB with appropriate emoji
+        $reportback = $this->createTestReportback();
+        $reportback['why_participated'] = json_decode("\uD83C\uDF2E");
+        $reportback['caption'] = json_decode("\uD83C\uDF7F");
+
+        // Test posting the reportback
+        $this->postReportback($reportback);
+
+        // Get the response and make sure we see the right values in the database
+        $this->checkReportbackResponse($this->decodeResponseJson());
     }
 }
