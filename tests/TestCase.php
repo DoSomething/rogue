@@ -129,7 +129,7 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
     }
 
     /**
-     * After posting a reportback and receiving a response, make sure we see the expected values in the database
+     * After posting a new reportback and receiving a response, make sure we see the expected values in the database
      *
      * @return array
      */
