@@ -128,7 +128,6 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        DoSomething\Northstar\Laravel\NorthstarServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -152,16 +151,20 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
+         * Third-party Service Providers...
+         */
+        DoSomething\Gateway\Laravel\GatewayServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
+        Maknz\Slack\Laravel\ServiceProvider::class,
+        Aws\Laravel\AwsServiceProvider::class,
+
+        /*
          * Application Service Providers...
          */
         Rogue\Providers\AppServiceProvider::class,
         Rogue\Providers\AuthServiceProvider::class,
         Rogue\Providers\EventServiceProvider::class,
         Rogue\Providers\RouteServiceProvider::class,
-        Spatie\Backup\BackupServiceProvider::class,
-        Maknz\Slack\Laravel\ServiceProvider::class,
-        Aws\Laravel\AwsServiceProvider::class,
-
     ],
 
     /*
