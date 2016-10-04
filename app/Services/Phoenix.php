@@ -2,7 +2,7 @@
 
 namespace Rogue\Services;
 
-use DoSomething\Northstar\Common\RestApiClient;
+use DoSomething\Gateway\Common\RestApiClient;
 use GuzzleHttp\Cookie\CookieJar;
 use Cache;
 
