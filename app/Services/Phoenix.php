@@ -3,11 +3,14 @@
 namespace Rogue\Services;
 
 use DoSomething\Gateway\Common\RestApiClient;
+use DoSomething\Gateway\ForwardsTransactionIds;
 use GuzzleHttp\Cookie\CookieJar;
 use Cache;
 
 class Phoenix extends RestApiClient
 {
+    use AuthorizesWithPhoenix, ForwardsTransactionIds;
+
     /**
      * Create a new Phoenix API client.
      */
@@ -79,28 +82,5 @@ class Phoenix extends RestApiClient
         $response = $this->post('campaigns/' . $nid . '/reportback', $body);
 
         return is_null($response) ? null : $response;
-    }
-
-    /**
-     * Overrides DoSometing\Northstar\Common\RestApiClient to add Cookie and X-CSRF-Token to header.
-     *
-     * @param $method
-     * @param $path
-     * @param array $options
-     * @param bool $withAuthorization
-     * @return response
-     */
-    public function raw($method, $path, $options, $withAuthorization = true)
-    {
-        if ($withAuthorization) {
-            if (! isset($options['token'])) {
-                $authorizationHeader = [];
-                $authorizationHeader['X-CSRF-Token'] = $this->getAuthenticationToken();
-                $options['cookies'] = $this->getAuthenticationCookie();
-                $options['headers'] = array_merge($this->defaultHeaders, $authorizationHeader);
-            }
-        }
-
-        return $this->client->request($method, $path, $options);
     }
 }
