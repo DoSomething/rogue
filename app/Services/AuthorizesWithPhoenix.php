@@ -9,7 +9,7 @@ trait AuthorizesWithPhoenix
      *
      * @see RestApiClient@raw
      */
-    function runAuthorizesWithPhoenixTasks($method, &$path, &$options, &$withAuthorization)
+    public function runAuthorizesWithPhoenixTasks($method, &$path, &$options, &$withAuthorization)
     {
         if ($withAuthorization) {
             if (! isset($options['token'])) {
