@@ -12,6 +12,13 @@ class Phoenix extends RestApiClient
     use AuthorizesWithPhoenix, ForwardsTransactionIds;
 
     /**
+     * The class name of the transaction framework bridge.
+     *
+     * @var string
+     */
+    protected $transactionBridge = \DoSomething\Gateway\Laravel\LaravelTransactionBridge::class;
+
+    /**
      * Create a new Phoenix API client.
      */
     public function __construct()

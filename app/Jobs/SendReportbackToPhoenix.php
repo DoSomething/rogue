@@ -7,6 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Rogue\Services\Phoenix;
 use Rogue\Models\Reportback;
+use Request;
 
 class SendReportbackToPhoenix extends Job implements ShouldQueue
 {
