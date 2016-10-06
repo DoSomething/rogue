@@ -28,32 +28,6 @@ class Phoenix extends RestApiClient
     }
 
     /**
-     * Returns a token for making authenticated requests to the Drupal API.
-     *
-     * @return array - Cookie & token for authenticated requests
-     */
-    private function authenticate()
-    {
-        $authentication = Cache::remember('drupal.authentication', 30, function () {
-            $payload = [
-                'username' => config('services.phoenix.username'),
-                'password' => config('services.phoenix.password'),
-            ];
-
-            $response = $this->post('auth/login', $payload, false);
-            $session_name = $response['session_name'];
-            $session_value = $response['sessid'];
-
-            return [
-                'cookie' => [$session_name => $session_value],
-                'token' => $response['token'],
-            ];
-        });
-
-        return $authentication;
-    }
-
-    /**
      * Send a POST request to save a copy of the reportback in Phoenix.
      *
      * @param string $nid

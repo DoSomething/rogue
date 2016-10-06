@@ -7,6 +7,32 @@ use GuzzleHttp\Cookie\CookieJar;
 trait AuthorizesWithPhoenix
 {
     /**
+     * Returns a token for making authenticated requests to the Drupal API.
+     *
+     * @return array - Cookie & token for authenticated requests
+     */
+    private function authenticate()
+    {
+        $authentication = Cache::remember('drupal.authentication', 30, function () {
+            $payload = [
+                'username' => config('services.phoenix.username'),
+                'password' => config('services.phoenix.password'),
+            ];
+
+            $response = $this->post('auth/login', $payload, false);
+            $session_name = $response['session_name'];
+            $session_value = $response['sessid'];
+
+            return [
+                'cookie' => [$session_name => $session_value],
+                'token' => $response['token'],
+            ];
+        });
+
+        return $authentication;
+    }
+
+    /**
      * Get the CSRF token for the authenticated API session.
      *
      * @return string - token
