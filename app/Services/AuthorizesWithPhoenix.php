@@ -2,9 +2,10 @@
 
 namespace Rogue\Services;
 
+use GuzzleHttp\Cookie\CookieJar;
+
 trait AuthorizesWithPhoenix
 {
-
     /**
      * Get the CSRF token for the authenticated API session.
      *
