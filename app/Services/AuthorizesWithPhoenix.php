@@ -4,6 +4,29 @@ namespace Rogue\Services;
 
 trait AuthorizesWithPhoenix
 {
+
+    /**
+     * Get the CSRF token for the authenticated API session.
+     *
+     * @return string - token
+     */
+    private function getAuthenticationToken()
+    {
+        return $this->authenticate()['token'];
+    }
+
+    /**
+     * Get the cookie for the authenitcated API session.
+     *
+     * @return CookieJar
+     */
+    private function getAuthenticationCookie()
+    {
+        $cookieDomain = parse_url(config('services.phoenix.uri'))['host'];
+
+        return CookieJar::fromArray($this->authenticate()['cookie'], $cookieDomain);
+    }
+
     /**
      * Run custom tasks before making a request.
      *
