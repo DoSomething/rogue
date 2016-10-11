@@ -26,6 +26,6 @@ class ReportbackItem extends Model
      */
     public function reactions()
     {
-        return $this->belongsToMany('App\Reaction');
+        return $this->belongsToMany('\Rogue\Models\Reaction');
     }
 }

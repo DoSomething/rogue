@@ -18,6 +18,6 @@ class Reaction extends Model
      */
     public function reportbackItems()
     {
-        return $this->belongsToMany('App\ReportbackItems');
+        return $this->belongsToMany('\Rogue\Models\ReportbackItem');
     }
 }
