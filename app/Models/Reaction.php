@@ -11,13 +11,13 @@ class Reaction extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'drupal_id', 'file_id', 'taxonomy_id'];
+    protected $fillable = ['id', 'northstar_id', 'drupal_id', 'taxonomy_id'];
 
     /**
-     * The reportbacks that belont to the reaction.
+     * The reportback items that belongs to the reaction.
      */
-    public function reportbacks()
+    public function reportbackItems()
     {
-        return $this->belongsToMany('App\Reportbacks');
+        return $this->belongsToMany('App\ReportbackItems');
     }
 }
