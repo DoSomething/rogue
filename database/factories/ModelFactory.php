@@ -2,7 +2,6 @@
 
 use Faker\Generator;
 use Rogue\Models\Reportback;
-use Rogue\Models\ReportbackItem;
 use Rogue\Models\Reaction;
 
 /*
