@@ -25,6 +25,7 @@ class ReportbackItemSeeder extends Seeder
                 $reportbackItem = new ReportbackItem;
 
                 $reportbackItem->reportback_id = $reportback->getKey();
+                $reportbackItem->file_url = 'https://placekitten.com/g/400/400';
                 $reportbackItem->caption = $faker->text(100);
                 $reportbackItem->status = 'pending';
                 $reportbackItem->reviewed = null;

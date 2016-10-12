@@ -79,7 +79,7 @@ class ReportbackRepository
         $logData = [
             'op' => $operation,
             'reportback_id' => $reportback->id,
-            'files' => $reportback->items->implode('file_id', ','),
+            'files' => $reportback->items->implode('file_url', ','),
             'num_files' => $reportback->items->count(),
         ];
 
@@ -103,7 +103,7 @@ class ReportbackRepository
     {
         if (isset($data['file'])) {
             // @todo - this part right here might actually belong in the service class now that i think about it.
-            $data['file_url'] = $this->aws->storeImage($data['file'], $data['file_id']);
+            $data['file_url'] = $this->aws->storeImage($data['file'], $data['campaign_id']);
 
             $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
         }
