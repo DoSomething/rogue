@@ -2,7 +2,6 @@
 
 use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackItem;
-use Rogue\Services\Phoenix\Phoenix;
 use Faker\Generator;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -17,7 +16,7 @@ class ReportbackApiTest extends TestCase
      * Base URL for the Api.
      */
     protected $reportbackApiUrl = 'api/v1/reportbacks';
-    protected $updateReportbackUrl = 'api/v1/items';
+    protected $reportbackItemsUrl = 'api/v1/items';
 
     /**
      * Test if a POST request to /reportbacks creates a new reportback.
@@ -26,7 +25,7 @@ class ReportbackApiTest extends TestCase
      */
     public function testCreatingNewReportback()
     {
-        // Create test RB with appropriate emoji
+        // Create test RB
         $reportback = $this->createTestReportback();
 
         // Test posting the reportback
@@ -58,9 +57,6 @@ class ReportbackApiTest extends TestCase
                 'quantity' => 2000,
             ],
         ]);
-        // $response = json_decode($response->content());
-
-        // $this->assertEquals($response->data->quantity, 2000);
     }
 
     /**
@@ -86,7 +82,7 @@ class ReportbackApiTest extends TestCase
         ];
 
         // Post updated status to /items
-        $this->call('PUT', $this->updateReportbackUrl, $updatesToReportbackItem);
+        $this->call('PUT', $this->reportbackItemsUrl, $updatesToReportbackItem);
 
         $rbItem = ReportbackItem::where(['id' => $reportbackItem->id])->first();
 
