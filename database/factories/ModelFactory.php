@@ -2,7 +2,6 @@
 
 use Faker\Generator;
 use Rogue\Models\Reportback;
-use Rogue\Models\ReportbackItem;
 use Rogue\Models\Reaction;
 
 /*
@@ -33,14 +32,11 @@ $factory->define(Reportback::class, function (Generator $faker) {
     ];
 });
 
-// Kudo Factory
+// Reaction Factory
 $factory->define(Reaction::class, function (Generator $faker) {
-    $files = ReportbackItem::all()->pluck('file_id');
-
     return [
         'northstar_id'     => str_random(24),
         'drupal_id'        => $faker->randomNumber(8),
-        'file_id'          => $faker->randomElement($files->toArray()),
         'taxonomy_id'      => $faker->randomElement([0, 641, 646]),
     ];
 });

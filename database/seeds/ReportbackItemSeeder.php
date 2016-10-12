@@ -1,5 +1,6 @@
 <?php
 
+use Rogue\Models\Reaction;
 use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackItem;
 use Illuminate\Database\Seeder;
@@ -24,7 +25,7 @@ class ReportbackItemSeeder extends Seeder
                 $reportbackItem = new ReportbackItem;
 
                 $reportbackItem->reportback_id = $reportback->getKey();
-                $reportbackItem->file_id = $faker->numberBetween(1, 9999);
+                $reportbackItem->file_url = 'https://placekitten.com/g/400/400';
                 $reportbackItem->caption = $faker->text(100);
                 $reportbackItem->status = 'pending';
                 $reportbackItem->reviewed = null;
@@ -34,6 +35,10 @@ class ReportbackItemSeeder extends Seeder
                 $reportbackItem->remote_addr = $faker->randomElement(['100.38.10.249', '207.110.19.130', '96.24.79.91']);
 
                 $reportback->items()->save($reportbackItem);
+
+                // Give this item a reaction.
+                $reaction = Reaction::all()->random(1);
+                $reportbackItem->reactions()->save($reaction);
             }
         }
     }

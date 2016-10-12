@@ -20,8 +20,6 @@ POST /api/v1/reportbacks
     The reason why the user participated.
   - **num_participants**: (int).
     How many people participated in the action. 
-  - **file_id**: (int) required.
-    The drupal file id of the reportback item to submit with this reportback. 
   - **caption**: (string).
     Corresponding caption for the reportback image.
   - **source**: (string).

@@ -1,5 +1,7 @@
 <?php
 
+use Rogue\Jobs\SendReportbackToPhoenix;
+
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     /**
@@ -17,13 +19,6 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      * @var \Faker\Generator
      */
     protected $faker;
-
-    /**
-     * File System dependency.
-     *
-     * @var
-     */
-    protected $fileSystem;
 
     /**
      * Setup the test environment.
@@ -102,7 +97,6 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
             'quantity'         => $this->faker->numberBetween(10, 1000),
             'why_participated' => $this->faker->paragraph(3),
             'num_participants' => null,
-            'file_id'          => $this->faker->randomNumber(4),
             'caption'          => $this->faker->sentence(),
             'source'           => 'runscope',
             'remote_addr'      => '207.110.19.130',
@@ -141,7 +135,9 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
                         ->andReturn(true);
         }
 
-        $this->json('POST', $this->reportbackApiUrl, $reportback);
+        $this->expectsJobs(SendReportbackToPhoenix::class);
+
+        $response = $this->json('POST', $this->reportbackApiUrl, $reportback);
 
         $this->assertResponseStatus(201);
     }
