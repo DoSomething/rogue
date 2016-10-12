@@ -27,7 +27,7 @@ class ReportbackLogSeeder extends Seeder
             $log->op = 'insert';
             $log->quantity = $reportback->quantity;
             $log->why_participated = $reportback->why_participated;
-            $log->files = $reportback->items->implode('file_id', ',');
+            $log->files = $reportback->items->implode('file_url', ',');
             $log->num_files = $reportback->items->count();
             $log->remote_addr = $reportback->remote_addr;
             $log->reason = null;
