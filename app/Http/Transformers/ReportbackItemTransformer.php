@@ -19,7 +19,6 @@ class ReportbackItemTransformer extends TransformerAbstract
             'id' => (string) $reportbackItem->id,
             'reportback_id' => $reportbackItem->reportback_id,
             'media' => [
-                'id' => $reportbackItem->file_id,
                 'url' => $reportbackItem->file_url,
             ],
             'caption' => $reportbackItem->caption,
