@@ -8,7 +8,7 @@ namespace :laravel do
     end
   end
 
-  desc 'Run NPM run build'
+  desc 'Run Artisan tasks'
   task :artisan_tasks do
     on roles(:all) do
       within "#{release_path}" do
@@ -19,6 +19,6 @@ namespace :laravel do
 end
 
 namespace :deploy do
- after :updated, "laravel:npm_run_build"
+ #after :updated, "laravel:npm_run_build"
  after :updated, "laravel:artisan_tasks"
 end
