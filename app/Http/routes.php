@@ -12,8 +12,10 @@
 */
 
 // Authentication
-Route::get('login', 'Auth\AuthController@getLogin');
-Route::get('logout', 'Auth\AuthController@getLogout');
+Route::group(['middleware' => ['web']], function () {
+    Route::get('login', 'Auth\AuthController@getLogin');
+    Route::get('logout', 'Auth\AuthController@getLogout');
+});
 
 Route::get('/', function () {
     return view('pages.home');
