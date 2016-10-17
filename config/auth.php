@@ -104,4 +104,5 @@ return [
         ],
     ],
 
+    'model' => Rogue\Models\User::class,
 ];

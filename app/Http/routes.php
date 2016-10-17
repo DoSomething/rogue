@@ -11,10 +11,20 @@
 |
 */
 
+// Authentication
+Route::get('login', 'Auth\AuthController@getLogin');
+Route::get('logout', 'Auth\AuthController@getLogout');
+
 Route::get('/', function () {
     return view('pages.home');
 });
 
+Route::get('/test', function () {
+    return session('oauth_state');
+});
+
+
+// API Routes
 Route::group(['prefix' => 'api/v1', 'middleware' => ['api']], function () {
     Route::get('/', function () {
         return 'Rogue API version 1';

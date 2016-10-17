@@ -7,6 +7,9 @@ use Validator;
 use Rogue\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
 
 class AuthController extends Controller
 {
@@ -30,6 +33,15 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
 
+
+    /**
+     * Where to redirect users after logout.
+     *
+     * @var string
+     */
+    protected $redirectAfterLogout = '/';
+
+
     /**
      * Create a new authentication controller instance.
      *
@@ -37,7 +49,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        // $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
     /**
@@ -46,27 +58,50 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    // protected function validator(array $data)
+    // {
+    //     return Validator::make($data, [
+    //         'name' => 'required|max:255',
+    //         'email' => 'required|email|max:255|unique:users',
+    //         'password' => 'required|min:6|confirmed',
+    //     ]);
+    // }
+
+    // *
+    //  * Create a new user instance after a valid registration.
+    //  *
+    //  * @param  array  $data
+    //  * @return User
+
+    // protected function create(array $data)
+    // {
+    //     return User::create([
+    //         'name' => $data['name'],
+    //         'email' => $data['email'],
+    //         'password' => bcrypt($data['password']),
+    //     ]);
+    // }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getLogin(ServerRequestInterface $request, ResponseInterface $response)
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
+        return gateway('northstar')->authorize($request, $response, $this->redirectTo);
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Handle a logout request to the application.
      *
-     * @param  array  $data
-     * @return User
+     * @param ResponseInterface $response
+     * @return ResponseInterface
      */
-    protected function create(array $data)
+    public function getLogout(ResponseInterface $response)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        return gateway('northstar')->logout($response, $this->redirectAfterLogout);
     }
 }
