@@ -2,11 +2,11 @@
 
 namespace Rogue\Models;
 
-// use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use DoSomething\Gateway\Contracts\NorthstarUserContract;
 use DoSomething\Gateway\Laravel\HasNorthstarToken;
 
-class User implements NorthstarUserContract
+class User extends Model implements NorthstarUserContract
 {
     use HasNorthstarToken;
 

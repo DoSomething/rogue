@@ -13,7 +13,6 @@ class UpdateUsersTableForNorthstarUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('id');
             $table->dropColumn('name');
             $table->dropColumn('email');
             $table->dropColumn('password');
@@ -38,7 +37,6 @@ class UpdateUsersTableForNorthstarUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
