@@ -53,17 +53,3 @@ $factory->define(User::class, function (Generator $faker) {
         'role' => null,
     ];
 });
-
-// // Admin User factory
-// $factory->defineAs(User::class, 'admin', function ($faker) use ($factory) {
-//     $user->$factory->raw(User::class);
-
-//     return array_merge($user, ['role' => 'admin']);
-// });
-
-// // Staff User factory
-// $factory->defineAs(User::class, 'staff', function ($faker) use ($factory) {
-//     $user->$factory->raw(User::class);
-
-//     return array_merge($user, ['role' => 'staff']);
-// });

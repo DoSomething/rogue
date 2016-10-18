@@ -12,8 +12,6 @@ class User extends Model implements AuthenticatableContract, NorthstarUserContra
 {
     use Authenticatable, HasNorthstarToken;
 
-    public $incrementing = false;
-
     /**
      * Check to see if this user matches one of the given roles.
      *
