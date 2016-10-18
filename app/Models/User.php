@@ -3,12 +3,14 @@
 namespace Rogue\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use DoSomething\Gateway\Contracts\NorthstarUserContract;
 use DoSomething\Gateway\Laravel\HasNorthstarToken;
 
-class User extends Model implements NorthstarUserContract
+class User extends Model implements AuthenticatableContract, NorthstarUserContract
 {
-    use HasNorthstarToken;
+    use Authenticatable, HasNorthstarToken;
 
     public $incrementing = false;
 
