@@ -23,5 +23,6 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['api']], function () {
     Route::get('reportbacks', 'Api\ReportbackController@index');
     Route::post('reportbacks', 'Api\ReportbackController@store');
     Route::put('items', 'Api\ReportbackController@updateReportbackItems');
+    Route::post('reactions', 'Api\ReactionsController@store');
     Route::get('users', 'UsersController@index');
 });
