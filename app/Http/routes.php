@@ -11,12 +11,17 @@
 |
 */
 
+Route::get('/', function () {
+    return view('pages.home');
+});
+
 // Authentication
 Route::get('login', 'Auth\AuthController@getLogin');
 Route::get('logout', 'Auth\AuthController@getLogout');
 
-// Fake homepage, temporary.
-Route::get('/', 'UsersController@index');
+// Default route to send authenticated users to.
+// NOTE: For testing authentication only.
+Route::get('reportbacks', 'ReportbacksController@index');
 
 // API Routes
 Route::group(['prefix' => 'api/v1', 'middleware' => ['api']], function () {

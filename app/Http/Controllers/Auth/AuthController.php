@@ -31,8 +31,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
-
+    protected $redirectTo = '/reportbacks';
 
     /**
      * Where to redirect users after logout.
@@ -40,17 +39,6 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectAfterLogout = '/';
-
-
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        // $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
-    }
 
     /**
      * Handle a login request to the application.
