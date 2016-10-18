@@ -12,19 +12,11 @@
 */
 
 // Authentication
-Route::group(['middleware' => ['web']], function () {
-    Route::get('login', 'Auth\AuthController@getLogin');
-    Route::get('logout', 'Auth\AuthController@getLogout');
-});
+Route::get('login', 'Auth\AuthController@getLogin');
+Route::get('logout', 'Auth\AuthController@getLogout');
 
-Route::get('/', function () {
-    return view('pages.home');
-});
-
-Route::get('/test', function () {
-    return session('oauth_state');
-});
-
+// Fake homepage, temporary.
+Route::get('/', 'UsersController@index');
 
 // API Routes
 Route::group(['prefix' => 'api/v1', 'middleware' => ['api']], function () {

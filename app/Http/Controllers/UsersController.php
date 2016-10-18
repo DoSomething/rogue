@@ -2,7 +2,7 @@
 
 namespace Rogue\Http\Controllers;
 
-use DoSomething\Northstar\Northstar;
+use DoSomething\Gateway\Northstar;
 
 class UsersController extends Controller
 {
@@ -26,6 +26,6 @@ class UsersController extends Controller
     public function index()
     {
         // Test for now to make sure northstar auth is working.
-        return "Yay you're allowed in!";
+        return view('pages.home');
     }
 }
