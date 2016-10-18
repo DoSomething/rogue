@@ -19,6 +19,6 @@ namespace :laravel do
 end
 
 namespace :deploy do
- #after :updated, "laravel:npm_run_build"
+ after :updated, "laravel:npm_run_build"
  after :updated, "laravel:artisan_tasks"
 end
