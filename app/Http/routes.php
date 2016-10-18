@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('pages.home');
-})->middleware('guest');;
+})->middleware('guest');
 
 // Authentication
 Route::get('login', 'Auth\AuthController@getLogin');

@@ -2,12 +2,8 @@
 
 namespace Rogue\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Rogue\Http\Requests;
-
 class ReportbacksController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -22,4 +18,3 @@ class ReportbacksController extends Controller
         return view('reportbacks.index');
     }
 }
-

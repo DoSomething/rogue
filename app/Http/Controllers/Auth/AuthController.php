@@ -2,14 +2,11 @@
 
 namespace Rogue\Http\Controllers\Auth;
 
-use Rogue\User;
-use Validator;
 use Rogue\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-
 
 class AuthController extends Controller
 {
