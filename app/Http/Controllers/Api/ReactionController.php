@@ -4,11 +4,11 @@ namespace Rogue\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 
-class ReactionsController extends ApiController
+class ReactionController extends ApiController
 {
-
+    //TODO: Add doc block here.
     public function store()
     {
-        dd('hi');
+
     }
 }
