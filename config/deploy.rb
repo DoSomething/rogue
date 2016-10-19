@@ -15,7 +15,7 @@ end
 
 set :keep_releases, 1
 
-set :npm_flags, '--production'
+set :npm_flags, ''
 set :composer_install_flags, '--no-dev --optimize-autoloader'
 
 set :linked_files, %w{.env}
