@@ -9,6 +9,6 @@ class ReactionController extends ApiController
     //TODO: Add doc block here.
     public function store()
     {
-
+        dd('hi');
     }
 }
