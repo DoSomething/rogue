@@ -66,7 +66,7 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'northstar',
+            'driver' => 'eloquent',
             'model' => Rogue\Models\User::class,
         ],
 
@@ -104,4 +104,5 @@ return [
         ],
     ],
 
+    'model' => Rogue\Models\User::class,
 ];

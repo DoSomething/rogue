@@ -2,36 +2,34 @@
 
 namespace Rogue\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use DoSomething\Gateway\Contracts\NorthstarUserContract;
+use DoSomething\Gateway\Laravel\HasNorthstarToken;
 
-class User extends Authenticatable
+class User extends Model implements AuthenticatableContract, NorthstarUserContract
 {
-    /**
+    use Authenticatable, HasNorthstarToken;
+
+    /*
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $fillable = [];
 
     /**
      * Check to see if this user matches one of the given roles.
      *
-     * @param array|mixed $roles -role(s) to check
+     * @param  array|mixed $roles - role(s) to check
      * @return bool
      */
     public function hasRole($roles)
     {
+        // Prepare an array of roles to check.
+        // e.g. $user->hasRole('admin') => ['admin']
+        //      $user->hasRole('admin, 'staff') => ['admin', 'staff']
         $roles = is_array($roles) ? $roles : func_get_args();
 
         return in_array($this->role, $roles);

@@ -2,11 +2,9 @@
 
 namespace Rogue\Http\Controllers\Auth;
 
-use Rogue\User;
-use Validator;
 use Rogue\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class AuthController extends Controller
 {
@@ -21,52 +19,40 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
     /**
      * Where to redirect users after login / registration.
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/reportbacks';
 
     /**
-     * Create a new authentication controller instance.
+     * Where to redirect users after logout.
      *
-     * @return void
+     * @var string
      */
-    public function __construct()
+    protected $redirectAfterLogout = '/';
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getLogin(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        return gateway('northstar')->authorize($request, $response, $this->redirectTo);
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Handle a logout request to the application.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param ResponseInterface $response
+     * @return ResponseInterface
      */
-    protected function validator(array $data)
+    public function getLogout(ResponseInterface $response)
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        return gateway('northstar')->logout($response, $this->redirectAfterLogout);
     }
 }

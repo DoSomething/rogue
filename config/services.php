@@ -30,6 +30,7 @@ return [
             'client_id' => env('NORTHSTAR_CLIENT_ID'),
             'client_secret' => env('NORTHSTAR_CLIENT_SECRET'),
             'scope' => ['user', 'role:staff', 'role:admin'],
+            'redirect_uri' => '/login',
         ],
     ],
 

@@ -3,6 +3,7 @@
 use Faker\Generator;
 use Rogue\Models\Reportback;
 use Rogue\Models\Reaction;
+use Rogue\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,5 +39,17 @@ $factory->define(Reaction::class, function (Generator $faker) {
         'northstar_id'     => str_random(24),
         'drupal_id'        => $faker->randomNumber(8),
         'taxonomy_id'      => $faker->randomElement([0, 641, 646]),
+    ];
+});
+
+// Base User Factory
+$factory->define(User::class, function (Generator $faker) {
+    return [
+        'northstar_id' => str_random(24),
+        'access_token' => str_random(1024),
+        'access_token_expiration' => str_random(11),
+        'refresh_token' => str_random(1024),
+        'remember_token' => str_random(10),
+        'role' => null,
     ];
 });

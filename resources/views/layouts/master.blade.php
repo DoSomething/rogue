@@ -17,6 +17,9 @@
     <body>
         <div class="chrome">
             <div class="wrapper">
+
+                @include('layouts.nav')
+
                 <div class="container">
 
                     @yield('main_content')

@@ -2,7 +2,7 @@
 
 namespace Rogue\Http\Controllers;
 
-use DoSomething\Northstar\Northstar;
+use DoSomething\Gateway\Northstar;
 
 class UsersController extends Controller
 {
@@ -15,9 +15,6 @@ class UsersController extends Controller
     public function __construct(Northstar $northstar)
     {
         $this->northstar = $northstar;
-
-        $this->middleware('auth');
-        $this->middleware('role:admin,staff');
     }
 
     /** Index of all users.
@@ -25,7 +22,6 @@ class UsersController extends Controller
      */
     public function index()
     {
-        // Test for now to make sure northstar auth is working.
-        return "Yay you're allowed in!";
+        return 'list of all users';
     }
 }
