@@ -12,6 +12,13 @@ class User extends Model implements AuthenticatableContract, NorthstarUserContra
 {
     use Authenticatable, HasNorthstarToken;
 
+    /*
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [];
+
     /**
      * Check to see if this user matches one of the given roles.
      *

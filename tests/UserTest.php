@@ -48,8 +48,7 @@ class UserTest extends TestCase
     public function testLogin()
     {
         $mock = $this->mock(Northstar::class)
-            ->shouldReceive('authorize')
-            ->andReturn(302);
+            ->shouldReceive('authorize');
 
         $this->visit('/login');
     }
@@ -62,8 +61,7 @@ class UserTest extends TestCase
     public function testLogout()
     {
         $mock = $this->mock(Northstar::class)
-            ->shouldReceive('logout')
-            ->andReturn(302);
+            ->shouldReceive('logout');
 
         $this->visit('/logout');
     }
