@@ -28,6 +28,6 @@ class Reaction extends Model
      */
     public function reportbackItems()
     {
-        return $this->belongsToMany('\Rogue\Models\ReportbackItem')->withPivot('deleted_at');
+        return $this->belongsTo('\Rogue\Models\ReportbackItem');
     }
 }

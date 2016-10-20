@@ -10,6 +10,7 @@ class ReactionController extends ApiController
 {
     /**
      * Store or update a reaction to a reportback item.
+     * Referenced from https://mydnic.be/post/the-perfect-like-system-for-laravel
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
@@ -36,5 +37,8 @@ class ReactionController extends ApiController
                 $existingReaction->restore();
             }
         }
+
+        // TODO: When we build out Phoenix and decide on what we want in the response, we will need to add a Reaction Transformer.
+        return 'Placeholder response.';
     }
 }
