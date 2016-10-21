@@ -48,11 +48,11 @@ class ReactionController extends ApiController
             // If the reportback_item was previously "liked" by this user, soft delete the reaction. Otherwise, restore the reaction.
             if (is_null($reaction->deleted_at)) {
                 $code = 201;
-                $action = "unliked";
+                $action = 'unliked';
                 $reaction->delete();
             } else {
                 $code = 201;
-                $action = "liked";
+                $action = 'liked';
                 $reaction->restore();
             }
         }
