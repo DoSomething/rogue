@@ -18,7 +18,7 @@ class ReactionController extends ApiController
      */
     public function __construct()
     {
-        $this->reactionTransformer = new ReactionTransformer;
+        $this->transformer = new ReactionTransformer;
     }
 
     /**
@@ -61,6 +61,6 @@ class ReactionController extends ApiController
             'action' => $action,
         ];
 
-        return $this->item($reaction, $code, $meta, $this->reactionTransformer);
+        return $this->item($reaction, $code, $meta);
     }
 }

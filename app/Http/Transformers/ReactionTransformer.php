@@ -15,7 +15,6 @@ class ReactionTransformer extends TransformerAbstract
      */
     public function transform(Reaction $reaction)
     {
-        // dd($reaction);
         return [
             'reaction_id' => $reaction->id,
             'northstar_id' => $reaction->northstar_id,
