@@ -16,9 +16,9 @@ class ReactionTransformer extends TransformerAbstract
     public function transform(Reaction $reaction)
     {
         return [
-            'reaction_id' => $reaction->id,
+            'reaction_id' => (string) $reaction->id,
             'northstar_id' => $reaction->northstar_id,
-            'reportback_item_id' => $reaction->reportback_item_id,
+            'reportback_item_id' => (string) $reaction->reportback_item_id,
             'created_at' => $reaction->created_at,
             'updated_at' => $reaction->updated_at,
             'deleted_at' => $reaction->deleted_at,

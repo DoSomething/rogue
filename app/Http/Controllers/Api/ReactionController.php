@@ -38,7 +38,7 @@ class ReactionController extends ApiController
 
         // If a reportback_item does not have a reaction from this user, create a reaction.
         if (is_null($reaction)) {
-            Reaction::create([
+            $reaction = Reaction::create([
                 'northstar_id' => $userId,
                 'reportback_item_id' => $reportbackItemId,
             ]);

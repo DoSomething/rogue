@@ -23,7 +23,7 @@ class ReactionRequest extends Request
     {
         return [
             'reportback_item_id' => 'required|int',
-            'northstar_id' => 'required|int',
+            'northstar_id' => 'required',
         ];
     }
 }
