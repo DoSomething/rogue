@@ -19,17 +19,17 @@ class ReactionController extends ApiController
         $userId = $request['northstar_id'];
         $reportbackItemId = $request['reportback_item_id'];
 
-        // Check to see if the reportback_item has a reaction.
+        // Check to see if the reportback_item has a reaction from this particular user with id of northstar_id.
         $existingReaction = Reaction::withTrashed()->where(['northstar_id' => $userId, 'reportback_item_id' => $reportbackItemId])->first();
 
-        // If a reportback_item does not have a reaction, create a reaction.
+        // If a reportback_item does not have a reaction from this user, create a reaction.
         if (is_null($existingReaction)) {
             Reaction::create([
                 'northstar_id' => $userId,
                 'reportback_item_id' => $reportbackItemId,
             ]);
         } else {
-            // If the reportback_item is "liked", soft delete the item. Otherwise, restore the reaction.
+            // If the reportback_item is "liked" by this user, soft delete the reaction. Otherwise, restore the reaction.
             if (is_null($existingReaction->deleted_at)) {
                 $existingReaction->delete();
             } else {
