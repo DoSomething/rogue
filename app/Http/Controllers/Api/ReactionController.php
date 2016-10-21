@@ -4,7 +4,6 @@ namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Reaction;
 use Rogue\Http\Requests\ReactionRequest;
-use Illuminate\Http\Request;
 
 class ReactionController extends ApiController
 {
@@ -30,7 +29,7 @@ class ReactionController extends ApiController
                 'reportback_item_id' => $reportbackItemId,
             ]);
         } else {
-        // If the reportback_item is "liked", soft delete the item. Otherwise, restore the reaction.
+            // If the reportback_item is "liked", soft delete the item. Otherwise, restore the reaction.
             if (is_null($existingReaction->deleted_at)) {
                 $existingReaction->delete();
             } else {
