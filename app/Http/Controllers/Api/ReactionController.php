@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ReactionController extends ApiController
 {
     /**
-     * Store or update a reaction to a reportback item.
+     * Store or update a reportback_item's reaction.
      * Referenced from https://mydnic.be/post/the-perfect-like-system-for-laravel
      *
      * @param \Illuminate\Http\Request $request
