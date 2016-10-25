@@ -31,9 +31,13 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['api']], function () {
         return 'Rogue API version 1';
     });
 
+    // /items
+    Route::put('items', 'Api\ReportbackController@updateReportbackItems');
+
+    // /reactions
+    Route::post('reactions', 'Api\ReactionController@store');
+
+    // /reportbacks
     Route::get('reportbacks', 'Api\ReportbackController@index');
     Route::post('reportbacks', 'Api\ReportbackController@store');
-    Route::put('items', 'Api\ReportbackController@updateReportbackItems');
-    Route::post('reactions', 'Api\ReactionController@store');
-    Route::get('users', 'UsersController@index');
 });
