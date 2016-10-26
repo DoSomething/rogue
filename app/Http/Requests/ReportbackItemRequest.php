@@ -21,9 +21,21 @@ class ReportbackItemRequest extends Request
      */
     public function rules()
     {
-        return [
-            // 'rogue_reportback_item_id' => 'required',
-            // 'status' => 'required',
-        ];
+        foreach ($this->request as $key => $value) {
+            $rules[$key]['rogue_reportback_item_id'] = 'required';
+            $rules[$key]['status'] = 'required';
+        }
+
+        return $rules;
     }
 }
+
+
+// array:2 [
+//   "rogue_reportback_item_id" => "required"
+//   "status" => "required"
+// ]
+// array:2 [
+//   "rogue_reportback_item_id" => "254"
+//   "status" => "approved"
+// ]

@@ -66,7 +66,6 @@ class ReportbackController extends ApiController
      */
     public function updateReportbackItems(ReportbackItemRequest $request)
     {
-        dd($request->source);
         $items = $this->reportbackService->updateReportbackItems($request->all());
 
         if (empty($items)) {
