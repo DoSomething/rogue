@@ -8,7 +8,7 @@ use Rogue\Http\Requests\ReportbackItemRequest;
 use Rogue\Services\ReportbackService;
 use Rogue\Http\Transformers\ReportbackTransformer;
 use Rogue\Http\Transformers\ReportbackItemTransformer;
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 
 class ReportbackController extends ApiController
 {
@@ -64,8 +64,13 @@ class ReportbackController extends ApiController
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function updateReportbackItems(ReportbackItemRequest $request)
+    public function updateReportbackItems(Request $request)
     {
+        $this->validate($request, [
+            '*.rogue_reportback_item_id' => 'required',
+            '*.status' => 'required',
+        ]);
+
         $items = $this->reportbackService->updateReportbackItems($request->all());
 
         if (empty($items)) {
