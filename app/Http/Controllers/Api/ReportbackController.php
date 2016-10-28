@@ -65,6 +65,11 @@ class ReportbackController extends ApiController
      */
     public function updateReportbackItems(Request $request)
     {
+        $this->validate($request, [
+            '*.rogue_reportback_item_id' => 'required',
+            '*.status' => 'required',
+        ]);
+
         $items = $this->reportbackService->updateReportbackItems($request->all());
 
         if (empty($items)) {

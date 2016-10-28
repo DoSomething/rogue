@@ -9,5 +9,5 @@ PUT /api/v1/items
 
   - **rogue_reportback_item_id**: (string) required
     The reportback item's Rogue id (id column in Rogue's reportback_items table).
-  - **status**: (string)
+  - **status**: (string) required
     The status of the reportback item. 
