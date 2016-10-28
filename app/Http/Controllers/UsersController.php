@@ -16,12 +16,4 @@ class UsersController extends Controller
     {
         $this->northstar = $northstar;
     }
-
-    /** Index of all users.
-     * @return Response
-     */
-    public function index()
-    {
-        return 'list of all users';
-    }
 }
