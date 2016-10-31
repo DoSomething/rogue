@@ -6,9 +6,6 @@ use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackLog;
 use Rogue\Models\ReportbackItem;
 use Rogue\Services\AWS;
-use Intervention\Image\Facades\Image;
-use finfo;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 
 class ReportbackRepository
 {
@@ -17,6 +14,11 @@ class ReportbackRepository
      *
      */
     protected $AWS;
+
+    /**
+     * Array of properties needed for cropping and rotating.
+     */
+    protected $cropProperties = ['crop_x', 'crop_y', 'crop_width', 'crop_height', 'crop_rotate'];
 
     /**
      * Constructor
@@ -115,11 +117,17 @@ class ReportbackRepository
             // @todo - this part right here might actually belong in the service class now that i think about it.
             $data['file_url'] = $this->aws->storeImage($data['file'], $data['campaign_id']);
 
-            $img = (string) Image::make($data['file_url'])->crop(100, 100, 25, 25)->encode('data-url');
+            $cropValues = extract_values_by_keys($data, $this->cropProperties);
 
-            $data['cropped_file_url'] = $this->aws->storeImage($img, 'edited_' . $data['campaign_id']);
+            if ($cropValues)
+            {
+                $editedImage = edit_image($data['file_url'], $cropValues);
 
-            $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'cropped_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
+                $data['edited_file_url'] = $this->aws->storeImage($editedImage, 'edited_' . $data['campaign_id']);
+
+            }
+
+            $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'edited_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
         }
 
         return $reportback;
