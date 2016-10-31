@@ -6,11 +6,21 @@ use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackLog;
 use Rogue\Models\ReportbackItem;
 use Rogue\Services\AWS;
+use Intervention\Image\Facades\Image;
+use finfo;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 
 class ReportbackRepository
 {
+    /**
+     * Instance of \Rogue\Services\AWS;
+     *
+     */
     protected $AWS;
 
+    /**
+     * Constructor
+     */
     public function __construct(AWS $aws)
     {
         $this->aws = $aws;
@@ -105,7 +115,11 @@ class ReportbackRepository
             // @todo - this part right here might actually belong in the service class now that i think about it.
             $data['file_url'] = $this->aws->storeImage($data['file'], $data['campaign_id']);
 
-            $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
+            $img = (string) Image::make($data['file_url'])->crop(100, 100, 25, 25)->encode('data-url');
+
+            $data['cropped_file_url'] = $this->aws->storeImage($img, 'edited_' . $data['campaign_id']);
+
+            $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'cropped_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
         }
 
         return $reportback;

@@ -13,6 +13,11 @@ class ReportbackService
      */
     protected $reportbackRepository;
 
+    /**
+     * Contructor
+     *
+     * @param \Rogue\Repositories\ReportbackRepository $reportbackRepository
+     */
     public function __construct(ReportbackRepository $reportbackRepository)
     {
         $this->reportbackRepository = $reportbackRepository;
