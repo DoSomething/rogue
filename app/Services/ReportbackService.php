@@ -9,12 +9,14 @@ use Rogue\Jobs\SendReportbackToPhoenix;
 class ReportbackService
 {
     /*
-     * Instance of \Rogue\Repositories\ReportbackRepository
+     * Reportback repository instance.
+     *
+     * @var \Rogue\Repositories\ReportbackRepository
      */
     protected $reportbackRepository;
 
     /**
-     * Contructor
+     * Constructor
      *
      * @param \Rogue\Repositories\ReportbackRepository $reportbackRepository
      */

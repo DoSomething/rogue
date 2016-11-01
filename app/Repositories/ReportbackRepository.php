@@ -10,12 +10,16 @@ use Rogue\Services\AWS;
 class ReportbackRepository
 {
     /**
-     * Instance of \Rogue\Services\AWS;
+     * AWS service class instance.
+     *
+     * @var \Rogue\Services\AWS
      */
     protected $AWS;
 
     /**
      * Array of properties needed for cropping and rotating.
+     *
+     * @var array
      */
     protected $cropProperties = ['crop_x', 'crop_y', 'crop_width', 'crop_height', 'crop_rotate'];
 
