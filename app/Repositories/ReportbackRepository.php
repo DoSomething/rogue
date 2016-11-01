@@ -9,8 +9,23 @@ use Rogue\Services\AWS;
 
 class ReportbackRepository
 {
+    /**
+     * AWS service class instance.
+     *
+     * @var \Rogue\Services\AWS
+     */
     protected $AWS;
 
+    /**
+     * Array of properties needed for cropping and rotating.
+     *
+     * @var array
+     */
+    protected $cropProperties = ['crop_x', 'crop_y', 'crop_width', 'crop_height', 'crop_rotate'];
+
+    /**
+     * Constructor
+     */
     public function __construct(AWS $aws)
     {
         $this->aws = $aws;
@@ -105,7 +120,15 @@ class ReportbackRepository
             // @todo - this part right here might actually belong in the service class now that i think about it.
             $data['file_url'] = $this->aws->storeImage($data['file'], $data['campaign_id']);
 
-            $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
+            $cropValues = array_only($data, $this->cropProperties);
+
+            if ($cropValues) {
+                $editedImage = edit_image($data['file'], $cropValues);
+
+                $data['edited_file_url'] = $this->aws->storeImage($editedImage, 'edited_' . $data['campaign_id']);
+            }
+
+            $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'edited_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
         }
 
         return $reportback;

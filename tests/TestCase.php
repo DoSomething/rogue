@@ -101,6 +101,11 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
             'source'           => 'runscope',
             'remote_addr'      => '207.110.19.130',
             'file'             => $file,
+            'crop_x'           => 0,
+            'crop_y'           => 0,
+            'crop_width'       => 100,
+            'crop_height'      => 100,
+            'crop_rotate'      => 90,
         ];
 
         return $reportback;
@@ -153,8 +158,11 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         // Make sure we created a reportback item for the reportback.
         $this->seeInDatabase('reportback_items', ['reportback_id' => $response['data']['id']]);
 
-        // Make sure the file is saved to S3 and the file_url is saved to the database.
+        // Make sure the file_url is saved to the database.
         $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
+
+        // Make sure the edited_file_url is saved to the database.
+        $this->seeInDatabase('reportback_items', ['edited_file_url' => $response['data']['reportback_items']['data'][0]['media']['edited_url']]);
 
         // Make sure we created a record in the reportback log table.
         $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);

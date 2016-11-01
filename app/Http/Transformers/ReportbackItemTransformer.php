@@ -20,6 +20,7 @@ class ReportbackItemTransformer extends TransformerAbstract
             'reportback_id' => $reportbackItem->reportback_id,
             'media' => [
                 'url' => $reportbackItem->file_url,
+                'edited_url' => $reportbackItem->edited_file_url,
             ],
             'caption' => $reportbackItem->caption,
             'status' => $reportbackItem->status,

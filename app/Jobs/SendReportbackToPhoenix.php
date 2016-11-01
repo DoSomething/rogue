@@ -40,7 +40,7 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
             'nid' => $this->reportback->campaign_id,
             'quantity' => $this->reportback->quantity,
             'why_participated' => $this->reportback->why_participated,
-            'file_url' => $reportbackItem->file_url,
+            'file_url' => $reportbackItem->edited_file_url,
             'caption' => $reportbackItem->caption,
             'source' => $reportbackItem->source,
         ];

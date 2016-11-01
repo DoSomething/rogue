@@ -9,10 +9,17 @@ use Rogue\Jobs\SendReportbackToPhoenix;
 class ReportbackService
 {
     /*
-     * Instance of \Rogue\Repositories\ReportbackRepository
+     * Reportback repository instance.
+     *
+     * @var \Rogue\Repositories\ReportbackRepository
      */
     protected $reportbackRepository;
 
+    /**
+     * Constructor
+     *
+     * @param \Rogue\Repositories\ReportbackRepository $reportbackRepository
+     */
     public function __construct(ReportbackRepository $reportbackRepository)
     {
         $this->reportbackRepository = $reportbackRepository;
