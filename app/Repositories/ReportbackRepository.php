@@ -121,7 +121,7 @@ class ReportbackRepository
 
             if ($cropValues)
             {
-                $editedImage = edit_image($data['file_url'], $cropValues);
+                $editedImage = edit_image($data['file'], $cropValues);
 
                 $data['edited_file_url'] = $this->aws->storeImage($editedImage, 'edited_' . $data['campaign_id']);
             }
