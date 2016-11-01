@@ -18,19 +18,3 @@ function edit_image($image, $coords)
 
     return $editedImage;
 }
-
-/**
- * Given an array of key/value pairs, create a new array with only the
- * keys given.
- *
- * @param  associative array  $data
- * @param  array $desiredKeys
- *
- * @return array
- */
-function extract_values_by_keys($array, $desiredKeys)
-{
-    $desiredValues = array_intersect_key($array, array_flip($desiredKeys));
-
-    return (count($array) > 0) ? $desiredValues : null;
-}

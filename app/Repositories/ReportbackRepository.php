@@ -120,7 +120,7 @@ class ReportbackRepository
             // @todo - this part right here might actually belong in the service class now that i think about it.
             $data['file_url'] = $this->aws->storeImage($data['file'], $data['campaign_id']);
 
-            $cropValues = extract_values_by_keys($data, $this->cropProperties);
+            $cropValues = array_only($data, $this->cropProperties);
 
             if ($cropValues) {
                 $editedImage = edit_image($data['file'], $cropValues);
