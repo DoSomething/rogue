@@ -11,7 +11,6 @@ class ReportbackRepository
 {
     /**
      * Instance of \Rogue\Services\AWS;
-     *
      */
     protected $AWS;
 
@@ -119,8 +118,7 @@ class ReportbackRepository
 
             $cropValues = extract_values_by_keys($data, $this->cropProperties);
 
-            if ($cropValues)
-            {
+            if ($cropValues) {
                 $editedImage = edit_image($data['file'], $cropValues);
 
                 $data['edited_file_url'] = $this->aws->storeImage($editedImage, 'edited_' . $data['campaign_id']);
