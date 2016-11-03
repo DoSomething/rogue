@@ -120,13 +120,13 @@ class ReportbackRepository
             // @todo - this part right here might actually belong in the service class now that i think about it.
             $data['file_url'] = $this->aws->storeImage($data['file'], $data['campaign_id']);
 
-            $cropValues = array_only($data, $this->cropProperties);
+            // $cropValues = array_only($data, $this->cropProperties);
 
-            if ($cropValues) {
-                $editedImage = edit_image($data['file'], $cropValues);
+            // if (count($cropValues) > 0) {
+            //     $editedImage = edit_image($data['file'], $cropValues);
 
-                $data['edited_file_url'] = $this->aws->storeImage($editedImage, 'edited_' . $data['campaign_id']);
-            }
+            //     $data['edited_file_url'] = $this->aws->storeImage($editedImage, 'edited_' . $data['campaign_id']);
+            // }
 
             $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'edited_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
         }
