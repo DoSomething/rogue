@@ -40,6 +40,4 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['auth.api']], function () {
     // /reportbacks
     Route::get('reportbacks', 'Api\ReportbackController@index');
     Route::post('reportbacks', 'Api\ReportbackController@store');
-
-    Route::get('users', 'UsersController@index');
 });
