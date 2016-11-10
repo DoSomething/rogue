@@ -6,14 +6,14 @@ This is the Rogue API, it is used to capture activity from members.
 #### Reportbacks
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
-`POST /api/v1/reportbacks`                     | [Create a reportback](documentation/reportbacks.md#reportbacks)
+`POST /api/v1/reportbacks`                     | [Create a reportback](endpoints/reportbacks.md#reportbacks)
 
 #### Reportback Items
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
-`PUT /api/v1/items`                            | [Reportback Items](documentation/reportbackitems.md#reportbackitems)
+`PUT /api/v1/items`                            | [Reportback Items](endpoints/reportbackitems.md#reportbackitems)
 
 #### Reactions
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
-`POST /api/v1/reactions`                       | [Create or update a reaction](documentation/reactions.md#reactions)
+`POST /api/v1/reactions`                       | [Create or update a reaction](endpoints/reactions.md#reactions)
