@@ -36,6 +36,7 @@ class ReportbackController extends ApiController
      */
     public function store(ReportbackRequest $request)
     {
+        // TODO: This is the first place that it is received so we want to write the transaction id logic here for when reportback/items are received.
         // @TODO - instead should probably just have a method that gets northstar_id by default from a drupal_id if that is the only thing provided and then use that to find the reportback.
         $userId = $request['northstar_id'] ? $request['northstar_id'] : $request['drupal_id'];
         $type = $request['northstar_id'] ? 'northstar_id' : 'drupal_id';
@@ -65,6 +66,7 @@ class ReportbackController extends ApiController
      */
     public function updateReportbackItems(Request $request)
     {
+        // TODO: Add transaction id for received updated status of reportback item here.
         $this->validate($request, [
             '*.rogue_reportback_item_id' => 'required',
             '*.status' => 'required',
