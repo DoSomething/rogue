@@ -39,13 +39,11 @@ class ReportbackController extends ApiController
         // Log that the request has been received from Phoenix.
         $transactionId = $request->header('X-Request-ID');
         $transactionIdParts = explode('-', $transactionId);
-        $transactionIdBase = $transactionIdParts[0];
         $incrementedStep = $transactionIdParts[1] + 1;
-        $transactionIdHeader = ['X-Request-ID' => $transactionIdBase . '-' . $incrementedStep];
-        logger()->info('Request received. Transaction ID: ' . $transactionIdBase . '-' . $incrementedStep);
+        $newTransactionId = $transactionIdParts[0] . '-' . $incrementedStep;
+        logger()->info('Request received. Transaction ID: ' . $newTransactionId);
 
         // Add the new transaction ID to the header to send back to Phoenix.
-
 
         // @TODO - instead should probably just have a method that gets northstar_id by default from a drupal_id if that is the only thing provided and then use that to find the reportback.
         $userId = $request['northstar_id'] ? $request['northstar_id'] : $request['drupal_id'];
