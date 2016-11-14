@@ -1,5 +1,6 @@
 # Rogue API
 This is the Rogue API, it is used to capture activity from members.
+All `POST` and `PUT` endpoints require authentication to be submitted with the request.
 
 ## Endpoints
 
