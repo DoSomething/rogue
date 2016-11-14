@@ -36,9 +36,8 @@ $factory->define(Reportback::class, function (Generator $faker) {
 // Reaction Factory
 $factory->define(Reaction::class, function (Generator $faker) {
     return [
-        'northstar_id'     => str_random(24),
-        'drupal_id'        => $faker->randomNumber(8),
-        'taxonomy_id'      => $faker->randomElement([0, 641, 646]),
+        'northstar_id' => str_random(24),
+        'reportback_item_id' => $faker->randomNumber(7),
     ];
 });
 
