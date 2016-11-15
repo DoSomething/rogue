@@ -35,9 +35,11 @@ class ReportbackService
     {
         $reportback = $this->reportbackRepository->create($data);
 
+        // Add new transaction id to header.
+        request()->headers->set('X-Request-ID', $newTransactionId);
+
         // POST reportback back to Phoenix.
         // If request fails, record in failed_jobs table.
-        request()->headers->set('X-Request-ID', $newTransactionId);
         dispatch(new SendReportbackToPhoenix($reportback));
 
         return $reportback;
@@ -55,9 +57,11 @@ class ReportbackService
     {
         $reportback = $this->reportbackRepository->update($reportback, $data);
 
+        // Add new transaction id to header.
+        request()->headers->set('X-Request-ID', $newTransactionId);
+
         // POST reportback update back to Phoenix.
         // If request fails, record in failed_jobs table.
-        request()->headers->set('X-Request-ID', $newTransactionId);
         dispatch(new SendReportbackToPhoenix($reportback));
 
         return $reportback;

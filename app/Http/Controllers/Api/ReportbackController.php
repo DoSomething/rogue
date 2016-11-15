@@ -36,15 +36,10 @@ class ReportbackController extends ApiController
      */
     public function store(ReportbackRequest $request)
     {
-        // Log that the request has been received from Phoenix.
-        $transactionId = $request->header('X-Request-ID');
-        $transactionIdParts = explode('-', $transactionId);
-        $incrementedStep = $transactionIdParts[1] + 1;
-        $newTransactionId = $transactionIdParts[0] . '-' . $incrementedStep;
-        logger()->info('Request received. Transaction ID: ' . $newTransactionId);
+        $newTransactionId = $this->incrementTransactionId($request);
 
-        // Add new transaction id to header.
-        // $request->headers->set('X-Request-ID', $newTransactionId);
+        // Log that the request has been received from Phoenix.
+        logger()->info('Request received. Transaction ID: ' . $newTransactionId);
 
         // @TODO - instead should probably just have a method that gets northstar_id by default from a drupal_id if that is the only thing provided and then use that to find the reportback.
         $userId = $request['northstar_id'] ? $request['northstar_id'] : $request['drupal_id'];
@@ -75,7 +70,11 @@ class ReportbackController extends ApiController
      */
     public function updateReportbackItems(Request $request)
     {
-        // TODO: Add transaction id for received updated status of reportback item here.
+        $newTransactionId = $this->incrementTransactionId($request);
+
+        // Log that the request has been received from Phoenix.
+        logger()->info('Request received. Transaction ID: ' . $newTransactionId);
+
         $this->validate($request, [
             '*.rogue_reportback_item_id' => 'required',
             '*.status' => 'required',
@@ -92,5 +91,20 @@ class ReportbackController extends ApiController
         $meta = [];
 
         return $this->collection($items, $code, $meta, $this->itemTransformer);
+    }
+
+    /**
+     * Helper function to increment transaction id.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return $newTransactionId
+     */
+    public function incrementTransactionId($request) {
+        $transactionId = $request->header('X-Request-ID');
+        $transactionIdParts = explode('-', $transactionId);
+        $incrementedStep = $transactionIdParts[1] + 1;
+        $newTransactionId = $transactionIdParts[0] . '-' . $incrementedStep;
+
+        return $newTransactionId;
     }
 }
