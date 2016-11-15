@@ -34,7 +34,6 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
         $phoenix = new Phoenix;
 
         $reportbackItem = $this->reportback->items()->orderBy('created_at', 'desc')->first();
-        dd($this->reportback);
 
         $body = [
             'uid' => $this->reportback->drupal_id,

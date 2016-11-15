@@ -43,7 +43,8 @@ class ReportbackController extends ApiController
         $newTransactionId = $transactionIdParts[0] . '-' . $incrementedStep;
         logger()->info('Request received. Transaction ID: ' . $newTransactionId);
 
-        // Add the new transaction ID to the header to send back to Phoenix.
+        // Add new transaction id to header.
+        // $request->headers->set('X-Request-ID', $newTransactionId);
 
         // @TODO - instead should probably just have a method that gets northstar_id by default from a drupal_id if that is the only thing provided and then use that to find the reportback.
         $userId = $request['northstar_id'] ? $request['northstar_id'] : $request['drupal_id'];
@@ -54,11 +55,11 @@ class ReportbackController extends ApiController
         $updating = ! is_null($reportback);
 
         if (! $updating) {
-            $reportback = $this->reportbackService->create($request->all());
+            $reportback = $this->reportbackService->create($request->all(), $newTransactionId);
 
             $code = 200;
         } else {
-            $reportback = $this->reportbackService->update($reportback, $request->all());
+            $reportback = $this->reportbackService->update($reportback, $request->all(), $newTransactionId);
 
             $code = 201;
         }
