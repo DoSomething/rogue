@@ -1,7 +1,6 @@
 # Rogue API
 This is the Rogue API, it is used to capture activity from members.
-All `POST` and `PUT` endpoints require authentication to be submitted with the request.
-in headers include the `X-DS-Rogue-API-Key`
+All `POST` and `PUT` endpoints require an api key (`X-DS-Rogue-API-Key`) in the header to be submitted with the request. 
 
 ## Endpoints
 
