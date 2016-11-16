@@ -18,3 +18,19 @@ function edit_image($image, $coords)
 
     return $editedImage;
 }
+
+/**
+ * Helper function to increment transaction id.
+ *
+ * @param \Illuminate\Http\Request $request
+ * @return $newTransactionId
+ */
+function incrementTransactionId($request)
+{
+    $transactionId = $request->header('X-Request-ID');
+    $transactionIdParts = explode('-', $transactionId);
+    $incrementedStep = $transactionIdParts[1] + 1;
+    $newTransactionId = $transactionIdParts[0] . '-' . $incrementedStep;
+
+    return $newTransactionId;
+}

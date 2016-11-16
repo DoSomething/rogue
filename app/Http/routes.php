@@ -26,7 +26,7 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 // API Routes
-Route::group(['prefix' => 'api/v1', 'middleware' => ['auth.api']], function () {
+Route::group(['prefix' => 'api/v1', 'middleware' => ['api', 'log.received.request']], function () {
     Route::get('/', function () {
         return 'Rogue API version 1';
     });
@@ -40,6 +40,4 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['auth.api']], function () {
     // /reportbacks
     Route::get('reportbacks', 'Api\ReportbackController@index');
     Route::post('reportbacks', 'Api\ReportbackController@store');
-
-    Route::get('users', 'UsersController@index');
 });

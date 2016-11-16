@@ -36,6 +36,8 @@ class ReportbackController extends ApiController
      */
     public function store(ReportbackRequest $request)
     {
+        $transactionId = incrementTransactionId($request);
+
         // @TODO - instead should probably just have a method that gets northstar_id by default from a drupal_id if that is the only thing provided and then use that to find the reportback.
         $userId = $request['northstar_id'] ? $request['northstar_id'] : $request['drupal_id'];
         $type = $request['northstar_id'] ? 'northstar_id' : 'drupal_id';
@@ -45,11 +47,11 @@ class ReportbackController extends ApiController
         $updating = ! is_null($reportback);
 
         if (! $updating) {
-            $reportback = $this->reportbackService->create($request->all());
+            $reportback = $this->reportbackService->create($request->all(), $transactionId);
 
             $code = 200;
         } else {
-            $reportback = $this->reportbackService->update($reportback, $request->all());
+            $reportback = $this->reportbackService->update($reportback, $request->all(), $transactionId);
 
             $code = 201;
         }

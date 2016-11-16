@@ -49,5 +49,6 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \Rogue\Http\Middleware\RedirectIfAuthenticated::class,
         'role' => \Rogue\Http\Middleware\CheckRole::class,
+        'log.received.request' => \Rogue\Http\Middleware\LogReceivedRequest::class,
     ];
 }

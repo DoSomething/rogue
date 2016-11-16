@@ -29,11 +29,15 @@ class ReportbackService
      * Handles all the logic around creating a reportback.
      *
      * @param array $data
+     * @param string $transactionId
      * @return \Rogue\Models\Reportback $reportback.
      */
-    public function create($data)
+    public function create($data, $transactionId)
     {
         $reportback = $this->reportbackRepository->create($data);
+
+        // Add new transaction id to header.
+        request()->headers->set('X-Request-ID', $transactionId);
 
         // POST reportback back to Phoenix.
         // If request fails, record in failed_jobs table.
@@ -47,12 +51,16 @@ class ReportbackService
      *
      * @param \Rogue\Models\Reportback $reportback
      * @param array $data
+     * @param string $transactionId
      *
      * @return \Rogue\Models\Reportback $reportback.
      */
-    public function update($reportback, $data)
+    public function update($reportback, $data, $transactionId)
     {
         $reportback = $this->reportbackRepository->update($reportback, $data);
+
+        // Add new transaction id to header.
+        request()->headers->set('X-Request-ID', $transactionId);
 
         // POST reportback update back to Phoenix.
         // If request fails, record in failed_jobs table.
