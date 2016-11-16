@@ -36,10 +36,7 @@ class ReportbackController extends ApiController
      */
     public function store(ReportbackRequest $request)
     {
-        $newTransactionId = $this->incrementTransactionId($request);
-
-        // Log that the request has been received from Phoenix.
-        logger()->info('Request received. Transaction ID: ' . $newTransactionId);
+        $newTransactionId = incrementTransactionId($request);
 
         // @TODO - instead should probably just have a method that gets northstar_id by default from a drupal_id if that is the only thing provided and then use that to find the reportback.
         $userId = $request['northstar_id'] ? $request['northstar_id'] : $request['drupal_id'];
@@ -70,11 +67,6 @@ class ReportbackController extends ApiController
      */
     public function updateReportbackItems(Request $request)
     {
-        $newTransactionId = $this->incrementTransactionId($request);
-
-        // Log that the request has been received from Phoenix.
-        logger()->info('Request received. Transaction ID: ' . $newTransactionId);
-
         $this->validate($request, [
             '*.rogue_reportback_item_id' => 'required',
             '*.status' => 'required',
@@ -91,20 +83,5 @@ class ReportbackController extends ApiController
         $meta = [];
 
         return $this->collection($items, $code, $meta, $this->itemTransformer);
-    }
-
-    /**
-     * Helper function to increment transaction id.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return $newTransactionId
-     */
-    public function incrementTransactionId($request) {
-        $transactionId = $request->header('X-Request-ID');
-        $transactionIdParts = explode('-', $transactionId);
-        $incrementedStep = $transactionIdParts[1] + 1;
-        $newTransactionId = $transactionIdParts[0] . '-' . $incrementedStep;
-
-        return $newTransactionId;
     }
 }
