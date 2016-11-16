@@ -25,7 +25,8 @@ function edit_image($image, $coords)
  * @param \Illuminate\Http\Request $request
  * @return $newTransactionId
  */
-function incrementTransactionId($request) {
+function incrementTransactionId($request)
+{
     $transactionId = $request->header('X-Request-ID');
     $transactionIdParts = explode('-', $transactionId);
     $incrementedStep = $transactionIdParts[1] + 1;
