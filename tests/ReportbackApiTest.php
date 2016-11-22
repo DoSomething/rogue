@@ -77,7 +77,8 @@ class ReportbackApiTest extends TestCase
         $updatesToReportbackItem = [
             [
                 'rogue_reportback_item_id' => $reportbackItem->id,
-                'status' => 'approved'
+                'status' => 'approved',
+                'reviewer' => str_random(24),
             ]
         ];
 

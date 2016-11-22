@@ -28,9 +28,15 @@ function edit_image($image, $coords)
 function incrementTransactionId($request)
 {
     $transactionId = $request->header('X-Request-ID');
-    $transactionIdParts = explode('-', $transactionId);
-    $incrementedStep = $transactionIdParts[1] + 1;
-    $newTransactionId = $transactionIdParts[0] . '-' . $incrementedStep;
 
-    return $newTransactionId;
+    if ($transactionId)
+    {
+        $transactionIdParts = explode('-', $transactionId);
+        $incrementedStep = $transactionIdParts[1] + 1;
+        $newTransactionId = $transactionIdParts[0] . '-' . $incrementedStep;
+
+        return $newTransactionId;
+    }
+
+    return null;
 }
