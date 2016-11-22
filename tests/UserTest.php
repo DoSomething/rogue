@@ -65,4 +65,24 @@ class UserTest extends TestCase
 
         $this->visit('/logout');
     }
+
+    // public function testRegistrar()
+    // {
+    //     $registrar = new Registrar;
+
+    //     $mock = $this->mock(Northstar::class)
+    //         ->shouldReceive('getUser')
+    //         ->andReturn((object) [
+    //             'id' => str_random(24),
+    //             'first_name' => 'Shae',
+    //             // ...
+    //         ]);
+    //     dd($mock);
+    //     // $user = $registrar->findUserAccount([
+    //     //     'id' => 'bloop@dosomething.org',
+    //     //     'term' => 'email',
+    //     // ]);
+
+    //     // dd($user);
+    // }
 }

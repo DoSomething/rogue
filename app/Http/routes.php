@@ -23,6 +23,8 @@ Route::group(['middleware' => 'web'], function () {
     // Default route to send authenticated users to.
     // NOTE: For testing authentication only.
     Route::get('reportbacks', 'ReportbacksController@index');
+
+    Route::get('users', 'UsersController@index');
 });
 
 // API Routes
