@@ -64,7 +64,7 @@ class ReportbackService
 
         // POST reportback update back to Phoenix.
         // If request fails, record in failed_jobs table.
-        dispatch(new SendReportbackToPhoenix($reportback));
+        dispatch(new SendReportbackToPhoenix($reportback, isset($data['file']) ? TRUE : FALSE));
 
         return $reportback;
     }

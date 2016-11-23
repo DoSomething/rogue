@@ -13,15 +13,17 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     protected $reportback;
+    protected $hasFile;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Reportback $reportback)
+    public function __construct(Reportback $reportback, $hasFile = TRUE)
     {
         $this->reportback = $reportback;
+        $this->hasFile = $hasFile;
     }
 
     /**
@@ -33,17 +35,22 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
     {
         $phoenix = new Phoenix;
 
-        $reportbackItem = $this->reportback->items()->orderBy('created_at', 'desc')->first();
-
+        // Data that every post will have
         $body = [
             'uid' => $this->reportback->drupal_id,
             'nid' => $this->reportback->campaign_id,
             'quantity' => $this->reportback->quantity,
             'why_participated' => $this->reportback->why_participated,
-            'file_url' => is_null($reportbackItem->edited_file_url) ? $reportbackItem->file_url : $reportbackItem->edited_file_url,
-            'caption' => $reportbackItem->caption,
-            'source' => $reportbackItem->source,
         ];
+
+        // @TODO: only send this if we have something that Phoenix doesn't yet
+        // Data that everything except and update without a file will have
+        if ($this->hasFile) {
+            $reportbackItem = $this->reportback->items()->orderBy('created_at', 'desc')->first();
+            $body['file_url'] = is_null($reportbackItem->edited_file_url) ? $reportbackItem->file_url : $reportbackItem->edited_file_url;
+            $body['caption'] = $reportbackItem->caption;
+            $body['source'] = $reportbackItem->source;
+        }
 
         $phoenix->postReportback($this->reportback->campaign_id, $body);
     }
