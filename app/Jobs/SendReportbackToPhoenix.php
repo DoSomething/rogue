@@ -43,8 +43,7 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
             'why_participated' => $this->reportback->why_participated,
         ];
 
-        // @TODO: only send this if we have something that Phoenix doesn't yet
-        // Data that everything except and update without a file will have
+        // Data that everything except an update without a file will have
         if ($this->hasFile) {
             $reportbackItem = $this->reportback->items()->orderBy('created_at', 'desc')->first();
             $body['file_url'] = is_null($reportbackItem->edited_file_url) ? $reportbackItem->file_url : $reportbackItem->edited_file_url;
