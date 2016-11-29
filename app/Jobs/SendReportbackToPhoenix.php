@@ -20,7 +20,7 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Reportback $reportback, $hasFile = TRUE)
+    public function __construct(Reportback $reportback, $hasFile = true)
     {
         $this->reportback = $reportback;
         $this->hasFile = $hasFile;
