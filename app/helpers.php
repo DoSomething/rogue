@@ -29,8 +29,7 @@ function incrementTransactionId($request)
 {
     $transactionId = $request->header('X-Request-ID');
 
-    if ($transactionId)
-    {
+    if ($transactionId) {
         $transactionIdParts = explode('-', $transactionId);
         $incrementedStep = $transactionIdParts[1] + 1;
         $newTransactionId = $transactionIdParts[0] . '-' . $incrementedStep;

@@ -2,15 +2,13 @@
 
 namespace Rogue\Services;
 
-use \DoSomething\Gateway\Northstar;
+use DoSomething\Gateway\Northstar;
 use Rogue\Repositories\CacheRepository;
 
 class Registrar
 {
-
     /**
      * Create new Registrar instance.
-     *
      */
     public function __construct()
     {
@@ -29,8 +27,7 @@ class Registrar
     {
         $user = $this->cache->retrieve($id);
 
-        if (! $user)
-        {
+        if (! $user) {
             $user = $this->northstar->getUser('id', $id);
 
             // @TODO - How long should we store users in Cache?
