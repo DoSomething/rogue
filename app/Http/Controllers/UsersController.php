@@ -24,10 +24,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-
+        // $this->registrar->find('559442cca59dbfc9578b4bf4');
         // dd($this->registrar->find('559442cca59dbfc9578b4bf4'));
 
-        $this->registrar->flush();
         dd($this->registrar->findAll(['5571f4f5a59dbf3c7a8b4569', '559442cca59dbfc9578b4bf4']));
 
         // dd($this->registrar);

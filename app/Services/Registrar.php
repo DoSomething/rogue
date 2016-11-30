@@ -3,10 +3,11 @@
 namespace Rogue\Services;
 
 use \DoSomething\Gateway\Northstar;
-use Illuminate\Support\Facades\Cache;
+use Rogue\Repositories\CacheRepository;
 
 class Registrar
 {
+
     /**
      * Create new Registrar instance.
      *
@@ -14,19 +15,21 @@ class Registrar
     public function __construct()
     {
         $this->northstar = gateway('northstar');
+        $this->cache = new CacheRepository;
     }
 
     public function find($id)
     {
         // First look in cache
-        $user = Cache::get($id);
+        $user = $this->cache->retrieve($id);
 
         // If not look to Northstar and store in cache
         if (! $user)
         {
             $user = $this->northstar->getUser('id', $id);
 
-            Cache::put($user->id, $user, 15);
+            // @TODO - How long should we store users in Cache?
+            $this->cache->store($user->id, $user);
         }
 
         return $user;
@@ -35,7 +38,7 @@ class Registrar
     public function findAll(array $ids = [])
     {
         if ($ids) {
-            $users = $this->retrieveMany($ids);
+            $users = $this->cache->retrieveMany($ids);
 
             if (! $users) {
                 $users = $this->getBatchedCollection($ids);
@@ -43,7 +46,7 @@ class Registrar
                 if (count($users)) {
                     $group = $users->keyBy('id')->all();
 
-                    Cache::putMany($group, 15);
+                    $this->cache->storeMany($group);
                 }
             } else {
                 $users = $this->resolveMissingUsers($users);
@@ -57,45 +60,6 @@ class Registrar
     }
 
     /**
-     * @todo - MOVE TO HELPER CLASS (REPO?)
-     * Remove all items from the cache.
-     *
-     * @return void
-     */
-    public function flush()
-    {
-        Cache::flush();
-    }
-
-    /**
-     * @todo - MOVE TO HELPER CLASS (REPO?)
-     * Retrieve multiple items from the cache by key.
-     * Items not found in the cache will have a null value.
-     *
-     * @param  array  $keys
-     * @return array|null
-     */
-    protected function retrieveMany(array $keys)
-    {
-        $retrieved = [];
-
-        $data = Cache::many($keys);
-
-        foreach ($data as $item) {
-            if ($item) {
-                $retrieved[] = $item;
-            }
-        }
-
-        if (count($retrieved)) {
-            return $data;
-        }
-
-        return null;
-    }
-
-    /**
-     * @todo - MOVE TO HELPER CLASS (REPO?)
      * Resolving missing cached users in a user cache collection.
      *
      * @param  array $users
@@ -141,5 +105,4 @@ class Registrar
 
         return collect($data);
     }
-
 }
