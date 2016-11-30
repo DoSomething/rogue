@@ -18,12 +18,17 @@ class Registrar
         $this->cache = new CacheRepository;
     }
 
+    /**
+     * Finds a single user in the Rogue/Northstar system. If the user is not found
+     * in the Cache, then we grab it directly from Northstar and store in cache.
+     *
+     * @param  string $id
+     * @return object $user Northstar user object
+     */
     public function find($id)
     {
-        // First look in cache
         $user = $this->cache->retrieve($id);
 
-        // If not look to Northstar and store in cache
         if (! $user)
         {
             $user = $this->northstar->getUser('id', $id);
@@ -35,6 +40,12 @@ class Registrar
         return $user;
     }
 
+    /**
+     * Finds a group of users in the Rogue/Northstar system.
+     *
+     * @param  array $ids
+     * @return array $users|null
+     */
     public function findAll(array $ids = [])
     {
         if ($ids) {
@@ -85,7 +96,6 @@ class Registrar
      */
     protected function getBatchedCollection($ids, $size = 50)
     {
-        // @TODO: Should this be a function in Northstar Client?
         $count = intval(ceil(count($ids) / 50));
         $index = 0;
         $data = [];

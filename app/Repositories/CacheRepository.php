@@ -104,10 +104,6 @@ class CacheRepository
      */
     public function resolveMissingItems($items)
     {
-        // @TODO: maybe this should run in the retrieveMany() method?
-        // @TODO: May want to check if calling Class has find() method using method_exists($object, $method_name).
-        // @TODO: Might also be faster to collect the missing items and do a getAll() instead of find() for each individually.
-
         foreach ($items as $key => $value) {
             if ($value === false || $value === null) {
                 if (property_exists($this, 'prefix')) {
