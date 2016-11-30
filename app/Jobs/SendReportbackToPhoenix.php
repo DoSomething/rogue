@@ -47,7 +47,7 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
         if ($this->hasFile) {
             $reportbackItem = $this->reportback->items()->orderBy('created_at', 'desc')->first();
             $body['file_url'] = is_null($reportbackItem->edited_file_url) ? $reportbackItem->file_url : $reportbackItem->edited_file_url;
-            $body['caption'] = $reportbackItem->caption;
+            $body['caption'] = isset($reportbackItem->caption) ? $reportbackItem->caption : null;
             $body['source'] = $reportbackItem->source;
         }
 
