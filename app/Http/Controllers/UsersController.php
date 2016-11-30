@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Services\Registrar as Registrar;
+use Rogue\Models\User;
 
 class UsersController extends Controller
 {
@@ -18,10 +19,16 @@ class UsersController extends Controller
     }
 
     /**
-     * List of Rogue users.
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        $ids = User::all()->pluck('northstar_id')->all();
 
+        $users = $this->registrar->findAll($ids);
+
+        return view('users.index', compact('users'));
     }
 }
