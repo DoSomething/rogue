@@ -2,7 +2,8 @@
 
 namespace Rogue\Http\Controllers;
 
-use DoSomething\Gateway\Northstar;
+use Rogue\Services\Registrar as Registrar;
+use Rogue\Models\User;
 
 class UsersController extends Controller
 {
@@ -12,8 +13,22 @@ class UsersController extends Controller
      */
     protected $northstar;
 
-    public function __construct(Northstar $northstar)
+    public function __construct(Registrar $registrar)
     {
-        $this->northstar = $northstar;
+        $this->registrar = $registrar;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $ids = User::all()->pluck('northstar_id')->all();
+
+        $users = $this->registrar->findAll($ids);
+
+        return view('users.index', compact('users'));
     }
 }
