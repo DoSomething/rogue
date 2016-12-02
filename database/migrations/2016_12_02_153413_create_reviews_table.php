@@ -25,7 +25,7 @@ class CreateReviewsTable extends Migration
 
             $table->string('status')->nullable();
             $table->string('old_status')->nullable();
-            $table->text('description')->nullable()->comment('A comment left by the reviewer when reviewing.');
+            $table->text('comment')->nullable()->comment('A comment left by the reviewer when reviewing.');
             $table->timestamps();
         });
     }
