@@ -23,7 +23,7 @@ class CreatePhotosTable extends Migration
             $table->string('file_url')->comment('The url of the file on s3.');
             $table->string('edited_file_url')->nullable()->comment('The url of the edited file on s3.');
             $table->string('caption')->nullable();
-            $table->string('status')->nullable()->default('pending');
+            $table->string('status')->nullable()->index()->default('pending');
             $table->timestamps();
         });
     }

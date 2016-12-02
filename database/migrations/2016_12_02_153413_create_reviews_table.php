@@ -22,8 +22,8 @@ class CreateReviewsTable extends Migration
             $table->string('northstar_id')->index()->comment('The user that submitted the thing being reviewed');
             $table->string('admin_northstar_id')->index()->comment('The NS id of the admin doing the reviewing');
 
-            $table->string('status')->nullable();
-            $table->string('old_status')->nullable();
+            $table->string('status')->index()->nullable();
+            $table->string('old_status')->index()->nullable();
             $table->text('comment')->nullable()->comment('A comment left by the reviewer when reviewing.');
             $table->timestamps();
         });
