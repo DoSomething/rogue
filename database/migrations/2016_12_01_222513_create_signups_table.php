@@ -14,7 +14,7 @@ class CreateSignupsTable extends Migration
     {
         Schema::create('signups', function (Blueprint $table) {
             $table->increments('id')->comment('Primary key.');
-            $table->integer('event_id')->unsigned()->comment('The event ID');
+            $table->integer('event_id')->unsigned()->index()->comment('The event ID');
             $table->foreign('event_id')->references('id')->on('events');
             $table->string('northstar_id')->index()->comment('The users Northstar ID');
             $table->integer('campaign_id')->index()->comment('The campaign node id the event happened on');

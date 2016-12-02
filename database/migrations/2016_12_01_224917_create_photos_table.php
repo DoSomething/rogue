@@ -13,10 +13,10 @@ class CreatePhotosTable extends Migration
     public function up()
     {
         Schema::create('photos', function (Blueprint $table) {
-            $table->integer('event_id')->unsigned()->comment('The event this post corresponds to.');
+            $table->integer('event_id')->unsigned()->index()->comment('The event this post corresponds to.');
             $table->foreign('event_id')->references('id')->on('events');
 
-            $table->integer('signup_id')->unsigned()->comment('The signup this Post references.');
+            $table->integer('signup_id')->unsigned()->index()->comment('The signup this Post references.');
             $table->foreign('signup_id')->references('id')->on('signups');
 
             $table->string('northstar_id')->index()->comment('The users Northstar ID');
