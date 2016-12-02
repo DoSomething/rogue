@@ -4,14 +4,14 @@ namespace Rogue\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Signup extends Model
+class Photo extends Model
 {
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'event_type', 'submission_type'];
+    protected $fillable = ['event_id', 'signup_id', 'northstar_id', 'file_url', 'edited_file_url', 'caption', 'status'];
 
     //@TODO relationships.
 }

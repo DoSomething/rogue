@@ -12,4 +12,6 @@ class Event extends Model
      * @var array
      */
     protected $fillable = ['id', 'northstar_id', 'event_type', 'submission_type'];
+
+    //@TODO relationships.
 }
