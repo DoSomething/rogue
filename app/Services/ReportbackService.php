@@ -39,9 +39,11 @@ class ReportbackService
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
 
-        // POST reportback back to Phoenix.
+        // POST reportback back to Phoenix, unless told not to.
         // If request fails, record in failed_jobs table.
-        dispatch(new SendReportbackToPhoenix($reportback));
+        if (! $data['do_not_forward']) {
+            dispatch(new SendReportbackToPhoenix($reportback));
+        }
 
         return $reportback;
     }
@@ -62,9 +64,11 @@ class ReportbackService
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
 
-        // POST reportback update back to Phoenix.
+        // POST reportback back to Phoenix, unless told not to.
         // If request fails, record in failed_jobs table.
-        dispatch(new SendReportbackToPhoenix($reportback, isset($data['file'])));
+        if (! $data['do_not_forward']) {
+            dispatch(new SendReportbackToPhoenix($reportback, isset($data['file'])));
+        }
 
         return $reportback;
     }
