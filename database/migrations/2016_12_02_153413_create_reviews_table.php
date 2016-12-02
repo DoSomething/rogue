@@ -19,8 +19,7 @@ class CreateReviewsTable extends Migration
             $table->integer('signup_id')->unsigned()->index()->comment('The signup this Post references.');
             $table->foreign('signup_id')->references('id')->on('signups');
 
-            $table->string('northstar_id')->index()->comment('The user that submitted the thing being reviewed
-');
+            $table->string('northstar_id')->index()->comment('The user that submitted the thing being reviewed');
             $table->string('admin_northstar_id')->index()->comment('The NS id of the admin doing the reviewing');
 
             $table->string('status')->nullable();
