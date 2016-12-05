@@ -41,7 +41,7 @@ class ReportbackService
 
         // POST reportback back to Phoenix, unless told not to.
         // If request fails, record in failed_jobs table.
-        if (! $data['do_not_forward']) {
+        if (! isset($data['do_not_forward'])) {
             dispatch(new SendReportbackToPhoenix($reportback));
         }
 
@@ -66,7 +66,7 @@ class ReportbackService
 
         // POST reportback back to Phoenix, unless told not to.
         // If request fails, record in failed_jobs table.
-        if (! $data['do_not_forward']) {
+        if (! isset($data['do_not_forward'])) {
             dispatch(new SendReportbackToPhoenix($reportback, isset($data['file'])));
         }
 
