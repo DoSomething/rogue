@@ -30,8 +30,8 @@ class AWS
         $extension = $this->guessExtension($data);
 
         // Make sure we're only uploading valid image types
-        if (! in_array($extension, ['jpeg', 'png'])) {
-            throw new UnprocessableEntityHttpException('Invalid file type. Upload a JPEG or PNG.');
+        if (! in_array($extension, ['jpeg', 'png', 'gif'])) {
+            throw new UnprocessableEntityHttpException('Invalid file type. Upload a JPEG, PNG or GIF.');
         }
 
         // Add a unique timestamp (e.g. uploads/folder/filename-1456498664.jpeg) to
