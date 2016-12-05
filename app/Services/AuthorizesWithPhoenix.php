@@ -2,8 +2,8 @@
 
 namespace Rogue\Services;
 
-use GuzzleHttp\Cookie\CookieJar;
 use Cache;
+use GuzzleHttp\Cookie\CookieJar;
 
 trait AuthorizesWithPhoenix
 {

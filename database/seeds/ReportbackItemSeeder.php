@@ -2,8 +2,8 @@
 
 use Rogue\Models\Reaction;
 use Rogue\Models\Reportback;
-use Rogue\Models\ReportbackItem;
 use Illuminate\Database\Seeder;
+use Rogue\Models\ReportbackItem;
 
 class ReportbackItemSeeder extends Seeder
 {

@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Services\Registrar as Registrar;
 use Rogue\Models\User;
+use Rogue\Services\Registrar as Registrar;
 
 class UsersController extends Controller
 {

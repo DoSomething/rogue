@@ -1,9 +1,9 @@
 <?php
 
 use Faker\Generator;
-use Rogue\Models\Reportback;
-use Rogue\Models\Reaction;
 use Rogue\Models\User;
+use Rogue\Models\Reaction;
+use Rogue\Models\Reportback;
 
 /*
 |--------------------------------------------------------------------------

@@ -3,8 +3,8 @@
 namespace Rogue\Services;
 
 use Rogue\Models\Reportback;
-use Rogue\Repositories\ReportbackRepository;
 use Rogue\Jobs\SendReportbackToPhoenix;
+use Rogue\Repositories\ReportbackRepository;
 
 class ReportbackService
 {
