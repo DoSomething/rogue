@@ -2,12 +2,12 @@
 
 namespace Rogue\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
 use Rogue\Models\Reportback;
-use Rogue\Http\Requests\ReportbackRequest;
 use Rogue\Services\ReportbackService;
+use Rogue\Http\Requests\ReportbackRequest;
 use Rogue\Http\Transformers\ReportbackTransformer;
 use Rogue\Http\Transformers\ReportbackItemTransformer;
-use Illuminate\Http\Request;
 
 class ReportbackController extends ApiController
 {

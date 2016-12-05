@@ -2,10 +2,10 @@
 
 namespace Rogue\Repositories;
 
+use Rogue\Services\AWS;
 use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackLog;
 use Rogue\Models\ReportbackItem;
-use Rogue\Services\AWS;
 
 class ReportbackRepository
 {

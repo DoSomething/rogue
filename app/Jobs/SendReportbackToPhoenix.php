@@ -2,11 +2,11 @@
 
 namespace Rogue\Jobs;
 
+use Rogue\Services\Phoenix;
+use Rogue\Models\Reportback;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Rogue\Services\Phoenix;
-use Rogue\Models\Reportback;
 
 class SendReportbackToPhoenix extends Job implements ShouldQueue
 {

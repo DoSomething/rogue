@@ -1,8 +1,8 @@
 <?php
 
 use Rogue\Models\Reportback;
-use Rogue\Models\ReportbackLog;
 use Illuminate\Database\Seeder;
+use Rogue\Models\ReportbackLog;
 
 class ReportbackLogSeeder extends Seeder
 {
