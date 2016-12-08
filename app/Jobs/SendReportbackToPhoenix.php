@@ -49,6 +49,7 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
             $body['file_url'] = is_null($reportbackItem->edited_file_url) ? $reportbackItem->file_url : $reportbackItem->edited_file_url;
             $body['caption'] = isset($reportbackItem->caption) ? $reportbackItem->caption : null;
             $body['source'] = $reportbackItem->source;
+            $body['remote_addr'] = $reportbackItem->remote_addr;
         }
 
         $phoenix->postReportback($this->reportback->campaign_id, $body);
