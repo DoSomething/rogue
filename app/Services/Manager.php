@@ -7,7 +7,7 @@ use Rogue\Jobs\SendReportbackToPhoenix;
 use Rogue\Repositories\ReportbackRepository;
 use Rogue\Repositories\EventRepository;
 
-class ReportbackService
+class Manager
 {
     /*
      * Reportback repository instance.

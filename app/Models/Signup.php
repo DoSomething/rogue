@@ -13,5 +13,11 @@ class Signup extends Model
      */
     protected $fillable = ['id', 'event_id', 'northstar_id', 'campaign_id', 'campaign_run_id', 'quantity', 'quantity_pending'];
 
-    //@TODO relationships.
+    /**
+     * Each signup belongs to an event.
+     */
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }

@@ -40,6 +40,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['api', 'log.received.reques
     Route::post('reactions', 'Api\ReactionController@store');
 
     // /reportbacks
-    Route::get('reportbacks', 'Api\ReportbackController@index');
-    Route::post('reportbacks', 'Api\ReportbackController@store');
+    // Route::get('reportbacks', 'Api\ReportbackController@index');
+    // Route::post('reportbacks', 'Api\ReportbackController@store');
+    Route::post('reportbacks', 'Api\PostsController@store');
 });
