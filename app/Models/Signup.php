@@ -11,7 +11,7 @@ class Signup extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'event_type', 'submission_type'];
+    protected $fillable = ['id', 'event_id', 'northstar_id', 'campaign_id', 'campaign_run_id', 'quantity', 'quantity_pending'];
 
     //@TODO relationships.
 }

@@ -4,6 +4,7 @@ namespace Rogue\Services;
 
 use DoSomething\Gateway\Common\RestApiClient;
 use DoSomething\Gateway\ForwardsTransactionIds;
+// use Log;
 
 class Phoenix extends RestApiClient
 {
@@ -37,7 +38,7 @@ class Phoenix extends RestApiClient
     public function postReportback($nid, $body = [])
     {
         $response = $this->post('campaigns/' . $nid . '/reportback', $body);
-
+        // Log::info('phoenix response', ['response' => $response]);
         return is_null($response) ? null : $response;
     }
 }

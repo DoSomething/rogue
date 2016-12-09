@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue;
+namespace Rogue\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

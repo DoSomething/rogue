@@ -5,6 +5,7 @@ namespace Rogue\Services;
 use Rogue\Models\Reportback;
 use Rogue\Jobs\SendReportbackToPhoenix;
 use Rogue\Repositories\ReportbackRepository;
+use Rogue\Repositories\EventRepository;
 
 class ReportbackService
 {
@@ -20,9 +21,10 @@ class ReportbackService
      *
      * @param \Rogue\Repositories\ReportbackRepository $reportbackRepository
      */
-    public function __construct(ReportbackRepository $reportbackRepository)
+    public function __construct(ReportbackRepository $reportbackRepository, EventRepository $EventRepository)
     {
         $this->reportbackRepository = $reportbackRepository;
+        $this->event = $EventRepository;
     }
 
     /*
@@ -34,18 +36,25 @@ class ReportbackService
      */
     public function create($data, $transactionId)
     {
-        $reportback = $this->reportbackRepository->create($data);
-
-        // Add new transaction id to header.
-        request()->headers->set('X-Request-ID', $transactionId);
-
-        // POST reportback back to Phoenix, unless told not to.
-        // If request fails, record in failed_jobs table.
-        if (! isset($data['do_not_forward'])) {
-            dispatch(new SendReportbackToPhoenix($reportback));
+        // @todo check for 'legacy' flag in the request to decide to use event repository or the old reportback repository.
+        if (! isset($data['legacy'])) {
+            $response = $this->event->create($data);
+            dd($response);
         }
 
-        return $reportback;
+        return $response;
+        // $reportback = $this->reportbackRepository->create($data);
+
+        // // Add new transaction id to header.
+        // request()->headers->set('X-Request-ID', $transactionId);
+
+        // // POST reportback back to Phoenix, unless told not to.
+        // // If request fails, record in failed_jobs table.
+        // if (! isset($data['do_not_forward'])) {
+        //     dispatch(new SendReportbackToPhoenix($reportback));
+        // }
+
+        // return $reportback;
     }
 
     /*
