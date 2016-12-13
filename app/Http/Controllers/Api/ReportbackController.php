@@ -38,10 +38,6 @@ class ReportbackController extends ApiController
     {
         $transactionId = incrementTransactionId($request);
 
-        // TEMP - just hardcodeing some params in the request that the client would normally set on it's end in this new world.
-        $request['event_type'] = 'post_photo';
-        $request['submission_type'] = 'user';
-
         // @TODO - instead should probably just have a method that gets northstar_id by default from a drupal_id if that is the only thing provided and then use that to find the reportback.
         $userId = $request['northstar_id'] ? $request['northstar_id'] : $request['drupal_id'];
         $type = $request['northstar_id'] ? 'northstar_id' : 'drupal_id';
@@ -63,7 +59,7 @@ class ReportbackController extends ApiController
             $code = 201;
         }
 
-        // return $this->item($reportback, $code);
+        return $this->item($reportback, $code);
     }
 
     /**

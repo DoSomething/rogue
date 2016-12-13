@@ -7,6 +7,7 @@ use Rogue\Models\Event;
 use Rogue\Models\Signup;
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
+use Rogue\Http\Transformers\PhotoTransformer;
 
 use Rogue\Http\Requests;
 
@@ -22,6 +23,11 @@ class PostsController extends ApiController
      * The signup repository instance.
      */
     protected $signups;
+
+    /**
+     * @var \League\Fractal\TransformerAbstract;
+     */
+    protected $transformer;
 
     /**
      * Create a controller instance.
@@ -45,10 +51,9 @@ class PostsController extends ApiController
     {
         $transactionId = incrementTransactionId($request);
 
-        // @TODO - Remove. This is temporary. Just hardcoding some params in the request that the client would normally pass. But we assume everything is a photo post at the moment.
+        // @TODO - Remove. This is temporary. Just hardcoding some params in the request that the client would normally pass. But we assume everything is a photo post from a user at the moment.
         $request['event_type'] = 'post_photo';
         $request['submission_type'] = 'user';
-
 
         $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
 
@@ -57,8 +62,28 @@ class PostsController extends ApiController
             $signup = $this->signups->create($request->all());
         }
 
-        $this->posts->create($request->all(), $signup->id, $transactionId);
+        $post = $this->posts->create($request->all(), $signup->id, $transactionId);
 
-        dd('done');
+        if ($post) {
+            $code = 200;
+        }
+
+        return $this->resolvePostTransformer($post, $code);
+    }
+
+    protected function resolvePostTransformer($model, $code)
+    {
+        $class = get_class($model);
+
+        switch ($class) {
+            case 'Rogue\Models\Photo':
+                $this->transformer = new PhotoTransformer;
+
+                return $this->item($model, $code);
+
+                break;
+            default:
+                break;
+        }
     }
 }
