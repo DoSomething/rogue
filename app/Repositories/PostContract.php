@@ -5,22 +5,11 @@ namespace Rogue\Repositories;
 interface PostContract
 {
     /**
-     * Find the specified resource in the repository.
+     * Create a post.
      *
-     * @param  string  $id
-     * @return object
+     * @param  array $data
+     * @param  int  $signupId
+     * @return Illuminate\Database\Eloquent\Model
      */
-    // public function find($id);
-
-    // public function get($northstarId, $campaignId, $campaignRunId);
-
-    /**
-     * Get collection of all resources or set of resources by ids.
-     *
-     * @param  array  $ids
-     * @return \Illuminate\Support\Collection
-     */
-    // public function getAll(array $ids = []);
-
-    public function create($signupId, array $data = []);
+    public function create(array $data = [], $signupId);
 }

@@ -34,11 +34,11 @@ class PhotoRepository implements PostContract
     /**
      * Create an event.
      *
-     * @param  int $signupId
      * @param  array $data
+     * @param  int $signupId
      * @return \Rogue\Models\Photo|null
      */
-    public function create($signupId, array $data = [])
+    public function create(array $data = [], $signupId)
     {
         $postEvent = Event::create($data);
 

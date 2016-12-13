@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Rogue\Models\Event;
 use Rogue\Models\Signup;
-use Rogue\Repositories\PostContract;
+use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
 
 use Rogue\Http\Requests;
@@ -14,7 +14,7 @@ class PostsController extends ApiController
 {
 
     /**
-     * The photo repository instance.
+     * The photo service instance.
      */
     protected $posts;
 
@@ -29,7 +29,7 @@ class PostsController extends ApiController
      * @param  PostContract  $posts
      * @return void
      */
-    public function __construct(PostContract $posts, SignupRepository $signups)
+    public function __construct(PostService $posts, SignupRepository $signups)
     {
         $this->posts = $posts;
         $this->signups = $signups;
@@ -43,9 +43,9 @@ class PostsController extends ApiController
      */
     public function store(Request $request)
     {
-        // $transactionId = incrementTransactionId($request);
+        $transactionId = incrementTransactionId($request);
 
-        // TEMP - just hardcoding some params in the request that the client would normally set on its end in this new world.
+        // @TODO - Remove. This is temporary. Just hardcoding some params in the request that the client would normally pass. But we assume everything is a photo post at the moment.
         $request['event_type'] = 'post_photo';
         $request['submission_type'] = 'user';
 
@@ -57,53 +57,8 @@ class PostsController extends ApiController
             $signup = $this->signups->create($request->all());
         }
 
-        $this->posts->create($signup->id, $request->all());
+        $this->posts->create($request->all(), $signup->id, $transactionId);
 
         dd('done');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
