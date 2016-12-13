@@ -15,7 +15,7 @@ class SignupRepository
      */
     public function create($data)
     {
-        // First or create here? We should retrict creting the event if it already exists. But users could have multiple signup events so maybe not.
+        // @todo - throw errors on non-nullable columns.
         $event = Event::create([
             'northstar_id' => $data['northstar_id'],
             'event_type' => 'signup',
@@ -28,14 +28,15 @@ class SignupRepository
             'campaign_id' => $data['campaign_id'],
             'campaign_run_id' => $data['campaign_run_id'],
             'quantity' => null,
-            'quantity_pending' => $data['quantity']
+            'quantity_pending' => $data['quantity'],
+            'why_participated' => $data['why_participated'],
         ]);
 
-        return $signup; // Append events?
+        return $signup;
     }
 
     /**
-     * Get a signup.
+     * Get a signup
      *
      * @param  string $northstarId
      * @param  int $campaignId

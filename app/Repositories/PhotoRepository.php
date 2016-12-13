@@ -7,9 +7,8 @@ use Rogue\Models\Event;
 use Rogue\Models\Signup;
 use Rogue\Models\Photo;
 
-class PhotoRepository
+class PhotoRepository implements PostContract
 {
-
     /**
      * AWS service class instance.
      *
@@ -39,7 +38,7 @@ class PhotoRepository
      * @param  array $data
      * @return \Rogue\Models\Photo|null
      */
-    public function create($signupId, $data)
+    public function create($signupId, array $data = [])
     {
         $postEvent = Event::create($data);
 

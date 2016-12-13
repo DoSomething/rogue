@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Rogue\Models\Event;
 use Rogue\Models\Signup;
-use Rogue\Repositories\PhotoRepository;
+use Rogue\Repositories\PostContract;
 use Rogue\Repositories\SignupRepository;
 
 use Rogue\Http\Requests;
@@ -16,7 +16,7 @@ class PostsController extends ApiController
     /**
      * The photo repository instance.
      */
-    protected $photos;
+    protected $posts;
 
     /**
      * The signup repository instance.
@@ -26,12 +26,12 @@ class PostsController extends ApiController
     /**
      * Create a controller instance.
      *
-     * @param  PhotoRepository  $photos
+     * @param  PostContract  $posts
      * @return void
      */
-    public function __construct(PhotoRepository $photos, SignupRepository $signups)
+    public function __construct(PostContract $posts, SignupRepository $signups)
     {
-        $this->photos = $photos;
+        $this->posts = $posts;
         $this->signups = $signups;
     }
 
@@ -52,26 +52,14 @@ class PostsController extends ApiController
 
         $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
 
-        // @TODO - should we eventually throw an error if a signup doesn't exist before a post is created?
+        // @TODO - should we eventually throw an error if a signup doesn't exist before a post is created? I create one here because we haven't implemented sending signups to rogue yet, so it will have to create a signup record for all posts.
         if (is_null($signup)) {
             $signup = $this->signups->create($request->all());
         }
 
-        switch ($request['event_type']) {
-            case 'post_photo':
-                $this->photos->create($signup->id, $request->all());
+        $this->posts->create($signup->id, $request->all());
 
-                break;
-            case 'video':
-                // send to the video repository
-                break;
-            case 'text':
-                // send to the text repository
-                break;
-            default:
-                // Maybe default to the event repository
-                break;
-        }
+        dd('done');
     }
 
     /**
