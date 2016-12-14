@@ -12,7 +12,7 @@ class CascadeDeleteForiegnKeys extends Migration
      */
     public function up()
     {
-        Schema::table('signups', function ($table) {
+        Schema::table('signups', function (Blueprint $table) {
             $table->dropForeign('signups_event_id_foreign');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
         });
@@ -41,7 +41,7 @@ class CascadeDeleteForiegnKeys extends Migration
      */
     public function down()
     {
-        Schema::table('signups', function ($table) {
+        Schema::table('signups', function (Blueprint $table) {
             $table->dropForeign('signups_event_id_foreign');
             $table->foreign('event_id')->references('id')->on('events');
         });

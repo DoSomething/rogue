@@ -42,7 +42,6 @@ class SendPostToPhoenix extends Job implements ShouldQueue
      */
     public function handle()
     {
-
         $phoenix = new Phoenix;
 
         // Data that every post will have
