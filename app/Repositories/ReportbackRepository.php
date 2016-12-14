@@ -66,6 +66,8 @@ class ReportbackRepository
     {
         if (isset($data['file'])) {
             $reportback = $this->addItem($reportback, $data);
+        } elseif (isset($data['default_image'])) {
+            $reportback = $this->addItem($reportback, $data);
         }
 
         $reportback->fill(array_only($data, ['quantity', 'why_participated', 'num_participants', 'flagged', 'flagged_reason', 'promoted', 'promoted_reason']));
@@ -127,6 +129,11 @@ class ReportbackRepository
 
                 $data['edited_file_url'] = $this->aws->storeImage($editedImage, 'edited_' . $data['campaign_id']);
             }
+
+            $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'edited_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
+        } elseif (isset($data['default_image'])) {
+            // @TODO: figure out how to set the default url
+            $data['file_url'] = 'default image url goes here';
 
             $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'edited_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr', 'default_image']));
         }
