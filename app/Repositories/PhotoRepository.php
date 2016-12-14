@@ -2,10 +2,9 @@
 
 namespace Rogue\Repositories;
 
-use Rogue\Services\AWS;
 use Rogue\Models\Event;
-use Rogue\Models\Signup;
 use Rogue\Models\Photo;
+use Rogue\Services\AWS;
 use Rogue\Services\Registrar;
 
 class PhotoRepository
@@ -40,7 +39,7 @@ class PhotoRepository
      * @param  int $signupId
      * @return \Rogue\Models\Photo|null
      */
-    public function create(array $data = [], $signupId)
+    public function create(array $data, $signupId)
     {
         $postEvent = Event::create($data);
 

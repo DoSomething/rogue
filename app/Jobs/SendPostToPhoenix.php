@@ -2,9 +2,8 @@
 
 namespace Rogue\Jobs;
 
-use Rogue\Services\Phoenix;
 use Rogue\Models\Photo;
-use Illuminate\Queue\SerializesModels;
+use Rogue\Services\Phoenix;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -48,7 +47,7 @@ class SendPostToPhoenix extends Job implements ShouldQueue
 
         // Data that every post will have
         $body = [
-            'uid' => 12345,// Grab drupal_id from northstar object?
+            'uid' => 12345, // Grab drupal_id from northstar object?
             'nid' => $this->photo->signup->campaign_id,
             'quantity' => $this->photo->signup->quantity,
             'why_participated' => $this->photo->signup->why_participated,

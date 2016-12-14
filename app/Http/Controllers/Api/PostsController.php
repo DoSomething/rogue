@@ -2,18 +2,14 @@
 
 namespace Rogue\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use Rogue\Models\Event;
 use Rogue\Models\Signup;
+use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Transformers\PhotoTransformer;
 
-use Rogue\Http\Requests;
-
 class PostsController extends ApiController
 {
-
     /**
      * The photo service instance.
      *

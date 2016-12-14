@@ -2,7 +2,6 @@
 
 namespace Rogue\Services;
 
-use Rogue\Models\Photo;
 use Rogue\Jobs\SendPostToPhoenix;
 use Rogue\Repositories\PhotoRepository;
 

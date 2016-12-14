@@ -40,7 +40,7 @@ class PhotoTransformer extends TransformerAbstract
                 'status' => $photo->status,
                 'created_at' => $photo->created_at->toIso8601String(),
                 'updated_at' => $photo->updated_at->toIso8601String(),
-            ]
+            ],
         ];
     }
 
