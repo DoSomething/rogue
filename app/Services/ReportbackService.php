@@ -5,7 +5,6 @@ namespace Rogue\Services;
 use Rogue\Models\Reportback;
 use Rogue\Jobs\SendReportbackToPhoenix;
 use Rogue\Repositories\ReportbackRepository;
-use Rogue\Repositories\EventRepository;
 
 class ReportbackService
 {
@@ -21,10 +20,9 @@ class ReportbackService
      *
      * @param \Rogue\Repositories\ReportbackRepository $reportbackRepository
      */
-    public function __construct(ReportbackRepository $reportbackRepository, EventRepository $EventRepository)
+    public function __construct(ReportbackRepository $reportbackRepository)
     {
         $this->reportbackRepository = $reportbackRepository;
-        $this->event = $EventRepository;
     }
 
     /*

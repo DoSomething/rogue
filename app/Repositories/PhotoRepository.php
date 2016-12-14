@@ -6,6 +6,7 @@ use Rogue\Services\AWS;
 use Rogue\Models\Event;
 use Rogue\Models\Signup;
 use Rogue\Models\Photo;
+use Rogue\Services\Registrar;
 
 class PhotoRepository implements PostContract
 {
@@ -26,9 +27,10 @@ class PhotoRepository implements PostContract
     /**
      * Constructor
      */
-    public function __construct(AWS $aws)
+    public function __construct(AWS $aws, Registrar $registrar)
     {
         $this->aws = $aws;
+        $this->registrar = $registrar;
     }
 
     /**
@@ -57,6 +59,8 @@ class PhotoRepository implements PostContract
             'source' => $data['source'],
             'remote_addr' => $data['remote_addr'],
         ]);
+
+        $this->registrar->find($data['northstar_id']);
 
         return $photo;
     }

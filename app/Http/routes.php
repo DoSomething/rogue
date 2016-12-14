@@ -44,7 +44,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['api', 'log.received.reques
     Route::post('reportbacks', 'Api\ReportbackController@store');
 });
 
-// Legacy API Routes
+// v2 routes
 Route::group(['prefix' => 'api/v2', 'middleware' => ['api', 'log.received.request']], function () {
     Route::post('posts', 'Api\PostsController@store');
 });

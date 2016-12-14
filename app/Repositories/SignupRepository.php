@@ -15,7 +15,6 @@ class SignupRepository
      */
     public function create($data)
     {
-        // @todo - throw errors on non-nullable columns.
         $event = Event::create([
             'northstar_id' => $data['northstar_id'],
             'event_type' => 'signup',

@@ -50,9 +50,6 @@ class ReportbackController extends ApiController
             $reportback = $this->reportbackService->create($request->all(), $transactionId);
 
             $code = 200;
-
-            // TEMPORARY REMOVE THIS
-            return $reportback;
         } else {
             $reportback = $this->reportbackService->update($reportback, $request->all(), $transactionId);
 

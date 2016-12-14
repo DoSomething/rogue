@@ -4,7 +4,6 @@ namespace Rogue\Services;
 
 use DoSomething\Gateway\Common\RestApiClient;
 use DoSomething\Gateway\ForwardsTransactionIds;
-// use Log;
 
 class Phoenix extends RestApiClient
 {
