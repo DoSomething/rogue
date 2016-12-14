@@ -4,25 +4,26 @@ namespace Rogue\Services;
 
 use Rogue\Models\Photo;
 use Rogue\Jobs\SendPostToPhoenix;
-use Rogue\Repositories\PostContract;
+use Rogue\Repositories\PhotoRepository;
 
 class PostService
 {
     /*
-     * Post contract
+     * PhotoRepository Instance
      *
-     * @var Rogue\Repositories\PostContract;
+     * @var Rogue\Repositories\PhotoRepository;
      */
-    protected $posts;
+    protected $post;
 
     /**
      * Constructor
      *
-     * @param \Rogue\Repositories\PostContract $posts
+     * @param \Rogue\Repositories\PhotoRepository $photos
      */
-    public function __construct(PostContract $posts)
+    public function __construct(PhotoRepository $post)
     {
-        $this->posts = $posts;
+        // @TODO - Eventually would want to figure out a smarter way of resolving different repositories to use for a post i.e. Video, text, etc.
+        $this->post = $post;
     }
 
     /*
@@ -35,7 +36,7 @@ class PostService
      */
     public function create($data, $signupId, $transactionId)
     {
-        $post = $this->posts->create($data, $signupId);
+        $post = $this->post->create($data, $signupId);
 
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
