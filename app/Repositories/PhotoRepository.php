@@ -54,6 +54,8 @@ class PhotoRepository implements PostContract
             'edited_file_url' => $editedImage,
             'caption' => $data['caption'],
             'status' => isset($data['status']) ? $data['status'] : 'pending',
+            'source' => $data['source'],
+            'remote_addr' => $data['remote_addr'],
         ]);
 
         return $photo;

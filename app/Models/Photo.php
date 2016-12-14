@@ -11,7 +11,7 @@ class Photo extends Model
      *
      * @var array
      */
-    protected $fillable = ['event_id', 'signup_id', 'northstar_id', 'file_url', 'edited_file_url', 'caption', 'status'];
+    protected $fillable = ['event_id', 'signup_id', 'northstar_id', 'file_url', 'edited_file_url', 'caption', 'status', 'source', 'remote_addr'];
 
     /**
      * Each photo belongs to an event.
