@@ -16,11 +16,15 @@ class PostsController extends ApiController
 
     /**
      * The photo service instance.
+     *
+     * @var Rogue\Services\PostService
      */
     protected $posts;
 
     /**
      * The signup repository instance.
+     *
+     * @var Rogue\Repositories\SignupRepository
      */
     protected $signups;
 
