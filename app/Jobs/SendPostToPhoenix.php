@@ -58,10 +58,10 @@ class SendPostToPhoenix extends Job implements ShouldQueue
         if ($this->hasFile) {
             $body['file_url'] = is_null($this->photo->edited_file_url) ? $this->photo->file_url : $this->photo->edited_file_url;
             $body['caption'] = isset($this->photo->caption) ? $this->photo->caption : null;
-            // $body['source'] = $this->photo->source;
-            // $body['remote_addr'] = $reportbackItem->remote_addr;
+            $body['source'] = $this->photo->source;
+            $body['remote_addr'] = $this->photo->remote_addr;
         }
-        dd($body);
-        $phoenix->postReportback($this->reportback->campaign_id, $body);
+
+        $phoenix->postReportback($body);
     }
 }

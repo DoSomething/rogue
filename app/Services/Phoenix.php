@@ -30,15 +30,14 @@ class Phoenix extends RestApiClient
     /**
      * Send a POST request to save a copy of the reportback in Phoenix.
      *
-     * @param string $nid
      * @param array $body
      * @param bool $withAuthorization - Should this request be authorized?
      * @return object|false
      */
-    public function postReportback($nid, $body = [])
+    public function postReportback($body = [])
     {
-        $response = $this->post('campaigns/' . $nid . '/reportback', $body);
-        // Log::info('phoenix response', ['response' => $response]);
+        $response = $this->post('campaigns/' . $body['nid'] . '/reportback', $body);
+
         return is_null($response) ? null : $response;
     }
 }
