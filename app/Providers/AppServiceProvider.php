@@ -34,27 +34,22 @@ class AppServiceProvider extends ServiceProvider
             $request->event_type = 'post_photo';
         }
 
-        if (! is_null($request->event_type))
-        {
-            $this->app->bind('Rogue\Repositories\PostContract', function ($app) use ($request) {
+        $this->app->bind('Rogue\Repositories\PostContract', function ($app) use ($request) {
 
-                switch ($request->event_type) {
-                    case 'post_photo':
-                        return $app->make('Rogue\Repositories\PhotoRepository');
+            switch ($request->event_type) {
+                case 'post_photo':
+                    return $app->make('Rogue\Repositories\PhotoRepository');
 
-                        break;
-                    case 'video':
-                        // send to the video repository
-                        break;
-                    case 'text':
-                        // send to the text repository
-                        break;
-                    default:
-                        break;
-                }
-            });
-        } else {
-            // Throw error.
-        }
+                    break;
+                case 'video':
+                    // send to the video repository
+                    break;
+                case 'text':
+                    // send to the text repository
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 }

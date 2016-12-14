@@ -75,6 +75,13 @@ class PostsController extends ApiController
         return $this->resolvePostTransformer($post, $code);
     }
 
+    /**
+     * Decides how to transform a post based on what kind of post it is.
+     *
+     * @param  Illuminate\Database\Eloquent\Model  $model
+     * @param  int  $code
+     * @return \Illuminate\Http\Response
+     */
     protected function resolvePostTransformer($model, $code)
     {
         $class = get_class($model);

@@ -9,7 +9,7 @@ use Rogue\Repositories\PostContract;
 class PostService
 {
     /*
-     * Photo repository instance.
+     * Post contract
      *
      * @var Rogue\Repositories\PostContract;
      */
@@ -18,7 +18,7 @@ class PostService
     /**
      * Constructor
      *
-     * @param \Rogue\Repositories\PhotoRepository $photos
+     * @param \Rogue\Repositories\PostContract $posts
      */
     public function __construct(PostContract $posts)
     {
