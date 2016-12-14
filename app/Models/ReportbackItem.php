@@ -11,7 +11,7 @@ class ReportbackItem extends Model
      *
      * @var array
      */
-    protected $fillable = ['reportback_id', 'file_url', 'edited_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr'];
+    protected $fillable = ['reportback_id', 'file_url', 'edited_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr', 'default_image'];
 
     /**
      * A reportback item belongs to one reportback.
