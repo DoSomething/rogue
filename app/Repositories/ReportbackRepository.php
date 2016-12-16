@@ -66,7 +66,7 @@ class ReportbackRepository
     {
         if (isset($data['file'])) {
             $reportback = $this->addItem($reportback, $data);
-        } elseif (isset($data['default_image'])) {
+        } elseif (array_key_exists('file', $data)) {
             $reportback = $this->addItem($reportback, $data);
         }
 
@@ -131,7 +131,7 @@ class ReportbackRepository
             }
 
             $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'edited_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
-        } elseif (isset($data['default_image'])) {
+        } elseif (array_key_exists('file', $data)) {
             // @TODO: figure out how to set the default url
             $data['file_url'] = 'default';
 
