@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue;
+namespace Rogue\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,5 +13,11 @@ class Event extends Model
      */
     protected $fillable = ['id', 'northstar_id', 'event_type', 'submission_type'];
 
-    //@TODO relationships.
+    /**
+     * An event has one signup.
+     */
+    public function signup()
+    {
+        return $this->hasOne(Signup::class);
+    }
 }

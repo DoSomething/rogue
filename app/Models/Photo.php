@@ -11,7 +11,21 @@ class Photo extends Model
      *
      * @var array
      */
-    protected $fillable = ['event_id', 'signup_id', 'northstar_id', 'file_url', 'edited_file_url', 'caption', 'status'];
+    protected $fillable = ['event_id', 'signup_id', 'northstar_id', 'file_url', 'edited_file_url', 'caption', 'status', 'source', 'remote_addr'];
 
-    //@TODO relationships.
+    /**
+     * Each photo belongs to an event.
+     */
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Each photo belongs to a signup.
+     */
+    public function signup()
+    {
+        return $this->belongsTo(Signup::class);
+    }
 }

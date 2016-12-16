@@ -52,6 +52,6 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
             $body['remote_addr'] = $reportbackItem->remote_addr;
         }
 
-        $phoenix->postReportback($this->reportback->campaign_id, $body);
+        $phoenix->postReportback($body);
     }
 }
