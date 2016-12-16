@@ -132,10 +132,9 @@ class ReportbackRepository
 
             $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'edited_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
         } elseif (array_key_exists('file', $data)) {
-            // @TODO: figure out how to set the default url
             $data['file_url'] = 'default';
 
-            $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'edited_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr', 'default_image']));
+            $reportback->items()->create(array_only($data, ['file_id', 'file_url', 'edited_file_url', 'caption', 'status', 'reviewed', 'reviewer', 'review_source', 'source', 'remote_addr']));
         }
 
         return $reportback;
