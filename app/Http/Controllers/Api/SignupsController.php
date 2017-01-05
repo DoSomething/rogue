@@ -3,7 +3,7 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use Rogue\Repositories\SignupRepository;
+use Rogue\Services\SignupService;
 use Rogue\Http\Transformers\SignupTransformer;
 
 
@@ -17,9 +17,9 @@ class SignupsController extends ApiController
     protected $transformer;
 
     /**
-     * The signup repository instance.
+     * The signup service instance.
      *
-     * @var Rogue\Repositories\SignupRepository
+     * @var Rogue\Services\SignupService
      */
     protected $signups;
 
@@ -29,7 +29,7 @@ class SignupsController extends ApiController
      * @param  PostContract  $posts
      * @return void
      */
-    public function __construct(SignupRepository $signups)
+    public function __construct(SignupService $signups)
     {
         $this->signups = $signups;
     }
@@ -44,7 +44,7 @@ class SignupsController extends ApiController
     {
         $transactionId = incrementTransactionId($request);
 
-        $signup = $this->signups->create($request->all());
+        $signup = $this->signups->create($request->all(), $transactionId);
 
         if ($signup) {
         	$code = '200';
