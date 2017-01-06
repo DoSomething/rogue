@@ -11,7 +11,7 @@ class Signup extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'event_id', 'northstar_id', 'campaign_id', 'campaign_run_id', 'quantity', 'quantity_pending', 'why_participated'];
+    protected $fillable = ['id', 'event_id', 'northstar_id', 'campaign_id', 'campaign_run_id', 'quantity', 'quantity_pending', 'why_participated', 'source'];
 
     /**
      * Each signup belongs to an event.
