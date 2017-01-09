@@ -2,11 +2,11 @@
 
 namespace Rogue\Http\Controllers\Api;
 
-use Rogue\Services\PostService;
-use Rogue\Http\Transformers\PostTransformer;
-use Illuminate\Http\Request;
 use Rogue\Models\Signup;
+use Illuminate\Http\Request;
+use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
+use Rogue\Http\Transformers\PostTransformer;
 
 class PostsController extends ApiController
 {
@@ -43,7 +43,6 @@ class PostsController extends ApiController
         // Now we have one PostTransformer to handle returning a Post to the API request.
         $this->transformer = new PostTransformer;
     }
-
 
     /**
      * Store a newly created resource in storage.

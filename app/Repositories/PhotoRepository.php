@@ -2,9 +2,9 @@
 
 namespace Rogue\Repositories;
 
+use Rogue\Models\Post;
 use Rogue\Models\Event;
 use Rogue\Models\Photo;
-use Rogue\Models\Post;
 use Rogue\Services\AWS;
 use Rogue\Services\Registrar;
 
