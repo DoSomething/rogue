@@ -11,21 +11,31 @@ class Photo extends Model
      *
      * @var array
      */
-    protected $fillable = ['event_id', 'signup_id', 'northstar_id', 'file_url', 'edited_file_url', 'caption', 'status', 'source', 'remote_addr'];
+    protected $fillable = ['signup_id', 'northstar_id', 'file_url', 'edited_file_url', 'caption', 'status', 'source', 'remote_addr'];
 
     /**
-     * Each photo belongs to an event.
+     * Returns a parent Post model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
      */
-    public function event()
+    public function content()
     {
-        return $this->belongsTo(Event::class);
+        return $this->morphOne('Rogue\Models\Post', 'post');
     }
 
-    /**
-     * Each photo belongs to a signup.
-     */
-    public function signup()
-    {
-        return $this->belongsTo(Signup::class);
-    }
+    // /**
+    //  * Each photo belongs to an event.
+    //  */
+    // public function event()
+    // {
+    //     return $this->belongsTo(Event::class);
+    // }
+
+    // /**
+    //  * Each photo belongs to a signup.
+    //  */
+    // public function signup()
+    // {
+    //     return $this->belongsTo(Signup::class);
+    // }
 }

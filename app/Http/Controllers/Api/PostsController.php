@@ -6,7 +6,7 @@ use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
-use Rogue\Http\Transformers\PhotoTransformer;
+use Rogue\Http\Transformers\PostTransformer;
 
 class PostsController extends ApiController
 {
@@ -39,7 +39,9 @@ class PostsController extends ApiController
     {
         $this->posts = $posts;
         $this->signups = $signups;
+        $this->transformer = new PostTransformer;
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -64,33 +66,6 @@ class PostsController extends ApiController
 
         $post = $this->posts->create($request->all(), $signup->id, $transactionId);
 
-        if ($post) {
-            $code = 200;
-        }
-
-        return $this->resolvePostTransformer($post, $code);
-    }
-
-    /**
-     * Decides how to transform a post based on what kind of post it is.
-     *
-     * @param  Illuminate\Database\Eloquent\Model  $model
-     * @param  int  $code
-     * @return \Illuminate\Http\Response
-     */
-    protected function resolvePostTransformer($model, $code)
-    {
-        $class = get_class($model);
-
-        switch ($class) {
-            case 'Rogue\Models\Photo':
-                $this->transformer = new PhotoTransformer;
-
-                return $this->item($model, $code);
-
-                break;
-            default:
-                break;
-        }
+        return $this->item($post);
     }
 }

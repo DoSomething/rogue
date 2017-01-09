@@ -4,6 +4,7 @@ namespace Rogue\Repositories;
 
 use Rogue\Models\Event;
 use Rogue\Models\Photo;
+use Rogue\Models\Post;
 use Rogue\Services\AWS;
 use Rogue\Services\Registrar;
 
@@ -48,8 +49,6 @@ class PhotoRepository
         $editedImage = $this->crop($data);
 
         $photo = Photo::create([
-            'event_id' => $postEvent->id,
-            'signup_id' => $signupId,
             'northstar_id' => $data['northstar_id'],
             'file_url' => $fileUrl,
             'edited_file_url' => $editedImage,
@@ -59,9 +58,19 @@ class PhotoRepository
             'remote_addr' => $data['remote_addr'],
         ]);
 
+        // move in to Post service class as a help?
+        // or a PostRepo that these other specific repos extend?
+        $post = new Post([
+            'event_id' => $postEvent->id,
+            'signup_id' => $signupId,
+        ]);
+
+        $post->postData()->associate($photo);
+        $post->save();
+
         // $this->registrar->find($data['northstar_id']);
 
-        return $photo;
+        return $post;
     }
 
     protected function crop($data)
