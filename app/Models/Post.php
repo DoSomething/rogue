@@ -40,4 +40,12 @@ class Post extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    /**
+     * Each post belongs to a signup.
+     */
+    public function signup()
+    {
+        return $this->belongsTo(Signup::class);
+    }
 }

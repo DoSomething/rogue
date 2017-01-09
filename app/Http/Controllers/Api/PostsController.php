@@ -2,11 +2,11 @@
 
 namespace Rogue\Http\Controllers\Api;
 
-use Rogue\Models\Signup;
-use Illuminate\Http\Request;
 use Rogue\Services\PostService;
-use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Transformers\PostTransformer;
+use Illuminate\Http\Request;
+use Rogue\Models\Signup;
+use Rogue\Repositories\SignupRepository;
 
 class PostsController extends ApiController
 {

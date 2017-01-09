@@ -2,7 +2,7 @@
 
 namespace Rogue\Jobs;
 
-use Rogue\Models\Photo;
+use Rogue\Models\Post;
 use Rogue\Services\Phoenix;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,11 +12,11 @@ class SendPostToPhoenix extends Job implements ShouldQueue
     use InteractsWithQueue;
 
     /*
-     * Photo instance.
+     * Post instance.
      *
-     * @var Rogue\Models\Photo
+     * @var Rogue\Models\Post
      */
-    protected $photo;
+    protected $post;
 
     /*
      * @var bool
@@ -28,9 +28,9 @@ class SendPostToPhoenix extends Job implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Photo $photo, $hasFile = true)
+    public function __construct(Post $post, $hasFile = true)
     {
-        $this->photo = $photo;
+        $this->post = $post;
 
         $this->hasFile = $hasFile;
     }
@@ -47,17 +47,17 @@ class SendPostToPhoenix extends Job implements ShouldQueue
         // Data that every post will have
         $body = [
             'uid' => 12345, // Grab drupal_id from northstar object?
-            'nid' => $this->photo->signup->campaign_id,
-            'quantity' => $this->photo->signup->quantity,
-            'why_participated' => $this->photo->signup->why_participated,
+            'nid' => $this->post->signup->campaign_id,
+            'quantity' => $this->post->signup->quantity,
+            'why_participated' => $this->post->signup->why_participated,
         ];
 
         // Data that everything except an update without a file will have
         if ($this->hasFile) {
-            $body['file_url'] = is_null($this->photo->edited_file_url) ? $this->photo->file_url : $this->photo->edited_file_url;
-            $body['caption'] = isset($this->photo->caption) ? $this->photo->caption : null;
-            $body['source'] = $this->photo->source;
-            $body['remote_addr'] = $this->photo->remote_addr;
+            $body['file_url'] = is_null($this->post->postData->edited_file_url) ? $this->photo->file_url : $this->post->postData->edited_file_url;
+            $body['caption'] = isset($this->post->postData->caption) ? $this->post->postData->caption : null;
+            $body['source'] = $this->post->postData->source;
+            $body['remote_addr'] = $this->post->postData->remote_addr;
         }
 
         $phoenix->postReportback($body);

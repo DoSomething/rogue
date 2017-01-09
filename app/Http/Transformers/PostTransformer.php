@@ -28,8 +28,8 @@ class PostTransformer extends TransformerAbstract
             'event_id' => $post->event_id,
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->postData->northstar_id,
-            // 'campaign_id' => $photo->signup->campaign_id,
-            // 'campaign_run_id' => $photo->signup->campaign_run_id,
+            'campaign_id' => $post->signup->campaign_id,
+            'campaign_run_id' => $post->signup->campaign_run_id,
             'content' => [
                 'type' => $post->event->event_type,
                 'media' => [
