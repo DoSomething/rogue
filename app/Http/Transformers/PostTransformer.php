@@ -27,19 +27,19 @@ class PostTransformer extends TransformerAbstract
         return [
             'event_id' => $post->event_id,
             'signup_id' => $post->signup_id,
-            'northstar_id' => $post->postData->northstar_id,
+            'northstar_id' => $post->content->northstar_id,
             'campaign_id' => $post->signup->campaign_id,
             'campaign_run_id' => $post->signup->campaign_run_id,
             'content' => [
                 'type' => $post->event->event_type,
                 'media' => [
-                    'url' => $post->postData->file_url,
-                    'edited_url' => $post->postData->edited_file_url,
+                    'url' => $post->content->file_url,
+                    'edited_url' => $post->content->edited_file_url,
                 ],
-                'caption' => $post->postData->caption,
-                'status' => $post->postData->status,
-                'created_at' => $post->postData->created_at->toIso8601String(),
-                'updated_at' => $post->postData->updated_at->toIso8601String(),
+                'caption' => $post->content->caption,
+                'status' => $post->content->status,
+                'created_at' => $post->content->created_at->toIso8601String(),
+                'updated_at' => $post->content->updated_at->toIso8601String(),
             ],
         ];
     }

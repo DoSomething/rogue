@@ -18,24 +18,8 @@ class Photo extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphOne
      */
-    public function content()
+    public function post()
     {
         return $this->morphOne('Rogue\Models\Post', 'post');
     }
-
-    // /**
-    //  * Each photo belongs to an event.
-    //  */
-    // public function event()
-    // {
-    //     return $this->belongsTo(Event::class);
-    // }
-
-    // /**
-    //  * Each photo belongs to a signup.
-    //  */
-    // public function signup()
-    // {
-    //     return $this->belongsTo(Signup::class);
-    // }
 }

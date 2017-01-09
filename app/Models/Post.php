@@ -15,7 +15,6 @@ class Post extends Model
 
     protected $primaryKey = ['event_id'];
 
-
     /**
      * Indicates if the IDs are auto-incrementing.
      *
@@ -28,7 +27,7 @@ class Post extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function postData()
+    public function content()
     {
         return $this->morphTo('post');
     }

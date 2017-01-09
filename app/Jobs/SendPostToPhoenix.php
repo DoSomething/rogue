@@ -54,10 +54,10 @@ class SendPostToPhoenix extends Job implements ShouldQueue
 
         // Data that everything except an update without a file will have
         if ($this->hasFile) {
-            $body['file_url'] = is_null($this->post->postData->edited_file_url) ? $this->photo->file_url : $this->post->postData->edited_file_url;
-            $body['caption'] = isset($this->post->postData->caption) ? $this->post->postData->caption : null;
-            $body['source'] = $this->post->postData->source;
-            $body['remote_addr'] = $this->post->postData->remote_addr;
+            $body['file_url'] = is_null($this->post->content->edited_file_url) ? $this->photo->file_url : $this->post->content->edited_file_url;
+            $body['caption'] = isset($this->post->content->caption) ? $this->post->content->caption : null;
+            $body['source'] = $this->post->content->source;
+            $body['remote_addr'] = $this->post->content->remote_addr;
         }
 
         $phoenix->postReportback($body);

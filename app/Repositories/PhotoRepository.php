@@ -58,14 +58,14 @@ class PhotoRepository
             'remote_addr' => $data['remote_addr'],
         ]);
 
-        // move in to Post service class as a help?
-        // or a PostRepo that these other specific repos extend?
+        // Create the Post and associate the Photo with it.
+        // @Note -- Having some issue using the `create` method here. I think
+        // becase the Posts table doesn't have an `id` key, but I can work that out.
         $post = new Post([
             'event_id' => $postEvent->id,
             'signup_id' => $signupId,
         ]);
-
-        $post->postData()->associate($photo);
+        $post->content()->associate($photo);
         $post->save();
 
         // $this->registrar->find($data['northstar_id']);

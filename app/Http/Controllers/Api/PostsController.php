@@ -39,6 +39,8 @@ class PostsController extends ApiController
     {
         $this->posts = $posts;
         $this->signups = $signups;
+
+        // Now we have one PostTransformer to handle returning a Post to the API request.
         $this->transformer = new PostTransformer;
     }
 
@@ -49,6 +51,7 @@ class PostsController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // @TODO - Validate post request.
     public function store(Request $request)
     {
         $transactionId = incrementTransactionId($request);
@@ -64,6 +67,8 @@ class PostsController extends ApiController
             $signup = $this->signups->create($request->all());
         }
 
+        // Send the data to the PostService class which will handle delgating
+        // which type of post we are dealing with and which repostitory to use to // actually create the post.
         $post = $this->posts->create($request->all(), $signup->id, $transactionId);
 
         return $this->item($post);
