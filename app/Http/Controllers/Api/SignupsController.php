@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Rogue\Services\SignupService;
 use Rogue\Http\Transformers\SignupTransformer;
-
+use Rogue\Repositories\PhotoRepository;
 
 // use Rogue\Http\Requests;
 
@@ -24,14 +24,22 @@ class SignupsController extends ApiController
     protected $signups;
 
     /**
+     * The photo repository instance.
+     *
+     * @var Rogue\Repositories\PhotoRepository
+     */
+    protected $photo;
+
+    /**
      * Create a controller instance.
      *
      * @param  PostContract  $posts
      * @return void
      */
-    public function __construct(SignupService $signups)
+    public function __construct(SignupService $signups, PhotoRepository $photo)
     {
         $this->signups = $signups;
+        $this->photo = $photo;
     }
 
    	/**
@@ -53,9 +61,15 @@ class SignupsController extends ApiController
         // get the data into the way we want to return it
         $this->transformer = new SignupTransformer;
 
+        // @TODO: probably want to bust this out into it's own helper function
+        // check to see if there is a reportback too
+        if (array_key_exists('caption', $request->all())) {
+			// create the photo and tie it to this signup
+			$this->photo->create($request->all(), $signup->id);
+        }
+
         return $this->item($signup, $code);
 
 
-    	// return 'hit the store signup endpoint :)';
     }
 }
