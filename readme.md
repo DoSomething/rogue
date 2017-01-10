@@ -1,4 +1,4 @@
-# Rogue
+# :camera: Rogue
 
 Rogue is Dossomething.org's campaign activity application.
 
