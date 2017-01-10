@@ -25,7 +25,6 @@ class PostTransformer extends TransformerAbstract
     public function transform(Post $post)
     {
         return [
-            'event_id' => $post->event_id,
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->content->northstar_id,
             'campaign_id' => $post->signup->campaign_id,

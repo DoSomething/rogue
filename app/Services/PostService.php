@@ -22,8 +22,6 @@ class PostService
      */
     public function create($data, $signupId, $transactionId)
     {
-        // Looks at the event type that is past to figure out which type of post
-        // we are dealing with.
         $this->resolvePostRepository($data['event_type']);
 
         $post = $this->repository->create($data, $signupId);

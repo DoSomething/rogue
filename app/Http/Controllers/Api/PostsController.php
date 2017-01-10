@@ -3,8 +3,8 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Signup;
-use Illuminate\Http\Request;
 use Rogue\Services\PostService;
+use Rogue\Http\Requests\PostRequest;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Transformers\PostTransformer;
 
@@ -51,7 +51,7 @@ class PostsController extends ApiController
      * @return \Illuminate\Http\Response
      */
     // @TODO - Validate post request.
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         $transactionId = incrementTransactionId($request);
 
@@ -66,7 +66,7 @@ class PostsController extends ApiController
             $signup = $this->signups->create($request->all());
         }
 
-        // Send the data to the PostService class which will handle delgating
+        // Send the data to the PostService class which will handle determining
         // which type of post we are dealing with and which repostitory to use to // actually create the post.
         $post = $this->posts->create($request->all(), $signup->id, $transactionId);
 
