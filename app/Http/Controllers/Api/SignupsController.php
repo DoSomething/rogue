@@ -64,7 +64,9 @@ class SignupsController extends ApiController
         // check to see if there is a reportback too aka we are migratin'
         if (array_key_exists('photo', $request->all())) {
 			// create the photo and tie it to this signup
-			$this->photo->create($request->all()['photo'], $signup);
+			foreach ($request->all()['photo'] as $photos) {
+				$this->photo->create($photos, $signup);
+			}
         }
 
         return $this->item($signup, $code);
