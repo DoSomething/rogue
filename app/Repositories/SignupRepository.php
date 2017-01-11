@@ -29,7 +29,7 @@ class SignupRepository
             'quantity' => null,
             'quantity_pending' => isset($data['quantity']) ? $data['quantity'] : null,
             'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
-            'source' => $data['source'],
+            'source' => isset($data['source']) ? isset($data['source']) : null,
         ]);
 
         return $signup;
