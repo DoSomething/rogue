@@ -5,6 +5,7 @@ namespace Rogue\Repositories;
 use Rogue\Models\Post;
 use Rogue\Models\Event;
 use Rogue\Models\Photo;
+use Rogue\Models\Signup;
 use Rogue\Services\AWS;
 use Rogue\Services\Registrar;
 
@@ -40,16 +41,22 @@ class PhotoRepository
      * @param  int $signupId
      * @return \Rogue\Models\Photo|null
      */
-    public function create(array $data, $signupId)
+    public function create(array $data, Signup $signup)
     {
         $postEvent = Event::create($data);
 
-        $fileUrl = $this->aws->storeImage($data['file'], $data['campaign_id']);
+        if (array_key_exists('campaign_id', $data)) {
+            $fileUrl = $this->aws->storeImage($data['file'], $data['campaign_id']);
+        } else {
+            $fileUrl = $this->aws->storeImage($data['file'], $signup->id);
+        }
 
         $editedImage = $this->crop($data);
 
         $photo = Photo::create([
             'northstar_id' => $data['northstar_id'],
+            'event_id' => $postEvent->id,
+            'signup_id' => $signup->id,
             'file_url' => $fileUrl,
             'edited_file_url' => $editedImage,
             'caption' => $data['caption'],

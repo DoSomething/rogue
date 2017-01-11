@@ -58,14 +58,13 @@ class SignupsController extends ApiController
         	$code = '200';
         }
 
-        // get the data into the way we want to return it
+        // Transform the data to return it
         $this->transformer = new SignupTransformer;
 
-        // @TODO: probably want to bust this out into it's own helper function
-        // check to see if there is a reportback too
-        if (array_key_exists('caption', $request->all())) {
+        // check to see if there is a reportback too aka we are migratin'
+        if (array_key_exists('photo', $request->all())) {
 			// create the photo and tie it to this signup
-			$this->photo->create($request->all(), $signup->id);
+			$this->photo->create($request->all()['photo'], $signup);
         }
 
         return $this->item($signup, $code);
