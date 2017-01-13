@@ -24,13 +24,18 @@ return [
     ],
 
     'northstar' => [
-        'grant' => 'authorization_code',
+        'grant' => 'client_credentials',
         'url' => env('NORTHSTAR_URL'),
         'authorization_code' => [
-            'client_id' => env('NORTHSTAR_CLIENT_ID'),
-            'client_secret' => env('NORTHSTAR_CLIENT_SECRET'),
+            'client_id' => env('NORTHSTAR_AUTH_ID'),
+            'client_secret' => env('NORTHSTAR_AUTH_SECRET'),
             'scope' => ['user', 'role:staff', 'role:admin'],
             'redirect_uri' => '/login',
+        ],
+        'client_credentials' => [
+            'client_id' => env('NORTHSTAR_CLIENT_ID'),
+            'client_secret' => env('NORTHSTAR_CLIENT_SECRET'),
+            'scope' => ['user', 'admin'],
         ],
     ],
 
