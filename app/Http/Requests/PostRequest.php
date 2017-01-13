@@ -2,8 +2,6 @@
 
 namespace Rogue\Http\Requests;
 
-use Rogue\Http\Requests\Request;
-
 class PostRequest extends Request
 {
 
@@ -42,7 +40,7 @@ class PostRequest extends Request
     /**
      * Determines the validation ruleset to use for a particular type of post.
      *
-     * @param  Object $request
+     * @param  object $request
      * @return array|null
      */
     protected function getRules($request)
