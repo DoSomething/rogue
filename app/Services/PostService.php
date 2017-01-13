@@ -51,11 +51,9 @@ class PostService
         switch ($type) {
             case 'post_photo':
                 $this->repository = app('Rogue\Repositories\PhotoRepository');
-
                 break;
             default:
                 throw new HttpException(405, 'Not a valid post type');
-
                 break;
         }
     }

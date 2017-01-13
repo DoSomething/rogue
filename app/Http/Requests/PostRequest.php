@@ -4,7 +4,6 @@ namespace Rogue\Http\Requests;
 
 class PostRequest extends Request
 {
-
     protected $rules = [
         'northstar_id' => 'required|string',
         'campaign_id' => 'required|int',
