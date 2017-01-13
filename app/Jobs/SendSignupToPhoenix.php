@@ -32,14 +32,17 @@ class SendSignupToPhoenix extends Job implements ShouldQueue
     public function handle()
     {
         $phoenix = new Phoenix;
-        // @TODO: get uid from northstar
 
-		// format the data how phoenix wants it as the $body here
-		// give them uid and source
+        // @TODO: get uid from northstar
+        $registrar = new Registrar;
+		$drupal_id = $registrar->find($this->signup->northstar_id);
+		dd($drupal_id);
+        // format the data how phoenix wants it as the $body here
+        // give them uid and source
         $body = [
-        	// include user here
-        	// this is a dummy user aka me lol
-        	'uid' => '1705523',
+            // include user here
+            // this is a dummy user aka me lol
+            'uid' => '1705523',
             'source' => $this->signup->source,
         ];
 

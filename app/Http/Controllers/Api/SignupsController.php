@@ -4,8 +4,8 @@ namespace Rogue\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Rogue\Services\SignupService;
-use Rogue\Http\Transformers\SignupTransformer;
 use Rogue\Repositories\PhotoRepository;
+use Rogue\Http\Transformers\SignupTransformer;
 
 // use Rogue\Http\Requests;
 
@@ -40,9 +40,10 @@ class SignupsController extends ApiController
     {
         $this->signups = $signups;
         $this->photo = $photo;
+        $this->transformer = new SignupTransformer;
     }
 
-   	/**
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -55,7 +56,7 @@ class SignupsController extends ApiController
         $signup = $this->signups->create($request->all(), $transactionId);
 
         if ($signup) {
-        	$code = '200';
+            $code = '200';
         }
 
         // Transform the data to return it
@@ -63,14 +64,12 @@ class SignupsController extends ApiController
 
         // check to see if there is a reportback too aka we are migratin'
         if (array_key_exists('photo', $request->all())) {
-			// create the photo and tie it to this signup
-			foreach ($request->all()['photo'] as $photos) {
-				$this->photo->create($photos, $signup);
-			}
+            // create the photo and tie it to this signup
+            foreach ($request->all()['photo'] as $photos) {
+                $this->photo->create($photos, $signup);
+            }
         }
 
         return $this->item($signup, $code);
-
-
     }
 }

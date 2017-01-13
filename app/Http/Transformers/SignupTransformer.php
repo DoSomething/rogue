@@ -7,7 +7,7 @@ use League\Fractal\TransformerAbstract;
 
 class SignupTransformer extends TransformerAbstract
 {
-	/**
+    /**
      * Transform resource data.
      *
      * @param \Rogue\Models\Signup $signup
