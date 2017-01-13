@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->integer('signup_id')->unsigned()->index()->comment('The signup this Post references.');
             $table->foreign('signup_id')->references('id')->on('signups')->onDelete('cascade');
 
-            $table->morphs('post');
+            $table->morphs('postable');
             $table->timestamps();
         });
     }

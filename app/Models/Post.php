@@ -29,7 +29,7 @@ class Post extends Model
      */
     public function content()
     {
-        return $this->morphTo('post');
+        return $this->morphTo('postable');
     }
 
     /**

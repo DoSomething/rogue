@@ -20,6 +20,6 @@ class Photo extends Model
      */
     public function post()
     {
-        return $this->morphOne('Rogue\Models\Post', 'post');
+        return $this->morphOne('Rogue\Models\Post', 'postable');
     }
 }
