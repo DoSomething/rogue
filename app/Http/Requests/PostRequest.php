@@ -39,6 +39,12 @@ class PostRequest extends Request
         return $this->getRules($this->request);
     }
 
+    /**
+     * Determines the validation ruleset to use for a particular type of post.
+     *
+     * @param  Object $request
+     * @return array|null
+     */
     protected function getRules($request)
     {
         switch ($request->event_type) {
@@ -52,6 +58,11 @@ class PostRequest extends Request
         }
     }
 
+    /**
+     * Defines the ruleset for photo posts.
+     *
+     * @return array
+     */
     protected function setPhotoRules()
     {
         return [
@@ -59,6 +70,7 @@ class PostRequest extends Request
             'status' => 'pending',
             'source' => 'string',
             'remote_addr' => 'ip',
+            'file' => 'string', // @TODO - should do some better validation around files.
         ];
     }
 }

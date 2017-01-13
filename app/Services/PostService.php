@@ -3,6 +3,7 @@
 namespace Rogue\Services;
 
 use Rogue\Jobs\SendPostToPhoenix;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PostService
 {
@@ -38,6 +39,13 @@ class PostService
         return $post;
     }
 
+    /*
+     * Determines which type of post we trying to work with based on the passed 'event_type'
+     *
+     * @param $string $type
+     * @throws HttpException
+     * @return Rogue\Repostitories\PhotoRepository
+     */
     protected function resolvePostRepository($type)
     {
         switch ($type) {
@@ -45,8 +53,9 @@ class PostService
                 $this->repository = app('Rogue\Repositories\PhotoRepository');
 
                 break;
-
             default:
+                throw new HttpException(405, 'Not a valid post type');
+
                 break;
         }
     }

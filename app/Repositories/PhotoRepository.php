@@ -65,6 +65,7 @@ class PhotoRepository
             'event_id' => $postEvent->id,
             'signup_id' => $signupId,
         ]);
+
         $post->content()->associate($photo);
         $post->save();
 
@@ -73,6 +74,12 @@ class PhotoRepository
         return $post;
     }
 
+    /**
+     * Crop an image
+     *
+     * @param  int $signupId
+     * @return url|null
+     */
     protected function crop($data)
     {
         $cropValues = array_only($data, $this->cropProperties);
