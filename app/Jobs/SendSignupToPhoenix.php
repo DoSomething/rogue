@@ -2,8 +2,9 @@
 
 namespace Rogue\Jobs;
 
-use Rogue\Services\Phoenix;
 use Rogue\Models\Signup;
+use Rogue\Services\Phoenix;
+use Rogue\Services\Registrar;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,14 +34,11 @@ class SendSignupToPhoenix extends Job implements ShouldQueue
     {
         $phoenix = new Phoenix;
 
-        // @TODO: get uid from northstar
-		//$registrar = new Registrar;
-		// $drupal_id = $registrar->find($this->signup->northstar_id);
+		$registrar = new Registrar;
+		$drupal_id = $registrar->find($this->signup->northstar_id)->drupal_id;
 
-        // format the data how phoenix wants it as the $body here
         $body = [
-            // @TODO: this is hardcorded for now until I get the northstar request to work
-            'uid' => '1705523',
+            'uid' => $drupal_id,
             'source' => $this->signup->source,
         ];
 
