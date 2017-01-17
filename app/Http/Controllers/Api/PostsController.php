@@ -3,10 +3,10 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Signup;
-use Illuminate\Http\Request;
 use Rogue\Services\PostService;
+use Rogue\Http\Requests\PostRequest;
 use Rogue\Repositories\SignupRepository;
-use Rogue\Http\Transformers\PhotoTransformer;
+use Rogue\Http\Transformers\PostTransformer;
 
 class PostsController extends ApiController
 {
@@ -39,6 +39,9 @@ class PostsController extends ApiController
     {
         $this->posts = $posts;
         $this->signups = $signups;
+
+        // Now we have one PostTransformer to handle returning a Post to the API request.
+        $this->transformer = new PostTransformer;
     }
 
     /**
@@ -47,7 +50,8 @@ class PostsController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    // @TODO - Validate post request.
+    public function store(PostRequest $request)
     {
         $transactionId = incrementTransactionId($request);
 
@@ -62,35 +66,10 @@ class PostsController extends ApiController
             $signup = $this->signups->create($request->all());
         }
 
+        // Send the data to the PostService class which will handle determining
+        // which type of post we are dealing with and which repostitory to use to // actually create the post.
         $post = $this->posts->create($request->all(), $signup->id, $transactionId);
 
-        if ($post) {
-            $code = 200;
-        }
-
-        return $this->resolvePostTransformer($post, $code);
-    }
-
-    /**
-     * Decides how to transform a post based on what kind of post it is.
-     *
-     * @param  Illuminate\Database\Eloquent\Model  $model
-     * @param  int  $code
-     * @return \Illuminate\Http\Response
-     */
-    protected function resolvePostTransformer($model, $code)
-    {
-        $class = get_class($model);
-
-        switch ($class) {
-            case 'Rogue\Models\Photo':
-                $this->transformer = new PhotoTransformer;
-
-                return $this->item($model, $code);
-
-                break;
-            default:
-                break;
-        }
+        return $this->item($post);
     }
 }

@@ -20,4 +20,12 @@ class Event extends Model
     {
         return $this->hasOne(Signup::class);
     }
+
+    /**
+     * An event has one post.
+     */
+    public function post()
+    {
+        return $this->hasOne(Post::class);
+    }
 }

@@ -3,27 +3,15 @@
 namespace Rogue\Services;
 
 use Rogue\Jobs\SendPostToPhoenix;
-use Rogue\Repositories\PhotoRepository;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PostService
 {
     /*
-     * PhotoRepository Instance
+     * Repository Instance
      *
-     * @var Rogue\Repositories\PhotoRepository;
      */
-    protected $post;
-
-    /**
-     * Constructor
-     *
-     * @param \Rogue\Repositories\PhotoRepository $photos
-     */
-    public function __construct(PhotoRepository $post)
-    {
-        // @TODO - Eventually would want to figure out a smarter way of resolving different repositories to use for a post i.e. Video, text, etc.
-        $this->post = $post;
-    }
+    protected $repository;
 
     /*
      * Handles all business logic around creating posts.
@@ -35,7 +23,9 @@ class PostService
      */
     public function create($data, $signupId, $transactionId)
     {
-        $post = $this->post->create($data, $signupId);
+        $this->resolvePostRepository($data['event_type']);
+
+        $post = $this->repository->create($data, $signupId);
 
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
@@ -47,5 +37,24 @@ class PostService
         }
 
         return $post;
+    }
+
+    /*
+     * Determines which type of post we trying to work with based on the passed 'event_type'
+     *
+     * @param $string $type
+     * @throws HttpException
+     * @return Rogue\Repostitories\PhotoRepository
+     */
+    protected function resolvePostRepository($type)
+    {
+        switch ($type) {
+            case 'post_photo':
+                $this->repository = app('Rogue\Repositories\PhotoRepository');
+                break;
+            default:
+                throw new HttpException(405, 'Not a valid post type');
+                break;
+        }
     }
 }

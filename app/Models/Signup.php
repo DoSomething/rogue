@@ -20,4 +20,6 @@ class Signup extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    // @TODO - A signup has many posts.
 }
