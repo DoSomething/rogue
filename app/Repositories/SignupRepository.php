@@ -32,6 +32,17 @@ class SignupRepository
             'source' => isset($data['source']) ? $data['source'] : null,
         ]);
 
+        // Let Laravel take care of the timestamps unless they are specified in the request
+        if (isset($data['created_at'])) {
+            $signup->created_at = $data['created_at'];
+            $signup->save(['timestamps' => false]);
+        }
+
+        if (isset($data['updated_at'])) {
+            $signup->updated_at = $data['updated_at'];
+            $signup->save(['timestamps' => false]);
+        }
+
         return $signup;
     }
 
