@@ -7,8 +7,6 @@ use Rogue\Services\SignupService;
 use Rogue\Repositories\PhotoRepository;
 use Rogue\Http\Transformers\SignupTransformer;
 
-// use Rogue\Http\Requests;
-
 class SignupsController extends ApiController
 {
     /**
@@ -28,7 +26,7 @@ class SignupsController extends ApiController
      *
      * @var Rogue\Repositories\PhotoRepository
      */
-    protected $photo;
+    protected $photos;
 
     /**
      * Create a controller instance.
@@ -36,11 +34,10 @@ class SignupsController extends ApiController
      * @param  PostContract  $posts
      * @return void
      */
-    public function __construct(SignupService $signups, PhotoRepository $photo)
+    public function __construct(SignupService $signups, PhotoRepository $photos)
     {
         $this->signups = $signups;
-        $this->photo = $photo;
-        $this->transformer = new SignupTransformer;
+        $this->photos = $photos;
     }
 
     /**
@@ -56,17 +53,17 @@ class SignupsController extends ApiController
         $signup = $this->signups->create($request->all(), $transactionId);
 
         if ($signup) {
-            $code = '200';
+            $code = 200;
         }
 
         // Transform the data to return it
         $this->transformer = new SignupTransformer;
 
         // check to see if there is a reportback too aka we are migratin'
-        if (array_key_exists('photo', $request->all())) {
+        if ($request->has('photo')) {
             // create the photo and tie it to this signup
-            foreach ($request->all()['photo'] as $photos) {
-                $this->photo->create($photos, $signup);
+            foreach ($request->photo as $photo) {
+				$this->photos->create($photo, $signup);
             }
         }
 

@@ -50,6 +50,6 @@ class Phoenix extends RestApiClient
     {
         $response = $this->post('campaigns/' . $campaign_id . '/signup', $body);
 
-        return is_null($response) ? null : $response;
+        return $response;
     }
 }

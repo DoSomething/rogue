@@ -13,6 +13,11 @@ class SendSignupToPhoenix extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
+    /*
+     * Signup instance.
+     *
+     * @var Rogue\Models\Signup
+     */
     protected $signup;
 
     /**
