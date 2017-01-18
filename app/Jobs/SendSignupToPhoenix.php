@@ -35,11 +35,8 @@ class SendSignupToPhoenix extends Job implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(Phoenix $phoenix, Registrar $registrar)
     {
-        $phoenix = new Phoenix;
-
-		$registrar = new Registrar;
 		$drupal_id = $registrar->find($this->signup->northstar_id)->drupal_id;
 
         $body = [
