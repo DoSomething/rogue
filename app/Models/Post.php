@@ -11,7 +11,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['event_id', 'signup_id'];
+    protected $fillable = ['event_id', 'signup_id', 'northstar_id'];
 
     protected $primaryKey = ['event_id'];
 

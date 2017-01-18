@@ -49,7 +49,6 @@ class PhotoRepository
         $editedImage = $this->crop($data);
 
         $photo = Photo::create([
-            'northstar_id' => $data['northstar_id'],
             'file_url' => $fileUrl,
             'edited_file_url' => $editedImage,
             'caption' => $data['caption'],
@@ -64,6 +63,7 @@ class PhotoRepository
         $post = new Post([
             'event_id' => $postEvent->id,
             'signup_id' => $signupId,
+            'northstar_id' => $data['northstar_id'],
         ]);
 
         $post->content()->associate($photo);

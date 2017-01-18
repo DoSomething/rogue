@@ -26,7 +26,7 @@ class PostTransformer extends TransformerAbstract
     {
         return [
             'signup_id' => $post->signup_id,
-            'northstar_id' => $post->content->northstar_id,
+            'northstar_id' => $post->northstar_id,
             'campaign_id' => $post->signup->campaign_id,
             'campaign_run_id' => $post->signup->campaign_run_id,
             'content' => [

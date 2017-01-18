@@ -36,11 +36,10 @@ class DropNorthstarIdFromPhotosTable extends Migration
     public function down()
     {
         Schema::table('photos', function (Blueprint $table) {
-           $table->string('northstar_id')->index()->after('id')->comment('The users Northstar ID');
+            $table->string('northstar_id')->index()->after('id')->comment('The users Northstar ID');
 
             $table->dropColumn('source');
             $table->dropColumn('remote_addr');
-
         });
 
         Schema::table('photos', function (Blueprint $table) {
