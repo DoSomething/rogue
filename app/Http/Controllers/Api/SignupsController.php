@@ -53,7 +53,7 @@ class SignupsController extends ApiController
         $signup = $this->signups->create($request->all(), $transactionId);
 
         if ($signup) {
-            $code = 200;
+            $code = 201;
         }
 
         // Transform the data to return it
