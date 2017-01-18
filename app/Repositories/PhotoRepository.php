@@ -41,22 +41,20 @@ class PhotoRepository
      * @param  int $signupId
      * @return \Rogue\Models\Photo|null
      */
-    public function create(array $data, Signup $signup)
+    public function create(array $data, $signupId)
     {
         $postEvent = Event::create($data);
 
         if (array_key_exists('campaign_id', $data)) {
             $fileUrl = $this->aws->storeImage($data['file'], $data['campaign_id']);
         } else {
-            $fileUrl = $this->aws->storeImage($data['file'], $signup->id);
+            $fileUrl = $this->aws->storeImage($data['file'], $signupId);
         }
 
         $editedImage = $this->crop($data);
 
         $photo = Photo::create([
             'northstar_id' => $data['northstar_id'],
-            'event_id' => $postEvent->id,
-            'signup_id' => $signup->id,
             'file_url' => $fileUrl,
             'edited_file_url' => $editedImage,
             'caption' => $data['caption'],
