@@ -22,4 +22,11 @@ class Signup extends Model
     }
 
     // @TODO - A signup has many posts.
+    /**
+     * Get the posts associated with this signup.
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
