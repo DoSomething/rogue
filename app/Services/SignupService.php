@@ -2,12 +2,12 @@
 
 namespace Rogue\Services;
 
-use Rogue\Repositories\SignupRepository;
 use Rogue\Jobs\SendSignupToPhoenix;
+use Rogue\Repositories\SignupRepository;
 
 class SignupService
 {
- 	/*
+    /*
      * SignupRepository Instance
      *
      * @var Rogue\Repositories\SignupRepository;

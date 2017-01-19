@@ -3,8 +3,8 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use Rogue\Services\SignupService;
 use Rogue\Services\PostService;
+use Rogue\Services\SignupService;
 use Rogue\Http\Transformers\SignupTransformer;
 
 class SignupsController extends ApiController
@@ -63,7 +63,7 @@ class SignupsController extends ApiController
         if ($request->has('photo')) {
             // create the photo and tie it to this signup
             foreach ($request->photo as $photo) {
-				$this->posts->create($photo, $signup->id, $transactionId);
+                $this->posts->create($photo, $signup->id, $transactionId);
             }
         }
 

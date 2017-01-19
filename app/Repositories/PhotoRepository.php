@@ -6,7 +6,6 @@ use Rogue\Models\Post;
 use Rogue\Models\Event;
 use Rogue\Models\Photo;
 use Rogue\Services\AWS;
-use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 
 class PhotoRepository

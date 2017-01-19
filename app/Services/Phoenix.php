@@ -46,7 +46,7 @@ class Phoenix extends RestApiClient
      * @param array $body
      * @return object|false
      */
-    public function postSignup($body = [], $campaign_id)
+    public function postSignup($body, $campaign_id)
     {
         $response = $this->post('campaigns/' . $campaign_id . '/signup', $body);
 

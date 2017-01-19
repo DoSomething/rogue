@@ -14,7 +14,7 @@ class AddSourceToSignup extends Migration
     {
         Schema::table('signups', function (Blueprint $table) {
             $table->string('source')->nullable()->comment('Source of the signup creation.')->after('why_participated');
-        });    
+        });
     }
 
     /**
@@ -26,6 +26,6 @@ class AddSourceToSignup extends Migration
     {
         Schema::table('signups', function (Blueprint $table) {
             $table->dropColumn('source');
-        });    
+        });
     }
 }
