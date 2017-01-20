@@ -4,9 +4,9 @@ namespace Rogue\Jobs;
 
 use Rogue\Models\Post;
 use Rogue\Services\Phoenix;
+use Rogue\Services\Registrar;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Rogue\Services\Registrar;
 
 class SendPostToPhoenix extends Job implements ShouldQueue
 {
