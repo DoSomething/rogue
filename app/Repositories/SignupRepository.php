@@ -27,9 +27,21 @@ class SignupRepository
             'campaign_id' => $data['campaign_id'],
             'campaign_run_id' => $data['campaign_run_id'],
             'quantity' => null,
-            'quantity_pending' => $data['quantity'],
-            'why_participated' => $data['why_participated'],
+            'quantity_pending' => isset($data['quantity']) ? $data['quantity'] : null,
+            'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
+            'source' => isset($data['source']) ? $data['source'] : null,
         ]);
+
+        // Let Laravel take care of the timestamps unless they are specified in the request
+        if (isset($data['created_at'])) {
+            $signup->created_at = $data['created_at'];
+            $signup->save(['timestamps' => false]);
+        }
+
+        if (isset($data['updated_at'])) {
+            $signup->updated_at = $data['updated_at'];
+            $signup->save(['timestamps' => false]);
+        }
 
         return $signup;
     }

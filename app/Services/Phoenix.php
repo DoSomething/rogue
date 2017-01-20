@@ -39,4 +39,17 @@ class Phoenix extends RestApiClient
 
         return is_null($response) ? null : $response;
     }
+
+    /**
+     * Send a POST request to save a copy of the signup in Phoenix.
+     *
+     * @param array $body
+     * @return object|false
+     */
+    public function postSignup($body, $campaign_id)
+    {
+        $response = $this->post('campaigns/' . $campaign_id . '/signup', $body);
+
+        return $response;
+    }
 }

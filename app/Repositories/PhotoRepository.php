@@ -44,9 +44,9 @@ class PhotoRepository
     {
         $postEvent = Event::create($data);
 
-        $fileUrl = $this->aws->storeImage($data['file'], $data['campaign_id']);
+        $fileUrl = $this->aws->storeImage($data['file'], $signupId);
 
-        $editedImage = $this->crop($data);
+        $editedImage = $this->crop($data, $signupId);
 
         $photo = Photo::create([
             'northstar_id' => $data['northstar_id'],
@@ -87,7 +87,7 @@ class PhotoRepository
         if (count($cropValues) > 0) {
             $editedImage = edit_image($data['file'], $cropValues);
 
-            return $this->aws->storeImage($editedImage, 'edited_' . $data['campaign_id']);
+            return $this->aws->storeImage($editedImage, 'edited_' . $signupId);
         }
 
         return null;

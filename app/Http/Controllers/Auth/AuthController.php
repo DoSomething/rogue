@@ -42,7 +42,7 @@ class AuthController extends Controller
      */
     public function getLogin(ServerRequestInterface $request, ResponseInterface $response)
     {
-        return gateway('northstar')->authorize($request, $response, $this->redirectTo);
+        return gateway('northstar')->asUser()->authorize($request, $response, $this->redirectTo);
     }
 
     /**
@@ -53,6 +53,6 @@ class AuthController extends Controller
      */
     public function getLogout(ResponseInterface $response)
     {
-        return gateway('northstar')->logout($response, $this->redirectAfterLogout);
+        return gateway('northstar')->asUser()->logout($response, $this->redirectAfterLogout);
     }
 }
