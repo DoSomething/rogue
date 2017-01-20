@@ -67,7 +67,7 @@ class PostsController extends ApiController
         }
 
         // Send the data to the PostService class which will handle determining
-        // which type of post we are dealing with and which repostitory to use to // actually create the post.
+        // which type of post we are dealing with and which repostitory to use to actually create the post.
         $post = $this->posts->create($request->all(), $signup->id, $transactionId);
 
         return $this->item($post);
