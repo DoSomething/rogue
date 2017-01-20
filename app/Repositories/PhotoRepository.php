@@ -60,6 +60,7 @@ class PhotoRepository
         // Create the Post and associate the Photo with it.
         // @Note -- Having some issue using the `create` method here. I think
         // becase the Posts table doesn't have an `id` key, but I can work that out.
+
         $post = new Post([
             'event_id' => $postEvent->id,
             'signup_id' => $signupId,
@@ -80,7 +81,7 @@ class PhotoRepository
      * @param  int $signupId
      * @return url|null
      */
-    protected function crop($data)
+    protected function crop($data, $signupId)
     {
         $cropValues = array_only($data, $this->cropProperties);
 
