@@ -6,6 +6,7 @@ use Rogue\Models\Post;
 use Rogue\Services\Phoenix;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Rogue\Services\Registrar;
 
 class SendPostToPhoenix extends Job implements ShouldQueue
 {
@@ -40,15 +41,16 @@ class SendPostToPhoenix extends Job implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(Registrar $registrar)
     {
         $phoenix = new Phoenix;
+        $drupal_id = $registrar->find($this->post->signup->northstar_id)->drupal_id;
 
         // Data that every post will have
         $body = [
-            'uid' => 12345, // Grab drupal_id from northstar object?
+            'uid' => $drupal_id,
             'nid' => $this->post->signup->campaign_id,
-            'quantity' => $this->post->signup->quantity,
+            'quantity' => $this->post->signup->quantity_pending,
             'why_participated' => $this->post->signup->why_participated,
         ];
 
