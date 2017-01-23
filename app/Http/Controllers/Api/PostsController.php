@@ -64,8 +64,6 @@ class PostsController extends ApiController
         // @TODO - should we eventually throw an error if a signup doesn't exist before a post is created? I create one here because we haven't implemented sending signups to rogue yet, so it will have to create a signup record for all posts.
         if (is_null($signup)) {
             $signup = $this->signups->create($request->all());
-        } else {
-            $this->signups->update($signup, $request->all());
         }
 
         // Send the data to the PostService class which will handle determining
