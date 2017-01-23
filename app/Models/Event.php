@@ -18,7 +18,7 @@ class Event extends Model
      */
     public function signup()
     {
-        return $this->hasOne(Signup::class);
+        return $this->belongsTo(Signup::class);
     }
 
     /**

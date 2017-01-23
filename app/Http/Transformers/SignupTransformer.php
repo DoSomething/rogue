@@ -48,7 +48,7 @@ class SignupTransformer extends TransformerAbstract
     {
         $event = $signup->event;
 
-        return $this->item($event, new EventTransformer);
+        return $this->collection($event, new EventTransformer);
     }
 
     /**

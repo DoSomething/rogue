@@ -15,13 +15,15 @@ class SignupRepository
      */
     public function create($data)
     {
+        // Create the post_signup event
         $event = Event::create([
             'northstar_id' => $data['northstar_id'],
-            'event_type' => 'signup',
+            'event_type' => 'post_signup',
             'submission_type' => 'user',
         ]);
 
-        $signup = $event->signup()->create([
+        // Create the signup
+        $signup = Signup::create([
             'event_id' => $event->id,
             'northstar_id' => $data['northstar_id'],
             'campaign_id' => $data['campaign_id'],
@@ -31,6 +33,10 @@ class SignupRepository
             'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
             'source' => isset($data['source']) ? $data['source'] : null,
         ]);
+
+        // Associate the event and the signup
+        $event->signup()->associate($signup);
+        $event->save();
 
         // Let Laravel take care of the timestamps unless they are specified in the request
         if (isset($data['created_at'])) {
