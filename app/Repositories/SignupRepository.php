@@ -70,4 +70,36 @@ class SignupRepository
 
         return $signup;
     }
+
+    /**
+     * Update a signup.
+     *
+     * @param  array $data
+     * @return \Rogue\Models\Signup|null
+     */
+    public function update(Signup $signup, $data)
+    {
+        // Create the event for the signup update and include the relevant changes
+        $event = Event::create([
+            'northstar_id' => $data['northstar_id'],
+            'event_type' => 'update_signup',
+            'submission_type' => 'user',
+            'quantity_pending' => isset($data['quantity']) ? $data['quantity'] : null,
+            'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
+            'source' => isset($data['source']) ? $data['source'] : null,
+        ]);
+
+        // Associate the event and the signup
+        $event->signup()->associate($signup);
+        $event->save();
+
+        // Update the actual signup data to the new values
+        $signup = $event->signup()->update([
+            'quantity_pending' => isset($data['quantity']) ? $data['quantity'] : null,
+            'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
+            'source' => isset($data['source']) ? $data['source'] : null,
+        ]);
+
+        return $signup;
+    }
 }
