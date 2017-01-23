@@ -86,7 +86,6 @@ class SignupRepository
             'submission_type' => 'user',
             'quantity_pending' => isset($data['quantity']) ? $data['quantity'] : null,
             'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
-            'source' => isset($data['source']) ? $data['source'] : null,
         ]);
 
         // Associate the event and the signup
@@ -97,7 +96,6 @@ class SignupRepository
         $signup = $event->signup()->update([
             'quantity_pending' => isset($data['quantity']) ? $data['quantity'] : null,
             'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
-            'source' => isset($data['source']) ? $data['source'] : null,
         ]);
 
         return $signup;
