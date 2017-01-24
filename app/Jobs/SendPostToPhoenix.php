@@ -44,8 +44,8 @@ class SendPostToPhoenix extends Job implements ShouldQueue
     public function handle(Registrar $registrar)
     {
         $phoenix = new Phoenix;
-        $drupal_id = $registrar->find($this->post->signup->northstar_id)->drupal_id;
 
+        $drupal_id = $registrar->find($this->post->signup->northstar_id)->drupal_id;
         // Data that every post will have
         $body = [
             'uid' => $drupal_id,
@@ -53,7 +53,14 @@ class SendPostToPhoenix extends Job implements ShouldQueue
             'quantity' => $this->post->signup->quantity_pending,
             'why_participated' => $this->post->signup->why_participated,
         ];
+        dd($body);
 
+//      array:4 [
+//          "uid" => "1704953"
+//          "nid" => 1173
+//          "quantity" => 300
+//          "why_participated" => "Because"
+//      ]
         // Data that everything except an update without a file will have
         if ($this->hasFile) {
             $body['file_url'] = is_null($this->post->content->edited_file_url) ? $this->post->content->file_url : $this->post->content->edited_file_url;

@@ -76,6 +76,35 @@ class PhotoRepository
     }
 
     /**
+     * Update an existing photo post and signup.
+     *
+     * @param \Rogue\Models\Photo $signup
+     * @param array $data
+     *
+     * @return \Rogue\Models\Photo
+     */
+    public function update($signup, $data) {
+        // If there is a file, create a new photo post.
+        if (isset($data['file'])) {
+            return $this->create($data, $signup->id);
+        } elseif (array_key_exists('file', $data)) {
+            return $this->create($data, $signup->id);
+        // Otherwise, only update the signup's quantity and/or why_participated data.
+        } else {
+            Event::create($data);
+
+            $data['quantity_pending'] = $data['quantity'];
+
+            $signup->fill(array_only($data, ['quantity_pending', 'why_participated']));
+
+            $signup->save();
+
+            return $signup;
+        }
+    }
+
+
+    /**
      * Crop an image
      *
      * @param  int $signupId

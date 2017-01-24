@@ -56,20 +56,25 @@ class PostsController extends ApiController
         $transactionId = incrementTransactionId($request);
 
         // @TODO - Remove. This is temporary. Just hardcoding some params in the request that the client would normally pass. But we assume everything is a photo post from a user at the moment.
-        $request['event_type'] = 'post_photo';
+        // $request['event_type'] = 'post_photo';
         $request['submission_type'] = 'user';
 
         $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
 
+        $updating = ! is_null($signup);
+
         // @TODO - should we eventually throw an error if a signup doesn't exist before a post is created? I create one here because we haven't implemented sending signups to rogue yet, so it will have to create a signup record for all posts.
-        if (is_null($signup)) {
+        if (! $updating) {
             $signup = $this->signups->create($request->all());
+
+            // Send the data to the PostService class which will handle determining
+            // which type of post we are dealing with and which repostitory to use to actually create the post.
+            $post = $this->posts->create($request->all(), $signup->id, $transactionId);
+        } else {
+            $post = $this->posts->update($signup, $request->all(), $transactionId);
         }
 
-        // Send the data to the PostService class which will handle determining
-        // which type of post we are dealing with and which repostitory to use to actually create the post.
-        $post = $this->posts->create($request->all(), $signup->id, $transactionId);
-
+        // QUESTION: what do we want to return here per scenario?
         return $this->item($post);
     }
 }

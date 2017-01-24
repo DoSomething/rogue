@@ -40,6 +40,29 @@ class PostService
     }
 
     /*
+     * Handles all business logic around updating posts.
+     *
+     * @param \Rogue\Models\Signup $signup
+     * @param array $data
+     * @param string $transactionId
+     *
+     * @return \Illuminate\Database\Eloquent\Model $model
+     */
+    public function update($signup, $data, $transactionId) {
+        $this->resolvePostRepository($data['event_type']);
+
+        $post = $this->repository->update($signup, $data);
+        // Add new transaction id to header.
+        request()->headers->set('X-Request-ID', $transactionId);
+
+        // Post reportback back to Phoenix, unless told not to.
+        // If request fails, record in failed_jobs table.
+        if (! isset($data['do_not_forward'])) {
+            dispatch(new SendPostToPhoenix($post, isset($data['file'])));
+        }
+    }
+
+    /*
      * Determines which type of post we trying to work with based on the passed 'event_type'
      *
      * @param $string $type
