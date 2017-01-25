@@ -103,7 +103,6 @@ class PhotoRepository
         }
     }
 
-
     /**
      * Crop an image
      *
