@@ -84,25 +84,16 @@ class PhotoRepository
      * @return \Rogue\Models\Photo
      */
     public function update($signup, $data) {
-        // Update the signup's quantity and/or why_participated data.
-        // We will always update why_participated since we can't tell if this has been changed in a good way yet.
-        if ($signup->quantity_pending != $data['quantity']) {
-            Event::create($data);
+        // Update the signup's quantity and why_participated data.
+        // We will always update these since we can't tell if this has been changed in a good way yet.
+        Event::create($data);
 
-            $data['quantity_pending'] = $data['quantity'];
-            $signup->fill(array_only($data, ['quantity_pending', 'why_participated']));
-            $signup->save();
-        } else {
-            Event::create($data);
-
-            $signup->fill(array_only($data, ['why_participated']));
-            $signup->save();
-        }
+        $data['quantity_pending'] = $data['quantity'];
+        $signup->fill(array_only($data, ['quantity_pending', 'why_participated']));
+        $signup->save();
 
         // If there is a file, create a new photo post.
         if (isset($data['file'])) {
-            return $this->create($data, $signup->id);
-        } elseif (array_key_exists('file', $data)) {
             return $this->create($data, $signup->id);
         }
 
