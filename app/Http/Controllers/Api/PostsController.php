@@ -73,12 +73,21 @@ class PostsController extends ApiController
 
             return $this->item($post);
         } else {
-            $post = $this->posts->update($signup, $request->all(), $transactionId);
+            // Check to see if this is a photo's status update or new photo/signup update.
+            if (isset($request->['quantity'])) {
+                $post = $this->posts->update($signup, $request->all(), $transactionId);
 
-            if (isset($request['file'])) {
-                return $this->item($post);
+                if (isset($request['file'])) {
+                    return $this->item($post);
+                } else {
+                    return $signup;
+                }
             } else {
-                return $signup;
+                $this->validate($request, [
+                    '*.rogue_reportback_item_id' => 'required',
+                    '*.status' => 'required',
+                    '*.reviewer' => 'required',
+                ]);
             }
         }
     }
