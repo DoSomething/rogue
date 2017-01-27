@@ -73,6 +73,8 @@ class PostsController extends ApiController
 
             return $this->item($post);
         } else {
+            $post = $this->posts->update($signup, $request->all(), $transactionId);
+
             if (isset($request['file'])) {
                 return $this->item($post);
             } else {
