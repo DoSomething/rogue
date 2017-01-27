@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
 use Rogue\Models\Signup;
 use Rogue\Services\PostService;
 use Rogue\Http\Requests\PostRequest;
@@ -71,9 +72,13 @@ class PostsController extends ApiController
             // which type of post we are dealing with and which repostitory to use to actually create the post.
             $post = $this->posts->create($request->all(), $signup->id, $transactionId);
 
+            $code = 200;
+
             return $this->item($post);
         } else {
             $post = $this->posts->update($signup, $request->all(), $transactionId);
+
+            $code = 201;
 
             if (isset($request['file'])) {
                 return $this->item($post);
@@ -81,5 +86,31 @@ class PostsController extends ApiController
                 return $signup;
             }
         }
+    }
+
+    /**
+     * Update a post(s)'s status when reviewed.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reviews(Request $request)
+    {
+        // @TODO: where do we write what to say if there is no rogue_event_id or status in the response?
+        $this->validate($request, [
+            '*.rogue_event_id' => 'required',
+            '*.status' => 'required',
+        ]);
+
+        $updatedPosts = $this->posts->reviews($request->all());
+
+        if (empty($updatedPosts)) {
+            $code = 404;
+        } else {
+            $code = 201;
+        }
+
+        // TODO: how do we want to return this data?
     }
 }

@@ -83,7 +83,8 @@ class PhotoRepository
      *
      * @return \Rogue\Models\Photo
      */
-    public function update($signup, $data) {
+    public function update($signup, $data)
+    {
         // Update the signup's quantity and why_participated data.
         // We will always update these since we can't tell if this has been changed in a good way yet.
         Event::create($data);
@@ -98,6 +99,43 @@ class PhotoRepository
         }
 
         return $signup;
+    }
+
+    /**
+     * Updates a photo(s)'s status after being reviewed.
+     *
+     * @param array $data
+     *
+     * @return
+     */
+    public function reviews($data)
+    {
+        $reviewed = [];
+
+        foreach ($data as $review) {
+            if ($review['rogue_event_id'] && ! empty($review['rogue_event_id'])) {
+                $post = Post::where(['event_id' => $review['rogue_event_id']])->first();
+
+                $photo = Photo::where(['id' => $post->postable_id])->first();
+
+                if ($review['status'] && ! empty($review['status'])) {
+                    // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
+                    $review['submission_type'] = 'admin review';
+                    $review['status'] = 'accepted';
+                    Event::create($review);
+
+                    $photo->status = $review['status'];
+                    $photo->save();
+
+                    array_push($reviewed, $photo);
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+            return $reviewed;
+        }
     }
 
     /**

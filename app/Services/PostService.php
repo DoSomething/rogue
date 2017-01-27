@@ -49,7 +49,8 @@ class PostService
      *
      * @return \Illuminate\Database\Eloquent\Model $model
      */
-    public function update($signup, $data, $transactionId) {
+    public function update($signup, $data, $transactionId)
+    {
         $this->resolvePostRepository($data['event_type']);
 
         $post = $this->repository->update($signup, $data);
@@ -73,6 +74,22 @@ class PostService
         }
 
         return $post;
+    }
+
+    /**
+     * Handles all business logic around updating the posts(s)'s status after being reviewed.
+     *
+     * @param array $data
+     *
+     * @return
+     */
+    public function reviews($data)
+    {
+        $this->resolvePostRepository($data[0]['event_type']);
+
+        $updatedPosts = $this->repository->reviews($data);
+
+        return $updatedPosts;
     }
 
     /**
