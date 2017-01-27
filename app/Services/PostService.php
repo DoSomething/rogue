@@ -14,7 +14,7 @@ class PostService
      */
     protected $repository;
 
-    /*
+    /**
      * Handles all business logic around creating posts.
      *
      * @param array $data
@@ -40,7 +40,7 @@ class PostService
         return $post;
     }
 
-    /*
+    /**
      * Handles all business logic around updating posts.
      *
      * @param \Rogue\Models\Signup $signup
@@ -75,7 +75,7 @@ class PostService
         return $post;
     }
 
-    /*
+    /**
      * Determines which type of post we trying to work with based on the passed 'event_type'
      *
      * @param $string $type
