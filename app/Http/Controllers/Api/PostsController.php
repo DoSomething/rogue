@@ -103,13 +103,15 @@ class PostsController extends ApiController
             '*.status' => 'required',
         ]);
 
-        $updatedPosts = $this->posts->reviews($request->all());
+        $reviewedPosts = $this->posts->reviews($request->all());
 
-        if (empty($updatedPosts)) {
+        if (empty($reviewedPosts)) {
             $code = 404;
         } else {
             $code = 201;
         }
+
+        dd($reviewedPosts);
 
         // TODO: how do we want to return this data?
     }

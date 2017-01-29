@@ -110,7 +110,7 @@ class PhotoRepository
      */
     public function reviews($data)
     {
-        $reviewed = [];
+        $reviewedPhotos = [];
 
         foreach ($data as $review) {
             if ($review['rogue_event_id'] && ! empty($review['rogue_event_id'])) {
@@ -122,19 +122,21 @@ class PhotoRepository
                     // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
                     $review['submission_type'] = 'admin review';
                     $review['status'] = 'accepted';
+
                     Event::create($review);
 
                     $photo->status = $review['status'];
                     $photo->save();
 
-                    array_push($reviewed, $photo);
+                    array_push($reviewedPhotos, $photo);
                 } else {
                     return null;
                 }
             } else {
                 return null;
             }
-            return $reviewed;
+
+            return $reviewedPhotos;
         }
     }
 
