@@ -104,7 +104,6 @@ class PostsController extends ApiController
      */
     public function reviews(Request $request)
     {
-        // @TODO: where do we write what to say if there is no rogue_event_id or status in the response?
         $this->validate($request, [
             '*.rogue_event_id' => 'required',
             '*.status' => 'required',

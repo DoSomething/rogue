@@ -87,8 +87,6 @@ class PhotoRepository
     {
         // Update the signup's quantity and why_participated data.
         // We will always update these since we can't tell if this has been changed in a good way yet.
-        Event::create($data);
-
         $data['quantity_pending'] = $data['quantity'];
         $signup->fill(array_only($data, ['quantity_pending', 'why_participated']));
         $signup->save();
@@ -96,6 +94,10 @@ class PhotoRepository
         // If there is a file, create a new photo post.
         if (isset($data['file'])) {
             return $this->create($data, $signup->id);
+        } else {
+            // If it doesn't add a new photo, a new event won't be created. Create the event here for an updated signup.
+            // @TODO: right now, an updated signup's event_type is recorded as post_photo. Depending on future decisions, we might want to update this.
+            Event::create($data);
         }
 
         return $signup;
