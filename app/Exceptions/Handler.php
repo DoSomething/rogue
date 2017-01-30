@@ -5,6 +5,7 @@ namespace Rogue\Exceptions;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -45,11 +46,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+
         if ($request->wantsJson()) {
+            $fe = FlattenException::create($e);
+
             $json = [
                 'error' => [
-                    'code' => $e->getStatusCode(),
-                    'message' => $e->getMessage(),
+                    'code' => $fe->getStatusCode(),
+                    'message' => $fe->getMessage(),
                 ],
             ];
 
