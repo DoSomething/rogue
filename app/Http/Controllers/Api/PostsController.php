@@ -8,6 +8,7 @@ use Rogue\Services\PostService;
 use Rogue\Http\Requests\PostRequest;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Transformers\PostTransformer;
+use Rogue\Http\Transformers\PhotoTransformer;
 
 class PostsController extends ApiController
 {
@@ -31,6 +32,11 @@ class PostsController extends ApiController
     protected $transformer;
 
     /**
+     * @var \Rogue\Http\Transformers\PhotoTransformer
+     */
+    protected $photoTransformer;
+
+    /**
      * Create a controller instance.
      *
      * @param  PostContract  $posts
@@ -43,6 +49,7 @@ class PostsController extends ApiController
 
         // Now we have one PostTransformer to handle returning a Post to the API request.
         $this->transformer = new PostTransformer;
+        $this->photoTransformer = new PhotoTransformer;
     }
 
     /**
@@ -111,8 +118,9 @@ class PostsController extends ApiController
             $code = 201;
         }
 
-        dd($reviewedPosts);
+        $meta = [];
 
-        // TODO: how do we want to return this data?
+        // @TODO: we'll need to change the transformer here depending on what type of post.
+        return $this->collection($reviewedPosts, $code, $meta, $this->photoTransformer);
     }
 }
