@@ -15,7 +15,7 @@
         "aws/aws-sdk-php-laravel": "^3.1",
         "league/fractal": "^0.13.0",
         "guzzlehttp/guzzle": "^6.2",
-        "dosomething/gateway": "1.0.0-rc14",
+        "dosomething/gateway": "1.0.0-rc16",
         "doctrine/dbal": "^2.5",
         "intervention/image": "^2.3"
     },
