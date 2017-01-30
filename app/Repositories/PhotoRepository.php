@@ -121,7 +121,8 @@ class PhotoRepository
 
                 if ($review['status'] && ! empty($review['status'])) {
                     // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
-                    $review['submission_type'] = 'admin review';
+                    $review['submission_type'] = 'admin';
+                    $review['event_type'] = 'review';
 
                     Event::create($review);
 

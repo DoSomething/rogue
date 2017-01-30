@@ -64,7 +64,6 @@ class PostsController extends ApiController
         $transactionId = incrementTransactionId($request);
 
         // @TODO - Remove. This is temporary. Just hardcoding some params in the request that the client would normally pass. But we assume everything is a photo post from a user at the moment.
-        // $request['event_type'] = 'post_photo';
         $request['submission_type'] = 'user';
 
         $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
