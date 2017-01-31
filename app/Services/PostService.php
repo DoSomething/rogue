@@ -2,8 +2,8 @@
 
 namespace Rogue\Services;
 
-use Rogue\Jobs\SendPostToPhoenix;
 use Rogue\Models\Post;
+use Rogue\Jobs\SendPostToPhoenix;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PostService

@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use Rogue\Models\Signup;
+use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Http\Requests\PostRequest;
 use Rogue\Repositories\SignupRepository;
