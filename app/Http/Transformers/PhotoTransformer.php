@@ -25,11 +25,11 @@ class PhotoTransformer extends TransformerAbstract
     public function transform(Photo $photo)
     {
         return [
-            'event_id' => $photo->event_id,
-            'signup_id' => $photo->signup_id,
-            'northstar_id' => $photo->northstar_id,
-            'campaign_id' => $photo->signup->campaign_id,
-            'campaign_run_id' => $photo->signup->campaign_run_id,
+            'event_id' => $photo->post->event_id,
+            'signup_id' => $photo->post->signup_id,
+            'northstar_id' => $photo->post->northstar_id,
+            'campaign_id' => $photo->post->signup->campaign_id,
+            'campaign_run_id' => $photo->post->signup->campaign_run_id,
             'post' => [
                 'type' => 'photo',
                 'media' => [
@@ -52,7 +52,7 @@ class PhotoTransformer extends TransformerAbstract
      */
     public function includeEvent(Photo $photo)
     {
-        $event = $photo->event;
+        $event = $photo->post->event;
 
         return $this->item($event, new EventTransformer);
     }

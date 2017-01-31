@@ -46,7 +46,12 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['api', 'log.received.reques
 
 // v2 routes
 Route::group(['prefix' => 'api/v2', 'middleware' => ['api', 'log.received.request']], function () {
+
+    // posts
     Route::post('posts', 'Api\PostsController@store');
+
+    // reviews
+    Route::put('reviews', 'Api\PostsController@reviews');
 
     // signups
     Route::post('signups', 'Api\SignupsController@store');

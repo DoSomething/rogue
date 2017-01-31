@@ -25,7 +25,7 @@ class ReportbackService
         $this->reportbackRepository = $reportbackRepository;
     }
 
-    /*
+    /**
      * Handles all the logic around creating a reportback.
      *
      * @param array $data
@@ -48,7 +48,7 @@ class ReportbackService
         return $reportback;
     }
 
-    /*
+    /**
      * Handles all the business logic around updating a reportback.
      *
      * @param \Rogue\Models\Reportback $reportback
@@ -73,7 +73,7 @@ class ReportbackService
         return $reportback;
     }
 
-    /*
+    /**
      * Check if a reportback already exists for a given user,
      * on a specific campaign, and campaign run.
      *
@@ -91,7 +91,7 @@ class ReportbackService
         return $reportback ? $reportback : null;
     }
 
-    /*
+    /**
      * Handles all business logic around update a reportbackitem(s).
      *
      * @param array $data

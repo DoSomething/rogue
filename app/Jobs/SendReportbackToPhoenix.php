@@ -34,7 +34,6 @@ class SendReportbackToPhoenix extends Job implements ShouldQueue
     public function handle()
     {
         $phoenix = new Phoenix;
-
         // Data that every post will have
         $body = [
             'uid' => $this->reportback->drupal_id,

@@ -4,6 +4,7 @@ All `POST` and `PUT` endpoints require an api key (`X-DS-Rogue-API-Key`) in the 
 
 ## Endpoints
 
+### v1
 #### Reportbacks
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
@@ -18,3 +19,15 @@ Endpoint                                       | Functionality
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
 `POST /api/v1/reactions`                       | [Create or update a reaction](endpoints/reactions.md#reactions)
+
+
+### v2
+#### Posts
+Endpoint                                       | Functionality                                           
+---------------------------------------------- | --------------------------------------------------------
+`POST /api/v2/posts`                     | [Create a post](endpoints/posts.md#posts)
+
+#### Reviews
+Endpoint                                       | Functionality                                           
+---------------------------------------------- | --------------------------------------------------------
+`POST /api/v2/reviews`                     | [Update a post or multiple posts' status when admin reviews](endpoints/reviews.md#reviews)

@@ -46,7 +46,7 @@ class PostRequest extends Request
     {
         switch ($request->event_type) {
             case 'post_photo':
-                return array_merge($this->rules, $this->setPhotoRules());
+                return array_merge($this->rules, $this->getPhotoRules());
 
                 break;
 
@@ -60,7 +60,7 @@ class PostRequest extends Request
      *
      * @return array
      */
-    protected function setPhotoRules()
+    protected function getPhotoRules()
     {
         return [
             'caption' => 'string',

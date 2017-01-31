@@ -44,6 +44,7 @@ class SendPostToPhoenix extends Job implements ShouldQueue
     public function handle(Registrar $registrar)
     {
         $phoenix = new Phoenix;
+
         $drupal_id = $registrar->find($this->post->signup->northstar_id)->drupal_id;
 
         // Data that every post will have
