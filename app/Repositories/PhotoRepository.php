@@ -85,6 +85,7 @@ class PhotoRepository
      */
     public function update($signup, $data)
     {
+        // @TODO: remove the below logic when we are no longer supporting the phoenix-ashes campaign template.
         // Update the signup's quantity and why_participated data.
         // We will always update these since we can't tell if this has been changed in a good way yet.
         $data['quantity_pending'] = $data['quantity'];
