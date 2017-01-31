@@ -118,7 +118,6 @@ class PhotoRepository
         foreach ($data as $review) {
             if (isset($review['rogue_event_id']) && ! empty($review['rogue_event_id'])) {
                 $post = Post::where(['event_id' => $review['rogue_event_id']])->first();
-                $photo = Photo::where(['id' => $post->postable_id])->first();
 
                 if ($review['status'] && ! empty($review['status'])) {
                     // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
@@ -127,10 +126,10 @@ class PhotoRepository
 
                     Event::create($review);
 
-                    $photo->status = $review['status'];
-                    $photo->save();
+                    $post->content->status = $review['status'];
+                    $post->content->save();
 
-                    array_push($reviewedPhotos, $photo);
+                    array_push($reviewedPhotos, $post->content);
                 } else {
                     return null;
                 }
