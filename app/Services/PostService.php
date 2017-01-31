@@ -72,6 +72,7 @@ class PostService
         if (! isset($data['do_not_forward'])) {
             dispatch(new SendPostToPhoenix($post, isset($data['file'])));
         }
+
         return $post;
     }
 

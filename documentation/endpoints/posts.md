@@ -35,7 +35,7 @@ POST /api/v2/posts
   - **crop_rotate** (int).
     The copy rotate coordinates of the post image if the user cropped the image.
 
-Example Response: The signup and associated content (post and event).
+Example Response:
 
 ```
 {
