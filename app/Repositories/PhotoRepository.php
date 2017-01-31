@@ -116,7 +116,7 @@ class PhotoRepository
         $reviewedPhotos = [];
 
         foreach ($data as $review) {
-            if ($review['rogue_event_id'] && ! empty($review['rogue_event_id'])) {
+            if (isset($review['rogue_event_id']) && ! empty($review['rogue_event_id'])) {
                 $post = Post::where(['event_id' => $review['rogue_event_id']])->first();
                 $photo = Photo::where(['id' => $post->postable_id])->first();
 
