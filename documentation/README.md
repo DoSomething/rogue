@@ -2,6 +2,8 @@
 This is the Rogue API, it is used to capture activity from members.
 All `POST` and `PUT` endpoints require an api key (`X-DS-Rogue-API-Key`) in the header to be submitted with the request. 
 
+Refer to this [document](https://github.com/DoSomething/rogue/wiki/API) for the most updated documentation. 
+
 ## Endpoints
 
 #### Reportbacks
