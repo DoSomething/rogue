@@ -70,8 +70,6 @@ class PhotoRepository
         $post->content()->associate($photo);
         $post->save();
 
-        // $this->registrar->find($data['northstar_id']);
-
         return $post;
     }
 
