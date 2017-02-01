@@ -89,9 +89,10 @@ class PhotoRepository
         // @TODO: remove the below logic when we are no longer supporting the phoenix-ashes campaign template.
         // @TODO: separate event_type into update_why and update_quantity.
         $data['event_type'] = 'update_signup';
+        $data['quantity_pending'] = $data['quantity'];
+        $data['quantity'] = null;
         Event::create($data);
 
-        $data['quantity_pending'] = $data['quantity'];
         $signup->fill(array_only($data, ['quantity_pending', 'why_participated']));
         $signup->save();
 
