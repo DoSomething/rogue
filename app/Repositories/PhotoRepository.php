@@ -42,6 +42,9 @@ class PhotoRepository
      */
     public function create(array $data, $signupId)
     {
+        // Set quantity and why_participated to null - we don't want this to live on the post_photo event.
+        $data['quantity'] = null;
+        $data['why_participated'] = null;
         $postEvent = Event::create($data);
 
         $fileUrl = $this->aws->storeImage($data['file'], $signupId);
@@ -88,10 +91,16 @@ class PhotoRepository
         // We will always update these since we can't tell if this has been changed in a good way yet.
         // @TODO: remove the below logic when we are no longer supporting the phoenix-ashes campaign template.
         // @TODO: separate event_type into update_why and update_quantity.
-        $data['event_type'] = 'update_signup';
-        $data['quantity_pending'] = $data['quantity'];
-        $data['quantity'] = null;
-        Event::create($data);
+        $updateSignupData = [];
+        $updateSignupData['northstar_id'] = $data['northstar_id'];
+        $updateSignupData['event_type'] = 'update_signup';
+        $updateSignupData['submission_type'] = $data['submission_type'];
+        $updateSignupData['quantity_pending'] = $data['quantity'];
+        $updateSignupData['why_participated'] = $data['why_participated'];
+        $updateSignupData['source'] = $data['source'];
+        $updateSignupData['remote_addr'] = $data['remote_addr'];
+
+        Event::create($updateSignupData);
 
         $signup->fill(array_only($data, ['quantity_pending', 'why_participated']));
         $signup->save();
@@ -124,7 +133,6 @@ class PhotoRepository
                 if ($review['status'] && ! empty($review['status'])) {
                     // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
                     $review['submission_type'] = 'admin';
-                    $review['event_type'] = 'review';
 
                     Event::create($review);
 
