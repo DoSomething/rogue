@@ -51,7 +51,10 @@ class PostService
      */
     public function update($signup, $data, $transactionId)
     {
-        $this->resolvePostRepository($data['event_type']);
+        // Get the event type (type is anything after _).
+        $type = explode('_', $data['event_type'])[1];
+
+        $this->resolvePostRepository($type);
 
         $post = $this->repository->update($signup, $data);
 
@@ -86,7 +89,8 @@ class PostService
     public function reviews($data)
     {
         // @TODO: this will need to be updated when other post types are introduced. Right now, all reviews are of photos so everything in this nested array will be a photo. However, if admins can review different types of posts (e.g. photos, videos, links) at once, we'll need to update the logic here.
-        $this->resolvePostRepository($data[0]['event_type']);
+        $type = explode('_', $data[0]['event_type'])[1];
+        $this->resolvePostRepository($type);
 
         $reviewedPosts = $this->repository->reviews($data);
 
@@ -103,7 +107,7 @@ class PostService
     protected function resolvePostRepository($type)
     {
         switch ($type) {
-            case 'post_photo':
+            case 'photo':
                 $this->repository = app('Rogue\Repositories\PhotoRepository');
                 break;
             default:

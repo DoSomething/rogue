@@ -83,20 +83,23 @@ class PhotoRepository
      */
     public function update($signup, $data)
     {
-        // @TODO: remove the below logic when we are no longer supporting the phoenix-ashes campaign template.
-        // Update the signup's quantity and why_participated data.
+
+        // Update the signup's quantity and why_participated data and log as an event.
         // We will always update these since we can't tell if this has been changed in a good way yet.
+        // @TODO: remove the below logic when we are no longer supporting the phoenix-ashes campaign template.
+        // @TODO: separate event_type into update_why and update_quantity.
+        $data['event_type'] = 'update_signup';
+        Event::create($data);
+
         $data['quantity_pending'] = $data['quantity'];
         $signup->fill(array_only($data, ['quantity_pending', 'why_participated']));
         $signup->save();
 
         // If there is a file, create a new photo post.
-        if (isset($data['file'])) {
+        if (! empty($data['file'])) {
+            $data['event_type'] = 'post_photo';
+
             return $this->create($data, $signup->id);
-        } else {
-            // If it doesn't add a new photo, a new event won't be created. Create the event here for an updated signup.
-            // @TODO: right now, an updated signup's event_type is recorded as post_photo. Depending on future decisions, we might want to update this.
-            Event::create($data);
         }
 
         return $signup;

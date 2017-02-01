@@ -29,7 +29,7 @@ class PostRequest extends Request
     {
         if (! isset($this->request->event_type)) {
             return [
-                'event_type' => 'required|in:post_photo',
+                'event_type' => 'required|in:post_photo, review_photo',
             ];
         }
 
