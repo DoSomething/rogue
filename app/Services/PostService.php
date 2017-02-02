@@ -102,8 +102,11 @@ class PostService
      */
     protected function resolvePostRepository($type)
     {
+        // Get the event type (type is anything after _).
+        $type = explode('_', $type)[1];
+
         switch ($type) {
-            case 'post_photo':
+            case 'photo':
                 $this->repository = app('Rogue\Repositories\PhotoRepository');
                 break;
             default:
