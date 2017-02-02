@@ -89,14 +89,9 @@ class PhotoRepository
         // We will always update these since we can't tell if this has been changed in a good way yet.
         // @TODO: remove the below logic when we are no longer supporting the phoenix-ashes campaign template.
         // @TODO: separate event_type into update_why and update_quantity.
-        $updateSignupData = [];
-        $updateSignupData['northstar_id'] = $data['northstar_id'];
+        $updateSignupData = array_only($data, ['northstar_id', 'submission_type', 'why_participated', 'source', 'remote_addr']);
         $updateSignupData['event_type'] = 'update_signup';
-        $updateSignupData['submission_type'] = $data['submission_type'];
         $updateSignupData['quantity_pending'] = $data['quantity'];
-        $updateSignupData['why_participated'] = $data['why_participated'];
-        $updateSignupData['source'] = $data['source'];
-        $updateSignupData['remote_addr'] = $data['remote_addr'];
 
         Event::create($updateSignupData);
 
