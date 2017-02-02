@@ -14,12 +14,12 @@ class PostApiTest extends TestCase
     protected $postsApiUrl = 'api/v2/posts';
 
     /**
-     * Test that a POST request to /posts creates a new post
+     * Test that a POST request to /posts creates a new photo post.
      *
-     * @group creatingAPost
+     * @group creatingAPhoto
      * @return void
      */
-    public function testCreatingAPost()
+    public function testCreatingAPhoto()
     {
         $this->expectsJobs(Rogue\Jobs\SendPostToPhoenix::class);
 
@@ -55,8 +55,6 @@ class PostApiTest extends TestCase
         $response = $this->json('POST', $this->postsApiUrl, $post);
 
         $this->assertResponseStatus(200);
-
-        // Get the response and make sure we see the right values in the database
 
         $response = $this->decodeResponseJson();
 
