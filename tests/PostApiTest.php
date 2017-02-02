@@ -21,10 +21,33 @@ class PostApiTest extends TestCase
      */
     public function testCreatingAPost()
     {
+        $this->expectsJobs(Rogue\Jobs\SendPostToPhoenix::class);
+
         // Create test Post. Temporarily use the current test reportback data
         // array as the requests are the same.
-        $post = $this->createTestReportback();
-        $post['event_type'] = 'post_photo';
+        // Create an uploaded file.
+        $file = $this->mockFile();
+
+        $post = [
+            'northstar_id'     => str_random(24),
+            'drupal_id'        => $this->faker->randomNumber(8),
+            'campaign_id'      => $this->faker->randomNumber(4),
+            'campaign_run_id'  => $this->faker->randomNumber(4),
+            'quantity'         => $this->faker->numberBetween(10, 1000),
+            'why_participated' => $this->faker->paragraph(3),
+            'num_participants' => null,
+            'caption'          => $this->faker->sentence(),
+            'source'           => 'runscope',
+            'remote_addr'      => '207.110.19.130',
+            'file'             => $file,
+            'crop_x'           => 0,
+            'crop_y'           => 0,
+            'crop_width'       => 100,
+            'crop_height'      => 100,
+            'crop_rotate'      => 90,
+            'event_type'       => 'post_photo',
+        ];
+
 
         // Mock sending image to AWS.
         Storage::shouldReceive('put')->andReturn(true);
@@ -35,18 +58,18 @@ class PostApiTest extends TestCase
 
         // Get the response and make sure we see the right values in the database
 
-        //
+        $response = $this->decodeResponseJson();
 
         // Make sure we created a reportback item for the reportback.
-        // $this->seeInDatabase('events', ['northstar_id' => $response['data']['northstar_id']]);
+        $this->seeInDatabase('events', [
+            'northstar_id' => $response['data']['northstar_id'],
+            'event_type' => $response['data']['event']['data']['event_type'],
+        ]);
 
         // Make sure the file_url is saved to the database.
-        // $this->seeInDatabase('reportback_items', ['file_url' => $response['data']['reportback_items']['data'][0]['media']['url']]);
+        $this->seeInDatabase('photos', ['file_url' => $response['data']['content']['media']['url']]);
 
         // // Make sure the edited_file_url is saved to the database.
-        // $this->seeInDatabase('reportback_items', ['edited_file_url' => $response['data']['reportback_items']['data'][0]['media']['edited_url']]);
-
-        // // Make sure we created a record in the reportback log table.
-        // $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
+        $this->seeInDatabase('photos', ['edited_file_url' => $response['data']['content']['media']['edited_url']]);
     }
 }
