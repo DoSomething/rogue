@@ -42,10 +42,8 @@ class PhotoRepository
      */
     public function create(array $data, $signupId)
     {
-        // Set quantity and why_participated to null - we don't want this to live on the post_photo event.
-        $data['quantity'] = null;
-        $data['why_participated'] = null;
-        $postEvent = Event::create($data);
+        // Don't send quantity and why_participated - we don't want this to live on the post_photo event.
+        $postEvent = Event::create(array_except($data, ['quantity', 'why_participated']));
 
         $fileUrl = $this->aws->storeImage($data['file'], $signupId);
 
