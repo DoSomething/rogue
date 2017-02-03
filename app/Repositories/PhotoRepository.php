@@ -7,7 +7,6 @@ use Rogue\Models\Event;
 use Rogue\Models\Photo;
 use Rogue\Services\AWS;
 use Rogue\Services\Registrar;
-use Rogue\Repositories\ReportbackRepository;
 
 class PhotoRepository
 {
@@ -146,13 +145,9 @@ class PhotoRepository
                         return null;
                     }
                 } else {
-                    if ($review['status'] && ! empty($review['status'])) {
-                        $formatReview = [$review];
-                        $reportbackItem = $this->reportbackRepository->updateReportbackItems($formatReview);
-                        array_push($reviewedPhotos, $reportbackItem);
-                    } else {
-                        return null;
-                    }
+                    $formatReview = [$review];
+                    $reportbackItem = $this->reportbackRepository->updateReportbackItems($formatReview);
+                    array_push($reviewedPhotos, $reportbackItem);
                 }
             } else {
                 return null;

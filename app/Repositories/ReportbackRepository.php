@@ -177,9 +177,7 @@ class ReportbackRepository
         $reportbackItems = [];
 
         foreach ($data as $reportbackItem) {
-
             if (isset($reportbackItem['rogue_reportback_item_id']) && ! empty($reportbackItem['rogue_reportback_item_id'])) {
-
                 $rbItem = ReportbackItem::where(['id' => $reportbackItem['rogue_reportback_item_id']])->first();
 
                 if ($reportbackItem['status'] && ! empty($reportbackItem['status'])) {
@@ -192,7 +190,7 @@ class ReportbackRepository
                     return null;
                 }
             } elseif (isset($reportbackItem['rogue_event_id']) && ! empty($reportbackItem['rogue_event_id'])) {
-               $rbItem = ReportbackItem::where(['id' => $reportbackItem['rogue_event_id']])->first();
+                $rbItem = ReportbackItem::where(['id' => $reportbackItem['rogue_event_id']])->first();
 
                 if ($reportbackItem['status'] && ! empty($reportbackItem['status'])) {
                     $rbItem->status = $reportbackItem['status'];
@@ -202,8 +200,7 @@ class ReportbackRepository
                 } else {
                     return null;
                 }
-            }
-            else {
+            } else {
                 return null;
             }
         }
