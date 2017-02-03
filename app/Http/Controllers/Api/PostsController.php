@@ -9,7 +9,6 @@ use Rogue\Http\Requests\PostRequest;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Transformers\PhotoTransformer;
-use Rogue\Http\Transformers\ReportbackItemTransformer;
 
 class PostsController extends ApiController
 {
@@ -38,11 +37,6 @@ class PostsController extends ApiController
     protected $photoTransformer;
 
     /**
-     * @var \Rogue\Http\Transformers\ReportbackItemTransformer
-     */
-    protected $reportbackItemTransformer;
-
-    /**
      * Create a controller instance.
      *
      * @param  PostContract  $posts
@@ -56,7 +50,6 @@ class PostsController extends ApiController
         // Now we have one PostTransformer to handle returning a Post to the API request.
         $this->transformer = new PostTransformer;
         $this->photoTransformer = new PhotoTransformer;
-        $this->reportbackItemTransformer = new ReportbackItemTransformer;
     }
 
     /**
@@ -125,12 +118,7 @@ class PostsController extends ApiController
 
         $meta = [];
 
-        // If these are reportback items, send to Reportback Items Transformer.
-        if ($reviewedPosts[0]->reportback_id) {
-            return $this->collection($reviewedPosts, $code, $meta, $this->reportbackItemTransformer);
-        } else {
-            // @TODO: we'll need to change the transformer here depending on what type of post.
-            return $this->collection($reviewedPosts, $code, $meta, $this->photoTransformer);
-        }
+        // @TODO: we'll need to change the transformer here depending on what type of post.
+        return $this->collection($reviewedPosts, $code, $meta, $this->photoTransformer);
     }
 }
