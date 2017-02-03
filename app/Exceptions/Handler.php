@@ -45,7 +45,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        dd($e);
         if ($request->wantsJson()) {
             $json = [
                 'error' => [

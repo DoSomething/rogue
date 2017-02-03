@@ -122,19 +122,19 @@ class PhotoRepository
             if (isset($review['rogue_event_id']) && ! empty($review['rogue_event_id'])) {
                 $post = Post::where(['event_id' => $review['rogue_event_id']])->first();
 
-                    if ($review['status'] && ! empty($review['status'])) {
-                        // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
-                        $review['submission_type'] = 'admin';
+                if ($review['status'] && ! empty($review['status'])) {
+                    // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
+                    $review['submission_type'] = 'admin';
 
-                        Event::create($review);
+                    Event::create($review);
 
-                        $post->content->status = $review['status'];
-                        $post->content->save();
+                    $post->content->status = $review['status'];
+                    $post->content->save();
 
-                        array_push($reviewedPhotos, $post->content);
-                    } else {
-                        return null;
-                    }
+                    array_push($reviewedPhotos, $post->content);
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
