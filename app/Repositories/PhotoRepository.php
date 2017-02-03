@@ -7,6 +7,7 @@ use Rogue\Models\Event;
 use Rogue\Models\Photo;
 use Rogue\Services\AWS;
 use Rogue\Services\Registrar;
+use Rogue\Repositories\ReportbackRepository;
 
 class PhotoRepository
 {
@@ -16,6 +17,13 @@ class PhotoRepository
      * @var \Rogue\Services\AWS
      */
     protected $AWS;
+
+    /*
+     * Reportback repository instance.
+     *
+     * @var \Rogue\Repositories\ReportbackRepository
+     */
+    protected $reportbackRepository;
 
     /**
      * Array of properties needed for cropping and rotating.
@@ -27,10 +35,11 @@ class PhotoRepository
     /**
      * Constructor
      */
-    public function __construct(AWS $aws, Registrar $registrar)
+    public function __construct(AWS $aws, Registrar $registrar, ReportbackRepository $reportbackRepository)
     {
         $this->aws = $aws;
         $this->registrar = $registrar;
+        $this->reportbackRepository = $reportbackRepository;
     }
 
     /**
@@ -122,19 +131,24 @@ class PhotoRepository
         foreach ($data as $review) {
             if (isset($review['rogue_event_id']) && ! empty($review['rogue_event_id'])) {
                 $post = Post::where(['event_id' => $review['rogue_event_id']])->first();
+                if ($post) {
+                    if ($review['status'] && ! empty($review['status'])) {
+                        // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
+                        $review['submission_type'] = 'admin';
 
-                if ($review['status'] && ! empty($review['status'])) {
-                    // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
-                    $review['submission_type'] = 'admin';
+                        Event::create($review);
 
-                    Event::create($review);
+                        $post->content->status = $review['status'];
+                        $post->content->save();
 
-                    $post->content->status = $review['status'];
-                    $post->content->save();
-
-                    array_push($reviewedPhotos, $post->content);
+                        array_push($reviewedPhotos, $post->content);
+                    } else {
+                        return null;
+                    }
                 } else {
-                    return null;
+                    $formatReview = [$review];
+                    $reportbackItem = $this->reportbackRepository->updateReportbackItems($formatReview);
+                    array_push($reviewedPhotos, $reportbackItem);
                 }
             } else {
                 return null;

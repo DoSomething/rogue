@@ -90,7 +90,23 @@ class PostService
 
         $reviewedPosts = $this->repository->reviews($data);
 
-        return $reviewedPosts;
+        // Add reportback items into an array.
+        $reportbackItems = [];
+
+        // Remove all Reportback Items so the transformer doesn't break.
+        foreach ($reviewedPosts as $key => $reviewedPost) {
+            if (isset($reviewedPost->reportback_id)) {
+                array_push($reportbackItems, $reviewedPost);
+                unset($reviewedPosts[$key]);
+            }
+        }
+
+        // If all reviewed posts are reportback items, return $reportbackItems array to send to Reportback Items Transformer. Otherwise, return reviewed posts, omitting reportback items.
+        if (empty($reviewedPosts)) {
+            return $reportbackItems;
+        } else {
+            return $reviewedPosts;
+        }
     }
 
     /**
