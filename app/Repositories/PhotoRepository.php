@@ -145,8 +145,7 @@ class PhotoRepository
                         return null;
                     }
                 } else {
-                    $formatReview = [$review];
-                    $reportbackItem = $this->reportbackRepository->updateReportbackItems($formatReview);
+                    $reportbackItem = $this->reportbackRepository->updateReportbackItems([$review]);
                     array_push($reviewedPhotos, $reportbackItem);
                 }
             } else {
