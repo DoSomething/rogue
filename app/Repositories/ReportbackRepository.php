@@ -192,7 +192,6 @@ class ReportbackRepository
                     return null;
                 }
             } elseif (isset($reportbackItem['rogue_event_id']) && ! empty($reportbackItem['rogue_event_id'])) {
-
                $rbItem = ReportbackItem::where(['id' => $reportbackItem['rogue_event_id']])->first();
 
                 if ($reportbackItem['status'] && ! empty($reportbackItem['status'])) {

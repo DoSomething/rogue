@@ -89,7 +89,6 @@ class PostService
         $this->resolvePostRepository($data[0]['event_type']);
 
         $reviewedPosts = $this->repository->reviews($data);
-
         // Add reportback items into an array.
         $reportbackItems = [];
 

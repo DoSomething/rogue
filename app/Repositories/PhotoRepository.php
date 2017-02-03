@@ -146,9 +146,13 @@ class PhotoRepository
                         return null;
                     }
                 } else {
-                    $formatReview = [$review];
-                    $reportbackItem = $this->reportbackRepository->updateReportbackItems($formatReview);
-                    array_push($reviewedPhotos, $reportbackItem);
+                    if ($review['status'] && ! empty($review['status'])) {
+                        $formatReview = [$review];
+                        $reportbackItem = $this->reportbackRepository->updateReportbackItems($formatReview);
+                        array_push($reviewedPhotos, $reportbackItem);
+                    } else {
+                        return null;
+                    }
                 }
             } else {
                 return null;
