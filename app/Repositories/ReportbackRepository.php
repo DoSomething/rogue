@@ -182,7 +182,7 @@ class ReportbackRepository
 
                 if ($reportbackItem['status'] && ! empty($reportbackItem['status'])) {
                     $rbItem->status = $reportbackItem['status'];
-                    $rbItem->reviewer = $reportbackItem['reviewer'];
+                    $rbItem->reviewer = isset($reportbackItem['reviewer']) ? $reportbackItem['reviewer'] : null;
                     $rbItem->save();
 
                     array_push($reportbackItems, $rbItem);

@@ -17,13 +17,6 @@ class PhotoRepository
      */
     protected $AWS;
 
-    /*
-     * Reportback repository instance.
-     *
-     * @var \Rogue\Repositories\ReportbackRepository
-     */
-    protected $reportbackRepository;
-
     /**
      * Array of properties needed for cropping and rotating.
      *
@@ -34,11 +27,10 @@ class PhotoRepository
     /**
      * Constructor
      */
-    public function __construct(AWS $aws, Registrar $registrar, ReportbackRepository $reportbackRepository)
+    public function __construct(AWS $aws, Registrar $registrar)
     {
         $this->aws = $aws;
         $this->registrar = $registrar;
-        $this->reportbackRepository = $reportbackRepository;
     }
 
     /**
@@ -126,11 +118,10 @@ class PhotoRepository
     public function reviews($data)
     {
         $reviewedPhotos = [];
-
         foreach ($data as $review) {
             if (isset($review['rogue_event_id']) && ! empty($review['rogue_event_id'])) {
                 $post = Post::where(['event_id' => $review['rogue_event_id']])->first();
-                if ($post) {
+
                     if ($review['status'] && ! empty($review['status'])) {
                         // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
                         $review['submission_type'] = 'admin';
@@ -144,10 +135,6 @@ class PhotoRepository
                     } else {
                         return null;
                     }
-                } else {
-                    $reportbackItem = $this->reportbackRepository->updateReportbackItems([$review]);
-                    array_push($reviewedPhotos, $reportbackItem);
-                }
             } else {
                 return null;
             }
