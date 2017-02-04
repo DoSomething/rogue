@@ -177,7 +177,7 @@ class ReportbackRepository
         $reportbackItems = [];
 
         foreach ($data as $reportbackItem) {
-            if ($reportbackItem['rogue_reportback_item_id'] && ! empty($reportbackItem['rogue_reportback_item_id'])) {
+            if (isset($reportbackItem['rogue_reportback_item_id']) && ! empty($reportbackItem['rogue_reportback_item_id'])) {
                 $rbItem = ReportbackItem::where(['id' => $reportbackItem['rogue_reportback_item_id']])->first();
 
                 if ($reportbackItem['status'] && ! empty($reportbackItem['status'])) {

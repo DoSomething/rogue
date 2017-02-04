@@ -66,7 +66,6 @@ class ReviewsController extends ApiController
 
         $reportbackItems = [];
         $photos = [];
-
         // Loop through the $request and separate reportback items from photos.
         foreach ($request->all() as $review) {
             $post = Post::where(['event_id' => $review['rogue_event_id']])->first();
@@ -78,11 +77,16 @@ class ReviewsController extends ApiController
             }
         }
 
-        $reviewedReportbackItems = $this->reportbacks->updateReportbackItems($reportbackItems);
-        $reviewedReportbackItemsCode = $this->code($reviewedReportbackItems);
+        if ($reportbackItems) {
+            $reviewedReportbackItems = $this->reportbacks->updateReportbackItems($reportbackItems);
 
-        $reviewedPhotos = $this->posts->reviews($photos);
-        $reviewedPhotosCode = $this->code($reviewedPhotos);
+            $reviewedReportbackItemsCode = $this->code($reviewedReportbackItems);
+        }
+
+        if ($photos) {
+            $reviewedPhotos = $this->posts->reviews($photos);
+            $reviewedPhotosCode = $this->code($reviewedPhotos);
+        }
 
         $meta = [];
 
