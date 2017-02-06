@@ -78,17 +78,22 @@ class ReviewsController extends ApiController
             }
         }
 
-        $reviewedReportbackItems = $this->reportbacks->updateReportbackItems($reportbackItems);
-        $reviewedReportbackItemsCode = $this->code($reviewedReportbackItems);
+        if ($reportbackItems) {
+            $reviewedReportbackItems = $this->reportbacks->updateReportbackItems($reportbackItems);
 
-        $reviewedPhotos = $this->posts->reviews($photos);
-        $reviewedPhotosCode = $this->code($reviewedPhotos);
+            $reviewedReportbackItemsCode = $this->code($reviewedReportbackItems);
+        }
+
+        if ($photos) {
+            $reviewedPhotos = $this->posts->reviews($photos);
+            $reviewedPhotosCode = $this->code($reviewedPhotos);
+        }
 
         $meta = [];
 
-        if ($reviewedReportbackItems) {
+        if (isset($reviewedReportbackItems)) {
             return $this->collection($reviewedReportbackItems, $reviewedReportbackItemsCode, $meta, $this->reportbackItemTransformer);
-        } elseif ($reviewedPhotos) {
+        } elseif (isset($reviewedPhotos)) {
             return $this->collection($reviewedPhotos, $reviewedPhotosCode, $meta, $this->photoTransformer);
         } else {
             return 404;
