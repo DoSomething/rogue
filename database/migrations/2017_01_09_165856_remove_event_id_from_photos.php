@@ -40,7 +40,6 @@ class RemoveEventIdFromPhotos extends Migration
             $table->foreign('signup_id')->references('id')->on('signups')->onDelete('cascade');
 
             $table->dropColumn('id');
-
         });
     }
 }
