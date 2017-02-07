@@ -33,13 +33,13 @@ class RemoveEventIdFromPhotos extends Migration
     public function down()
     {
         Schema::table('photos', function (Blueprint $table) {
-            $table->dropColumn('id');
-
-            $table->integer('event_id')->unsigned()->index()->comment('The event this post corresponds to.');
+            $table->integer('event_id')->unsigned()->nullable()->index()->comment('The event this post corresponds to.');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
 
-            $table->integer('signup_id')->unsigned()->index()->comment('The signup this Post references.');
+            $table->integer('signup_id')->unsigned()->nullable()->index()->comment('The signup this Post references.');
             $table->foreign('signup_id')->references('id')->on('signups')->onDelete('cascade');
+
+            $table->dropColumn('id');
         });
     }
 }
