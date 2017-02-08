@@ -45,7 +45,11 @@ class PhotoRepository
         // Don't send quantity and why_participated - we don't want this to live on the post_photo event.
         $postEvent = Event::create(array_except($data, ['quantity', 'why_participated']));
 
-        $fileUrl = $this->aws->storeImage($data['file'], $signupId);
+        if (isset($data['file'])) {
+            $fileUrl = $this->aws->storeImage($data['file'], $signupId);
+        } else {
+            $fileUrl = 'default';
+        }
 
         $editedImage = $this->crop($data, $signupId);
 
