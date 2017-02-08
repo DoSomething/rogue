@@ -56,3 +56,5 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['api', 'log.received.reques
     // signups
     Route::post('signups', 'Api\SignupsController@store');
 });
+
+Route::get('api/v2/activity', 'Api\ActivityController@index');
