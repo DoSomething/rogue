@@ -9,6 +9,15 @@ use League\Fractal\TransformerAbstract;
 class ActivityTransformer extends TransformerAbstract
 {
     /**
+     * List of resources to automatically include
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'posts',
+    ];
+
+    /**
      * Transform resource data.
      *
      * @param \Rogue\Models\Signup $signup
@@ -29,5 +38,18 @@ class ActivityTransformer extends TransformerAbstract
             'created_at' => $signup->created_at->toIso8601String(),
             'updated_at' => $signup->updated_at->toIso8601String(),
         ];
+    }
+
+    /**
+     * Include the post
+     *
+     * @param \Rogue\Models\Signup $signup
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includePosts(Signup $signup)
+    {
+        $post = $signup->posts;
+
+        return $this->collection($post, new PostTransformer);
     }
 }
