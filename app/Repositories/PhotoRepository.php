@@ -50,11 +50,11 @@ class PhotoRepository
 
         if (isset($data['file'])) {
             $fileUrl = $this->aws->storeImage($data['file'], $signupId);
+
+            $editedImage = $this->crop($data, $signupId);
         } else {
             $fileUrl = 'default';
         }
-
-        $editedImage = $this->crop($data, $signupId);
 
         $photo = Photo::create([
             'file_url' => $fileUrl,
