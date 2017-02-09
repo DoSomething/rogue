@@ -45,6 +45,10 @@ class SignupRepository
             $signup->save(['timestamps' => false]);
         }
 
+        // Now that the signup exists, set the signup_id on the signup event
+        $event->signup_id = $signup->id;
+        $event->save();
+
         return $signup;
     }
 
