@@ -29,18 +29,20 @@ class ActivityController extends ApiController
     public function index(Request $request)
     {
         $filters = $this->setFilters($request->all());
+
         if (isset($filters['count'])) {
             $count = $filters['count'];
             unset($filters['count']);
 
             $signups = Signup::where($filters)->take($count)->get();
         } else {
-            $signups = Signup::where($filters)->get();
+            $signups = Signup::where($filters)->paginate(15);
         }
 
                             // ->paginate(3);
 
                             // dd($signups);
+        // with paginate, it comes with the parameter ?page= already set up
         // $signups = Signup::paginate(15);
 
         $this->transformer = new ActivityTransformer;
