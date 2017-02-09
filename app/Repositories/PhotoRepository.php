@@ -42,12 +42,19 @@ class PhotoRepository
      */
     public function create(array $data, $signupId)
     {
+        // Include signup_id when we create the Event
+        $data['signup_id'] = $signupId;
+
         // Don't send quantity and why_participated - we don't want this to live on the post_photo event.
         $postEvent = Event::create(array_except($data, ['quantity', 'why_participated']));
 
-        $fileUrl = $this->aws->storeImage($data['file'], $signupId);
+        if (isset($data['file'])) {
+            $fileUrl = $this->aws->storeImage($data['file'], $signupId);
 
-        $editedImage = $this->crop($data, $signupId);
+            $editedImage = $this->crop($data, $signupId);
+        } else {
+            $fileUrl = 'default';
+        }
 
         $photo = Photo::create([
             'file_url' => $fileUrl,
