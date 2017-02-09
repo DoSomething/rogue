@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Signup;
+use App\Http\Controllers\Controller;
 use Rogue\Http\Transformers\ActivityTransformer;
 
 class ActivityController extends ApiController
@@ -26,7 +27,7 @@ class ActivityController extends ApiController
      */
     public function index()
     {
-        $signups = Signup::all();
+        $signups = Signup::paginate(15);
 
         $this->transformer = new ActivityTransformer;
 
