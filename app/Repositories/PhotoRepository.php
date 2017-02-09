@@ -42,6 +42,9 @@ class PhotoRepository
      */
     public function create(array $data, $signupId)
     {
+        // Include signup_id when we create the Event
+        $data['signup_id'] = $signupId;
+
         // Don't send quantity and why_participated - we don't want this to live on the post_photo event.
         $postEvent = Event::create(array_except($data, ['quantity', 'why_participated']));
 
