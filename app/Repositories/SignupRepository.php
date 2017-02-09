@@ -15,12 +15,12 @@ class SignupRepository
      */
     public function create($data)
     {
+        // Add these values to pass to the Event
+        $data['event_type'] = 'signup';
+        $data['submission_type'] = 'user';
+
         // Create the signup event
-        $event = Event::create([
-            'northstar_id' => $data['northstar_id'],
-            'event_type' => 'signup',
-            'submission_type' => 'user',
-        ]);
+        $event = Event::create($data);
 
         // Create the signup
         $signup = $event->signup()->create([
