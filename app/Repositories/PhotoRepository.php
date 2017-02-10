@@ -58,7 +58,7 @@ class PhotoRepository
 
         $photo = Photo::create([
             'file_url' => $fileUrl,
-            'edited_file_url' => $editedImage,
+            'edited_file_url' => isset($editedImage) ? $editedImage : null,
             'caption' => $data['caption'],
             'status' => isset($data['status']) ? $data['status'] : 'pending',
             'source' => $data['source'],
