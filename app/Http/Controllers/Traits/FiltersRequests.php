@@ -29,8 +29,8 @@ trait FiltersRequests
         if (! $filters) {
             return $query;
         }
-
         // Requests may be filtered by indexed fields.
+
         $filters = array_intersect_key($filters, array_flip($indexes));
 
         // You can filter by multiple values, e.g. `filter[source]=agg,cgg`
@@ -45,34 +45,6 @@ trait FiltersRequests
                 $query->where($filter, '=', $value, ($firstWhere ? 'and' : 'or'));
                 $firstWhere = false;
             }
-        }
-
-        return $query;
-    }
-
-    /**
-     * Limit results to users matching a set of search terms.
-     *
-     * @param $query - Query to apply search to
-     * @param array $searches - Key/value array of fields and search terms
-     * @param array $indexes - Indexed fields (whitelisted for search)
-     * @return mixed
-     */
-    public function search($query, $searches, $indexes)
-    {
-        if (! $searches) {
-            return $query;
-        }
-
-        // Searches may only be performed on indexed fields.
-        $searches = array_intersect_key($searches, array_flip($indexes));
-
-        // For the first `where` query, we want to limit results... from then on,
-        // we want to append (e.g. `SELECT * WHERE _ OR WHERE _ OR WHERE _`)
-        $firstWhere = true;
-        foreach ($searches as $term => $value) {
-            $query->where($term, '=', $value, ($firstWhere ? 'and' : 'or'));
-            $firstWhere = false;
         }
 
         return $query;
