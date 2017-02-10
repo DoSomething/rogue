@@ -28,6 +28,10 @@ class ActivityController extends ApiController
      */
     public function index(Request $request)
     {
+        $query = $this->newQuery(Signup::class);
+
+        $filters = $request->query('filter');
+        dd($filters);
         $filters = $this->setFilters($request->all());
 
         if (isset($filters['count'])) {
