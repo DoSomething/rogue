@@ -26,7 +26,6 @@ trait FiltersRequests
      */
     public function filter($query, $filters, $indexes)
     {
-        dd('hi');
         if (! $filters) {
             return $query;
         }

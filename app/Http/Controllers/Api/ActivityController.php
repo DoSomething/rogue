@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Signup;
+use Rogue\Models\Activity;
 use App\Http\Controllers\Controller;
 use Rogue\Http\Transformers\ActivityTransformer;
 use Illuminate\Http\Request;

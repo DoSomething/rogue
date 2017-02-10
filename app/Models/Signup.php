@@ -14,6 +14,18 @@ class Signup extends Model
     protected $fillable = ['id', 'event_id', 'northstar_id', 'campaign_id', 'campaign_run_id', 'quantity', 'quantity_pending', 'why_participated', 'source', 'created_at', 'updated_at'];
 
     /**
+     * Attributes that can be queried when filtering.
+     *
+     * This array is manually maintained. It does not necessarily mean that
+     * any of these are actual indexes on the database... but they should be!
+     *
+     * @var array
+     */
+    public static $indexes = [
+        'campaigns', 'camapign_runs', 'count', 'page',
+    ];
+
+    /**
      * Each signup belongs to an event.
      */
     public function event()
