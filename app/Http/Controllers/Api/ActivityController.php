@@ -24,15 +24,24 @@ class ActivityController extends ApiController
     }
 
     /**
-     * Returns user activity.
+     * Returns signup activity.
+     * GET /activity
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
+        // Create an empty Signup query, which we can either filter (below)
+        // or paginate to retrieve all signup records.
         $query = $this->newQuery(Signup::class);
 
-        $filters = $request->query('filter');
-        dd($filters);
-        $filters = $this->setFilters($request->all());
+        $filters = $request->all();
+        // $filters = $request->query('filter');
+        dd(Signup::$indexes);
+        // $filters = $request->query('filter');
+        $query = $this->filter($query, $filters, Signup::$indexes);
+
 
         if (isset($filters['count'])) {
             $count = $filters['count'];

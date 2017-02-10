@@ -6,10 +6,14 @@ use League\Fractal\Manager;
 use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Serializer\DataArraySerializer;
+use Rogue\Http\Controllers\Traits\FiltersRequests;
 use Rogue\Http\Controllers\Controller as BaseController;
 
 class ApiController extends BaseController
 {
+
+    use FiltersRequests;
+
     /**
      * @var League\Fractal\Manager
      */
