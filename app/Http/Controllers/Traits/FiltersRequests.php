@@ -29,24 +29,27 @@ trait FiltersRequests
         if (! $filters) {
             return $query;
         }
-        // Requests may be filtered by indexed fields.
 
+        // Requests may be filtered by indexed fields.
         $filters = array_intersect_key($filters, array_flip($indexes));
 
         // You can filter by multiple values, e.g. `filter[source]=agg,cgg`
         // to get records that have a source value of either `agg` or `cgg`.
         foreach ($filters as $filter => $values) {
             $values = explode(',', $values);
-
-            // For the first `where` query, we want to limit results... from then on,
-            // we want to append (e.g. `SELECT * WHERE _ OR WHERE _ OR WHERE _`)
-            $firstWhere = true;
-            foreach ($values as $value) {
-                $query->where($filter, '=', $value, ($firstWhere ? 'and' : 'or'));
-                $firstWhere = false;
+            if (count($values) > 1) {
+                // For the first `where` query, we want to limit results... from then on,
+                // we want to append (e.g. `SELECT * WHERE _ OR WHERE _ OR WHERE _`)
+                    $query->where(function($query) use ($values, $filter) {
+                        foreach ($values as $value)
+                        {
+                            $query->orWhere($filter, $value);
+                        }
+                    });
+            } else {
+                $query->where($filter, $values[0], 'and');
             }
         }
-
         return $query;
     }
 }
