@@ -2,10 +2,9 @@
 
 namespace Rogue\Http\Transformers;
 
-use Rogue\Models\Signup;
 use Rogue\Models\Event;
+use Rogue\Models\Signup;
 use League\Fractal\TransformerAbstract;
-
 
 class ActivityTransformer extends TransformerAbstract
 {
@@ -52,7 +51,7 @@ class ActivityTransformer extends TransformerAbstract
     {
         $post = $signup->posts;
 
-        return new \League\Fractal\Resource\Collection($post, function($post) {
+        return new \League\Fractal\Resource\Collection($post, function ($post) {
             return [
                 'postable_id' => $post->postable_id,
                 'post_event_id' => $post->event_id,
@@ -74,18 +73,18 @@ class ActivityTransformer extends TransformerAbstract
         });
     }
 
-    /**
-     * Include the event log for the signup.
-     *
-     * @param \Rogue\Models\Signup $signup
-     * @return \League\Fractal\Resource\Collection
-     */
+     /**
+      * Include the event log for the signup.
+      *
+      * @param \Rogue\Models\Signup $signup
+      * @return \League\Fractal\Resource\Collection
+      */
      public function includeEvents(Signup $signup)
      {
-        $event = Event::where('signup_id', $signup->id)->get();
+         $event = Event::where('signup_id', $signup->id)->get();
 
-        return new \League\Fractal\Resource\Collection($event, function($event) {
-            return [
+         return new \League\Fractal\Resource\Collection($event, function ($event) {
+             return [
                 'event_id' => $event->id,
                 'event_type' => $event->event_type,
                 'submission_type' => $event->submission_type,
@@ -100,7 +99,6 @@ class ActivityTransformer extends TransformerAbstract
                 'created_at' => $event->created_at->toIso8601String(),
                 'updated_at' => $event->updated_at->toIso8601String(),
             ];
-        });
-
+         });
      }
 }

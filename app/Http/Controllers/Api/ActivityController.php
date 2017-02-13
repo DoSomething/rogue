@@ -4,9 +4,9 @@ namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Signup;
 use Rogue\Models\Activity;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Rogue\Http\Transformers\ActivityTransformer;
-use Illuminate\Http\Request;
 
 class ActivityController extends ApiController
 {
@@ -17,7 +17,6 @@ class ActivityController extends ApiController
 
     /**
      * Create a controller instance.
-     *
      */
     public function __construct()
     {

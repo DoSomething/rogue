@@ -12,7 +12,6 @@ use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
 class ApiController extends BaseController
 {
-
     use FiltersRequests;
 
     /**
