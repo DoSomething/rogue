@@ -65,13 +65,16 @@ class PhotoRepository
             'remote_addr' => $data['remote_addr'],
         ]);
 
-        // @TODO: I think we can remove this after the migration runs
+        // @TODO: This if can be removed after the migration
         // Let Laravel take care of the timestamps unless they are specified in the request
         if (isset($data['created_at'])) {
             $photo->created_at = $data['created_at'];
             $photo->updated_at = $data['created_at'];
+            $postEvent->created_at = $data['created_at'];
+            $postEvent->updated_at = $data['created_at'];
 
             $photo->save(['timestamps' => false]);
+            $postEvent->save(['timestamps' => false]);
         }
 
         // Create the Post and associate the Photo with it.
@@ -84,7 +87,7 @@ class PhotoRepository
             'northstar_id' => $data['northstar_id'],
         ]);
 
-        // @TODO: I think we can remove this after the migration runs
+        // @TODO: After the migration, only keep the code in the else
         // Let Laravel take care of the timestamps unless they are specified in the request
         // Post and Photo would have the same timestamps
         if (isset($data['created_at'])) {
