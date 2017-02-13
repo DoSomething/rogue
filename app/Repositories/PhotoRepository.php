@@ -65,6 +65,15 @@ class PhotoRepository
             'remote_addr' => $data['remote_addr'],
         ]);
 
+        // @TODO: I think we can remove this after the migration runs
+        // Let Laravel take care of the timestamps unless they are specified in the request
+        if (isset($data['created_at'])) {
+            $photo->created_at = $data['created_at'];
+            $photo->updated_at = $data['created_at'];
+
+            $photo->save(['timestamps' => false]);
+        }
+
         // Create the Post and associate the Photo with it.
         // @Note -- Having some issue using the `create` method here. I think
         // becase the Posts table doesn't have an `id` key, but I can work that out.
@@ -75,8 +84,21 @@ class PhotoRepository
             'northstar_id' => $data['northstar_id'],
         ]);
 
-        $post->content()->associate($photo);
-        $post->save();
+        // @TODO: I think we can remove this after the migration runs
+        // Let Laravel take care of the timestamps unless they are specified in the request
+        // Post and Photo would have the same timestamps
+        if (isset($data['created_at'])) {
+            $post->content()->associate($photo);
+
+            $post->created_at = $data['created_at'];
+            $post->updated_at = $data['created_at'];
+
+            $post->save(['timestamps' => false]);
+        } else {
+            // @TODO: keep this after the migration
+            $post->content()->associate($photo);
+            $post->save();
+        }
 
         return $post;
     }
