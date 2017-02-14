@@ -40,11 +40,11 @@ trait FiltersRequests
             if (count($values) > 1) {
                 // For the first `where` query, we want to limit results... from then on,
                 // we want to append (e.g. `SELECT * (WHERE _ OR WHERE _ OR WHERE _)` and (WHERE _ OR WHERE _))
-                    $query->where(function ($query) use ($values, $filter) {
-                        foreach ($values as $value) {
-                            $query->orWhere($filter, $value);
-                        }
-                    });
+                $query->where(function ($query) use ($values, $filter) {
+                    foreach ($values as $value) {
+                        $query->orWhere($filter, $value);
+                    }
+                });
             } else {
                 $query->where($filter, $values[0], 'and');
             }
