@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Transformers;
 
-use Rogue\Models\Signup;
 use Rogue\Models\Event;
+use Rogue\Models\Signup;
 use League\Fractal\TransformerAbstract;
 
 class SignupTransformer extends TransformerAbstract
@@ -63,10 +63,8 @@ class SignupTransformer extends TransformerAbstract
      */
     public function includeEvents(Signup $signup)
     {
-        // $event = $signup->event;
         $event = Event::where('signup_id', $signup->id)->get();
 
         return $this->collection($event, new EventTransformer);
     }
-
 }

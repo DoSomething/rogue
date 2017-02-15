@@ -15,7 +15,7 @@ class EventTransformer extends TransformerAbstract
      */
     public function transform(Event $event)
     {
-         return [
+        return [
             'event_id' => $event->id,
             'event_type' => $event->event_type,
             'submission_type' => $event->submission_type,
