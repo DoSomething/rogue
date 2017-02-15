@@ -40,29 +40,21 @@ Example Response:
 ```
 {
   "data": {
-    "signup_id": 31,
-    "northstar_id": "1233",
-    "campaign_id": 74,
-    "campaign_run_id": 1790,
+    "postable_id": 340,
+    "post_event_id": 784,
+    "submission_type": "user",
+    "postable_type": "Rogue\\Models\\Photo",
     "content": {
-      "type": "post_photo",
       "media": {
-        "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/31-1485896463.jpeg",
-        "edited_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_31-1485896464.jpeg"
+        "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487182498.jpeg",
+        "edited_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_18-1487182498.jpeg"
       },
       "caption": "1234",
       "status": "pending",
-      "created_at": "2017-01-31T21:01:04+0000",
-      "updated_at": "2017-01-31T21:01:04+0000"
-    },
-    "event": {
-      "data": {
-        "event_id": "559",
-        "event_type": "post_photo",
-        "submission_type": "user",
-        "created_at": "2017-01-31T21:01:03+0000",
-        "updated_at": "2017-01-31T21:01:03+0000"
-      }
+      "remote_addr": "207.110.19.130",
+      "post_source": "runscope",
+      "created_at": "2017-02-15T18:14:58+0000",
+      "updated_at": "2017-02-15T18:14:58+0000"
     }
   }
 }

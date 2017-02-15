@@ -119,85 +119,64 @@ Example request body:
 ]
 ```
 
-Response: The signup and associated event and posts.
+Response: The signup and associated events and posts.
 
 Example response:
 ```
 {
   "data": {
-    "id": 160,
-    "northstar_id": "5639066ba59dbfe6598b4567",
+    "signup_id": 160,
+    "signup_event_id": 799,
+    "submission_type": "user",
+    "northstar_id": "1234",
     "campaign_id": "6",
     "campaign_run_id": "1740",
     "quantity": null,
     "quantity_pending": "200",
     "why_participated": "bcuz I luv endpointz",
+    "signup_source": "phoenix-web",
     "created_at": "2017-01-19T19:11:14+0000",
     "updated_at": "2017-01-19T19:11:14+0000",
-    "post": {
+    "posts": {
       "data": [
         {
-          "signup_id": 160,
-          "northstar_id": "5639066ba59dbfe6598b4567",
-          "campaign_id": 6,
-          "campaign_run_id": 1740,
+          "postable_id": 16,
+          "post_event_id": 29,
+          "submission_type": "user",
+          "postable_type": "Rogue\\Models\\Photo",
           "content": {
-            "type": "post_photo",
             "media": {
-              "url": "https://s3.amazonaws.com/ds-rogue-qa/uploads/reportback-items/160-1484853074.jpeg",
-              "edited_url": null
+              "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/1334-1484771619.jpeg",
+              "edited_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_1334-1484771621.jpeg"
             },
-            "caption": "LOOK AT THAT CAT",
+            "caption": "caption",
             "status": "pending",
-            "created_at": "2017-01-19T19:11:15+0000",
-            "updated_at": "2017-01-19T19:11:15+0000"
-          },
-          "event": {
-            "data": {
-              "event_id": "290",
-              "event_type": "post_photo",
-              "submission_type": "",
-              "created_at": "2017-01-19T19:11:14+0000",
-              "updated_at": "2017-01-19T19:11:14+0000"
-            }
+            "remote_addr": null,
+            "post_source": null,
+            "created_at": "2017-01-18T20:33:41+0000",
+            "updated_at": "2017-01-18T20:33:41+0000"
           }
         },
+      ],
+    },
+    "events": {
+      "data": [
         {
-          "signup_id": 160,
-          "northstar_id": "5639066ba59dbfe6598b4567",
-          "campaign_id": 6,
-          "campaign_run_id": 1740,
-          "content": {
-            "type": "post_photo",
-            "media": {
-              "url": "https://s3.amazonaws.com/ds-rogue-qa/uploads/reportback-items/160-1484853075.png",
-              "edited_url": null
-            },
-            "caption": "lil chickens",
-            "status": "pending",
-            "created_at": "2017-01-19T19:11:16+0000",
-            "updated_at": "2017-01-19T19:11:16+0000"
-          },
-          "event": {
-            "data": {
-              "event_id": "291",
-              "event_type": "post_photo",
-              "submission_type": "",
-              "created_at": "2017-01-19T19:11:15+0000",
-              "updated_at": "2017-01-19T19:11:15+0000"
-            }
-          }
+          "event_id": 800,
+          "event_type": "signup",
+          "submission_type": "user",
+          "quantity": null,
+          "quantity_pending": null,
+          "why_participated": null,
+          "caption": null,
+          "status": null,
+          "source": "chloe-testing",
+          "remote_addr": null,
+          "reason": null,
+          "created_at": "2017-02-15T18:31:07+0000",
+          "updated_at": "2017-02-15T18:31:07+0000"
         }
       ]
-    },
-    "event": {
-      "data": {
-        "event_id": "289",
-        "event_type": "signup",
-        "submission_type": "user",
-        "created_at": "2017-01-19T19:11:14+0000",
-        "updated_at": "2017-01-19T19:11:14+0000"
-      }
     }
   }
 }
