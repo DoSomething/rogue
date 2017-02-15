@@ -45,7 +45,10 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['api', 'log.received.reques
 });
 
 // v2 routes
-Route::group(['prefix' => 'api/v2', 'middleware' => ['api', 'log.received.request']], function () {
+Route::group(['prefix' => 'api/v2', 'middleware' => ['log.received.request']], function () {
+
+    // activity
+    Route::get('activity', 'Api\ActivityController@index');
 
     // posts
     Route::post('posts', 'Api\PostsController@store');
@@ -56,5 +59,3 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['api', 'log.received.reques
     // signups
     Route::post('signups', 'Api\SignupsController@store');
 });
-
-Route::get('api/v2/activity', 'Api\ActivityController@index');
