@@ -3,15 +3,15 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Signup;
-use Rogue\Models\Activity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Rogue\Http\Transformers\ActivityTransformer;
+// use Rogue\Http\Transformers\ActivityTransformer;
+use Rogue\Http\Transformers\SignupTransformer;
 
 class ActivityController extends ApiController
 {
     /**
-     * @var ActivityTransformer;
+     * @var SignupTransformer;
      */
     protected $transformer;
 
@@ -20,7 +20,7 @@ class ActivityController extends ApiController
      */
     public function __construct()
     {
-        $this->transformer = new ActivityTransformer();
+        $this->transformer = new SignupTransformer();
     }
 
     /**
