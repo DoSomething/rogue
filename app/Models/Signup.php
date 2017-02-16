@@ -26,11 +26,11 @@ class Signup extends Model
     ];
 
     /**
-     * Each signup belongs to an event.
+     * Get the events associated with this signup.
      */
     public function event()
     {
-        return $this->belongsTo(Event::class);
+        return $this->hasMany(Event::class);
     }
 
     /**
