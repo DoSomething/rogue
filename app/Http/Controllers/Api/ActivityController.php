@@ -5,7 +5,6 @@ namespace Rogue\Http\Controllers\Api;
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-// use Rogue\Http\Transformers\ActivityTransformer;
 use Rogue\Http\Transformers\SignupTransformer;
 
 class ActivityController extends ApiController
