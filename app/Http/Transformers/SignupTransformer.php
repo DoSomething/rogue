@@ -65,7 +65,7 @@ class SignupTransformer extends TransformerAbstract
      */
     public function includeEvents(Signup $signup)
     {
-        $event = Event::where('signup_id', $signup->id)->get();
+        $event = $signup->event;
 
         return $this->collection($event, new EventTransformer);
     }
