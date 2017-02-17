@@ -28,8 +28,8 @@ class SignupRepository
             'northstar_id' => $data['northstar_id'],
             'campaign_id' => $data['campaign_id'],
             'campaign_run_id' => $data['campaign_run_id'],
-            'quantity' => null,
-            'quantity_pending' => isset($data['quantity']) ? $data['quantity'] : null,
+            'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
+            'quantity_pending' => isset($data['quantity_pending']) ? $data['quantity_pending'] : null,
             'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
             'source' => isset($data['source']) ? $data['source'] : null,
         ]);
