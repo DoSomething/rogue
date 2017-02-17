@@ -43,6 +43,8 @@ class ReviewsController extends ApiController
      */
     public function __construct(PostService $posts, ReportbackService $reportbacks)
     {
+        $this->middleware('api');
+
         $this->posts = $posts;
         $this->reportbacks = $reportbacks;
 

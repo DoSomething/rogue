@@ -6,10 +6,14 @@ use League\Fractal\Manager;
 use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Serializer\DataArraySerializer;
+use Rogue\Http\Controllers\Traits\FiltersRequests;
 use Rogue\Http\Controllers\Controller as BaseController;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
 class ApiController extends BaseController
 {
+    use FiltersRequests;
+
     /**
      * @var League\Fractal\Manager
      */
@@ -85,5 +89,31 @@ class ApiController extends BaseController
         }
 
         return $transformer;
+    }
+
+    /**
+     * Format & return a paginated collection response.
+     *
+     * @param $query - Eloquent query
+     * @return \Illuminate\Http\Response
+     */
+    public function paginatedCollection($query, $request, $code = 200, $meta = [], $transformer = null)
+    {
+        if (is_null($transformer)) {
+            $transformer = $this->transformer;
+        }
+
+        $pages = (int) $request->query('limit', 20);
+        $paginator = $query->paginate(min($pages, 100));
+
+        $queryParams = array_diff_key($request->query(), array_flip(['page']));
+        $paginator->appends($queryParams);
+
+        $resource = new Collection($paginator->getCollection(), $transformer);
+
+        $resource->setMeta($meta);
+        $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
+
+        return $this->transform($resource, $code);
     }
 }

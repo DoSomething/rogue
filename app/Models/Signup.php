@@ -14,11 +14,23 @@ class Signup extends Model
     protected $fillable = ['id', 'event_id', 'northstar_id', 'campaign_id', 'campaign_run_id', 'quantity', 'quantity_pending', 'why_participated', 'source', 'created_at', 'updated_at'];
 
     /**
-     * Each signup belongs to an event.
+     * Attributes that can be queried when filtering.
+     *
+     * This array is manually maintained. It does not necessarily mean that
+     * any of these are actual indexes on the database... but they should be!
+     *
+     * @var array
      */
-    public function event()
+    public static $indexes = [
+        'campaign_id', 'campaign_run_id',
+    ];
+
+    /**
+     * Get the events associated with this signup.
+     */
+    public function events()
     {
-        return $this->belongsTo(Event::class);
+        return $this->hasMany(Event::class);
     }
 
     /**

@@ -8,15 +8,6 @@ use League\Fractal\TransformerAbstract;
 class PostTransformer extends TransformerAbstract
 {
     /**
-     * List of resources to automatically include
-     *
-     * @var array
-     */
-    protected $defaultIncludes = [
-        'event',
-    ];
-
-    /**
      * Transform resource data.
      *
      * @param \Rogue\Models\Photo $photo
@@ -25,34 +16,22 @@ class PostTransformer extends TransformerAbstract
     public function transform(Post $post)
     {
         return [
-            'signup_id' => $post->signup_id,
-            'northstar_id' => $post->northstar_id,
-            'campaign_id' => $post->signup->campaign_id,
-            'campaign_run_id' => $post->signup->campaign_run_id,
+            'postable_id' => $post->postable_id,
+            'post_event_id' => $post->event_id,
+            'submission_type' => $post->event->submission_type,
+            'postable_type' => $post->postable_type,
             'content' => [
-                'type' => $post->event->event_type,
                 'media' => [
                     'url' => $post->content->file_url,
                     'edited_url' => $post->content->edited_file_url,
                 ],
                 'caption' => $post->content->caption,
                 'status' => $post->content->status,
+                'remote_addr' => $post->content->remote_addr,
+                'post_source' => $post->content->source,
                 'created_at' => $post->content->created_at->toIso8601String(),
                 'updated_at' => $post->content->updated_at->toIso8601String(),
             ],
         ];
-    }
-
-    /**
-     * Include the event
-     *
-     * @param \Rogue\Models\Post $post
-     * @return \League\Fractal\Resource\Item
-     */
-    public function includeEvent(Post $post)
-    {
-        $event = $post->event;
-
-        return $this->item($event, new EventTransformer);
     }
 }
