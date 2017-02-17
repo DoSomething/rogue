@@ -1,5 +1,7 @@
 <?php
 
+use Rogue\Models\Signup;
+
 class ActivityApiTest extends TestCase
 {
     /*
@@ -47,15 +49,24 @@ class ActivityApiTest extends TestCase
      *  GET /activity?filter[campaign_id]=47
      * @return void
      */
-    // public function testActivityIndexWithCampaignIdQuery()
-    // {
-    //     // do we need to make a signup with this campaign?
-    //     $response = $this->json('GET', $this->activityApiUrl . '?filter[campaign_id]=3');
+    public function testActivityIndexWithCampaignIdQuery()
+    {
+        $signup = Signup::create([
+            'northstar_id' => '1234',
+            'campaign_id' => '47',
+            'campaign_run_id' => '1771',
+        ]);
+        dd($signup);
 
-    //     $this->assertResponseStatus(200);
+        // $this->asUserUsingLegacyAuth($user)->withLegacyApiKeyScopes(['user'])->get('v1/signups?users='.$user->_id.','.$user2->_id);
 
-    //     $response = $this->decodeResponseJson();
 
-    //     $this->assertEquals(3, $response['meta']['pagination']['current_page']);
-    // }
+        $response = $this->json('GET', $this->activityApiUrl . '?filter[campaign_id]=' . $signup->campaign_id);
+
+        $this->assertResponseStatus(200);
+
+        $response = $this->decodeResponseJson();
+        dd($response);
+        // $this->assertEquals('47', $response['meta']['pagination']['current_page']);
+    }
 }
