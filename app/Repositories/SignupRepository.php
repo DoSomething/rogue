@@ -37,9 +37,14 @@ class SignupRepository
         // Let Laravel take care of the timestamps unless they are specified in the request
         // @TODO: keep only the else after the migration
         if (isset($data['created_at'])) {
+            // Associate the event with the signup
+            $event->signup_id = $signup->id;
+
+            // Set the created_at time
             $signup->created_at = $data['created_at'];
             $event->created_at = $data['created_at'];
 
+            // Set the updated time if provided, if not, assume no updates
             if (isset($data['updated_at'])) {
                 $signup->updated_at = $data['updated_at'];
                 $event->updated_at = $data['updated_at'];
