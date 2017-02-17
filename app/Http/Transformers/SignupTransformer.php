@@ -26,12 +26,10 @@ class SignupTransformer extends TransformerAbstract
      */
     public function transform(Signup $signup)
     {
-        $signup_event = Event::where('id', $signup->event_id)->get();
-
         return [
             'signup_id' => $signup->id,
             'signup_event_id' => $signup->event_id,
-            'submission_type' => $signup_event[0]->submission_type,
+            'submission_type' => $signup->events->first()->submission_type,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'campaign_run_id' => $signup->campaign_run_id,
@@ -65,7 +63,7 @@ class SignupTransformer extends TransformerAbstract
      */
     public function includeEvents(Signup $signup)
     {
-        $event = $signup->event;
+        $event = $signup->events;
 
         return $this->collection($event, new EventTransformer);
     }

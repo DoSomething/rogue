@@ -28,7 +28,7 @@ class Signup extends Model
     /**
      * Get the events associated with this signup.
      */
-    public function event()
+    public function events()
     {
         return $this->hasMany(Event::class);
     }
