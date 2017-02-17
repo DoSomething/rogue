@@ -60,8 +60,7 @@ class PostApiTest extends TestCase
 
         // Make sure we created a reportback item for the reportback.
         $this->seeInDatabase('events', [
-            'northstar_id' => $response['data']['northstar_id'],
-            'event_type' => $response['data']['event']['data']['event_type'],
+            'caption' => $response['data']['content']['caption'],
         ]);
 
         // Make sure the file_url is saved to the database.
