@@ -22,6 +22,7 @@ GET /api/v2/activity
 
 Example Response:
 
+```
 {
   "data": [
     {
