@@ -118,6 +118,23 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
     }
 
     /**
+     * Create test signup to use in tests.
+     *
+     * @return object
+     */
+    public function createTestSignup($event)
+    {
+        $signup = $event->signup()->create([
+            'event_id' => $event->id,
+            'northstar_id' => $event->northstar_id,
+            'campaign_id' => $this->faker->randomNumber(4),
+            'campaign_run_id' => $this->faker->randomNumber(4),
+        ]);
+
+        return $signup;
+    }
+
+    /**
      * Post a new reportback and assert successful response
      *
      * @return array

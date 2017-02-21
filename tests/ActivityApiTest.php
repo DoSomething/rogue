@@ -55,12 +55,7 @@ class ActivityApiTest extends TestCase
     {
         $event = factory(Event::class)->create();
 
-        $signup = $event->signup()->create([
-            'event_id' => $event->id,
-            'northstar_id' => $event->northstar_id,
-            'campaign_id' => $this->faker->randomNumber(4),
-            'campaign_run_id' => $this->faker->randomNumber(4),
-        ]);
+        $signup = $this->createTestSignup($event);
 
         $event->signup_id = $signup->id;
         $event->save();
@@ -84,12 +79,7 @@ class ActivityApiTest extends TestCase
     {
         $event = factory(Event::class)->create();
 
-        $signup = $event->signup()->create([
-            'event_id' => $event->id,
-            'northstar_id' => $event->northstar_id,
-            'campaign_id' => $this->faker->randomNumber(4),
-            'campaign_run_id' => $this->faker->randomNumber(4),
-        ]);
+        $signup = $this->createTestSignup($event);
 
         $event->signup_id = $signup->id;
         $event->save();
@@ -114,24 +104,14 @@ class ActivityApiTest extends TestCase
     {
         $firstEvent = factory(Event::class)->create();
 
-        $firstSignup = $firstEvent->signup()->create([
-            'event_id' => $firstEvent->id,
-            'northstar_id' => $firstEvent->northstar_id,
-            'campaign_id' => $this->faker->randomNumber(4),
-            'campaign_run_id' => $this->faker->randomNumber(4),
-        ]);
+        $firstSignup = $this->createTestSignup($firstEvent);
 
         $firstEvent->signup_id = $firstSignup->id;
         $firstEvent->save();
 
         $secondEvent = factory(Event::class)->create();
 
-        $secondSignup = $secondEvent->signup()->create([
-            'event_id' => $secondEvent->id,
-            'northstar_id' => $secondEvent->northstar_id,
-            'campaign_id' => $this->faker->randomNumber(4),
-            'campaign_run_id' => $this->faker->randomNumber(4),
-        ]);
+        $secondSignup = $this->createTestSignup($secondEvent);
 
         $secondEvent->signup_id = $secondSignup->id;
         $secondEvent->save();
