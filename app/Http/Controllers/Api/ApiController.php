@@ -102,6 +102,7 @@ class ApiController extends BaseController
         if (is_null($transformer)) {
             $transformer = $this->transformer;
         }
+
         $pages = (int) $request->query('limit', 20);
         $paginator = $query->paginate(min($pages, 100));
 

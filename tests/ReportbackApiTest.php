@@ -1,4 +1,5 @@
 <?php
+
 use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackItem;
 use Faker\Generator;

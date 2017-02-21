@@ -2,9 +2,9 @@
 
 use Faker\Generator;
 use Rogue\Models\User;
+use Rogue\Models\Event;
 use Rogue\Models\Reaction;
 use Rogue\Models\Reportback;
-use Rogue\Models\Event;
 
 /*
 |--------------------------------------------------------------------------
