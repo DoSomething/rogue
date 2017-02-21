@@ -1,9 +1,14 @@
 <?php
 
 use Rogue\Jobs\SendReportbackToPhoenix;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
+    use DatabaseMigrations;
+
+    static protected $isInitialTest = true;
+
     /**
      * The base URL to use while testing the application.
      *
@@ -20,6 +25,28 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     protected $faker;
 
+    /*
+     * Clean test database on first test of each test run
+     */
+    protected static function cleanDB() {
+
+        $colname = 'Tables_in_' . env('DB_DATABASE');
+        $tables  = DB::select('SHOW TABLES');
+        $droplist = [];
+        foreach ($tables as $table) {
+            $droplist[] = $table->$colname;
+        }
+        if (count($droplist) > 0) {
+            $droplist = implode(',', $droplist);
+
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0'); // turn off referential integrity
+            DB::statement("DROP TABLE $droplist");
+            DB::statement('SET FOREIGN_KEY_CHECKS = 1'); // turn referential integrity back on
+        }
+
+        Artisan::call('migrate');
+    }
+
     /**
      * Setup the test environment.
      *
@@ -28,6 +55,12 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
     public function setUp()
     {
         parent::setUp();
+
+        // if (self::$isInitialTest) {
+        //     self::$isInitialTest = false;
+        //     self::cleanDB();
+        // }
+
         // Get a new Faker generator from Laravel.
         $this->faker = app(\Faker\Generator::class);
     }

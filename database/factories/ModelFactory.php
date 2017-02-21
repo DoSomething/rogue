@@ -4,6 +4,7 @@ use Faker\Generator;
 use Rogue\Models\User;
 use Rogue\Models\Reaction;
 use Rogue\Models\Reportback;
+use Rogue\Models\Event;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,13 @@ use Rogue\Models\Reportback;
 | database. Just tell the factory how a default model should look.
 |
 */
+
+// Event Factory
+$factory->define(Event::class, function (Generator $faker) {
+    return [
+        'northstar_id' => str_random(24),
+    ];
+});
 
 // Reportback Factory
 $factory->define(Reportback::class, function (Generator $faker) {

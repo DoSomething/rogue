@@ -1,6 +1,8 @@
 <?php
 
 use Rogue\Models\Signup;
+use Rogue\Models\Event;
+use Faker\Generator;
 
 class ActivityApiTest extends TestCase
 {
@@ -51,22 +53,24 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithCampaignIdQuery()
     {
-        $signup = Signup::create([
-            'northstar_id' => '1234',
-            'campaign_id' => '47',
-            'campaign_run_id' => '1771',
+        $event = factory(Event::class)->create();
+
+        $signup = $event->signup()->create([
+            'event_id' => $event->id,
+            'northstar_id' => $event->northstar_id,
+            'campaign_id' => $this->faker->randomNumber(4),
+            'campaign_run_id' => $this->faker->randomNumber(4),
         ]);
-        dd($signup);
 
-        // $this->asUserUsingLegacyAuth($user)->withLegacyApiKeyScopes(['user'])->get('v1/signups?users='.$user->_id.','.$user2->_id);
-
+        $event->signup_id = $signup->id;
+        $event->save();
 
         $response = $this->json('GET', $this->activityApiUrl . '?filter[campaign_id]=' . $signup->campaign_id);
 
         $this->assertResponseStatus(200);
 
         $response = $this->decodeResponseJson();
-        dd($response);
-        // $this->assertEquals('47', $response['meta']['pagination']['current_page']);
+
+        $this->assertEquals($signup->campaign_id, $response['data'][0]['campaign_id']);
     }
 }

@@ -18,7 +18,6 @@ class SignupRepository
         // Add these values to pass to the Event
         $data['event_type'] = 'signup';
         $data['submission_type'] = 'user';
-
         // Create the signup event
         $event = Event::create($data);
 
