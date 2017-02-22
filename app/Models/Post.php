@@ -47,4 +47,12 @@ class Post extends Model
     {
         return $this->belongsTo(Signup::class);
     }
+
+    /**
+     * Each post has many reactions.
+     */
+    public function reactions()
+    {
+        return $this->hasMany(Reaction::class);
+    }
 }
