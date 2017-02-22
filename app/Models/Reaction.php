@@ -5,8 +5,7 @@ namespace Rogue\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Reaction extends Model
-{
+class Reaction extends Model {
     use SoftDeletes;
 
     /**
@@ -21,13 +20,13 @@ class Reaction extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'reportback_item_id'];
+    protected $fillable = ['id', 'northstar_id', 'post_id'];
 
     /**
-     * The reportback items that belongs to the reaction.
+     * Each reaction belongs to a post.
      */
-    public function reportbackItems()
+    public function post()
     {
-        return $this->belongsTo('\Rogue\Models\ReportbackItem');
+        return $this->belongsTo(Post::class);
     }
 }
