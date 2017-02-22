@@ -36,9 +36,6 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['api', 'log.received.reques
     // items
     Route::put('items', 'Api\ReportbackController@updateReportbackItems');
 
-    // reactions
-    Route::post('reactions', 'Api\ReactionController@store');
-
     // reportbacks
     Route::get('reportbacks', 'Api\ReportbackController@index');
     Route::post('reportbacks', 'Api\ReportbackController@store');
@@ -52,6 +49,9 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['log.received.request']], f
 
     // posts
     Route::post('posts', 'Api\PostsController@store');
+
+    // reactions
+    Route::post('reactions', 'Api\ReactionController@store');
 
     // reviews
     Route::put('reviews', 'Api\ReviewsController@reviews');
