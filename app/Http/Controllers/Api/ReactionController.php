@@ -33,7 +33,8 @@ class ReactionController extends ApiController
     public function store(ReactionRequest $request)
     {
         $userId = $request['northstar_id'];
-        $reportbackItemId = $request['reportback_item_id'];
+        $postableId = $request['postable_id'];
+        $postableType = $request['postable_type'];
 
         // Check to see if the reportback_item has a reaction from this particular user with id of northstar_id.
         $reaction = Reaction::withTrashed()->where(['northstar_id' => $userId, 'reportback_item_id' => $reportbackItemId])->first();

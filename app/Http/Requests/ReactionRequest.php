@@ -23,7 +23,7 @@ class ReactionRequest extends Request
     {
         return [
             'postable_id' => 'required|int',
-            'postable_type' => 'required'
+            'postable_type' => 'required',
             'northstar_id' => 'required',
         ];
     }
