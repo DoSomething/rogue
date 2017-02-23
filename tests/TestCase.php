@@ -7,8 +7,6 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     use DatabaseMigrations;
 
-    static protected $isInitialTest = true;
-
     /**
      * The base URL to use while testing the application.
      *
