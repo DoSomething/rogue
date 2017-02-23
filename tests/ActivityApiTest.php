@@ -23,9 +23,13 @@ class ActivityApiTest extends TestCase
 
         $this->assertResponseStatus(200);
 
-        $response = $this->decodeResponseJson();
-
-        $this->assertEquals(8, $response['meta']['pagination']['per_page']);
+        $this->seeJsonSubset([
+            'meta' => [
+                'pagination' => [
+                    'per_page' => 8
+                ],
+            ]
+        ]);
     }
 
     /**
@@ -40,9 +44,13 @@ class ActivityApiTest extends TestCase
 
         $this->assertResponseStatus(200);
 
-        $response = $this->decodeResponseJson();
-
-        $this->assertEquals(3, $response['meta']['pagination']['current_page']);
+        $this->seeJsonSubset([
+            'meta' => [
+                'pagination' => [
+                    'current_page' => 3
+                ],
+            ]
+        ]);
     }
 
     /**
@@ -64,9 +72,13 @@ class ActivityApiTest extends TestCase
 
         $this->assertResponseStatus(200);
 
-        $response = $this->decodeResponseJson();
-
-        $this->assertEquals($signup->campaign_id, $response['data'][0]['campaign_id']);
+        $this->seeJsonSubset([
+            'data' => [
+                0 => [
+                    'campaign_id' => $signup->campaign_id
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -88,9 +100,13 @@ class ActivityApiTest extends TestCase
 
         $this->assertResponseStatus(200);
 
-        $response = $this->decodeResponseJson();
-
-        $this->assertEquals($signup->campaign_run_id, $response['data'][0]['campaign_run_id']);
+        $this->seeJsonSubset([
+            'data' => [
+                0 => [
+                    'campaign_run_id' => $signup->campaign_run_id
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -120,8 +136,12 @@ class ActivityApiTest extends TestCase
 
         $this->assertResponseStatus(200);
 
-        $response = $this->decodeResponseJson();
-
-        $this->assertEquals(0, $response['meta']['pagination']['total']);
+        $this->seeJsonSubset([
+            'meta' => [
+                'pagination' => [
+                    'total' => 0
+                ],
+            ],
+        ]);
     }
 }
