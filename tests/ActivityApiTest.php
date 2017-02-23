@@ -19,7 +19,7 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithLimitQuery()
     {
-        $response = $this->json('GET', $this->activityApiUrl . '?limit=8');
+        $this->json('GET', $this->activityApiUrl . '?limit=8');
 
         $this->assertResponseStatus(200);
 
@@ -36,7 +36,7 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithPageQuery()
     {
-        $response = $this->json('GET', $this->activityApiUrl . '?page=3');
+        $this->json('GET', $this->activityApiUrl . '?page=3');
 
         $this->assertResponseStatus(200);
 
@@ -60,7 +60,7 @@ class ActivityApiTest extends TestCase
         $event->signup_id = $signup->id;
         $event->save();
 
-        $response = $this->json('GET', $this->activityApiUrl . '?filter[campaign_id]=' . $signup->campaign_id);
+        $this->json('GET', $this->activityApiUrl . '?filter[campaign_id]=' . $signup->campaign_id);
 
         $this->assertResponseStatus(200);
 
@@ -84,7 +84,7 @@ class ActivityApiTest extends TestCase
         $event->signup_id = $signup->id;
         $event->save();
 
-        $response = $this->json('GET', $this->activityApiUrl . '?filter[campaign_run_id]=' . $signup->campaign_run_id);
+        $this->json('GET', $this->activityApiUrl . '?filter[campaign_run_id]=' . $signup->campaign_run_id);
 
         $this->assertResponseStatus(200);
 
@@ -116,7 +116,7 @@ class ActivityApiTest extends TestCase
         $secondEvent->signup_id = $secondSignup->id;
         $secondEvent->save();
 
-        $response = $this->json('GET', $this->activityApiUrl . '?filter[campaign_id]=' . $firstSignup->campaign_id . ',' . $secondSignup->campaign_id . '&filter[campaign_run_id]=z');
+        $this->json('GET', $this->activityApiUrl . '?filter[campaign_id]=' . $firstSignup->campaign_id . ',' . $secondSignup->campaign_id . '&filter[campaign_run_id]=z');
 
         $this->assertResponseStatus(200);
 
