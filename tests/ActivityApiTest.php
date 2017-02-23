@@ -61,15 +61,11 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithCampaignIdQuery()
     {
-        $event = factory(Event::class)->create();
-
-        $signup = $this->createTestSignup($event);
-
-        $event->signup_id = $signup->id;
-        $event->save();
+        $signup = factory(Signup::class)->create();
 
         $this->json('GET', $this->activityApiUrl . '?filter[campaign_id]=' . $signup->campaign_id);
 
+        // $response = $this->decodeResponseJson();
         $this->assertResponseStatus(200);
 
         $this->seeJsonSubset([
@@ -89,12 +85,7 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithCampaignRunIdQuery()
     {
-        $event = factory(Event::class)->create();
-
-        $signup = $this->createTestSignup($event);
-
-        $event->signup_id = $signup->id;
-        $event->save();
+        $signup = factory(Signup::class)->create();
 
         $this->json('GET', $this->activityApiUrl . '?filter[campaign_run_id]=' . $signup->campaign_run_id);
 
@@ -118,19 +109,9 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithMixedQueryReturnsNoResults()
     {
-        $firstEvent = factory(Event::class)->create();
+        $firstSignup = factory(Signup::class)->create();
 
-        $firstSignup = $this->createTestSignup($firstEvent);
-
-        $firstEvent->signup_id = $firstSignup->id;
-        $firstEvent->save();
-
-        $secondEvent = factory(Event::class)->create();
-
-        $secondSignup = $this->createTestSignup($secondEvent);
-
-        $secondEvent->signup_id = $secondSignup->id;
-        $secondEvent->save();
+        $secondSignup = factory(Signup::class)->create();
 
         $this->json('GET', $this->activityApiUrl . '?filter[campaign_id]=' . $firstSignup->campaign_id . ',' . $secondSignup->campaign_id . '&filter[campaign_run_id]=z');
 

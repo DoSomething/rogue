@@ -48,7 +48,6 @@ class Handler extends ExceptionHandler
     {
         if ($request->wantsJson()) {
             $fe = FlattenException::create($e);
-
             $json = [
                 'error' => [
                     'code' => $fe->getStatusCode(),

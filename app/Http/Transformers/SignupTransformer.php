@@ -26,6 +26,7 @@ class SignupTransformer extends TransformerAbstract
      */
     public function transform(Signup $signup)
     {
+        dd($signup->events);
         return [
             'signup_id' => $signup->id,
             'signup_event_id' => $signup->event_id,

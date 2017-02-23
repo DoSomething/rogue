@@ -5,6 +5,7 @@ use Rogue\Models\User;
 use Rogue\Models\Event;
 use Rogue\Models\Reaction;
 use Rogue\Models\Reportback;
+use Rogue\Models\Signup;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,18 @@ use Rogue\Models\Reportback;
 $factory->define(Event::class, function (Generator $faker) {
     return [
         'northstar_id' => str_random(24),
+        'submission_type' => 'signup',
+    ];
+});
+
+// Signup Factory
+$factory->define(Signup::class, function (Generator $faker) {
+    return [
+        'campaign_id' => $this->faker->randomNumber(4),
+        'campaign_run_id' => $this->faker->randomNumber(4),
+        'event_id' => function() {
+            return factory(Event::class)->create()->id;
+        },
     ];
 });
 
