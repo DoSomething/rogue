@@ -62,10 +62,12 @@ class ActivityApiTest extends TestCase
     public function testActivityIndexWithCampaignIdQuery()
     {
         $signup = factory(Signup::class)->create();
+        $event = Event::all()->first();
+        $event->signup_id = $signup->id;
+        $event->save();
 
         $this->json('GET', $this->activityApiUrl . '?filter[campaign_id]=' . $signup->campaign_id);
 
-        // $response = $this->decodeResponseJson();
         $this->assertResponseStatus(200);
 
         $this->seeJsonSubset([
@@ -86,6 +88,9 @@ class ActivityApiTest extends TestCase
     public function testActivityIndexWithCampaignRunIdQuery()
     {
         $signup = factory(Signup::class)->create();
+        $event = Event::all()->first();
+        $event->signup_id = $signup->id;
+        $event->save();
 
         $this->json('GET', $this->activityApiUrl . '?filter[campaign_run_id]=' . $signup->campaign_run_id);
 

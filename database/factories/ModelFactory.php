@@ -18,7 +18,7 @@ use Rogue\Models\Signup;
 |
 */
 
-// Event Factory
+// Event - Signup Factory
 $factory->define(Event::class, function (Generator $faker) {
     return [
         'northstar_id' => str_random(24),
