@@ -20,7 +20,7 @@ class Reaction extends Model {
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'post_id'];
+    protected $fillable = ['id', 'northstar_id', 'postable_id', 'postable_type'];
 
     /**
      * Each reaction belongs to a post.
