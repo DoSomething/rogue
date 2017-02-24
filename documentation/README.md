@@ -15,11 +15,6 @@ Endpoint                                       | Functionality
 ---------------------------------------------- | --------------------------------------------------------
 `PUT /api/v1/items`                            | [Reportback Items](endpoints/reportbackitems.md#reportbackitems)
 
-#### Reactions
-Endpoint                                       | Functionality                                           
----------------------------------------------- | --------------------------------------------------------
-`POST /api/v1/reactions`                       | [Create or update a reaction](endpoints/reactions.md#reactions)
-
 
 ### v2
 #### Activity
@@ -31,6 +26,11 @@ Endpoint                                       | Functionality
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
 `POST /api/v2/posts`                           | [Create a post](endpoints/posts.md#posts)
+
+#### Reactions
+Endpoint                                       | Functionality                                           
+---------------------------------------------- | --------------------------------------------------------
+`POST /api/v2/reactions`                       | [Create or update a reaction](endpoints/reactions.md#reactions)
 
 #### Reviews
 Endpoint                                       | Functionality                                           

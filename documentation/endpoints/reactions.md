@@ -7,43 +7,49 @@ POST /api/v1/reactions
 ```
   - **northstar_id**: (int) required
     The northstar id of the user who "liked" or "unliked" the reportback item. 
-  - **reportback_item_id**: (int) required 
-    The reportback item that the reaction belongs to. 
+  - **postable_id**: (int) required 
+    The post that the reaction belongs to. 
+  - **postable_type**: (string) required
+    The post type of the post.
     
 Example Request
 ```
-curl http://rogue.dev:8000/api/v1/reactions
+curl http://rogue.dev:8000/api/v2/reactions
  -d '{
   "northstar_id":1234,
-  "reportback_item_id":1
+  "postable_id":1,
+  "postable_type":"Rogue\Models\Photo",
   }'
   --header "Accept: application/json"
 ```
 Example Response 
 ```
 {
+{
   "data": {
-    "reaction_id": 11,
-    "northstar_id": "1234",
-    "reportback_item_id": 1,
+    "reaction_id": "21",
+    "northstar_id": "8888",
+    "postable_id": "352",
+    "postable_type": "Rogue\\Models\\Photo",
     "created_at": {
-      "date": "2016-10-12 17:31:41.000000",
+      "date": "2017-02-24 16:10:01.000000",
       "timezone_type": 3,
       "timezone": "UTC"
     },
     "updated_at": {
-      "date": "2016-10-21 20:03:28.000000",
+      "date": "2017-02-24 16:11:07.000000",
       "timezone_type": 3,
       "timezone": "UTC"
     },
     "deleted_at": {
-      "date": "2016-10-21 20:04:07.000000",
+      "date": "2017-02-24 16:11:14.000000",
       "timezone_type": 3,
       "timezone": "UTC"
     }
   },
   "meta": {
-    "action": "liked"
+    "action": "unliked",
+    "total_reactions": 1
   }
 }
 ```
