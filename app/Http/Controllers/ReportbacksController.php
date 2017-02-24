@@ -15,6 +15,7 @@ class ReportbacksController extends Controller
      */
     public function index()
     {
-        return view('reportbacks.index');
+        return view('reportbacks.index')
+            ->with('state', ['name' => 'Dave']);
     }
 }

@@ -4,6 +4,10 @@
 
     @include('layouts.header', ['header' => 'Lemonade'])
 
+    <div id="app">
+        Loading...
+    </div>
+
     <div class="container -padded">
         <div class="wrapper">
             <div class="container__block -narrow">
