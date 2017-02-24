@@ -80,8 +80,6 @@ class ReactionController extends ApiController
      */
     public function getTotalPostReactions($postableId, $postableType)
     {
-        $match = ['postable_id' => $postableId, 'postable_type' => $postableType];
-
-        return Reaction::where($match)->count();
+        return Reaction::where(['postable_id' => $postableId, 'postable_type' => $postableType])->count();
     }
 }
