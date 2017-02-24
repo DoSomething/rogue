@@ -5,7 +5,8 @@ namespace Rogue\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Reaction extends Model {
+class Reaction extends Model
+{
     use SoftDeletes;
 
     /**
