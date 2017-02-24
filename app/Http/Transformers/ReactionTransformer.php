@@ -18,7 +18,8 @@ class ReactionTransformer extends TransformerAbstract
         return [
             'reaction_id' => (string) $reaction->id,
             'northstar_id' => $reaction->northstar_id,
-            'reportback_item_id' => (string) $reaction->reportback_item_id,
+            'postable_id' => (string) $reaction->postable_id,
+            'postable_type' => $reaction->postable_type,
             'created_at' => $reaction->created_at,
             'updated_at' => $reaction->updated_at,
             'deleted_at' => $reaction->deleted_at,

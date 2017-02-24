@@ -22,7 +22,8 @@ class ReactionRequest extends Request
     public function rules()
     {
         return [
-            'reportback_item_id' => 'required|int',
+            'postable_id' => 'required|int',
+            'postable_type' => 'required',
             'northstar_id' => 'required',
         ];
     }

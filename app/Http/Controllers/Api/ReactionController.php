@@ -18,6 +18,8 @@ class ReactionController extends ApiController
      */
     public function __construct()
     {
+        $this->middleware('api');
+
         $this->transformer = new ReactionTransformer;
     }
 
@@ -31,21 +33,24 @@ class ReactionController extends ApiController
     public function store(ReactionRequest $request)
     {
         $userId = $request['northstar_id'];
-        $reportbackItemId = $request['reportback_item_id'];
+        $postableId = $request['postable_id'];
+        $postableType = $request['postable_type'];
 
-        // Check to see if the reportback_item has a reaction from this particular user with id of northstar_id.
-        $reaction = Reaction::withTrashed()->where(['northstar_id' => $userId, 'reportback_item_id' => $reportbackItemId])->first();
+        // Check to see if the post has a reaction from this particular user with id of northstar_id.
+        $reaction = Reaction::withTrashed()->where(['northstar_id' => $userId, 'postable_id' => $postableId, 'postable_type' => $postableType])->first();
 
-        // If a reportback_item does not have a reaction from this user, create a reaction.
+        // If a post does not have a reaction from this user, create a reaction.
         if (is_null($reaction)) {
             $reaction = Reaction::create([
                 'northstar_id' => $userId,
-                'reportback_item_id' => $reportbackItemId,
+                'postable_id' => $postableId,
+                'postable_type' => $postableType,
             ]);
+
             $code = 200;
             $action = 'liked';
         } else {
-            // If the reportback_item was previously "liked" by this user, soft delete the reaction. Otherwise, restore the reaction.
+            // If the post was previously "liked" by this user, soft delete the reaction. Otherwise, restore the reaction.
             $code = 201;
             if (is_null($reaction->deleted_at)) {
                 $action = 'unliked';
@@ -56,10 +61,25 @@ class ReactionController extends ApiController
             }
         }
 
+        $totalReactions = $this->getTotalPostReactions($postableId, $postableType);
+
         $meta = [
             'action' => $action,
+            'total_reactions' => $totalReactions,
         ];
 
         return $this->item($reaction, $code, $meta);
+    }
+
+    /**
+     * Query for total reactions for a post.
+     *
+     * @param int $postableId
+     * @param int $postableType
+     * @return int total count
+     */
+    public function getTotalPostReactions($postableId, $postableType)
+    {
+        return Reaction::where(['postable_id' => $postableId, 'postable_type' => $postableType])->count();
     }
 }

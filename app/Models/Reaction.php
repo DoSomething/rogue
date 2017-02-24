@@ -21,13 +21,13 @@ class Reaction extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'reportback_item_id'];
+    protected $fillable = ['id', 'northstar_id', 'postable_id', 'postable_type'];
 
     /**
-     * The reportback items that belongs to the reaction.
+     * Each reaction belongs to a post.
      */
-    public function reportbackItems()
+    public function post()
     {
-        return $this->belongsTo('\Rogue\Models\ReportbackItem');
+        return $this->belongsTo(Post::class);
     }
 }
