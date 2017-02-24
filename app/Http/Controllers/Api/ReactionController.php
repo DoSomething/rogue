@@ -61,10 +61,26 @@ class ReactionController extends ApiController
             }
         }
 
+        $totalReactions = $this->getTotalPostReactions($postableId, $postableType);
+
         $meta = [
             'action' => $action,
+            'total_reactions' => $totalReactions,
         ];
 
         return $this->item($reaction, $code, $meta);
+    }
+
+    /**
+     * Query for total reactions for a post.
+     *
+     * @param int $postableId
+     * @param int $postableType
+     * @return int total count
+     */
+    public function getTotalPostReactions($postableId, $postableType)
+    {
+        $match = ['postable_id' => $postableId, 'postable_type' => $postableType];
+        return Reaction::where($match)->count();
     }
 }
