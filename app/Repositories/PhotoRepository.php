@@ -5,6 +5,7 @@ namespace Rogue\Repositories;
 use Rogue\Models\Post;
 use Rogue\Models\Event;
 use Rogue\Models\Photo;
+use Rogue\Models\Review;
 use Rogue\Services\AWS;
 use Rogue\Services\Registrar;
 
@@ -159,7 +160,20 @@ class PhotoRepository
                     // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
                     $review['submission_type'] = 'admin';
 
-                    Event::create($review);
+                    $event = Event::create($review);
+                    dd($review);
+                    // Create the Review.
+                    // $review = $event->review()->create([
+                    //     'event_id' => $event->id,
+                    //     'signup_id' ,
+                    //     'northstar_id' => ,
+                    //     'admin_northstar_id' => $review['reviewer'],
+                    //     'status' => $review['status'],
+                    //     'old_status' ,
+                    //     'comment' => isset($review['comment']) ? $review['comment'] : null,
+                    //     'created_at' => $event->created_at,
+                    //     'updated_at' => $event->updated_at,
+                    // ]);
 
                     $post->content->status = $review['status'];
                     $post->content->save();

@@ -14,6 +14,14 @@ class Review extends Model
     protected $fillable = ['event_id', 'signup_id', 'northstar_id', 'admin_northstar_id', 'status', 'old_status', 'comment'];
 
     /**
+     * Each review belongs to an event.
+     */
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
+    /**
      * Each review belongs to a post.
      */
     public function post()

@@ -105,11 +105,6 @@ class PostsController extends ApiController
      */
     public function reviews(Request $request)
     {
-        $this->validate($request, [
-            '*.rogue_event_id' => 'required',
-            '*.status' => 'required',
-        ]);
-
         $reviewedPosts = $this->posts->reviews($request->all());
 
         if (empty($reviewedPosts)) {

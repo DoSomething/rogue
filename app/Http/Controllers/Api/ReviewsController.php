@@ -77,18 +77,12 @@ class ReviewsController extends ApiController
                 array_push($photos, $review);
             } else {
                 $review['rogue_reportback_item_id'] = $review['rogue_event_id'];
-                array_push($reportbackItems, array_only($review, ['rogue_reportback_item_id', 'status']));
+                array_push($reportbackItems, array_only($review, ['rogue_reportback_item_id', 'status', 'reviewer']));
             }
         }
 
         if ($reportbackItems) {
-            //Create a new review for each of the reviewed items.
-            foreach ($reportbackItems as $reportbackItem) {
-                $review = Review::create()
-            }
-
             $reviewedReportbackItems = $this->reportbacks->updateReportbackItems($reportbackItems);
-
             $reviewedReportbackItemsCode = $this->code($reviewedReportbackItems);
         }
 
