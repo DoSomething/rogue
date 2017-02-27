@@ -114,6 +114,6 @@ class ApiController extends BaseController
         $resource->setMeta($meta);
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
 
-        return $this->transform($resource, $code, $meta);
+        return $this->transform($resource, $code);
     }
 }
