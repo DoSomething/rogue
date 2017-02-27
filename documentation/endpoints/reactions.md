@@ -17,12 +17,12 @@ Example Response:
       "postable_id": "4",
       "postable_type": "Rogue\\Models\\Photo",
       "created_at": {
-        "date": "2016-10-12 17:31:41.000000",
+        "date": "2016-10-12T17:31:41+0000",
         "timezone_type": 3,
         "timezone": "UTC"
       },
       "updated_at": {
-        "date": "2016-10-12 17:31:41.000000",
+        "date": "2016-10-12T17:31:41+0000",
         "timezone_type": 3,
         "timezone": "UTC"
       },
@@ -35,12 +35,12 @@ Example Response:
       "postable_id": "6",
       "postable_type": "Rogue\\Models\\Photo",
       "created_at": {
-        "date": "2016-10-12 17:31:41.000000",
+        "date": "2016-10-12T17:31:41+0000",
         "timezone_type": 3,
         "timezone": "UTC"
       },
       "updated_at": {
-        "date": "2016-10-12 17:31:41.000000",
+        "date": "2016-10-12T17:31:41+0000",
         "timezone_type": 3,
         "timezone": "UTC"
       },
@@ -53,12 +53,12 @@ Example Response:
       "postable_id": "9",
       "postable_type": "Rogue\\Models\\Photo",
       "created_at": {
-        "date": "2016-10-12 17:31:41.000000",
+        "date": "2016-10-12T17:31:41+0000",
         "timezone_type": 3,
         "timezone": "UTC"
       },
       "updated_at": {
-        "date": "2016-10-12 17:31:41.000000",
+        "date": "2016-10-12T17:31:41+0000",
         "timezone_type": 3,
         "timezone": "UTC"
       },
@@ -110,17 +110,17 @@ Example Response
     "postable_id": "352",
     "postable_type": "Rogue\\Models\\Photo",
     "created_at": {
-      "date": "2017-02-27 19:33:14.000000",
+      "date": "2016-10-12T17:31:41+0000",
       "timezone_type": 3,
       "timezone": "UTC"
     },
     "updated_at": {
-      "date": "2017-02-27 19:33:14.000000",
+      "date": "2016-10-12T17:31:41+0000",
       "timezone_type": 3,
       "timezone": "UTC"
     },
     "deleted_at": {
-      "date": "2017-02-27 19:33:56.000000",
+      "date": "2016-10-12T17:31:41+0000",
       "timezone_type": 3,
       "timezone": "UTC"
     },
