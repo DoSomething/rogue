@@ -1,9 +1,12 @@
 <?php
 
 use Rogue\Jobs\SendReportbackToPhoenix;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
+    use DatabaseMigrations;
+
     /**
      * The base URL to use while testing the application.
      *
@@ -28,6 +31,7 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
     public function setUp()
     {
         parent::setUp();
+
         // Get a new Faker generator from Laravel.
         $this->faker = app(\Faker\Generator::class);
     }
