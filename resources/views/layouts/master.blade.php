@@ -28,7 +28,8 @@
             </div>
         </div>
 
-        <script src="{{ asset('/dist/app.js') }}"></script>
+        <script src="{{ asset('dist/app.js') }}"></script>
+        {{ isset($state) ? scriptify($state) : scriptify() }}
     </body>
 
 </html>
