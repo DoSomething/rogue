@@ -13,5 +13,11 @@ class Review extends Model
      */
     protected $fillable = ['event_id', 'signup_id', 'northstar_id', 'admin_northstar_id', 'status', 'old_status', 'comment'];
 
-    //@TODO relationships.
+    /**
+     * Each review belongs to a post.
+     */
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
 }
