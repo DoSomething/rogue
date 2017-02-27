@@ -65,6 +65,7 @@ Example Response:
       "deleted_at": null,
       "total_reactions": 1
     },
+  ],
   "meta": {
     "pagination": {
       "total": 3,

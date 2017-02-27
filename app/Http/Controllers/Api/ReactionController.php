@@ -3,8 +3,8 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Reaction;
-use Rogue\Http\Requests\ReactionRequest;
 use Illuminate\Http\Request;
+use Rogue\Http\Requests\ReactionRequest;
 use Rogue\Http\Transformers\ReactionTransformer;
 
 class ReactionController extends ApiController
