@@ -29,7 +29,10 @@ Endpoint                                       | Functionality
 
 #### Reactions
 Endpoint                                       | Functionality                                           
----------------------------------------------- | --------------------------------------------------------
+---------------------------------------------- | 
+--------------------------------------------------------
+`GET /api/v2/reactions`                       | [Get all reactions](endpoints/reactions.md#reactions)
+--------------------------------------------------------
 `POST /api/v2/reactions`                       | [Create or update a reaction](endpoints/reactions.md#reactions)
 
 #### Reviews
