@@ -23,6 +23,7 @@ class ReactionTransformer extends TransformerAbstract
             'created_at' => $reaction->created_at,
             'updated_at' => $reaction->updated_at,
             'deleted_at' => $reaction->deleted_at,
+            'total_reactions' => $reaction->totalReactions,
         ];
     }
 }
