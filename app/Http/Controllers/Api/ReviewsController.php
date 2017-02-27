@@ -64,7 +64,7 @@ class ReviewsController extends ApiController
         $this->validate($request, [
             '*.rogue_event_id' => 'required',
             '*.status' => 'required',
-            '*.admin_northstar_id' => 'required',
+            '*.reviewer' => 'required',
         ]);
 
         $reportbackItems = [];
@@ -84,7 +84,7 @@ class ReviewsController extends ApiController
         if ($reportbackItems) {
             //Create a new review for each of the reviewed items.
             foreach ($reportbackItems as $reportbackItem) {
-                $event = Review::create()
+                $review = Review::create()
             }
 
             $reviewedReportbackItems = $this->reportbacks->updateReportbackItems($reportbackItems);
