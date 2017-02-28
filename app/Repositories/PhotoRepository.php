@@ -155,25 +155,29 @@ class PhotoRepository
         foreach ($data as $review) {
             if (isset($review['rogue_event_id']) && ! empty($review['rogue_event_id'])) {
                 $post = Post::where(['event_id' => $review['rogue_event_id']])->first();
+                $photo = Photo::where(['id' => $post->postable_id])->first();
 
                 if ($review['status'] && ! empty($review['status'])) {
                     // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
                     $review['submission_type'] = 'admin';
 
                     $event = Event::create($review);
-                    dd($review);
+
                     // Create the Review.
-                    // $review = $event->review()->create([
-                    //     'event_id' => $event->id,
-                    //     'signup_id' ,
-                    //     'northstar_id' => ,
-                    //     'admin_northstar_id' => $review['reviewer'],
-                    //     'status' => $review['status'],
-                    //     'old_status' ,
-                    //     'comment' => isset($review['comment']) ? $review['comment'] : null,
-                    //     'created_at' => $event->created_at,
-                    //     'updated_at' => $event->updated_at,
-                    // ]);
+                    $review = new Review([
+                        'event_id' => $event->id,
+                        'signup_id' => $post->signup_id,
+                        'northstar_id' => $post->northstar_id,
+                        'admin_northstar_id' => $review['reviewer'],
+                        'status' => $review['status'],
+                        'old_status' => $photo->status,
+                        'comment' => isset($review['comment']) ? $review['comment'] : null,
+                        'created_at' => $event->created_at,
+                        'updated_at' => $event->updated_at,
+                    ]);
+
+                    $review->save();
+                    // do you have to associate this review with anything?
 
                     $post->content->status = $review['status'];
                     $post->content->save();
