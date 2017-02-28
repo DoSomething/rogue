@@ -161,10 +161,25 @@ class PhotoRepository
                     // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
                     $review['submission_type'] = 'admin';
 
-                    $event = Event::create($review);
+                    $event = Event::create([
+                        'signup_id' => $post->signup_id,
+                        // Do we want the user's northstar id or the admin's?
+                        'northstar_id' => $post->northstar_id,
+                        'event_type' => $review['event_type'],
+                        'submission_type' => $review['submission_type'],
+                        // When we start tracking when admins update the below, we'll need to update this endpoint and comment these in.
+                        // 'quantity' => ,
+                        // 'quantity_pending' => ,
+                        // 'why_participated' => ,
+                        // 'caption' => ,
+                        'status' => $review['status'],
+                        // 'source' =>
+                        // 'remote_addr' =>
+                        // 'reason'
+                    ]);
 
                     // Create the Review.
-                    $review = new Review([
+                    $review = Review::create([
                         'event_id' => $event->id,
                         'signup_id' => $post->signup_id,
                         'northstar_id' => $post->northstar_id,
