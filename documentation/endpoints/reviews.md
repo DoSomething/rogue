@@ -10,6 +10,8 @@ PUT /api/v2/reviews
     The reportback item's Rogue event id (id column in Rogue's event table).
   - **status**: (string) required.
     The status of the post. 
+  - **reviewer**: (string) required.
+    The reviewer's northstar id. 
 
 Example Response:
 

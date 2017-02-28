@@ -28,4 +28,12 @@ class ReportbackItem extends Model
     {
         return $this->hasMany('\Rogue\Models\Reaction');
     }
+
+    /**
+     * Each reportback item has one review.
+     */
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
 }

@@ -28,4 +28,12 @@ class Reportback extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    /**
+     * Each reportback has many reviews.
+     */
+    public function review()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

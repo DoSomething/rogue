@@ -7,6 +7,7 @@ use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackLog;
 use Rogue\Models\ReportbackItem;
 use Rogue\Models\Event;
+use Rogue\Models\Review;
 
 class ReportbackRepository
 {
@@ -185,9 +186,10 @@ class ReportbackRepository
                 if ($reportbackItem['status'] && ! empty($reportbackItem['status'])) {
                     // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
                     $reportbackItem['submission_type'] = 'admin';
+
                     // Create the Event.
                     $event = Event::create([
-                        // 'signup_id' => $post->signup_id,
+                        'signup_id' => 0,
                         // Do we want the user's northstar id or the admin's?
                         'northstar_id' => $rb->northstar_id,
                         'event_type' => $reportbackItem['event_type'],
@@ -203,11 +205,10 @@ class ReportbackRepository
                         // 'reason' => ,
                     ]);
 
-                    dd($event);
                     // Create the Review.
                     Review::create([
                         'event_id' => $event->id,
-                        // 'signup_id' => $post->signup_id,
+                        'signup_id' => 0,
                         'northstar_id' => $rb->northstar_id,
                         'admin_northstar_id' => $reportbackItem['reviewer'],
                         'status' => $reportbackItem['status'],

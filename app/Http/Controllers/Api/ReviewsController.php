@@ -77,7 +77,7 @@ class ReviewsController extends ApiController
                 array_push($photos, $review);
             } else {
                 $review['rogue_reportback_item_id'] = $review['rogue_event_id'];
-                array_push($reportbackItems, array_only($review, ['rogue_reportback_item_id', 'status', 'reviewer']));
+                array_push($reportbackItems, array_except($review, ['rogue_event_id']));
             }
         }
 
