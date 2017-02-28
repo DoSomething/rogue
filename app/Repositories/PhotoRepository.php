@@ -5,8 +5,8 @@ namespace Rogue\Repositories;
 use Rogue\Models\Post;
 use Rogue\Models\Event;
 use Rogue\Models\Photo;
-use Rogue\Models\Review;
 use Rogue\Services\AWS;
+use Rogue\Models\Review;
 use Rogue\Services\Registrar;
 
 class PhotoRepository
