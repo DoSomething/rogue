@@ -177,7 +177,6 @@ class PhotoRepository
                         // 'remote_addr' =>
                         // 'reason'
                     ]);
-
                     // Create the Review.
                     $review = Review::create([
                         'event_id' => $event->id,
@@ -189,8 +188,11 @@ class PhotoRepository
                         'comment' => isset($review['comment']) ? $review['comment'] : null,
                         'created_at' => $event->created_at,
                         'updated_at' => $event->updated_at,
+                        'postable_id' => $post->postable_id,
+                        'postable_type' => $post->postable_type,
                     ]);
 
+                    // dd($post->postable_type);
                     $review->save();
                     // do you have to associate this review with anything?
 
