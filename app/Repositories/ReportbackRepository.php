@@ -190,7 +190,6 @@ class ReportbackRepository
                     // Create the Event.
                     $event = Event::create([
                         'signup_id' => 0,
-                        // Do we want the user's northstar id or the admin's?
                         'northstar_id' => $rb->northstar_id,
                         'event_type' => $reportbackItem['event_type'],
                         'submission_type' => $reportbackItem['submission_type'],

@@ -164,7 +164,6 @@ class PhotoRepository
                     // Create the Event.
                     $event = Event::create([
                         'signup_id' => $post->signup_id,
-                        // Do we want the user's northstar id or the admin's?
                         'northstar_id' => $post->northstar_id,
                         'event_type' => $review['event_type'],
                         'submission_type' => $review['submission_type'],
