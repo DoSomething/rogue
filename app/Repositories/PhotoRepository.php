@@ -161,6 +161,7 @@ class PhotoRepository
                     // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
                     $review['submission_type'] = 'admin';
 
+                    // Create the Event.
                     $event = Event::create([
                         'signup_id' => $post->signup_id,
                         // Do we want the user's northstar id or the admin's?
@@ -173,12 +174,13 @@ class PhotoRepository
                         // 'why_participated' => ,
                         // 'caption' => ,
                         'status' => $review['status'],
-                        // 'source' =>
-                        // 'remote_addr' =>
-                        // 'reason'
+                        // 'source' => ,
+                        // 'remote_addr' => ,
+                        // 'reason' => ,
                     ]);
+
                     // Create the Review.
-                    $review = Review::create([
+                    Review::create([
                         'event_id' => $event->id,
                         'signup_id' => $post->signup_id,
                         'northstar_id' => $post->northstar_id,
@@ -191,10 +193,6 @@ class PhotoRepository
                         'postable_id' => $post->postable_id,
                         'postable_type' => $post->postable_type,
                     ]);
-
-                    // dd($post->postable_type);
-                    $review->save();
-                    // do you have to associate this review with anything?
 
                     $post->content->status = $review['status'];
                     $post->content->save();
