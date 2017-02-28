@@ -6,8 +6,6 @@ use Rogue\Services\AWS;
 use Rogue\Models\Reportback;
 use Rogue\Models\ReportbackLog;
 use Rogue\Models\ReportbackItem;
-use Rogue\Models\Event;
-use Rogue\Models\Review;
 
 class ReportbackRepository
 {
@@ -186,39 +184,6 @@ class ReportbackRepository
                 if ($reportbackItem['status'] && ! empty($reportbackItem['status'])) {
                     // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
                     $reportbackItem['submission_type'] = 'admin';
-
-                    // Create the Event.
-                    $event = Event::create([
-                        'signup_id' => 0,
-                        'northstar_id' => $rb->northstar_id,
-                        'event_type' => $reportbackItem['event_type'],
-                        'submission_type' => $reportbackItem['submission_type'],
-                        // When we start tracking when admins update the below, we'll need to update this endpoint and comment these in.
-                        // 'quantity' => ,
-                        // 'quantity_pending' => ,
-                        // 'why_participated' => ,
-                        // 'caption' => ,
-                        'status' => $reportbackItem['status'],
-                        // 'source' => ,
-                        // 'remote_addr' => ,
-                        // 'reason' => ,
-                    ]);
-
-                    // Create the Review.
-                    Review::create([
-                        'event_id' => $event->id,
-                        'signup_id' => 0,
-                        'northstar_id' => $rb->northstar_id,
-                        'admin_northstar_id' => $reportbackItem['reviewer'],
-                        'status' => $reportbackItem['status'],
-                        'old_status' => $rbItem->status,
-                        'comment' => isset($reportbackItem['comment']) ? $reportbackItem['comment'] : null,
-                        'created_at' => $event->created_at,
-                        'updated_at' => $event->updated_at,
-                        'postable_id' => $rbItem->id,
-                        'postable_type' => 'Reportback Item',
-                    ]);
-
 
                     $rbItem->status = $reportbackItem['status'];
                     $rbItem->reviewer = $reportbackItem['reviewer'];

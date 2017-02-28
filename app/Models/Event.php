@@ -28,12 +28,4 @@ class Event extends Model
     {
         return $this->hasOne(Post::class);
     }
-
-    /**
-     * An event has one reportback.
-     */
-    public function reportback()
-    {
-        return $this->hasOne(Reportback::class);
-    }
 }
