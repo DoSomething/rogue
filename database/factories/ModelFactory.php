@@ -50,9 +50,6 @@ $factory->define(Post::class, function (Generator $faker) {
         'signup_id' => function () {
             return factory(Signup::class)->create()->id;
         },
-        'postable_id' => function () {
-            return factory(Photo::class)->create()->id;
-        }
     ];
 });
 
