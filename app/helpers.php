@@ -2,6 +2,7 @@
 
 use Illuminate\Support\HtmlString;
 use Intervention\Image\Facades\Image;
+use Rogue\Models\Reaction;
 
 /**
  * Create a script tag to set a global variable.
@@ -30,6 +31,18 @@ function edit_image($image, $coords)
         ->encode('data-url');
 
     return $editedImage;
+}
+
+/**
+ * Query for total reactions for a post.
+ *
+ * @param int $postableId
+ * @param int $postableType
+ * @return int total count
+ */
+function getTotalPostReactions($postableId, $postableType)
+{
+    return Reaction::where(['postable_id' => $postableId, 'postable_type' => $postableType])->count();
 }
 
 /**
