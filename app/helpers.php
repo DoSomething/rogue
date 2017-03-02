@@ -1,8 +1,8 @@
 <?php
 
+use Rogue\Models\Reaction;
 use Illuminate\Support\HtmlString;
 use Intervention\Image\Facades\Image;
-use Rogue\Models\Reaction;
 
 /**
  * Create a script tag to set a global variable.
