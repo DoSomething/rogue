@@ -193,7 +193,7 @@ class PhotoRepository
                         'postable_type' => $post->postable_type,
                     ]);
 
-                    $photo->status= $review['status'];
+                    $photo->status = $review['status'];
                     $photo->save();
 
                     array_push($reviewedPhotos, $photo);
