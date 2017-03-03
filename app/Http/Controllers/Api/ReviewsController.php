@@ -61,14 +61,6 @@ class ReviewsController extends ApiController
      */
     public function reviews(Request $request)
     {
-        $this->validate($request, [
-            '*.rogue_event_id' => 'required',
-            '*.status' => 'required',
-            '*.reviewer' => 'required',
-        ]);
-
-        $photos = [];
-
         // Loop through the $request and separate reportback items from photos.
         foreach ($request->all() as $review) {
             $post = Post::where(['event_id' => $review['rogue_event_id']])->first();
