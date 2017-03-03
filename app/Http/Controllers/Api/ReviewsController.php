@@ -3,11 +3,11 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Post;
-use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Services\ReportbackService;
 use Rogue\Http\Transformers\PhotoTransformer;
 use Rogue\Http\Transformers\ReportbackItemTransformer;
+use Rogue\Http\Requests\ReviewsRequest;
 
 class ReviewsController extends ApiController
 {
@@ -55,11 +55,11 @@ class ReviewsController extends ApiController
     /**
      * Update a post(s)'s status when reviewed.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Rogue\Http\Requests\ReviewsRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function reviews(Request $request)
+    public function reviews(ReviewsRequest $request)
     {
         $reviewedPhoto = $this->posts->reviews($request->all());
         $reviewedPhotoCode = $this->code($reviewedPhoto);
