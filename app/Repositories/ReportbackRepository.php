@@ -179,14 +179,9 @@ class ReportbackRepository
         foreach ($data as $reportbackItem) {
             if (isset($reportbackItem['rogue_reportback_item_id']) && ! empty($reportbackItem['rogue_reportback_item_id'])) {
                 $rbItem = ReportbackItem::where(['id' => $reportbackItem['rogue_reportback_item_id']])->first();
-                $rb = Reportback::where(['id' => $rbItem->reportback_id])->first();
 
                 if ($reportbackItem['status'] && ! empty($reportbackItem['status'])) {
-                    // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
-                    $reportbackItem['submission_type'] = 'admin';
-
                     $rbItem->status = $reportbackItem['status'];
-                    $rbItem->reviewer = $reportbackItem['reviewer'];
                     $rbItem->save();
 
                     array_push($reportbackItems, $rbItem);
