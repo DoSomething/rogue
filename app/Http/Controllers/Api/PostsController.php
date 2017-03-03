@@ -105,9 +105,9 @@ class PostsController extends ApiController
      */
     public function reviews(Request $request)
     {
-        $reviewedPosts = $this->posts->reviews($request->all());
+        $reviewedPost = $this->posts->reviews($request->all());
 
-        if (empty($reviewedPosts)) {
+        if (empty($reviewedPost)) {
             $code = 404;
         } else {
             $code = 201;
@@ -116,6 +116,6 @@ class PostsController extends ApiController
         $meta = [];
 
         // @TODO: we'll need to change the transformer here depending on what type of post.
-        return $this->collection($reviewedPosts, $code, $meta, $this->photoTransformer);
+        return $this->item($reviewedPost, $code, $meta, $this->photoTransformer);
     }
 }

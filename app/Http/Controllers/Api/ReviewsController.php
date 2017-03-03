@@ -61,19 +61,13 @@ class ReviewsController extends ApiController
      */
     public function reviews(Request $request)
     {
-        // Loop through the $request and separate reportback items from photos.
-        foreach ($request->all() as $review) {
-            $post = Post::where(['event_id' => $review['rogue_event_id']])->first();
-            array_push($photos, $review);
-        }
-
-        $reviewedPhotos = $this->posts->reviews($photos);
-        $reviewedPhotosCode = $this->code($reviewedPhotos);
+        $reviewedPhoto = $this->posts->reviews($request->all());
+        $reviewedPhotoCode = $this->code($reviewedPhoto);
 
         $meta = [];
 
-        if (isset($reviewedPhotos)) {
-            return $this->collection($reviewedPhotos, $reviewedPhotosCode, $meta, $this->photoTransformer);
+        if (isset($reviewedPhoto)) {
+            return $this->item($reviewedPhoto, $reviewedPhotoCode, $meta, $this->photoTransformer);
         } else {
             return 404;
         }
