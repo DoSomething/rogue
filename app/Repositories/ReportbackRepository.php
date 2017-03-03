@@ -182,6 +182,8 @@ class ReportbackRepository
 
                 if ($reportbackItem['status'] && ! empty($reportbackItem['status'])) {
                     $rbItem->status = $reportbackItem['status'];
+                    // With /reviews endpoint, we no longer have a reviewer. If it's coming from the /reviews endpoint, this will not be set.
+                    $rbItem->reviewer = isset($reportbackItem['reviewer']) ? $reportbackItem['reviewer'] : null;
                     $rbItem->save();
 
                     array_push($reportbackItems, $rbItem);
