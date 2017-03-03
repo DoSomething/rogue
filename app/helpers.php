@@ -1,6 +1,6 @@
 <?php
 
-use Rogue\Models\Reaction;
+use Rogue\Models\Post;
 use Illuminate\Support\HtmlString;
 use Intervention\Image\Facades\Image;
 
@@ -42,7 +42,13 @@ function edit_image($image, $coords)
  */
 function getTotalPostReactions($postableId, $postableType)
 {
-    return Reaction::where(['postable_id' => $postableId, 'postable_type' => $postableType])->count();
+    // return Reaction::where(['postable_id' => $postableId, 'postable_type' => $postableType])->count();
+
+    // return Post::withCount('reactions')->get();
+
+    return Post::withCount(['reactions' => function ($query) {
+        $query->where(['postable_id' => $postableId, 'postable_type' => $postableType]);
+    }])->get();
 }
 
 /**
