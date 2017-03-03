@@ -74,10 +74,9 @@ class ReviewsController extends ApiController
             $post = Post::where(['event_id' => $review['rogue_event_id']])->first();
             array_push($photos, $review);
         }
-        if ($photos) {
-            $reviewedPhotos = $this->posts->reviews($photos);
-            $reviewedPhotosCode = $this->code($reviewedPhotos);
-        }
+
+        $reviewedPhotos = $this->posts->reviews($photos);
+        $reviewedPhotosCode = $this->code($reviewedPhotos);
 
         $meta = [];
 
