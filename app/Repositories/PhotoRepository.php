@@ -194,7 +194,6 @@ class PhotoRepository
 
                 $photo->status = $data['status'];
                 $photo->save();
-
             } else {
                 return null;
             }

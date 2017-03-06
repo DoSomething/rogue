@@ -5,9 +5,9 @@ namespace Rogue\Http\Controllers\Api;
 use Rogue\Models\Post;
 use Rogue\Services\PostService;
 use Rogue\Services\ReportbackService;
+use Rogue\Http\Requests\ReviewsRequest;
 use Rogue\Http\Transformers\PhotoTransformer;
 use Rogue\Http\Transformers\ReportbackItemTransformer;
-use Rogue\Http\Requests\ReviewsRequest;
 
 class ReviewsController extends ApiController
 {
