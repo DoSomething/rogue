@@ -5,11 +5,21 @@ class Header extends React.Component {
     return (
       <thead>
         <tr className="table__header">
-          <th className="table__cell">Campaign Name</th>
-          <th className="table__cell">Approved</th>
-          <th className="table__cell">Pending</th>
-          <th className="table__cell">Rejecte</th>
-          <th className="table__cell">Deleted</th>
+          <th className="table__cell -delta">
+            <h3 className="heading -delta">Campaign Name</h3>
+          </th>
+          <th className="table__cell">
+            <h3 className="heading -delta">Approved</h3>
+          </th>
+          <th className="table__cell">
+            <h3 className="heading -delta">Pending</h3>
+          </th>
+          <th className="table__cell">
+            <h3 className="heading -delta">Rejected</h3>
+          </th>
+          <th className="table__cell">
+            <h3 className="heading -delta">Deleted</h3>
+          </th>
         </tr>
       </thead>
     )
