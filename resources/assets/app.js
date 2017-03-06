@@ -1,17 +1,16 @@
 import { ready } from './helpers';
 import './app.scss';
 
-const React = require('react');
-const ReactDom = require('react-dom');
+import React from 'react';
+import ReactDom from 'react-dom';
 
-// @TEMP - remove when we start building out actual views.
-const Greeter = (props) => {
-  let message = `Hey ${props.message}`;
-  let subtitle = `${props.subtitle}`;
-
-  return <div className="container__block -narrow"><p>{ message }</p><h2>{subtitle}</h2></div>;
-};
+import CampaignTable from './components/CampaignTable'
 
 ready(() => {
-  ReactDom.render(<Greeter {...window.STATE} />, document.getElementById('app'));
+  const overviewContainer = document.getElementById('overviewContainer');
+
+  if(overviewContainer)
+  {
+    ReactDom.render(<CampaignTable />, overviewContainer);
+  }
 });
