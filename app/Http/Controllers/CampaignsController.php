@@ -15,10 +15,29 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        return view('pages.campaign_overview');
-            // ->with('state', [
-            //     'message' => 'So what are you gonna say at my funeral, now that you\'ve killed me? Here lies the body of the love of my life, whose heart I broke without a gun to my head. Here lies the mother of my children, both living and dead. Rest in peace, my true love, who I took for granted. Most bomb p*ssy who, because of me, sleep evaded. Her god listening. Her heaven will be a love without betrayal.',
-            //     'subtitle' => 'Ashes to ashes, dust to side chicks.',
-            // ]);
+        $staffPicks = collect([
+            ['name' => 'Campaign 1', 'approved' => 53, 'pending' => 32, 'rejected' => 34, 'deleted' => 3],
+            ['name' => 'Campaign 2', 'approved' => 54, 'pending' => 33, 'rejected' => 35, 'deleted' => 4],
+            ['name' => 'Campaign 3', 'approved' => 55, 'pending' => 34, 'rejected' => 36, 'deleted' => 5],
+        ]);
+
+        $environment = collect([
+            ['name' => 'Campaign 4', 'approved' => 53, 'pending' => 32, 'rejected' => 34, 'deleted' => 3],
+            ['name' => 'Campaign 5', 'approved' => 54, 'pending' => 33, 'rejected' => 35, 'deleted' => 4],
+            ['name' => 'Campaign 6', 'approved' => 55, 'pending' => 34, 'rejected' => 36, 'deleted' => 5],
+        ]);
+
+        $bullying = collect([
+            ['name' => 'Campaign 7', 'approved' => 53, 'pending' => 32, 'rejected' => 34, 'deleted' => 3],
+            ['name' => 'Campaign 8', 'approved' => 54, 'pending' => 33, 'rejected' => 35, 'deleted' => 4],
+            ['name' => 'Campaign 9', 'approved' => 55, 'pending' => 34, 'rejected' => 36, 'deleted' => 5],
+        ]);
+
+        return view('pages.campaign_overview')
+            ->with('state', [
+                'Staff Picks' => $staffPicks,
+                'Environment' => $environment,
+                'Bullying' => $bullying,
+            ]);
     }
 }

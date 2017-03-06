@@ -11,6 +11,6 @@ ready(() => {
 
   if(overviewContainer)
   {
-    ReactDom.render(<CampaignOverview />, overviewContainer);
+    ReactDom.render(<CampaignOverview {...window.STATE} />, overviewContainer);
   }
 });
