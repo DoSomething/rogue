@@ -22,9 +22,10 @@ class ReviewsRequest extends Request
     public function rules()
     {
         return [
-            'rogue_event_id' => 'required|int',
+            'rogue_event_id' => 'required',
             'status' => 'required',
             'reviewer' => 'required',
+            'event_type' => 'required',
         ];
     }
 }

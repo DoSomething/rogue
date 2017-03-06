@@ -12,6 +12,8 @@ PUT /api/v2/reviews
     The status of the post. 
   - **reviewer**: (string) required.
     The reviewer's northstar id. 
+  - **event_type**: (string) required.
+    The event type of the review. 
 
 Example Response:
 
