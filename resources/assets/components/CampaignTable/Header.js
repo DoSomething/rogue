@@ -4,12 +4,12 @@ class Header extends React.Component {
   render() {
     return (
       <thead>
-        <tr>
-          <th>Campaign Name</th>
-          <th>Approved</th>
-          <th>Pending</th>
-          <th>Rejecte</th>
-          <th>Deleted</th>
+        <tr className="table__header">
+          <th className="table__cell">Campaign Name</th>
+          <th className="table__cell">Approved</th>
+          <th className="table__cell">Pending</th>
+          <th className="table__cell">Rejecte</th>
+          <th className="table__cell">Deleted</th>
         </tr>
       </thead>
     )
