@@ -6,9 +6,32 @@ import './table.scss';
 
 class CampaignTable extends React.Component {
   render() {
-    const campaigns = ['Campaign 1', 'Campain 2', 'Campaign 3'];
-    const campaignsList = campaigns.map((name, index) => {
-      return <Row key={index} campaign={name} />;
+    const campaigns = [
+      {
+        name: 'Campaign 1',
+        approved: 42,
+        pending: 32,
+        rejected: 34,
+        deleted: 3,
+      },
+      {
+        name: 'Campaign 2',
+        approved: 42,
+        pending: 32,
+        rejected: 34,
+        deleted: 3,
+      },
+      {
+        name: 'Campaign 3',
+        approved: 42,
+        pending: 32,
+        rejected: 34,
+        deleted: 3,
+      },
+    ];
+
+    const campaignsList = campaigns.map((campaign, index) => {
+      return <Row key={index} campaign={campaign} />;
     });
 
     return (
