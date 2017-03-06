@@ -20,9 +20,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('login', 'Auth\AuthController@getLogin');
     Route::get('logout', 'Auth\AuthController@getLogout');
 
-    // Default route to send authenticated users to.
-    // NOTE: For testing authentication only.
-    Route::get('reportbacks', 'ReportbacksController@index');
+    Route::get('campaigns', 'CampaignsController@index');
 
     Route::get('users', 'UsersController@index');
 });
