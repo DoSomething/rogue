@@ -45,13 +45,13 @@ class ReviewsController extends ApiController
      */
     public function reviews(ReviewsRequest $request)
     {
-        $reviewedPhoto = $this->posts->reviews($request->all());
-        $reviewedPhotoCode = $this->code($reviewedPhoto);
+        $reviewedPost = $this->posts->reviews($request->all());
+        $reviewedPostCode = $this->code($reviewedPost);
 
         $meta = [];
 
-        if (isset($reviewedPhoto)) {
-            return $this->item($reviewedPhoto, $reviewedPhotoCode, $meta, $this->postTransformer);
+        if (isset($reviewedPost)) {
+            return $this->item($reviewedPost, $reviewedPostCode, $meta, $this->postTransformer);
         } else {
             return 404;
         }
