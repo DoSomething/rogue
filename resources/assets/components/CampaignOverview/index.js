@@ -1,4 +1,5 @@
 import React from 'react';
+import { map } from 'lodash';
 
 import CampaignTable from '../CampaignTable';
 
@@ -6,8 +7,8 @@ class CampaignOverview extends React.Component {
   render() {
     const causeData = this.props;
 
-    const causeTables = Object.keys(causeData).map((cause, index) => {
-      return <CampaignTable key={index} cause={cause} campaigns={causeData[cause]}/>;
+    const causeTables = map(causeData, (data, cause) => {
+      return <CampaignTable key={cause} cause={cause} campaigns={data} causeData={causeData} />;
     });
 
     return (
