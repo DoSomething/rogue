@@ -28,6 +28,6 @@ class Reaction extends Model
      */
     public function post()
     {
-        return $this->belongsTo(Post::class);
+        return $this->morphedByMany(Post::class, 'postable');
     }
 }

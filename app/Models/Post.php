@@ -53,7 +53,21 @@ class Post extends Model
      */
     public function reactions()
     {
-        return $this->hasMany(Reaction::class);
+        return $this->morphToMany(Reaction::class, 'postable');
+    }
+
+    /**
+    * Query for total reactions for a post.
+     *
+     * @param int $postableId
+     * @param int $postableType
+     * @return int total count
+     */
+    public static function withReactionCount($postableId, $postableType)
+    {
+        return self::withCount(['reactions' => function ($query) use ($postableId, $postableType) {
+            $query->where(['postable_id' => $postableId, 'postable_type' => $postableType]);
+        }])->get();
     }
 
     /**

@@ -34,24 +34,6 @@ function edit_image($image, $coords)
 }
 
 /**
- * Query for total reactions for a post.
- *
- * @param int $postableId
- * @param int $postableType
- * @return int total count
- */
-function getTotalPostReactions($postableId, $postableType)
-{
-    // return Reaction::where(['postable_id' => $postableId, 'postable_type' => $postableType])->count();
-
-    // return Post::withCount('reactions')->get();
-
-    return Post::withCount(['reactions' => function ($query) {
-        $query->where(['postable_id' => $postableId, 'postable_type' => $postableType]);
-    }])->get();
-}
-
-/**
  * Helper function to increment transaction id.
  *
  * @param \Illuminate\Http\Request $request
