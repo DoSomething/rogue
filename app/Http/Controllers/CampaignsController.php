@@ -7,7 +7,9 @@ use Rogue\Services\Registrar;
 
 class CampaignsController extends Controller
 {
-    public function __construct()
+    protected $phoenix;
+
+    public function __construct(Phoenix $phoenix)
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
@@ -19,6 +21,10 @@ class CampaignsController extends Controller
      */
     public function index()
     {
+        $allCampaigns = $this->phoenix->getAllCampaigns();
+
+        dd($allCampaigns['data'][1]);
+
         $staffPicks = collect([
             ['name' => 'Campaign 1', 'approved' => 53, 'pending' => 32, 'rejected' => 34, 'deleted' => 3],
             ['name' => 'Campaign 2', 'approved' => 54, 'pending' => 33, 'rejected' => 35, 'deleted' => 4],
