@@ -19,61 +19,40 @@ Example Response:
 
 ```
 {
-  "data": [
-    {
-      "event_id": 407,
-      "signup_id": 32,
-      "northstar_id": "1234",
-      "campaign_id": 1222,
-      "campaign_run_id": 1822,
-      "post": {
-        "type": "photo",
-        "media": {
-          "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/32-1485545279.jpeg",
-          "edited_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_32-1485545279.jpeg"
-        },
-        "caption": "third post",
-        "status": "approved",
-        "created_at": "2017-01-27T19:28:00+0000",
-        "updated_at": "2017-01-30T16:12:52+0000"
+  "data": {
+    "event_id": 816,
+    "signup_id": 66,
+    "northstar_id": "1234",
+    "campaign_id": 47,
+    "campaign_run_id": 1771,
+    "post": {
+      "type": "photo",
+      "media": {
+        "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487193185.jpeg",
+        "edited_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_18-1487193185.jpeg"
       },
-      "event": {
-        "data": {
-          "event_id": "407",
-          "event_type": "post_photo",
-          "submission_type": "user",
-          "created_at": "2017-01-27T19:27:59+0000",
-          "updated_at": "2017-01-27T19:27:59+0000"
-        }
-      }
+      "caption": "new1",
+      "status": "pending",
+      "created_at": "2017-02-15T21:13:05+0000",
+      "updated_at": "2017-03-03T22:15:01+0000"
     },
-    {
-      "event_id": 410,
-      "signup_id": 32,
-      "northstar_id": "1234",
-      "campaign_id": 1222,
-      "campaign_run_id": 1822,
-      "post": {
-        "type": "photo",
-        "media": {
-          "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/32-1485545448.jpeg",
-          "edited_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_32-1485545449.jpeg"
-        },
-        "caption": "second post 1/27",
-        "status": "approved",
-        "created_at": "2017-01-27T19:30:49+0000",
-        "updated_at": "2017-01-30T16:14:07+0000"
-      },
-      "event": {
-        "data": {
-          "event_id": "410",
-          "event_type": "post_photo",
-          "submission_type": "user",
-          "created_at": "2017-01-27T19:30:48+0000",
-          "updated_at": "2017-01-27T19:30:48+0000"
-        }
+    "event": {
+      "data": {
+        "event_id": 816,
+        "event_type": "post_photo",
+        "submission_type": "user",
+        "quantity": null,
+        "quantity_pending": null,
+        "why_participated": null,
+        "caption": "new caption",
+        "status": "pending",
+        "source": "phoenix_web",
+        "remote_addr": "10.0.2.2",
+        "reason": null,
+        "created_at": "2017-02-21T15:39:26+0000",
+        "updated_at": "2017-02-21T15:39:26+0000"
       }
     }
-  ]
+  }
 }
 ```
