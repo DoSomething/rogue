@@ -33,7 +33,7 @@ class ReviewsApiTest extends TestCase
 
         $review = [
             'rogue_event_id' => $post->event_id,
-            'status' => 'accepted',
+            'status' => $this->faker->word(),
             'event_type' => 'review_photo',
             'reviewer' => str_random(24),
         ];
@@ -46,17 +46,17 @@ class ReviewsApiTest extends TestCase
 
         // Make sure we created a event for the review.
         $this->seeInDatabase('events', [
-            'status' => $response['data']['post']['status'],
+            'status' => $response['data']['content']['status'],
         ]);
 
         // Make sure a review is created.
         $this->seeInDatabase('reviews', [
-            'northstar_id' => $response['data']['northstar_id'],
+            'postable_id' => $response['data']['postable_id'],
         ]);
 
         // Make sure the status is updated.
         $this->seeInDatabase('photos', [
-            'status' => $response['data']['post']['status'],
+            'status' => $response['data']['content']['status'],
         ]);
     }
 }
