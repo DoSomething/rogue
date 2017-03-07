@@ -9,8 +9,7 @@ import CampaignOverview from './components/CampaignOverview'
 ready(() => {
   const overviewContainer = document.getElementById('overviewContainer');
 
-  if(overviewContainer)
-  {
+  if (overviewContainer) {
     ReactDom.render(<CampaignOverview {...window.STATE} />, overviewContainer);
   }
 });
