@@ -88,26 +88,4 @@ class PostsController extends ApiController
             }
         }
     }
-
-    /**
-     * Update a post(s)'s status when reviewed.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function reviews(Request $request)
-    {
-        $reviewedPost = $this->posts->reviews($request->all());
-
-        if (empty($reviewedPost)) {
-            $code = 404;
-        } else {
-            $code = 201;
-        }
-
-        $meta = [];
-
-        return $this->item($reviewedPost, $code, $meta, $this->transformer);
-    }
 }

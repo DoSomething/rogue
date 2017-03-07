@@ -87,9 +87,9 @@ class PostService
     {
         $this->resolvePostRepository($data['event_type']);
 
-        $reviewedPosts = $this->repository->reviews($data);
+        $reviewedPost = $this->repository->reviews($data);
 
-        return $reviewedPosts;
+        return $reviewedPost;
     }
 
     /**

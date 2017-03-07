@@ -4,10 +4,8 @@ namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Post;
 use Rogue\Services\PostService;
-use Rogue\Services\ReportbackService;
 use Rogue\Http\Requests\ReviewsRequest;
-use Rogue\Http\Transformers\PhotoTransformer;
-use Rogue\Http\Transformers\ReportbackItemTransformer;
+use Rogue\Http\Transformers\PostTransformer;
 
 class ReviewsController extends ApiController
 {
@@ -19,21 +17,9 @@ class ReviewsController extends ApiController
     protected $posts;
 
     /**
-     * The reportback service instance.
-     *
-     * @var Rogue\Services\ReportbackService
+     * @var \Rogue\Http\Transformers\PostTransformer
      */
-    protected $reportbacks;
-
-    /**
-     * @var \Rogue\Http\Transformers\ReportbackItemTransformer
-     */
-    protected $reportbackItemTransformer;
-
-    /**
-     * @var \Rogue\Http\Transformers\PhotoTransformer
-     */
-    protected $photoTransformer;
+    protected $postTransformer;
 
     /**
      * Create a controller instance.
@@ -41,15 +27,13 @@ class ReviewsController extends ApiController
      * @param  PostContract  $posts
      * @return void
      */
-    public function __construct(PostService $posts, ReportbackService $reportbacks)
+    public function __construct(PostService $posts)
     {
         $this->middleware('api');
 
         $this->posts = $posts;
-        $this->reportbacks = $reportbacks;
 
-        $this->reportbackItemTransformer = new ReportbackItemTransformer;
-        $this->photoTransformer = new PhotoTransformer;
+        $this->postTransformer = new PostTransformer;
     }
 
     /**
@@ -67,7 +51,7 @@ class ReviewsController extends ApiController
         $meta = [];
 
         if (isset($reviewedPhoto)) {
-            return $this->item($reviewedPhoto, $reviewedPhotoCode, $meta, $this->photoTransformer);
+            return $this->item($reviewedPhoto, $reviewedPhotoCode, $meta, $this->postTransformer);
         } else {
             return 404;
         }
