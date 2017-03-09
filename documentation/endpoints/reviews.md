@@ -10,66 +10,32 @@ PUT /api/v2/reviews
     The reportback item's Rogue event id (id column in Rogue's event table).
   - **status**: (string) required.
     The status of the post. 
+  - **reviewer**: (string) required.
+    The reviewer's northstar id. 
+  - **event_type**: (string) required.
+    The event type of the review. 
 
 Example Response:
 
 ```
 {
-  "data": [
-    {
-      "event_id": 407,
-      "signup_id": 32,
-      "northstar_id": "1234",
-      "campaign_id": 1222,
-      "campaign_run_id": 1822,
-      "post": {
-        "type": "photo",
-        "media": {
-          "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/32-1485545279.jpeg",
-          "edited_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_32-1485545279.jpeg"
-        },
-        "caption": "third post",
-        "status": "approved",
-        "created_at": "2017-01-27T19:28:00+0000",
-        "updated_at": "2017-01-30T16:12:52+0000"
+  "data": {
+    "postable_id": 352,
+    "post_event_id": 816,
+    "submission_type": "user",
+    "postable_type": "Rogue\\Models\\Photo",
+    "content": {
+      "media": {
+        "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487193185.jpeg",
+        "edited_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_18-1487193185.jpeg"
       },
-      "event": {
-        "data": {
-          "event_id": "407",
-          "event_type": "post_photo",
-          "submission_type": "user",
-          "created_at": "2017-01-27T19:27:59+0000",
-          "updated_at": "2017-01-27T19:27:59+0000"
-        }
-      }
-    },
-    {
-      "event_id": 410,
-      "signup_id": 32,
-      "northstar_id": "1234",
-      "campaign_id": 1222,
-      "campaign_run_id": 1822,
-      "post": {
-        "type": "photo",
-        "media": {
-          "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/32-1485545448.jpeg",
-          "edited_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_32-1485545449.jpeg"
-        },
-        "caption": "second post 1/27",
-        "status": "approved",
-        "created_at": "2017-01-27T19:30:49+0000",
-        "updated_at": "2017-01-30T16:14:07+0000"
-      },
-      "event": {
-        "data": {
-          "event_id": "410",
-          "event_type": "post_photo",
-          "submission_type": "user",
-          "created_at": "2017-01-27T19:30:48+0000",
-          "updated_at": "2017-01-27T19:30:48+0000"
-        }
-      }
+      "caption": "new1",
+      "status": "pending",
+      "remote_addr": "207.110.19.130",
+      "post_source": "runscope",
+      "created_at": "2017-02-15T21:13:05+0000",
+      "updated_at": "2017-03-03T22:15:01+0000"
     }
-  ]
+  }
 }
 ```

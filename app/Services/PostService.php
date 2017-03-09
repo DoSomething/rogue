@@ -85,12 +85,11 @@ class PostService
      */
     public function reviews($data)
     {
-        // @TODO: this will need to be updated when other post types are introduced. Right now, all reviews are of photos so everything in this nested array will be a photo. However, if admins can review different types of posts (e.g. photos, videos, links) at once, we'll need to update the logic here.
-        $this->resolvePostRepository($data[0]['event_type']);
+        $this->resolvePostRepository($data['event_type']);
 
-        $reviewedPosts = $this->repository->reviews($data);
+        $reviewed = $this->repository->reviews($data);
 
-        return $reviewedPosts;
+        return $reviewed->post;
     }
 
     /**

@@ -30,7 +30,6 @@ class PostApiTest extends TestCase
 
         $post = [
             'northstar_id'     => str_random(24),
-            'drupal_id'        => $this->faker->randomNumber(8),
             'campaign_id'      => $this->faker->randomNumber(4),
             'campaign_run_id'  => $this->faker->randomNumber(4),
             'quantity'         => $this->faker->numberBetween(10, 1000),

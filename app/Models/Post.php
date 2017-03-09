@@ -55,4 +55,12 @@ class Post extends Model
     {
         return $this->hasMany(Reaction::class);
     }
+
+    /**
+     * Each post has one review.
+     */
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
 }
