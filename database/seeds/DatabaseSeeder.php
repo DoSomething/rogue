@@ -11,9 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ReactionSeeder::class);
-        $this->call(ReportbackSeeder::class);
-        $this->call(ReportbackItemSeeder::class);
-        $this->call(ReportbackLogSeeder::class);
+        $this->call(PhotoSeeder::class);
     }
 }
