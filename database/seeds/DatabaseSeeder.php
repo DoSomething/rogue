@@ -14,15 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $user = factory(App\User::class)->make([
-        //     'name' => 'Abigail',
-        // ]);
-
         $photo = factory(Photo::class)->create();
 
         // Create the post and associate it with the photo.
         $post = factory(Post::class)->create([
-            // 'northstar_id' => '1234',
             'postable_id' => $photo->id,
             'postable_type' => 'Rogue\Models\Photo',
         ]);
@@ -54,7 +49,5 @@ class DatabaseSeeder extends Seeder
         // Fill the signup event northstar_id with the post_northstar_id so all is associated with the same user.
         $signupEvent->northstar_id = $post->northstar_id;
         $signupEvent->save();
-
-
     }
 }
