@@ -62,6 +62,7 @@ class ActivityApiTest extends TestCase
     public function testActivityIndexWithCampaignIdQuery()
     {
         $signup = factory(Signup::class)->create();
+        dd($signup);
         $event = Event::all()->first();
         $event->signup_id = $signup->id;
         $event->save();
