@@ -65,6 +65,9 @@ $factory->define(Signup::class, function (Generator $faker) {
     return [
         'campaign_id' => $this->faker->randomNumber(4),
         'campaign_run_id' => $this->faker->randomNumber(4),
+        'quantity_pending' => $this->faker->randomNumber(4),
+        'why_participated' => $this->faker->sentence(),
+        'source' => 'phoenix-web',
         'event_id' => function () {
             return factory(Event::class, 'signup')->create()->id;
         },
