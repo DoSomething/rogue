@@ -20,11 +20,18 @@ use Rogue\Models\Reportback;
 |
 */
 
-// Event Factory
-$factory->define(Event::class, function (Generator $faker) {
+// Signup Event Factory
+$factory->defineAs(Event::class, 'signup', function (Generator $faker) {
     return [
         'northstar_id' => str_random(24),
         'submission_type' => 'signup',
+    ];
+});
+
+$factory->defineAs(Event::class, 'post', function (Generator $faker) {
+    return [
+        'northstar_id' => str_random(24),
+        'submission_type' => 'post',
     ];
 });
 
@@ -45,7 +52,7 @@ $factory->define(Post::class, function (Generator $faker) {
     return [
         'northstar_id' => str_random(24),
         'event_id' => function () {
-            return factory(Event::class)->create()->id;
+            return factory(Event::class, 'post')->create()->id;
         },
         'signup_id' => function () {
             return factory(Signup::class)->create()->id;
@@ -59,7 +66,7 @@ $factory->define(Signup::class, function (Generator $faker) {
         'campaign_id' => $this->faker->randomNumber(4),
         'campaign_run_id' => $this->faker->randomNumber(4),
         'event_id' => function () {
-            return factory(Event::class)->create()->id;
+            return factory(Event::class, 'signup')->create()->id;
         },
     ];
 });
