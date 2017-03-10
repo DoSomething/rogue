@@ -14,10 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // $user = factory(App\User::class)->make([
+        //     'name' => 'Abigail',
+        // ]);
+
         $photo = factory(Photo::class)->create();
 
         // Create the post and associate it with the photo.
         $post = factory(Post::class)->create([
+            // 'northstar_id' => '1234',
             'postable_id' => $photo->id,
             'postable_type' => 'Rogue\Models\Photo',
         ]);
@@ -33,14 +38,23 @@ class DatabaseSeeder extends Seeder
         $postEvent->caption = $photo->caption;
         $postEvent->status = 'pending';
         $postEvent->source = $post->signup->source;
+        // Fill the post event northstar_id with the post northstar_id so all is associated with the same user.
+        $postEvent->northstar_id = $post->northstar_id;
         $postEvent->save();
+
+        // Fill the signup northstar_id with the post northstar_id.
+        $post->signup->northstar_id = $post->northstar_id;
+        $post->signup->save();
 
         // Associate the signup event with the signup.
         $signupEventId = $post->signup->event_id;
         $signupEvent = Event::where('id', $signupEventId)->first();
         $signupEvent->signup_id = $post->signup->id;
         $signupEvent->event_type = 'signup';
+        // Fill the signup event northstar_id with the post_northstar_id so all is associated with the same user.
+        $signupEvent->northstar_id = $post->northstar_id;
         $signupEvent->save();
+
 
     }
 }
