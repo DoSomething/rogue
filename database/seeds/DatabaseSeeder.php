@@ -1,8 +1,8 @@
 <?php
 
 use Rogue\Models\Post;
-use Rogue\Models\Photo;
 use Rogue\Models\Event;
+use Rogue\Models\Photo;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
