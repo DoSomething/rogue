@@ -21,7 +21,7 @@ class UserTest extends TestCase
         ]);
 
         $this->actingAs($user)
-            ->visit('/reportbacks')
+            ->visit('/campaigns')
             // Only authenticated users will see log out button.
             ->see('Log Out');
     }
@@ -36,7 +36,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->make();
 
         $this->actingAs($user)
-            ->visit('/reportbacks')
+            ->visit('/campaigns')
             ->see('You Don\'t have the proper priviledges to do this!');
     }
 
