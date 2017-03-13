@@ -64,12 +64,16 @@ class ApiController extends BaseController
      * @param  array  $meta
      * @return \Illuminate\Http\JsonResponse
      */
-    public function transform($data, $code = 200, $meta = [])
+    public function transform($data, $code = 200, $meta = [], $include = null)
     {
         $data->setMeta($meta);
 
         $manager = new Manager;
         $manager->setSerializer(new DataArraySerializer);
+
+        if (isset($include)) {
+            $manager->parseIncludes($include);
+        }
 
         $response = $manager->createData($data)->toArray();
 
@@ -114,6 +118,8 @@ class ApiController extends BaseController
         $resource->setMeta($meta);
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
 
-        return $this->transform($resource, $code);
+        $include = isset($request->include) ? $request->include : null;
+
+        return $this->transform($resource, $code, [], $include);
     }
 }
