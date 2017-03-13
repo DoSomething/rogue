@@ -47,10 +47,15 @@ class DatabaseSeeder extends Seeder
         $signupEvent = Event::where('id', $signupEventId)->first();
         // We need to figure out how to associate the signup event to the signup for it to work in the SignupTransformer.
         // $signupEvent->signup() = $post->signup;
-        // $post->signup->events()->associate($signupEvent);
-        $post->signup->events()->first()
+        // $signup->events()->associate($signupEvent);
+        $post->signup->events()->save($signupEvent);
+        dd($post->signup->events()->first());
+
+        // $signup->save();
+        // dd($signup->events->first());
         $signupEvent->signup_id = $post->signup->id;
         $signupEvent->event_type = 'signup';
+
         // Fill the signup event northstar_id with the post_northstar_id so all is associated with the same user.
         $signupEvent->northstar_id = $post->northstar_id;
         $signupEvent->save();
