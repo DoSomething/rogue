@@ -3,7 +3,6 @@
 use Rogue\Models\Post;
 use Rogue\Models\Photo;
 use Rogue\Models\Event;
-use Rogue\Models\Signup;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -34,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $postEvent->caption = $photo->caption;
         $postEvent->status = 'pending';
         $postEvent->source = $post->signup->source;
+
         // Fill the post event northstar_id with the post northstar_id so all is associated with the same user.
         $postEvent->northstar_id = $post->northstar_id;
         $postEvent->save();
@@ -45,14 +45,7 @@ class DatabaseSeeder extends Seeder
         // Associate the signup event with the signup.
         $signupEventId = $post->signup->event_id;
         $signupEvent = Event::where('id', $signupEventId)->first();
-        // We need to figure out how to associate the signup event to the signup for it to work in the SignupTransformer.
-        // $signupEvent->signup() = $post->signup;
-        // $signup->events()->associate($signupEvent);
         $post->signup->events()->save($signupEvent);
-        dd($post->signup->events()->first());
-
-        // $signup->save();
-        // dd($signup->events->first());
         $signupEvent->signup_id = $post->signup->id;
         $signupEvent->event_type = 'signup';
 
