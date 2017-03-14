@@ -1,6 +1,5 @@
 <?php
 
-use Rogue\Models\Post;
 use Illuminate\Support\HtmlString;
 use Intervention\Image\Facades\Image;
 

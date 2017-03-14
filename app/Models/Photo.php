@@ -30,4 +30,21 @@ class Photo extends Model
     {
         return $this->morphMany('Rogue\Models\Reaction', 'reactionable');
     }
+
+    /**
+     * Query for total reactions for a photo.
+     *
+     * @param int $reactionableId
+     * @return int total count
+     */
+    public static function withReactionCount($reactionableId)
+    {
+
+        // $posts = Post::withCount(['votes', 'comments' => function ($query) {
+        //     $query->where('content', 'like', 'foo%');
+        // }])->get();
+        return self::withCount(['reactions' => function ($query) use ($reactionableId) {
+            $query->where(['id' => $reactionableId]);
+        }])->get();
+    }
 }
