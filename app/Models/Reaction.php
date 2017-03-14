@@ -30,5 +30,7 @@ class Reaction extends Model
     {
         // return $this->morphedByMany(Post::class, 'postable');
         return $this->morphTo();
+                // return $this->morphOne('Rogue\Models\Post', 'reactionable');
+
     }
 }

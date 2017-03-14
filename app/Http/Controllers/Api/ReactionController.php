@@ -61,7 +61,8 @@ class ReactionController extends ApiController
             }
         }
 
-        $totalReactions = getTotalPostReactions($postableId, $postableType);
+        // $totalReactions = getTotalPostReactions($postableId, $postableType);
+        $totalReactions = 1;
 
         $meta = [
             'action' => $action,
