@@ -15,6 +15,7 @@ class PostTransformer extends TransformerAbstract
      */
     public function transform(Post $post)
     {
+        dd($post->reactions);
         return [
             'postable_id' => $post->postable_id,
             'post_event_id' => $post->event_id,

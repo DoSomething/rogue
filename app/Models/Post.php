@@ -57,7 +57,7 @@ class Post extends Model
     }
 
     /**
-    * Query for total reactions for a post.
+     * Query for total reactions for a post.
      *
      * @param int $postableId
      * @param int $postableType
