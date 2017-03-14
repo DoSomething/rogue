@@ -53,7 +53,8 @@ class Post extends Model
      */
     public function reactions()
     {
-        return $this->morphToMany(Reaction::class, 'postable');
+        // return $this->morphToMany(Reaction::class, 'postable');
+        return $this->morphMany(Reaction::class, 'postable');
     }
 
     /**
