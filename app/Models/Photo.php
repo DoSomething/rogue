@@ -22,4 +22,12 @@ class Photo extends Model
     {
         return $this->morphOne('Rogue\Models\Post', 'postable');
     }
+
+    /**
+     * Get all of the photo's reactions.
+     */
+    public function reactions()
+    {
+        return $this->morphMany('Rogue\Models\Reaction', 'reactionable');
+    }
 }

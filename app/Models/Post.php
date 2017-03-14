@@ -49,17 +49,6 @@ class Post extends Model
     }
 
     /**
-     * Each post has many reactions.
-     */
-    public function reactions()
-    {
-        // return $this->morphToMany(Reaction::class, 'postable');
-        // return $this->morphMany(Reaction::class, 'postable');
-        return $this->morphTo(Reaction::class, 'postable');
-        // return $this->morphTo('reactionable');
-    }
-
-    /**
      * Query for total reactions for a post.
      *
      * @param int $postableId

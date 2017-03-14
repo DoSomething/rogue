@@ -21,16 +21,14 @@ class Reaction extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'postable_id', 'postable_type'];
+    protected $fillable = ['id', 'northstar_id', 'reactionable_id', 'reactionable_type'];
 
     /**
-     * Each reaction belongs to a post.
+     * Get all of the owning reactionable models.
      */
-    public function postable()
+    public function reactionable()
     {
-        // return $this->morphedByMany(Post::class, 'postable');
         return $this->morphTo();
-                // return $this->morphOne('Rogue\Models\Post', 'reactionable');
 
     }
 }
