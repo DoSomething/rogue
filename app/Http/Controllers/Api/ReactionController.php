@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Reaction;
+use Illuminate\Http\Request;
 use Rogue\Http\Requests\ReactionRequest;
 use Rogue\Http\Transformers\ReactionTransformer;
 
@@ -21,6 +22,22 @@ class ReactionController extends ApiController
         $this->middleware('api');
 
         $this->transformer = new ReactionTransformer;
+    }
+
+    /**
+     * Returns reaction activity.
+     * GET /reactions
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        // Create an empty Reaction query, which we can either filter (below)
+        // or paginate to retrieve all reaction records.
+        $query = $this->newQuery(Reaction::class);
+
+        return $this->paginatedCollection($query, $request);
     }
 
     /**
@@ -61,11 +78,10 @@ class ReactionController extends ApiController
             }
         }
 
-        $totalReactions = $this->getTotalPostReactions($postableId, $postableType);
+        $reaction->totalReactions = $this->getTotalPostReactions($postableId, $postableType);
 
         $meta = [
             'action' => $action,
-            'total_reactions' => $totalReactions,
         ];
 
         return $this->item($reaction, $code, $meta);
