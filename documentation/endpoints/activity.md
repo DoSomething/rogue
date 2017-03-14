@@ -18,6 +18,9 @@ GET /api/v2/activity
 - **campaign_run_id** _(integer)_
   - The campaign run nid(s) to filter the response by.
   - e.g. `/activity?filter[campaign_run_id]=1771`
+- **user** _(integer)_
+  - Whether or not to include information about the user with the response.
+  - e.g. `/activity?include=user`
 
 
 Example Response:
@@ -129,6 +132,11 @@ Example Response:
             "updated_at": "2017-01-18T20:33:39+0000"
           }
         ]
+      }
+      "user": {
+        "data": {
+          "first_name": "Chloe"
+        }
       }
     }
   ],

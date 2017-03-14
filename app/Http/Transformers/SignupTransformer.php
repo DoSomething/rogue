@@ -4,6 +4,7 @@ namespace Rogue\Http\Transformers;
 
 use Rogue\Models\Event;
 use Rogue\Models\Signup;
+use Rogue\Services\Registrar;
 use League\Fractal\TransformerAbstract;
 
 class SignupTransformer extends TransformerAbstract
@@ -16,6 +17,15 @@ class SignupTransformer extends TransformerAbstract
     protected $defaultIncludes = [
         'posts',
         'events',
+    ];
+
+    /**
+     * List of resources possible to include
+     *
+     * @var array
+     */
+    protected $availableIncludes = [
+        'user',
     ];
 
     /**
@@ -66,5 +76,19 @@ class SignupTransformer extends TransformerAbstract
         $event = $signup->events;
 
         return $this->collection($event, new EventTransformer);
+    }
+
+    /**
+     * Include the user data (optionally)
+     *
+     * @param \Rogue\Models\Signup $signup
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includeUser(Signup $signup)
+    {
+        $registrar = app(Registrar::class);
+        $northstar_id = $signup->northstar_id;
+
+        return $this->item($registrar->find($northstar_id), new UserTransformer);
     }
 }
