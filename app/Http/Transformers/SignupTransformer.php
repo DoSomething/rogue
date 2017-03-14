@@ -86,7 +86,7 @@ class SignupTransformer extends TransformerAbstract
      */
     public function includeUser(Signup $signup)
     {
-        $registrar = new Registrar();
+        $registrar = app(Registrar::class);
         $northstar_id = $signup->northstar_id;
 
         return $this->item($registrar->find($northstar_id), new UserTransformer);
