@@ -3,8 +3,8 @@
 namespace Rogue\Http\Transformers;
 
 use Rogue\Models\Event;
-use Rogue\Services\Registrar;
 use Rogue\Models\Signup;
+use Rogue\Services\Registrar;
 use League\Fractal\TransformerAbstract;
 
 class SignupTransformer extends TransformerAbstract
@@ -90,6 +90,5 @@ class SignupTransformer extends TransformerAbstract
         $northstar_id = $signup->northstar_id;
 
         return $this->item($registrar->find($northstar_id), new UserTransformer);
-
     }
 }
