@@ -33,18 +33,18 @@ class ReactionController extends ApiController
     public function store(ReactionRequest $request)
     {
         $userId = $request['northstar_id'];
-        $postableId = $request['postable_id'];
-        $postableType = $request['postable_type'];
+        $reactionableId = $request['reactionable_id'];
+        $reactionableType = $request['reactionable_type'];
 
         // Check to see if the post has a reaction from this particular user with id of northstar_id.
-        $reaction = Reaction::withTrashed()->where(['northstar_id' => $userId, 'postable_id' => $postableId, 'postable_type' => $postableType])->first();
+        $reaction = Reaction::withTrashed()->where(['northstar_id' => $userId, 'reactionable_id' => $reactionableId, 'reactionable_type' => $reactionableType])->first();
 
         // If a post does not have a reaction from this user, create a reaction.
         if (is_null($reaction)) {
             $reaction = Reaction::create([
                 'northstar_id' => $userId,
-                'postable_id' => $postableId,
-                'postable_type' => $postableType,
+                'reactionable_id' => $reactionableId,
+                'reactionable_type' => $reactionableType,
             ]);
 
             $code = 200;
