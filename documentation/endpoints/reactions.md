@@ -3,7 +3,7 @@
 Create or update a Reaction 
 
 ```
-POST /api/v1/reactions
+POST /api/v2/reactions
 ```
   - **northstar_id**: (int) required
     The northstar id of the user who "liked" or "unliked" the reportback item. 
