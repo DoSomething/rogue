@@ -18,7 +18,7 @@ curl http://rogue.dev:8000/api/v2/reactions
  -d '{
   "northstar_id":1234,
   "reactionable_id":1,
-  "reactionable_type":"Rogue\Models\Photo",
+  "reactionable_type":"photo",
   }'
   --header "Accept: application/json"
 ```
@@ -29,7 +29,7 @@ Example Response
     "reaction_id": "29",
     "northstar_id": "1234",
     "reactionable_id": "1",
-    "reactionable_type": "Rogue\\Models\\Photo",
+    "reactionable_type": "photo",
     "created_at": {
       "date": "2017-03-14 20:58:07.000000",
       "timezone_type": 3,

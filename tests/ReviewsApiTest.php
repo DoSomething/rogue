@@ -26,7 +26,7 @@ class ReviewsApiTest extends TestCase
         // Create a post and associate the photo with it.
         $post = factory(Post::class)->create([
             'postable_id' => $photo->id,
-            'postable_type' => 'Rogue\Models\Photo',
+            'postable_type' => 'photo',
         ]);
         $post->content()->associate($photo);
         $post->save();

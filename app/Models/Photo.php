@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model
 {
+    protected $morphClass = 'photo';
+
     /**
      * The attributes that are mass assignable.
      *

@@ -63,10 +63,8 @@ class ReactionController extends ApiController
             }
         }
 
-        $reactionableType = explode('\\', $reactionableType)[2];
-
         // @TODO: as we add more post types, we should break the below into a helper function and add different cases.
-        if ($reactionableType === 'Photo') {
+        if ($reactionableType === 'photo') {
             $photo = Photo::where('id', $reactionableId)->first();
             $totalReactions = count($photo->reactions);
         } else {

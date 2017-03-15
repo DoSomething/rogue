@@ -23,7 +23,7 @@ class ReactionRequest extends Request
     {
         return [
             'reactionable_id' => 'required|int',
-            'reactionable_type' => 'required',
+            'reactionable_type' => 'required|in:photo',
             'northstar_id' => 'required',
         ];
     }
