@@ -6,7 +6,6 @@ namespace Rogue\Http\Controllers;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Rogue\Services\Phoenix;
-use Rogue\Models\Post;
 use Illuminate\Support\Facades\DB;
 use Rogue\Services\CampaignService;
 
@@ -30,18 +29,9 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        // $campaigns = DB::table('posts')
-        //         ->join('signups', 'signups.id', '=', 'posts.signup_id')
-        //         ->select('signups.campaign_id', DB::raw('count(posts.northstar_id)'))
-        //         ->groupBy('signups.campaign_id')
-        //         ->get();
-
-        // dd($campaigns);
-        //
-        // THE DREAM:
-        // $posts = Campaigns::withCount('signups.posts');
-
-        $ids = $this->campaignService->getCampaignIds();
+        // Get campaigns ids for all signups in rogue.
+        $campaigns = DB::table('signups')->select('campaign_id')->groupBy('campaign_id')->get();
+        $ids = collect($campaigns)->pluck('campaign_id')->toArray();
 
         $campaigns = $this->campaignService->findAll($ids);
         $campaigns = $this->campaignService->groupByCause($campaigns);

@@ -2,9 +2,7 @@
 
 namespace Rogue\Services;
 
-use Rogue\Services\Phoenix;
 use Rogue\Repositories\CacheRepository;
-use Illuminate\Support\Facades\DB;
 
 class CampaignService
 {
@@ -37,7 +35,6 @@ class CampaignService
         return $campaign['data'];
     }
 
-
     /**
      * Finds a group of campagins in Rogue/Phoenix.
      *
@@ -67,20 +64,6 @@ class CampaignService
         }
 
         return null;
-    }
-
-    /**
-     * Returns an array of unique campaign IDs that we have signups for.
-     *
-     * @return array $ids
-     */
-    public function getCampaignIds()
-    {
-        $campaigns = DB::table('signups')->select('campaign_id')->groupBy('campaign_id')->get();
-
-        $ids = collect($campaigns)->pluck('campaign_id')->toArray();
-
-        return $ids;
     }
 
     /**
@@ -129,9 +112,16 @@ class CampaignService
         return collect($data);
     }
 
+    /**
+     * Group a collection of campaigns by cause space.
+     *
+     * @param  array  $ids
+     * @param  int $size
+     * @return \Illuminate\Support\Collection
+     */
     public function groupByCause($campaigns)
     {
-        $grouped = $campaigns->groupBy(function($campaign) {
+        $grouped = $campaigns->groupBy(function ($campaign) {
             if ($campaign['staff_pick']) {
                 return 'Staff Pick';
             }

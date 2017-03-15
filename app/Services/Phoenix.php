@@ -65,6 +65,7 @@ class Phoenix extends RestApiClient
 
         return is_null($response) ? null : $response;
     }
+
     /**
      * Send a GET request to return a campaign with the specified id.
      *
