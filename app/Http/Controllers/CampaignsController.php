@@ -41,68 +41,13 @@ class CampaignsController extends Controller
         // THE DREAM:
         // $posts = Campaigns::withCount('signups.posts');
 
-        // $posts = Post::with('content' => function($query) { $query->where('status', '=', 'approved')})->get();
+        $ids = $this->campaignService->getCampaignIds();
 
-        // $posts = Post::with(['content' => function ($query) {
-        //     dd($query);
-        //     $query->where('status', '=', 'approved');
-
-        // }])->get();
-        // $campaigns = DB::table('signups')->select('campaign_id')->groupBy('campaign_id')->get();
-        // $campaignIds = collect($campaigns)->pluck('campaign_id')->toArray();
-        $ids = $this->campaignService->getAllCampaigns();
-
-        $params = [
-            'campaigns' => implode(',', $ids),
-            'count' => (int) count($ids), // Look into batchedCollection
-        ];
-
-        $phoenixCampaigns = $this->phoenix->getAllCampaigns($params);
-        $phoenixCampaigns = collect($phoenixCampaigns['data']);
-
-        $grouped = $phoenixCampaigns->groupBy(function($campaign) {
-            if ($campaign['staff_pick']) {
-                return 'Staff Pick';
-            }
-
-            $cause = $campaign['causes']['primary']['name'];
-
-            return $cause;
-        });
-
-        $grouped = $grouped->toArray();
-        // dd($grouped->toArray());
-
-        // $posts = Post::with('content')->get();
-        // // dd($posts);
-        // foreach ($posts as $post) {
-        //     dd($post);
-        // }
-
-
-
-        // dd($posts->content);
-
-        // $staffPicks = collect([
-        //     ['name' => 'Campaign 1', 'approved' => 53, 'pending' => 32, 'rejected' => 34, 'deleted' => 3],
-        //     ['name' => 'Campaign 2', 'approved' => 54, 'pending' => 33, 'rejected' => 35, 'deleted' => 4],
-        //     ['name' => 'Campaign 3', 'approved' => 55, 'pending' => 34, 'rejected' => 36, 'deleted' => 5],
-        // ]);
-
-        // $environment = collect([
-        //     ['name' => 'Campaign 4', 'approved' => 53, 'pending' => 32, 'rejected' => 34, 'deleted' => 3],
-        //     ['name' => 'Campaign 5', 'approved' => 54, 'pending' => 33, 'rejected' => 35, 'deleted' => 4],
-        //     ['name' => 'Campaign 6', 'approved' => 55, 'pending' => 34, 'rejected' => 36, 'deleted' => 5],
-        // ]);
-
-        // $bullying = collect([
-        //     ['name' => 'Campaign 7', 'approved' => 53, 'pending' => 32, 'rejected' => 34, 'deleted' => 3],
-        //     ['name' => 'Campaign 8', 'approved' => 54, 'pending' => 33, 'rejected' => 35, 'deleted' => 4],
-        //     ['name' => 'Campaign 9', 'approved' => 55, 'pending' => 34, 'rejected' => 36, 'deleted' => 5],
-        // ]);
+        $campaigns = $this->campaignService->findAll($ids);
+        $campaigns = $this->campaignService->groupByCause($campaigns);
 
         return view('pages.campaign_overview')
-            ->with('state', $grouped);
+            ->with('state', $campaigns);
     }
 
     /**
