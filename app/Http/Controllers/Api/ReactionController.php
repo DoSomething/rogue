@@ -67,14 +67,11 @@ class ReactionController extends ApiController
 
         // @TODO: as we add more post types, we should break the below into a helper function and add different cases.
         if ($reactionableType === "Photo") {
-            $photo = Photo::withReactionCount($reactionableId);
-            dd($photo);
-            dd($totalReactions[0]->reactions_count);
+            $photo = Photo::where('id', $reactionableId)->first();
+            $totalReactions = count($photo->reactions);
         } else {
             throw new HttpException(405, 'Not a valid post type');
         }
-        // $totalReactions = getTotalPostReactions($postableId, $postableType);
-        $totalReactions = 1;
 
         $meta = [
             'action' => $action,
