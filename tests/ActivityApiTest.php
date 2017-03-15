@@ -19,7 +19,7 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithLimitQuery()
     {
-        $this->json('GET', $this->activityApiUrl . '?limit=3');
+        $this->json('GET', $this->activityApiUrl . '?limit=8');
 
         $this->assertResponseStatus(200);
 

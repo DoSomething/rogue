@@ -6,7 +6,6 @@ use Rogue\Models\Photo;
 use Rogue\Models\Reaction;
 use Rogue\Http\Requests\ReactionRequest;
 use Rogue\Http\Transformers\ReactionTransformer;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ReactionController extends ApiController
 {
@@ -67,8 +66,6 @@ class ReactionController extends ApiController
         if ($reactionableType === 'photo') {
             $photo = Photo::where('id', $reactionableId)->first();
             $totalReactions = count($photo->reactions);
-        } else {
-            throw new HttpException(405, 'Not a valid post type');
         }
 
         $meta = [

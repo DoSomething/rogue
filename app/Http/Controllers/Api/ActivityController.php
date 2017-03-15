@@ -33,6 +33,7 @@ class ActivityController extends ApiController
         // Create an empty Signup query, which we can either filter (below)
         // or paginate to retrieve all signup records.
         $query = $this->newQuery(Signup::class);
+
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Signup::$indexes);
 
