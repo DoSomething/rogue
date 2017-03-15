@@ -20,7 +20,7 @@ class Photo extends Model
      */
     public function post()
     {
-        return $this->morphOne('Rogue\Models\Post', 'postable');
+        return $this->morphOne(Post::class, 'postable');
     }
 
     /**
@@ -28,6 +28,6 @@ class Photo extends Model
      */
     public function reactions()
     {
-        return $this->morphMany('Rogue\Models\Reaction', 'reactionable');
+        return $this->morphMany(Reaction::class, 'reactionable');
     }
 }
