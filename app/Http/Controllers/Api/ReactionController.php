@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Controllers\Api;
 
-use Rogue\Models\Reaction;
 use Rogue\Models\Photo;
+use Rogue\Models\Reaction;
 use Rogue\Http\Requests\ReactionRequest;
 use Rogue\Http\Transformers\ReactionTransformer;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -66,7 +66,7 @@ class ReactionController extends ApiController
         $reactionableType = explode('\\', $reactionableType)[2];
 
         // @TODO: as we add more post types, we should break the below into a helper function and add different cases.
-        if ($reactionableType === "Photo") {
+        if ($reactionableType === 'Photo') {
             $photo = Photo::where('id', $reactionableId)->first();
             $totalReactions = count($photo->reactions);
         } else {
