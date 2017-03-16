@@ -62,6 +62,7 @@ class ReactionsApiTest extends TestCase
         // Create a photo to react to.
         $photo = factory(Photo::class)->create();
 
+        // A user reacts to this photo.
         $this->createReaction($this->faker->uuid, $photo->id, 'photo');
 
         $this->assertResponseStatus(200);
@@ -73,6 +74,7 @@ class ReactionsApiTest extends TestCase
             ]
         ]);
 
+        // A second user reacts to the same photo.
         $this->createReaction($this->faker->uuid, $photo->id, 'photo');
 
         $this->assertResponseStatus(200);
