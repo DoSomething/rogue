@@ -1,7 +1,6 @@
 <?php
 
 use Rogue\Models\Photo;
-use Rogue\Models\Post;
 
 class ReactionsApiTest extends TestCase
 {
@@ -18,34 +17,86 @@ class ReactionsApiTest extends TestCase
      * POST /reactions
      * @return void
      */
-    public function testCreationAndSoftDeleteForReactions()
+    public function testPostingAndSoftDeleteForReaction()
     {
-        // Create a photo.
+        // Create a photo to react to.
         $photo = factory(Photo::class)->create();
-        $northstarId = str_random(24);
 
-        // Create a post and associate the photo with it.
-        $post = factory(Post::class)->create([
-            'postable_id' => $photo->id,
-            'postable_type' => 'photo',
-        ]);
-        $post->content()->associate($photo);
-        $post->save();
+        $northstarId = str_random(24);
 
         $reaction = [
             'northstar_id' => $northstarId,
-            'reacionable_id' => $photo->id,
+            'reactionable_id' => $photo->id,
             'reactionable_type' => 'photo',
         ];
 
-        // $this->json('POST', $this->reactionsApiUrl, $reaction);
         $this->json('POST', $this->reactionsApiUrl, $reaction);
 
-        $this->assertResponseStatus(201);
+        $this->assertResponseStatus(200);
 
+        // Make sure this creates a reaction.
         $this->seeJsonSubset([
             'meta' => [
                 'total_reactions' => 1,
+            ]
+        ]);
+
+        // React (unlike) again to the same photo with the same user.
+        $this->json('POST', $this->reactionsApiUrl, $reaction);
+
+        // This should now be a 201 code because it was updated.
+        $this->assertResponseStatus(201);
+
+        // Make sure this reaction is soft deleted.
+        $this->seeJsonSubset([
+            'meta' => [
+                'total_reactions' => 0,
+            ]
+        ]);
+    }
+
+    /**
+     * Test that the aggregate of total reactions for a photo is correct.
+     *
+     * POST /reactions
+     * @return void
+     */
+    public function testAggregateReactions()
+    {
+        // Create a photo to react to.
+        $photo = factory(Photo::class)->create();
+
+        $reaction = [
+            'northstar_id' => str_random(24),
+            'reactionable_id' => $photo->id,
+            'reactionable_type' => 'photo',
+        ];
+
+        $this->json('POST', $this->reactionsApiUrl, $reaction);
+
+        $this->assertResponseStatus(200);
+
+        // Make sure this creates a reaction.
+        $this->seeJsonSubset([
+            'meta' => [
+                'total_reactions' => 1,
+            ]
+        ]);
+
+        $reaction = [
+            'northstar_id' => str_random(24),
+            'reactionable_id' => $photo->id,
+            'reactionable_type' => 'photo',
+        ];
+
+        $this->json('POST', $this->reactionsApiUrl, $reaction);
+
+        $this->assertResponseStatus(200);
+
+        // Make sure this creates a reaction and increases total_reaction count.
+        $this->seeJsonSubset([
+            'meta' => [
+                'total_reactions' => 2,
             ]
         ]);
     }
