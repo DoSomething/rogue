@@ -25,7 +25,12 @@ class ReactionsApiTest extends TestCase
 
         $northstarId = $this->faker->uuid;
 
-        $this->createReaction($northstarId, $photo->id, 'photo');
+        // Create a reaction.
+        $this->json('POST', $this->reactionsApiUrl, [
+            'northstar_id' => $northstarId,
+            'reactionable_id' => $photo->id,
+            'reactionable_type' => 'photo',
+        ]);
 
         $this->assertResponseStatus(200);
 
@@ -37,7 +42,11 @@ class ReactionsApiTest extends TestCase
         ]);
 
         // React (unlike) again to the same photo with the same user.
-        $this->createReaction($northstarId, $photo->id, 'photo');
+         $this->json('POST', $this->reactionsApiUrl, [
+            'northstar_id' => $northstarId,
+            'reactionable_id' => $photo->id,
+            'reactionable_type' => 'photo',
+        ]);
 
         // This should now be a 201 code because it was updated.
         // @TODO update this when we do an audit of status codes in Rogue.
@@ -63,7 +72,11 @@ class ReactionsApiTest extends TestCase
         $photo = factory(Photo::class)->create();
 
         // A user reacts to this photo.
-        $this->createReaction($this->faker->uuid, $photo->id, 'photo');
+         $this->json('POST', $this->reactionsApiUrl, [
+            'northstar_id' => $this->faker->uuid,
+            'reactionable_id' => $photo->id,
+            'reactionable_type' => 'photo',
+        ]);
 
         $this->assertResponseStatus(200);
 
@@ -75,7 +88,11 @@ class ReactionsApiTest extends TestCase
         ]);
 
         // A second user reacts to the same photo.
-        $this->createReaction($this->faker->uuid, $photo->id, 'photo');
+        $this->json('POST', $this->reactionsApiUrl, [
+            'northstar_id' => $this->faker->uuid,
+            'reactionable_id' => $photo->id,
+            'reactionable_type' => 'photo',
+        ]);
 
         $this->assertResponseStatus(200);
 
