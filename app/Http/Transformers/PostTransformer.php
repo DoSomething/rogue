@@ -3,6 +3,7 @@
 namespace Rogue\Http\Transformers;
 
 use Rogue\Models\Post;
+use Rogue\Models\Photo;
 use League\Fractal\TransformerAbstract;
 
 class PostTransformer extends TransformerAbstract
@@ -15,8 +16,6 @@ class PostTransformer extends TransformerAbstract
      */
     public function transform(Post $post)
     {
-
-        dd(Post::withReactionCount($post->postable_id));
         return [
             'postable_id' => $post->postable_id,
             'post_event_id' => $post->event_id,
@@ -29,7 +28,7 @@ class PostTransformer extends TransformerAbstract
                 ],
                 'caption' => $post->content->caption,
                 'status' => $post->content->status,
-                'total_reactions' => count($post->content->reactions),
+                'total_reactions' => Photo::withReactionCount($post->postable_id)->reactions_count,
                 'remote_addr' => $post->content->remote_addr,
                 'post_source' => $post->content->source,
                 'created_at' => $post->content->created_at->toIso8601String(),
