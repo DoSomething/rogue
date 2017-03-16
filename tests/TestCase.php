@@ -173,16 +173,16 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
     }
 
     /**
-     * Create a reaction request.
+     * Create a reaction.
      *
      * @return array
      */
-    public function createReactionRequest($northstarId, $photoId, $postType)
+    public function createReaction($northstarId, $photoId, $postType)
     {
-        return [
+        $this->json('POST', $this->reactionsApiUrl, [
             'northstar_id' => $northstarId,
             'reactionable_id' => $photoId,
             'reactionable_type' => $postType,
-        ];
+        ]);
     }
 }
