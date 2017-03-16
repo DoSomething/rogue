@@ -22,13 +22,7 @@ class ReactionsApiTest extends TestCase
         // Create a photo to react to.
         $photo = factory(Photo::class)->create();
 
-        $northstarId = str_random(24);
-
-        $reaction = [
-            'northstar_id' => $northstarId,
-            'reactionable_id' => $photo->id,
-            'reactionable_type' => 'photo',
-        ];
+        $reaction = $this->createReactionRequest(str_random(24), $photo->id, 'photo');
 
         $this->json('POST', $this->reactionsApiUrl, $reaction);
 
@@ -66,13 +60,9 @@ class ReactionsApiTest extends TestCase
         // Create a photo to react to.
         $photo = factory(Photo::class)->create();
 
-        $reaction = [
-            'northstar_id' => str_random(24),
-            'reactionable_id' => $photo->id,
-            'reactionable_type' => 'photo',
-        ];
+        $firstReaction = $this->createReactionRequest(str_random(24), $photo->id, 'photo');
 
-        $this->json('POST', $this->reactionsApiUrl, $reaction);
+        $this->json('POST', $this->reactionsApiUrl, $firstReaction);
 
         $this->assertResponseStatus(200);
 
@@ -83,13 +73,9 @@ class ReactionsApiTest extends TestCase
             ]
         ]);
 
-        $reaction = [
-            'northstar_id' => str_random(24),
-            'reactionable_id' => $photo->id,
-            'reactionable_type' => 'photo',
-        ];
+        $secondReaction = $this->createReactionRequest(str_random(24), $photo->id, 'photo');
 
-        $this->json('POST', $this->reactionsApiUrl, $reaction);
+        $this->json('POST', $this->reactionsApiUrl, $secondReaction);
 
         $this->assertResponseStatus(200);
 

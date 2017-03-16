@@ -171,4 +171,18 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         // Make sure we created a record in the reportback log table.
         $this->seeInDatabase('reportback_logs', ['reportback_id' => $response['data']['id']]);
     }
+
+    /**
+     * Create a reaction request.
+     *
+     * @return array
+     */
+    public function createReactionRequest($northstarId, $photoId, $postType)
+    {
+        return [
+            'northstar_id' => $northstarId,
+            'reactionable_id' => $photoId,
+            'reactionable_type' => $postType,
+        ];
+    }
 }
