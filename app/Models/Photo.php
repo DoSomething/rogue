@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model
 {
+    protected $morphClass = 'photo';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +22,16 @@ class Photo extends Model
      */
     public function post()
     {
-        return $this->morphOne('Rogue\Models\Post', 'postable');
+        return $this->morphOne(Post::class, 'postable');
     }
+
+    /**
+     * Get all of the photo's reactions.
+     */
+    public function reactions()
+    {
+        return $this->morphMany(Reaction::class, 'reactionable');
+    }
+
+    // @TODO: Make a withReactionCount model function that uses ::withCount
 }

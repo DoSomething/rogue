@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Api;
 
+use Rogue\Models\Photo;
 use Rogue\Models\Reaction;
 use Rogue\Http\Requests\ReactionRequest;
 use Rogue\Http\Transformers\ReactionTransformer;
@@ -33,18 +34,18 @@ class ReactionController extends ApiController
     public function store(ReactionRequest $request)
     {
         $userId = $request['northstar_id'];
-        $postableId = $request['postable_id'];
-        $postableType = $request['postable_type'];
+        $reactionableId = $request['reactionable_id'];
+        $reactionableType = $request['reactionable_type'];
 
         // Check to see if the post has a reaction from this particular user with id of northstar_id.
-        $reaction = Reaction::withTrashed()->where(['northstar_id' => $userId, 'postable_id' => $postableId, 'postable_type' => $postableType])->first();
+        $reaction = Reaction::withTrashed()->where(['northstar_id' => $userId, 'reactionable_id' => $reactionableId, 'reactionable_type' => $reactionableType])->first();
 
         // If a post does not have a reaction from this user, create a reaction.
         if (is_null($reaction)) {
             $reaction = Reaction::create([
                 'northstar_id' => $userId,
-                'postable_id' => $postableId,
-                'postable_type' => $postableType,
+                'reactionable_id' => $reactionableId,
+                'reactionable_type' => $reactionableType,
             ]);
 
             $code = 200;
@@ -61,7 +62,11 @@ class ReactionController extends ApiController
             }
         }
 
-        $totalReactions = $this->getTotalPostReactions($postableId, $postableType);
+        // @TODO: as we add more post types, we should break the below into a helper function and add different cases.
+        if ($reactionableType === 'photo') {
+            $photo = Photo::where('id', $reactionableId)->first();
+            $totalReactions = count($photo->reactions);
+        }
 
         $meta = [
             'action' => $action,
@@ -69,17 +74,5 @@ class ReactionController extends ApiController
         ];
 
         return $this->item($reaction, $code, $meta);
-    }
-
-    /**
-     * Query for total reactions for a post.
-     *
-     * @param int $postableId
-     * @param int $postableType
-     * @return int total count
-     */
-    public function getTotalPostReactions($postableId, $postableType)
-    {
-        return Reaction::where(['postable_id' => $postableId, 'postable_type' => $postableType])->count();
     }
 }
