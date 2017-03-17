@@ -28,7 +28,7 @@ class PostTransformer extends TransformerAbstract
                 ],
                 'caption' => $post->content->caption,
                 'status' => $post->content->status,
-                'total_reactions' => Photo::withReactionCount($post->postable_id)->reactions_count,
+                'total_reactions' => count($post->content->reactions),
                 'remote_addr' => $post->content->remote_addr,
                 'post_source' => $post->content->source,
                 'created_at' => $post->content->created_at->toIso8601String(),

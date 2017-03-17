@@ -32,15 +32,4 @@ class Photo extends Model
     {
         return $this->morphMany(Reaction::class, 'reactionable');
     }
-
-    /**
-     * Query for total reactions for a photo.
-     *
-     * @param int $reactionableId
-     * @return int total count
-     */
-    public static function withReactionCount($reactionableId)
-    {
-        return self::where('id', $reactionableId)->withCount('reactions')->first();
-    }
 }
