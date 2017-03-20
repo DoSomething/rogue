@@ -36,8 +36,6 @@ class PhotoTransformer extends TransformerAbstract
                     'url' => $photo->file_url,
                     'edited_url' => $photo->edited_file_url,
                 ],
-                'caption' => $photo->caption,
-                'status' => $photo->status,
                 'created_at' => $photo->created_at->toIso8601String(),
                 'updated_at' => $photo->updated_at->toIso8601String(),
             ],
