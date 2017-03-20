@@ -13,7 +13,6 @@ class AddColumnsToPostTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            // souce, remote_addre,
             $table->string('status')->nullable()->index()->default('pending')->after('postable_type');
             $table->string('source')->nullable()->comment('Source which reportback file was submitted from.')->after('status');
             $table->ipAddress('remote_addr')->nullable()->comment('The IP address of the user that submitted the file.')->after('source');
