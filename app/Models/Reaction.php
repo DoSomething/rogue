@@ -24,6 +24,14 @@ class Reaction extends Model
     protected $fillable = ['id', 'northstar_id', 'reactionable_id', 'reactionable_type'];
 
     /**
+     * Each reaction has events.
+     */
+    public function events()
+    {
+        $this->morphMany('Rogue\Models\Event', 'eventable');
+    }
+
+    /**
      * Get all of the owning reactionable models.
      */
     public function reactionable()

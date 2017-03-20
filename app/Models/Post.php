@@ -33,11 +33,11 @@ class Post extends Model
     }
 
     /**
-     * Each post belongs to an event.
+     * Each post has events.
      */
-    public function event()
+    public function events()
     {
-        return $this->belongsTo(Event::class);
+        $this->morphMany('Rogue\Models\Event', 'eventable');
     }
 
     /**

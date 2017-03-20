@@ -14,11 +14,11 @@ class Review extends Model
     protected $fillable = ['event_id', 'signup_id', 'northstar_id', 'admin_northstar_id', 'status', 'old_status', 'comment', 'postable_id', 'postable_type'];
 
     /**
-     * Each review belongs to an event.
+     * Each review has events.
      */
-    public function event()
+    public function events()
     {
-        return $this->belongsTo(Event::class);
+        $this->morphMany('Rogue\Models\Event', 'eventable');
     }
 
     /**
