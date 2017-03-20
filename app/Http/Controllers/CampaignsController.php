@@ -2,6 +2,8 @@
 
 namespace Rogue\Http\Controllers;
 
+use Rogue\Models\Signup;
+
 class CampaignsController extends Controller
 {
     public function __construct()
@@ -39,5 +41,28 @@ class CampaignsController extends Controller
                 'Environment' => $environment,
                 'Bullying' => $bullying,
             ]);
+    }
+
+    /**
+     * Show overview of campaigns.
+     */
+    public function show($campaign_run_id)
+    {
+        // pull in pending rb items for the given run
+        // 1. pull in all signups
+        $signups = Signup::where('campaign_run_id', $campaign_run_id)->get();
+
+        // 2. pull in ALL posts
+        $posts = $signups->flatMap(function ($item) {
+            return $item->posts;
+        });
+        // 3. pull in all pending photos
+
+
+        return view('pages.campaign_inbox');
+            // ->with('state', [
+            //     'Campaign' => $campaign_run_id, 
+            //     'Posts' => $posts, 
+            // ]);
     }
 }
