@@ -61,9 +61,6 @@ class PhotoRepository
             'file_url' => $fileUrl,
             'edited_file_url' => isset($editedImage) ? $editedImage : null,
             'caption' => $data['caption'],
-            'status' => isset($data['status']) ? $data['status'] : 'pending',
-            'source' => $data['source'],
-            'remote_addr' => $data['remote_addr'],
         ]);
 
         // @TODO: This if can be removed after the migration
@@ -86,6 +83,9 @@ class PhotoRepository
             'event_id' => $postEvent->id,
             'signup_id' => $signupId,
             'northstar_id' => $data['northstar_id'],
+            'status' => isset($data['status']) ? $data['status'] : 'pending',
+            'source' => $data['source'],
+            'remote_addr' => $data['remote_addr'],
         ]);
 
         // @TODO: After the migration, only keep the code in the else

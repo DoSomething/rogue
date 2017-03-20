@@ -13,7 +13,7 @@ class Photo extends Model
      *
      * @var array
      */
-    protected $fillable = ['signup_id', 'northstar_id', 'file_url', 'edited_file_url', 'caption', 'status', 'source', 'remote_addr'];
+    protected $fillable = ['signup_id', 'northstar_id', 'file_url', 'edited_file_url', 'caption'];
 
     /**
      * Returns a parent Post model.
