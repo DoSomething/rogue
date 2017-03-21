@@ -18,7 +18,7 @@ class Review extends Model
      */
     public function events()
     {
-        $this->morphMany('Rogue\Models\Event', 'eventable');
+        return $this->morphMany(Event::class, 'eventable');
     }
 
     /**
