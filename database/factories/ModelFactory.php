@@ -3,7 +3,6 @@
 use Faker\Generator;
 use Rogue\Models\Post;
 use Rogue\Models\User;
-use Rogue\Models\Event;
 use Rogue\Models\Photo;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;

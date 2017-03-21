@@ -22,7 +22,7 @@ class DropEventsTable extends Migration
      */
     public function down()
     {
-         Schema::create('events', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('signup_id')->index();
             $table->string('northstar_id')->index()->comment('The users Northstar ID');

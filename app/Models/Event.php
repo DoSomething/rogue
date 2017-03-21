@@ -13,7 +13,6 @@ class Event extends Model
      */
     protected $fillable = [];
 
-
     public function eventable()
     {
         return $this->morphTo();
