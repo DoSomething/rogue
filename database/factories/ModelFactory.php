@@ -32,10 +32,6 @@ $factory->define(Photo::class, function (Generator $faker) {
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
     return [
-        'northstar_id' => str_random(24),
-        'signup_id' => function () {
-            return factory(Signup::class)->create()->id;
-        },
         'status' => 'pending',
         'source' => 'phoenix-web',
         'remote_addr' => '10.0.2.2',
@@ -45,6 +41,7 @@ $factory->define(Post::class, function (Generator $faker) {
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
     return [
+        'northstar_id' => str_random(24),
         'campaign_id' => $this->faker->randomNumber(4),
         'campaign_run_id' => $this->faker->randomNumber(4),
         'quantity_pending' => $this->faker->randomNumber(4),
