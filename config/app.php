@@ -166,6 +166,7 @@ return [
         Rogue\Providers\AuthServiceProvider::class,
         Rogue\Providers\EventServiceProvider::class,
         Rogue\Providers\RouteServiceProvider::class,
+        Rogue\Providers\ModelServiceProvider::class,
     ],
 
     /*
