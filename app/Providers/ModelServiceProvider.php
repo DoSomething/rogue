@@ -15,13 +15,13 @@ class ModelServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Signup::created(function ($signup) {
+        Signup::saved(function ($signup) {
             $signup->events()->create([
                 'content' => $signup->toJson(),
             ]);
         });
 
-        Post::created(function ($post) {
+        Post::saved(function ($post) {
             $post->events()->create([
                 'content' => $post->toJson(),
             ]);
