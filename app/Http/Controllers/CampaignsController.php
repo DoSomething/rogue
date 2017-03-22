@@ -44,25 +44,18 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Show overview of campaigns.
+     * Show particular campaign inbox.
      */
     public function show($campaign_run_id)
     {
-        // pull in pending rb items for the given run
-        // 1. pull in all signups
-        $signups = Signup::where('campaign_run_id', $campaign_run_id)->get();
+        // Pull in all signups for the given run that have pending posts, and include their pending posts
+        $signups = Signup::whereHas('posts', function ($query) {
+            $query->where('status', 'pending');
+        })->where('campaign_run_id', $campaign_run_id)->with('posts.content')->get();
 
-        // 2. pull in ALL posts
-        $posts = $signups->flatMap(function ($item) {
-            return $item->posts;
-        });
-        // 3. pull in all pending photos
-
-
-        return view('pages.campaign_inbox');
-            // ->with('state', [
-            //     'Campaign' => $campaign_run_id, 
-            //     'Posts' => $posts, 
-            // ]);
+        return view('pages.campaign_inbox')
+            ->with('state', [
+                'Signups' => $signups,
+            ]);
     }
 }

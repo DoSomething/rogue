@@ -1,17 +1,27 @@
 import React from 'react';
-import { map } from 'lodash';
+import { flatMap } from 'lodash';
+
+import InboxItem from '../InboxItem';
 
 class CampaignInbox extends React.Component {
   render() {
-    // const causeData = this.props;
+    const signups = this.props['Signups'];
 
-    // const causeTables = map(causeData, (data, cause) => {
-    //   return <CampaignTable key={cause} cause={cause} campaigns={data} causeData={causeData} />;
-    // });
+    const posts = flatMap(signups, signup => {
+      return signup.posts.map(post => {
+        post.signup = signup;
+        return post;
+      });
+    });
 
     return (
       <div>
-        PLEASE SHOW UP
+          <ul>
+            {
+              Object.keys(posts)
+                .map(key => <InboxItem key={key} details={posts[key]}/>)
+            }
+          </ul>
       </div>
     )
   }
