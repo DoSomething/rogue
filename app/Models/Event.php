@@ -11,7 +11,7 @@ class Event extends Model
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['eventable_id', 'eventable_type', 'content'];
 
     public function eventable()
     {
