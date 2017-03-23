@@ -15,7 +15,7 @@ class CreateNewEventsTableSchema extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
             $table->morphs('eventable');
-            $table->string('content');
+            $table->json('content');
             $table->timestamps();
         });
     }
