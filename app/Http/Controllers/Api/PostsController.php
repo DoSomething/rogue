@@ -12,7 +12,7 @@ use Rogue\Http\Transformers\PostTransformer;
 class PostsController extends ApiController
 {
     /**
-     * The photo service instance.
+     * The post service instance.
      *
      * @var Rogue\Services\PostService
      */
@@ -43,7 +43,6 @@ class PostsController extends ApiController
         $this->posts = $posts;
         $this->signups = $signups;
 
-        // Now we have one PostTransformer to handle returning a Post to the API request.
         $this->transformer = new PostTransformer;
     }
 
@@ -57,9 +56,6 @@ class PostsController extends ApiController
     public function store(PostRequest $request)
     {
         $transactionId = incrementTransactionId($request);
-
-        // @TODO - Remove. This is temporary. Just hardcoding some params in the request that the client would normally pass. But we assume everything is a photo post from a user at the moment.
-        $request['submission_type'] = 'user';
 
         $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
 

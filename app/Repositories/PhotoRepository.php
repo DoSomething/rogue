@@ -43,12 +43,6 @@ class PhotoRepository
      */
     public function create(array $data, $signupId)
     {
-        // Include signup_id when we create the Event
-        $data['signup_id'] = $signupId;
-
-        // Don't send quantity and why_participated - we don't want this to live on the post_photo event.
-        $postEvent = Event::create(array_except($data, ['quantity', 'why_participated']));
-
         if (isset($data['file'])) {
             $fileUrl = $this->aws->storeImage($data['file'], $signupId);
 
@@ -68,19 +62,14 @@ class PhotoRepository
         if (isset($data['created_at'])) {
             $photo->created_at = $data['created_at'];
             $photo->updated_at = $data['created_at'];
-            $postEvent->created_at = $data['created_at'];
-            $postEvent->updated_at = $data['created_at'];
 
             $photo->save(['timestamps' => false]);
-            $postEvent->save(['timestamps' => false]);
         }
 
         // Create the Post and associate the Photo with it.
         // @Note -- Having some issue using the `create` method here. I think
         // becase the Posts table doesn't have an `id` key, but I can work that out.
-
         $post = new Post([
-            'event_id' => $postEvent->id,
             'signup_id' => $signupId,
             'northstar_id' => $data['northstar_id'],
             'status' => isset($data['status']) ? $data['status'] : 'pending',
@@ -117,24 +106,12 @@ class PhotoRepository
      */
     public function update($signup, $data)
     {
-
-        // Update the signup's quantity and why_participated data and log as an event.
-        // We will always update these since we can't tell if this has been changed in a good way yet.
-        // @TODO: remove the below logic when we are no longer supporting the phoenix-ashes campaign template.
-        // @TODO: separate event_type into update_why and update_quantity.
-        $updateSignupData = array_only($data, ['northstar_id', 'submission_type', 'why_participated', 'source', 'remote_addr']);
-        $updateSignupData['event_type'] = 'update_signup';
-        $updateSignupData['quantity_pending'] = $data['quantity'];
-
-        Event::create($updateSignupData);
-
         $signup->fill(array_only($data, ['quantity_pending', 'why_participated']));
+        // Triggeres model event that logs the updated signup.
         $signup->save();
 
         // If there is a file, create a new photo post.
         if (! empty($data['file'])) {
-            $data['event_type'] = 'post_photo';
-
             return $this->create($data, $signup->id);
         }
 
