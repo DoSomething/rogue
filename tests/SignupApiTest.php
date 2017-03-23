@@ -33,23 +33,18 @@ class SignupApiTest extends TestCase
         // Send the signup and make sure the response has the data we expect
         $response = $this->json('POST', $this->signupsApiUrl, $signup)
         				 ->seeJson([
-        				 	'northstar_id' => $signup['northstar_id'],
-        				 	'campaign_id' => $signup['campaign_id'],
-        				 	'campaign_run_id' => $signup['campaign_run_id'],
-        				 	'source' => 'the-fox-den',
-        				 	'quantity' => null,
-        				 	'why_participated' => null,
-        					]);
+                            'northstar_id' => $signup['northstar_id'],
+                            'campaign_id' => $signup['campaign_id'],
+                            'campaign_run_id' => $signup['campaign_run_id'],
+                            'signup_source' => 'the-fox-den',
+                            'quantity' => null,
+                            'why_participated' => null,
+                        ]);
 
         // Make sure we get the 201 Created response
         $this->assertResponseStatus(201);
 
         $response = $this->decodeResponseJson();
-
-        // Make sure the signup event got created
-        $this->seeInDatabase('events', [
-            'northstar_id' => $response['data']['northstar_id'],
-        ]);
 
         // Make sure the signup got created
         $this->seeInDatabase('signups', [

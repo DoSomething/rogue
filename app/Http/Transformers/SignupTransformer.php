@@ -2,7 +2,6 @@
 
 namespace Rogue\Http\Transformers;
 
-use Rogue\Models\Event;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use League\Fractal\TransformerAbstract;

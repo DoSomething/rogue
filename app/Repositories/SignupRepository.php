@@ -2,7 +2,6 @@
 
 namespace Rogue\Repositories;
 
-use Rogue\Models\Event;
 use Rogue\Models\Signup;
 
 class SignupRepository

@@ -4,7 +4,6 @@ namespace Rogue\Services;
 
 use Rogue\Models\Post;
 use Rogue\Jobs\SendPostToPhoenix;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PostService
 {
@@ -14,7 +13,7 @@ class PostService
      */
     protected $repository;
 
-    public function  __construct()
+    public function __construct()
     {
         // @TODO - when we remove the photos table this will also be removed an favor a PostRepository.
         $this->repository = app('Rogue\Repositories\PhotoRepository');
