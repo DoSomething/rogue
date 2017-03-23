@@ -6,7 +6,7 @@
 
 	    <div class="container -padded">
 	        <div id="inboxContainer" class="wrapper">
-	            shove the react here
+	            Loading...
 	        </div>
 	    </div>
 
