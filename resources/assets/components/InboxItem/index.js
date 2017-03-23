@@ -15,13 +15,19 @@ class InboxItem extends React.Component {
     const post = this.props.details;
 
     return (
-      <div>
-          <li> 
-            <p>ID: {post['postable']['id']}</p>
-            <p><img src={this.displayImage(post['postable']['file_url'])}/></p>
-            <p>Caption: {post['postable']['caption']}</p>
-            <p>Why Participated: {post['signup']['why_participated']}</p>
-          </li>
+      <div className="container__row">
+        <div className="container__block -half">
+          <img src={this.displayImage(post['postable']['file_url'])}/>
+        </div>
+        <div className="container__block -half">
+          <p><strong>Quantity: </strong> {post['signup']['quantity']}</p>
+          <p><strong>Photo Caption: </strong> {post['postable']['caption']}</p>
+          <p><strong>Why Statement: </strong> {post['signup']['why_participated']}</p>
+          <ul className="form-actions -inline">
+            <li> <input className="button" value="Accepted"/></li>
+            <li> <input className="button -secondary" value="Rejected"/></li>
+          </ul>
+        </div>
       </div>
     )
   }

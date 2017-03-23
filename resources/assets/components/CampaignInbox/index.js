@@ -15,13 +15,11 @@ class CampaignInbox extends React.Component {
     });
 
     return (
-      <div>
-          <ul>
-            {
-              Object.keys(posts)
-                .map(key => <InboxItem key={key} details={posts[key]}/>)
-            }
-          </ul>
+      <div className="container">
+        {
+          Object.keys(posts)
+            .map(key => <InboxItem key={key} details={posts[key]}/>)
+        }
       </div>
     )
   }
