@@ -35,7 +35,7 @@ class PhotoRepository
     }
 
     /**
-     * Create an event.
+     * Create a Photo.
      *
      * @param  array $data
      * @param  int $signupId
@@ -107,7 +107,8 @@ class PhotoRepository
     public function update($signup, $data)
     {
         $signup->fill(array_only($data, ['quantity_pending', 'why_participated']));
-        // Triggeres model event that logs the updated signup.
+
+        // Triggers model event that logs the updated signup in the events table.
         $signup->save();
 
         // If there is a file, create a new photo post.

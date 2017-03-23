@@ -16,6 +16,7 @@ class PostService
 
     public function  __construct()
     {
+        // @TODO - when we remove the photos table this will also be removed an favor a PostRepository.
         $this->repository = app('Rogue\Repositories\PhotoRepository');
     }
 
@@ -36,9 +37,9 @@ class PostService
 
         // POST reportback back to Phoenix, unless told not to.
         // If request fails, record in failed_jobs table.
-        // if (! isset($data['do_not_forward'])) {
-        //     dispatch(new SendPostToPhoenix($post));
-        // }
+        if (! isset($data['do_not_forward'])) {
+            dispatch(new SendPostToPhoenix($post));
+        }
 
         return $post;
     }
@@ -70,9 +71,9 @@ class PostService
 
         // Post reportback back to Phoenix, unless told not to.
         // If request fails, record in failed_jobs table.
-        // if (! isset($data['do_not_forward'])) {
-        //     dispatch(new SendPostToPhoenix($post, isset($data['file'])));
-        // }
+        if (! isset($data['do_not_forward'])) {
+            dispatch(new SendPostToPhoenix($post, isset($data['file'])));
+        }
 
         return $post;
     }

@@ -44,7 +44,6 @@ class PostApiTest extends TestCase
             'crop_width'       => 100,
             'crop_height'      => 100,
             'crop_rotate'      => 90,
-            'event_type'       => 'post_photo',
         ];
 
 
@@ -56,11 +55,6 @@ class PostApiTest extends TestCase
         $this->assertResponseStatus(200);
 
         $response = $this->decodeResponseJson();
-
-        // Make sure we created a reportback item for the reportback.
-        $this->seeInDatabase('events', [
-            'caption' => $response['data']['content']['caption'],
-        ]);
 
         // Make sure the file_url is saved to the database.
         $this->seeInDatabase('photos', ['file_url' => $response['data']['content']['media']['url']]);
