@@ -3,7 +3,6 @@
 use Faker\Generator;
 use Rogue\Models\Post;
 use Rogue\Models\User;
-use Rogue\Models\Event;
 use Rogue\Models\Photo;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
@@ -20,50 +19,33 @@ use Rogue\Models\Reportback;
 |
 */
 
-// User Event Factory
-$factory->defineAs(Event::class, 'user', function (Generator $faker) {
-    return [
-        'northstar_id' => str_random(24),
-        'submission_type' => 'user',
-    ];
-});
-
 // Photo Factory
 $factory->define(Photo::class, function (Generator $faker) {
     return [
         'file_url' => 'https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg',
         'edited_file_url' => null,
         'caption' => $this->faker->sentence(),
-        'status' => 'pending',
-        'source' => 'phoenix-web',
-        'remote_addr' => '10.0.2.2',
     ];
 });
 
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
     return [
-        'northstar_id' => str_random(24),
-        'event_id' => function () {
-            return factory(Event::class, 'user')->create()->id;
-        },
-        'signup_id' => function () {
-            return factory(Signup::class)->create()->id;
-        },
+        'status' => 'pending',
+        'source' => 'phoenix-web',
+        'remote_addr' => '10.0.2.2',
     ];
 });
 
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
     return [
+        'northstar_id' => str_random(24),
         'campaign_id' => $this->faker->randomNumber(4),
         'campaign_run_id' => $this->faker->randomNumber(4),
         'quantity_pending' => $this->faker->randomNumber(4),
         'why_participated' => $this->faker->sentence(),
         'source' => 'phoenix-web',
-        'event_id' => function () {
-            return factory(Event::class, 'user')->create()->id;
-        },
     ];
 });
 

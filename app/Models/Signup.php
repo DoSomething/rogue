@@ -26,11 +26,11 @@ class Signup extends Model
     ];
 
     /**
-     * Get the events associated with this signup.
+     * Each signup has events.
      */
     public function events()
     {
-        return $this->hasMany(Event::class);
+        return $this->morphMany(Event::class, 'eventable');
     }
 
     /**

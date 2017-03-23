@@ -11,21 +11,10 @@ class Event extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'signup_id', 'northstar_id', 'event_type', 'submission_type', 'quantity', 'quantity_pending', 'why_participated', 'caption', 'status', 'source', 'remote_addr', 'reason'];
+    protected $fillable = [];
 
-    /**
-     * An event has one signup.
-     */
-    public function signup()
+    public function eventable()
     {
-        return $this->hasOne(Signup::class);
-    }
-
-    /**
-     * An event has one post.
-     */
-    public function post()
-    {
-        return $this->hasOne(Post::class);
+        return $this->morphTo();
     }
 }
