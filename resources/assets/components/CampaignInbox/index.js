@@ -5,7 +5,7 @@ import InboxItem from '../InboxItem';
 
 class CampaignInbox extends React.Component {
   render() {
-    const signups = this.props['Signups'];
+    const signups = this.props['signups'];
 
     const posts = flatMap(signups, signup => {
       return signup.posts.map(post => {

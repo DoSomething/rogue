@@ -55,7 +55,7 @@ class CampaignsController extends Controller
 
         return view('pages.campaign_inbox')
             ->with('state', [
-                'Signups' => $signups,
+                'signups' => $signups,
             ]);
     }
 }
