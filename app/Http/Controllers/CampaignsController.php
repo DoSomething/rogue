@@ -2,6 +2,8 @@
 
 namespace Rogue\Http\Controllers;
 
+use Rogue\Models\Signup;
+
 class CampaignsController extends Controller
 {
     public function __construct()
@@ -38,6 +40,22 @@ class CampaignsController extends Controller
                 'Staff Picks' => $staffPicks,
                 'Environment' => $environment,
                 'Bullying' => $bullying,
+            ]);
+    }
+
+    /**
+     * Show particular campaign inbox.
+     */
+    public function show($campaign_run_id)
+    {
+        // Pull in all signups for the given run that have pending posts, and include their pending posts
+        $signups = Signup::whereHas('posts', function ($query) {
+            $query->where('status', 'pending');
+        })->where('campaign_run_id', $campaign_run_id)->with('posts.content')->get();
+
+        return view('pages.campaign_inbox')
+            ->with('state', [
+                'signups' => $signups,
             ]);
     }
 }
