@@ -1,5 +1,6 @@
 import React from 'react';
 import { flatMap } from 'lodash';
+import { map } from 'lodash';
 
 import InboxItem from '../InboxItem';
 
@@ -15,13 +16,8 @@ class CampaignInbox extends React.Component {
     });
 
     return (
-      <div>
-          <ul>
-            {
-              Object.keys(posts)
-                .map(key => <InboxItem key={key} details={posts[key]}/>)
-            }
-          </ul>
+      <div className="container">
+        { map(posts, (post, key) => <InboxItem key={key} details={post} />) }
       </div>
     )
   }
