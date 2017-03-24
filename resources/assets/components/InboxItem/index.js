@@ -21,12 +21,19 @@ class InboxItem extends React.Component {
         </div>
         <div className="container__block -half">
           <p><strong>Quantity: </strong> {post['signup']['quantity']}</p>
-          <p><strong>Photo Caption: </strong> {post['postable']['caption']}</p>
-          <p><strong>Why Statement: </strong> {post['signup']['why_participated']}</p>
+          <p><strong>Photo Caption </strong><br/>
+           {post['postable']['caption']}</p>
+          <p><strong>Why Statement </strong><br/>
+           {post['signup']['why_participated']}</p>
           <ul className="form-actions -inline">
             <li> <input className="button" value="Accepted"/></li>
             <li> <input className="button -secondary" value="Rejected"/></li>
           </ul>
+          <p><strong>Meta</strong><br/>
+          Post ID: {post['postable_id']} <br/>
+          Source: {post['source']} <br/>
+          Submitted: {post['created_at']} <br/>
+          </p>
         </div>
       </div>
     )
