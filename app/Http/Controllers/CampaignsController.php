@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Signup;
+use Rogue\Services\Registrar;
 
 class CampaignsController extends Controller
 {
@@ -10,6 +11,7 @@ class CampaignsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
+        $this->registrar = new Registrar();
     }
 
     /**
@@ -52,6 +54,14 @@ class CampaignsController extends Controller
         $signups = Signup::whereHas('posts', function ($query) {
             $query->where('status', 'pending');
         })->where('campaign_run_id', $campaign_run_id)->with('posts.content')->get();
+
+        // For each post, get and include the user
+        $signups->each(function ($item) {
+            $item->posts->each(function ($item) {
+                $user = $this->registrar->find($item->northstar_id);
+                $item->user = $user->toArray();
+            });
+        });
 
         return view('pages.campaign_inbox')
             ->with('state', [

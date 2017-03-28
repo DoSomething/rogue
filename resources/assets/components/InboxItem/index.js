@@ -11,6 +11,14 @@ class InboxItem extends React.Component {
     }
   }
 
+  calculateAge(date) {
+    const birthdate = new Date(date);
+    const today = Date.now();
+    const age = Math.floor((today - birthdate) / 31536000000);
+
+    return age;
+  }
+
   render() {
     const post = this.props.details;
 
@@ -20,6 +28,9 @@ class InboxItem extends React.Component {
           <img src={this.displayImage(post['postable']['file_url'])}/>
         </div>
         <div className="container__block -half">
+          <h2>{post['user']['first_name']} {post['user']['last_name']}, {this.calculateAge(post['user']['birthdate'])}</h2>
+          <p><em>{post['user']['email']}</em></p>
+          <p><em>{post['user']['mobile']}</em></p>
           <p><strong>Quantity: </strong> {post['signup']['quantity']}</p>
           <h4>Photo Caption</h4>
           <p>{post['postable']['caption']}</p>
