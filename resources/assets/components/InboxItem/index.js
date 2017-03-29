@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import { calculateAge } from '../../helpers';
 
 class InboxItem extends React.Component {
   displayImage(photo_url) {
@@ -11,14 +12,6 @@ class InboxItem extends React.Component {
     }
   }
 
-  calculateAge(date) {
-    const birthdate = new Date(date);
-    const today = Date.now();
-    const age = Math.floor((today - birthdate) / 31536000000);
-
-    return age;
-  }
-
   render() {
     const post = this.props.details;
 
@@ -28,7 +21,7 @@ class InboxItem extends React.Component {
           <img src={this.displayImage(post['postable']['file_url'])}/>
         </div>
         <div className="container__block -half">
-          <h2>{post['user']['first_name']} {post['user']['last_name']}, {this.calculateAge(post['user']['birthdate'])}</h2>
+          <h2>{post['user']['first_name']} {post['user']['last_name']}, {calculateAge(post['user']['birthdate'])}</h2>
           <p><em>{post['user']['email']}</em></p>
           <p><em>{post['user']['mobile']}</em></p>
           <p><strong>Quantity: </strong> {post['signup']['quantity']}</p>
