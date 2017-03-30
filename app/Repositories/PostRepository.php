@@ -34,11 +34,11 @@ class PostRepository
     }
 
     /**
-     * Create a Photo.
+     * Create a Post.
      *
      * @param  array $data
      * @param  int $signupId
-     * @return \Rogue\Models\Photo|null
+     * @return \Rogue\Models\Post|null
      */
     public function create(array $data, $signupId)
     {
@@ -79,12 +79,12 @@ class PostRepository
     }
 
     /**
-     * Update an existing photo post and signup.
+     * Update an existing Post and Signup.
      *
-     * @param \Rogue\Models\Photo $signup
+     * @param \Rogue\Models\Post $signup
      * @param array $data
      *
-     * @return \Rogue\Models\Photo
+     * @return \Rogue\Models\Post
      */
     public function update($signup, $data)
     {
@@ -93,7 +93,7 @@ class PostRepository
         // Triggers model event that logs the updated signup in the events table.
         $signup->save();
 
-        // If there is a file, create a new photo post.
+        // If there is a file, create a new post.
         if (! empty($data['file'])) {
             return $this->create($data, $signup->id);
         }
