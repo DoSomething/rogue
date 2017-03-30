@@ -2,6 +2,8 @@ import React from 'react';
 import { map } from 'lodash';
 import { calculateAge } from '../../helpers';
 
+import Tags from '../Tags';
+
 class InboxItem extends React.Component {
   displayImage(photo_url) {
     if (photo_url == "default") {
