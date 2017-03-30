@@ -32,6 +32,8 @@ class InboxItem extends React.Component {
           <ul className="form-actions -inline">
             <li> <input className="button" value="Accepted"/></li>
             <li> <input className="button -secondary" value="Rejected"/></li>
+            <br/>
+            <li> <input className="button -tertiary" value="Delete"/></li>
           </ul>
           <h4>Meta</h4>
           <p>
