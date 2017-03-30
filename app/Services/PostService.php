@@ -4,7 +4,6 @@ namespace Rogue\Services;
 
 use Rogue\Models\Post;
 use Rogue\Jobs\SendPostToPhoenix;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PostService
 {
@@ -13,6 +12,12 @@ class PostService
      *
      */
     protected $repository;
+
+    public function __construct()
+    {
+        // @TODO - when we remove the photos table this will also be removed an favor a PostRepository.
+        $this->repository = app('Rogue\Repositories\PhotoRepository');
+    }
 
     /**
      * Handles all business logic around creating posts.
@@ -24,8 +29,6 @@ class PostService
      */
     public function create($data, $signupId, $transactionId)
     {
-        $this->resolvePostRepository($data['event_type']);
-
         $post = $this->repository->create($data, $signupId);
 
         // Add new transaction id to header.
@@ -51,8 +54,6 @@ class PostService
      */
     public function update($signup, $data, $transactionId)
     {
-        $this->resolvePostRepository($data['event_type']);
-
         $post = $this->repository->update($signup, $data);
 
         // @TODO: This will is only temporary and will be removed!
@@ -85,32 +86,8 @@ class PostService
      */
     public function reviews($data)
     {
-        $this->resolvePostRepository($data['event_type']);
-
         $reviewed = $this->repository->reviews($data);
 
         return $reviewed->post;
-    }
-
-    /**
-     * Determines which type of post we trying to work with based on the passed 'event_type'
-     *
-     * @param $string $type
-     * @throws HttpException
-     * @return Rogue\Repostitories\PhotoRepository
-     */
-    protected function resolvePostRepository($type)
-    {
-        // Get the event type (type is anything after _).
-        $type = explode('_', $type)[1];
-
-        switch ($type) {
-            case 'photo':
-                $this->repository = app('Rogue\Repositories\PhotoRepository');
-                break;
-            default:
-                throw new HttpException(405, 'Not a valid post type');
-                break;
-        }
     }
 }

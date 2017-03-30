@@ -16,13 +16,14 @@ class PostTransformer extends TransformerAbstract
     public function transform(Post $post)
     {
         return [
+            'id' => $post->id,
+            'signup_id' => $post->signup_id,
+            'northstar_id' => $post->northstar_id,
             'postable_id' => $post->postable_id,
-            'post_event_id' => $post->event_id,
-            'submission_type' => $post->event->submission_type,
             'postable_type' => $post->postable_type,
             'status' => $post->status,
-            'remote_addr' => $post->remote_addr,
             'post_source' => $post->source,
+            'remote_addr' => $post->remote_addr,
             'content' => [
                 'media' => [
                     'url' => $post->content->file_url,

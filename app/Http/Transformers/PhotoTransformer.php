@@ -1,5 +1,7 @@
 <?php
 
+// @TODO - to be removed when we get rid of this table.
+
 namespace Rogue\Http\Transformers;
 
 use Rogue\Models\Photo;
@@ -25,12 +27,12 @@ class PhotoTransformer extends TransformerAbstract
     public function transform(Photo $photo)
     {
         return [
-            'event_id' => $photo->post->event_id,
+            'id' => $photo->id,
             'signup_id' => $photo->post->signup_id,
             'northstar_id' => $photo->post->northstar_id,
             'campaign_id' => $photo->post->signup->campaign_id,
             'campaign_run_id' => $photo->post->signup->campaign_run_id,
-            'post' => [
+            'content' => [
                 'type' => 'photo',
                 'media' => [
                     'url' => $photo->file_url,

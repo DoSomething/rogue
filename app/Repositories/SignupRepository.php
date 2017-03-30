@@ -2,7 +2,6 @@
 
 namespace Rogue\Repositories;
 
-use Rogue\Models\Event;
 use Rogue\Models\Signup;
 
 class SignupRepository
@@ -15,50 +14,30 @@ class SignupRepository
      */
     public function create($data)
     {
-        // Add these values to pass to the Event
-        $data['event_type'] = 'signup';
-        $data['submission_type'] = 'user';
-
-        // Create the signup event
-        $event = Event::create($data);
-
         // Create the signup
-        $signup = $event->signup()->create([
-            'event_id' => $event->id,
-            'northstar_id' => $data['northstar_id'],
-            'campaign_id' => $data['campaign_id'],
-            'campaign_run_id' => $data['campaign_run_id'],
-            'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
-            'quantity_pending' => isset($data['quantity_pending']) ? $data['quantity_pending'] : null,
-            'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
-            'source' => isset($data['source']) ? $data['source'] : null,
-        ]);
+        $signup = new Signup;
 
-        // Let Laravel take care of the timestamps unless they are specified in the request
-        // @TODO: keep only the else after the migration
+        $signup->northstar_id = $data['northstar_id'];
+        $signup->campaign_id = $data['campaign_id'];
+        $signup->campaign_run_id = $data['campaign_run_id'];
+        $signup->quantity = isset($data['quantity']) ? $data['quantity'] : null;
+        $signup->quantity_pending = isset($data['quantity_pending']) ? $data['quantity_pending'] : null;
+        $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : null;
+        $signup->source = isset($data['source']) ? $data['source'] : null;
+
         if (isset($data['created_at'])) {
-            // Associate the event with the signup
-            $event->signup_id = $signup->id;
-
-            // Set the created_at time
+            // Manually set created and updated times for the signup
             $signup->created_at = $data['created_at'];
-            $event->created_at = $data['created_at'];
-
-            // Set the updated time if provided, if not, assume no updates
-            if (isset($data['updated_at'])) {
-                $signup->updated_at = $data['updated_at'];
-                $event->updated_at = $data['updated_at'];
-            } else {
-                $signup->updated_at = $data['created_at'];
-                $event->updated_at = $data['created_at'];
-            }
-
+            $signup->updated_at = isset($data['updated_at']) ? $data['updated_at'] : $data['created_at'];
             $signup->save(['timestamps' => false]);
+
+            // Manually update the signup event timestamp.
+            $event = $signup->events->first();
+            $event->created_at = $data['created_at'];
+            $event->updated_at = isset($data['updated_at']) ? $data['updated_at'] : $data['created_at'];
             $event->save(['timestamps' => false]);
         } else {
-            // Now that the signup exists, set the signup_id on the signup event
-            $event->signup_id = $signup->id;
-            $event->save();
+            $signup->save();
         }
 
         return $signup;

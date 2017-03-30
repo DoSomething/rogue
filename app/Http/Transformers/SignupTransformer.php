@@ -2,7 +2,6 @@
 
 namespace Rogue\Http\Transformers;
 
-use Rogue\Models\Event;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use League\Fractal\TransformerAbstract;
@@ -16,7 +15,6 @@ class SignupTransformer extends TransformerAbstract
      */
     protected $defaultIncludes = [
         'posts',
-        'events',
     ];
 
     /**
@@ -38,8 +36,6 @@ class SignupTransformer extends TransformerAbstract
     {
         return [
             'signup_id' => $signup->id,
-            'signup_event_id' => $signup->event_id,
-            'submission_type' => $signup->events->first()->submission_type,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'campaign_run_id' => $signup->campaign_run_id,
@@ -63,19 +59,6 @@ class SignupTransformer extends TransformerAbstract
         $post = $signup->posts;
 
         return $this->collection($post, new PostTransformer);
-    }
-
-    /**
-     * Include the event
-     *
-     * @param \Rogue\Models\Signup $signup
-     * @return \League\Fractal\Resource\Item
-     */
-    public function includeEvents(Signup $signup)
-    {
-        $event = $signup->events;
-
-        return $this->collection($event, new EventTransformer);
     }
 
     /**

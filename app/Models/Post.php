@@ -11,16 +11,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['event_id', 'signup_id', 'northstar_id', 'status', 'source', 'remote_addr'];
-
-    protected $primaryKey = ['event_id'];
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
+    protected $fillable = ['id', 'signup_id', 'northstar_id', 'postable_id', 'postable_type', 'status', 'source', 'remote_addr'];
 
     /**
      * Returns Post data
