@@ -8,7 +8,6 @@ use Rogue\Repositories\PostRepository;
 
 class PostService
 {
-
     /*
      * PostRepository Instance
      *
