@@ -88,7 +88,6 @@ class PhotoRepository
 
             $post->save(['timestamps' => false]);
 
-
             $post->events->first()->created_at = $data['created_at'];
             $post->events->first()->updated_at = $data['created_at'];
 
