@@ -13,9 +13,15 @@ class Tags extends React.Component {
     // });
 
     return (
-      <div className="container">
-        // { map(posts, (post, key) => <InboxItem key={key} details={post} />) }
-      </div>
+        <ul className="form-actions -inline">
+          <li><b> Tags </b></li>
+          <br/>
+          <li> <input className="button -secondary" value="Good Photo"/></li>
+          <li> <input className="button -secondary" value="Good Quote"/></li>
+          <br/>
+          <li> <input className="button -secondary" value="Hide in Gallery"/></li>
+          <li> <input className="button -secondary" value="Good for Sponsor"/></li>
+        </ul>
     )
   }
 }

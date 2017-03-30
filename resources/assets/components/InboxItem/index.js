@@ -5,6 +5,20 @@ import { calculateAge } from '../../helpers';
 import Tags from '../Tags';
 
 class InboxItem extends React.Component {
+  constructor () {
+    super();
+    this.state = {
+      showTags: false,
+    };
+    this._onAcceptClick = this._onAcceptClick.bind(this);
+  }
+
+  _onAcceptClick() {
+    this.setState({
+      showTags: true,
+    });
+  }
+
   displayImage(photo_url) {
     if (photo_url == "default") {
       return "https://pics.onsizzle.com/bork-2411135.png";
@@ -16,6 +30,7 @@ class InboxItem extends React.Component {
 
   render() {
     const post = this.props.details;
+    const tags = this.props.tags;
 
     return (
       <div className="container__row">
@@ -32,9 +47,11 @@ class InboxItem extends React.Component {
           <h4>Why Statement</h4>
           <p>{post['signup']['why_participated']}</p>
           <ul className="form-actions -inline">
-            <li> <input className="button" value="Accepted"/></li>
+            <li> <input className="button" value="Accepted" onClick={this._onAcceptClick}/></li>
             <li> <input className="button -secondary" value="Rejected"/></li>
+            {this.state.showTags? <Tags /> : null}
             <br/>
+            <li> {tags}</li>
             <li> <input className="button -tertiary" value="Delete"/></li>
           </ul>
           <h4>Meta</h4>
