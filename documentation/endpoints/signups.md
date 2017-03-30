@@ -126,9 +126,7 @@ Example response:
 {
   "data": {
     "signup_id": 160,
-    "signup_event_id": 799,
-    "submission_type": "user",
-    "northstar_id": "1234",
+    "northstar_id": "5571df46a59db12346dsb456d",
     "campaign_id": "6",
     "campaign_run_id": "1740",
     "quantity": null,
@@ -140,44 +138,21 @@ Example response:
     "posts": {
       "data": [
         {
-          "postable_id": 16,
-          "post_event_id": 29,
-          "submission_type": "user",
-          "postable_type": "Rogue\\Models\\Photo",
-          "content": {
-            "media": {
-              "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/1334-1484771619.jpeg",
-              "edited_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_1334-1484771621.jpeg"
-            },
-            "caption": "caption",
-            "status": "pending",
-            "remote_addr": null,
-            "post_source": null,
-            "created_at": "2017-01-18T20:33:41+0000",
-            "updated_at": "2017-01-18T20:33:41+0000"
-          }
+          "id": 340,
+          "signup_id": 160,
+          "northstar_id": "5571df46a59db12346dsb456d",
+          "media": {
+            "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487182498.jpeg",
+            "caption": "Captioning captions",
+          },
+          "status": "pending",
+          "remote_addr": "207.110.19.130",
+          "post_source": "runscope",
+          "created_at": "2017-02-15T18:14:58+0000",
+          "updated_at": "2017-02-15T18:14:58+0000",
         },
       ],
     },
-    "events": {
-      "data": [
-        {
-          "event_id": 800,
-          "event_type": "signup",
-          "submission_type": "user",
-          "quantity": null,
-          "quantity_pending": null,
-          "why_participated": null,
-          "caption": null,
-          "status": null,
-          "source": "chloe-testing",
-          "remote_addr": null,
-          "reason": null,
-          "created_at": "2017-02-15T18:31:07+0000",
-          "updated_at": "2017-02-15T18:31:07+0000"
-        }
-      ]
-    }
   }
 }
 ```
