@@ -4,19 +4,25 @@ namespace Rogue\Services;
 
 use Rogue\Models\Post;
 use Rogue\Jobs\SendPostToPhoenix;
+use Rogue\Repositories\PostRepository;
 
 class PostService
 {
     /*
-     * Repository Instance
+     * PostRepository Instance
      *
+     * @var Rogue\Repositories\PostRepository;
      */
     protected $repository;
 
-    public function __construct()
+    /**
+     * Constructor
+     *
+     * @param \Rogue\Repositories\PostRepository $posts
+     */
+    public function __construct(PostRepository $posts)
     {
-        // @TODO - when we remove the photos table this will also be removed an favor a PostRepository.
-        $this->repository = app('Rogue\Repositories\PhotoRepository');
+        $this->repository = $posts;
     }
 
     /**
@@ -75,19 +81,5 @@ class PostService
         }
 
         return $post;
-    }
-
-    /**
-     * Handles all business logic around updating the posts(s)'s status after being reviewed.
-     *
-     * @param array $data
-     *
-     * @return
-     */
-    public function reviews($data)
-    {
-        $reviewed = $this->repository->reviews($data);
-
-        return $reviewed->post;
     }
 }
