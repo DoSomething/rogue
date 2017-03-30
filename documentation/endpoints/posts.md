@@ -43,7 +43,6 @@ Example Response:
     "id": 340,
     "signup_id": 784,
     "northstar_id": "5571df46a59db12346dsb456d",
-    "postable_type": "Rogue\\Models\\Photo",
     "media": {
       "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487182498.jpeg",
       "caption": "Captioning captions",
