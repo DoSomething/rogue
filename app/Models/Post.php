@@ -11,17 +11,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'signup_id', 'northstar_id', 'postable_id', 'postable_type', 'status', 'source', 'remote_addr'];
-
-    /**
-     * Returns Post data
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function content()
-    {
-        return $this->morphTo('postable');
-    }
+    protected $fillable = ['id', 'signup_id', 'northstar_id', 'url', 'caption', 'status', 'source', 'remote_addr'];
 
     /**
      * Each post has events.
