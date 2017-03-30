@@ -3,6 +3,7 @@
 namespace Rogue\Http\Transformers;
 
 use Rogue\Models\Post;
+use Rogue\Models\Photo;
 use League\Fractal\TransformerAbstract;
 
 class PostTransformer extends TransformerAbstract

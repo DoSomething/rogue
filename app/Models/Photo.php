@@ -32,6 +32,4 @@ class Photo extends Model
     {
         return $this->morphMany(Reaction::class, 'reactionable');
     }
-
-    // @TODO: Make a withReactionCount model function that uses ::withCount
 }
