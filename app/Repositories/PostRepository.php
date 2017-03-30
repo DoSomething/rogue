@@ -3,9 +3,8 @@
 namespace Rogue\Repositories;
 
 use Rogue\Models\Post;
-use Rogue\Models\Event;
 use Rogue\Services\AWS;
-use Rogue\Models\Review;
+// use Rogue\Models\Review;
 use Rogue\Services\Registrar;
 
 class PostRepository
