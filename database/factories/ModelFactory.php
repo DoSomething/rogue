@@ -19,15 +19,6 @@ use Rogue\Models\Reportback;
 |
 */
 
-// Photo Factory
-$factory->define(Photo::class, function (Generator $faker) {
-    return [
-        'file_url' => 'https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg',
-        'edited_file_url' => null,
-        'caption' => $this->faker->sentence(),
-    ];
-});
-
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
     return [
