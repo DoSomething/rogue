@@ -19,10 +19,10 @@ class PhoenixGalleryTransformer extends TransformerAbstract
         $result = [
             'id' => $post->postable_id,
             'status' => $post->status,
-            'caption' => $post->content->caption,
-            'uri' => $post->content->file_url,
+            'caption' => $post->caption,
+            'uri' => $post->file_url,
             'media' => [
-                'uri' => $post->content->file_url,
+                'uri' => $post->file_url,
                 'type' => 'image',
             ],
             'created_at' => $post->created_at->toIso8601String(),
