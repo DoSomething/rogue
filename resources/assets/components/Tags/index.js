@@ -8,16 +8,15 @@ class Tags extends React.Component {
       'good_quote': 'Good Quote',
       'hidden': 'Hide in Gallery',
       'sponsor': 'Good for Sponsor',
+      'storytelling': 'Good for Storytelling',
     };
 
     return (
       <div>
-        <div className="container__block -half">
-          <h4>Tags</h4>
-        </div>
         <br/>
+        <h4>Tags</h4>
         <ul className="form-actions -inline">
-          {map(tags, (label, value) => <input className="button -secondary" value={label}/>)}
+          <li>{map(tags, (label, value) => <input className="tag" value={label}/>)}</li>
         </ul>
       </div>
     )

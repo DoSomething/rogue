@@ -48,10 +48,9 @@ class InboxItem extends React.Component {
           <ul className="form-actions -inline">
             <li> <input className="button" value="Accepted" onClick={this.onAcceptClick}/></li>
             <li> <input className="button -secondary" value="Rejected"/></li>
-            {this.state.status === 'accepted' ? <Tags /> : null}
-            <br/>
             <li> <input className="button -tertiary" value="Delete"/></li>
           </ul>
+          {this.state.status === 'accepted' ? <Tags /> : null}
           <h4>Meta</h4>
           <p>
             Post ID: {post['postable_id']} <br/>
