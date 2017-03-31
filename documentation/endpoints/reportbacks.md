@@ -1,32 +1,75 @@
 ## Reportbacks
 
-Create a Reportback
+Retrieve all Posts.
 
 ```
-POST /api/v1/reportbacks
+GET /api/v1/reportbacks
 ```
 
-  - **northstar_id**: (string) required if `drupal_id` is not provided.
-    The northstar id of the user reporting back.
-  - **drupal_id**: (int) required if `northstar_id` is not provided.
-    The drupal user id of the user reporting back.
-  - **campaign_id**: (int) required.
-    The drupal node id of the campaign the user is reporting back on.
-  - **campaign_run_id**: (int) required.
-    The drupal campaign run node id of the campaign run the user is reporting back on.
-  - **quantity**: (int).
-    The number of reportback nouns verbed. 
-  - **why_participated**: (string) required.
-    The reason why the user participated.
-  - **num_participants**: (int).
-    How many people participated in the action. 
-  - **caption**: (string).
-    Corresponding caption for the reportback image.
-  - **source**: (string).
-    Where the reportback file was submitted from.
-  - **remote_addr**: (string).
-    IP address of where the reportback is submitted from. 
-  - **file**: (string) required.
-    File string to save of reportback image.
+### Optional Query Parameters
+- **limit**
+  - Set the number of records to return in a single response.
+  - e.g. `/reportbacks?limit=35`
+- **page** _(integer)_
+  - For pagination, specify page of activity to return in the response.
+  - e.g. `/reportbacks?page=2`
+- **campaign_id** _(integer)_
+  - The nid to filter the response by.
+  - e.g. `/activity?filter[campaign_id]=47`
 
-Response: The reportback and associated reportback items.
+Example Response:
+
+```
+{
+  "data": [
+    {
+      "id": 4,
+      "status": "approved",
+      "caption": "Ipsam fugit magnam impedit sit quia quo.",
+      "uri": "https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg",
+      "media": {
+        "uri": "https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg",
+        "type": "image"
+      },
+      "created_at": "2017-03-28T14:33:32+00:00",
+      "reportback": {
+        "id": 2,
+        "created_at": "2017-03-28T14:33:32+00:00",
+        "updated_at": "2017-03-28T14:33:32+00:00",
+        "quantity": null,
+        "why_participated": "Vel excepturi soluta aut natus ut.",
+        "flagged": "false"
+      }
+    },
+    {
+      "id": 6,
+      "status": "approved",
+      "caption": "Nostrum et nemo totam quia occaecati.",
+      "uri": "https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg",
+      "media": {
+        "uri": "https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg",
+        "type": "image"
+      },
+      "created_at": "2017-03-28T14:33:32+00:00",
+      "reportback": {
+        "id": 2,
+        "created_at": "2017-03-28T14:33:32+00:00",
+        "updated_at": "2017-03-28T14:33:32+00:00",
+        "quantity": null,
+        "why_participated": "Vel excepturi soluta aut natus ut.",
+        "flagged": "false"
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "total": 2,
+      "count": 2,
+      "per_page": 20,
+      "current_page": 1,
+      "total_pages": 1,
+      "links": []
+    }
+  }
+}
+```
