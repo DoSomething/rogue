@@ -2,7 +2,7 @@
 
 namespace Rogue\Http\Controllers\Api;
 
-use Rogue\Models\Photo;
+use Rogue\Models\Post;
 use Rogue\Models\Reaction;
 use Rogue\Http\Requests\ReactionRequest;
 use Rogue\Http\Transformers\ReactionTransformer;
@@ -34,18 +34,16 @@ class ReactionController extends ApiController
     public function store(ReactionRequest $request)
     {
         $userId = $request['northstar_id'];
-        $reactionableId = $request['reactionable_id'];
-        $reactionableType = $request['reactionable_type'];
+        $postId = $request['post_id'];
 
         // Check to see if the post has a reaction from this particular user with id of northstar_id.
-        $reaction = Reaction::withTrashed()->where(['northstar_id' => $userId, 'reactionable_id' => $reactionableId, 'reactionable_type' => $reactionableType])->first();
+        $reaction = Reaction::withTrashed()->where(['northstar_id' => $userId, 'post_id' => $postId])->first();
 
         // If a post does not have a reaction from this user, create a reaction.
         if (is_null($reaction)) {
             $reaction = Reaction::create([
                 'northstar_id' => $userId,
-                'reactionable_id' => $reactionableId,
-                'reactionable_type' => $reactionableType,
+                'post_id' => $postId,
             ]);
 
             $code = 200;
@@ -62,17 +60,22 @@ class ReactionController extends ApiController
             }
         }
 
-        // @TODO: as we add more post types, we should break the below into a helper function and add different cases.
-        if ($reactionableType === 'photo') {
-            $photo = Photo::where('id', $reactionableId)->first();
-            $totalReactions = count($photo->reactions);
-        }
-
         $meta = [
             'action' => $action,
-            'total_reactions' => $totalReactions,
+            'total_reactions' => $this->getTotalReactions($postId),
         ];
 
         return $this->item($reaction, $code, $meta);
+    }
+
+    /**
+     * Get the number of reactions a post has.
+     *
+     * @param int $postId
+     * @return int
+     */
+    private function getTotalReactions($postId)
+    {
+        return count(Post::find($postId)->reactions());
     }
 }
