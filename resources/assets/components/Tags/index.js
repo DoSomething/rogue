@@ -3,14 +3,6 @@ import { map } from 'lodash';
 
 class Tags extends React.Component {
   render() {
-    // const signups = this.props['signups'];
-
-    // const posts = flatMap(signups, signup => {
-    //   return signup.posts.map(post => {
-    //     post.signup = signup;
-    //     return post;
-    //   });
-    // });
 
     return (
         <ul className="form-actions -inline">

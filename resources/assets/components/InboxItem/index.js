@@ -30,7 +30,6 @@ class InboxItem extends React.Component {
 
   render() {
     const post = this.props.details;
-    const tags = this.props.tags;
 
     return (
       <div className="container__row">
@@ -51,7 +50,6 @@ class InboxItem extends React.Component {
             <li> <input className="button -secondary" value="Rejected"/></li>
             {this.state.showTags? <Tags /> : null}
             <br/>
-            <li> {tags}</li>
             <li> <input className="button -tertiary" value="Delete"/></li>
           </ul>
           <h4>Meta</h4>

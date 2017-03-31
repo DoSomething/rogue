@@ -15,9 +15,6 @@ class CampaignInbox extends React.Component {
       });
     });
 
-    // @TODO: figure out how to pass this all the way to tags index.js (right now it's hardcoded)
-    const tags = this.props['tags'];
-
     return (
       <div className="container">
         { map(posts, (post, key) => <InboxItem key={key} details={post} />) }

@@ -63,18 +63,9 @@ class CampaignsController extends Controller
             });
         });
 
-        // @TODO: update to pull in query tags from tags table when it exists. Temporarily hard codes tags.
-        $tags = [
-            'Good Photo',
-            'Good Quote',
-            'Hide in Gallery',
-            'Good for Sponsor',
-        ];
-
         return view('pages.campaign_inbox')
             ->with('state', [
                 'signups' => $signups,
-                'tags' => $tags,
             ]);
     }
 }
