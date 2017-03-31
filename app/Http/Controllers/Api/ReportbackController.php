@@ -2,12 +2,12 @@
 
 namespace Rogue\Http\Controllers\Api;
 
+use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Models\Reportback;
 use Rogue\Services\ReportbackService;
 use Rogue\Http\Requests\ReportbackRequest;
 use Rogue\Http\Transformers\ReportbackTransformer;
-use Rogue\Http\Transformers\ReportbackItemTransformer;
 
 class ReportbackController extends ApiController
 {
@@ -24,7 +24,32 @@ class ReportbackController extends ApiController
     {
         $this->reportbackService = $reportbackService;
         $this->transformer = new ReportbackTransformer;
-        $this->itemTransformer = new ReportbackItemTransformer;
+    }
+
+    /**
+     * Returns Post data for the Phoenix-ashes gallery
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        // Create an empty Post query, which we can filter and paginate
+        $query = $this->newQuery(Post::class);
+
+        // 1. Join with signups so we can access the signup data and filter by campaign
+        // 2. Only return approved Posts
+        $query = $query->join('signups', 'signups.id', '=', 'posts.signup_id')
+            ->where('status', '=', 'approved');
+
+        // Only return Posts for the given campaign_id (if there is one)
+        if (array_key_exists('campaign_id', $request->filter)) {
+            $campaign_id = $request->filter['campaign_id'];
+
+            $query = $query->where('campaign_id', '=', $campaign_id);
+        }
+
+        return $this->paginatedCollection($query, $request);
     }
 
     /**
