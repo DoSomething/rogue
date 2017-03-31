@@ -1,7 +1,6 @@
 <?php
 
 use Rogue\Models\Post;
-use Rogue\Models\Photo;
 use Rogue\Models\Signup;
 use Illuminate\Database\Seeder;
 
