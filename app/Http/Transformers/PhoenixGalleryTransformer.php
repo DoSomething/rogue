@@ -20,7 +20,8 @@ class PhoenixGalleryTransformer extends TransformerAbstract
             'id' => $post->postable_id,
             'status' => $post->status,
             'caption' => $post->caption,
-            'uri' => $post->file_url,
+            // Add link to review reportback item in Rogue here once that page exists
+            // 'uri' => 'link_goes_here'
             'media' => [
                 'uri' => $post->file_url,
                 'type' => 'image',
