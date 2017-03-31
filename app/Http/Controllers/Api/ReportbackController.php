@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Rogue\Models\Reportback;
 use Rogue\Services\ReportbackService;
 use Rogue\Http\Requests\ReportbackRequest;
-use Rogue\Http\Transformers\PhoenixGalleryTransformer;
+use Rogue\Http\Transformers\ReportbackTransformer;
 
 class ReportbackController extends ApiController
 {
@@ -23,7 +23,7 @@ class ReportbackController extends ApiController
     public function __construct(ReportbackService $reportbackService)
     {
         $this->reportbackService = $reportbackService;
-        $this->transformer = new PhoenixGalleryTransformer;
+        $this->transformer = new ReportbackTransformer;
     }
 
     /**
