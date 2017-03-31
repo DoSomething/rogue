@@ -22,6 +22,8 @@ use Rogue\Models\Reportback;
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
     return [
+        'url' => 'https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg',
+        'caption' => $this->faker->sentence(),
         'status' => 'pending',
         'source' => 'phoenix-web',
         'remote_addr' => '10.0.2.2',
