@@ -10,7 +10,7 @@ class ReportbackTransformer extends TransformerAbstract
     /**
      * Transform resource data.
      *
-     * @param \Rogue\Models\Photo $photo
+     * @param \Rogue\Models\Post $post
      * @return array
      */
     public function transform(Post $post)
