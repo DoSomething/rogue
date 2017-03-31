@@ -22,9 +22,8 @@ class ReactionRequest extends Request
     public function rules()
     {
         return [
-            'reactionable_id' => 'required|int',
-            'reactionable_type' => 'required|in:photo',
             'northstar_id' => 'required',
+            'post_id' => 'required',
         ];
     }
 }

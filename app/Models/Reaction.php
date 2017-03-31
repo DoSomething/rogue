@@ -21,7 +21,7 @@ class Reaction extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'reactionable_id', 'reactionable_type'];
+    protected $fillable = ['id', 'northstar_id', 'post_id'];
 
     /**
      * Each reaction has events.
@@ -32,10 +32,10 @@ class Reaction extends Model
     }
 
     /**
-     * Get all of the owning reactionable models.
+     * Each reaction belongs to a post.
      */
-    public function reactionable()
+    public function post()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Post::class);
     }
 }

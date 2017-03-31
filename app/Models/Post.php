@@ -36,4 +36,12 @@ class Post extends Model
     {
         return $this->hasOne(Review::class);
     }
+
+    /**
+     * Get the reactions associated with this post.
+     */
+    public function reactions()
+    {
+        return $this->hasMany(Reaction::class);
+    }
 }

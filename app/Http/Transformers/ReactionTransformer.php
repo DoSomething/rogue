@@ -16,13 +16,11 @@ class ReactionTransformer extends TransformerAbstract
     public function transform(Reaction $reaction)
     {
         return [
-            'reaction_id' => (string) $reaction->id,
             'northstar_id' => $reaction->northstar_id,
-            'reactionable_id' => (string) $reaction->reactionable_id,
-            'reactionable_type' => $reaction->reactionable_type,
-            'created_at' => $reaction->created_at,
-            'updated_at' => $reaction->updated_at,
-            'deleted_at' => $reaction->deleted_at,
+            'post_id' => (string) $reaction->post_id,
+            'created_at' => $reaction->created_at->toIso8601String(),
+            'updated_at' => $reaction->updated_at->toIso8601String(),
+            'deleted_at' => is_null($reaction->deleted_at) ? null : $reaction->deleted_at->toIso8601String(),
         ];
     }
 }
