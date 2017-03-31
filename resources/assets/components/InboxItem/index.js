@@ -8,14 +8,14 @@ class InboxItem extends React.Component {
   constructor () {
     super();
     this.state = {
-      showTags: false,
+      status: 'pending',
     };
     this.onAcceptClick = this.onAcceptClick.bind(this);
   }
 
   onAcceptClick() {
     this.setState({
-      showTags: true,
+      status: 'accepted',
     });
   }
 
@@ -48,7 +48,7 @@ class InboxItem extends React.Component {
           <ul className="form-actions -inline">
             <li> <input className="button" value="Accepted" onClick={this.onAcceptClick}/></li>
             <li> <input className="button -secondary" value="Rejected"/></li>
-            {this.state.showTags? <Tags /> : null}
+            {this.state.status === 'accepted' ? <Tags /> : null}
             <br/>
             <li> <input className="button -tertiary" value="Delete"/></li>
           </ul>
