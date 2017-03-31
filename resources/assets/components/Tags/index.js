@@ -16,7 +16,7 @@ class Tags extends React.Component {
         <br/>
         <h4>Tags</h4>
         <ul className="form-actions -inline">
-          <li>{map(tags, (label, value) => <input className="tag" value={label}/>)}</li>
+          <li>{map(tags, (label, value) => <input className="tag" type="button" value={label}/>)}</li>
         </ul>
       </div>
     )
