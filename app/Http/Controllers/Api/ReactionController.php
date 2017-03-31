@@ -76,6 +76,6 @@ class ReactionController extends ApiController
      */
     private function getTotalReactions($postId)
     {
-        return count(Post::find($postId)->reactions());
+        return count(Post::find($postId)->reactions);
     }
 }
