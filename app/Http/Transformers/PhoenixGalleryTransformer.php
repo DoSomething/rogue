@@ -24,7 +24,7 @@ class PhoenixGalleryTransformer extends TransformerAbstract
             'media' => [
                 'uri' => $post->content->file_url,
                 'type' => 'image',
-    		],
+            ],
             'created_at' => $post->created_at->toIso8601String(),
             'reportback' => [
                 'id' => $signup->id,
@@ -33,8 +33,8 @@ class PhoenixGalleryTransformer extends TransformerAbstract
                 'quantity' => $signup->quantity,
                 'why_participated' => $signup->why_participated,
                 'flagged' => 'false',
-        	],
-    	];
+            ],
+        ];
 
         return $result;
     }
