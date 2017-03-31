@@ -3,17 +3,23 @@ import { map } from 'lodash';
 
 class Tags extends React.Component {
   render() {
+    const tags = {
+      'good_photo': 'Good Photo',
+      'good_quote': 'Good Quote',
+      'hidden': 'Hide in Gallery',
+      'sponsor': 'Good for Sponsor',
+    };
 
     return (
+      <div>
+        <div className="container__block -half">
+          <h4>Tags</h4>
+        </div>
+        <br/>
         <ul className="form-actions -inline">
-          <li><b> Tags </b></li>
-          <br/>
-          <li> <input className="button -secondary" value="Good Photo"/></li>
-          <li> <input className="button -secondary" value="Good Quote"/></li>
-          <br/>
-          <li> <input className="button -secondary" value="Hide in Gallery"/></li>
-          <li> <input className="button -secondary" value="Good for Sponsor"/></li>
+          {map(tags, (label, value) => <input className="button -secondary" value={label}/>)}
         </ul>
+      </div>
     )
   }
 }
