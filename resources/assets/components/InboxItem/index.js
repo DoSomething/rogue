@@ -10,10 +10,10 @@ class InboxItem extends React.Component {
     this.state = {
       showTags: false,
     };
-    this._onAcceptClick = this._onAcceptClick.bind(this);
+    this.onAcceptClick = this.onAcceptClick.bind(this);
   }
 
-  _onAcceptClick() {
+  onAcceptClick() {
     this.setState({
       showTags: true,
     });
@@ -46,7 +46,7 @@ class InboxItem extends React.Component {
           <h4>Why Statement</h4>
           <p>{post['signup']['why_participated']}</p>
           <ul className="form-actions -inline">
-            <li> <input className="button" value="Accepted" onClick={this._onAcceptClick}/></li>
+            <li> <input className="button" value="Accepted" onClick={this.onAcceptClick}/></li>
             <li> <input className="button -secondary" value="Rejected"/></li>
             {this.state.showTags? <Tags /> : null}
             <br/>
