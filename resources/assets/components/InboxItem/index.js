@@ -2,7 +2,23 @@ import React from 'react';
 import { map } from 'lodash';
 import { calculateAge } from '../../helpers';
 
+import Tags from '../Tags';
+
 class InboxItem extends React.Component {
+  constructor () {
+    super();
+    this.state = {
+      status: 'pending',
+    };
+    this.onAcceptClick = this.onAcceptClick.bind(this);
+  }
+
+  onAcceptClick() {
+    this.setState({
+      status: 'accepted',
+    });
+  }
+
   displayImage(photo_url) {
     if (photo_url == "default") {
       return "https://pics.onsizzle.com/bork-2411135.png";
@@ -29,12 +45,12 @@ class InboxItem extends React.Component {
           <p>{post['postable']['caption']}</p>
           <h4>Why Statement</h4>
           <p>{post['signup']['why_participated']}</p>
-          <ul className="form-actions -inline">
-            <li> <input className="button" value="Accepted"/></li>
-            <li> <input className="button -secondary" value="Rejected"/></li>
-            <br/>
-            <li> <input className="button -tertiary" value="Delete"/></li>
+          <ul>
+            <li><button className="button" onClick={this.onAcceptClick}>Accepted</button></li>
+            <li><button className="button -secondary">Rejected</button></li>
+            <li><button className="button -tertiary">Delete</button></li>
           </ul>
+          {this.state.status === 'accepted' ? <Tags /> : null}
           <h4>Meta</h4>
           <p>
             Post ID: {post['postable_id']} <br/>
