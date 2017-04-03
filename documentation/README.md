@@ -8,7 +8,7 @@ All `POST` and `PUT` endpoints require an api key (`X-DS-Rogue-API-Key`) in the 
 #### Reportbacks
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
-`POST /api/v1/reportbacks`                     | [Create a reportback](endpoints/reportbacks.md#reportbacks)
+`GET /api/v1/reportbacks`                      | [Get reportbacks](endpoints/reportbacks.md#reportbacks)
 
 #### Reportback Items
 Endpoint                                       | Functionality                                           
