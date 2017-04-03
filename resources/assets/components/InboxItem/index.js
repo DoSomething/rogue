@@ -45,10 +45,10 @@ class InboxItem extends React.Component {
           <p>{post['postable']['caption']}</p>
           <h4>Why Statement</h4>
           <p>{post['signup']['why_participated']}</p>
-          <ul className="form-actions -inline">
-            <li> <input className="button" value="Accepted" onClick={this.onAcceptClick}/></li>
-            <li> <input className="button -secondary" value="Rejected"/></li>
-            <li> <input className="button -tertiary" id="left-aligned" value="Delete"/></li>
+          <ul>
+            <li><button className="button" onClick={this.onAcceptClick}>Accepted</button></li>
+            <li><button className="button -secondary">Rejected</button></li>
+            <li><button className="button -tertiary">Delete</button></li>
           </ul>
           {this.state.status === 'accepted' ? <Tags /> : null}
           <h4>Meta</h4>

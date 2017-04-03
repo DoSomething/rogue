@@ -15,17 +15,12 @@ $forge-path: "~@dosomething/forge/assets/";
   border: 0;
   margin: 10px 10px 0 0;
 
-  &:hover {
+  &:active, &.is-active {
     background: $blue;
-    color: white;
-  }
-
-  &:active {
-    background: $blue;
-    color: white;
+    color: $white;
   }
 }
 
-#left-aligned{
-  text-align: left;
+.aligned-actions li {
+  float: left;
 }
