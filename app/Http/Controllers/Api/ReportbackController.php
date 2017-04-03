@@ -43,10 +43,12 @@ class ReportbackController extends ApiController
             ->where('status', '=', 'approved');
 
         // Only return Posts for the given campaign_id (if there is one)
-        if (array_key_exists('campaign_id', $request->filter)) {
-            $campaign_id = $request->filter['campaign_id'];
+        if (isset($request->filter)) {
+            if (array_key_exists('campaign_id', $request->filter)) {
+                $campaign_id = $request->filter['campaign_id'];
 
-            $query = $query->where('campaign_id', '=', $campaign_id);
+                $query = $query->where('campaign_id', '=', $campaign_id);
+            }
         }
 
         return $this->paginatedCollection($query, $request);
