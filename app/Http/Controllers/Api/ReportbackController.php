@@ -39,8 +39,10 @@ class ReportbackController extends ApiController
 
         // 1. Join with signups so we can access the signup data and filter by campaign
         // 2. Only return approved Posts
+        // 3. Select all the fields that we will be using
         $query = $query->join('signups', 'signups.id', '=', 'posts.signup_id')
-            ->where('status', '=', 'approved');
+            ->where('status', '=', 'approved')
+            ->select('posts.id as id', 'signups.campaign_id as campaign_id', 'posts.status as status', 'posts.caption as caption', 'posts.url as url', 'posts.created_at as created_at', 'posts.signup_id as signup_id');
 
         // Only return Posts for the given campaign_id (if there is one)
         if (isset($request->filter)) {
