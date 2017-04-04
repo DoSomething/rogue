@@ -17,13 +17,13 @@ class ReportbackTransformer extends TransformerAbstract
     {
         $signup = $post->signup;
         $result = [
-            'id' => $post->postable_id,
+            'id' => $post->id,
             'status' => $post->status,
             'caption' => $post->caption,
             // Add link to review reportback item in Rogue here once that page exists
             // 'uri' => 'link_goes_here'
             'media' => [
-                'uri' => $post->file_url,
+                'uri' => $post->url,
                 'type' => 'image',
             ],
             'created_at' => $post->created_at->toIso8601String(),
