@@ -35,6 +35,10 @@ class ReportbackTransformer extends TransformerAbstract
                 'why_participated' => $signup->why_participated,
                 'flagged' => 'false',
             ],
+            'kudos' => [
+                // @TODO: Include reaction information here!
+                'data' => [],
+            ],
         ];
 
         return $result;
