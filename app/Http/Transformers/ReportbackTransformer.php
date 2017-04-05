@@ -38,7 +38,7 @@ class ReportbackTransformer extends TransformerAbstract
             'kudos' => [
                 // @TODO: Include reaction information here!
                 'data' => [],
-            ]
+            ],
         ];
 
         return $result;
