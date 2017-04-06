@@ -37,8 +37,7 @@ class ReportbackTransformer extends TransformerAbstract
                 'flagged' => 'false',
             ],
             'kudos' => [
-                // @TODO: Include reaction information here!
-                'total' => 5,
+                'total' => count($post->reactions),
             ],
         ];
 
