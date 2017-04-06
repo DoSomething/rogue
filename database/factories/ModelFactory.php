@@ -3,7 +3,6 @@
 use Faker\Generator;
 use Rogue\Models\Post;
 use Rogue\Models\User;
-use Rogue\Models\Photo;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
 use Rogue\Models\Reportback;
@@ -19,18 +18,11 @@ use Rogue\Models\Reportback;
 |
 */
 
-// Photo Factory
-$factory->define(Photo::class, function (Generator $faker) {
-    return [
-        'file_url' => 'https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg',
-        'edited_file_url' => null,
-        'caption' => $this->faker->sentence(),
-    ];
-});
-
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
     return [
+        'url' => 'https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg',
+        'caption' => $this->faker->sentence(),
         'status' => 'pending',
         'source' => 'phoenix-web',
         'remote_addr' => '10.0.2.2',
