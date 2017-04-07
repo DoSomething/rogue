@@ -1,8 +1,10 @@
 import React from 'react';
-import { map } from 'lodash';
 import { calculateAge } from '../../helpers';
+import { remove } from 'lodash';
+import { map } from 'lodash';
 
 import Tags from '../Tags';
+import InboxTile from './InboxTile';
 
 class InboxItem extends React.Component {
   constructor () {
@@ -28,6 +30,21 @@ class InboxItem extends React.Component {
     }
   }
 
+  getOtherPosts(post) {
+    const post_id = post['id'];
+    console.log(post_id);
+    // get array of posts
+    var other_posts = post['signup']['posts'];
+
+    // find index that has that post_id
+    const big_post = _.remove(other_posts, function(current_post) {
+      return current_post['id'] == post_id;
+    });
+
+    // return the rest of the original array
+    return other_posts;
+  }
+
   render() {
     const post = this.props.details;
 
@@ -35,6 +52,9 @@ class InboxItem extends React.Component {
       <div className="container__row">
         <div className="container__block -half">
           <img src={this.displayImage(post['url'])}/>
+          <ul className="gallery -quartet">
+          { map(this.getOtherPosts(post), (post, key) => <InboxTile key={key} details={post} />) }
+          </ul>
         </div>
         <div className="container__block -half">
           <h2>{post['user']['first_name']} {post['user']['last_name']}, {calculateAge(post['user']['birthdate'])}</h2>
