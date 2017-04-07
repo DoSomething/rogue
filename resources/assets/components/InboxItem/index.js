@@ -34,7 +34,7 @@ class InboxItem extends React.Component {
     return (
       <div className="container__row">
         <div className="container__block -half">
-          <img src={this.displayImage(post['postable']['file_url'])}/>
+          <img src={this.displayImage(post['url'])}/>
         </div>
         <div className="container__block -half">
           <h2>{post['user']['first_name']} {post['user']['last_name']}, {calculateAge(post['user']['birthdate'])}</h2>
@@ -42,7 +42,7 @@ class InboxItem extends React.Component {
           <p><em>{post['user']['mobile']}</em></p>
           <p><strong>Quantity: </strong> {post['signup']['quantity']}</p>
           <h4>Photo Caption</h4>
-          <p>{post['postable']['caption']}</p>
+          <p>{post['caption']}</p>
           <h4>Why Statement</h4>
           <p>{post['signup']['why_participated']}</p>
           <ul>
