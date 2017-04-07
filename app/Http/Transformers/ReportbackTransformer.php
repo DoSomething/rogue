@@ -39,6 +39,7 @@ class ReportbackTransformer extends TransformerAbstract
             'kudos' => [
                 'total' => count($post->reactions),
             ],
+            'user' => $signup->northstar_id,
         ];
 
         return $result;
