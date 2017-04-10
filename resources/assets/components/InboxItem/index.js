@@ -1,7 +1,6 @@
 import React from 'react';
 import { calculateAge } from '../../helpers';
-import { remove } from 'lodash';
-import { map } from 'lodash';
+import { remove, map, clone } from 'lodash';
 
 import Tags from '../Tags';
 import InboxTile from './InboxTile';
@@ -32,12 +31,12 @@ class InboxItem extends React.Component {
 
   getOtherPosts(post) {
     const post_id = post['id'];
-    console.log(post_id);
-    // get array of posts
-    var other_posts = post['signup']['posts'];
 
-    // find index that has that post_id
-    const big_post = _.remove(other_posts, function(current_post) {
+    // get array of posts
+    const other_posts = clone(post['signup']['posts']);
+
+    // find index that has that post_id and remove
+    const big_post = remove(other_posts, function(current_post) {
       return current_post['id'] == post_id;
     });
 
