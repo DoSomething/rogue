@@ -1,13 +1,9 @@
 <?php
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class PostApiTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /*
      * Base URL for the Api.
      */
@@ -57,9 +53,6 @@ class PostApiTest extends TestCase
         $response = $this->decodeResponseJson();
 
         // Make sure the file_url is saved to the database.
-        $this->seeInDatabase('photos', ['file_url' => $response['data']['content']['media']['url']]);
-
-        // // Make sure the edited_file_url is saved to the database.
-        $this->seeInDatabase('photos', ['edited_file_url' => $response['data']['content']['media']['edited_url']]);
+        $this->seeInDatabase('posts', ['url' => $response['data']['media']['url']]);
     }
 }
