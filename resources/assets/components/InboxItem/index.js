@@ -52,7 +52,16 @@ class InboxItem extends React.Component {
             <li><em>{post['user']['email']}</em></li>
             <li><em>{post['user']['mobile']}</em></li>
           </ul>
-          <p><strong>Quantity: </strong> {post['signup']['quantity']}</p>
+          <br/>
+          <article className="figure -left -center">
+            <div className="figure__media">
+              <div className="quantity">{post['signup']['quantity']}</div>
+            </div>
+            <div className="figure__body">
+              Nouns verbed
+            </div>
+          </article>
+          <br/>
           <h4>Photo Caption</h4>
           <p>{post['caption']}</p>
           <h4>Why Statement</h4>
