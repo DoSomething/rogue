@@ -54,3 +54,11 @@ $forge-path: "~@dosomething/forge/assets/";
     @include span(4 of 12);
   }
 }
+
+.quantity {
+  outline-color: #4e2b63;
+  padding: 2px;
+  outline-style: solid;
+  color: #4e2b63;
+  font-weight: bold;
+}
