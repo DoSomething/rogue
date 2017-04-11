@@ -18,3 +18,14 @@ export function calculateAge(date) {
 
 	return age;
 };
+
+export function getImageUrlFromProp(photoProp) {
+	const photo_url = photoProp['url'];
+
+	if (photo_url == "default") {
+	  return "https://pics.onsizzle.com/bork-2411135.png";
+	}
+	else {
+	  return photo_url;
+	}
+};

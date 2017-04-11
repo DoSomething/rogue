@@ -1,8 +1,9 @@
 import React from 'react';
-import { map } from 'lodash';
-import { calculateAge } from '../../helpers';
+import { calculateAge, getImageUrlFromProp } from '../../helpers';
+import { remove, map, clone } from 'lodash';
 
 import Tags from '../Tags';
+import InboxTile from './InboxTile';
 
 class InboxItem extends React.Component {
   constructor () {
@@ -19,13 +20,19 @@ class InboxItem extends React.Component {
     });
   }
 
-  displayImage(photo_url) {
-    if (photo_url == "default") {
-      return "https://pics.onsizzle.com/bork-2411135.png";
-    }
-    else {
-      return photo_url;
-    }
+  getOtherPosts(post) {
+    const post_id = post['id'];
+
+    // get array of posts
+    const other_posts = clone(post['signup']['posts']);
+
+    // find index that has that post_id and remove
+    const big_post = remove(other_posts, function(current_post) {
+      return current_post['id'] == post_id;
+    });
+
+    // return the rest of the original array
+    return other_posts;
   }
 
   render() {
@@ -34,7 +41,10 @@ class InboxItem extends React.Component {
     return (
       <div className="container__row">
         <div className="container__block -half">
-          <img src={this.displayImage(post['url'])}/>
+          <img src={getImageUrlFromProp(post)}/>
+          <ul className="gallery -quartet">
+          { map(this.getOtherPosts(post), (post, key) => <InboxTile key={key} details={post} />) }
+          </ul>
         </div>
         <div className="container__block -half">
           <h2>{post['user']['first_name']} {post['user']['last_name']}, {calculateAge(post['user']['birthdate'])}</h2>
