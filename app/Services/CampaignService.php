@@ -126,9 +126,28 @@ class CampaignService
                 return 'Staff Pick';
             }
 
-            $cause = $campaign['causes']['primary']['name'];
+            if (! $campaign['causes']['primary']['name']) {
+                return 'No Cause';
+            }
+
+            $cause = ucfirst($campaign['causes']['primary']['name']);
 
             return $cause;
+        });
+
+        $sorted = $grouped->sortBy(function ($campaigns, $key) {
+            // Hacky solution to move the Staff Pick group to the top of the list,
+            // the No Cause group to the end of the list,
+            // and alphabetize everything inbetween.
+            if ($key === 'Staff Pick') {
+                return 'A';
+            }
+
+            if ($key === 'No Cause') {
+                return 'Z';
+            }
+
+            return $key;
         });
 
         return $grouped->toArray();
