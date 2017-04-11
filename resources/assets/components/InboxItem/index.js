@@ -1,5 +1,5 @@
 import React from 'react';
-import { calculateAge } from '../../helpers';
+import { calculateAge, getImageUrlFromProp } from '../../helpers';
 import { remove, map, clone } from 'lodash';
 
 import Tags from '../Tags';
@@ -18,15 +18,6 @@ class InboxItem extends React.Component {
     this.setState({
       status: 'accepted',
     });
-  }
-
-  displayImage(photo_url) {
-    if (photo_url == "default") {
-      return "https://pics.onsizzle.com/bork-2411135.png";
-    }
-    else {
-      return photo_url;
-    }
   }
 
   getOtherPosts(post) {
@@ -50,7 +41,7 @@ class InboxItem extends React.Component {
     return (
       <div className="container__row">
         <div className="container__block -half">
-          <img src={this.displayImage(post['url'])}/>
+          <img src={getImageUrlFromProp(post)}/>
           <ul className="gallery -quartet">
           { map(this.getOtherPosts(post), (post, key) => <InboxTile key={key} details={post} />) }
           </ul>
