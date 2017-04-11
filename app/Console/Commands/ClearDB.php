@@ -47,15 +47,14 @@ class ClearDB extends Command
             $tables[] = array_values((array) $v)[0];
         }
 
-        if (! empty($tables))
-        {
+        if (! empty($tables)) {
             foreach ($tables as $table) {
                 Schema::drop($table);
 
                 $this->info('Table ' . $table . ' has been dropped.' . PHP_EOL);
             }
         } else {
-             $this->info('There are no tables to drop.');
+            $this->info('There are no tables to drop.');
         }
 
         if ($this->option('migrate')) {
