@@ -48,8 +48,10 @@ class InboxItem extends React.Component {
         </div>
         <div className="container__block -half">
           <h2>{post['user']['first_name']} {post['user']['last_name']}, {calculateAge(post['user']['birthdate'])}</h2>
-          <p><em>{post['user']['email']}</em></p>
-          <p><em>{post['user']['mobile']}</em></p>
+          <ul>
+            <li><em>{post['user']['email']}</em></li>
+            <li><em>{post['user']['mobile']}</em></li>
+          </ul>
           <p><strong>Quantity: </strong> {post['signup']['quantity']}</p>
           <h4>Photo Caption</h4>
           <p>{post['caption']}</p>
