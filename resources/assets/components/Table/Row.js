@@ -8,7 +8,6 @@ class Row extends React.Component {
         <td className="table__cell">{this.props.approved}</td>
         <td className="table__cell">{this.props.pending}</td>
         <td className="table__cell">{this.props.rejected}</td>
-        <td className="table__cell">{this.props.deleted}</td>
       </tr>
     )
   }
