@@ -40,13 +40,13 @@ class InboxItem extends React.Component {
 
     return (
       <div className="container__row">
-        <div className="container__block -half">
+        <div className="container__block -third">
           <img src={getImageUrlFromProp(post)}/>
           <ul className="gallery -quartet">
           { map(this.getOtherPosts(post), (post, key) => <InboxTile key={key} details={post} />) }
           </ul>
         </div>
-        <div className="container__block -half">
+        <div className="container__block -third">
           <h2>{post['user']['first_name']} {post['user']['last_name']}, {calculateAge(post['user']['birthdate'])}</h2>
           <ul>
             <li><em>{post['user']['email']}</em></li>
@@ -57,9 +57,13 @@ class InboxItem extends React.Component {
           <p>{post['caption']}</p>
           <h4>Why Statement</h4>
           <p>{post['signup']['why_participated']}</p>
-          <ul>
-            <li><button className="button -green" onClick={this.onAcceptClick}>Accepted</button></li>
-            <li><button className="button -red">Rejected</button></li>
+        </div>
+        <div className="container__block -third">
+          <ul className="form-actions -inline">
+            <li><button className="button -accepted" onClick={this.onAcceptClick}>Accepted</button></li>
+            <li><button className="button -rejected">Rejected</button></li>
+          </ul>
+          <ul className="form-actions -inline">
             <li><button className="button -tertiary">Delete</button></li>
           </ul>
           {this.state.status === 'accepted' ? <Tags /> : null}
