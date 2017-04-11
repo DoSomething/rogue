@@ -56,14 +56,14 @@ class InboxItem extends React.Component {
           <h4>Why Statement</h4>
           <p>{post['signup']['why_participated']}</p>
           <ul>
-            <li><button className="button" onClick={this.onAcceptClick}>Accepted</button></li>
-            <li><button className="button -secondary">Rejected</button></li>
+            <li><button className="button -green" onClick={this.onAcceptClick}>Accepted</button></li>
+            <li><button className="button -red">Rejected</button></li>
             <li><button className="button -tertiary">Delete</button></li>
           </ul>
           {this.state.status === 'accepted' ? <Tags /> : null}
           <h4>Meta</h4>
           <p>
-            Post ID: {post['postable_id']} <br/>
+            Post ID: {post['id']} <br/>
             Source: {post['source']} <br/>
             Submitted: {post['created_at']} <br/>
           </p>
