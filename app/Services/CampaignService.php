@@ -150,6 +150,6 @@ class CampaignService
             return $key;
         });
 
-        return $grouped->toArray();
+        return $sorted->toArray();
     }
 }
