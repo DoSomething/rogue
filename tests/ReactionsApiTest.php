@@ -1,6 +1,6 @@
 <?php
 
-use Rogue\Models\Photo;
+use Rogue\Models\Post;
 use Faker\Generator;
 
 class ReactionsApiTest extends TestCase
@@ -11,25 +11,24 @@ class ReactionsApiTest extends TestCase
     protected $reactionsApiUrl = 'api/v2/reactions';
 
     /**
-     * Test that the POST /reactions request creates a reaction for a reactionable.
-     * Also test that when POST /reactions is hit again by the same user for the same reactionable,
-     * the reaction is soft deleted.
+     * Test that the POST /reactions request creates a reaction for a post.
+     * Also test that when POST /reactions is hit again by the same user
+     * for the same post, the reaction is soft deleted.
      *
      * POST /reactions
      * @return void
      */
     public function testPostingAndSoftDeleteForReaction()
     {
-        // Create a photo to react to.
-        $photo = factory(Photo::class)->create();
+        // Create a post to react to.
+        $post = factory(Post::class)->create();
 
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
         $this->json('POST', $this->reactionsApiUrl, [
             'northstar_id' => $northstarId,
-            'reactionable_id' => $photo->id,
-            'reactionable_type' => 'photo',
+            'post_id' => $post->id,
         ]);
 
         $this->assertResponseStatus(200);
@@ -44,8 +43,7 @@ class ReactionsApiTest extends TestCase
         // React (unlike) again to the same photo with the same user.
          $this->json('POST', $this->reactionsApiUrl, [
             'northstar_id' => $northstarId,
-            'reactionable_id' => $photo->id,
-            'reactionable_type' => 'photo',
+            'post_id' => $post->id,
         ]);
 
         // This should now be a 201 code because it was updated.
@@ -61,7 +59,7 @@ class ReactionsApiTest extends TestCase
     }
 
     /**
-     * Test that the aggregate of total reactions for a photo is correct.
+     * Test that the aggregate of total reactions for a post is correct.
      *
      * POST /reactions
      * @return void
@@ -69,13 +67,12 @@ class ReactionsApiTest extends TestCase
     public function testAggregateReactions()
     {
         // Create a photo to react to.
-        $photo = factory(Photo::class)->create();
+        $post = factory(Post::class)->create();
 
-        // A user reacts to this photo.
-         $this->json('POST', $this->reactionsApiUrl, [
+        // Create a reaction.
+        $this->json('POST', $this->reactionsApiUrl, [
             'northstar_id' => $this->faker->uuid,
-            'reactionable_id' => $photo->id,
-            'reactionable_type' => 'photo',
+            'post_id' => $post->id,
         ]);
 
         $this->assertResponseStatus(200);
@@ -90,8 +87,7 @@ class ReactionsApiTest extends TestCase
         // A second user reacts to the same photo.
         $this->json('POST', $this->reactionsApiUrl, [
             'northstar_id' => $this->faker->uuid,
-            'reactionable_id' => $photo->id,
-            'reactionable_type' => 'photo',
+            'post_id' => $post->id,
         ]);
 
         $this->assertResponseStatus(200);
