@@ -11,28 +11,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['event_id', 'signup_id', 'northstar_id'];
-
-    protected $primaryKey = ['event_id'];
-
-    // protected $with = ['content'];
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * Returns Post data
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function content()
-    {
-        return $this->morphTo('postable');
-    }
+    protected $fillable = ['id', 'signup_id', 'northstar_id', 'url', 'caption', 'status', 'source', 'remote_addr'];
 
     /**
      * Each post has events.
