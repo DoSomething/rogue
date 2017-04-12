@@ -11,7 +11,7 @@ class Table extends React.Component {
     });
 
     const rows = this.props.data.map((content, index) => {
-      return <Row key={index} campaign={content} approved pending rejected deleted />;
+      return <Row key={index} campaign={content} approved pending rejected />;
     });
 
     return (
