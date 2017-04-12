@@ -40,30 +40,45 @@ class InboxItem extends React.Component {
 
     return (
       <div className="container__row">
-        <div className="container__block -half">
+        <div className="container__block -third">
           <img src={getImageUrlFromProp(post)}/>
           <ul className="gallery -quartet">
           { map(this.getOtherPosts(post), (post, key) => <InboxTile key={key} details={post} />) }
           </ul>
         </div>
-        <div className="container__block -half">
+        <div className="container__block -third">
           <h2>{post['user']['first_name']} {post['user']['last_name']}, {calculateAge(post['user']['birthdate'])}</h2>
-          <p><em>{post['user']['email']}</em></p>
-          <p><em>{post['user']['mobile']}</em></p>
-          <p><strong>Quantity: </strong> {post['signup']['quantity']}</p>
+          <ul>
+            <li><em>{post['user']['email']}</em></li>
+            <li><em>{post['user']['mobile']}</em></li>
+          </ul>
+          <br/>
+          <article className="figure -left -center">
+            <div className="figure__media">
+              <div className="quantity">{post['signup']['quantity']}</div>
+            </div>
+            <div className="figure__body">
+              Nouns verbed
+            </div>
+          </article>
+          <br/>
           <h4>Photo Caption</h4>
           <p>{post['caption']}</p>
           <h4>Why Statement</h4>
           <p>{post['signup']['why_participated']}</p>
-          <ul>
-            <li><button className="button" onClick={this.onAcceptClick}>Accepted</button></li>
-            <li><button className="button -secondary">Rejected</button></li>
+        </div>
+        <div className="container__block -third">
+          <ul className="form-actions -inline">
+            <li><button className="button -accepted" onClick={this.onAcceptClick}>Accepted</button></li>
+            <li><button className="button -rejected">Rejected</button></li>
+          </ul>
+          <ul className="form-actions -inline">
             <li><button className="button -tertiary">Delete</button></li>
           </ul>
           {this.state.status === 'accepted' ? <Tags /> : null}
           <h4>Meta</h4>
           <p>
-            Post ID: {post['postable_id']} <br/>
+            Post ID: {post['id']} <br/>
             Source: {post['source']} <br/>
             Submitted: {post['created_at']} <br/>
           </p>
