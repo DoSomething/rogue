@@ -110,7 +110,7 @@ class CampaignService
             $batch = array_slice($ids, $index, $size);
 
             $parameters['count'] = '5000';
-            $parameters['campaigns'] = implode(',', $batch);
+            $parameters['ids'] = implode(',', $batch);
 
             $campaigns = $this->phoenix->getAllCampaigns($parameters);
 
