@@ -4,7 +4,6 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
-use Illuminate\Support\Facades\DB;
 use Rogue\Services\CampaignService;
 
 class CampaignsController extends Controller

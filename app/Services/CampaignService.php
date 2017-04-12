@@ -2,7 +2,6 @@
 
 namespace Rogue\Services;
 
-use Rogue\Services\Phoenix;
 use Illuminate\Support\Facades\DB;
 use Rogue\Repositories\CacheRepository;
 
