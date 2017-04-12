@@ -17,6 +17,8 @@ class CampaignService
 
     /**
      * Create new Registrar instance.
+     *
+     * @param Rogue\Services\Phoenix $phoenix
      */
     public function __construct(Phoenix $phoenix)
     {
@@ -93,7 +95,7 @@ class CampaignService
     }
 
     /**
-     * Get large number of users in batches from Northstar.
+     * Get large number of campaigns from Phoenix.
      *
      * @param  array  $ids
      * @param  int $size

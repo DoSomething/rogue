@@ -26,7 +26,8 @@ class CampaignsController extends Controller
     /**
      * Constructor
      *
-     * @param \Rogue\Services\Phoenix $phoenix
+     * @param Rogue\Services\Registrar $registrar
+     * @param Rogue\Services\CampaignService $campaignService
      */
     public function __construct(Registrar $registrar, CampaignService $campaignService)
     {
