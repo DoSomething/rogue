@@ -2,17 +2,25 @@
 
 namespace Rogue\Services;
 
+use Rogue\Services\Phoenix;
 use Illuminate\Support\Facades\DB;
 use Rogue\Repositories\CacheRepository;
 
 class CampaignService
 {
     /**
+     * Phoenix instance
+     *
+     * @var Rogue\Services\Phoenix
+     */
+    protected $phoenix;
+
+    /**
      * Create new Registrar instance.
      */
-    public function __construct()
+    public function __construct(Phoenix $phoenix)
     {
-        $this->phoenix = new Phoenix;
+        $this->phoenix = $phoenix;
         $this->cache = new CacheRepository;
     }
 
@@ -154,6 +162,11 @@ class CampaignService
         return $sorted->toArray();
     }
 
+    /**
+     * Get a distinct set of campaign ids from the signups table.
+     *
+     * @return array $ids
+     */
     public function getCampaignIdsFromSignups()
     {
         $campaigns = DB::table('signups')->distinct()->select('campaign_id')->get();

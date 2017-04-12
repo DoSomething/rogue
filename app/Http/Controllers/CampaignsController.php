@@ -3,7 +3,6 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Signup;
-use Rogue\Services\Phoenix;
 use Rogue\Services\Registrar;
 use Illuminate\Support\Facades\DB;
 use Rogue\Services\CampaignService;
@@ -20,13 +19,6 @@ class CampaignsController extends Controller
     /**
      * Phoenix instance
      *
-     * @var Rogue\Services\Phoenix
-     */
-    protected $phoenix;
-
-    /**
-     * Phoenix instance
-     *
      * @var Rogue\Services\CampaignService
      */
     protected $campaignService;
@@ -36,12 +28,11 @@ class CampaignsController extends Controller
      *
      * @param \Rogue\Services\Phoenix $phoenix
      */
-    public function __construct(Phoenix $phoenix, Registrar $registrar, CampaignService $campaignService)
+    public function __construct(Registrar $registrar, CampaignService $campaignService)
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
 
-        $this->phoenix = $phoenix;
         $this->registrar = $registrar;
         $this->campaignService = $campaignService;
     }
