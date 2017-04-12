@@ -36,14 +36,14 @@ class CampaignsController extends Controller
      *
      * @param \Rogue\Services\Phoenix $phoenix
      */
-    public function __construct(Phoenix $phoenix)
+    public function __construct(Phoenix $phoenix, Registrar $registrar, CampaignService $campaignService)
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
 
         $this->phoenix = $phoenix;
-        $this->registrar = new Registrar();
-        $this->campaignService = new CampaignService;
+        $this->registrar = $registrar;
+        $this->campaignService = $campaignService;
     }
 
     /**
