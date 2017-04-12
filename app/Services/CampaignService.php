@@ -2,6 +2,7 @@
 
 namespace Rogue\Services;
 
+use Illuminate\Support\Facades\DB;
 use Rogue\Repositories\CacheRepository;
 
 class CampaignService
@@ -151,5 +152,14 @@ class CampaignService
         });
 
         return $sorted->toArray();
+    }
+
+    public function getCampaignIdsFromSignups()
+    {
+        $campaigns = DB::table('signups')->distinct()->select('campaign_id')->get();
+
+        $ids = collect($campaigns)->pluck('campaign_id')->toArray();
+
+        return $ids ? $ids : null;
     }
 }

@@ -51,10 +51,7 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        // Get campaigns ids for all signups in rogue.
-        $campaigns = DB::table('signups')->select('campaign_id')->groupBy('campaign_id')->get();
-        $ids = collect($campaigns)->pluck('campaign_id')->toArray();
-
+        $ids = $this->campaignService->getCampaignIdsFromSignups();
         $campaigns = $this->campaignService->findAll($ids);
         $campaigns = $this->campaignService->groupByCause($campaigns);
 
