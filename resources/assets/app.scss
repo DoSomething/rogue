@@ -56,9 +56,8 @@ $forge-path: "~@dosomething/forge/assets/";
 }
 
 .quantity {
-  outline-color: #4e2b63;
-  padding: 2px;
-  outline-style: solid;
+  border: 3px solid #4e2b63;
+  padding: 4px 12px;
   color: #4e2b63;
   font-weight: bold;
 }
