@@ -62,7 +62,7 @@ class Signup extends Model
      */
     public function rejected()
     {
-        return $this->hasMany(Post::class)->where('status', '=', 'accepted');
+        return $this->hasMany(Post::class)->where('status', '=', 'rejected');
     }
 
     /**
