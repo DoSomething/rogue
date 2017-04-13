@@ -76,24 +76,11 @@ class Signup extends Model
     }
 
     /**
-     * Scope a query to only include signups for a particular campaign
+     * Scope a query to include a count of post statuses for a signup.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWithPosts($query, $status = '')
-    {
-        if ($status === 'pending') {
-            return $query->with('pending');
-        } else if ($status === 'accepted') {
-            return $query->with('accepted');
-        } else if ($status === 'rejected') {
-            return $query->with('rejected');
-        } else {
-            return $query->with('posts');
-        }
-    }
-
-    public function scopeIncludeStatusCounts($query)
+    public function scopeIncludePostStatusCounts($query)
     {
         return $query->withCount(['accepted', 'pending', 'rejected']);
     }

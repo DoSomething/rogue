@@ -43,29 +43,19 @@ class CampaignsController extends Controller
     public function index()
     {
         $ids = $this->campaignService->getCampaignIdsFromSignups();
+
         $campaigns = $this->campaignService->findAll($ids);
-        $campaignsWithCounts = $campaigns->map(function($campaign, $key) {
+
+        $campaigns = $campaigns->map(function($campaign, $key) {
             if ($campaign) {
-
-                $campaign['accepted_count'] = 0;
-                $campaign['pending_count'] = 0;
-                $campaign['rejected_count'] = 0;
-
-                $signups = Signup::has('posts')->where('campaign_id', '=', $campaign['id'])
-                    ->withCount(['accepted', 'pending', 'rejected'])->get();
-
-                $signups->each(function($signup) use ($campaign) {
-                    $campaign['accepted_count'] += $signup['accepted_count'];
-                    $campaign['pending_count'] += $signup['pending_count'];
-                    $campaign['rejected_count'] += $signup['rejected_count'];
-                });
+                $campaign = $this->campaignService->getCampaignPostStatusCounts($campaign);
             }
 
             return $campaign;
         });
 
-        $causes = $this->campaignService->groupByCause($campaignsWithCounts);
-        dd($causes);
+        $causes = $this->campaignService->groupByCause($campaigns);
+
         return view('pages.campaign_overview')
             ->with('state', $causes);
     }

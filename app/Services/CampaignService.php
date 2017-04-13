@@ -2,6 +2,7 @@
 
 namespace Rogue\Services;
 
+use Rogue\Models\Signup;
 use Illuminate\Support\Facades\DB;
 use Rogue\Repositories\CacheRepository;
 
@@ -175,5 +176,21 @@ class CampaignService
         $ids = collect($campaigns)->pluck('campaign_id')->toArray();
 
         return $ids ? $ids : null;
+    }
+
+    /**
+     * Get an aggregate of how many pending, accepted, and reject posts there are for a campaign.
+     *
+     * @return array $campaign
+     */
+    public function getCampaignPostStatusCounts($campaign)
+    {
+        $signups = Signup::campaign($campaign['id'])->includePostStatusCounts()->get();
+
+        $campaign['accepted_count'] = $signups->sum('accepted_count');
+        $campaign['pending_count'] = $signups->sum('pending_count');
+        $campaign['rejected_count'] = $signups->sum('rejected_count');
+
+        return $campaign;
     }
 }
