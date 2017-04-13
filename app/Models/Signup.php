@@ -40,4 +40,28 @@ class Signup extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * Get the 'pending' posts associated with this signup.
+     */
+    public function pending()
+    {
+        return $this->hasMany(Post::class)->where('status', '=', 'pending');
+    }
+
+    /**
+     * Get the 'accepted' posts associated with this signup.
+     */
+    public function accepted()
+    {
+        return $this->hasMany(Post::class)->where('status', '=', 'accepted');
+    }
+
+    /**
+     * Get the 'rejected' posts associated with this signup.
+     */
+    public function rejected()
+    {
+        return $this->hasMany(Post::class)->where('status', '=', 'accepted');
+    }
 }
