@@ -64,4 +64,37 @@ class Signup extends Model
     {
         return $this->hasMany(Post::class)->where('status', '=', 'accepted');
     }
+
+    /**
+     * Scope a query to only include signups for a particular campaign
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCampaign($query, $id)
+    {
+        return $query->where('campaign_id', $id);
+    }
+
+    /**
+     * Scope a query to only include signups for a particular campaign
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithPosts($query, $status = '')
+    {
+        if ($status === 'pending') {
+            return $query->with('pending');
+        } else if ($status === 'accepted') {
+            return $query->with('accepted');
+        } else if ($status === 'rejected') {
+            return $query->with('rejected');
+        } else {
+            return $query->with('posts');
+        }
+    }
+
+    public function scopeIncludeStatusCounts($query)
+    {
+        return $query->withCount(['accepted', 'pending', 'rejected']);
+    }
 }
