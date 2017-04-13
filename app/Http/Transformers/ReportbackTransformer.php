@@ -38,9 +38,7 @@ class ReportbackTransformer extends TransformerAbstract
                 'flagged' => 'false',
             ],
             'kudos' => [
-                // 'data' => [
                     'total' => $post->reactions_count,
-                    // 'liked_by_current_user' => count($post->reactions) >= 1,
                     'data' => [
                         'current_user' => [
                             'kudos_id' => 1,
@@ -52,9 +50,6 @@ class ReportbackTransformer extends TransformerAbstract
                             'total' => $post->reactions_count,
                         ],
                     ],
-                    // $this->item($post->reactions, new ReactionTransformer),
-
-                // ]
             ],
             'user' => $signup->northstar_id,
         ];
