@@ -30,6 +30,7 @@ class CampaignInbox extends React.Component {
         </div>
       )
     } else {
+      // @todo - make this into an actual component.
       return (
         <div className="container">
           <h2 className="-padded">No Posts to review!</h2>
