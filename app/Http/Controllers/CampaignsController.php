@@ -63,12 +63,9 @@ class CampaignsController extends Controller
     /**
      * Show particular campaign inbox.
      */
-    public function show($campaign_run_id)
+    public function show($campaignId)
     {
-        // Pull in all signups for the given run that have pending posts, and include their pending posts
-        $signups = Signup::whereHas('posts', function ($query) {
-            $query->where('status', 'pending');
-        })->where('campaign_run_id', $campaign_run_id)->with('posts')->get();
+        $signups = Signup::campaign($campaignId)->has('pending')->with('pending')->get();
 
         // For each post, get and include the user
         $signups->each(function ($item) {
