@@ -1,0 +1,30 @@
+/**
+ * Table
+ */
+@import '~@dosomething/forge/scss/toolkit';
+
+.button {
+  &.-accepted {
+    background: #80E85D;
+
+    &:hover {
+      background: lighten(#80E85D, $color-tint);
+    }
+
+    &:active {
+      background: darken(#80E85D, $color-tint);
+    }
+  }
+
+  &.-rejected {
+    background: $error-color;
+
+    &:hover {
+      background: lighten($error-color, $color-tint);
+    }
+
+    &:active {
+      background: darken($error-color, $color-tint);
+    }
+  }
+}
