@@ -51,6 +51,10 @@ class ReportbackController extends ApiController
 
                 $query = $query->where('campaign_id', '=', $campaign_id);
             }
+            // Exclude Posts if exclude param is present
+            if (array_key_exists('exclude', $request->filter)) {
+                $query =  $query->whereNotIn('posts.id', explode(',', $request->filter['exclude']));
+            }
         }
 
         // Eagerly load the count of all reactions on a post.
