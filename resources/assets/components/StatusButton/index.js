@@ -7,10 +7,10 @@ class StatusButton extends React.Component {
   getClass() {
     return `button -${this.props.type}`;
   }
-
+  // Ideal setStatus would be defined on this component and would set some sort of global state via redux
   render() {
     return (
-      <button className={this.getClass()} onClick="">{this.props.type}</button>
+      <button className={this.getClass()} onClick={() => this.props.setStatus(this.props.type)}>{this.props.type}</button>
     )
   }
 }
