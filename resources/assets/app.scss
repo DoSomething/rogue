@@ -25,30 +25,6 @@ $forge-path: "~@dosomething/forge/assets/";
   float: left;
 }
 
-.button.-accepted {
-  background: #80E85D;
-
-  &:hover {
-    background: lighten(#80E85D, $color-tint);
-  }
-
-  &:active {
-    background: darken(#80E85D, $color-tint);
-  }
-}
-
-.button.-rejected {
-  background: $error-color;
-
-  &:hover {
-    background: lighten($error-color, $color-tint);
-  }
-
-  &:active {
-    background: darken($error-color, $color-tint);
-  }
-}
-
 .container__block.-third {
   @include media($tablet) {
     @include span(4 of 12);

@@ -4,6 +4,7 @@ import { remove, map, clone } from 'lodash';
 
 import Tags from '../Tags';
 import InboxTile from './InboxTile';
+import StatusButton from '../StatusButton';
 
 class InboxItem extends React.Component {
   constructor () {
@@ -69,8 +70,8 @@ class InboxItem extends React.Component {
         </div>
         <div className="container__block -third">
           <ul className="form-actions -inline">
-            <li><button className="button -accepted" onClick={this.onAcceptClick}>Accepted</button></li>
-            <li><button className="button -rejected">Rejected</button></li>
+            <li><StatusButton type="accepted"/></li>
+            <li><StatusButton type="rejected"/></li>
           </ul>
           <ul className="form-actions -inline">
             <li><button className="button -tertiary">Delete</button></li>
