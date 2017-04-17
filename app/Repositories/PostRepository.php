@@ -6,6 +6,7 @@ use Rogue\Models\Post;
 use Rogue\Services\AWS;
 // use Rogue\Models\Review;
 use Rogue\Services\Registrar;
+use Intervention\Image\Facades\Image;
 
 class PostRepository
 {
@@ -42,7 +43,10 @@ class PostRepository
     public function create(array $data, $signupId)
     {
         if (isset($data['file'])) {
-            $fileUrl = $this->aws->storeImage($data['file'], $signupId);
+            // Auto-orient the photo by default based on exif data.
+            $img = Image::make($data['file'])->orientate();
+
+            $fileUrl = $this->aws->storeImage((string) $img->encode('data-url'), $signupId);
 
             $editedImage = $this->crop($data, $signupId);
         } else {
@@ -176,7 +180,7 @@ class PostRepository
         $cropValues = array_only($data, $this->cropProperties);
 
         if (count($cropValues) > 0) {
-            $editedImage = edit_image($data['file'], $cropValues);
+            $editedImage = edit_image($img, $cropValues);
 
             return $this->aws->storeImage($editedImage, 'edited_' . $signupId);
         }
