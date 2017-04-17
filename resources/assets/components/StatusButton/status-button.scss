@@ -3,16 +3,18 @@
  */
 @import '~@dosomething/forge/scss/toolkit';
 
+$accepted-green: #80E85D;
+
 .button {
   &.-accepted {
-    background: #80E85D;
+    background: $accepted-green;
 
     &:hover {
-      background: lighten(#80E85D, $color-tint);
+      background: lighten($accepted-green, $color-tint);
     }
 
-    &:active {
-      background: darken(#80E85D, $color-tint);
+    &:active, &:focus {
+      background: darken($accepted-green, $color-tint);
     }
   }
 
@@ -23,7 +25,7 @@
       background: lighten($error-color, $color-tint);
     }
 
-    &:active {
+    &:active, &:focus {
       background: darken($error-color, $color-tint);
     }
   }
