@@ -44,16 +44,18 @@ class ReportbackController extends ApiController
             ->where('status', '=', 'approved')
             ->select('posts.id as id', 'signups.campaign_id as campaign_id', 'posts.status as status', 'posts.caption as caption', 'posts.url as url', 'posts.created_at as created_at', 'posts.signup_id as signup_id');
 
-        if (isset($request->filter)) {
-            // Only return Posts for the given campaign_id (if there is one)
-            if (array_key_exists('campaign_id', $request->filter)) {
-                $campaign_id = $request->filter['campaign_id'];
+        $filters = $request->query('filter');
 
-                $query = $query->where('campaign_id', '=', $campaign_id);
+        if (! empty($filters)) {
+            // Only return Posts for the given campaign_id (if there is one)
+            if (array_has($filters, 'campaign_id')) {
+                $query = $query->where('campaign_id', '=', $filters['campaign_id']);
             }
+
             // Exclude Posts if exclude param is present
-            if (array_key_exists('exclude', $request->filter)) {
-                $query = $query->whereNotIn('posts.id', explode(',', $request->filter['exclude']));
+            if (array_has($filters, 'exclude')) {
+                $query = $query->whereNotIn('posts.id', explode(',', $filters['exclude']));
+
             }
         }
 
