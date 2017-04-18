@@ -43,17 +43,8 @@ class CampaignsController extends Controller
     public function index()
     {
         $ids = $this->campaignService->getCampaignIdsFromSignups();
-
         $campaigns = $this->campaignService->findAll($ids);
-
-        $campaigns = $campaigns->map(function($campaign, $key) {
-            if ($campaign) {
-                $campaign = $this->campaignService->getCampaignPostStatusCounts($campaign);
-            }
-
-            return $campaign;
-        });
-
+        $campaigns = $this->campaignService->getCampaignPostStatusCounts($campaigns);
         $causes = $this->campaignService->groupByCause($campaigns);
 
         return view('pages.campaign_overview')
@@ -65,7 +56,7 @@ class CampaignsController extends Controller
      */
     public function show($campaignId)
     {
-        $signups = Signup::campaign($campaignId)->has('pending')->with('pending')->get();
+        $signups = Signup::campaign([$campaignId])->has('pending')->with('pending')->get();
 
         // For each post, get and include the user
         $signups->each(function ($item) {

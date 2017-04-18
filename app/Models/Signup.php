@@ -70,9 +70,9 @@ class Signup extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeCampaign($query, $id)
+    public function scopeCampaign($query, $ids)
     {
-        return $query->where('campaign_id', $id);
+        return $query->wherein('campaign_id', $ids);
     }
 
     /**

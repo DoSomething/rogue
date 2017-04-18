@@ -71,7 +71,7 @@ class CampaignService
                 $campaigns = collect(array_values($campaigns));
             }
 
-            return $campaigns;
+            return collect($campaigns);
         }
 
         return null;
@@ -179,18 +179,31 @@ class CampaignService
     }
 
     /**
-     * Get an aggregate of how many pending, accepted, and reject posts there are for a campaign.
+     * Appends status counts to a collection of campaigns.
      *
-     * @return array $campaign
+     * @return Illuminate\Database\Eloquent\Collection $campaigns
      */
-    public function getCampaignPostStatusCounts($campaign)
+    public function getCampaignPostStatusCounts($campaigns)
     {
-        $signups = Signup::campaign($campaign['id'])->includePostStatusCounts()->get();
+        $ids = array_pluck($campaigns, 'id');
 
-        $campaign['accepted_count'] = $signups->sum('accepted_count');
-        $campaign['pending_count'] = $signups->sum('pending_count');
-        $campaign['rejected_count'] = $signups->sum('rejected_count');
+        $campaignsWithSignups = Signup::campaign($ids)
+            ->includePostStatusCounts()
+            ->get()
+            ->groupBy('campaign_id');
 
-        return $campaign;
+        $campaigns = $campaigns->map(function ($campaign, $key) use ($campaignsWithSignups) {
+            if ($campaign) {
+                $signups = $campaignsWithSignups->get($campaign['id']);
+
+                $campaign['accepted_count'] = $signups->sum('accepted_count');
+                $campaign['pending_count'] = $signups->sum('pending_count');
+                $campaign['rejected_count'] = $signups->sum('rejected_count');
+            }
+
+            return $campaign;
+        });
+
+        return $campaigns;
     }
 }
