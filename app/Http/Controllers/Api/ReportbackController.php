@@ -55,7 +55,6 @@ class ReportbackController extends ApiController
             // Exclude Posts if exclude param is present
             if (array_has($filters, 'exclude')) {
                 $query = $query->whereNotIn('posts.id', explode(',', $filters['exclude']));
-
             }
         }
 
