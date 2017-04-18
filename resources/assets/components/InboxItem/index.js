@@ -42,6 +42,10 @@ class InboxItem extends React.Component {
       <div className="container__row">
         <div className="container__block -third">
           <img src={getImageUrlFromProp(post)}/>
+          <p>
+            <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a>
+          </p>
+
           <ul className="gallery -quartet">
           { map(this.getOtherPosts(post), (post, key) => <InboxTile key={key} details={post} />) }
           </ul>
