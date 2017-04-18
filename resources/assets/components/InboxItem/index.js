@@ -4,20 +4,22 @@ import { remove, map, clone } from 'lodash';
 
 import Tags from '../Tags';
 import InboxTile from './InboxTile';
+import StatusButton from '../StatusButton';
 
 class InboxItem extends React.Component {
   constructor () {
     super();
+
     this.state = {
       status: 'pending',
     };
-    this.onAcceptClick = this.onAcceptClick.bind(this);
+
+    this.setStatus = this.setStatus.bind(this);
   }
 
-  onAcceptClick() {
-    this.setState({
-      status: 'accepted',
-    });
+  // @todo - define this on the StatusButton component that can set some sort of global state.
+  setStatus(status) {
+    this.setState({ status });
   }
 
   getOtherPosts(post) {
@@ -73,8 +75,8 @@ class InboxItem extends React.Component {
         </div>
         <div className="container__block -third">
           <ul className="form-actions -inline">
-            <li><button className="button -accepted" onClick={this.onAcceptClick}>Accepted</button></li>
-            <li><button className="button -rejected">Rejected</button></li>
+            <li><StatusButton type="accepted" setStatus={this.setStatus}/></li>
+            <li><StatusButton type="rejected" setStatus={this.setStatus}/></li>
           </ul>
           <ul className="form-actions -inline">
             <li><button className="button -tertiary">Delete</button></li>

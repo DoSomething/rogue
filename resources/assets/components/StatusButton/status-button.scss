@@ -1,0 +1,32 @@
+/**
+ * Status Button
+ */
+@import '~@dosomething/forge/scss/toolkit';
+
+$accepted-green: #80E85D;
+
+.button {
+  &.-accepted {
+    background: $accepted-green;
+
+    &:hover {
+      background: lighten($accepted-green, $color-tint);
+    }
+
+    &:active, &:focus {
+      background: darken($accepted-green, $color-tint);
+    }
+  }
+
+  &.-rejected {
+    background: $error-color;
+
+    &:hover {
+      background: lighten($error-color, $color-tint);
+    }
+
+    &:active, &:focus {
+      background: darken($error-color, $color-tint);
+    }
+  }
+}
