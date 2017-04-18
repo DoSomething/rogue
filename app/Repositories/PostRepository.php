@@ -44,9 +44,9 @@ class PostRepository
     {
         if (isset($data['file'])) {
             // Auto-orient the photo by default based on exif data.
-            $img = Image::make($data['file'])->orientate();
+            $image = Image::make($data['file'])->orientate();
 
-            $fileUrl = $this->aws->storeImage((string) $img->encode('data-url'), $signupId);
+            $fileUrl = $this->aws->storeImage((string) $image->encode('data-url'), $signupId);
 
             $editedImage = $this->crop($data, $signupId);
         } else {
