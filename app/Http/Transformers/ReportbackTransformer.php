@@ -16,6 +16,7 @@ class ReportbackTransformer extends TransformerAbstract
     public function transform(Post $post)
     {
         $signup = $post->signup;
+
         $result = [
             'id' => $post->id,
             'status' => $post->status,
@@ -36,9 +37,20 @@ class ReportbackTransformer extends TransformerAbstract
                 'flagged' => 'false',
             ],
             'kudos' => [
-                // @TODO: Include reaction information here!
-                'data' => [],
+                    'total' => $post->reactions_count,
+                    'data' => [
+                        'current_user' => [
+                            'kudos_id' => 1,
+                            'reacted' => count($post->reactions) >= 1,
+                        ],
+                        'term' => [
+                            'name' => 'heart',
+                            'id' => 641,
+                            'total' => $post->reactions_count,
+                        ],
+                    ],
             ],
+            'user' => $signup->northstar_id,
         ];
 
         return $result;

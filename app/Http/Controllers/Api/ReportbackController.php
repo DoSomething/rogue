@@ -44,13 +44,29 @@ class ReportbackController extends ApiController
             ->where('status', '=', 'approved')
             ->select('posts.id as id', 'signups.campaign_id as campaign_id', 'posts.status as status', 'posts.caption as caption', 'posts.url as url', 'posts.created_at as created_at', 'posts.signup_id as signup_id');
 
-        // Only return Posts for the given campaign_id (if there is one)
-        if (isset($request->filter)) {
-            if (array_key_exists('campaign_id', $request->filter)) {
-                $campaign_id = $request->filter['campaign_id'];
+        $filters = $request->query('filter');
 
-                $query = $query->where('campaign_id', '=', $campaign_id);
+        if (! empty($filters)) {
+            // Only return Posts for the given campaign_id (if there is one)
+            if (array_has($filters, 'campaign_id')) {
+                $query = $query->where('campaign_id', '=', $filters['campaign_id']);
             }
+
+            // Exclude Posts if exclude param is present
+            if (array_has($filters, 'exclude')) {
+                $query = $query->whereNotIn('posts.id', explode(',', $filters['exclude']));
+            }
+        }
+
+        // Eagerly load the count of all reactions on a post.
+        $query = $query->withCount('reactions');
+
+        // If user param is passed, return whether or not the user has liked the particular post.
+        if ($request->query('as_user')) {
+            $userId = $request->query('as_user');
+            $query = $query->with(['reactions' => function ($query) use ($userId) {
+                $query->where('northstar_id', '=', $userId);
+            }]);
         }
 
         return $this->paginatedCollection($query, $request);
