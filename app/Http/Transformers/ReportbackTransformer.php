@@ -21,7 +21,6 @@ class ReportbackTransformer extends TransformerAbstract
             'id' => $post->id,
             'status' => $post->status,
             'caption' => $post->caption,
-            'event_id' => $post->events[0]->id,
             // Add link to review reportback item in Rogue here once that page exists
             // 'uri' => 'link_goes_here'
             'media' => [
