@@ -1,7 +1,5 @@
 import React from 'react';
 import './status-button.scss';
-// import { map } from 'lodash';
-
 
 class StatusButton extends React.Component {
   getClass() {
