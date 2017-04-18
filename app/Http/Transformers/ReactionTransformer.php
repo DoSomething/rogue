@@ -23,10 +23,6 @@ class ReactionTransformer extends TransformerAbstract
                 'id' => 641,
                 'total' => 1,
             ],
-            'current_user' => [
-                'kudos_id' => 1,
-                'reacted' => 1,
-            ],
             'created_at' => $reaction->created_at->toIso8601String(),
             'updated_at' => $reaction->updated_at->toIso8601String(),
             'deleted_at' => is_null($reaction->deleted_at) ? null : $reaction->deleted_at->toIso8601String(),
