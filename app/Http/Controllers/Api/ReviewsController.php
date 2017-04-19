@@ -10,11 +10,11 @@ use Rogue\Http\Transformers\PostTransformer;
 class ReviewsController extends ApiController
 {
     /**
-     * The photo service instance.
+     * The post service instance.
      *
      * @var Rogue\Services\PostService
      */
-    protected $posts;
+    protected $post;
 
     /**
      * @var \Rogue\Http\Transformers\PostTransformer
@@ -24,14 +24,14 @@ class ReviewsController extends ApiController
     /**
      * Create a controller instance.
      *
-     * @param  PostContract  $posts
+     * @param  PostContract $posts
      * @return void
      */
-    public function __construct(PostService $posts)
+    public function __construct(PostService $post)
     {
         $this->middleware('api');
 
-        $this->posts = $posts;
+        $this->post = $post;
 
         $this->postTransformer = new PostTransformer;
     }
@@ -45,7 +45,8 @@ class ReviewsController extends ApiController
      */
     public function reviews(ReviewsRequest $request)
     {
-        $reviewedPost = $this->posts->reviews($request->all());
+        dd('hi');
+        $reviewedPost = $this->post->reviews($request->all());
         $reviewedPostCode = $this->code($reviewedPost);
 
         $meta = [];
