@@ -4,6 +4,7 @@ namespace Rogue\Providers;
 
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
+use Rogue\Models\Review;
 use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider
@@ -27,6 +28,13 @@ class ModelServiceProvider extends ServiceProvider
         Post::saved(function ($post) {
             $post->events()->create([
                 'content' => $post->toJson(),
+            ]);
+        });
+
+        // When Reviews are saved create an event for them.
+        Review::saved(function ($review) {
+            $review->events()->create([
+                'content' => $review->toJson(),
             ]);
         });
     }

@@ -45,7 +45,16 @@ class ReviewsController extends ApiController
      */
     public function reviews(ReviewsRequest $request)
     {
-        dd('hi');
+        $review = $request->all();
+        $post = Post::where('id', $review['postable_id'])->first();
+        // "postable_id" => "2"
+        // "postable_type" => "Rogue\Models\Post"
+        // "status" => "test status"
+        // "admin_northstar_id" => "chloe"
+        $review['signup_id'] = $post->signup_id;
+        $review['northstar_id'] = $post->northstar_id;
+        dd($post->review);
+
         $reviewedPost = $this->post->reviews($request->all());
         $reviewedPostCode = $this->code($reviewedPost);
 
