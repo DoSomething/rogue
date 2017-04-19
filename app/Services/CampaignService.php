@@ -2,7 +2,6 @@
 
 namespace Rogue\Services;
 
-use Rogue\Models\Signup;
 use Illuminate\Support\Facades\DB;
 use Rogue\Repositories\CacheRepository;
 
@@ -179,26 +178,47 @@ class CampaignService
     }
 
     /**
-     * Appends status counts to a collection of campaigns.
+     * Gets the count of pending, accepted, and rejected stautses on each post for a campaign.
      *
+     * @param  array $campaigns
      * @return Illuminate\Database\Eloquent\Collection $campaigns
      */
     public function getCampaignPostStatusCounts($campaigns)
     {
-        $ids = array_pluck($campaigns, 'id');
+        $ids = array_filter(array_pluck($campaigns, 'id'));
 
-        $campaignsWithSignups = Signup::campaign($ids)
-            ->includePostStatusCounts()
-            ->get()
-            ->groupBy('campaign_id');
+        $campaignsWithCounts = DB::table('signups')
+                ->join('posts', 'signups.id', '=', 'posts.signup_id')
+                ->select('signups.campaign_id',
+                    DB::raw('SUM(case when posts.status = "accepted" then 1 else 0 end) as accepted_count'),
+                    DB::raw('SUM(case when posts.status = "pending" then 1 else 0 end) as pending_count'),
+                    DB::raw('SUM(case when posts.status = "rejected" then 1 else 0 end) as rejected_count'))
+                ->wherein('campaign_id', $ids)
+                ->groupBy('signups.campaign_id')
+                ->get();
 
-        $campaigns = $campaigns->map(function ($campaign, $key) use ($campaignsWithSignups) {
+        return $campaignsWithCounts ? collect($campaignsWithCounts)->keyBy('campaign_id') : null;
+    }
+
+    /**
+     * Appends status counts to a collection of campaigns.
+     *
+     * @param  array $campaigns
+     * @return Illuminate\Database\Eloquent\Collection $campaigns
+     */
+    public function appendStatusCountsToCampaigns($campaigns)
+    {
+        $campaignsWithCounts = $this->getCampaignPostStatusCounts($campaigns);
+
+        $campaigns = $campaigns->map(function ($campaign, $key) use ($campaignsWithCounts) {
             if ($campaign) {
-                $signups = $campaignsWithSignups->get($campaign['id']);
+                $statusCounts = $campaignsWithCounts->get($campaign['id']);
 
-                $campaign['accepted_count'] = $signups->sum('accepted_count');
-                $campaign['pending_count'] = $signups->sum('pending_count');
-                $campaign['rejected_count'] = $signups->sum('rejected_count');
+                if ($statusCounts) {
+                    $campaign['accepted_count'] = (int) $statusCounts->accepted_count;
+                    $campaign['pending_count'] = (int) $statusCounts->pending_count;
+                    $campaign['rejected_count'] = (int) $statusCounts->rejected_count;
+                }
             }
 
             return $campaign;

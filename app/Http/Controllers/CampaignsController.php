@@ -44,7 +44,8 @@ class CampaignsController extends Controller
     {
         $ids = $this->campaignService->getCampaignIdsFromSignups();
         $campaigns = $this->campaignService->findAll($ids);
-        $campaigns = $this->campaignService->getCampaignPostStatusCounts($campaigns);
+        $campaigns = $this->campaignService->appendStatusCountsToCampaigns($campaigns);
+
         $causes = $this->campaignService->groupByCause($campaigns);
 
         return view('pages.campaign_overview')
