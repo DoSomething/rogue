@@ -9,6 +9,7 @@ use League\Fractal\Serializer\DataArraySerializer;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
 use Rogue\Http\Controllers\Controller as BaseController;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
+use Rogue\Http\Transformers\PaginatorForPhoenixAshesGallery;
 
 class ApiController extends BaseController
 {
@@ -64,12 +65,19 @@ class ApiController extends BaseController
      * @param  array  $meta
      * @return \Illuminate\Http\JsonResponse
      */
-    public function transform($data, $code = 200, $meta = [], $include = null)
+    public function transform($data, $code = 200, $meta = [], $include = null, $endpoint = null)
     {
         $data->setMeta($meta);
 
         $manager = new Manager;
-        $manager->setSerializer(new DataArraySerializer);
+
+        // If this is a request to /reportbacks, send to PaginatorForPhoenixAshesGallery to match response expected for pagination in Phoenix Ashes Gallery.
+        if ($endpoint === 'reportbacks') {
+            $manager->setSerializer(new PaginatorForPhoenixAshesGallery);
+        }
+        else {
+            $manager->setSerializer(new DataArraySerializer);
+        }
 
         if (isset($include)) {
             $manager->parseIncludes($include);
@@ -116,10 +124,15 @@ class ApiController extends BaseController
         $resource = new Collection($paginator->getCollection(), $transformer);
 
         $resource->setMeta($meta);
+
+        $urlWithoutQueryString = explode('?', $request->fullUrl())[0];
+        $urlParts = explode('/', $urlWithoutQueryString);
+        $endpoint = end($urlParts);
+
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
 
         $include = isset($request->include) ? $request->include : null;
 
-        return $this->transform($resource, $code, [], $include);
+        return $this->transform($resource, $code, [], $include, $endpoint);
     }
 }
