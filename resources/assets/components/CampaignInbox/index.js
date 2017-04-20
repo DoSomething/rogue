@@ -27,8 +27,6 @@ class CampaignInbox extends React.Component {
     if (posts.length !== 0) {
       return (
         <div className="container">
-          <h2>{ campaign['title'] }</h2>
-          <h3>{ campaign_run_id }</h3>
           { map(posts, (post, key) => <InboxItem key={key} details={{post: post, campaign: campaign}} />) }
         </div>
       )
