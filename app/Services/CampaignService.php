@@ -197,7 +197,7 @@ class CampaignService
                 ->groupBy('signups.campaign_id')
                 ->get();
 
-        return $campaignsWithCounts ? collect($campaignsWithCounts)->keyBy('campaign_id') : null;
+        return $campaignsWithCounts ? collect($campaignsWithCounts)->keyBy('campaign_id') : collect();
     }
 
     /**
