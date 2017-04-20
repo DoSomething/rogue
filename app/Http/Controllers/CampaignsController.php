@@ -59,6 +59,7 @@ class CampaignsController extends Controller
     {
         $signups = Signup::campaign([$campaignId])->has('pending')->with('pending')->get();
 
+        // @TODO: handle inbox zero state
         // For each post, get and include the user
         $signups->each(function ($item) {
             $item->posts->each(function ($item) {
@@ -67,9 +68,14 @@ class CampaignsController extends Controller
             });
         });
 
+        // Get the campaign data
+        $campaign_id = $signups[0]->campaign_id;
+        $campaign_data = $this->campaignService->find($campaign_id);
+
         return view('pages.campaign_inbox')
             ->with('state', [
                 'signups' => $signups,
+                'campaign' => $campaign_data,
             ]);
     }
 }
