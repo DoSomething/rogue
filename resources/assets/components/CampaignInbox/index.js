@@ -8,7 +8,6 @@ class CampaignInbox extends React.Component {
   render() {
     const signups = this.props['signups'];
     const campaign = this.props['campaign'];
-    const campaign_run_id = this.props['campaign_run_id'];
 
     const posts = flatMap(signups, signup => {
       return signup.posts.map(post => {

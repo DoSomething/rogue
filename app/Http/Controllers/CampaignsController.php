@@ -76,7 +76,6 @@ class CampaignsController extends Controller
             ->with('state', [
                 'signups' => $signups,
                 'campaign' => $campaign_data,
-                'campaign_run_id' => $campaign_run_id,
             ]);
     }
 }
