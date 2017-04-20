@@ -38,7 +38,8 @@ class InboxItem extends React.Component {
   }
 
   render() {
-    const post = this.props.details;
+    const post = this.props.details['post'];
+    const campaign = this.props.details['campaign'];
 
     return (
       <div className="container__row">
@@ -64,7 +65,7 @@ class InboxItem extends React.Component {
               <div className="quantity">{post['signup']['quantity']}</div>
             </div>
             <div className="figure__body">
-              Nouns verbed
+              {campaign['reportback_info']['noun']} {campaign['reportback_info']['verb']}
             </div>
           </article>
           <br/>
