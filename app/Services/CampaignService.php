@@ -70,7 +70,7 @@ class CampaignService
                 $campaigns = collect(array_values($campaigns));
             }
 
-            return $campaigns;
+            return collect($campaigns);
         }
 
         return null;
@@ -110,7 +110,7 @@ class CampaignService
             $batch = array_slice($ids, $index, $size);
 
             $parameters['count'] = '5000';
-            $parameters['campaigns'] = implode(',', $batch);
+            $parameters['ids'] = implode(',', $batch);
 
             $campaigns = $this->phoenix->getAllCampaigns($parameters);
 
@@ -175,5 +175,55 @@ class CampaignService
         $ids = collect($campaigns)->pluck('campaign_id')->toArray();
 
         return $ids ? $ids : null;
+    }
+
+    /**
+     * Gets the count of pending, accepted, and rejected stautses on each post for a campaign.
+     *
+     * @param  array $campaigns
+     * @return Illuminate\Database\Eloquent\Collection $campaigns
+     */
+    public function getCampaignPostStatusCounts($campaigns)
+    {
+        $ids = array_filter(array_pluck($campaigns, 'id'));
+
+        $campaignsWithCounts = DB::table('signups')
+                ->leftJoin('posts', 'signups.id', '=', 'posts.signup_id')
+                ->select('signups.campaign_id',
+                    DB::raw('SUM(case when posts.status = "accepted" then 1 else 0 end) as accepted_count'),
+                    DB::raw('SUM(case when posts.status = "pending" then 1 else 0 end) as pending_count'),
+                    DB::raw('SUM(case when posts.status = "rejected" then 1 else 0 end) as rejected_count'))
+                ->wherein('campaign_id', $ids)
+                ->groupBy('signups.campaign_id')
+                ->get();
+
+        return $campaignsWithCounts ? collect($campaignsWithCounts)->keyBy('campaign_id') : collect();
+    }
+
+    /**
+     * Appends status counts to a collection of campaigns.
+     *
+     * @param  array $campaigns
+     * @return Illuminate\Database\Eloquent\Collection $campaigns
+     */
+    public function appendStatusCountsToCampaigns($campaigns)
+    {
+        $campaignsWithCounts = $this->getCampaignPostStatusCounts($campaigns);
+
+        $campaigns = $campaigns->map(function ($campaign, $key) use ($campaignsWithCounts) {
+            if ($campaign) {
+                $statusCounts = $campaignsWithCounts->get($campaign['id']);
+
+                if ($statusCounts) {
+                    $campaign['accepted_count'] = (int) $statusCounts->accepted_count;
+                    $campaign['pending_count'] = (int) $statusCounts->pending_count;
+                    $campaign['rejected_count'] = (int) $statusCounts->rejected_count;
+                }
+            }
+
+            return $campaign;
+        });
+
+        return $campaigns;
     }
 }

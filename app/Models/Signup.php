@@ -40,4 +40,48 @@ class Signup extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * Get the 'pending' posts associated with this signup.
+     */
+    public function pending()
+    {
+        return $this->hasMany(Post::class)->where('status', '=', 'pending');
+    }
+
+    /**
+     * Get the 'accepted' posts associated with this signup.
+     */
+    public function accepted()
+    {
+        return $this->hasMany(Post::class)->where('status', '=', 'accepted');
+    }
+
+    /**
+     * Get the 'rejected' posts associated with this signup.
+     */
+    public function rejected()
+    {
+        return $this->hasMany(Post::class)->where('status', '=', 'rejected');
+    }
+
+    /**
+     * Scope a query to only include signups for a particular campaign
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCampaign($query, $ids)
+    {
+        return $query->wherein('campaign_id', $ids);
+    }
+
+    /**
+     * Scope a query to include a count of post statuses for a signup.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeIncludePostStatusCounts($query)
+    {
+        return $query->withCount(['accepted', 'pending', 'rejected']);
+    }
 }

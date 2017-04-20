@@ -4,8 +4,8 @@
         @if (Auth::user())
             <ul class="navigation__primary">
                 <li>
-                    <a href="#">
-                        <strong class="navigation__title">One Fish</strong>
+                    <a href="/campaigns">
+                        <strong class="navigation__title">Campaign Overview</strong>
                     </a>
                 </li>
                 <li>

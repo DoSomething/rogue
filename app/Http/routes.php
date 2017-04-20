@@ -21,7 +21,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('logout', 'Auth\AuthController@getLogout');
 
     Route::get('campaigns', 'CampaignsController@index');
-    Route::get('campaigns/{id}', 'CampaignsController@show');
+    Route::get('campaigns/{id}/inbox', 'CampaignsController@show');
 
     Route::get('users', 'UsersController@index');
 });
