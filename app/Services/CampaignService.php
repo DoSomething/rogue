@@ -40,9 +40,11 @@ class CampaignService
             $campaign = $this->phoenix->getCampaign($id);
 
             $this->cache->store($campaign['data']['id'], $campaign['data']);
+
+            $campaign = $campaign['data'];
         }
 
-        return $campaign['data'];
+        return $campaign;
     }
 
     /**
