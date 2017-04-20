@@ -188,7 +188,7 @@ class CampaignService
         $ids = array_filter(array_pluck($campaigns, 'id'));
 
         $campaignsWithCounts = DB::table('signups')
-                ->join('posts', 'signups.id', '=', 'posts.signup_id')
+                ->leftJoin('posts', 'signups.id', '=', 'posts.signup_id')
                 ->select('signups.campaign_id',
                     DB::raw('SUM(case when posts.status = "accepted" then 1 else 0 end) as accepted_count'),
                     DB::raw('SUM(case when posts.status = "pending" then 1 else 0 end) as pending_count'),
