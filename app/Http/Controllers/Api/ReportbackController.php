@@ -3,11 +3,15 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Post;
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
 use Illuminate\Http\Request;
 use Rogue\Models\Reportback;
 use Rogue\Services\ReportbackService;
 use Rogue\Http\Requests\ReportbackRequest;
 use Rogue\Http\Transformers\ReportbackTransformer;
+use Rogue\Http\Transformers\PaginatorForPhoenixAshesGallery;
+
 
 class ReportbackController extends ApiController
 {
@@ -129,5 +133,30 @@ class ReportbackController extends ApiController
         $meta = [];
 
         return $this->collection($items, $code, $meta, $this->itemTransformer);
+    }
+
+    /**
+     * Manage and finalize the data transformation.
+     *
+     * @param  \League\Fractal\Resource\Item|\League\Fractal\Resource\Collection  $data
+     * @param  int  $code
+     * @param  array  $meta
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function transform($data, $code = 200, $meta = [], $include = null, $endpoint = null)
+    {
+        $data->setMeta($meta);
+
+        $manager = new Manager;
+
+        $manager->setSerializer(new PaginatorForPhoenixAshesGallery);
+
+        if (isset($include)) {
+            $manager->parseIncludes($include);
+        }
+
+        $response = $manager->createData($data)->toArray();
+
+        return response()->json($response, $code, [], JSON_UNESCAPED_SLASHES);
     }
 }
