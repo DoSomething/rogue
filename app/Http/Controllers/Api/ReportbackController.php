@@ -4,14 +4,12 @@ namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Post;
 use League\Fractal\Manager;
-use League\Fractal\Resource\Collection;
 use Illuminate\Http\Request;
 use Rogue\Models\Reportback;
 use Rogue\Services\ReportbackService;
 use Rogue\Http\Requests\ReportbackRequest;
 use Rogue\Http\Transformers\ReportbackTransformer;
 use Rogue\Http\Transformers\PaginatorForPhoenixAshesGallery;
-
 
 class ReportbackController extends ApiController
 {
