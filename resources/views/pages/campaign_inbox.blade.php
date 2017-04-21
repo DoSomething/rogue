@@ -2,7 +2,7 @@
 
 @section('main_content')
 
-    @include('layouts.header', ['header' => $state['title']])
+    @include('layouts.header', ['header' => $state['campaign']['title']])
 
 	    <div class="container -padded">
 	        <div id="inboxContainer" class="wrapper">
