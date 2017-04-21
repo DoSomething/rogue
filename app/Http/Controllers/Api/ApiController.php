@@ -74,8 +74,7 @@ class ApiController extends BaseController
         // If this is a request to /reportbacks, send to PaginatorForPhoenixAshesGallery to match response expected for pagination in Phoenix Ashes Gallery.
         if ($endpoint === 'reportbacks') {
             $manager->setSerializer(new PaginatorForPhoenixAshesGallery);
-        }
-        else {
+        } else {
             $manager->setSerializer(new DataArraySerializer);
         }
 

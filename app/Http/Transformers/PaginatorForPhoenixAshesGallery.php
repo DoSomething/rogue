@@ -5,10 +5,8 @@ namespace Rogue\Http\Transformers;
 use League\Fractal\Serializer\ArraySerializer;
 use League\Fractal\Pagination\PaginatorInterface;
 
-
 class PaginatorForPhoenixAshesGallery extends ArraySerializer
 {
-
     /**
      * Serialize a collection.
      *
