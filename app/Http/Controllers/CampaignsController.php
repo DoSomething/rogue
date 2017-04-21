@@ -69,8 +69,7 @@ class CampaignsController extends Controller
         });
 
         // Get the campaign data
-        $campaign_id = $signups[0]->campaign_id;
-        $campaign_data = $this->campaignService->find($campaign_id);
+        $campaign_data = $this->campaignService->find($campaignId);
 
         return view('pages.campaign_inbox')
             ->with('state', [
