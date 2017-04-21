@@ -59,7 +59,6 @@ class CampaignsController extends Controller
     {
         $signups = Signup::campaign([$campaignId])->has('pending')->with('pending')->get();
 
-        // @TODO: handle inbox zero state
         // For each post, get and include the user
         $signups->each(function ($item) {
             $item->posts->each(function ($item) {
