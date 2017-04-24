@@ -7,6 +7,7 @@ import InboxItem from '../InboxItem';
 class CampaignInbox extends React.Component {
   render() {
     const signups = this.props['signups'];
+    const campaign = this.props['campaign'];
 
     const posts = flatMap(signups, signup => {
       return signup.posts.map(post => {
@@ -26,7 +27,7 @@ class CampaignInbox extends React.Component {
     if (posts.length !== 0) {
       return (
         <div className="container">
-          { map(posts, (post, key) => <InboxItem key={key} details={post} />) }
+          { map(posts, (post, key) => <InboxItem key={key} details={{post: post, campaign: campaign}} />) }
         </div>
       )
     } else {
@@ -40,7 +41,6 @@ class CampaignInbox extends React.Component {
         </div>
       )
     }
-
   }
 }
 
