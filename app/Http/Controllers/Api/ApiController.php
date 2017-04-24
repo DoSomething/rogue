@@ -64,7 +64,7 @@ class ApiController extends BaseController
      * @param  array  $meta
      * @return \Illuminate\Http\JsonResponse
      */
-    public function transform($data, $code = 200, $meta = [], $include = null, $endpoint = null)
+    public function transform($data, $code = 200, $meta = [], $include = null)
     {
         $data->setMeta($meta);
 
@@ -118,14 +118,10 @@ class ApiController extends BaseController
 
         $resource->setMeta($meta);
 
-        $urlWithoutQueryString = explode('?', $request->fullUrl())[0];
-        $urlParts = explode('/', $urlWithoutQueryString);
-        $endpoint = end($urlParts);
-
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
 
         $include = isset($request->include) ? $request->include : null;
 
-        return $this->transform($resource, $code, [], $include, $endpoint);
+        return $this->transform($resource, $code, [], $include);
     }
 }
