@@ -140,7 +140,7 @@ Example Response:
       "current_page": 1,
       "total_pages": 8,
       "links": {
-        "next": "http://rogue.dev:8000/api/v1/reportbacks?limit=3&page=2"
+        "next_uri": "http://rogue.dev:8000/api/v1/reportbacks?limit=3&page=2"
       }
     }
   }

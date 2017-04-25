@@ -69,6 +69,7 @@ class ApiController extends BaseController
         $data->setMeta($meta);
 
         $manager = new Manager;
+
         $manager->setSerializer(new DataArraySerializer);
 
         if (isset($include)) {
@@ -116,6 +117,7 @@ class ApiController extends BaseController
         $resource = new Collection($paginator->getCollection(), $transformer);
 
         $resource->setMeta($meta);
+
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
 
         $include = isset($request->include) ? $request->include : null;
