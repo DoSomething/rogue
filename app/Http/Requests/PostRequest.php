@@ -26,9 +26,9 @@ class PostRequest extends Request
             'campaign_id' => 'required|int',
             'campaign_run_id' => 'required|int',
             'caption' => 'string',
-            'status' => 'pending',
+            // 'status' => 'pending',
             'source' => 'string',
-            'remote_addr' => 'ip',
+            // 'remote_addr' => 'ip',
             // 'file' => 'string', // @TODO - should do some better validation around files.
         ];
     }
