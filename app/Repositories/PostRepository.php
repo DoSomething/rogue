@@ -91,7 +91,7 @@ class PostRepository
      */
     public function update($signup, $data)
     {
-        $signup->fill(array_only($data, ['quantity_pending', 'why_participated']));
+        $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'why_participated']));
 
         // Triggers model event that logs the updated signup in the events table.
         $signup->save();
