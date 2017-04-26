@@ -65,7 +65,7 @@ class PostService
         // @TODO: This will is only temporary and will be removed!
         // If this is a signup update, get the most recent post.
         // If there is a quantity_pending, this is a signup.
-        if ($post->quantity_pending) {
+        if ($post->quantity || $post->quantity_pending) {
             $signupId = $post->id;
             // Find the post with this signup id.
             $post = Post::where('signup_id', $signupId)->first();
