@@ -97,7 +97,7 @@ class PostRepository
         $signup->save();
 
         // If there is a file, create a new post.
-        if (! empty($data['file'])) {
+        if (array_key_exists('file', $data)) {
             return $this->create($data, $signup->id);
         }
 
