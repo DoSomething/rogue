@@ -180,7 +180,7 @@ class PostRepository
         $cropValues = array_only($data, $this->cropProperties);
 
         if (count($cropValues) > 0) {
-            $editedImage = edit_image($img, $cropValues);
+            $editedImage = edit_image($data['file'], $cropValues);
 
             return $this->aws->storeImage($editedImage, 'edited_' . $signupId);
         }
