@@ -28,9 +28,6 @@ class PostTransformer extends TransformerAbstract
             'remote_addr' => $post->remote_addr,
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
-            // 'reactions' => [
-            //     'total' => count($post->reactions),
-            // ]
         ];
     }
 }
