@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use DoSomething\Gateway\Northstar;
+use Rogue\Services\CampaignService;
 use Rogue\Models\User;
 
 class UserTest extends TestCase
@@ -16,6 +17,13 @@ class UserTest extends TestCase
         $user = factory(User::class)->make([
             'role' => 'admin',
         ]);
+
+        $mock = $this->mock(CampaignService::class)
+            ->shouldReceive('getCampaignIdsFromSignups')->andReturn([])
+            ->shouldReceive('findAll')
+            ->shouldReceive('appendStatusCountsToCampaigns')
+            ->shouldReceive('groupByCause')
+            ->andReturn('true');
 
         $this->actingAs($user)
             ->visit('/campaigns')
