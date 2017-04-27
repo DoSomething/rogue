@@ -38,7 +38,7 @@ class Signup extends Model
      */
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)->with('tagged');
     }
 
     /**
@@ -46,7 +46,7 @@ class Signup extends Model
      */
     public function pending()
     {
-        return $this->hasMany(Post::class)->where('status', '=', 'pending');
+        return $this->hasMany(Post::class)->where('status', '=', 'pending')->with('tagged');
     }
 
     /**
@@ -54,7 +54,7 @@ class Signup extends Model
      */
     public function accepted()
     {
-        return $this->hasMany(Post::class)->where('status', '=', 'accepted');
+        return $this->hasMany(Post::class)->where('status', '=', 'accepted')->with('tagged');
     }
 
     /**
@@ -62,7 +62,7 @@ class Signup extends Model
      */
     public function rejected()
     {
-        return $this->hasMany(Post::class)->where('status', '=', 'rejected');
+        return $this->hasMany(Post::class)->where('status', '=', 'rejected')->with('tagged');
     }
 
     /**
