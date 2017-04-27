@@ -60,7 +60,7 @@ class CampaignsController extends Controller
         $signups = Signup::campaign([$campaignId])->has('pending')->with('pending')->get();
 
         // For each post, get and include the user
-        // @TODO - we should rethink this logic, as making a request to northstar
+        // @TODO - we should rethink this logic. Making a request to northstar
         // for each post might be heavy. Ideally we could grab/attach users in bulk when
         // we grab the signup.
         $signups->each(function ($item) {

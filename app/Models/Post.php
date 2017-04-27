@@ -2,8 +2,8 @@
 
 namespace Rogue\Models;
 
+use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
-use \Conner\Tagging\Taggable;
 
 class Post extends Model
 {
