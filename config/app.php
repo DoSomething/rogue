@@ -158,7 +158,7 @@ return [
         Maknz\Slack\Laravel\ServiceProvider::class,
         Aws\Laravel\AwsServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Conner\Tagging\Providers\TaggingServiceProvider::class,
+        \Conner\Tagging\Providers\TaggingServiceProvider::class,
 
         /*
          * Application Service Providers...

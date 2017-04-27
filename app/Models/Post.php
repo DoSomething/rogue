@@ -3,9 +3,12 @@
 namespace Rogue\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use \Conner\Tagging\Taggable;
 
 class Post extends Model
 {
+    use Taggable;
+
     /**
      * The attributes that are mass assignable.
      *
