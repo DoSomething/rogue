@@ -4,7 +4,7 @@ namespace Rogue\Repositories;
 
 use Rogue\Models\Post;
 use Rogue\Services\AWS;
-// use Rogue\Models\Review;
+use Rogue\Models\Review;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
 
@@ -105,69 +105,66 @@ class PostRepository
     }
 
     /**
-     * Updates a photo(s)'s status after being reviewed.
-     * @todo - update with new logic once photos table is removed
-     * and everything lives on the post.
+     * Updates a post's status after being reviewed.
      *
      * @param array $data
      *
      * @return
      */
-    // public function reviews($data)
-    // {
-    //     $reviewedPhotos = [];
+    public function reviews($data)
+    {
+        // dd($data);
+        // $reviewedPhotos = [];
 
-    //     if (isset($data['rogue_event_id']) && ! empty($data['rogue_event_id'])) {
-    //         $post = Post::where(['event_id' => $data['rogue_event_id']])->first();
-    //         $photo = Photo::where(['id' => $post->postable_id])->first();
+        // if (isset($data['rogue_event_id']) && ! empty($data['rogue_event_id'])) {
+            $post = Post::where(['id' => $data['post_id']])->first();
+            // $photo = Photo::where(['id' => $post->postable_id])->first();
 
-    //         if ($data['status'] && ! empty($data['status'])) {
-    //             // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
-    //             $data['submission_type'] = 'admin';
+            // if ($data['status'] && ! empty($data['status'])) {
+                // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
+                // $data['submission_type'] = 'admin';
 
-    //             // Create the Event.
-    //             $event = Event::create([
-    //                 'signup_id' => $post->signup_id,
-    //                 'northstar_id' => $post->northstar_id,
-    //                 'event_type' => $data['event_type'],
-    //                 'submission_type' => $data['submission_type'],
-    //                 // When we start tracking when admins update the below, we'll need to update this endpoint and comment these in.
-    //                 // 'quantity' => ,
-    //                 // 'quantity_pending' => ,
-    //                 // 'why_participated' => ,
-    //                 // 'caption' => ,
-    //                 'status' => $data['status'],
-    //                 // 'source' => ,
-    //                 // 'remote_addr' => ,
-    //                 // 'reason' => ,
-    //             ]);
+                // Create the Event.
+                // $event = Event::create([
+                //     'signup_id' => $post->signup_id,
+                //     'northstar_id' => $post->northstar_id,
+                //     'event_type' => $data['event_type'],
+                //     'submission_type' => $data['submission_type'],
+                //     // When we start tracking when admins update the below, we'll need to update this endpoint and comment these in.
+                //     // 'quantity' => ,
+                //     // 'quantity_pending' => ,
+                //     // 'why_participated' => ,
+                //     // 'caption' => ,
+                //     'status' => $data['status'],
+                //     // 'source' => ,
+                //     // 'remote_addr' => ,
+                //     // 'reason' => ,
+                // ]);
+            dd($post->id);
 
-    //             // Create the Review.
-    //             Review::create([
-    //                 'event_id' => $event->id,
-    //                 'signup_id' => $post->signup_id,
-    //                 'northstar_id' => $post->northstar_id,
-    //                 'admin_northstar_id' => $data['reviewer'],
-    //                 'status' => $data['status'],
-    //                 'old_status' => $photo->status,
-    //                 'comment' => isset($data['comment']) ? $data['comment'] : null,
-    //                 'created_at' => $event->created_at,
-    //                 'updated_at' => $event->updated_at,
-    //                 'postable_id' => $post->postable_id,
-    //                 'postable_type' => $post->postable_type,
-    //             ]);
+                // Create the Review.
+                Review::create([
+                    // 'event_id' => $event->id,
+                    'signup_id' => $post->signup_id,
+                    'northstar_id' => $post->northstar_id,
+                    'admin_northstar_id' => $data['admin_northstar_id'],
+                    'status' => $data['status'],
+                    'old_status' => $post->status,
+                    'comment' => isset($data['comment']) ? $data['comment'] : null,
+                    'post_id' => $post->id,
+                ]);
 
-    //             $photo->status = $data['status'];
-    //             $photo->save();
-    //         } else {
-    //             return null;
-    //         }
-    //     } else {
-    //         return null;
-    //     }
+                $post->status = $data['status'];
+                $post->save();
+            // } else {
+            //     return null;
+            // }
+        // } else {
+            // return null;
+        // }
 
-    //     return $photo;
-    // }
+        return $post;
+    }
 
     /**
      * Crop an image
