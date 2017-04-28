@@ -84,4 +84,15 @@ class PostsController extends ApiController
             }
         }
     }
+
+    /**
+     * Delete a resource in storage
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($postId)
+    {
+        return $postId;
+    }
 }
