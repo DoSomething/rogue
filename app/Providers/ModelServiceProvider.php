@@ -3,8 +3,8 @@
 namespace Rogue\Providers;
 
 use Rogue\Models\Post;
-use Rogue\Models\Signup;
 use Rogue\Models\Review;
+use Rogue\Models\Signup;
 use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider

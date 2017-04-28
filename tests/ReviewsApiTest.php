@@ -25,7 +25,7 @@ class ReviewsApiTest extends TestCase
         $post = factory(Post::class)->create();
 
         $review = [
-            'post_id' => $post->_id,
+            'post_id' => $post->id,
             'status' => $this->faker->word(),
             'admin_northstar_id' => str_random(24),
         ];
