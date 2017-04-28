@@ -15,7 +15,7 @@ class PostApiTest extends TestCase
      * @group creatingAPhoto
      * @return void
      */
-    public function testCreatingAPhoto()
+    public function testCreatingAPost()
     {
         $this->expectsJobs(Rogue\Jobs\SendPostToPhoenix::class);
 
@@ -54,5 +54,10 @@ class PostApiTest extends TestCase
 
         // Make sure the file_url is saved to the database.
         $this->seeInDatabase('posts', ['url' => $response['data']['media']['url']]);
+
+        $this->seeInDatabase('signups', [
+            'id' => $response['data']['signup_id'],
+            'quantity' => $post['quantity'],
+        ]);
     }
 }
