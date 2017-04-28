@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Api;
 
+use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Services\PostService;
@@ -93,6 +94,8 @@ class PostsController extends ApiController
      */
     public function destroy($postId)
     {
-        return $postId;
+        $post = Post::find($postId)->delete();
+
+        return response()->json(['code' => 200, 'message' => 'Post deleted.']);
     }
 }
