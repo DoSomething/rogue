@@ -53,7 +53,7 @@ class ReviewsController extends ApiController
         // "admin_northstar_id" => "chloe"
         $review['signup_id'] = $post->signup_id;
         $review['northstar_id'] = $post->northstar_id;
-        dd($post->review);
+        // dd($post->review);
 
         $reviewedPost = $this->post->reviews($request->all());
         $reviewedPostCode = $this->code($reviewedPost);

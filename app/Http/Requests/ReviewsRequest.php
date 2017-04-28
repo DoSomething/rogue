@@ -22,8 +22,7 @@ class ReviewsRequest extends Request
     public function rules()
     {
         return [
-            'postable_id' => 'required',
-            'postable_type' => 'required',
+            'post_id' => 'required',
             'status' => 'required',
             'admin_northstar_id' => 'required',
         ];
