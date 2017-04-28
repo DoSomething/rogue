@@ -37,9 +37,9 @@ class ReviewsApiTest extends TestCase
         $response = $this->decodeResponseJson();
 
         // Make sure we created a event for the review.
-        // $this->seeInDatabase('events', [
-        //     'status' => $response['data']['content']['status'],
-        // ]);
+        $this->seeInDatabase('events', [
+            'created_at' => $response['data']['created_at'],
+        ]);
 
         // Make sure a review is created.
         $this->seeInDatabase('reviews', [
