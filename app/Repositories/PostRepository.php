@@ -113,55 +113,21 @@ class PostRepository
      */
     public function reviews($data)
     {
-        // dd($data);
-        // $reviewedPhotos = [];
+        $post = Post::where(['id' => $data['post_id']])->first();
+        // Create the Review.
+        $review = Review::create([
+            'signup_id' => $post->signup_id,
+            'northstar_id' => $post->northstar_id,
+            'admin_northstar_id' => $data['admin_northstar_id'],
+            'status' => $data['status'],
+            'old_status' => $post->status,
+            'comment' => isset($data['comment']) ? $data['comment'] : null,
+            'post_id' => $post->id,
+        ]);
 
-        // if (isset($data['rogue_event_id']) && ! empty($data['rogue_event_id'])) {
-            $post = Post::where(['id' => $data['post_id']])->first();
-            // $photo = Photo::where(['id' => $post->postable_id])->first();
-
-            // if ($data['status'] && ! empty($data['status'])) {
-                // @TODO: update to add more details in the event e.g. admin who reviewed, admin's northstar id, etc.
-                // $data['submission_type'] = 'admin';
-
-                // Create the Event.
-                // $event = Event::create([
-                //     'signup_id' => $post->signup_id,
-                //     'northstar_id' => $post->northstar_id,
-                //     'event_type' => $data['event_type'],
-                //     'submission_type' => $data['submission_type'],
-                //     // When we start tracking when admins update the below, we'll need to update this endpoint and comment these in.
-                //     // 'quantity' => ,
-                //     // 'quantity_pending' => ,
-                //     // 'why_participated' => ,
-                //     // 'caption' => ,
-                //     'status' => $data['status'],
-                //     // 'source' => ,
-                //     // 'remote_addr' => ,
-                //     // 'reason' => ,
-                // ]);
-            dd($post->id);
-
-                // Create the Review.
-                Review::create([
-                    // 'event_id' => $event->id,
-                    'signup_id' => $post->signup_id,
-                    'northstar_id' => $post->northstar_id,
-                    'admin_northstar_id' => $data['admin_northstar_id'],
-                    'status' => $data['status'],
-                    'old_status' => $post->status,
-                    'comment' => isset($data['comment']) ? $data['comment'] : null,
-                    'post_id' => $post->id,
-                ]);
-
-                $post->status = $data['status'];
-                $post->save();
-            // } else {
-            //     return null;
-            // }
-        // } else {
-            // return null;
-        // }
+        // Update the status on the Post.
+        $post->status = $data['status'];
+        $post->save();
 
         return $post;
     }
