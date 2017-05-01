@@ -125,17 +125,17 @@ class PostRepository
     {
         $post = Post::findOrFail($postId);
 
-        $fileDeleted = $this->aws->deleteImage($post->url);
+        // Delete the image file from AWS.
+        $this->aws->deleteImage($post->url);
 
-        // this will always be true be cause the file not found exception doesn't
-        // do anything. So figure that out.
-        if ($fileDeleted) {
-            $post->url = null;
-            $post->save();
-            $post->delete();
-        }
+        // Set the url of the post to null.
+        $post->url = null;
+        $post->save();
 
-        return $fileDeleted && $post->trashed() ? true : false;
+        // Soft delete the post.
+        $post->delete();
+
+        return $post->trashed() ? true : false;
     }
 
     /**

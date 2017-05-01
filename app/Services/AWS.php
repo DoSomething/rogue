@@ -2,6 +2,7 @@
 
 namespace Rogue\Services;
 
+use Log;
 use finfo;
 use Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -87,6 +88,17 @@ class AWS
         // We need to use the relative url for the request to s3.
         $path = str_replace($bucketBaseUrl, "", $path);
 
-        return Storage::delete($path);
+        // The delete() method always returns true because it doesn't seem to do anything with
+        // any exception that is thrown while trying to delete and just returns true.
+        // see: \Illuminate\Filesystem\FilesystemAdapter::delete().
+        // So we check if the file exists first and then try to delete it.
+        if (Storage::exists($path)) {
+            $success = Storage::delete($path);
+        } else {
+            Log::info('Could not find file when trying to delete.', ['path' => $path]);
+            $success = false;
+        }
+
+        return $success;
     }
 }
