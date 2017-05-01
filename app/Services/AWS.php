@@ -74,4 +74,19 @@ class AWS
 
         return base64_decode($file);
     }
+
+    /**
+     * Delete a file from s3
+     *
+     * @param $string $path
+     * @return boolean
+     */
+    public function deleteImage($path) {
+        $bucketBaseUrl = config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket');
+
+        // We need to use the relative url for the request to s3.
+        $path = str_replace($bucketBaseUrl, "", $path);
+
+        return Storage::delete($path);
+    }
 }
