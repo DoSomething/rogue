@@ -94,8 +94,12 @@ class PostsController extends ApiController
      */
     public function destroy($postId)
     {
-        $post = Post::find($postId)->delete();
+        $postDeleted = $this->posts->destroy($postId);
 
-        return response()->json(['code' => 200, 'message' => 'Post deleted.']);
+        if ($postDeleted) {
+            return response()->json(['code' => 200, 'message' => 'Post deleted.']);
+        } else {
+            return response()->json(['code' => 500, 'message' => 'There was an error deleting the post' ]);
+        }
     }
 }
