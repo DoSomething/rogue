@@ -99,7 +99,7 @@ class PostsController extends ApiController
         if ($postDeleted) {
             return response()->json(['code' => 200, 'message' => 'Post deleted.']);
         } else {
-            return response()->json(['code' => 500, 'message' => 'There was an error deleting the post' ]);
+            return response()->json(['code' => 500, 'message' => 'There was an error deleting the post']);
         }
     }
 }

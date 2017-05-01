@@ -76,7 +76,12 @@ class PostApiTest extends TestCase
 
         // Check that the post record is still in the database
         // Also, check that you can't find it with a `deleted_at` column as null.
-        $this->seeInDatabase('posts',['id' => $post->id])
-             ->notSeeInDatabase('posts',['id' => $post->id,'deleted_at' => null ]);
+        $this->seeInDatabase('posts', [
+                'id' => $post->id,
+                'url' => null,
+            ])->notSeeInDatabase('posts', [
+                'id' => $post->id,
+                'deleted_at' => null,
+            ]);
     }
 }

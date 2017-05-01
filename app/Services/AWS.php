@@ -80,13 +80,14 @@ class AWS
      * Delete a file from s3
      *
      * @param $string $path
-     * @return boolean
+     * @return bool
      */
-    public function deleteImage($path) {
+    public function deleteImage($path)
+    {
         $bucketBaseUrl = config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket');
 
         // We need to use the relative url for the request to s3.
-        $path = str_replace($bucketBaseUrl, "", $path);
+        $path = str_replace($bucketBaseUrl, '', $path);
 
         // The delete() method always returns true because it doesn't seem to do anything with
         // any exception that is thrown while trying to delete and just returns true.

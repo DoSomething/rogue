@@ -78,7 +78,7 @@ class PostService
      * Handle all business logic around deleting a post.
      *
      * @param int $postId
-     * @return boolean
+     * @return bool
      */
     public function destroy($postId)
     {
