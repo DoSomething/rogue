@@ -100,8 +100,7 @@ class PostRepository
             $event->created_at = $data['updated_at'];
             $event->updated_at = $data['updated_at'];
             $event->save(['timestamps' => false]);
-        }
-        else {
+        } else {
             $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'why_participated']));
 
             // Triggers model event that logs the updated signup in the events table.
