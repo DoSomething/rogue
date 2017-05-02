@@ -1,20 +1,47 @@
 import React from 'react';
 import { flatMap } from 'lodash';
-import { map, sample } from 'lodash';
+import { keyBy, map, sample } from 'lodash';
+import { RestApiClient} from '@dosomething/gateway';
 
 import InboxItem from '../InboxItem';
 
 class CampaignInbox extends React.Component {
-  render() {
-    const signups = this.props['signups'];
-    const campaign = this.props['campaign'];
+  constructor(props) {
+    super(props);
 
-    const posts = flatMap(signups, signup => {
+    const posts = keyBy(flatMap(props.signups, signup => {
       return signup.posts.map(post => {
         post.signup = signup;
         return post;
       });
+    }), 'id');
+
+    this.state = {
+      posts: posts
+    };
+
+    this.api = new RestApiClient;
+    this.updatePost = this.updatePost.bind(this);
+  }
+
+  updatePost(postId, fields) {
+    // @TODO: Make API request to Rogue.
+    // let response = this.api.post(`v2/reviews`, fields);
+
+    this.setState((previousState) => {
+      const newState = {...previousState};
+      newState.posts[postId].status = fields.status;
+
+      // @TODO: Update this based on the response from API!
+      // newState.posts[postId] = response.data;
+
+      return newState;
     });
+  }
+
+  render() {
+    const posts = this.state.posts;
+    const campaign = this.props.campaign;
 
     const nothingHere = [
       'https://media.giphy.com/media/3og0IT9dAZyMz3lXNe/giphy.gif',
@@ -27,7 +54,7 @@ class CampaignInbox extends React.Component {
     if (posts.length !== 0) {
       return (
         <div className="container">
-          { map(posts, (post, key) => <InboxItem key={key} details={{post: post, campaign: campaign}} />) }
+          { map(posts, (post, key) => <InboxItem onUpdate={this.updatePost} key={key} details={{post: post, campaign: campaign}} />) }
         </div>
       )
     } else {
