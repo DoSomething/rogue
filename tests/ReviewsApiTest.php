@@ -26,7 +26,7 @@ class ReviewsApiTest extends TestCase
 
         $review = [
             'post_id' => $post->id,
-            'status' => $this->faker->word(),
+            'status' => 'accepted',
             'admin_northstar_id' => str_random(24),
         ];
 
