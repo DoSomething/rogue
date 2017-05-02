@@ -6,36 +6,32 @@ Update a post or multiple posts' status when an admin reviews.
 PUT /api/v2/reviews
 ```
 
-  - **rogue_event_id**: (string) required.
-    The reportback item's Rogue event id (id column in Rogue's event table).
+  - **post_id**: (string) required.
+    The id of the post that has been reviewed.
   - **status**: (string) required.
     The status of the post. 
-  - **reviewer**: (string) required.
+  - **admin_northstar_id**: (string) required.
     The reviewer's northstar id. 
-  - **event_type**: (string) required.
-    The event type of the review. 
+  - **comment**: (string)
+    A comment that the reviewer has made. 
 
 Example Response:
 
 ```
 {
   "data": {
-    "postable_id": 352,
-    "post_event_id": 816,
-    "submission_type": "user",
-    "postable_type": "Rogue\\Models\\Photo",
-    "content": {
-      "media": {
-        "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487193185.jpeg",
-        "edited_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_18-1487193185.jpeg"
-      },
-      "caption": "new1",
-      "status": "pending",
-      "remote_addr": "207.110.19.130",
-      "post_source": "runscope",
-      "created_at": "2017-02-15T21:13:05+0000",
-      "updated_at": "2017-03-03T22:15:01+0000"
-    }
+    "id": 1,
+    "signup_id": 1,
+    "northstar_id": "1234",
+    "media": {
+      "url": "https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg",
+      "caption": "Est blanditiis ab quo sequi quis."
+    },
+    "status": "approved",
+    "source": "phoenix-web",
+    "remote_addr": "10.0.2.2",
+    "created_at": "2017-04-28T20:14:49+00:00",
+    "updated_at": "2017-04-28T20:22:23+00:00"
   }
 }
 ```

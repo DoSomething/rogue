@@ -22,10 +22,9 @@ class ReviewsRequest extends Request
     public function rules()
     {
         return [
-            'rogue_event_id' => 'required',
-            'status' => 'required',
-            'reviewer' => 'required',
-            'event_type' => 'required',
+            'post_id' => 'required',
+            'status' => 'in:pending,accepted,rejected',
+            'admin_northstar_id' => 'required',
         ];
     }
 }

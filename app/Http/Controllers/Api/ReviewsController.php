@@ -3,18 +3,18 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Post;
-use Rogue\Services\PostService;
+use Rogue\Repositories\PostRepository;
 use Rogue\Http\Requests\ReviewsRequest;
 use Rogue\Http\Transformers\PostTransformer;
 
 class ReviewsController extends ApiController
 {
     /**
-     * The photo service instance.
+     * The post service instance.
      *
-     * @var Rogue\Services\PostService
+     * @var Rogue\Repositories\PostRepository
      */
-    protected $posts;
+    protected $post;
 
     /**
      * @var \Rogue\Http\Transformers\PostTransformer
@@ -24,14 +24,14 @@ class ReviewsController extends ApiController
     /**
      * Create a controller instance.
      *
-     * @param  PostContract  $posts
+     * @param  PostContract $posts
      * @return void
      */
-    public function __construct(PostService $posts)
+    public function __construct(PostRepository $post)
     {
         $this->middleware('api');
 
-        $this->posts = $posts;
+        $this->post = $post;
 
         $this->postTransformer = new PostTransformer;
     }
@@ -45,7 +45,13 @@ class ReviewsController extends ApiController
      */
     public function reviews(ReviewsRequest $request)
     {
-        $reviewedPost = $this->posts->reviews($request->all());
+        $review = $request->all();
+        $post = Post::where('id', $review['post_id'])->first();
+        $review['signup_id'] = $post->signup_id;
+        $review['northstar_id'] = $post->northstar_id;
+        $review['old_status'] = $post->status;
+
+        $reviewedPost = $this->post->reviews($review);
         $reviewedPostCode = $this->code($reviewedPost);
 
         $meta = [];

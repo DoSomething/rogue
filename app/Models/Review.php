@@ -11,7 +11,7 @@ class Review extends Model
      *
      * @var array
      */
-    protected $fillable = ['event_id', 'signup_id', 'northstar_id', 'admin_northstar_id', 'status', 'old_status', 'comment', 'postable_id', 'postable_type'];
+    protected $fillable = ['signup_id', 'northstar_id', 'admin_northstar_id', 'status', 'old_status', 'comment', 'post_id'];
 
     /**
      * Each review has events.
