@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use Taggable;
-    use SoftDeletes;
+    use Taggable, SoftDeletes;
 
     /**
      * The attributes that should be mutated to dates.

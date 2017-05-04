@@ -135,7 +135,7 @@ class PostRepository
         // Soft delete the post.
         $post->delete();
 
-        return $post->trashed() ? true : false;
+        return $post->trashed();
     }
 
     /**
