@@ -20,6 +20,9 @@ class ReviewsApiTest extends TestCase
      */
     public function testUpdatingASingleReview()
     {
+        $user = factory(User::class, 'admin');
+
+        $this->be($user);
 
         // Create a post.
         $post = factory(Post::class)->create();
@@ -27,7 +30,6 @@ class ReviewsApiTest extends TestCase
         $review = [
             'post_id' => $post->id,
             'status' => 'accepted',
-            'admin_northstar_id' => str_random(24),
         ];
 
         $this->json('PUT', $this->reviewsApiUrl, $review);
@@ -43,6 +45,7 @@ class ReviewsApiTest extends TestCase
 
         // Make sure a review is created.
         $this->seeInDatabase('reviews', [
+            'admin_northstar_id' => $user->northstar_id,
             'post_id' => $response['data']['id'],
         ]);
 

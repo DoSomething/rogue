@@ -9,11 +9,6 @@ use Rogue\Http\Transformers\SignupTransformer;
 class ActivityController extends ApiController
 {
     /**
-     * @var SignupTransformer;
-     */
-    protected $transformer;
-
-    /**
      * Create a controller instance.
      */
     public function __construct()

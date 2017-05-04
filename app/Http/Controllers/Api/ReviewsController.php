@@ -19,7 +19,7 @@ class ReviewsController extends ApiController
     /**
      * @var \Rogue\Http\Transformers\PostTransformer
      */
-    protected $postTransformer;
+    protected $transformer;
 
     /**
      * Create a controller instance.
@@ -29,11 +29,11 @@ class ReviewsController extends ApiController
      */
     public function __construct(PostRepository $post)
     {
-        $this->middleware('api');
-
         $this->post = $post;
+        $this->transformer = new PostTransformer;
 
-        $this->postTransformer = new PostTransformer;
+        $this->middlware('auth');
+        $this->middleware('role:admin,staff');
     }
 
     /**
@@ -51,13 +51,16 @@ class ReviewsController extends ApiController
         $review['northstar_id'] = $post->northstar_id;
         $review['old_status'] = $post->status;
 
+        // Append admin's ID to the request for the "reviews" service.
+        $review['admin_northstar_id'] = auth()->user()->northstar_id;
+
         $reviewedPost = $this->post->reviews($review);
         $reviewedPostCode = $this->code($reviewedPost);
 
         $meta = [];
 
         if (isset($reviewedPost)) {
-            return $this->item($reviewedPost, $reviewedPostCode, $meta, $this->postTransformer);
+            return $this->item($reviewedPost, $reviewedPostCode);
         } else {
             return 404;
         }
