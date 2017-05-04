@@ -2,8 +2,6 @@
 
 namespace Rogue\Services;
 
-use Rogue\Models\Post;
-use Rogue\Jobs\SendPostToPhoenix;
 use Rogue\Repositories\PostRepository;
 
 class PostService
@@ -40,12 +38,6 @@ class PostService
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
 
-        // POST reportback back to Phoenix, unless told not to.
-        // If request fails, record in failed_jobs table.
-        if (! isset($data['do_not_forward'])) {
-            dispatch(new SendPostToPhoenix($post));
-        }
-
         return $post;
     }
 
@@ -64,12 +56,6 @@ class PostService
 
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
-
-        // Post reportback back to Phoenix, unless told not to.
-        // If request fails, record in failed_jobs table.
-        if (! isset($data['do_not_forward'])) {
-            dispatch(new SendPostToPhoenix($post, isset($data['file'])));
-        }
 
         return $post;
     }
