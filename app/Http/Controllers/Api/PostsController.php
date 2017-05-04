@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Api;
 
+use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Services\PostService;
@@ -82,6 +83,23 @@ class PostsController extends ApiController
             } else {
                 return $signup;
             }
+        }
+    }
+
+    /**
+     * Delete a resource in storage
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($postId)
+    {
+        $postDeleted = $this->posts->destroy($postId);
+
+        if ($postDeleted) {
+            return response()->json(['code' => 200, 'message' => 'Post deleted.']);
+        } else {
+            return response()->json(['code' => 500, 'message' => 'There was an error deleting the post']);
         }
     }
 }

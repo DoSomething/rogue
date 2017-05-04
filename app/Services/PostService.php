@@ -73,4 +73,15 @@ class PostService
 
         return $post;
     }
+
+    /**
+     * Handle all business logic around deleting a post.
+     *
+     * @param int $postId
+     * @return bool
+     */
+    public function destroy($postId)
+    {
+        return $this->repository->destroy($postId);
+    }
 }

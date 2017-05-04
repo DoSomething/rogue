@@ -116,7 +116,32 @@ class PostRepository
     }
 
     /**
-     * Updates a post's status after being reviewed.
+     * Delete a post and remove the file from s3.
+     *
+     * @param int $postId
+     * @return $post;
+     */
+    public function destroy($postId)
+    {
+        $post = Post::findOrFail($postId);
+
+        // Delete the image file from AWS.
+        $this->aws->deleteImage($post->url);
+
+        // Set the url of the post to null.
+        $post->url = null;
+        $post->save();
+
+        // Soft delete the post.
+        $post->delete();
+
+        return $post->trashed();
+    }
+
+    /**
+     * Updates a photo(s)'s status after being reviewed.
+     * @todo - update with new logic once photos table is removed
+     * and everything lives on the post.
      *
      * @param array $data
      *

@@ -48,6 +48,7 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['log.received.request']], f
 
     // posts
     Route::post('posts', 'Api\PostsController@store');
+    Route::delete('posts/{id}', 'Api\PostsController@destroy');
 
     // reactions
     Route::post('reactions', 'Api\ReactionController@store');
