@@ -2,7 +2,6 @@
 
 namespace Rogue\Services;
 
-use Rogue\Models\Post;
 use Rogue\Repositories\PostRepository;
 
 class PostService
