@@ -45,6 +45,7 @@ class ReviewsTest extends TestCase
 
         // Make sure a review is created.
         $this->seeInDatabase('reviews', [
+            // @TODO: change to admin northstar as logged in user
             'admin_northstar_id' => $user->northstar_id,
             'post_id' => $response['data']['id'],
         ]);

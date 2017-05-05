@@ -24,7 +24,6 @@ class ReviewsRequest extends Request
         return [
             'post_id' => 'required',
             'status' => 'in:pending,accepted,rejected',
-            'admin_northstar_id' => 'required',
         ];
     }
 }
