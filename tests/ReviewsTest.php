@@ -5,12 +5,12 @@ use Rogue\Models\Photo;
 use Rogue\Models\Post;
 use Faker\Generator;
 
-class ReviewsApiTest extends TestCase
+class ReviewsTest extends TestCase
 {
     /*
      * Base URL for the Api.
      */
-    protected $reviewsApiUrl = 'api/v2/reviews';
+    protected $reviewsUrl = 'api/v2/reviews';
 
     /**
      * Test that a PUT request to /reviews updates the post's status and creates a new event and review.
@@ -32,7 +32,7 @@ class ReviewsApiTest extends TestCase
             'status' => 'accepted',
         ];
 
-        $this->json('PUT', $this->reviewsApiUrl, $review);
+        $this->json('PUT', $this->reviewsUrl, $review);
 
         $this->assertResponseStatus(201);
 
