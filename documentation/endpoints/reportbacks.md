@@ -31,7 +31,7 @@ Example Response:
   "data": [
     {
       "id": 2,
-      "status": "approved",
+      "status": "accepted",
       "caption": "post 2",
       "event_id": 4,
       "media": {
@@ -65,7 +65,7 @@ Example Response:
     },
     {
       "id": 3,
-      "status": "approved",
+      "status": "accepted",
       "caption": "post 3",
       "event_id": 6,
       "media": {
@@ -99,7 +99,7 @@ Example Response:
     },
     {
       "id": 4,
-      "status": "approved",
+      "status": "accepted",
       "caption": "post 4",
       "event_id": 8,
       "media": {
