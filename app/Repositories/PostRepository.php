@@ -125,13 +125,12 @@ class PostRepository
     public function reviews($data)
     {
         $post = Post::where(['id' => $data['post_id']])->first();
-        $user = Auth::user();
 
         // Create the Review.
         $review = Review::create([
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
-            'admin_northstar_id' => $user->id,
+            'admin_northstar_id' => $data['admin_northstar_id'],
             'status' => $data['status'],
             'old_status' => $post->status,
             'comment' => isset($data['comment']) ? $data['comment'] : null,

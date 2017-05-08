@@ -7,7 +7,7 @@ use Rogue\Repositories\PostRepository;
 use Rogue\Http\Requests\ReviewsRequest;
 use Rogue\Http\Transformers\PostTransformer;
 
-class ReviewsController extends ApiController
+class ReviewsController extends Controller
 {
     /**
      * The post service instance.
@@ -29,11 +29,11 @@ class ReviewsController extends ApiController
      */
     public function __construct(PostRepository $post)
     {
+        $this->middleware('auth');
+        $this->middleware('role:admin,staff');
+
         $this->post = $post;
         $this->transformer = new PostTransformer;
-
-        $this->middlware('auth');
-        $this->middleware('role:admin,staff');
     }
 
     /**
@@ -53,10 +53,8 @@ class ReviewsController extends ApiController
 
         // Append admin's ID to the request for the "reviews" service.
         $review['admin_northstar_id'] = auth()->user()->northstar_id;
-
         $reviewedPost = $this->post->reviews($review);
         $reviewedPostCode = $this->code($reviewedPost);
-
         $meta = [];
 
         if (isset($reviewedPost)) {

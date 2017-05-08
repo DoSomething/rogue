@@ -3,6 +3,7 @@
 use Rogue\Models\Event;
 use Rogue\Models\Photo;
 use Rogue\Models\Post;
+use Rogue\Models\User;
 use Faker\Generator;
 
 class ReviewsTest extends TestCase
@@ -10,7 +11,7 @@ class ReviewsTest extends TestCase
     /*
      * Base URL for the Api.
      */
-    protected $reviewsUrl = 'api/v2/reviews';
+    protected $reviewsUrl = 'reviews';
 
     /**
      * Test that a PUT request to /reviews updates the post's status and creates a new event and review.
@@ -20,13 +21,14 @@ class ReviewsTest extends TestCase
      */
     public function testUpdatingASingleReview()
     {
-        $user = factory(User::class, 'admin');
+        $user = factory(User::class)->make([
+            'role' => 'admin',
+        ]);
 
         $this->be($user);
 
         // Create a post.
         $post = factory(Post::class)->create();
-
         $review = [
             'post_id' => $post->id,
             'status' => 'accepted',
@@ -45,7 +47,6 @@ class ReviewsTest extends TestCase
 
         // Make sure a review is created.
         $this->seeInDatabase('reviews', [
-            // @TODO: change to admin northstar as logged in user
             'admin_northstar_id' => $user->northstar_id,
             'post_id' => $response['data']['id'],
         ]);
@@ -54,5 +55,32 @@ class ReviewsTest extends TestCase
         $this->seeInDatabase('posts', [
             'status' => $response['data']['status'],
         ]);
+    }
+
+    /**
+     * Test that non-admin cannot review posts.
+     *
+     * @return void
+     */
+    public function testUnauthenticatedUserCantReviewPosts()
+    {
+        $user = factory(User::class)->make();
+
+        $this->be($user);
+
+        // Create a post.
+        $post = factory(Post::class)->create();
+        $review = [
+            'post_id' => $post->id,
+            'status' => 'accepted',
+        ];
+
+        $this->json('PUT', $this->reviewsUrl, $review);
+
+        $this->assertResponseStatus(401);
+
+        // $this->actingAs($user)
+        //     ->visit('/reviews')
+        //     ->see('You Don\'t have the proper priviledges to do this!');
     }
 }

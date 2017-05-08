@@ -24,6 +24,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('campaigns/{id}/inbox', 'CampaignsController@show');
 
     Route::get('users', 'UsersController@index');
+
+    // reviews
+    Route::put('reviews', 'ReviewsController@reviews');
 });
 
 // Legacy API Routes
@@ -51,9 +54,6 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['log.received.request']], f
 
     // reactions
     Route::post('reactions', 'Api\ReactionController@store');
-
-    // reviews
-    Route::put('reviews', 'ReviewsController@reviews');
 
     // signups
     Route::post('signups', 'Api\SignupsController@store');
