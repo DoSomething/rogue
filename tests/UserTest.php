@@ -39,10 +39,10 @@ class UserTest extends TestCase
     public function testUnauthenticatedUserCantAccessPagesInApp()
     {
         $user = factory(User::class)->make();
+        $this->be($user);
 
-        $this->actingAs($user)
-            ->visit('/campaigns')
-            ->see('You Don\'t have the proper priviledges to do this!');
+        $response = $this->call('GET', '/campaigns');
+        $this->assertResponseStatus(403);
     }
 
     /**
