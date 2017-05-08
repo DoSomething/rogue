@@ -74,6 +74,6 @@ $factory->define(User::class, function (Generator $faker) {
         'access_token_expiration' => str_random(11),
         'refresh_token' => str_random(1024),
         'remember_token' => str_random(10),
-        'role' => null,
+        'role' => 'user',
     ];
 });

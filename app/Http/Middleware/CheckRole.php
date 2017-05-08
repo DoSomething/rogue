@@ -4,6 +4,7 @@ namespace Rogue\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class CheckRole
 {
@@ -31,11 +32,7 @@ class CheckRole
     public function handle($request, Closure $next, ...$roles)
     {
         if ($this->auth->guest() || ! $this->auth->user()->hasRole($roles)) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return view('auth.unauthorized');
-            }
+            throw new AuthorizationException('You don\'t have the correct role to do that!');
         }
 
         return $next($request);

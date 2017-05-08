@@ -76,11 +76,6 @@ class ReviewsTest extends TestCase
         ];
 
         $this->json('PUT', $this->reviewsUrl, $review);
-
-        $this->assertResponseStatus(401);
-
-        // $this->actingAs($user)
-        //     ->visit('/reviews')
-        //     ->see('You Don\'t have the proper priviledges to do this!');
+        $this->assertResponseStatus(403);
     }
 }

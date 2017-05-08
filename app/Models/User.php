@@ -31,7 +31,6 @@ class User extends Model implements AuthenticatableContract, NorthstarUserContra
         // e.g. $user->hasRole('admin') => ['admin']
         //      $user->hasRole('admin, 'staff') => ['admin', 'staff']
         $roles = is_array($roles) ? $roles : func_get_args();
-
         return in_array($this->role, $roles);
     }
 }

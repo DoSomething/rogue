@@ -46,6 +46,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof AuthorizationException) {
+            return parent::render($request, $e);
+        }
+
         if ($request->wantsJson()) {
             $fe = FlattenException::create($e);
             $json = [
