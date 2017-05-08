@@ -159,6 +159,7 @@ return [
         Aws\Laravel\AwsServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         \Conner\Tagging\Providers\TaggingServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -218,6 +219,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'photo' => \Rogue\Models\Photo::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];
