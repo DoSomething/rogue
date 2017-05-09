@@ -4,6 +4,8 @@ import { keyBy, map, sample } from 'lodash';
 import { RestApiClient} from '@dosomething/gateway';
 
 import InboxItem from '../InboxItem';
+import ModalContainer from '../ModalContainer';
+import HistoryModal from '../HistoryModal';
 
 class CampaignInbox extends React.Component {
   constructor(props) {
@@ -17,11 +19,31 @@ class CampaignInbox extends React.Component {
     }), 'id');
 
     this.state = {
-      posts: posts
+      posts: posts,
+      displayHistoryModal: false,
+      historyModalId: null,
     };
 
     this.api = new RestApiClient;
     this.updatePost = this.updatePost.bind(this);
+    this.showHistory = this.showHistory.bind(this);
+    this.hideHistory = this.hideHistory.bind(this);
+  }
+
+  showHistory(postId) {
+    console.log('trying to give you a history lesson');
+
+    this.setState({
+      displayHistoryModal: true,
+      historyModalId: postId,
+    });
+  }
+
+  hideHistory(postId) {
+    this.setState({
+      displayHistoryModal: false,
+      historyModalId: postId,
+    });
   }
 
   updatePost(postId, fields) {
@@ -54,7 +76,10 @@ class CampaignInbox extends React.Component {
     if (posts.length !== 0) {
       return (
         <div className="container">
-          { map(posts, (post, key) => <InboxItem onUpdate={this.updatePost} key={key} details={{post: post, campaign: campaign}} />) }
+          { map(posts, (post, key) => <InboxItem onUpdate={this.updatePost} showHistory={this.showHistory} key={key} details={{post: post, campaign: campaign}} />) }
+          <ModalContainer>
+            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onClose={this.hideHistory} details={{post: posts[this.state.historyModalId], campaign: campaign}}/> : null}
+          </ModalContainer>
         </div>
       )
     } else {
