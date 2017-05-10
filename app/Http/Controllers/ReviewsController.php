@@ -61,7 +61,7 @@ class ReviewsController extends Controller
         if (isset($reviewedPost)) {
             return $this->item($reviewedPost, $reviewedPostCode);
         } else {
-            throw (new ModelNotFoundException)->setModel(get_class($this->model));
+            throw (new ModelNotFoundException)->setModel('Post');
         }
     }
 
