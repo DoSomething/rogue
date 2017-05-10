@@ -6,6 +6,7 @@ use Rogue\Models\Post;
 use Rogue\Repositories\PostRepository;
 use Rogue\Http\Requests\ReviewsRequest;
 use Rogue\Http\Transformers\PostTransformer;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ReviewsController extends Controller
 {
@@ -60,7 +61,7 @@ class ReviewsController extends Controller
         if (isset($reviewedPost)) {
             return $this->item($reviewedPost, $reviewedPostCode);
         } else {
-            return 404;
+            throw (new ModelNotFoundException)->setModel(get_class($this->model));
         }
     }
 
