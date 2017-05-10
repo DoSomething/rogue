@@ -3,14 +3,15 @@
 use Rogue\Models\Event;
 use Rogue\Models\Photo;
 use Rogue\Models\Post;
+use Rogue\Models\User;
 use Faker\Generator;
 
-class ReviewsApiTest extends TestCase
+class ReviewsTest extends TestCase
 {
     /*
      * Base URL for the Api.
      */
-    protected $reviewsApiUrl = 'api/v2/reviews';
+    protected $reviewsUrl = 'reviews';
 
     /**
      * Test that a PUT request to /reviews updates the post's status and creates a new event and review.
@@ -20,18 +21,20 @@ class ReviewsApiTest extends TestCase
      */
     public function testUpdatingASingleReview()
     {
+        $user = factory(User::class)->make([
+            'role' => 'admin',
+        ]);
+
+        $this->be($user);
 
         // Create a post.
         $post = factory(Post::class)->create();
-
         $review = [
             'post_id' => $post->id,
             'status' => 'accepted',
-            'admin_northstar_id' => str_random(24),
         ];
 
-        $this->json('PUT', $this->reviewsApiUrl, $review);
-
+        $this->json('PUT', $this->reviewsUrl, $review);
         $this->assertResponseStatus(201);
 
         $response = $this->decodeResponseJson();
@@ -43,6 +46,7 @@ class ReviewsApiTest extends TestCase
 
         // Make sure a review is created.
         $this->seeInDatabase('reviews', [
+            'admin_northstar_id' => $user->northstar_id,
             'post_id' => $response['data']['id'],
         ]);
 
@@ -50,5 +54,27 @@ class ReviewsApiTest extends TestCase
         $this->seeInDatabase('posts', [
             'status' => $response['data']['status'],
         ]);
+    }
+
+    /**
+     * Test that non-admin cannot review posts.
+     *
+     * @return void
+     */
+    public function testUnauthenticatedUserCantReviewPosts()
+    {
+        $user = factory(User::class)->make();
+
+        $this->be($user);
+
+        // Create a post.
+        $post = factory(Post::class)->create();
+        $review = [
+            'post_id' => $post->id,
+            'status' => 'accepted',
+        ];
+
+        $this->json('PUT', $this->reviewsUrl, $review);
+        $this->assertResponseStatus(403);
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
-namespace Rogue\Http\Controllers\Api;
+namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Post;
 use Rogue\Repositories\PostRepository;
 use Rogue\Http\Requests\ReviewsRequest;
 use Rogue\Http\Transformers\PostTransformer;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ReviewsController extends ApiController
+class ReviewsController extends Controller
 {
     /**
      * The post service instance.
@@ -19,7 +20,7 @@ class ReviewsController extends ApiController
     /**
      * @var \Rogue\Http\Transformers\PostTransformer
      */
-    protected $postTransformer;
+    protected $transformer;
 
     /**
      * Create a controller instance.
@@ -29,11 +30,11 @@ class ReviewsController extends ApiController
      */
     public function __construct(PostRepository $post)
     {
-        $this->middleware('api');
+        $this->middleware('auth');
+        $this->middleware('role:admin,staff');
 
         $this->post = $post;
-
-        $this->postTransformer = new PostTransformer;
+        $this->transformer = new PostTransformer;
     }
 
     /**
@@ -51,15 +52,16 @@ class ReviewsController extends ApiController
         $review['northstar_id'] = $post->northstar_id;
         $review['old_status'] = $post->status;
 
+        // Append admin's ID to the request for the "reviews" service.
+        $review['admin_northstar_id'] = auth()->user()->northstar_id;
         $reviewedPost = $this->post->reviews($review);
         $reviewedPostCode = $this->code($reviewedPost);
-
         $meta = [];
 
         if (isset($reviewedPost)) {
-            return $this->item($reviewedPost, $reviewedPostCode, $meta, $this->postTransformer);
+            return $this->item($reviewedPost, $reviewedPostCode);
         } else {
-            return 404;
+            throw (new ModelNotFoundException)->setModel('Post');
         }
     }
 

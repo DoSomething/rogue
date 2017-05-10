@@ -150,6 +150,7 @@ class PostRepository
     public function reviews($data)
     {
         $post = Post::where(['id' => $data['post_id']])->first();
+
         // Create the Review.
         $review = Review::create([
             'signup_id' => $post->signup_id,
