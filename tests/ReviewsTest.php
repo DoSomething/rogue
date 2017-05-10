@@ -35,7 +35,6 @@ class ReviewsTest extends TestCase
         ];
 
         $this->json('PUT', $this->reviewsUrl, $review);
-
         $this->assertResponseStatus(201);
 
         $response = $this->decodeResponseJson();

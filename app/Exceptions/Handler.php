@@ -50,6 +50,10 @@ class Handler extends ExceptionHandler
             return parent::render($request, $e);
         }
 
+        if ($e instanceof ModelNotFoundException) {
+            abort(404, $e->getMessage());
+        }
+
         if ($request->wantsJson()) {
             $fe = FlattenException::create($e);
             $json = [
