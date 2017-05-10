@@ -1,5 +1,4 @@
 import React from 'react';
-// import history modal
 
 class HistoryModal extends React.Component {
 	render() {
