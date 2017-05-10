@@ -64,7 +64,7 @@ class InboxItem extends React.Component {
               {campaign['reportback_info']['noun']} {campaign['reportback_info']['verb']}
             </div>
           </article>
-          <a href="#" onClick={() => this.props.showHistory(post['id'])}>Edit | Show History</a>
+          <a href="#" onClick={e => this.props.showHistory(post['id'], e)}>Edit | Show History</a>
           <br/>
           <h4>Photo Caption</h4>
           <p>{post['caption']}</p>

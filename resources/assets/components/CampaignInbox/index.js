@@ -30,8 +30,8 @@ class CampaignInbox extends React.Component {
     this.hideHistory = this.hideHistory.bind(this);
   }
 
-  showHistory(postId) {
-    console.log('trying to give you a history lesson');
+  showHistory(postId, event) {
+    event.preventDefault()
 
     this.setState({
       displayHistoryModal: true,
@@ -39,10 +39,12 @@ class CampaignInbox extends React.Component {
     });
   }
 
-  hideHistory(postId) {
+  hideHistory(event) {
+    event.preventDefault()
+
     this.setState({
       displayHistoryModal: false,
-      historyModalId: postId,
+      historyModalId: null,
     });
   }
 
@@ -78,7 +80,7 @@ class CampaignInbox extends React.Component {
         <div className="container">
           { map(posts, (post, key) => <InboxItem onUpdate={this.updatePost} showHistory={this.showHistory} key={key} details={{post: post, campaign: campaign}} />) }
           <ModalContainer>
-            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onClose={this.hideHistory} details={{post: posts[this.state.historyModalId], campaign: campaign}}/> : null}
+            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign}}/> : null}
           </ModalContainer>
         </div>
       )
