@@ -9,7 +9,7 @@ class HistoryModal extends React.Component {
 
 		return (
 			<div className="modal">
-				<div className="modal-close-button" role="dialog"></div>
+				<a href="#" onClick={this.props.onClose} className="modal-close-button">&times;</a>
 				<div className="modal__block">
 					<h3>Change Quantity</h3>
 					<div className="container__block -half">
@@ -24,8 +24,10 @@ class HistoryModal extends React.Component {
 					</div>
 
 					<h3>Reportback History</h3>
-					table of all the history goes here 📖
+					<p>table of all the history goes here 📖</p>
+
 				</div>
+				<a className="button -history">Save</a>
 			</div>
 		);
 	}

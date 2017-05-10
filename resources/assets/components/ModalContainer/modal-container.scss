@@ -95,3 +95,10 @@ $light-gray: #ddd !default;
     }
   }
 }
+
+.button {
+  &.-history {
+    width: 100%;
+    border-radius: 0px;
+  }
+}
