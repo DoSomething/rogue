@@ -25,7 +25,7 @@ class HistoryModal extends React.Component {
 					<h3>Reportback History</h3>
 					<p>table of all the history goes here 📖</p>
 				</div>
-				<a className="button -history">Save</a>
+				<a className="button -history" onClick={() => this.props.onUpdate(post)}>Save</a>
 			</div>
 		);
 	}

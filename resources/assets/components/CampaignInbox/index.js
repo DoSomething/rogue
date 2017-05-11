@@ -65,6 +65,25 @@ class CampaignInbox extends React.Component {
     });
   }
 
+  updateQuantity(postId, fields) {
+    console.log('updating quantity');
+    console.log(postId);
+    // @TODO: Make API request to Rogue.
+    // right now, fields only returns status. We need to add post_id (which we have in postId)
+    // and admin_northstar_id.
+    // let response = this.api.put('api/v2/posts', fields);
+
+    // this.setState((previousState) => {
+    //   const newState = {...previousState};
+    //   newState.posts[postId].status = fields.status;
+
+    //   // @TODO: Update this based on the response from API!
+    //   newState.posts[postId] = response.data;
+
+    //   return newState;
+    // });
+  }
+
   render() {
     const posts = this.state.posts;
     const campaign = this.props.campaign;
@@ -82,7 +101,7 @@ class CampaignInbox extends React.Component {
         <div className="container">
           { map(posts, (post, key) => <InboxItem onUpdate={this.updatePost} showHistory={this.showHistory} key={key} details={{post: post, campaign: campaign}} />) }
           <ModalContainer>
-            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign}}/> : null}
+            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign}}/> : null}
           </ModalContainer>
         </div>
       )
