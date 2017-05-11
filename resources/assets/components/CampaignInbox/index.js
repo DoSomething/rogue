@@ -25,10 +25,10 @@ class CampaignInbox extends React.Component {
   }
 
   updatePost(postId, fields) {
-    // @TODO: Make API request to Rogue.
     fields.post_id = postId;
     let response = this.api.put('reviews', fields);
-
+      console.log(response);
+      console.log('hi');
     this.setState((previousState) => {
       const newState = {...previousState};
       newState.posts[postId].status = fields.status;
@@ -36,6 +36,7 @@ class CampaignInbox extends React.Component {
       // @TODO: Update this based on the response from API!
       newState.posts[postId] = response.data;
 
+      console.log('made it!');
       return newState;
     });
   }

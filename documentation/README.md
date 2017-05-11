@@ -3,6 +3,10 @@ This is the Rogue API, it is used to capture activity from members.
 All `POST` and `PUT` endpoints require an api key (`X-DS-Rogue-API-Key`) in the header to be submitted with the request. 
 
 ## Endpoints
+#### Reviews
+Endpoint                                       | Functionality                                           
+---------------------------------------------- | --------------------------------------------------------
+`PUT /api/v2/reviews`                         | [Update a post's status when admin reviews the post](endpoints/reviews.md#reviews)
 
 ### v1
 #### Reportbacks
@@ -31,11 +35,6 @@ Endpoint                                       | Functionality
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
 `POST /api/v2/reactions`                       | [Create or update a reaction](endpoints/reactions.md#reactions)
-
-#### Reviews
-Endpoint                                       | Functionality                                           
----------------------------------------------- | --------------------------------------------------------
-`POST /api/v2/reviews`                         | [Update a post or multiple posts' status when admin reviews](endpoints/reviews.md#reviews)
 
 #### Signups
 Endpoint                                       | Functionality                                           
