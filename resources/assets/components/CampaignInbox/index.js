@@ -65,12 +65,13 @@ class CampaignInbox extends React.Component {
     });
   }
 
-  updateQuantity(postId, fields) {
+  updateQuantity(post, newQuantity) {
     console.log('updating quantity');
-    console.log(postId);
-    // @TODO: Make API request to Rogue.
-    // right now, fields only returns status. We need to add post_id (which we have in postId)
-    // and admin_northstar_id.
+    console.log(post);
+    console.log(newQuantity);
+
+    
+    // Make API request to Rogue.
     // let response = this.api.put('api/v2/posts', fields);
 
     // this.setState((previousState) => {
