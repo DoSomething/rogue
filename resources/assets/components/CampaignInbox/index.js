@@ -66,23 +66,37 @@ class CampaignInbox extends React.Component {
   }
 
   updateQuantity(post, newQuantity) {
+    // @TODO: remove these before merging
     console.log('updating quantity');
     console.log(post);
     console.log(newQuantity);
 
-    
-    // Make API request to Rogue.
-    // let response = this.api.put('api/v2/posts', fields);
+    // Fields to send to /posts
+    const fields = {
+      northstar_id: post.user.id,
+      campaign_id: post.signup.campaign_id,
+      campaign_run_id: post.signup.campaign_run_id,
+      quantity: newQuantity,
+    };
 
+    console.log(fields); //@TODO: remove this
+
+    // @TODO: need to update state for all posts under this SIGNUP
+
+    // Make API request to Rogue.
+    // let response = this.api.post('api/v2/posts', fields);
+
+    // Update the state
     // this.setState((previousState) => {
     //   const newState = {...previousState};
-    //   newState.posts[postId].status = fields.status;
 
-    //   // @TODO: Update this based on the response from API!
-    //   newState.posts[postId] = response.data;
+    //  @TODO update quant in signup of all other posts with the same signup_id - how?
 
     //   return newState;
     // });
+
+    // Close the modal (this doesn't work yet)
+    (e) => this.hideHistory(e);
   }
 
   render() {
