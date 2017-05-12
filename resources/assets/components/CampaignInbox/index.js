@@ -49,17 +49,17 @@ class CampaignInbox extends React.Component {
   }
 
   updatePost(postId, fields) {
-    // @TODO: Make API request to Rogue.
-    // right now, fields only returns status. We need to add post_id (which we have in postId)
-    // and admin_northstar_id.
-    let response = this.api.put('api/v2/reviews', fields);
+    fields.post_id = postId;
 
     this.setState((previousState) => {
       const newState = {...previousState};
       newState.posts[postId].status = fields.status;
 
-      // @TODO: Update this based on the response from API!
-      newState.posts[postId] = response.data;
+      let response = this.api.put('reviews', fields);
+
+      response.then(function(result) {
+        newState.posts[postId].status = result.data.status;
+      });
 
       return newState;
     });

@@ -17,8 +17,6 @@ class PostApiTest extends TestCase
      */
     public function testCreatingAPost()
     {
-        $this->expectsJobs(Rogue\Jobs\SendPostToPhoenix::class);
-
         // Create test Post. Temporarily use the current test reportback data
         // array as the requests are the same.
         // Create an uploaded file.

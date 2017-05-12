@@ -1,9 +1,9 @@
 ## Reviews
 
-Update a post or multiple posts' status when an admin reviews.
+Update a post's status when an admin reviews the post.
 
 ```
-PUT /api/v2/reviews
+PUT /reviews
 ```
 
   - **post_id**: (string) required.
