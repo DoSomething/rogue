@@ -26,10 +26,12 @@ class CampaignInbox extends React.Component {
 
     this.api = new RestApiClient;
     this.updatePost = this.updatePost.bind(this);
+    this.updateQuantity = this.updateQuantity.bind(this);
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
   }
 
+  // Open the history modal of the given post
   showHistory(postId, event) {
     event.preventDefault()
 
@@ -39,6 +41,7 @@ class CampaignInbox extends React.Component {
     });
   }
 
+  // Close the open history modal
   hideHistory(event) {
     event.preventDefault()
 
@@ -84,19 +87,26 @@ class CampaignInbox extends React.Component {
     // @TODO: need to update state for all posts under this SIGNUP
 
     // Make API request to Rogue.
-    // let response = this.api.post('api/v2/posts', fields);
-
     // Update the state
-    // this.setState((previousState) => {
-    //   const newState = {...previousState};
+    this.setState((previousState) => {
+      const newState = {...previousState};
+      console.log('state stuff:');
+      console.log(newState.posts[post.id].status);
+
+      let response = this.api.post('api/v2/posts', fields);
+
+      response.then(function(result) {
+        console.log(newState.posts[post.id].quantity);
+        newState.posts[post.id].quantity = result.quantity;
+      });
 
     //  @TODO update quant in signup of all other posts with the same signup_id - how?
 
-    //   return newState;
-    // });
+      return newState;
+    });
 
     // Close the modal (this doesn't work yet)
-    (e) => this.hideHistory(e);
+    // (e) => this.hideHistory(e);
   }
 
   render() {
