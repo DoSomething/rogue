@@ -26,17 +26,17 @@ class CampaignInbox extends React.Component {
 
   updatePost(postId, fields) {
     fields.post_id = postId;
-    let response = this.api.put('reviews', fields);
-      console.log(response);
-      console.log('hi');
+
     this.setState((previousState) => {
       const newState = {...previousState};
       newState.posts[postId].status = fields.status;
 
-      // @TODO: Update this based on the response from API!
-      newState.posts[postId] = response.data;
+      let response = this.api.put('reviews', fields);
 
-      console.log('made it!');
+      response.then(function(result) {
+        newState.posts[postId].status = result.data.status;
+      });
+
       return newState;
     });
   }
