@@ -17,4 +17,16 @@ class TagsController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
     }
+
+    /**
+     * Add or soft delete a tag to a post when reviewed.
+     *
+     * @param Rogue\Http\Requests\TagsRequest $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(TagsRequest $request)
+    {
+
+    }
 }
