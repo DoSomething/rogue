@@ -41,7 +41,9 @@ class CampaignInbox extends React.Component {
   }
 
   // Close the open history modal
-  hideHistory() {
+  hideHistory(event) {
+    event.preventDefault()
+
     this.setState({
       displayHistoryModal: false,
       historyModalId: null,
@@ -96,7 +98,7 @@ class CampaignInbox extends React.Component {
     });
 
     // Close the modal
-    this.hideHistory();
+    this.hideHistory(event);
   }
 
   render() {
