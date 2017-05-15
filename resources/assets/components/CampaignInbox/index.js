@@ -1,6 +1,5 @@
 import React from 'react';
-import { flatMap } from 'lodash';
-import { keyBy, map, sample } from 'lodash';
+import { flatMap, keyBy, map, sample, forEach } from 'lodash';
 import { RestApiClient} from '@dosomething/gateway';
 
 import InboxItem from '../InboxItem';
@@ -42,9 +41,7 @@ class CampaignInbox extends React.Component {
   }
 
   // Close the open history modal
-  hideHistory(event) {
-    event.preventDefault()
-
+  hideHistory() {
     this.setState({
       displayHistoryModal: false,
       historyModalId: null,
@@ -69,11 +66,6 @@ class CampaignInbox extends React.Component {
   }
 
   updateQuantity(post, newQuantity) {
-    // @TODO: remove these before merging
-    console.log('updating quantity');
-    console.log(post);
-    console.log(newQuantity);
-
     // Fields to send to /posts
     const fields = {
       northstar_id: post.user.id,
@@ -82,31 +74,29 @@ class CampaignInbox extends React.Component {
       quantity: newQuantity,
     };
 
-    console.log(fields); //@TODO: remove this
+    // Make API request to Rogue to update the quantity on the backend
+    let response = this.api.post('api/v2/posts', fields);
 
-    // @TODO: need to update state for all posts under this SIGNUP
+    response.then((result) => {
+      // Update the state
+      this.setState((previousState) => {
+        const newState = {...previousState};
+        const signupChanged = post.signup_id;
 
-    // Make API request to Rogue.
-    // Update the state
-    this.setState((previousState) => {
-      const newState = {...previousState};
-      console.log('state stuff:');
-      console.log(newState.posts[post.id].status);
+        // Update the quantity for each post under this signup
+        forEach (newState.posts, (value) => {
+          if (value.signup_id == signupChanged) {
+            value.signup.quantity = newQuantity;
+          }
+        });
 
-      let response = this.api.post('api/v2/posts', fields);
-
-      response.then(function(result) {
-        console.log(newState.posts[post.id].quantity);
-        newState.posts[post.id].quantity = result.quantity;
+        // Return the new state
+        return newState;
       });
-
-    //  @TODO update quant in signup of all other posts with the same signup_id - how?
-
-      return newState;
     });
 
-    // Close the modal (this doesn't work yet)
-    // (e) => this.hideHistory(e);
+    // Close the modal
+    this.hideHistory();
   }
 
   render() {
