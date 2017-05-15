@@ -55,4 +55,12 @@ class Post extends Model
     {
         return $this->hasMany(Reaction::class);
     }
+
+    /**
+     * Get all fo the tags for the post.
+     */
+    public function tags()
+    {
+        return $this->morphMany(Tag::class, 'taggable');
+    }
 }
