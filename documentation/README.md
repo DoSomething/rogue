@@ -6,7 +6,7 @@ All `POST` and `PUT` endpoints require an api key (`X-DS-Rogue-API-Key`) in the 
 #### Reviews
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
-`PUT /api/v2/reviews`                         | [Update a post's status when admin reviews the post](endpoints/reviews.md#reviews)
+`PUT /reviews`                                 | [Update a post's status when admin reviews the post](endpoints/reviews.md#reviews)
 
 ### v1
 #### Reportbacks
