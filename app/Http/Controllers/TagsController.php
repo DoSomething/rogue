@@ -43,10 +43,10 @@ class TagsController extends Controller
         $tagData['admin_northstar_id'] = auth()->user()->northstar_id;
         $taggedPost = $this->post->tag($tagData);
 
-        if (isset($taggedPost)) {
-            return 201;
-        } else {
+        if (! isset($taggedPost)) {
             throw (new ModelNotFoundException)->setModel('Post');
         }
+
+        return;
     }
 }

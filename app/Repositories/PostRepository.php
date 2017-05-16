@@ -5,6 +5,7 @@ namespace Rogue\Repositories;
 use Rogue\Models\Post;
 use Rogue\Services\AWS;
 use Rogue\Models\Review;
+use Conner\Tagging\Model\Tagged;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
 
@@ -178,7 +179,14 @@ class PostRepository
     {
         $post = Post::where(['id' => $data['post_id']])->first();
 
-        // @TODO: save admin_northstar_id to database below
+        // @TODO: save admin_northstar_id to database below.
+        $tagged = Tagged::create([
+            'tagged_id' => $post->id,
+            'taggable_type' => 'Rogue\Models\Post',
+            'tag_name' => $data['tag_name'],
+            'admin_northstar_id' => $data['admin_northstar_id'],
+        ]);
+
         // Check if the post already has the tag.
         // If so, soft delete. Otherwise, add the tag to the post.
         if (in_array($data['tag_name'], $post->tagNames())) {
