@@ -10,7 +10,7 @@ class Tag extends Model
 {
     use Taggable, SoftDeletes;
 
-    protected $table = 'tagging_tags';
+    protected $table = 'tagging_tagged';
 
     /**
      * The attributes that should be mutated to dates.
@@ -24,7 +24,7 @@ class Tag extends Model
      *
      * @var array
      */
-    protected $fillable = ['tag_group_id', 'slug', 'name', 'suggest', 'count'];
+    protected $fillable = ['taggable_id', 'taggable_type', 'tag_name', 'tag_slug', 'admin_northstar_id'];
 
     /**
      * Get all of the posts that are assigned this tag.
