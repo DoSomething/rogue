@@ -90,7 +90,7 @@ class CampaignInbox extends React.Component {
         // Update the quantity for each post under this signup
         forEach (newState.posts, (value) => {
           if (value.signup_id == signupChanged) {
-            value.signup.quantity = newQuantity;
+            value.signup.quantity = result.quantity;
           }
         });
 
