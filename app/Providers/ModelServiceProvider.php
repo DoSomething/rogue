@@ -40,11 +40,11 @@ class ModelServiceProvider extends ServiceProvider
         });
 
         // When Tags are associated or unassociated to a post create an event for them.
-        Tagged::saved(function ($tagged) {
-            $tagged->events()->create([
-                'content' => $tagged->toJson(),
-            ]);
-        });
+        // Tagged::saved(function ($tagged) {
+        //     $tagged->events()->create([
+        //         'content' => $tagged->toJson(),
+        //     ]);
+        // });
     }
 
     /**
