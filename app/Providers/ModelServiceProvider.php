@@ -5,6 +5,7 @@ namespace Rogue\Providers;
 use Rogue\Models\Post;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
+use Rogue\Models\Tag;
 use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider
@@ -35,6 +36,13 @@ class ModelServiceProvider extends ServiceProvider
         Review::saved(function ($review) {
             $review->events()->create([
                 'content' => $review->toJson(),
+            ]);
+        });
+
+        // When Tags are saved create an event for them.
+        Tag::save(function ($tag) {
+            $tag->events()->create([
+                'content' => $tag->toJson(),
             ]);
         });
     }

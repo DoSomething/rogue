@@ -29,7 +29,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::put('reviews', 'ReviewsController@reviews');
 
     // tags
-    Route::post('tags', 'TagsController@tag');
+    Route::post('tags', 'TagsController@store');
 });
 
 // Legacy API Routes

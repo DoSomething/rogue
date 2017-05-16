@@ -33,4 +33,12 @@ class Tag extends Model
     {
         return $this->morphedByMany(Post::class, 'taggable');
     }
+
+    /**
+     * Each tag has events.
+     */
+    public function events()
+    {
+        return $this->morphMany(Event::class, 'eventable');
+    }
 }
