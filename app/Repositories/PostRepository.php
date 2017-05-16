@@ -139,9 +139,7 @@ class PostRepository
     }
 
     /**
-     * Updates a photo(s)'s status after being reviewed.
-     * @todo - update with new logic once photos table is removed
-     * and everything lives on the post.
+     * Updates a post's status after being reviewed.
      *
      * @param array $data
      *
@@ -165,6 +163,29 @@ class PostRepository
         // Update the status on the Post.
         $post->status = $data['status'];
         $post->save();
+
+        return $post;
+    }
+
+    /**
+     * Updates a post's tags when added or deleted.
+     *
+     * @param array $data
+     *
+     * @return
+     */
+    public function tag($data)
+    {
+        $post = Post::where(['id' => $data['post_id']])->first();
+
+        // @TODO: save admin_northstar_id to database below
+        // Check if the post already has the tag.
+        // If so, soft delete. Otherwise, add the tag to the post.
+        if (in_array($data['tag_name'], $post->tagNames())) {
+            $post->untag($data['tag_name']);
+        } else {
+            $post->tag($data['tag_name']);
+        }
 
         return $post;
     }

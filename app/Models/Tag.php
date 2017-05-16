@@ -10,7 +10,7 @@ class Tag extends Model
 {
     use Taggable, SoftDeletes;
 
-    protected $table = 'tagging_tagged';
+    protected $table = 'tagging_tags';
 
     /**
      * The attributes that should be mutated to dates.
@@ -24,7 +24,7 @@ class Tag extends Model
      *
      * @var array
      */
-    protected $fillable = ['taggable_id', 'taggable_type', 'tag_name', 'tag_slug', 'admin_northstar_id'];
+    protected $fillable = ['tag_group_id', 'slug', 'name', 'suggest', 'count'];
 
     /**
      * Get all of the posts that are assigned this tag.
@@ -37,8 +37,8 @@ class Tag extends Model
     /**
      * Each tag has events.
      */
-    public function events()
-    {
-        return $this->morphMany(Event::class, 'eventable');
-    }
+    // public function events()
+    // {
+    //     return $this->morphMany(Event::class, 'eventable');
+    // }
 }
