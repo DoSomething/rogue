@@ -187,7 +187,11 @@ class PostRepository
             $post->tag($data['tag_name']);
         }
 
-        return $post;
+        if ($post) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

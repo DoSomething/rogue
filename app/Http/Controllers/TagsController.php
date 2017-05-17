@@ -4,7 +4,6 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Http\Requests\TagsRequest;
 use Rogue\Repositories\PostRepository;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TagsController extends Controller
 {
@@ -41,8 +40,8 @@ class TagsController extends Controller
         $tagData = $request->all();
         $taggedPost = $this->post->tag($tagData);
 
-        if (! isset($taggedPost)) {
-            throw (new ModelNotFoundException)->setModel('Post');
+        if (! $taggedPost) {
+            abort(500, 'Tag was not successfully created/deleted.');
         }
 
         return;
