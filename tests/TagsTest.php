@@ -58,7 +58,7 @@ class TagsTest extends TestCase
      * POST /tags
      * @return void
      */
-    public function testSoftDeleteTagOnAPost()
+    public function testDeleteTagOnAPost()
     {
         $user = factory(User::class)->make([
             'role' => 'admin',
@@ -70,7 +70,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
         $post->tag('Good Photo');
 
-        // Soft delete tag.
+        // Delete tag.
         $tag = [
             'post_id' => $post->id,
             'tag_name' => 'Good Photo',
@@ -84,12 +84,7 @@ class TagsTest extends TestCase
             'eventable_type' => 'Conner\Tagging\Model\Tagged',
         ]);
 
-        // Make sure the tag is soft deleted.
-        $this->notSeeInDatabase('tagging_tagged', [
-            'deleted_at' => null,
-        ]);
-
-        // Make sure that the post's tags are updated.
+        // Make sure that the tag is deleted.
         $this->assertEmpty($post->tagNames());
     }
 
