@@ -41,7 +41,7 @@ class TagsController extends Controller
         $taggedPost = $this->post->tag($tagData);
 
         if (! $taggedPost) {
-            abort(500, 'Tag was not successfully created/deleted.');
+            response()->json(['error' => 'Tag was not successfully created/deleted.'], 500);
         }
 
         return;
