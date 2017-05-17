@@ -18,14 +18,14 @@ class HistoryModal extends React.Component {
 					<div className="container__block -half">
 						<h4>New Quantity</h4>
 						<div className="form-item">
-							<input type="text" className="text-field" placeholder="Enter # here"></input>
+							<input ref={(input) => this.newQuantity = input} type="text" className="text-field" placeholder="Enter # here"/>
 						</div>
 					</div>
 
 					<h3>Reportback History</h3>
 					<p>table of all the history goes here 📖</p>
 				</div>
-				<a className="button -history">Save</a>
+				<a className="button -history" onClick={() => this.props.onUpdate(post, this.newQuantity.value)}>Save</a>
 			</div>
 		);
 	}
