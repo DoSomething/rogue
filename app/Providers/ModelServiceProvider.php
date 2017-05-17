@@ -51,7 +51,7 @@ class ModelServiceProvider extends ServiceProvider
 
             Event::create([
                 'eventable_id' => $post->id,
-                'eventable_type' => 'Conner\Tagging\Model\Tagged',
+                'eventable_type' => $post->getModel(),
                 'content' => $post->toJson(),
             ]);
         });

@@ -39,7 +39,7 @@ class TagsTest extends TestCase
 
         // Make sure we created a event for the tag.
         $this->seeInDatabase('events', [
-            'eventable_type' => 'Conner\Tagging\Model\Tagged',
+            'eventable_type' => 'Rogue\Models\Post',
         ]);
 
         // Make sure the tag is created.
@@ -81,7 +81,7 @@ class TagsTest extends TestCase
 
         // Make sure we created an event for the tag.
         $this->seeInDatabase('events', [
-            'eventable_type' => 'Conner\Tagging\Model\Tagged',
+            'eventable_type' => 'Rogue\Models\Post',
         ]);
 
         // Make sure that the tag is deleted.
