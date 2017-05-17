@@ -178,7 +178,7 @@ class PostRepository
      */
     public function tag($data)
     {
-        $post = Post::where(['id' => $data['post_id']])->first();
+        $post = Post::findOrFail($data['post_id']);
 
         // Check if the post already has the tag.
         // If so, soft delete. Otherwise, add the tag to the post.
