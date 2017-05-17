@@ -22,8 +22,8 @@ class TagsRequest extends Request
     public function rules()
     {
         return [
-            'post_id' => 'required',
-            'tag_name' => 'required',
+            'post_id' => 'required|int',
+            'tag_name' => 'required|string',
         ];
     }
 }

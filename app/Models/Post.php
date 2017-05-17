@@ -10,8 +10,6 @@ class Post extends Model
 {
     use Taggable, SoftDeletes;
 
-    protected $table = 'posts';
-
     /**
      * The attributes that should be mutated to dates.
      *
