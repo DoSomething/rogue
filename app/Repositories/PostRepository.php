@@ -180,14 +180,6 @@ class PostRepository
     {
         $post = Post::where(['id' => $data['post_id']])->first();
 
-        // @TODO: save admin_northstar_id to database below.
-        // $tagged = Tagged::create([
-        //     'tagged_id' => $post->id,
-        //     'taggable_type' => 'Rogue\Models\Post',
-        //     'tag_name' => $data['tag_name'],
-        //     'admin_northstar_id' => $data['admin_northstar_id'],
-        // ]);
-
         // Check if the post already has the tag.
         // If so, soft delete. Otherwise, add the tag to the post.
         if (in_array($data['tag_name'], $post->tagNames())) {
@@ -203,17 +195,17 @@ class PostRepository
                     'eventable_id' => $post->id,
                     'eventable_type' => 'Conner\Tagging\Model\Tagged',
                     'content' => $post->toJson(),
-
                 ]);
             }
         } else {
             $post->tag($data['tag_name']);
 
-            $post->tag_name = $data['tag_name'];
-            $post->admin_northstar_id = $data['admin_northstar_id'];
-            $post->action = 'create';
             // Create an event when the tag is saved.
             if (in_array($data['tag_name'], $post->tagNames())) {
+                $post->tag_name = $data['tag_name'];
+                $post->admin_northstar_id = $data['admin_northstar_id'];
+                $post->action = 'create';
+
                 Event::create([
                     'eventable_id' => $post->id,
                     'eventable_type' => 'Conner\Tagging\Model\Tagged',

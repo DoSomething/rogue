@@ -10,8 +10,6 @@ PUT /reviews
     The id of the post that has been reviewed.
   - **status**: (string) required.
     The status of the post. 
-  - **admin_northstar_id**: (string) required.
-    The reviewer's northstar id. 
   - **comment**: (string)
     A comment that the reviewer has made. 
 

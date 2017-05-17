@@ -1,6 +1,5 @@
 <?php
 
-use Rogue\Models\Event;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Faker\Generator;
@@ -13,9 +12,9 @@ class TagsTest extends TestCase
     protected $tagsUrl = 'tags';
 
     /**
-     * Test that a PUT request to /tags updates the post's tags and creates a new event and tagged entry.
+     * Test that a POST request to /tags updates the post's tags and creates a new event and tagged entry.
      *
-     * POST /reviews
+     * POST /tags
      * @return void
      */
     public function testAddingATagToAPost()
@@ -54,7 +53,7 @@ class TagsTest extends TestCase
     }
 
     /**
-     * Test that a PUT request to /tags soft deletes an already existing tag on a post, creates a new event, and tagged entry.
+     * Test that a POST request to /tags soft deletes an already existing tag on a post, creates a new event, and tagged entry.
      *
      * POST /tags
      * @return void

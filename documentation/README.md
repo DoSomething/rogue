@@ -8,6 +8,11 @@ Endpoint                                       | Functionality
 ---------------------------------------------- | --------------------------------------------------------
 `PUT /reviews`                                 | [Update a post's status when admin reviews the post](endpoints/reviews.md#reviews)
 
+#### Tags
+Endpoint                                       | Functionality                                           
+---------------------------------------------- | --------------------------------------------------------
+`POST /tags`                                 | [Add or delete a post's tag](endpoints/reviews.md#tags)
+
 ### v1
 #### Reportbacks
 Endpoint                                       | Functionality                                           
