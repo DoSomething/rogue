@@ -3,10 +3,9 @@
 namespace Rogue\Repositories;
 
 use Rogue\Models\Post;
+use Rogue\Models\Event;
 use Rogue\Services\AWS;
 use Rogue\Models\Review;
-use Rogue\Models\Event;
-use Conner\Tagging\Model\Tagged;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
 
@@ -186,7 +185,7 @@ class PostRepository
             $post->untag($data['tag_name']);
 
             // Create an event when the tag is deleted.
-            if (!in_array($data['tag_name'], $post->tagNames())) {
+            if (! in_array($data['tag_name'], $post->tagNames())) {
                 $post->tag_name = $data['tag_name'];
                 $post->admin_northstar_id = $data['admin_northstar_id'];
                 $post->action = 'delete';

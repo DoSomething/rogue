@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TagsController extends Controller
 {
-
     /**
      * The post service instance.
      *
