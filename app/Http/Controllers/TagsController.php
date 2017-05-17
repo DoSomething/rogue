@@ -39,7 +39,6 @@ class TagsController extends Controller
     public function store(TagsRequest $request)
     {
         $tagData = $request->all();
-        $tagData['admin_northstar_id'] = auth()->user()->northstar_id;
         $taggedPost = $this->post->tag($tagData);
 
         if (! isset($taggedPost)) {
