@@ -3,9 +3,9 @@
 namespace Rogue\Providers;
 
 use Rogue\Models\Post;
+use Rogue\Models\Event;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
-use Rogue\Models\Event;
 use Conner\Tagging\Model\Tagged;
 use Illuminate\Support\ServiceProvider;
 
