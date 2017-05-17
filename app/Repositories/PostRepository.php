@@ -5,6 +5,7 @@ namespace Rogue\Repositories;
 use Rogue\Models\Post;
 use Rogue\Services\AWS;
 use Rogue\Models\Review;
+use Rogue\Models\Event;
 use Conner\Tagging\Model\Tagged;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
@@ -191,8 +192,34 @@ class PostRepository
         // If so, soft delete. Otherwise, add the tag to the post.
         if (in_array($data['tag_name'], $post->tagNames())) {
             $post->untag($data['tag_name']);
+
+            // Create an event when the tag is deleted.
+            if (!in_array($data['tag_name'], $post->tagNames())) {
+                $post->tag_name = $data['tag_name'];
+                $post->admin_northstar_id = $data['admin_northstar_id'];
+                $post->action = 'delete';
+
+                $event = Event::create([
+                    'eventable_id' => $post->id,
+                    'eventable_type' => 'Conner\Tagging\Model\Tagged',
+                    'content' => $post->toJson(),
+
+                ]);
+            }
         } else {
             $post->tag($data['tag_name']);
+
+            $post->tag_name = $data['tag_name'];
+            $post->admin_northstar_id = $data['admin_northstar_id'];
+            $post->action = 'create';
+            // Create an event when the tag is saved.
+            if (in_array($data['tag_name'], $post->tagNames())) {
+                Event::create([
+                    'eventable_id' => $post->id,
+                    'eventable_type' => 'Conner\Tagging\Model\Tagged',
+                    'content' => $post->toJson(),
+                ]);
+            }
         }
 
         return $post;

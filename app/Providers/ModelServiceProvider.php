@@ -5,7 +5,6 @@ namespace Rogue\Providers;
 use Rogue\Models\Post;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
-use Conner\Tagging\Model\Tagged;
 use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider
@@ -38,13 +37,6 @@ class ModelServiceProvider extends ServiceProvider
                 'content' => $review->toJson(),
             ]);
         });
-
-        // When Tags are associated or unassociated to a post create an event for them.
-        // Tagged::saved(function ($tagged) {
-        //     $tagged->events()->create([
-        //         'content' => $tagged->toJson(),
-        //     ]);
-        // });
     }
 
     /**

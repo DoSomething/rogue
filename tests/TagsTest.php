@@ -1,6 +1,6 @@
 <?php
 
-// use Rogue\Models\Event;
+use Rogue\Models\Event;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Faker\Generator;
@@ -38,15 +38,13 @@ class TagsTest extends TestCase
         $this->json('POST', $this->tagsUrl, $tag);
         $this->assertResponseStatus(200);
 
-        // @TODO: Make sure we created a event for the tag.
-        // $this->seeInDatabase('events', [
-        //     'eventable_id' => $post->id,
-        //     'eventable_type' => 'Rogue\Models\Post',
-        // ]);
+        // Make sure we created a event for the tag.
+        $this->seeInDatabase('events', [
+            'eventable_type' => 'Conner\Tagging\Model\Tagged',
+        ]);
 
         // Make sure the tag is created.
         $this->seeInDatabase('tagging_tagged', [
-            // 'admin_northstar_id' => $user->northstar_id,
             'taggable_id' => $post->id,
             'tag_name' => 'Good Photo',
         ]);
@@ -82,7 +80,10 @@ class TagsTest extends TestCase
         $this->json('POST', $this->tagsUrl, $tag);
         $this->assertResponseStatus(200);
 
-        // @TODO: Make sure we created an event for the tag.
+        // Make sure we created an event for the tag.
+        $this->seeInDatabase('events', [
+            'eventable_type' => 'Conner\Tagging\Model\Tagged',
+        ]);
 
         // Make sure the tag is soft deleted.
         $this->notSeeInDatabase('tagging_tagged', [
@@ -91,7 +92,6 @@ class TagsTest extends TestCase
 
         // Make sure that the post's tags are updated.
         $this->assertEmpty($post->tagNames());
-
     }
 
     /**
