@@ -3,8 +3,10 @@
 namespace Rogue\Providers;
 
 use Rogue\Models\Post;
+use Rogue\Models\Event;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
+use Conner\Tagging\Model\Tagged;
 use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider
@@ -35,6 +37,22 @@ class ModelServiceProvider extends ServiceProvider
         Review::saved(function ($review) {
             $review->events()->create([
                 'content' => $review->toJson(),
+            ]);
+        });
+
+        Tagged::saved(function ($tagged) {
+            $post = Post::find($tagged->taggable_id);
+            $adminId = auth()->user()->northstar_id;
+
+            $post->action = [
+                'type' => 'tagged',
+                'admin' => $adminId,
+            ];
+
+            Event::create([
+                'eventable_id' => $post->id,
+                'eventable_type' => $post->getModel(),
+                'content' => $post->toJson(),
             ]);
         });
     }

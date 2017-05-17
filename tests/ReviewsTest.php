@@ -1,7 +1,6 @@
 <?php
 
 use Rogue\Models\Event;
-use Rogue\Models\Photo;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Faker\Generator;

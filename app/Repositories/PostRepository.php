@@ -3,6 +3,7 @@
 namespace Rogue\Repositories;
 
 use Rogue\Models\Post;
+use Rogue\Models\Event;
 use Rogue\Services\AWS;
 use Rogue\Models\Review;
 use Rogue\Services\Registrar;
@@ -139,9 +140,7 @@ class PostRepository
     }
 
     /**
-     * Updates a photo(s)'s status after being reviewed.
-     * @todo - update with new logic once photos table is removed
-     * and everything lives on the post.
+     * Updates a post's status after being reviewed.
      *
      * @param array $data
      *
@@ -167,6 +166,32 @@ class PostRepository
         $post->save();
 
         return $post;
+    }
+
+    /**
+     * Updates a post's tags when added or deleted.
+     *
+     * @param array $data
+     *
+     * @return
+     */
+    public function tag($data)
+    {
+        $post = Post::findOrFail($data['post_id']);
+
+        // Check if the post already has the tag.
+        // If so, soft delete. Otherwise, add the tag to the post.
+        if (in_array($data['tag_name'], $post->tagNames())) {
+            $post->untag($data['tag_name']);
+        } else {
+            $post->tag($data['tag_name']);
+        }
+
+        if ($post) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
