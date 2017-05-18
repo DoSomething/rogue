@@ -77,7 +77,7 @@ class InboxItem extends React.Component {
             <li><StatusButton type="rejected" setStatus={this.setStatus}/></li>
           </ul>
           <ul className="form-actions -inline">
-            <li><button className="button -tertiary">Delete</button></li>
+            <li><button className="button -tertiary" onClick={e => this.props.deletePost(post['id'], e)}>Delete</button></li>
           </ul>
           {post.status === 'accepted' ? <Tags /> : null}
           <h4>Meta</h4>
