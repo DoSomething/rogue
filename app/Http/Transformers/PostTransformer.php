@@ -23,6 +23,7 @@ class PostTransformer extends TransformerAbstract
                 'url' => $post->url,
                 'caption' => $post->caption,
             ],
+            //'tagged' => $post->tagged,
             'status' => $post->status,
             'source' => $post->source,
             'remote_addr' => $post->remote_addr,

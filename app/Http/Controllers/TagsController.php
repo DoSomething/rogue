@@ -4,6 +4,7 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Http\Requests\TagsRequest;
 use Rogue\Repositories\PostRepository;
+use Rogue\Http\Transformers\PostTransformer;
 
 class TagsController extends Controller
 {
@@ -13,6 +14,11 @@ class TagsController extends Controller
      * @var Rogue\Repositories\PostRepository
      */
     protected $post;
+
+    /**
+     * @var \Rogue\Http\Transformers\PostTransformer
+     */
+    protected $transformer;
 
     /**
      * Create a controller instance.
@@ -26,6 +32,7 @@ class TagsController extends Controller
         $this->middleware('role:admin,staff');
 
         $this->post = $post;
+        $this->transformer = new PostTransformer;
     }
 
     /**
@@ -37,13 +44,12 @@ class TagsController extends Controller
      */
     public function store(TagsRequest $request)
     {
-        $tagData = $request->all();
-        $taggedPost = $this->post->tag($tagData);
+        $post = $this->post->find($request->input('post_id'));
+        $tagged = $this->post->tag($post, $request->input('tag_name'));
 
-        if (! $taggedPost) {
-            response()->json(['error' => 'Tag was not successfully created/deleted.'], 500);
-        }
+        // @TODO: $post isn't showing the updated tags right now.
 
-        return;
+        // @TODO: We should use a transformer anywhere we send data to client.
+        return response()->json($post, $tagged ? 201 : 204);
     }
 }

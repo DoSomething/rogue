@@ -76,8 +76,8 @@ class TagsTest extends TestCase
             'tag_name' => 'Good Photo',
         ];
 
-        $this->json('POST', $this->tagsUrl, $tag);
-        $this->assertResponseStatus(200);
+        $response = $this->json('POST', $this->tagsUrl, $tag);
+        $this->assertResponseStatus(204);
 
         // Make sure we created an event for the tag.
         $this->seeInDatabase('events', [

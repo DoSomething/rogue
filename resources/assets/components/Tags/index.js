@@ -1,33 +1,31 @@
 import React from 'react';
-import { map } from 'lodash';
+import { map, findKey } from 'lodash';
 import classnames from 'classnames';
 
 class Tags extends React.Component {
   constructor() {
     super();
 
-    // @TODO: This should come from the server!
-    this.state = {
-      'good_photo': true,
-      'good_quote': false,
-      'hidden': false,
-      'sponsor': true,
-      'storytelling': true,
-    }
-
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(key) {
-    this.setState({
-      [key]: !this.state[key]
-    });
+    // Ask the CampaignInbox to update the post's tags.
+    this.props.onTag(this.props.id, key);
+
+
+    // if (this.props.details.post.id.tagged.includes(key)) {
+    //   this.props.onUpdate(this.props.details.post.id, { tagged: tagged.push(key) });
+    // } else {
+    //   var index = this.props.details.post.id.tagged.indexOf(key);
+    //   this.props.onUpdate(this.props.details.post.id, { tagged: tagged.splice(index, 1)});
+    // }
   }
 
   render() {
     const tags = {
-      'good_photo': 'Good Photo',
-      'good_quote': 'Good Quote',
+      'good-photo': 'Good Photo',
+      'good-quote': 'Good Quote',
       'hidden': 'Hide in Gallery',
       'sponsor': 'Good for Sponsor',
       'storytelling': 'Good for Storytelling',
@@ -39,7 +37,7 @@ class Tags extends React.Component {
         <ul className="aligned-actions">
           {map(tags, (label, key) => (
             <li key={key}>
-              <button className={classnames('tag', {'is-active': this.state[key]})}
+              <button className={classnames('tag', {'is-active': findKey(this.props.tagged, {'tag_slug': key})})}
                       onClick={() => this.handleClick(key)}>{label}</button>
             </li>
           ))}

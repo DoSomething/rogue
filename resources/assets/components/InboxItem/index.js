@@ -11,11 +11,16 @@ class InboxItem extends React.Component {
     super();
 
     this.setStatus = this.setStatus.bind(this);
+    this.updateTag = this.updateTag.bind(this);
   }
 
   // @todo - define this on the StatusButton component that can set some sort of global state.
   setStatus(status) {
     this.props.onUpdate(this.props.details.post.id, { status: status })
+  }
+
+  updateTag(tag) {
+    this.props.onUpdate(this.props)
   }
 
   getOtherPosts(post) {
@@ -79,7 +84,7 @@ class InboxItem extends React.Component {
           <ul className="form-actions -inline">
             <li><button className="button -tertiary" onClick={e => this.props.deletePost(post['id'], e)}>Delete</button></li>
           </ul>
-          {post.status === 'accepted' ? <Tags /> : null}
+          {post.status === 'accepted' ? <Tags id={post.id} tagged={post.tagged} onTag={this.props.onTag} /> : null}
           <h4>Meta</h4>
           <p>
             Post ID: {post['id']} <br/>

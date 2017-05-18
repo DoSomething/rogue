@@ -35,6 +35,13 @@ class PostRepository
     }
 
     /**
+     *
+     */
+    public function find($id) {
+        return Post::with('signup', 'tagged')->findOrFail($id);
+    }
+
+    /**
      * Create a Post.
      *
      * @param  array $data
@@ -175,22 +182,16 @@ class PostRepository
      *
      * @return
      */
-    public function tag($data)
+    public function tag($post, $tag)
     {
-        $post = Post::findOrFail($data['post_id']);
-
         // Check if the post already has the tag.
         // If so, soft delete. Otherwise, add the tag to the post.
-        if (in_array($data['tag_name'], $post->tagNames())) {
-            $post->untag($data['tag_name']);
-        } else {
-            $post->tag($data['tag_name']);
-        }
-
-        if ($post) {
-            return true;
-        } else {
+        if (in_array($tag, $post->tagNames())) {
+            $post->untag($tag);
             return false;
+        } else {
+            $post->tag($tag);
+            return true;
         }
     }
 
