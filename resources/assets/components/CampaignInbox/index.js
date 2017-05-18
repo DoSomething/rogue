@@ -1,5 +1,5 @@
 import React from 'react';
-import { flatMap, keyBy, map, sample, forEach } from 'lodash';
+import { flatMap, keyBy, map, sample, forEach, reject } from 'lodash';
 import { RestApiClient} from '@dosomething/gateway';
 
 import InboxItem from '../InboxItem';
@@ -28,6 +28,7 @@ class CampaignInbox extends React.Component {
     this.updateQuantity = this.updateQuantity.bind(this);
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
+    this.deletePost = this.deletePost.bind(this);
   }
 
   // Open the history modal of the given post
@@ -103,6 +104,28 @@ class CampaignInbox extends React.Component {
     this.hideHistory();
   }
 
+  deletePost(postId, event) {
+    event.preventDefault();
+    confirm('Are you sure you want to delete this?');
+
+    console.log('bout to delete this');
+    // Make API request to Rogue to update the quantity on the backend
+    let response = this.api.delete('api/v2/posts/'.concat(postId));
+
+    response.then((result) => {
+      // Update the state
+      this.setState((previousState) => {
+        var newState = {...previousState};
+
+        // Remove the deleted post from the state
+        newState.posts = reject(newState.posts, ['id', postId]);
+
+        // Return the new state
+        return newState;
+      });
+    });
+  }
+
   render() {
     const posts = this.state.posts;
     const campaign = this.props.campaign;
@@ -118,7 +141,7 @@ class CampaignInbox extends React.Component {
     if (posts.length !== 0) {
       return (
         <div className="container">
-          { map(posts, (post, key) => <InboxItem onUpdate={this.updatePost} showHistory={this.showHistory} key={key} details={{post: post, campaign: campaign}} />) }
+          { map(posts, (post, key) => <InboxItem onUpdate={this.updatePost} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign}} />) }
           <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign}}/> : null}
           </ModalContainer>
