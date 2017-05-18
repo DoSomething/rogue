@@ -106,24 +106,25 @@ class CampaignInbox extends React.Component {
 
   deletePost(postId, event) {
     event.preventDefault();
-    confirm('Are you sure you want to delete this?');
+    const confirmed = confirm('Are you sure you want to delete this?');
 
-    console.log('bout to delete this');
-    // Make API request to Rogue to update the quantity on the backend
-    let response = this.api.delete('api/v2/posts/'.concat(postId));
+    if (confirmed) {
+      // Make API request to Rogue to update the quantity on the backend
+      let response = this.api.delete('api/v2/posts/'.concat(postId));
 
-    response.then((result) => {
-      // Update the state
-      this.setState((previousState) => {
-        var newState = {...previousState};
+      response.then((result) => {
+        // Update the state
+        this.setState((previousState) => {
+          var newState = {...previousState};
 
-        // Remove the deleted post from the state
-        newState.posts = reject(newState.posts, ['id', postId]);
+          // Remove the deleted post from the state
+          newState.posts = reject(newState.posts, ['id', postId]);
 
-        // Return the new state
-        return newState;
+          // Return the new state
+          return newState;
+        });
       });
-    });
+    }
   }
 
   render() {
