@@ -39,8 +39,6 @@ class PostsController extends ApiController
      */
     public function __construct(PostService $posts, SignupRepository $signups)
     {
-        $this->middleware('api');
-
         $this->posts = $posts;
         $this->signups = $signups;
 

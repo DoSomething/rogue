@@ -33,7 +33,7 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 // Legacy API Routes
-Route::group(['prefix' => 'api/v1', 'middleware' => ['api', 'log.received.request']], function () {
+Route::group(['prefix' => 'api/v1', 'middleware' => ['auth.api', 'log.received.request']], function () {
     Route::get('/', function () {
         return 'Rogue API version 1';
     });
@@ -47,7 +47,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['api', 'log.received.reques
 });
 
 // v2 routes
-Route::group(['prefix' => 'api/v2', 'middleware' => ['log.received.request']], function () {
+Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api','log.received.request']], function () {
 
     // activity
     Route::get('activity', 'Api\ActivityController@index');
