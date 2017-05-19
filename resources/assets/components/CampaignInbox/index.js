@@ -106,7 +106,7 @@ class CampaignInbox extends React.Component {
 
   deletePost(postId, event) {
     event.preventDefault();
-    const confirmed = confirm('Are you sure you want to delete this?');
+    const confirmed = confirm('🚨🔥🚨Are you sure you want to delete this?🚨🔥🚨');
 
     if (confirmed) {
       // Make API request to Rogue to update the quantity on the backend
