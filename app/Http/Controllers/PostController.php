@@ -2,7 +2,6 @@
 
 namespace Rogue\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 
 class PostController extends Controller
