@@ -47,7 +47,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['auth.api', 'log.received.r
 });
 
 // v2 routes
-Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api','log.received.request']], function () {
+Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.request']], function () {
 
     // activity
     Route::get('activity', 'Api\ActivityController@index');

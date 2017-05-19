@@ -4,6 +4,8 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class SignupApiTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /*
      * Base URL for the Api.
      */

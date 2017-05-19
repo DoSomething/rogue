@@ -5,6 +5,8 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PostApiTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /*
      * Base URL for the Api.
      */

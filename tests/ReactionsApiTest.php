@@ -2,9 +2,12 @@
 
 use Rogue\Models\Post;
 use Faker\Generator;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ReactionsApiTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /*
      * Base URL for the Api.
      */
