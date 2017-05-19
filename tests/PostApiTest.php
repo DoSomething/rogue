@@ -60,28 +60,4 @@ class PostApiTest extends TestCase
             'quantity' => $post['quantity'],
         ]);
     }
-
-    /**
-     * Test that posts get soft deleted when hiting the DELETE endpoint.
-     *
-     * @return void
-     */
-    public function testDeletingAPost()
-    {
-        $post = factory(Post::class)->create();
-
-        $this->json('DELETE', $this->postsApiUrl . '/' . $post->id);
-
-        $this->assertResponseStatus(200);
-
-        // Check that the post record is still in the database
-        // Also, check that you can't find it with a `deleted_at` column as null.
-        $this->seeInDatabase('posts', [
-                'id' => $post->id,
-                'url' => null,
-            ])->notSeeInDatabase('posts', [
-                'id' => $post->id,
-                'deleted_at' => null,
-            ]);
-    }
 }
