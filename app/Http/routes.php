@@ -26,7 +26,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('users', 'UsersController@index');
 
     // posts
-    Route::delete('posts/{id}', 'Api\PostsController@destroy');
+    Route::delete('posts/{id}', 'PostController@destroy');
 
     // reviews
     Route::put('reviews', 'ReviewsController@reviews');

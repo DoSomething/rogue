@@ -110,7 +110,7 @@ class CampaignInbox extends React.Component {
 
     if (confirmed) {
       // Make API request to Rogue to update the quantity on the backend
-      let response = this.api.delete('api/v2/posts/'.concat(postId));
+      let response = this.api.delete('posts/'.concat(postId));
 
       response.then((result) => {
         // Update the state
