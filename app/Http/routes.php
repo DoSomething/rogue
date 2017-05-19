@@ -25,6 +25,9 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('users', 'UsersController@index');
 
+    // posts
+    Route::delete('posts/{id}', 'Api\PostsController@destroy');
+
     // reviews
     Route::put('reviews', 'ReviewsController@reviews');
 
@@ -54,7 +57,6 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.r
 
     // posts
     Route::post('posts', 'Api\PostsController@store');
-    Route::delete('posts/{id}', 'Api\PostsController@destroy');
 
     // reactions
     Route::post('reactions', 'Api\ReactionController@store');
