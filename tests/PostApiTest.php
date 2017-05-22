@@ -1,12 +1,9 @@
 <?php
 
 use Rogue\Models\Post;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PostApiTest extends TestCase
 {
-    use WithoutMiddleware;
-
     /*
      * Base URL for the Api.
      */
@@ -46,7 +43,7 @@ class PostApiTest extends TestCase
         // Mock sending image to AWS.
         Storage::shouldReceive('put')->andReturn(true);
 
-        $response = $this->json('POST', $this->postsApiUrl, $post);
+        $response = $this->authed()->json('POST', $this->postsApiUrl, $post);
 
         $this->assertResponseStatus(200);
 
