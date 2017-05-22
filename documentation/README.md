@@ -11,7 +11,7 @@ Endpoint                                       | Functionality
 #### Tags
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
-`POST /tags`                                 | [Add or delete a post's tag](endpoints/reviews.md#tags)
+`POST /tags`                                 | [Add or delete a post's tag](endpoints/tags.md#tags)
 
 ### v1
 #### Reportbacks
