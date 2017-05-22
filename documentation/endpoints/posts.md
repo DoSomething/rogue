@@ -56,10 +56,10 @@ Example Response:
 }
 ```
 
-Delete a post. Posts get soft deleted from the database.
+Allows admins to delete a post. Posts get soft deleted from the database.
 
 ```
-DELETE /api/v2/posts/{post_id}
+DELETE posts/{post_id}
 ```
 
 Example Response:

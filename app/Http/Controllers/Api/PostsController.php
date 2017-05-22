@@ -39,8 +39,6 @@ class PostsController extends ApiController
      */
     public function __construct(PostService $posts, SignupRepository $signups)
     {
-        $this->middleware('api');
-
         $this->posts = $posts;
         $this->signups = $signups;
 
@@ -83,23 +81,6 @@ class PostsController extends ApiController
             } else {
                 return $signup;
             }
-        }
-    }
-
-    /**
-     * Delete a resource in storage
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($postId)
-    {
-        $postDeleted = $this->posts->destroy($postId);
-
-        if ($postDeleted) {
-            return response()->json(['code' => 200, 'message' => 'Post deleted.']);
-        } else {
-            return response()->json(['code' => 500, 'message' => 'There was an error deleting the post']);
         }
     }
 }

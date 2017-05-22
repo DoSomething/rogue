@@ -25,6 +25,9 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('users', 'UsersController@index');
 
+    // posts
+    Route::delete('posts/{id}', 'PostController@destroy');
+
     // reviews
     Route::put('reviews', 'ReviewsController@reviews');
 
@@ -33,7 +36,7 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 // Legacy API Routes
-Route::group(['prefix' => 'api/v1', 'middleware' => ['api', 'log.received.request']], function () {
+Route::group(['prefix' => 'api/v1', 'middleware' => ['auth.api', 'log.received.request']], function () {
     Route::get('/', function () {
         return 'Rogue API version 1';
     });
@@ -47,14 +50,13 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['api', 'log.received.reques
 });
 
 // v2 routes
-Route::group(['prefix' => 'api/v2', 'middleware' => ['log.received.request']], function () {
+Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.request']], function () {
 
     // activity
     Route::get('activity', 'Api\ActivityController@index');
 
     // posts
     Route::post('posts', 'Api\PostsController@store');
-    Route::delete('posts/{id}', 'Api\PostsController@destroy');
 
     // reactions
     Route::post('reactions', 'Api\ReactionController@store');

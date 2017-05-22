@@ -78,4 +78,13 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         $test = true;
         return new \Illuminate\Http\UploadedFile($path, $original_name, $mime_type, $error, $test);
     }
+
+    public function authed()
+    {
+        $header = $this->transformHeadersToServerVars(['X-DS-Rogue-API-Key' => env('ROGUE_API_KEY')]);
+
+        $this->serverVariables = array_merge($this->serverVariables, $header);
+
+        return $this;
+    }
 }
