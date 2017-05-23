@@ -51,7 +51,8 @@ class TagsController extends Controller
 
         // @TODO: We should use a transformer anywhere we send data to client.
         // return $this->item($post, $tagged ? 201 : 204);
-        return response()->json($post, $tagged ? 201 : 204);
+        // return response()->json($post, $tagged ? 201 : 204);
+        return response()->json($tagged);
         // return response()->json(['tagged' => $tagged ? 'Tagged' : 'Untagged']);
         // return response()->json(['tag_name' => $request->input('tag_name')]);
 

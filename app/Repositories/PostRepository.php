@@ -187,14 +187,14 @@ class PostRepository
     {
         // Check if the post already has the tag.
         // If so, soft delete. Otherwise, add the tag to the post.
-        if (in_array($tag, $post->tagNames())) {
-        // dd($post->tagged);
+        if (in_array($tag, $post->tagNames(), TRUE)) {
             $post->untag($tag);
-            return false;
+            // return false;
         } else {
             $post->tag($tag);
-            return true;
+            // return true;
         }
+        return $post;
     }
 
     /**
