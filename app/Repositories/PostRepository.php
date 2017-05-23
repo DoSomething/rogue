@@ -194,7 +194,8 @@ class PostRepository
             $post->tag($tag);
             // return true;
         }
-        return $post;
+        return Post::with('signup', 'tagged')->findOrFail($post->id);
+        // return $post;
     }
 
     /**
