@@ -43,8 +43,8 @@ class ReviewsController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-	public function reviews(ReviewsRequest $request)
-	{
+    public function reviews(ReviewsRequest $request)
+    {
         $review = $request->all();
         $post = Post::where('id', $review['post_id'])->first();
         $review['signup_id'] = $post->signup_id;
@@ -61,7 +61,7 @@ class ReviewsController extends ApiController
         } else {
             throw (new ModelNotFoundException)->setModel('Post');
         }
-	}
+    }
 
     /**
      * Determine status code.
