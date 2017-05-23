@@ -59,6 +59,9 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['log.received.request']], f
     // reactions
     Route::post('reactions', 'Api\ReactionController@store');
 
+    // reviews
+    Route::post('reviews', 'Api\ReviewsController@reviews');
+
     // signups
     Route::post('signups', 'Api\SignupsController@store');
 });
