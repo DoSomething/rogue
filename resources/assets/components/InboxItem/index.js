@@ -25,7 +25,6 @@ class InboxItem extends React.Component {
 
   getOtherPosts(post) {
     const post_id = post['id'];
-
     // get array of posts
     const other_posts = clone(post['signup']['posts']);
 

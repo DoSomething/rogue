@@ -56,8 +56,7 @@ class CampaignInbox extends React.Component {
 
   updatePost(postId, fields) {
     fields.post_id = postId;
-    // if fields.status, this is a review
-    // else this is a tag
+
     this.setState((previousState) => {
       const newState = {...previousState};
       newState.posts[postId].status = fields.status;
@@ -72,26 +71,25 @@ class CampaignInbox extends React.Component {
     });
   }
 
-  updateTag(postId, tagName) {
+  updateTag(postId, tag) {
     const fields = {
       post_id: postId,
-      tag_name: tagName,
+      tag_name: tag,
     };
-
+    console.log(fields);
     let response = this.api.post('tags', fields);
-
     response.then((data) => {
-      console.log('data', data);
+      // console.log('data', data);
 
       this.setState((previousState) => {
         const newState = {...previousState};
+        console.log(newState);
+        console.log(data);
         const user = newState.posts[postId].user;
-
         newState.posts[postId] = data;
 
         // Keep the user from the initial page load.
         newState.posts[postId].user = user;
-
         return newState;
       });
     });

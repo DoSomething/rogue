@@ -9,17 +9,9 @@ class Tags extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(key) {
+  handleClick(label) {
     // Ask the CampaignInbox to update the post's tags.
-    this.props.onTag(this.props.id, key);
-
-
-    // if (this.props.details.post.id.tagged.includes(key)) {
-    //   this.props.onUpdate(this.props.details.post.id, { tagged: tagged.push(key) });
-    // } else {
-    //   var index = this.props.details.post.id.tagged.indexOf(key);
-    //   this.props.onUpdate(this.props.details.post.id, { tagged: tagged.splice(index, 1)});
-    // }
+    this.props.onTag(this.props.id, label);
   }
 
   render() {
@@ -38,7 +30,7 @@ class Tags extends React.Component {
           {map(tags, (label, key) => (
             <li key={key}>
               <button className={classnames('tag', {'is-active': findKey(this.props.tagged, {'tag_slug': key})})}
-                      onClick={() => this.handleClick(key)}>{label}</button>
+                      onClick={() => this.handleClick(label)}>{label}</button>
             </li>
           ))}
         </ul>

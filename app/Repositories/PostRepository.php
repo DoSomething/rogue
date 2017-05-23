@@ -178,7 +178,8 @@ class PostRepository
     /**
      * Updates a post's tags when added or deleted.
      *
-     * @param array $data
+     * @param object $post
+     * @param string $tag
      *
      * @return
      */
@@ -187,6 +188,7 @@ class PostRepository
         // Check if the post already has the tag.
         // If so, soft delete. Otherwise, add the tag to the post.
         if (in_array($tag, $post->tagNames())) {
+        // dd($post->tagged);
             $post->untag($tag);
             return false;
         } else {

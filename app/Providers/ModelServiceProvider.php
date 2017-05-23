@@ -51,7 +51,7 @@ class ModelServiceProvider extends ServiceProvider
 
             Event::create([
                 'eventable_id' => $post->id,
-                'eventable_type' => $post->getModel(),
+                'eventable_type' => 'Rogue\Models\Post',
                 'content' => $post->toJson(),
             ]);
         });
