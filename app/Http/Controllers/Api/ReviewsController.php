@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Models\Post;
 use Rogue\Repositories\PostRepository;
-use Rogue\Http\Requests\ReviewsRequest;
+use Rogue\Http\Requests\ReviewsApiRequest;
 use Rogue\Http\Transformers\PostTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -39,11 +39,11 @@ class ReviewsController extends ApiController
     /**
      * Update a post(s)'s status when reviewed.
      *
-     * @param Rogue\Http\Requests\ReviewsRequest $request
+     * @param Rogue\Http\Requests\ReviewsApiRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function reviews(ReviewsRequest $request)
+    public function reviews(ReviewsApiRequest $request)
     {
         $review = $request->all();
         $post = Post::where('id', $review['post_id'])->first();
