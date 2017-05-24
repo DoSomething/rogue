@@ -23,8 +23,7 @@ class PostTransformer extends TransformerAbstract
                 'url' => $post->url,
                 'caption' => $post->caption,
             ],
-            // @TODO: add the below line in when we use the transformer in the /tags endpoint.
-            // 'tagged' => $post->tagNames(),
+            'tagged' => $post->tagNames(),
             'status' => $post->status,
             'source' => $post->source,
             'remote_addr' => $post->remote_addr,
