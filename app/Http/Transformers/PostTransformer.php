@@ -4,7 +4,6 @@ namespace Rogue\Http\Transformers;
 
 use Rogue\Models\Post;
 use League\Fractal\TransformerAbstract;
-use Conner\Tagging\Taggable;
 
 class PostTransformer extends TransformerAbstract
 {
@@ -24,7 +23,7 @@ class PostTransformer extends TransformerAbstract
                 'url' => $post->url,
                 'caption' => $post->caption,
             ],
-            'tagged' => $post->tagNames(),
+            // 'tagged' => $post->tagNames(),
             'status' => $post->status,
             'source' => $post->source,
             'remote_addr' => $post->remote_addr,

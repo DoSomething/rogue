@@ -35,9 +35,13 @@ class PostRepository
     }
 
     /**
+     * Find a post by post_id and return associated signup and tags.
      *
+     * @param int $id
+     * @return \Rogue\Models\Post
      */
-    public function find($id) {
+    public function find($id)
+    {
         return Post::with('signup', 'tagged')->findOrFail($id);
     }
 
@@ -186,7 +190,7 @@ class PostRepository
     public function tag($post, $tag)
     {
         // If the post already has the tag, soft delete. Otherwise, add the tag to the post.
-        if (in_array($tag, $post->tagNames(), TRUE)) {
+        if (in_array($tag, $post->tagNames(), true)) {
             $post->untag($tag);
         } else {
             $post->tag($tag);
