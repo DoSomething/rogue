@@ -14,6 +14,13 @@ class Review extends Model
     protected $fillable = ['signup_id', 'northstar_id', 'admin_northstar_id', 'status', 'old_status', 'comment', 'post_id'];
 
     /**
+     * All of the relationships to be touched.
+     *
+     * @var array
+     */
+    protected $touches = ['post'];
+
+    /**
      * Each review has events.
      */
     public function events()
