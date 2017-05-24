@@ -11,16 +11,11 @@ class InboxItem extends React.Component {
     super();
 
     this.setStatus = this.setStatus.bind(this);
-    this.updateTag = this.updateTag.bind(this);
   }
 
   // @todo - define this on the StatusButton component that can set some sort of global state.
   setStatus(status) {
     this.props.onUpdate(this.props.details.post.id, { status: status })
-  }
-
-  updateTag(tag) {
-    this.props.onUpdate(this.props)
   }
 
   getOtherPosts(post) {
