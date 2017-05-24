@@ -35,7 +35,7 @@ class TagsTest extends TestCase
         ];
 
         $this->json('POST', $this->tagsUrl, $tag);
-        $this->assertResponseStatus(201);
+        $this->assertResponseStatus(200);
 
         // Make sure we created a event for the tag.
         $this->seeInDatabase('events', [
@@ -77,7 +77,7 @@ class TagsTest extends TestCase
         ];
 
         $response = $this->json('POST', $this->tagsUrl, $tag);
-        $this->assertResponseStatus(204);
+        $this->assertResponseStatus(200);
 
         // Make sure we created an event for the tag.
         $this->seeInDatabase('events', [

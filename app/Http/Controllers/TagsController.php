@@ -45,15 +45,12 @@ class TagsController extends Controller
     public function store(TagsRequest $request)
     {
         $post = $this->post->find($request->input('post_id'));
-        $tagged = $this->post->tag($post, $request->input('tag_name'));
+        $taggedPost = $this->post->tag($post, $request->input('tag_name'));
+
         // @TODO: $post isn't showing the updated tags right now.
 
         // @TODO: We should use a transformer anywhere we send data to client.
-        // return $this->item($post, $tagged ? 201 : 204);
-        return response()->json($tagged);
-        // return response()->json($tagged);
-        // return response()->json(['tagged' => $tagged ? 'Tagged' : 'Untagged']);
-        // return response()->json(['tag_name' => $request->input('tag_name')]);
 
+        return response()->json($taggedPost);
     }
 }

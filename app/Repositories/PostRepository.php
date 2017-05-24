@@ -185,17 +185,15 @@ class PostRepository
      */
     public function tag($post, $tag)
     {
-        // Check if the post already has the tag.
-        // If so, soft delete. Otherwise, add the tag to the post.
+        // If the post already has the tag, soft delete. Otherwise, add the tag to the post.
         if (in_array($tag, $post->tagNames(), TRUE)) {
             $post->untag($tag);
-            // return false;
         } else {
             $post->tag($tag);
-            // return true;
         }
+
+        // Return the post object including the tags that are related to it.
         return Post::with('signup', 'tagged')->findOrFail($post->id);
-        // return $post;
     }
 
     /**
