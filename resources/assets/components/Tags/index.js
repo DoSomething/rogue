@@ -18,9 +18,9 @@ class Tags extends React.Component {
     const tags = {
       'good-photo': 'Good Photo',
       'good-quote': 'Good Quote',
-      'hide-in-gallery': 'Hide in Gallery',
-      'good-for-sponsor': 'Good for Sponsor',
-      'good-for-storytelling': 'Good for Storytelling',
+      'hide-in-gallery': 'Hide In Gallery',
+      'good-for-sponsor': 'Good For Sponsor',
+      'good-for-storytelling': 'Good For Storytelling',
     };
 
     return (
