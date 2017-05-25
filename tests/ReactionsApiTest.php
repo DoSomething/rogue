@@ -113,6 +113,7 @@ class ReactionsApiTest extends TestCase
         $signup = factory(Signup::class)->create();
         $post = factory(Post::class)->create();
         $post->signup()->associate($signup);
+        $post->save();
 
         // Wait 1 second before making a reaction to make sure the created_at and updated_at times are different.
         sleep(1);
