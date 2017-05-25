@@ -1,6 +1,7 @@
 <?php
 
 use Rogue\Models\Post;
+use Rogue\Models\Signup;
 use Faker\Generator;
 
 class ReactionsApiTest extends TestCase
@@ -40,7 +41,7 @@ class ReactionsApiTest extends TestCase
             ]
         ]);
 
-        // React (unlike) again to the same photo with the same user.
+        // React (unlike) again to the same post with the same user.
          $this->authed()->json('POST', $this->reactionsApiUrl, [
             'northstar_id' => $northstarId,
             'post_id' => $post->id,
@@ -66,7 +67,7 @@ class ReactionsApiTest extends TestCase
      */
     public function testAggregateReactions()
     {
-        // Create a photo to react to.
+        // Create a post to react to.
         $post = factory(Post::class)->create();
 
         // Create a reaction.
@@ -84,7 +85,7 @@ class ReactionsApiTest extends TestCase
             ]
         ]);
 
-        // A second user reacts to the same photo.
+        // A second user reacts to the same post..
         $this->authed()->json('POST', $this->reactionsApiUrl, [
             'northstar_id' => $this->faker->uuid,
             'post_id' => $post->id,
@@ -98,5 +99,35 @@ class ReactionsApiTest extends TestCase
                 'total_reactions' => 2,
             ]
         ]);
+    }
+
+    /**
+     * Test that a post and signup's updated_at updates when a reaction is made.
+     *
+     * @return void
+     */
+    public function testUpdatedPostAndSignupWithReaction()
+    {
+        // Create a signup and a post, and associate them to each other.
+        $signup = factory(Signup::class)->create();
+        $post = factory(Post::class)->create();
+        $post->signup()->associate($signup);
+
+        // Wait 1 second before making a reaction to make sure the created_at and updated_at times are different.
+        sleep(1);
+
+        // Create a reaction for the post.
+        $this->authed()->json('POST', $this->reactionsApiUrl, [
+            'northstar_id' => $this->faker->uuid,
+            'post_id' => $post->id,
+        ]);
+
+        // Re-grab the updated signup and post from the database.
+        $updatedSignup = Signup::where('id', $signup->id)->first();
+        $updatedPost = Post::where('id', $post->id)->first();
+
+        // Make sure the signup and post's updated_at matches the reaction created_at time.
+        $this->assertEquals($post->reactions[0]->created_at, $updatedSignup->updated_at);
+        $this->assertEquals($post->reactions[0]->created_at, $updatedPost->updated_at);
     }
 }

@@ -67,7 +67,7 @@ class PostTest extends TestCase
         $post->signup()->associate($signup);
 
         // Wait 1 second before updating the caption to make sure the created_at and updated_at times are different.
-        sleep(2);
+        sleep(1);
 
         // Update the caption of the post.
         $post->caption = 'new caption';

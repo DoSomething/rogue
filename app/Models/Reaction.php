@@ -21,7 +21,7 @@ class Reaction extends Model
      *
      * @var array
      */
-    protected $touches = ['post'];
+    protected $touches = ['post', 'signup'];
 
     /**
      * The attributes that are mass assignable.
@@ -44,5 +44,10 @@ class Reaction extends Model
     public function post()
     {
         return $this->belongsTo(Post::class);
+    }
+
+    public function signup()
+    {
+        return $this->post->signup();
     }
 }

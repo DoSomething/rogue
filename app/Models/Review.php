@@ -18,7 +18,7 @@ class Review extends Model
      *
      * @var array
      */
-    protected $touches = ['post'];
+    protected $touches = ['post', 'signup'];
 
     /**
      * Each review has events.
@@ -34,5 +34,10 @@ class Review extends Model
     public function post()
     {
         return $this->belongsTo(Post::class);
+    }
+
+    public function signup()
+    {
+        return $this->post->signup();
     }
 }
