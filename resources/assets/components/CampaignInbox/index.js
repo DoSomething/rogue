@@ -25,6 +25,7 @@ class CampaignInbox extends React.Component {
 
     this.api = new RestApiClient;
     this.updatePost = this.updatePost.bind(this);
+    this.updateTag = this.updateTag.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
@@ -67,6 +68,29 @@ class CampaignInbox extends React.Component {
       });
 
       return newState;
+    });
+  }
+
+  updateTag(postId, tag) {
+    const fields = {
+      post_id: postId,
+      tag_name: tag,
+    };
+
+    let response = this.api.post('tags', fields);
+    response.then((data) => {
+      console.log(data);
+      this.setState((previousState) => {
+        const newState = {...previousState};
+        const user = newState.posts[postId].user;
+
+        newState.posts[postId] = data;
+
+        // Keep the user from the initial page load.
+        newState.posts[postId].user = user;
+
+        return newState;
+      });
     });
   }
 
@@ -142,7 +166,9 @@ class CampaignInbox extends React.Component {
     if (posts.length !== 0) {
       return (
         <div className="container">
-          { map(posts, (post, key) => <InboxItem onUpdate={this.updatePost} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign}} />) }
+
+          { map(posts, (post, key) => <InboxItem onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign}} />) }
+
           <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign}}/> : null}
           </ModalContainer>

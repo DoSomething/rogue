@@ -1,36 +1,26 @@
 import React from 'react';
-import { map } from 'lodash';
+import { map, findKey } from 'lodash';
 import classnames from 'classnames';
 
 class Tags extends React.Component {
   constructor() {
     super();
 
-    // @TODO: This should come from the server!
-    this.state = {
-      'good_photo': true,
-      'good_quote': false,
-      'hidden': false,
-      'sponsor': true,
-      'storytelling': true,
-    }
-
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(key) {
-    this.setState({
-      [key]: !this.state[key]
-    });
+  handleClick(label) {
+    // Ask the CampaignInbox to update the post's tags.
+    this.props.onTag(this.props.id, label);
   }
 
   render() {
     const tags = {
-      'good_photo': 'Good Photo',
-      'good_quote': 'Good Quote',
-      'hidden': 'Hide in Gallery',
-      'sponsor': 'Good for Sponsor',
-      'storytelling': 'Good for Storytelling',
+      'good-photo': 'Good Photo',
+      'good-quote': 'Good Quote',
+      'hide-in-gallery': 'Hide In Gallery',
+      'good-for-sponsor': 'Good For Sponsor',
+      'good-for-storytelling': 'Good For Storytelling',
     };
 
     return (
@@ -39,8 +29,8 @@ class Tags extends React.Component {
         <ul className="aligned-actions">
           {map(tags, (label, key) => (
             <li key={key}>
-              <button className={classnames('tag', {'is-active': this.state[key]})}
-                      onClick={() => this.handleClick(key)}>{label}</button>
+              <button className={classnames('tag', {'is-active': findKey(this.props.tagged, {'tag_slug': key})})}
+                      onClick={() => this.handleClick(label)}>{label}</button>
             </li>
           ))}
         </ul>

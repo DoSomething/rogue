@@ -76,13 +76,16 @@ class TagsTest extends TestCase
             'tag_name' => 'Good Photo',
         ];
 
-        $this->json('POST', $this->tagsUrl, $tag);
+        $response = $this->json('POST', $this->tagsUrl, $tag);
         $this->assertResponseStatus(200);
 
         // Make sure we created an event for the tag.
         $this->seeInDatabase('events', [
             'eventable_type' => 'Rogue\Models\Post',
         ]);
+
+        // Make sure post's tag is removed from taggig_tagged table.
+        $this->notSeeInDatabase('tagging_tagged', ['tag_name' => 'Good Photo']);
 
         // Make sure that the tag is deleted.
         $this->assertEmpty($post->tagNames());

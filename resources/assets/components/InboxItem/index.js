@@ -20,7 +20,6 @@ class InboxItem extends React.Component {
 
   getOtherPosts(post) {
     const post_id = post['id'];
-
     // get array of posts
     const other_posts = clone(post['signup']['posts']);
 
@@ -79,7 +78,7 @@ class InboxItem extends React.Component {
           <ul className="form-actions -inline">
             <li><button className="button -tertiary" onClick={e => this.props.deletePost(post['id'], e)}>Delete</button></li>
           </ul>
-          {post.status === 'accepted' ? <Tags /> : null}
+          {post.status === 'accepted' ? <Tags id={post.id} tagged={post.tagged} onTag={this.props.onTag} /> : null}
           <h4>Meta</h4>
           <p>
             Post ID: {post['id']} <br/>
