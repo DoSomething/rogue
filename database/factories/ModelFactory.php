@@ -62,7 +62,7 @@ $factory->define(Reportback::class, function (Generator $faker) {
 $factory->define(Reaction::class, function (Generator $faker) {
     return [
         'northstar_id' => str_random(24),
-        'reportback_item_id' => $faker->randomNumber(7),
+        'post_id' => $faker->randomNumber(7),
     ];
 });
 

@@ -2,6 +2,7 @@
 
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
+use Rogue\Models\Reaction;
 use Faker\Generator;
 
 class ReactionsApiTest extends TestCase
@@ -117,8 +118,7 @@ class ReactionsApiTest extends TestCase
         sleep(1);
 
         // Create a reaction for the post.
-        $this->authed()->json('POST', $this->reactionsApiUrl, [
-            'northstar_id' => $this->faker->uuid,
+        $reaction = factory(Reaction::class)->create([
             'post_id' => $post->id,
         ]);
 
@@ -127,7 +127,7 @@ class ReactionsApiTest extends TestCase
         $updatedPost = Post::where('id', $post->id)->first();
 
         // Make sure the signup and post's updated_at matches the reaction created_at time.
-        $this->assertEquals($post->reactions[0]->created_at, $updatedSignup->updated_at);
-        $this->assertEquals($post->reactions[0]->created_at, $updatedPost->updated_at);
+        $this->assertEquals($reaction->created_at, $updatedSignup->updated_at);
+        $this->assertEquals($reaction->created_at, $updatedPost->updated_at);
     }
 }
