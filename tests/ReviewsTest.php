@@ -96,10 +96,10 @@ class ReviewsTest extends TestCase
         $post = factory(Post::class)->create();
         $post->signup()->associate($signup);
 
-        // Wait 1 second before making a reaction to make sure the created_at and updated_at times are different.
+        // Wait 1 second before making a review to make sure the created_at and updated_at times are different.
         sleep(1);
 
-        // Review for the post.
+        // Review the post.
         $review = [
             'post_id' => $post->id,
             'status' => 'accepted',
@@ -110,6 +110,7 @@ class ReviewsTest extends TestCase
         // Re-grab the updated signup and post from the database.
         $updatedSignup = Signup::where('id', $signup->id)->first();
         $updatedPost = Post::where('id', $post->id)->first();
+        dd($updatedPost);
 
         // Make sure the signup and post's updated_at matches the reaction created_at time.
         $this->assertEquals($post->review->created_at, $updatedSignup->updated_at);
