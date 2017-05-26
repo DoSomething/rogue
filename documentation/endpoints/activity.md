@@ -21,6 +21,9 @@ GET /api/v2/activity
 - **user** _(integer)_
   - Whether or not to include information about the user with the response.
   - e.g. `/activity?include=user`
+- **updated_at** _(timestamp)_
+  - Return records that have been updated at after the updated_at param value. 
+  - e.g. `/activity?filter[updated_at]=2017-05-25 20:14:48`
 
 
 Example Response:
