@@ -33,9 +33,12 @@ trait FiltersRequests
         $filters = array_intersect_key($filters, array_flip($indexes));
 
         // If there is an updated_at param, remove it from $filters and save the value.
-        if (!(array_search('updated_at', $filters))) {
+        if (array_key_exists('updated_at', $filters)) {
             $updatedAtValue = $filters['updated_at'];
             unset($filters['updated_at']);
+        }
+        else {
+            $updatedAtValue = false;
         }
 
         // You can filter by multiple values, e.g. `filter[source]=agg,cgg`
