@@ -22,8 +22,6 @@ POST /api/v2/signups
     The source of the signup.
   - **remote_addr**: (string).
     IP address of where the reportback is submitted from.
-  - **do_not_forward**: (string) optional.
-    TRUE if the signup should not be posted back to Phoenix (so during the migration).
   - **created_at**: (string) optional.
     `Y-m-d H:i:s` format. When the signup was created.
   - **updated_at**: (string) optional.
