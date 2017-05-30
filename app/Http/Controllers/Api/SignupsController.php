@@ -2,9 +2,9 @@
 
 namespace Rogue\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Services\SignupService;
+use Rogue\Http\Requests\SignupRequest;
 use Rogue\Http\Transformers\SignupTransformer;
 
 class SignupsController extends ApiController
@@ -46,7 +46,7 @@ class SignupsController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SignupRequest $request)
     {
         $transactionId = incrementTransactionId($request);
 
