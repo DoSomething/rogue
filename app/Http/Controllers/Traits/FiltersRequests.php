@@ -36,8 +36,7 @@ trait FiltersRequests
         if (array_key_exists('updated_at', $filters)) {
             $updatedAtValue = $filters['updated_at'];
             unset($filters['updated_at']);
-        }
-        else {
+        } else {
             $updatedAtValue = false;
         }
 
