@@ -25,9 +25,9 @@ class ActivityController extends ApiController
      */
     public function index(Request $request)
     {
-        // Create an empty Signup query, which we can either filter (below)
-        // or paginate to retrieve all signup records.
-        $query = $this->newQuery(Signup::class);
+        // Create an empty Signup query and eager-load posts, which we
+        // can either filter or paginate to retrieve all signup records.
+        $query = $this->newQuery(Signup::class)->with('posts');
 
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Signup::$indexes);
