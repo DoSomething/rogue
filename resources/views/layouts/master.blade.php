@@ -9,9 +9,7 @@
         <title>Rogue</title>
 
         <link rel="icon" type="image/ico" href="/favicon.ico?v1">
-
-        <link rel="stylesheet" href="{{ asset('dist/app.css') }}">
-        <script src="{{ asset('dist/modernizr.js') }}"></script>
+        <link rel="stylesheet" href="{{ elixir('app.css', 'dist') }}">
     </head>
 
     <body>
@@ -28,8 +26,8 @@
             </div>
         </div>
 
-        <script src="{{ asset('dist/app.js') }}"></script>
         {{ isset($state) ? scriptify($state) : scriptify() }}
+        <script src="{{ elixir('app.js', 'dist') }}"></script>
     </body>
 
 </html>
