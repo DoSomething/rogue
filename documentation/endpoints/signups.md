@@ -20,8 +20,6 @@ POST /api/v2/signups
     The reason why the user participated.
   - **source**: (string) optional (for migration purposes, there are signups on prod with no source).
     The source of the signup.
-  - **remote_addr**: (string).
-    IP address of where the reportback is submitted from.
   - **created_at**: (string) optional.
     `Y-m-d H:i:s` format. When the signup was created.
   - **updated_at**: (string) optional.

@@ -28,7 +28,6 @@ class SignupRequest extends Request
             'quantity' => 'int',
             'why_participated' => 'string',
             'source' => 'string',
-            'remote_addr' => 'string',
         ];
     }
 }
