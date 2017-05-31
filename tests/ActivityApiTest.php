@@ -1,6 +1,7 @@
 <?php
 
 use Rogue\Models\Signup;
+use Rogue\Models\Post;
 use Rogue\Models\Event;
 use Faker\Generator;
 
@@ -122,5 +123,42 @@ class ActivityApiTest extends TestCase
                 ],
             ],
         ]);
+    }
+
+    /**
+     * Test for retrieving a user's activity with the updated_at query param.
+     *
+     * GET /activity?filter[updated_at]=2017-05-25 20:14:48
+     * @return void
+     */
+
+    public function testActivityIndexWithUpdatedAtQuery()
+    {
+        // Create two signups and two posts. Associate the signups and posts respectively.
+        $firstSignup = factory(Signup::class)->create();
+        $firstPost = factory(Post::class)->create();
+        $firstPost->signup()->associate($firstSignup);
+        $firstPost->save();
+
+        // Wait 1 second before making the second signup and post so they have different timestamps.
+        sleep(1);
+
+        $secondSignup = factory(Signup::class)->create();
+        $secondPost = factory(Post::class)->create();
+        $secondPost->signup()->associate($secondSignup);
+        $secondPost->save();
+
+        $this->json('GET', $this->activityApiUrl . '?filter[updated_at]=' . $firstSignup->updated_at);
+
+        $this->assertResponseStatus(200);
+
+        $this->seeJsonSubset([
+            'data' => [
+                0 => [
+                    'signup_id' => $secondSignup->id
+                ],
+            ],
+        ]);
+
     }
 }

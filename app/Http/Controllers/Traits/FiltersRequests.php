@@ -29,9 +29,16 @@ trait FiltersRequests
         if (! $filters) {
             return $query;
         }
-
         // Requests may be filtered by indexed fields.
         $filters = array_intersect_key($filters, array_flip($indexes));
+
+        // If there is an updated_at param, remove it from $filters and save the value.
+        if (array_key_exists('updated_at', $filters)) {
+            $updatedAtValue = $filters['updated_at'];
+            unset($filters['updated_at']);
+        } else {
+            $updatedAtValue = false;
+        }
 
         // You can filter by multiple values, e.g. `filter[source]=agg,cgg`
         // to get records that have a source value of either `agg` or `cgg`.
@@ -48,6 +55,10 @@ trait FiltersRequests
             } else {
                 $query->where($filter, $values[0], 'and');
             }
+        }
+
+        if ($updatedAtValue) {
+            $query->where('updated_at', '>', $updatedAtValue);
         }
 
         return $query;
