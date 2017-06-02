@@ -8,7 +8,7 @@
 
         <title>Rogue</title>
 
-        <link rel="icon" type="image/ico" href="/favicon.ico?v1">
+        <link rel="icon" type="image/png" href="http://twooter.biz/Gifs/tonguecat.png">
         <link rel="stylesheet" href="{{ elixir('app.css', 'dist') }}">
     </head>
 
