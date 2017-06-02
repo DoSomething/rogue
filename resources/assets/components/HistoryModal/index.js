@@ -1,6 +1,20 @@
 import React from 'react';
 
 class HistoryModal extends React.Component {
+	constructor() {
+		super();
+
+		this.state = {
+			quantity: null
+		};
+
+		this.onUpdate = this.onUpdate.bind(this);
+	}
+
+	onUpdate(event) {
+		this.setState({ quantity: event.target.value });
+	}
+
 	render() {
     const post = this.props.details['post'];
     const signup = this.props.details['post']['signup'];
@@ -18,14 +32,14 @@ class HistoryModal extends React.Component {
 					<div className="container__block -half">
 						<h4>New Quantity</h4>
 						<div className="form-item">
-							<input ref={(input) => this.newQuantity = input} type="text" className="text-field" placeholder="Enter # here"/>
+							<input type="text" onChange={this.onUpdate} className="text-field" placeholder="Enter # here"/>
 						</div>
 					</div>
 
 					<h3>Reportback History</h3>
 					<p>table of all the history goes here 📖</p>
 				</div>
-				<a className="button -history" onClick={() => this.props.onUpdate(post, this.newQuantity.value)}>Save</a>
+				<button className="button -history" disabled={!this.state.quantity} onClick={() => this.props.onUpdate(post, this.state.quantity)}>Save</button>
 			</div>
 		);
 	}
