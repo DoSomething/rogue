@@ -21,6 +21,9 @@ GET /api/v2/activity
 - **user** _(integer)_
   - Whether or not to include information about the user with the response.
   - e.g. `/activity?include=user`
+- **northstar_id** _(integer)_
+  - The northstar id(s) to filter the response by.
+  - e.g. `/activity?filter[northstar_id]=1234`
 - **updated_at** _(timestamp)_
   - Return records that have been updated at after the updated_at param value. 
   - e.g. `/activity?filter[updated_at]=2017-05-25 20:14:48`

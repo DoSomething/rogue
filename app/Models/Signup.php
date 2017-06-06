@@ -22,7 +22,7 @@ class Signup extends Model
      * @var array
      */
     public static $indexes = [
-        'campaign_id', 'campaign_run_id', 'updated_at',
+        'campaign_id', 'campaign_run_id', 'updated_at', 'northstar_id',
     ];
 
     /**
