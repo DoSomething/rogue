@@ -54,6 +54,8 @@ class CampaignsController extends Controller
 
     /**
      * Show particular campaign inbox.
+     *
+     * @param  int $campaignId
      */
     public function showInbox($campaignId)
     {
@@ -71,19 +73,38 @@ class CampaignsController extends Controller
         });
 
         // Get the campaign data
-        $campaign_data = $this->campaignService->find($campaignId);
+        $campaignData = $this->campaignService->find($campaignId);
 
         return view('pages.campaign_inbox')
             ->with('state', [
                 'signups' => $signups,
-                'campaign' => $campaign_data,
+                'campaign' => $campaignData,
             ]);
     }
 
     /**
      * Show particular campaign and it's posts.
+     *
+     * @param  int $id
      */
     public function showCampaign($id) {
-        dd('show campaign');
+        $signups = Signup::campaign([$id])->has('accepted')->with('accepted')->get();
+
+        // @TODO EXTRACT AND FIGURE OUT HOW NOT TO HAVE TO DO THIS.
+        $signups->each(function ($item) {
+            $item->posts->each(function ($item) {
+                $user = $this->registrar->find($item->northstar_id);
+                $item->user = $user->toArray();
+            });
+        });
+
+        $campaignData = $this->campaignService->find($id);
+
+        dd($campaignData);
+        // return view('pages.campaign_inbox')
+        //     ->with('state', [
+        //         'signups' => $signups,
+        //         'campaign' => $campaign_data,
+        //     ]);
     }
 }
