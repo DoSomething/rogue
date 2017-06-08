@@ -100,7 +100,7 @@ class CampaignsController extends Controller
 
         $campaignData = $this->campaignService->find($id);
 
-        dd($campaignData);
+        return view('pages.campaign_single');
         // return view('pages.campaign_inbox')
         //     ->with('state', [
         //         'signups' => $signups,
