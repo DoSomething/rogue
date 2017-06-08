@@ -4,8 +4,9 @@ import './app.scss';
 import React from 'react';
 import ReactDom from 'react-dom';
 
-import CampaignOverview from './components/CampaignOverview'
-import CampaignInbox from './components/CampaignInbox'
+import CampaignOverview from './components/CampaignOverview';
+import CampaignInbox from './components/CampaignInbox';
+import StatusCounter from './components/StatusCounter';
 
 ready(() => {
   const overviewContainer = document.getElementById('overviewContainer');
@@ -21,6 +22,7 @@ ready(() => {
   }
 
   if (singleCampaignContainer) {
-    ReactDom.render(<CampaignInbox {...window.STATE} />, document.getElementById('postContainer'));
+    ReactDom.render(<StatusCounter {...window.STATE} />, document.getElementById('status-counter'));
+    ReactDom.render(<CampaignInbox {...window.STATE} />, document.getElementById('posts'));
   }
 });
