@@ -88,7 +88,7 @@ class CampaignsController extends Controller
      * @param  int $id
      */
     public function showCampaign($id) {
-        $signups = Signup::campaign([$id])->has('accepted')->with('accepted')->get();
+        $signups = Signup::campaign([$id])->has('posts')->with('posts')->get();
 
         // @TODO EXTRACT AND FIGURE OUT HOW NOT TO HAVE TO DO THIS.
         $signups->each(function ($item) {

@@ -45,3 +45,46 @@ $forge-path: "~@dosomething/forge/assets/";
   color: #4e2b63;
   font-weight: bold;
 }
+
+// Status counts.
+.status-counts {
+  margin-bottom: $base-spacing * 2;
+
+  ul {
+    @include clearfix;
+    margin-bottom: $base-spacing;
+  }
+
+  li {
+    float: left;
+    padding: $base-spacing;
+    text-align: center;
+
+    span {
+      display: block;
+      padding: $base-spacing/2;
+
+      &.status {
+        font-weight: $weight-bold;
+      }
+    }
+
+    &:first-child {
+      color: $purple;
+
+      span {
+        padding: 0px;
+      }
+
+      .count {
+        font-size: $font-hero;
+        font-weight: $weight-bold;
+      }
+
+      .button {
+        margin-top: $base-spacing;
+        background-color: $blue;
+      }
+    }
+  }
+}

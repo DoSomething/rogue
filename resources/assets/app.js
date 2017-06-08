@@ -21,6 +21,6 @@ ready(() => {
   }
 
   if (singleCampaignContainer) {
-    ReactDom.render(<CampaignInbox {...window.STATE} />, singleCampaignContainer);
+    ReactDom.render(<CampaignInbox {...window.STATE} />, document.getElementById('postContainer'));
   }
 });
