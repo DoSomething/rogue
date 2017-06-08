@@ -13,7 +13,7 @@ $accepted-green: #80E85D;
       background: lighten($accepted-green, $color-tint);
     }
 
-    &:active, &:focus, &.is-active{
+    &:active, &:focus, &.accepted{
       background: darken($accepted-green, $color-tint);
     }
   }
@@ -25,7 +25,7 @@ $accepted-green: #80E85D;
       background: lighten($error-color, $color-tint);
     }
 
-    &:active, &:focus, &.is-active {
+    &:active, &:focus, &.rejected {
       background: darken($error-color, $color-tint);
     }
   }
