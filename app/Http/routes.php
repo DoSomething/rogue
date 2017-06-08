@@ -20,8 +20,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('login', 'Auth\AuthController@getLogin');
     Route::get('logout', 'Auth\AuthController@getLogout');
 
+    // Campaigns
     Route::get('campaigns', 'CampaignsController@index');
-    Route::get('campaigns/{id}/inbox', 'CampaignsController@show');
+    Route::get('campaigns/{id}/inbox', 'CampaignsController@showInbox');
+    Route::get('campaigns/{id}', 'CampaignsController@showCampaign');
 
     Route::get('users', 'UsersController@index');
 

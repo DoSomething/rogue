@@ -55,7 +55,7 @@ class CampaignsController extends Controller
     /**
      * Show particular campaign inbox.
      */
-    public function show($campaignId)
+    public function showInbox($campaignId)
     {
         $signups = Signup::campaign([$campaignId])->has('pending')->with('pending')->get();
 
@@ -78,5 +78,9 @@ class CampaignsController extends Controller
                 'signups' => $signups,
                 'campaign' => $campaign_data,
             ]);
+    }
+
+    public function showCampaign($id) {
+        dd('show campaign');
     }
 }
