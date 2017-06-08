@@ -80,6 +80,9 @@ class CampaignsController extends Controller
             ]);
     }
 
+    /**
+     * Show particular campaign and it's posts.
+     */
     public function showCampaign($id) {
         dd('show campaign');
     }
