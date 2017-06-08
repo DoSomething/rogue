@@ -7,25 +7,25 @@ $accepted-green: #80E85D;
 
 .button {
   &.-accepted {
-    background: $accepted-green;
+    background: $light-gray;
 
     &:hover {
       background: lighten($accepted-green, $color-tint);
     }
 
-    &:active, &:focus {
+    &:active, &:focus, &.is-active{
       background: darken($accepted-green, $color-tint);
     }
   }
 
   &.-rejected {
-    background: $error-color;
+    background: $light-gray;
 
     &:hover {
       background: lighten($error-color, $color-tint);
     }
 
-    &:active, &:focus {
+    &:active, &:focus, &.is-active {
       background: darken($error-color, $color-tint);
     }
   }
