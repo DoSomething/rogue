@@ -44,7 +44,7 @@ class InboxItem extends React.Component {
             <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a>
           </p>
 
-          <ul className="gallery -quartet">
+          <ul className="gallery -duo">
           { map(this.getOtherPosts(post), (post, key) => <InboxTile key={key} details={post} />) }
           </ul>
         </div>
