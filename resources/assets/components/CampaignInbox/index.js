@@ -72,10 +72,6 @@ class CampaignInbox extends React.Component {
   }
 
   updateTag(postId, tag) {
-    if (tag === 'Hide In Gallery 👻') {
-      tag = 'Hide In Gallery';
-    }
-
     const fields = {
       post_id: postId,
       tag_name: tag,

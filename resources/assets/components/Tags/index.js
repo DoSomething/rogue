@@ -11,6 +11,10 @@ class Tags extends React.Component {
 
   handleClick(label) {
     // Ask the CampaignInbox to update the post's tags.
+    if (label === 'Hide In Gallery 👻') {
+      label = 'Hide In Gallery';
+    }
+
     this.props.onTag(this.props.id, label);
   }
 
