@@ -12,13 +12,18 @@ $accepted-green: #80E85D;
     border-color: $light-gray;
     border-width: 3px;
     border-style: solid;
+    text-transform: capitalize;
 
     &:hover {
       background: lighten($accepted-green, $color-tint);
+      color: $white;
+      border: none;
     }
 
     &:active, &:focus, &.accepted{
       background: darken($accepted-green, $color-tint);
+      color: $white;
+      border: none;
     }
   }
 
@@ -28,13 +33,18 @@ $accepted-green: #80E85D;
     border-color: $light-gray;
     border-width: 3px;
     border-style: solid;
+    text-transform: capitalize;
 
     &:hover {
       background: lighten($error-color, $color-tint);
+      color: $white;
+      border: none;
     }
 
     &:active, &:focus, &.rejected {
       background: darken($error-color, $color-tint);
+      color: $white;
+      border: none;
     }
   }
 }
