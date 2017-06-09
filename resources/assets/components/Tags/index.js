@@ -11,6 +11,10 @@ class Tags extends React.Component {
 
   handleClick(label) {
     // Ask the CampaignInbox to update the post's tags.
+    if (label === 'Hide In Gallery 👻') {
+      label = 'Hide In Gallery';
+    }
+
     this.props.onTag(this.props.id, label);
   }
 
@@ -18,7 +22,7 @@ class Tags extends React.Component {
     const tags = {
       'good-photo': 'Good Photo',
       'good-quote': 'Good Quote',
-      'hide-in-gallery': 'Hide In Gallery',
+      'hide-in-gallery': 'Hide In Gallery 👻',
       'good-for-sponsor': 'Good For Sponsor',
       'good-for-storytelling': 'Good For Storytelling',
     };

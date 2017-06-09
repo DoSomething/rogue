@@ -6,14 +6,22 @@ $forge-path: "~@dosomething/forge/assets/";
 .tag {
   list-style-type: none;
   clear: both;
-  background: $light-gray;
-  color: $med-gray;
+  background: $white;
+  color: $light-gray;
   font-size: $font-regular;
   font-weight: $weight-normal;
   font-family: $font-proxima-nova;
   text-align: center;
-  border: 0;
+  border-color: $light-gray;
+  border-width: 1px;
+  border-style: solid;
   margin: 10px 10px 0 0;
+  border-radius: 5px;
+
+  &:hover {
+    background: $blue;
+    color: $white;
+  }
 
   &:active, &.is-active {
     background: $blue;

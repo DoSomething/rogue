@@ -7,26 +7,44 @@ $accepted-green: #80E85D;
 
 .button {
   &.-accepted {
-    background: $accepted-green;
+    background: $white;
+    color: $light-gray;
+    border-color: $light-gray;
+    border-width: 3px;
+    border-style: solid;
+    text-transform: capitalize;
 
     &:hover {
       background: lighten($accepted-green, $color-tint);
+      color: $white;
+      border: none;
     }
 
-    &:active, &:focus {
+    &:active, &:focus, &.accepted{
       background: darken($accepted-green, $color-tint);
+      color: $white;
+      border: none;
     }
   }
 
   &.-rejected {
-    background: $error-color;
+    background: $white;
+    color: $light-gray;
+    border-color: $light-gray;
+    border-width: 3px;
+    border-style: solid;
+    text-transform: capitalize;
 
     &:hover {
       background: lighten($error-color, $color-tint);
+      color: $white;
+      border: none;
     }
 
-    &:active, &:focus {
+    &:active, &:focus, &.rejected {
       background: darken($error-color, $color-tint);
+      color: $white;
+      border: none;
     }
   }
 }

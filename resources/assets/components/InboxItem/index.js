@@ -72,8 +72,8 @@ class InboxItem extends React.Component {
         </div>
         <div className="container__block -third">
           <ul className="form-actions -inline">
-            <li><StatusButton type="accepted" label="accept" setStatus={this.setStatus}/></li>
-            <li><StatusButton type="rejected" label="reject" setStatus={this.setStatus}/></li>
+            <li><StatusButton type="accepted" label="accept" status={post.status} setStatus={this.setStatus}/></li>
+            <li><StatusButton type="rejected" label="reject" status={post.status} setStatus={this.setStatus}/></li>
           </ul>
           <ul className="form-actions -inline">
             <li><button className="button -tertiary" onClick={e => this.props.deletePost(post['id'], e)}>Delete</button></li>
