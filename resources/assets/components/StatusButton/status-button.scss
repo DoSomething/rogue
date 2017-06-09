@@ -7,7 +7,11 @@ $accepted-green: #80E85D;
 
 .button {
   &.-accepted {
-    background: $light-gray;
+    background: $white;
+    color: $light-gray;
+    border-color: $light-gray;
+    border-width: 3px;
+    border-style: solid;
 
     &:hover {
       background: lighten($accepted-green, $color-tint);
@@ -19,7 +23,11 @@ $accepted-green: #80E85D;
   }
 
   &.-rejected {
-    background: $light-gray;
+    background: $white;
+    color: $light-gray;
+    border-color: $light-gray;
+    border-width: 3px;
+    border-style: solid;
 
     &:hover {
       background: lighten($error-color, $color-tint);
