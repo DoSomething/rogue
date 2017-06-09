@@ -7,7 +7,7 @@ export default (props) => (
           <li>
               <span className="count">{props.post_totals.pending_count}</span>
               <span className="status">Pending</span>
-              <a className="button -secondary">Review</a>
+              <a className="button -secondary" href={`/campaigns/${props.campaign.id}/inbox`}>Review</a>
           </li>
           <li>
               <span className="status">Accepted</span>
