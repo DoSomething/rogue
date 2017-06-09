@@ -46,7 +46,7 @@ class CampaignsController extends Controller
         $campaigns = $this->campaignService->findAll($ids);
         $campaigns = $this->campaignService->appendStatusCountsToCampaigns($campaigns);
 
-        $causes = $this->campaignService->groupByCause($campaigns);
+        $causes = $campaigns ? $this->campaignService->groupByCause($campaigns) : null;
 
         return view('pages.campaign_overview')
             ->with('state', $causes);
@@ -98,12 +98,16 @@ class CampaignsController extends Controller
             });
         });
 
-        $campaignData = $this->campaignService->find($id);
-
+        $campaign = $this->campaignService->find($id);
+        $totals = $this->campaignService->getPostTotals($campaign);
+        dd($totals);
         return view('pages.campaign_single')
             ->with('state', [
                 'signups' => $signups,
-                'campaign' => $campaignData,
+                'campaign' => $campaign,
+                'post_totals' => [
+                    // 'accepted_count' => $totals->
+                ]
             ]);
     }
 }
