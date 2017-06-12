@@ -44,7 +44,7 @@ class CampaignSingle extends React.Component {
         <StatusCounter postTotals={this.state.postTotals} campaign={campaign} />
         <PostFilter onChange={this.filterPosts} />
 
-        { map(posts, (post, key) => <InboxItem onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign}} />) }
+        { map(posts, (post, key) => <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign}} />) }
       </div>
     )
   }

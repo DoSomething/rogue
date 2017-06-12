@@ -13,14 +13,16 @@ class PostFilter extends React.Component {
 
   render() {
     return (
-      <div>
-        <h4>Post Filter</h4>
-        <div className="select">
-            <select onChange={(event) => this.change(event)}>
-                <option>Accepted</option>
-                <option>Pending</option>
-                <option>Rejected</option>
-            </select>
+      <div className="container">
+        <div className="container__block -third">
+          <h4>Post Filter</h4>
+          <div className="select">
+              <select onChange={(event) => this.change(event)}>
+                  <option>Accepted</option>
+                  <option>Pending</option>
+                  <option>Rejected</option>
+              </select>
+          </div>
         </div>
       </div>
     )
