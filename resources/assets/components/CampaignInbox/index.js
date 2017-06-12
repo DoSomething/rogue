@@ -54,6 +54,7 @@ class CampaignInbox extends React.Component {
     });
   }
 
+  // Updates a post status.
   updatePost(postId, fields) {
     fields.post_id = postId;
 
@@ -71,6 +72,7 @@ class CampaignInbox extends React.Component {
     });
   }
 
+  // Tag a post.
   updateTag(postId, tag) {
     const fields = {
       post_id: postId,
@@ -94,6 +96,7 @@ class CampaignInbox extends React.Component {
     });
   }
 
+  // Update a signups quanity.
   updateQuantity(post, newQuantity) {
     // Fields to send to /posts
     const fields = {
@@ -128,6 +131,7 @@ class CampaignInbox extends React.Component {
     this.hideHistory();
   }
 
+  // Delete a post.
   deletePost(postId, event) {
     event.preventDefault();
     const confirmed = confirm('🚨🔥🚨Are you sure you want to delete this?🚨🔥🚨');
