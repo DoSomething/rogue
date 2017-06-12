@@ -42,6 +42,8 @@ class CampaignSingle extends React.Component {
   }
 
   // Open the history modal of the given post
+  // @TODO - Move this into the InboxItem component so
+  // we don't have to duplicate this functionality when every we want to use Inbox Items.
   showHistory(postId, event) {
     event.preventDefault()
 

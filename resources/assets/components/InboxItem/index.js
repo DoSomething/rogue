@@ -69,6 +69,7 @@ class InboxItem extends React.Component {
           </article>
           <a href="#" onClick={e => this.props.showHistory(post['id'], e)}>Edit | Show History</a>
           <br/>
+          <br/>
           {post['caption'] ?
             <div>
               <h4>Photo Caption</h4>
@@ -87,7 +88,7 @@ class InboxItem extends React.Component {
                 <li><StatusButton type="rejected" label="reject" status={post.status} setStatus={this.setStatus}/></li>
               </ul>
               <ul className="form-actions -inline">
-                <li><button className="button -tertiary" onClick={e => this.props.deletePost(post['id'], e)}>Delete</button></li>
+                <li><button className="button delete -tertiary" onClick={e => this.props.deletePost(post['id'], e)}>Delete</button></li>
               </ul>
               {post.status === 'accepted' ? <Tags id={post.id} tagged={post.tagged} onTag={this.props.onTag} /> : null}
             </div>

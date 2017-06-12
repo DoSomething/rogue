@@ -37,11 +37,18 @@ $forge-path: "~@dosomething/forge/assets/";
   @include media($tablet) {
     @include span(4 of 12);
   }
+
+  word-wrap: break-word;
+}
+
+button.delete {
+  padding: 0px;
 }
 
 .quantity {
   border: 3px solid #4e2b63;
-  padding: 4px 12px;
+  padding: 4px 12px;;
   color: #4e2b63;
   font-weight: bold;
+  margin-right: 5px;
 }

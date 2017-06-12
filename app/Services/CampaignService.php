@@ -179,7 +179,13 @@ class CampaignService
         return $ids ? $ids : null;
     }
 
-    public function getPostTotals($campaigns) {
+    /**
+     * Get Post totals for a collection of campaigns or a single campaign.
+     *
+     * @return Illuminate\Support\Collection| object $campaigns
+     */
+    public function getPostTotals($campaigns)
+    {
         if ($campaigns instanceof \Illuminate\Support\Collection) {
             return $this->getCollectionOfCampaignsPostTotals($campaigns);
         }
@@ -231,7 +237,6 @@ class CampaignService
                 ->where('campaign_id', '=', $campaign['id'])
                 ->groupBy('signups.campaign_id')
                 ->first();
-
 
         return $totals ? $totals : null;
     }
