@@ -20,8 +20,10 @@ class InboxItem extends React.Component {
 
   getOtherPosts(post) {
     const post_id = post['id'];
+    const signup = this.props.details.signup;
+
     // get array of posts
-    const other_posts = clone(post['signup']['posts']);
+    const other_posts = clone(signup.posts);
 
     // find index that has that post_id and remove
     const big_post = remove(other_posts, function(current_post) {
@@ -33,8 +35,9 @@ class InboxItem extends React.Component {
   }
 
   render() {
-    const post = this.props.details['post'];
-    const campaign = this.props.details['campaign'];
+    const post = this.props.details.post;
+    const campaign = this.props.details.campaign;
+    const signup = this.props.details.signup;
 
     return (
       <div className="container__row">
@@ -56,10 +59,10 @@ class InboxItem extends React.Component {
           </ul>
           <br/>
           <article className="figure -left -center">
-            { post['signup']['quantity'] ?
+            { signup.quantity ?
               <div>
                 <div className="figure__media">
-                  <div className="quantity">{post['signup']['quantity']}</div>
+                  <div className="quantity">{signup.quantity}</div>
                 </div>
                 <div className="figure__body">
                    {campaign['reportback_info']['noun']} {campaign['reportback_info']['verb']}
@@ -77,7 +80,7 @@ class InboxItem extends React.Component {
             </div>
           : null}
           <h4>Why Statement</h4>
-          <p>{post['signup']['why_participated']}</p>
+          <p>{signup.why_participated}</p>
         </div>
         <div className="container__block -third">
           {/* @TODO - make a Review component */}

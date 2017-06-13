@@ -1,5 +1,5 @@
 import React from 'react';
-import { map, sample, forEach, reject } from 'lodash';
+import { keyBy, map, sample, forEach, reject } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
 import { extractPostsFromSignups } from '../../helpers';
@@ -11,10 +11,10 @@ class CampaignInbox extends React.Component {
   constructor(props) {
     super(props);
 
-    const posts = extractPostsFromSignups(props.signups)
+    const posts = extractPostsFromSignups(props.signups);
 
     this.state = {
-      signups: props.signups,
+      signups: keyBy(props.signups, 'id'),
       posts: posts,
       displayHistoryModal: false,
       historyModalId: null,
@@ -168,7 +168,7 @@ class CampaignInbox extends React.Component {
       return (
         <div className="container">
 
-          { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign}} />) }
+          { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: this.state.signups[post.signup_id]}} />) }
 
           <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign}}/> : null}
