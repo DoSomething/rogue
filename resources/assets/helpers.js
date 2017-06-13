@@ -3,6 +3,8 @@
  *
  * @param {Function} fn
  */
+import { flatMap, keyBy } from 'lodash';
+
 export function ready(fn) {
   if (document.readyState !== 'loading'){
     fn();
@@ -29,3 +31,11 @@ export function getImageUrlFromProp(photoProp) {
 	  return photo_url;
 	}
 };
+
+export function extractPostsFromSignups(signups) {
+    const posts = keyBy(flatMap(signups, signup => {
+      return signup.posts;
+    }), 'id');
+
+    return posts;
+}

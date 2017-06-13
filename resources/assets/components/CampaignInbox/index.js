@@ -1,7 +1,8 @@
 import React from 'react';
-import { flatMap, keyBy, map, sample, forEach, reject } from 'lodash';
-import { RestApiClient} from '@dosomething/gateway';
+import { map, sample, forEach, reject } from 'lodash';
+import { RestApiClient } from '@dosomething/gateway';
 
+import { extractPostsFromSignups } from '../../helpers';
 import InboxItem from '../InboxItem';
 import ModalContainer from '../ModalContainer';
 import HistoryModal from '../HistoryModal';
@@ -10,14 +11,10 @@ class CampaignInbox extends React.Component {
   constructor(props) {
     super(props);
 
-    const posts = keyBy(flatMap(props.signups, signup => {
-      return signup.posts.map(post => {
-        post.signup = signup;
-        return post;
-      });
-    }), 'id');
+    const posts = extractPostsFromSignups(props.signups)
 
     this.state = {
+      signups: props.signups,
       posts: posts,
       displayHistoryModal: false,
       historyModalId: null,
