@@ -21,24 +21,21 @@ class CampaignSingle extends React.Component {
 
     this.state = {
       posts: posts,
-      filteredPosts: posts,
+      filter: 'accepted',
       postTotals: props.post_totals,
       displayHistoryModal: false,
       historyModalId: null,
     };
 
-    this.filterPosts = this.filterPosts.bind(this);
-
     this.api = new RestApiClient;
     this.updateQuantity = this.updateQuantity.bind(this);
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
+    this.filterPosts = this.filterPosts.bind(this);
   }
 
   filterPosts(status) {
-    const posts = filter(this.state.posts, {'status' : status.toLowerCase()});
-
-    this.setState({ filteredPosts: posts });
+    this.setState({ filter: status.toLowerCase() });
   }
 
   // Open the history modal of the given post
@@ -101,7 +98,7 @@ class CampaignSingle extends React.Component {
   }
 
   render() {
-    const posts = this.state.filteredPosts;
+    const posts = this.state.posts;
     const campaign = this.props.campaign;
 
     return (
@@ -109,7 +106,7 @@ class CampaignSingle extends React.Component {
         <StatusCounter postTotals={this.state.postTotals} campaign={campaign} />
         <PostFilter onChange={this.filterPosts} />
 
-        { map(posts, (post, key) => <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign}} />) }
+        { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign}} /> : null) }
 
         <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign}}/> : null}
