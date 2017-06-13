@@ -46,7 +46,7 @@ class CampaignsController extends Controller
         $campaigns = $this->campaignService->findAll($ids);
         $campaigns = $this->campaignService->appendStatusCountsToCampaigns($campaigns);
 
-        $causes = $this->campaignService->groupByCause($campaigns);
+        $causes = $campaigns ? $this->campaignService->groupByCause($campaigns) : null;
 
         return view('pages.campaign_overview')
             ->with('state', $causes);
@@ -54,8 +54,10 @@ class CampaignsController extends Controller
 
     /**
      * Show particular campaign inbox.
+     *
+     * @param  int $campaignId
      */
-    public function show($campaignId)
+    public function showInbox($campaignId)
     {
         $signups = Signup::campaign([$campaignId])->has('pending')->with('pending')->get();
 
@@ -71,12 +73,44 @@ class CampaignsController extends Controller
         });
 
         // Get the campaign data
-        $campaign_data = $this->campaignService->find($campaignId);
+        $campaignData = $this->campaignService->find($campaignId);
 
         return view('pages.campaign_inbox')
             ->with('state', [
                 'signups' => $signups,
-                'campaign' => $campaign_data,
+                'campaign' => $campaignData,
+            ]);
+    }
+
+    /**
+     * Show particular campaign and it's posts.
+     *
+     * @param  int $id
+     */
+    public function showCampaign($id)
+    {
+        $signups = Signup::campaign([$id])->has('posts')->with('posts')->get();
+
+        // @TODO EXTRACT AND FIGURE OUT HOW NOT TO HAVE TO DO THIS.
+        $signups->each(function ($item) {
+            $item->posts->each(function ($item) {
+                $user = $this->registrar->find($item->northstar_id);
+                $item->user = $user->toArray();
+            });
+        });
+
+        $campaign = $this->campaignService->find($id);
+        $totals = $this->campaignService->getPostTotals($campaign);
+
+        return view('pages.campaign_single')
+            ->with('state', [
+                'signups' => $signups,
+                'campaign' => $campaign,
+                'post_totals' => [
+                    'accepted_count' => $totals->accepted_count,
+                    'pending_count' => $totals->pending_count,
+                    'rejected_count' => $totals->rejected_count,
+                ],
             ]);
     }
 }

@@ -17,7 +17,7 @@ $accepted-green: #80E85D;
     &:hover {
       background: lighten($accepted-green, $color-tint);
       color: $white;
-      border: none;
+      border-color: $white;
     }
 
     &:active, &:focus, &.accepted{
@@ -38,7 +38,7 @@ $accepted-green: #80E85D;
     &:hover {
       background: lighten($error-color, $color-tint);
       color: $white;
-      border: none;
+      border-color: $white;
     }
 
     &:active, &:focus, &.rejected {

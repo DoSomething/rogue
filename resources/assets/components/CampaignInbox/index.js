@@ -54,6 +54,7 @@ class CampaignInbox extends React.Component {
     });
   }
 
+  // Updates a post status.
   updatePost(postId, fields) {
     fields.post_id = postId;
 
@@ -71,6 +72,7 @@ class CampaignInbox extends React.Component {
     });
   }
 
+  // Tag a post.
   updateTag(postId, tag) {
     const fields = {
       post_id: postId,
@@ -94,6 +96,7 @@ class CampaignInbox extends React.Component {
     });
   }
 
+  // Update a signups quanity.
   updateQuantity(post, newQuantity) {
     // Fields to send to /posts
     const fields = {
@@ -128,6 +131,7 @@ class CampaignInbox extends React.Component {
     this.hideHistory();
   }
 
+  // Delete a post.
   deletePost(postId, event) {
     event.preventDefault();
     const confirmed = confirm('🚨🔥🚨Are you sure you want to delete this?🚨🔥🚨');
@@ -167,7 +171,7 @@ class CampaignInbox extends React.Component {
       return (
         <div className="container">
 
-          { map(posts, (post, key) => <InboxItem onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign}} />) }
+          { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign}} />) }
 
           <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign}}/> : null}

@@ -56,32 +56,47 @@ class InboxItem extends React.Component {
           </ul>
           <br/>
           <article className="figure -left -center">
-            <div className="figure__media">
-              <div className="quantity">{post['signup']['quantity']}</div>
-            </div>
-            <div className="figure__body">
-              {campaign['reportback_info']['noun']} {campaign['reportback_info']['verb']}
-            </div>
+            { post['signup']['quantity'] ?
+              <div>
+                <div className="figure__media">
+                  <div className="quantity">{post['signup']['quantity']}</div>
+                </div>
+                <div className="figure__body">
+                   {campaign['reportback_info']['noun']} {campaign['reportback_info']['verb']}
+                </div>
+              </div>
+            : null }
           </article>
           <a href="#" onClick={e => this.props.showHistory(post['id'], e)}>Edit | Show History</a>
           <br/>
-          <h4>Photo Caption</h4>
-          <p>{post['caption']}</p>
+          <br/>
+          {post['caption'] ?
+            <div>
+              <h4>Photo Caption</h4>
+              <p>{post['caption']}</p>
+            </div>
+          : null}
           <h4>Why Statement</h4>
           <p>{post['signup']['why_participated']}</p>
         </div>
         <div className="container__block -third">
-          <ul className="form-actions -inline">
-            <li><StatusButton type="accepted" label="accept" status={post.status} setStatus={this.setStatus}/></li>
-            <li><StatusButton type="rejected" label="reject" status={post.status} setStatus={this.setStatus}/></li>
-          </ul>
-          <ul className="form-actions -inline">
-            <li><button className="button -tertiary" onClick={e => this.props.deletePost(post['id'], e)}>Delete</button></li>
-          </ul>
-          {post.status === 'accepted' ? <Tags id={post.id} tagged={post.tagged} onTag={this.props.onTag} /> : null}
+          {/* @TODO - make a Review component */}
+          {this.props.allowReview ?
+            <div>
+              <ul className="form-actions -inline">
+                <li><StatusButton type="accepted" label="accept" status={post.status} setStatus={this.setStatus}/></li>
+                <li><StatusButton type="rejected" label="reject" status={post.status} setStatus={this.setStatus}/></li>
+              </ul>
+              <ul className="form-actions -inline">
+                <li><button className="button delete -tertiary" onClick={e => this.props.deletePost(post['id'], e)}>Delete</button></li>
+              </ul>
+              {post.status === 'accepted' ? <Tags id={post.id} tagged={post.tagged} onTag={this.props.onTag} /> : null}
+            </div>
+          : null }
           <h4>Meta</h4>
           <p>
             Post ID: {post['id']} <br/>
+            Post Status: {post['status']} <br/>
             Source: {post['source']} <br/>
             Submitted: {post['created_at']} <br/>
           </p>

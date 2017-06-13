@@ -8,16 +8,6 @@
                         <strong class="navigation__title">Campaign Overview</strong>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <strong class="navigation__title">Two Fish</strong>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <strong class="navigation__title">Three Fish</strong>
-                    </a>
-                </li>
             </ul>
             <ul class="navigation__secondary">
                 <li>

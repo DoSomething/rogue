@@ -180,16 +180,34 @@ class CampaignService
     }
 
     /**
-     * Gets the count of pending, accepted, and rejected stautses on each post for a campaign.
+     * Get Post totals for a collection of campaigns or a single campaign.
      *
-     * @param  array $campaigns
-     * @return Illuminate\Database\Eloquent\Collection $campaigns
+     * @return Illuminate\Support\Collection| object $campaigns
      */
-    public function getCampaignPostStatusCounts($campaigns)
+    public function getPostTotals($campaigns)
     {
-        $ids = array_filter(array_pluck($campaigns, 'id'));
+        if ($campaigns instanceof \Illuminate\Support\Collection) {
+            return $this->getCollectionOfCampaignsPostTotals($campaigns);
+        }
 
-        $campaignsWithCounts = DB::table('signups')
+        if (is_array($campaigns)) {
+            return $this->getSingleCampaignPostTotals($campaigns);
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the count of pending, accepted, and rejected stautses on each post for a collection of campaigns.
+     *
+     * @param  Illuminate\Support\Collection $campaigns
+     * @return Illuminate\Support\Collection $campaigns
+     */
+    public function getCollectionOfCampaignsPostTotals($campaigns)
+    {
+        $ids = $campaigns->pluck('id')->filter()->toArray();
+
+        $totals = DB::table('signups')
                 ->leftJoin('posts', 'signups.id', '=', 'posts.signup_id')
                 ->select('signups.campaign_id',
                     DB::raw('SUM(case when posts.status = "accepted" then 1 else 0 end) as accepted_count'),
@@ -199,33 +217,56 @@ class CampaignService
                 ->groupBy('signups.campaign_id')
                 ->get();
 
-        return $campaignsWithCounts ? collect($campaignsWithCounts)->keyBy('campaign_id') : collect();
+        return $totals ? collect($totals)->keyBy('campaign_id') : collect();
+    }
+
+    /**
+     * Gets the count of pending, accepted, and rejected stautses on each post for a single campaign.
+     *
+     * @param  array $campaign
+     * @return array $toals | null
+     */
+    public function getSingleCampaignPostTotals($campaign)
+    {
+        return DB::table('signups')
+                ->leftJoin('posts', 'signups.id', '=', 'posts.signup_id')
+                ->select('signups.campaign_id',
+                    DB::raw('SUM(case when posts.status = "accepted" then 1 else 0 end) as accepted_count'),
+                    DB::raw('SUM(case when posts.status = "pending" then 1 else 0 end) as pending_count'),
+                    DB::raw('SUM(case when posts.status = "rejected" then 1 else 0 end) as rejected_count'))
+                ->where('campaign_id', '=', $campaign['id'])
+                ->groupBy('signups.campaign_id')
+                ->first();
     }
 
     /**
      * Appends status counts to a collection of campaigns.
      *
      * @param  array $campaigns
-     * @return Illuminate\Database\Eloquent\Collection $campaigns
+     * @return Illuminate\Support\Collection $campaigns | null
      */
     public function appendStatusCountsToCampaigns($campaigns)
     {
-        $campaignsWithCounts = $this->getCampaignPostStatusCounts($campaigns);
+        $campaignsWithCounts = $this->getPostTotals($campaigns);
 
-        $campaigns = $campaigns->map(function ($campaign, $key) use ($campaignsWithCounts) {
-            if ($campaign) {
-                $statusCounts = $campaignsWithCounts->get($campaign['id']);
+        if ($campaignsWithCounts) {
+            $campaigns = $campaigns->map(function ($campaign, $key) use ($campaignsWithCounts) {
+                if ($campaign) {
+                    $statusCounts = $campaignsWithCounts->get($campaign['id']);
 
-                if ($statusCounts) {
-                    $campaign['accepted_count'] = (int) $statusCounts->accepted_count;
-                    $campaign['pending_count'] = (int) $statusCounts->pending_count;
-                    $campaign['rejected_count'] = (int) $statusCounts->rejected_count;
+                    if ($statusCounts) {
+                        $campaign['accepted_count'] = (int) $statusCounts->accepted_count;
+                        $campaign['pending_count'] = (int) $statusCounts->pending_count;
+                        $campaign['rejected_count'] = (int) $statusCounts->rejected_count;
+                    }
                 }
-            }
 
-            return $campaign;
-        });
+                return $campaign;
+            });
 
-        return $campaigns;
+            return $campaigns;
+        }
+
+        return null;
     }
 }
