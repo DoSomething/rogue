@@ -34,13 +34,14 @@ class CampaignSingle extends React.Component {
     this.filterPosts = this.filterPosts.bind(this);
   }
 
+  // Filter posts based on status.
   filterPosts(status) {
     this.setState({ filter: status.toLowerCase() });
   }
 
   // Open the history modal of the given post
-  // @TODO - Move this into the InboxItem component so
-  // we don't have to duplicate this functionality when every we want to use Inbox Items.
+  // @TODO - Figure out how to share this logic between components so it
+  // doesn't need to be duplicated between components.
   showHistory(postId, event) {
     event.preventDefault()
 

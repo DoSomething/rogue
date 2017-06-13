@@ -228,7 +228,7 @@ class CampaignService
      */
     public function getSingleCampaignPostTotals($campaign)
     {
-        $totals = DB::table('signups')
+        return DB::table('signups')
                 ->leftJoin('posts', 'signups.id', '=', 'posts.signup_id')
                 ->select('signups.campaign_id',
                     DB::raw('SUM(case when posts.status = "accepted" then 1 else 0 end) as accepted_count'),
@@ -237,8 +237,6 @@ class CampaignService
                 ->where('campaign_id', '=', $campaign['id'])
                 ->groupBy('signups.campaign_id')
                 ->first();
-
-        return $totals ? $totals : null;
     }
 
     /**

@@ -7,8 +7,6 @@ import ReactDom from 'react-dom';
 import CampaignOverview from './components/CampaignOverview';
 import CampaignInbox from './components/CampaignInbox';
 import CampaignSingle from './components/CampaignSingle';
-// import PostFilter from './components/PostFilter';
-// import StatusCounter from './components/StatusCounter';
 
 ready(() => {
   const overviewContainer = document.getElementById('overviewContainer');
@@ -24,8 +22,6 @@ ready(() => {
   }
 
   if (singleCampaignContainer) {
-    // ReactDom.render(<StatusCounter {...window.STATE} />, document.getElementById('status-counter'));
-    // ReactDom.render(<PostFilter {...window.STATE} />, document.getElementById('status-filter'));
-    ReactDom.render(<CampaignSingle{...window.STATE} />, document.getElementById('singleCampaignContainer'));
+    ReactDom.render(<CampaignSingle {...window.STATE} historyModalId={null} />, document.getElementById('singleCampaignContainer'));
   }
 });
