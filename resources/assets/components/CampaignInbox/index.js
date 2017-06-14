@@ -107,7 +107,7 @@ class CampaignInbox extends React.Component {
     };
 
     // Make API request to Rogue to update the quantity on the backend
-    let response = this.api.post('api/v2/posts', fields);
+    let response = this.api.post('posts', fields);
 
     response.then((result) => {
       // Update the state
