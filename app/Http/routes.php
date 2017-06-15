@@ -28,6 +28,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('users', 'UsersController@index');
 
     // posts
+    Route::post('posts', 'PostController@store');
     Route::delete('posts/{id}', 'PostController@destroy');
 
     // reviews

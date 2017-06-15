@@ -3,9 +3,14 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Services\PostService;
+use Rogue\Repositories\SignupRepository;
+use Rogue\Http\Transformers\PostTransformer;
+use Rogue\Http\Controllers\Traits\PostRequests;
 
 class PostController extends Controller
 {
+    use PostRequests;
+
     /**
      * The post service instance.
      *
@@ -14,17 +19,32 @@ class PostController extends Controller
     protected $posts;
 
     /**
+     * The signup repository instance.
+     *
+     * @var Rogue\Repositories\SignupRepository
+     */
+    protected $signups;
+
+    /**
+     * @var \League\Fractal\TransformerAbstract;
+     */
+    protected $transformer;
+
+    /**
      * Create a controller instance.
      *
      * @param  PostContract  $posts
      * @return void
      */
-    public function __construct(PostService $posts)
+    public function __construct(PostService $posts, SignupRepository $signups)
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
 
         $this->posts = $posts;
+        $this->signups = $signups;
+
+        $this->transformer = new PostTransformer;
     }
 
     /**
