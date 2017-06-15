@@ -94,7 +94,6 @@ class CampaignInbox extends React.Component {
 
   // Update a signups quanity.
   updateQuantity(signup, newQuantity) {
-    console.log(signup);
     // Fields to send to /posts
     const fields = {
       northstar_id: signup.northstar_id,
@@ -108,24 +107,11 @@ class CampaignInbox extends React.Component {
 
     request.then((result) => {
       // Update the state
-      console.log('result');
-      console.log(result);
       this.setState((previousState) => {
         const newState = {...previousState};
-        // const updatedSignup = newState.signups[signup.id];
-        // console.log(updatedSignup.quantity);
-        console.log(newState.signups[signup.id].quantity);
+
         newState.signups[signup.id].quantity = result.quantity;
-        // const signupChanged = signup.id;
 
-        // // Update the quantity for each post under this signup
-        // forEach (newState.posts, (value) => {
-        //   if (value.signup_id == signupChanged) {
-        //     value.signup.quantity = result.quantity;
-        //   }
-        // });
-
-        // Return the new state
         return newState;
       });
     });
