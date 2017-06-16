@@ -16,9 +16,9 @@ class HistoryModal extends React.Component {
 	}
 
 	render() {
-    	const post = this.props.details['post'];
-    	const signup = this.props.details['post']['signup'];
-    	const campaign = this.props.details['campaign'];
+  	const post = this.props.details['post'];
+  	const signup = this.props.details.signups[post.signup_id];
+  	const campaign = this.props.details['campaign'];
 
 		return (
 			<div className="modal">
@@ -39,7 +39,7 @@ class HistoryModal extends React.Component {
 					<h3>Reportback History</h3>
 					<p>table of all the history goes here 📖</p>
 				</div>
-				<button className="button -history" disabled={!this.state.quantity} onClick={() => this.props.onUpdate(post, this.state.quantity)}>Save</button>
+				<button className="button -history" disabled={!this.state.quantity} onClick={() => this.props.onUpdate(signup, this.state.quantity)}>Save</button>
 			</div>
 		);
 	}

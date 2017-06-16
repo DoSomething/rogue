@@ -1,7 +1,8 @@
 import React from 'react';
-import { flatMap, keyBy, map, sample, forEach, reject } from 'lodash';
-import { RestApiClient} from '@dosomething/gateway';
+import { keyBy, map, sample, forEach, reject } from 'lodash';
+import { RestApiClient } from '@dosomething/gateway';
 
+import { extractPostsFromSignups } from '../../helpers';
 import InboxItem from '../InboxItem';
 import ModalContainer from '../ModalContainer';
 import HistoryModal from '../HistoryModal';
@@ -10,14 +11,10 @@ class CampaignInbox extends React.Component {
   constructor(props) {
     super(props);
 
-    const posts = keyBy(flatMap(props.signups, signup => {
-      return signup.posts.map(post => {
-        post.signup = signup;
-        return post;
-      });
-    }), 'id');
+    const posts = extractPostsFromSignups(props.signups);
 
     this.state = {
+      signups: keyBy(props.signups, 'id'),
       posts: posts,
       displayHistoryModal: false,
       historyModalId: null,
@@ -81,7 +78,6 @@ class CampaignInbox extends React.Component {
 
     let response = this.api.post('tags', fields);
     response.then((data) => {
-      console.log(data);
       this.setState((previousState) => {
         const newState = {...previousState};
         const user = newState.posts[postId].user;
@@ -97,32 +93,25 @@ class CampaignInbox extends React.Component {
   }
 
   // Update a signups quanity.
-  updateQuantity(post, newQuantity) {
+  updateQuantity(signup, newQuantity) {
     // Fields to send to /posts
     const fields = {
-      northstar_id: post.user.id,
-      campaign_id: post.signup.campaign_id,
-      campaign_run_id: post.signup.campaign_run_id,
+      northstar_id: signup.northstar_id,
+      campaign_id: signup.campaign_id,
+      campaign_run_id: signup.campaign_run_id,
       quantity: newQuantity,
     };
 
     // Make API request to Rogue to update the quantity on the backend
-    let response = this.api.post('posts', fields);
+    let request = this.api.post('posts', fields);
 
-    response.then((result) => {
+    request.then((result) => {
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
-        const signupChanged = post.signup_id;
 
-        // Update the quantity for each post under this signup
-        forEach (newState.posts, (value) => {
-          if (value.signup_id == signupChanged) {
-            value.signup.quantity = result.quantity;
-          }
-        });
+        newState.signups[signup.id].quantity = result.quantity;
 
-        // Return the new state
         return newState;
       });
     });
@@ -171,10 +160,10 @@ class CampaignInbox extends React.Component {
       return (
         <div className="container">
 
-          { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign}} />) }
+          { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: this.state.signups[post.signup_id]}} />) }
 
           <ModalContainer>
-            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign}}/> : null}
+            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups }}/> : null}
           </ModalContainer>
         </div>
       )
