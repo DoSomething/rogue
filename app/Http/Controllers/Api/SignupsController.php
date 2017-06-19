@@ -53,12 +53,10 @@ class SignupsController extends ApiController
         // Check to see if the signup exists before creating one.
         $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
 
+        $code = $signup ? 200 : 201;
+
         if (! $signup) {
             $signup = $this->signups->create($request->all(), $transactionId);
-        }
-
-        if ($signup) {
-            $code = 201;
         }
 
         // Transform the data to return it
