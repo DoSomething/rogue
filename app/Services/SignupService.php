@@ -27,7 +27,6 @@ class SignupService
      * Handles all business logic around creating signups.
      *
      * @param array $data
-     * @param int $signupId
      * @param string $transactionId
      * @return Illuminate\Database\Eloquent\Model $model
      */
@@ -37,6 +36,21 @@ class SignupService
 
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
+
+        return $signup;
+    }
+
+    /*
+     * Handles all business logic around retrieving a signup.
+     *
+     * @param  string $northstarId
+     * @param  int $campaignId
+     * @param  int $campaignRunId
+     * @return \Rogue\Models\Signup|null
+     */
+    public function get($northstarId, $campaignId, $campaignRunId)
+    {
+        $signup = $this->signup->get($northstarId, $campaignId, $campaignRunId);
 
         return $signup;
     }
