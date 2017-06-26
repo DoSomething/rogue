@@ -49,7 +49,7 @@ Example Response:
           {
             "id": 340,
             "signup_id": 15,
-            "northstar_id": "5571df46a59db12346dsb456d",
+            "northstar_id": "1234",
             "media": {
               "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487182498.jpeg",
               "caption": "Captioning captions",
@@ -57,6 +57,16 @@ Example Response:
             "tagged": [
               "Good Photo",
               "Good Quote"
+            ],
+            "reactions": [
+              {
+                  "id": 31,
+                  "northstar_id": "1234",
+                  "post_id": 1,
+                  "created_at": "2017-05-11 19:52:21",
+                  "updated_at": "2017-05-11 20:56:02",
+                  "deleted_at": null
+              }
             ],
             "status": "pending",
             "source": "phoenix-web",
@@ -67,12 +77,13 @@ Example Response:
           {
             "id": 312,
             "signup_id": 15,
-            "northstar_id": "5571df46a59db12346dsb456d",
+            "northstar_id": "12345",
             "media": {
               "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487182498.jpeg",
               "caption": "Captioning captions",
             },
             "tagged": [],
+            "reactions": [],
             "status": "pending",
             "source": "phoenix-web",
             "remote_addr": "207.110.19.130",
