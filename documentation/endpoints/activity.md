@@ -62,7 +62,7 @@ Example Response:
               {
                   "id": 31,
                   "northstar_id": "1234",
-                  "post_id": 1,
+                  "post_id": 340,
                   "created_at": "2017-05-11 19:52:21",
                   "updated_at": "2017-05-11 20:56:02",
                   "deleted_at": null
