@@ -36,13 +36,10 @@ Example Response:
   "data": [
     {
       "signup_id": 15,
-      "signup_event_id": 121,
-      "submission_type": "user",
       "northstar_id": "1234",
       "campaign_id": 47,
       "campaign_run_id": 1771,
       "quantity": null,
-      "quantity_pending": 3,
       "why_participated": "because i love to help!",
       "signup_source": "phoenix-web",
       "created_at": "2017-01-20T20:26:56+0000",
@@ -52,39 +49,49 @@ Example Response:
           {
             "id": 340,
             "signup_id": 15,
-            "northstar_id": "5571df46a59db12346dsb456d",
+            "northstar_id": "1234",
             "media": {
               "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487182498.jpeg",
               "caption": "Captioning captions",
             },
+            "tagged": [
+              "Good Photo",
+              "Good Quote"
+            ],
+            "reactions": [
+              {
+                  "id": 31,
+                  "northstar_id": "1234",
+                  "post_id": 340,
+                  "created_at": "2017-05-11 19:52:21",
+                  "updated_at": "2017-05-11 20:56:02",
+                  "deleted_at": null
+              }
+            ],
             "status": "pending",
+            "source": "phoenix-web",
             "remote_addr": "207.110.19.130",
-            "post_source": "runscope",
             "created_at": "2017-02-15T18:14:58+0000",
             "updated_at": "2017-02-15T18:14:58+0000"
           },
           {
             "id": 312,
             "signup_id": 15,
-            "northstar_id": "5571df46a59db12346dsb456d",
-            "postable_type": "Rogue\\Models\\Photo",
+            "northstar_id": "12345",
             "media": {
               "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487182498.jpeg",
               "caption": "Captioning captions",
             },
+            "tagged": [],
+            "reactions": [],
             "status": "pending",
+            "source": "phoenix-web",
             "remote_addr": "207.110.19.130",
-            "post_source": "runscope",
             "created_at": "2017-02-11T18:14:58+0000",
             "updated_at": "2017-02-11T18:14:58+0000"
           },
         ]
       },
-      "user": {
-        "data": {
-          "first_name": "Chloe"
-        }
-      }
     }
   ],
   "meta": {

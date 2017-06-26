@@ -24,6 +24,7 @@ class PostTransformer extends TransformerAbstract
                 'caption' => $post->caption,
             ],
             'tagged' => $post->tagNames(),
+            'reactions' => $post->reactions,
             'status' => $post->status,
             'source' => $post->source,
             'remote_addr' => $post->remote_addr,
