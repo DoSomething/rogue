@@ -59,7 +59,6 @@ class SignupService
         return $signup;
     }
 
-
     /*
      * Handles all business logic around retrieving a signup.
      *
