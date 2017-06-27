@@ -43,9 +43,21 @@ class SignupRepository
         return $signup;
     }
 
+    /**
+     * Update a signup. Quanity and Why participated are the
+     * only fields that can be updated, at the moment.
+     *
+     * @param  Rogue\Models\Signup $signup
+     * @param  array $data
+     * @return \Rogue\Models\Signup|null
+     */
     public function update($signup, $data)
     {
-        dd('update signup');
+        $signup->quantity = isset($data['quantity']) ? $data['quantity'] : $signup->quantity;
+        $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : $signup->why_participated;
+        $signup->save();
+
+        return $signup;
     }
 
     /**
