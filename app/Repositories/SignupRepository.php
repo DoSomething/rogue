@@ -43,6 +43,11 @@ class SignupRepository
         return $signup;
     }
 
+    public function update($signup, $data)
+    {
+        dd('update signup');
+    }
+
     /**
      * Get a signup
      *
