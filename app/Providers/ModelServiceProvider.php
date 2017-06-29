@@ -23,6 +23,7 @@ class ModelServiceProvider extends ServiceProvider
             $signup->events()->create([
                 // @TODO - Should this just be the attributes that have changed? Or the whole thing?
                 'content' => $signup->toJson(),
+                'user' => auth()->user() ? auth()->user()->northstar_id : $signup->northstar_id,
             ]);
         });
 
@@ -30,6 +31,7 @@ class ModelServiceProvider extends ServiceProvider
         Post::saved(function ($post) {
             $post->events()->create([
                 'content' => $post->toJson(),
+                'user' => auth()->user() ? auth()->user()->northstar_id : $post->northstar_id,
             ]);
         });
 
@@ -37,22 +39,18 @@ class ModelServiceProvider extends ServiceProvider
         Review::saved(function ($review) {
             $review->events()->create([
                 'content' => $review->toJson(),
+                'user' => $review->admin_northstar_id,
             ]);
         });
 
         Tagged::saved(function ($tagged) {
             $post = Post::find($tagged->taggable_id);
-            $adminId = auth()->user()->northstar_id;
-
-            $post->action = [
-                'type' => 'tagged',
-                'admin' => $adminId,
-            ];
 
             Event::create([
                 'eventable_id' => $post->id,
                 'eventable_type' => 'Rogue\Models\Post',
                 'content' => $post->toJson(),
+                'user' => auth()->user()->northstar_id,
             ]);
         });
     }
