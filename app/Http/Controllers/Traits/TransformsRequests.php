@@ -111,7 +111,12 @@ trait TransformsRequests
         $paginator->appends($queryParams);
 
         $resource = new Collection($paginator->getCollection(), $transformer);
-
+        // Check to see if this is a collection of posts.
+        // If so, map over the collection and remove all posts that have Hide In Gallery tag.
+        // Is this too specific to Rogue to add here?
+        $resource->map(function ($item, $key) {
+            if ($item)
+        });
         $resource->setMeta($meta);
 
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));

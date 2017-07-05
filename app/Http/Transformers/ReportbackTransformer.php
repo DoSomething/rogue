@@ -16,7 +16,11 @@ class ReportbackTransformer extends TransformerAbstract
     public function transform(Post $post)
     {
         $signup = $post->signup;
-        dd($post);
+
+        if (in_array('Hide In Gallery', $post->tagNames())) {
+            return;
+        }
+
         $result = [
             'id' => $post->id,
             'status' => $post->status,
@@ -27,6 +31,7 @@ class ReportbackTransformer extends TransformerAbstract
                 'uri' => $post->url,
                 'type' => 'image',
             ],
+            'tagged' => $post->tagNames(),
             'created_at' => $post->created_at->toIso8601String(),
             'reportback' => [
                 'id' => $signup->id,
