@@ -16,7 +16,7 @@ class ReportbackTransformer extends TransformerAbstract
     public function transform(Post $post)
     {
         $signup = $post->signup;
-
+        dd($post);
         $result = [
             'id' => $post->id,
             'status' => $post->status,
