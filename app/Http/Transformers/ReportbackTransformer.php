@@ -17,9 +17,9 @@ class ReportbackTransformer extends TransformerAbstract
     {
         $signup = $post->signup;
 
-        if (in_array('Hide In Gallery', $post->tagNames())) {
-            return;
-        }
+        // if (in_array('Hide In Gallery', $post->tagNames())) {
+        //     return;
+        // }
 
         $result = [
             'id' => $post->id,

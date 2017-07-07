@@ -44,11 +44,11 @@ class ReportbackController extends ApiController
         // 3. Only return Posts that do not have 'Hide In Gallery' tag
         // 4. Select all the fields that we will be using
         $query = $query->join('signups', 'signups.id', '=', 'posts.signup_id')
+            ->join('tagging_tagged', 'tagging_tagged.taggable_id', '=', 'posts.id')
             ->where('posts.status', '=', 'accepted')
-            // ->join('tagging_tagged', 'tagging_tagged.taggable_id', '=', 'posts.id')
-            // ->groupBy('tagging_tagged.taggable_id')
-            // ->where('tagging_tagged.tag_name', '<>', 'Hide In Gallery')
-            ->select('posts.id as id', 'signups.campaign_id as campaign_id', 'posts.status as status', 'posts.caption as caption', 'posts.url as url', 'posts.created_at as created_at', 'posts.signup_id as signup_id');
+            ->groupBy('tagging_tagged.taggable_id')
+            ->having('tagging_tagged.tag_name', '!=', 'Hide In Gallery')
+            ->select('posts.id as id', 'signups.campaign_id as campaign_id', 'posts.status as status', 'posts.caption as caption', 'posts.url as url', 'posts.created_at as created_at', 'posts.signup_id as signup_id', 'tagging_tagged.tag_name as tag_name');
 
         $filters = $request->query('filter');
 
