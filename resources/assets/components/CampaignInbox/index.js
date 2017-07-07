@@ -55,18 +55,17 @@ class CampaignInbox extends React.Component {
   updatePost(postId, fields) {
     fields.post_id = postId;
 
-    this.setState((previousState) => {
-      const newState = {...previousState};
-      newState.posts[postId].status = fields.status;
+    let request = this.api.put('reviews', fields);
 
-      let response = this.api.put('reviews', fields);
+    request.then((result) => {
+      this.setState((previousState) => {
+        const newState = {...previousState};
+        newState.posts[postId].status = fields.status;
 
-      response.then(function(result) {
-        newState.posts[postId].status = result.data.status;
+        return newState;
       });
-
-      return newState;
     });
+
   }
 
   // Tag a post.
@@ -135,7 +134,7 @@ class CampaignInbox extends React.Component {
           var newState = {...previousState};
 
           // Remove the deleted post from the state
-          newState.posts = reject(newState.posts, ['id', postId]);
+          delete(newState.posts[postId]);
 
           // Return the new state
           return newState;
