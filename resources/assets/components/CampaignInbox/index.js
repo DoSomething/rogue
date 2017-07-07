@@ -60,7 +60,6 @@ class CampaignInbox extends React.Component {
     request.then((result) => {
       this.setState((previousState) => {
         const newState = {...previousState};
-        console.log(newState.posts.postId);
         newState.posts[postId].status = fields.status;
 
         return newState;
