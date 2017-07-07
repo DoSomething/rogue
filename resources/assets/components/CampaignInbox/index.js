@@ -135,7 +135,7 @@ class CampaignInbox extends React.Component {
           var newState = {...previousState};
 
           // Remove the deleted post from the state
-          newState.posts = reject(newState.posts, ['id', postId]);
+          delete(newState.posts[postId]);
 
           // Return the new state
           return newState;
