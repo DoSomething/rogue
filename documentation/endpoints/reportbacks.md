@@ -38,6 +38,10 @@ Example Response:
         "uri": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/1-676c9c02029df581d3668ae869d937b8-1491250786.jpeg",
         "type": "image"
       },
+      "tagged": [
+        "Good Photo",
+        "Good For Storytelling"
+      ],
       "created_at": "2017-04-03T20:19:47+00:00",
       "reportback": {
         "id": 1,
@@ -72,6 +76,7 @@ Example Response:
         "uri": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/1-676c9c02029df581d3668ae869d937b8-1491250872.jpeg",
         "type": "image"
       },
+      "tagged": [],
       "created_at": "2017-04-03T20:21:13+00:00",
       "reportback": {
         "id": 1,
@@ -106,6 +111,7 @@ Example Response:
         "uri": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/1-676c9c02029df581d3668ae869d937b8-1491250890.jpeg",
         "type": "image"
       },
+      "tagged": [],
       "created_at": "2017-04-03T20:21:31+00:00",
       "reportback": {
         "id": 1,
