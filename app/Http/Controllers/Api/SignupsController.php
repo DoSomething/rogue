@@ -57,6 +57,8 @@ class SignupsController extends ApiController
 
         if (! $signup) {
             $signup = $this->signups->create($request->all(), $transactionId);
+        } else {
+            $signup = $this->signups->update($signup, $request->all(), $transactionId);
         }
 
         // Transform the data to return it
