@@ -21,8 +21,9 @@ class ModelServiceProvider extends ServiceProvider
         // When Signups are saved create an event for them.
         Signup::saved(function ($signup) {
             $signup->events()->create([
-                // @TODO - Should this just be the attributes that have changed? Or the whole thing?
                 'content' => $signup->toJson(),
+                // Use the authenticated user if coming from the web,
+                // otherwise use the id of the user in the request.
                 'user' => auth()->user() ? auth()->user()->northstar_id : $signup->northstar_id,
             ]);
         });
@@ -31,6 +32,8 @@ class ModelServiceProvider extends ServiceProvider
         Post::saved(function ($post) {
             $post->events()->create([
                 'content' => $post->toJson(),
+                // Use the authenticated user if coming from the web,
+                // otherwise use the id of the user in the request.
                 'user' => auth()->user() ? auth()->user()->northstar_id : $post->northstar_id,
             ]);
         });
@@ -50,6 +53,7 @@ class ModelServiceProvider extends ServiceProvider
                 'eventable_id' => $post->id,
                 'eventable_type' => 'Rogue\Models\Post',
                 'content' => $post->toJson(),
+                // Only authenticated admins can tag, so grab the authenticated user.
                 'user' => auth()->user()->northstar_id,
             ]);
         });
