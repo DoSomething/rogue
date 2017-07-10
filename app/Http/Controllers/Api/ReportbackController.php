@@ -37,7 +37,8 @@ class ReportbackController extends ApiController
     public function index(Request $request)
     {
         // Create an empty Post query, which we can filter and paginate
-        $query = $this->newQuery(Post::class);
+        // Only return Posts that do not have 'Hide In Gallery' tag
+        $query = $this->newQuery(Post::class)->withoutTags(['Hide In Gallery']);
 
         // 1. Join with signups so we can access the signup data and filter by campaign
         // 2. Only return approved Posts

@@ -27,6 +27,7 @@ class ReportbackTransformer extends TransformerAbstract
                 'uri' => $post->url,
                 'type' => 'image',
             ],
+            'tagged' => $post->tagNames(),
             'created_at' => $post->created_at->toIso8601String(),
             'reportback' => [
                 'id' => $signup->id,
