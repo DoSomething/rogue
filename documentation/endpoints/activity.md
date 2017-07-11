@@ -6,6 +6,9 @@ Retrieve all user activity data.
 GET /api/v2/activity
 ```
 ### Optional Query Parameters
+- **id** _(integer)_
+  - The signup id(s) to filter the response by.
+  - e.g. `/activity?filter[id]=121,122`
 - **limit** _(default is 20)_
   - Set the number of records to return in a single response.
   - e.g. `/activity?limit=35`
