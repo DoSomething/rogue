@@ -68,5 +68,6 @@ function has_middleware($middleware = null)
     if ($middleware) {
         return in_array($middleware, $currentRoute->middleware());
     }
+
     return $currentRoute->middleware() ? true : false;
 }

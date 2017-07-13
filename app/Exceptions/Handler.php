@@ -3,11 +3,10 @@
 namespace Rogue\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Exception\HttpResponseException;
-use Symfony\Component\Debug\Exception\FlattenException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -65,7 +64,6 @@ class Handler extends ExceptionHandler
             return $this->buildJsonResponse($e);
         }
 
-
         return parent::render($request, $e);
     }
 
@@ -81,6 +79,7 @@ class Handler extends ExceptionHandler
         if ($request->ajax() || $request->wantsJson()) {
             return $this->buildJsonResponse(new HttpException(401, 'Unauthorized.'));
         }
+
         return redirect()->guest('login');
     }
 
@@ -93,7 +92,6 @@ class Handler extends ExceptionHandler
     protected function buildJsonResponse(Exception $e)
     {
         if ($e instanceof HttpResponseException) {
-
             return $e->getResponse();
         }
 
@@ -113,6 +111,7 @@ class Handler extends ExceptionHandler
                 'line' => $e->getLine(),
             ];
         }
+
         return response()->json($response, $code);
     }
 }
