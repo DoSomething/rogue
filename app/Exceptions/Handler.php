@@ -49,6 +49,9 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         // Re-cast specific exceptions or uniquely render them:
+        if ($e instanceof AuthorizationException) {
+            return parent::render($request, $e);
+        }
         if ($e instanceof AuthenticationException) {
             return $this->unauthenticated($request, $e);
         } elseif ($e instanceof ValidationException || $e instanceof NorthstarValidationException) {
