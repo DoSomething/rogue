@@ -52,3 +52,22 @@ function incrementTransactionId($request)
 
     return null;
 }
+
+/**
+ * Check if the current route has any middleware attached.
+ *
+ * @param  null|string  $middleware
+ * @return bool
+ */
+function has_middleware($middleware = null)
+{
+    $currentRoute = app('router')->getCurrentRoute();
+    if (! $currentRoute) {
+        return false;
+    }
+    if ($middleware) {
+        return in_array($middleware, $currentRoute->middleware());
+    }
+
+    return $currentRoute->middleware() ? true : false;
+}
