@@ -39,7 +39,6 @@ class AWS
         // uploads to prevent AWS cache giving the user an old upload.
         $path = '/uploads/reportback-items' . '/' . $filename . '-' . md5($data) . '-' . time() . '.' . $extension;
 
-
         // Push file to S3.
         $success = Storage::put($path, $data);
 
@@ -68,7 +67,7 @@ class AWS
             throw new UnprocessableEntityHttpException('Invalid file type. Upload a JPEG, PNG or GIF.');
         }
 
-        $path = '/uploads/reportback-items/' . $filename . '.' . $extension; ;
+        $path = '/uploads/reportback-items/' . $filename . '.' . $extension;
 
         // Push file to S3.
         $success = Storage::put($path, $data);
