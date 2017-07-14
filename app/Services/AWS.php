@@ -39,6 +39,37 @@ class AWS
         // uploads to prevent AWS cache giving the user an old upload.
         $path = '/uploads/reportback-items' . '/' . $filename . '-' . md5($data) . '-' . time() . '.' . $extension;
 
+
+        // Push file to S3.
+        $success = Storage::put($path, $data);
+
+        if (! $success) {
+            throw new HttpException(500, 'Unable to save image to S3.');
+        }
+
+        return config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . $path;
+    }
+
+    /**
+     * Store a reportback item (image) in S3.
+     *
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|string $file
+     *  File object, or a base-64 encoded data URI
+     * @param string $data - File data
+     *
+     * @return string - URL of stored image
+     */
+    public function storeImageData($data, $filename)
+    {
+        $extension = $this->guessExtension($data);
+
+        // Make sure we're only uploading valid image types
+        if (! in_array($extension, ['jpeg', 'png', 'gif'])) {
+            throw new UnprocessableEntityHttpException('Invalid file type. Upload a JPEG, PNG or GIF.');
+        }
+
+        $path = '/uploads/reportback-items/' . $filename . '.' . $extension; ;
+
         // Push file to S3.
         $success = Storage::put($path, $data);
 
