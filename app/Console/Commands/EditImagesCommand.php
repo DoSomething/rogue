@@ -5,8 +5,8 @@ namespace Rogue\Console\Commands;
 use Rogue\Models\Post;
 use Rogue\Services\AWS;
 use Illuminate\Console\Command;
-use Intervention\Image\Exception\ImageException;
 use Intervention\Image\Facades\Image;
+use Intervention\Image\Exception\ImageException;
 
 class EditImagesCommand extends Command
 {
