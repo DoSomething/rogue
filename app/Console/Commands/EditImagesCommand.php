@@ -55,7 +55,7 @@ class EditImagesCommand extends Command
 
                     $aws->storeImageData($editedImage, 'edited_'.$post->id);
                 } catch (ImageException $e) {
-                    $this->error('Failed to edit image for post '.$post->id);
+                    $this->error('Failed to edit image for post '.$post->id.': '.$image);
                 }
 
                 $this->line('Saved edited image for post '.$post->id);
