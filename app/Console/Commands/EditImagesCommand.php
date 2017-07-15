@@ -6,6 +6,7 @@ use Rogue\Models\Post;
 use Rogue\Services\AWS;
 use Illuminate\Console\Command;
 use Intervention\Image\Facades\Image;
+use Intervention\Image\Exception\ImageException;
 
 class EditImagesCommand extends Command
 {
@@ -45,12 +46,17 @@ class EditImagesCommand extends Command
         Post::where('id', '>', $start)->chunk(100, function ($posts) use ($aws) {
             foreach ($posts as $post) {
                 $image = $post->url;
-                $editedImage = (string) Image::make($image)
-                    ->orientate()
-                    ->fit(400)
-                    ->encode('jpg', 75);
 
-                $aws->storeImageData($editedImage, 'edited_'.$post->id);
+                try {
+                    $editedImage = (string) Image::make($image)
+                        ->orientate()
+                        ->fit(400)
+                        ->encode('jpg', 75);
+
+                    $aws->storeImageData($editedImage, 'edited_'.$post->id);
+                } catch (ImageException $e) {
+                    $this->error('Failed to edit image for post '.$post->id.': '.$image);
+                }
 
                 $this->line('Saved edited image for post '.$post->id);
             }
