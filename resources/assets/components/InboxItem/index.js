@@ -40,7 +40,7 @@ class InboxItem extends React.Component {
     const signup = this.props.details.signup;
 
     return (
-      <div className="container__row">
+      <div className="container__row inbox-item">
         <div className="container__block -third">
           <img src={getImageUrlFromProp(post)}/>
           <p>
