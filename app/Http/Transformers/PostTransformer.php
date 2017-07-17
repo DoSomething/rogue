@@ -20,7 +20,7 @@ class PostTransformer extends TransformerAbstract
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
             'media' => [
-                'url' => $post->url,
+                'url' => config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . '/uploads/reportback-items/edited_' . $post->id . '.jpeg',
                 'caption' => $post->caption,
             ],
             'tagged' => $post->tagNames(),
