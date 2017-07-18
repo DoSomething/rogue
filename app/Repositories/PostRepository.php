@@ -211,22 +211,23 @@ class PostRepository
      */
     protected function crop($data, $postId)
     {
+        $editedImage = Image::make($data['file']);
+
+        // If we have crop values, then use 'em.
         $cropValues = array_only($data, $this->cropProperties);
-
         if (count($cropValues) > 0) {
-            $editedImage = edit_image($data['file'], $cropValues);
-
-            return $this->aws->storeImageData($editedImage, 'edited_' . $postId);
+            $editedImage = $editedImage
+                // Intervention Image rotates images counter-clockwise, but we get values assuming clockwise rotation, so we negate it to rotate clockwise.
+                ->rotate(-$cropValues['crop_rotate'])
+                ->crop($cropValues['crop_width'], $cropValues['crop_height'], $cropValues['crop_x'], $cropValues['crop_y']);
         } else {
-            // Take center crop
-            $editedImage = (string) Image::make($data['file'])
-                        ->orientate()
-                        ->fit(400)
-                        ->encode('jpg', 75);
-
-            return $this->aws->storeImageData($editedImage, 'edited_' . $postId);
+            // Otherwise, try to rotate automatically by EXIF metadata.
+            $editedImage = $editedImage->orientate();
         }
 
-        return null;
+        $editedImage = $editedImage->fit(400)
+            ->encode('jpg', 75);
+
+        return $this->aws->storeImageData((string) $editedImage, 'edited_' . $postId);
     }
 }
