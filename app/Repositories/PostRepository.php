@@ -59,7 +59,6 @@ class PostRepository
             $image = Image::make($data['file'])->orientate();
 
             $fileUrl = $this->aws->storeImage((string) $image->encode('data-url'), $signupId);
-
         } else {
             $fileUrl = 'default';
         }
