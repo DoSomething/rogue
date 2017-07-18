@@ -59,8 +59,6 @@ class PostRepository
             $image = Image::make($data['file'])->orientate();
 
             $fileUrl = $this->aws->storeImage((string) $image->encode('data-url'), $signupId);
-
-            $editedImage = $this->crop($data, $signupId);
         } else {
             $fileUrl = 'default';
         }
@@ -88,6 +86,11 @@ class PostRepository
             $post->events->first()->save(['timestamps' => false]);
         } else {
             $post->save();
+        }
+
+        // Edit the image if there is one
+        if (isset($data['file'])) {
+            $editedImage = $this->crop($data, $post->id);
         }
 
         return $post;
@@ -206,14 +209,22 @@ class PostRepository
      * @param  int $signupId
      * @return url|null
      */
-    protected function crop($data, $signupId)
+    protected function crop($data, $postId)
     {
         $cropValues = array_only($data, $this->cropProperties);
 
         if (count($cropValues) > 0) {
             $editedImage = edit_image($data['file'], $cropValues);
 
-            return $this->aws->storeImage($editedImage, 'edited_' . $signupId);
+            return $this->aws->storeImageData($editedImage, 'edited_' . $postId);
+        } else {
+            // Take center crop
+            $editedImage = (string) Image::make($data['file'])
+                        ->orientate()
+                        ->fit(400)
+                        ->encode('jpg', 75);
+
+            return $this->aws->storeImageData($editedImage, 'edited_' . $postId);
         }
 
         return null;
