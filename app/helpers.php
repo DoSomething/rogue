@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\HtmlString;
-use Intervention\Image\Facades\Image;
 
 /**
  * Create a script tag to set a global variable.
