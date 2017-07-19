@@ -36,6 +36,9 @@ class ReportbackTransformer extends TransformerAbstract
                 'why_participated' => $signup->why_participated,
                 'flagged' => 'false',
             ],
+            'campaign' => [
+                'id' => $signup->campaign_id,
+            ],
             'kudos' => [
                     'data' => [
                         [
