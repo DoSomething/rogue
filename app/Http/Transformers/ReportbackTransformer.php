@@ -21,14 +21,13 @@ class ReportbackTransformer extends TransformerAbstract
             'id' => $post->id,
             'status' => $post->status,
             'caption' => $post->caption,
-            // Add link to review reportback item in Rogue here once that page exists
-            // 'uri' => 'link_goes_here'
+            'uri' => url(config('services.phoenix.uri') . '/api/v1/reportback-items/'.$post->id, ['absolute' => true]),
             'media' => [
                 'uri' => config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . '/uploads/reportback-items/edited_' . $post->id . '.jpeg',
                 'type' => 'image',
             ],
             'tagged' => $post->tagNames(),
-            'created_at' => $post->created_at->toIso8601String(),
+            'created_at' => (string) $post->created_at->timestamp, // Phoenix quirk, this field is a string timestamp.
             'reportback' => [
                 'id' => $signup->id,
                 'created_at' => $signup->created_at->toIso8601String(),
@@ -38,20 +37,24 @@ class ReportbackTransformer extends TransformerAbstract
                 'flagged' => 'false',
             ],
             'kudos' => [
-                    'total' => $post->reactions_count,
                     'data' => [
-                        'current_user' => [
-                            'kudos_id' => 1,
-                            'reacted' => count($post->reactions) >= 1,
-                        ],
-                        'term' => [
-                            'name' => 'heart',
-                            'id' => 641,
-                            'total' => $post->reactions_count,
+                        [
+                            'current_user' => [
+                                'kudos_id' => 1,
+                                // `$post->reactions` is constrained to only reactions w/ `as_user` Northstar ID.
+                                'reacted' => $post->reactions->count() >= 1,
+                            ],
+                            'term' => [
+                                'id' => 641,
+                                'name' => 'heart',
+                                'total' => $post->reactions_count,
+                            ],
                         ],
                     ],
             ],
-            'user' => $signup->northstar_id,
+            'user' => [
+                'id' => $signup->northstar_id,
+            ],
         ];
 
         return $result;
