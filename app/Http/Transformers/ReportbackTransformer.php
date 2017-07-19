@@ -18,7 +18,7 @@ class ReportbackTransformer extends TransformerAbstract
         $signup = $post->signup;
 
         $result = [
-            'id' => $post->id,
+            'id' => (string) $post->id,
             'status' => $post->status,
             'caption' => $post->caption,
             'uri' => url(config('services.phoenix.uri') . '/api/v1/reportback-items/'.$post->id, ['absolute' => true]),
@@ -29,7 +29,7 @@ class ReportbackTransformer extends TransformerAbstract
             'tagged' => $post->tagNames(),
             'created_at' => (string) $post->created_at->timestamp, // Phoenix quirk, this field is a string timestamp.
             'reportback' => [
-                'id' => $signup->id,
+                'id' => (string) $signup->id,
                 'created_at' => $signup->created_at->toIso8601String(),
                 'updated_at' => $signup->updated_at->toIso8601String(),
                 'quantity' => $signup->quantity,
@@ -44,11 +44,11 @@ class ReportbackTransformer extends TransformerAbstract
                         [
                             'current_user' => [
                                 // `$post->reactions` is constrained to only reactions w/ `as_user` Northstar ID.
-                                'kudos_id' => ! empty($post->reactions[0]) ? $post->reactions[0]->id : null,
+                                'kudos_id' => ! empty($post->reactions[0]) ? (string) $post->reactions[0]->id : null,
                                 'reacted' => ! empty($post->reactions[0]),
                             ],
                             'term' => [
-                                'id' => 641,
+                                'id' => (string) 641,
                                 'name' => 'heart',
                                 'total' => $post->reactions_count,
                             ],
