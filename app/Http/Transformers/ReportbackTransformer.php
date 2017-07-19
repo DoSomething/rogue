@@ -27,7 +27,7 @@ class ReportbackTransformer extends TransformerAbstract
                 'type' => 'image',
             ],
             'tagged' => $post->tagNames(),
-            'created_at' => $post->created_at->toIso8601String(),
+            'created_at' => (string) $post->created_at->timestamp, // Phoenix quirk, this field is a string timestamp.
             'reportback' => [
                 'id' => $signup->id,
                 'created_at' => $signup->created_at->toIso8601String(),
