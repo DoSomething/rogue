@@ -21,8 +21,7 @@ class ReportbackTransformer extends TransformerAbstract
             'id' => $post->id,
             'status' => $post->status,
             'caption' => $post->caption,
-            // Add link to review reportback item in Rogue here once that page exists
-            // 'uri' => 'link_goes_here'
+            'uri' => url(config('services.phoenix.uri') . '/api/v1/reportbacks/'.$post->id, ['absolute' => true]),
             'media' => [
                 'uri' => config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . '/uploads/reportback-items/edited_' . $post->id . '.jpeg',
                 'type' => 'image',
@@ -52,6 +51,7 @@ class ReportbackTransformer extends TransformerAbstract
                     ],
             ],
             'user' => $signup->northstar_id,
+            ]
         ];
 
         return $result;
