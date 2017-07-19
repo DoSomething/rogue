@@ -37,16 +37,18 @@ class ReportbackTransformer extends TransformerAbstract
                 'flagged' => 'false',
             ],
             'kudos' => [
-                    'total' => $post->reactions_count,
                     'data' => [
-                        'current_user' => [
-                            'kudos_id' => 1,
-                            'reacted' => count($post->reactions) >= 1,
-                        ],
-                        'term' => [
-                            'name' => 'heart',
-                            'id' => 641,
-                            'total' => $post->reactions_count,
+                        [
+                            'current_user' => [
+                                'kudos_id' => 1,
+                                // `$post->reactions` is constrained to only reactions w/ `as_user` Northstar ID.
+                                'reacted' => $post->reactions->count() >= 1,
+                            ],
+                            'term' => [
+                                'id' => 641,
+                                'name' => 'heart',
+                                'total' => $post->reactions_count,
+                            ],
                         ],
                     ],
             ],
