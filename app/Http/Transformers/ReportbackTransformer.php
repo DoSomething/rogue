@@ -21,7 +21,7 @@ class ReportbackTransformer extends TransformerAbstract
             'id' => $post->id,
             'status' => $post->status,
             'caption' => $post->caption,
-            'uri' => url(config('services.phoenix.uri') . '/api/v1/reportbacks/'.$post->id, ['absolute' => true]),
+            'uri' => url(config('services.phoenix.uri') . '/api/v1/reportback-items/'.$post->id, ['absolute' => true]),
             'media' => [
                 'uri' => config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . '/uploads/reportback-items/edited_' . $post->id . '.jpeg',
                 'type' => 'image',
