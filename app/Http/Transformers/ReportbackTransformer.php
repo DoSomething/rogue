@@ -52,7 +52,8 @@ class ReportbackTransformer extends TransformerAbstract
                         ],
                     ],
             ],
-            'user' => $signup->northstar_id,
+            'user' => [
+                'id' => $signup->northstar_id,
             ]
         ];
 
