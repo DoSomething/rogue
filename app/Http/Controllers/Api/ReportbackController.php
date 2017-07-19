@@ -14,13 +14,21 @@ use Rogue\Http\Transformers\PaginatorForPhoenixAshesGallery;
 class ReportbackController extends ApiController
 {
     /**
-     * @var \Rogue\Http\Transformers\ReportbackTransformer
+     * The Reportback service.
+     *
+     * @var ReportbackService
+     */
+    protected $reportbackService;
+
+    /**
+     * @var ReportbackTransformer
      */
     protected $transformer;
-    protected $itemTransformer;
 
     /**
      * Create new ReportbackController instance.
+     *
+     * @param ReportbackService $reportbackService
      */
     public function __construct(ReportbackService $reportbackService)
     {
