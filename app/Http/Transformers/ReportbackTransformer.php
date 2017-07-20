@@ -46,7 +46,7 @@ class ReportbackTransformer extends TransformerAbstract
                         [
                             'current_user' => [
                                 // `$post->reactions` is constrained to only reactions w/ `as_user` Northstar ID.
-                                'kudos_id' => ! empty($post->reactions[0]) ? (string) $post->reactions[0]->id : null,
+                                'kudos_id' => ! empty($post->reactions[0]) ? $post->reactions[0]->post_id . '|' . $post->reactions[0]->northstar_id : null,
                                 'reacted' => ! empty($post->reactions[0]),
                             ],
                             'term' => [
