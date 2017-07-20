@@ -94,6 +94,15 @@ class CampaignSingle extends React.Component {
 
     return (
       <div className="container">
+        <div className="container__block">
+          <p>
+            Hey there 🐼! Why’s there only ~100 photos on this page you ask? <br/>
+            Good question! We’re only loading ~100 photos to help this page load <em>faster</em> for you! We’re working on showing all the photos while keeping the page load time <em>fast</em>  - this should be done the by 8/1! Stay tuned!<br/>
+            If you  need to see more accepted posts, reach out in #the-bleed in Slack!<br/>
+            Love,<br/>
+            Team Bleed
+          </p>
+        </div>
         <StatusCounter postTotals={this.state.postTotals} campaign={campaign} />
         <PostFilter onChange={this.filterPosts} />
 

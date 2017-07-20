@@ -22,10 +22,10 @@ export function calculateAge(date) {
 };
 
 export function getImageUrlFromProp(photoProp) {
-  const photo_url = photoProp['url'];
+	const photo_url = photoProp['url'];
 
 	if (photo_url == "default") {
-	  return "https://pics.onsizzle.com/bork-2411135.png";
+	  return "https://www.dosomething.org/sites/default/files/JenBugError.png";
 	}
 	else {
 	  return photo_url;

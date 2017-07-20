@@ -91,7 +91,8 @@ class CampaignsController extends Controller
      */
     public function showCampaign($id)
     {
-        $signups = Signup::campaign([$id])->has('posts')->with('posts')->get();
+        // @TODO: we should paginate here instead of just showing 100
+        $signups = Signup::campaign([$id])->has('posts')->with('posts')->take(100)->get();
 
         // @TODO EXTRACT AND FIGURE OUT HOW NOT TO HAVE TO DO THIS.
         $signups->each(function ($item) {
