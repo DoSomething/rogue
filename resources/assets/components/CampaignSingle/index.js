@@ -104,7 +104,8 @@ class CampaignSingle extends React.Component {
           </p>
         </div>
         <StatusCounter postTotals={this.state.postTotals} campaign={campaign} />
-        <PostFilter onChange={this.filterPosts} />
+        {/* @TODO - add back in when we deal with pagination on the single campaign view*/}
+        {/*<PostFilter onChange={this.filterPosts} />*/}
 
         { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: this.state.signups[post.signup_id]}} /> : null) }
 
