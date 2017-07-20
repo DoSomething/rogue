@@ -15,12 +15,14 @@ class PostTransformer extends TransformerAbstract
      */
     public function transform(Post $post)
     {
+        $url = ($post->url === 'default') ? 'default' : config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . '/uploads/reportback-items/edited_' . $post->id . '.jpeg';
+
         return [
             'id' => $post->id,
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
             'media' => [
-                'url' => config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . '/uploads/reportback-items/edited_' . $post->id . '.jpeg',
+                'url' => $url,
                 'caption' => $post->caption,
             ],
             'tagged' => $post->tagNames(),
