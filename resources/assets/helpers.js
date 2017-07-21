@@ -39,3 +39,13 @@ export function extractPostsFromSignups(signups) {
 
     return posts;
 }
+
+export function getEditedImageUrl(photoProp) {
+  const edited_file_name = `edited_${photoProp.id}.jpeg`;
+  const url_parts = photoProp['url'].split("/");
+
+  url_parts.pop();
+  url_parts.push(edited_file_name);
+
+  return url_parts.join('/');
+};
