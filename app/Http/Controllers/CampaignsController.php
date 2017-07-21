@@ -92,7 +92,7 @@ class CampaignsController extends Controller
     public function showCampaign($id)
     {
         // @TODO: we should paginate here instead of just showing 100
-        $signups = Signup::campaign([$id])->has('posts')->with('posts')->take(100)->get();
+        $signups = Signup::campaign([$id])->has('posts')->with('posts')->paginate(1);
 
         // @TODO EXTRACT AND FIGURE OUT HOW NOT TO HAVE TO DO THIS.
         $signups->each(function ($item) {
@@ -107,13 +107,15 @@ class CampaignsController extends Controller
 
         return view('pages.campaign_single')
             ->with('state', [
-                'signups' => $signups,
+                'signups' => $signups->toArray()['data'],
                 'campaign' => $campaign,
                 'post_totals' => [
                     'accepted_count' => $totals->accepted_count,
                     'pending_count' => $totals->pending_count,
                     'rejected_count' => $totals->rejected_count,
                 ],
+                'next_page' => $signups->nextPageUrl(),
+                'previous_page' => $signups->previousPageUrl(),
             ]);
     }
 }

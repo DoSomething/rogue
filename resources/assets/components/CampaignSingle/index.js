@@ -5,6 +5,7 @@ import { extractPostsFromSignups } from '../../helpers';
 import InboxItem from '../InboxItem';
 import ModalContainer from '../ModalContainer';
 import HistoryModal from '../HistoryModal';
+import PagingButtons from '../PagingButtons';
 import PostFilter from '../PostFilter';
 import StatusCounter from '../StatusCounter';
 import { RestApiClient} from '@dosomething/gateway';
@@ -22,6 +23,8 @@ class CampaignSingle extends React.Component {
       postTotals: props.post_totals,
       displayHistoryModal: false,
       historyModalId: null,
+      nextPage: props.next_page,
+      prevPage: props.previous_page,
     };
 
     this.api = new RestApiClient;
@@ -112,6 +115,8 @@ class CampaignSingle extends React.Component {
         <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups}}/> : null}
         </ModalContainer>
+        
+        <PagingButtons prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
       </div>
     )
   }
