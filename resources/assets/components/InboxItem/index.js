@@ -1,5 +1,5 @@
 import React from 'react';
-import { calculateAge, getImageUrlFromProp } from '../../helpers';
+import { calculateAge, getImageUrlFromProp, getEditedImageUrl } from '../../helpers';
 import { remove, map, clone } from 'lodash';
 
 import Tags from '../Tags';
@@ -44,7 +44,7 @@ class InboxItem extends React.Component {
         <div className="container__block -third">
           <img src={getImageUrlFromProp(post)}/>
           <p>
-            <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a>
+            <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a> | <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
           </p>
 
           <ul className="gallery -duo">
