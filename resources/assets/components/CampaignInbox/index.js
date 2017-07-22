@@ -6,27 +6,89 @@ import { extractPostsFromSignups } from '../../helpers';
 import InboxItem from '../InboxItem';
 import ModalContainer from '../ModalContainer';
 import HistoryModal from '../HistoryModal';
+import Confetti from 'react-dom-confetti';
+import classnames from 'classnames';
+
 
 class CampaignInbox extends React.Component {
   constructor(props) {
     super(props);
 
     const posts = extractPostsFromSignups(props.signups);
+    const allPosts = Object.keys(posts).map(elem => posts[elem]);
+    const initialPost = {};
+    allPosts.slice(0, 5).forEach(postElem => {
+      initialPost[postElem.id] = postElem;
+    });
 
     this.state = {
-      signups: keyBy(props.signups, 'id'),
-      posts: posts,
+      allPosts: allPosts,
+      currentBatch: 1,
+      celebrateClick: false,
       displayHistoryModal: false,
       historyModalId: null,
+      nextBatchButtonEnabled: false,
+      numberOfPosts: 5,
+      posts: initialPost,
+      signups: keyBy(props.signups, 'id')
     };
 
-    this.api = new RestApiClient;
-    this.updatePost = this.updatePost.bind(this);
-    this.updateTag = this.updateTag.bind(this);
-    this.updateQuantity = this.updateQuantity.bind(this);
-    this.showHistory = this.showHistory.bind(this);
-    this.hideHistory = this.hideHistory.bind(this);
-    this.deletePost = this.deletePost.bind(this);
+    this.api             = new RestApiClient;
+    this.updatePost      = this.updatePost.bind(this);
+    this.updateTag       = this.updateTag.bind(this);
+    this.updateQuantity  = this.updateQuantity.bind(this);
+    this.showHistory     = this.showHistory.bind(this);
+    this.hideHistory     = this.hideHistory.bind(this);
+    this.deletePost      = this.deletePost.bind(this);
+    this.getPostBatch    = this.getPostBatch.bind(this);
+    this.batchIsComplete = this.batchIsComplete.bind(this);
+  }
+
+  batchIsComplete(posts) {
+    return iscomplete =  Object.keys(posts)
+      .map(postKey => posts[postKey])
+      .every(post => post.status !== 'pending');
+  }
+
+  getPostBatch() {
+    const from          = this.state.currentBatch * this.state.numberOfPosts;
+    const to            = from + this.state.numberOfPosts;
+    const nextBatch     = this.state.currentBatch + 1;
+    const nextPostBatch = {};
+    this.state.allPosts.slice(from, to).forEach(postElem => nextPostBatch[postElem.id] = postElem);
+
+
+    this.setState({
+      currentBatch: nextBatch,
+      posts: nextPostBatch,
+      nextBatchButtonEnabled: false,
+      celebrateClick: true
+    });
+
+  }
+
+  // Updates a post status.
+  updatePost(postId, fields) {
+    const isEndOfPosts = this.state.currentBatch * this.state.numberOfPosts >= this.state.allPosts.length;
+    fields.post_id     = postId;
+    const request      = this.api.put('reviews', fields);
+
+    request.then(() => {
+      this.setState((previousState) => {
+        const newState                  = {...previousState};
+        newState.posts[postId].status   = fields.status;
+        newState.nextBatchButtonEnabled = this.batchIsComplete(newState.posts);
+
+        if (isEndOfPosts && this.batchIsComplete(newState.posts)) {
+          newState.celebrateClick = true;
+        } else {
+          newState.celebrateClick = false;
+        }
+
+        return newState;
+      });
+    });
+
   }
 
   // Open the history modal of the given post
@@ -49,23 +111,6 @@ class CampaignInbox extends React.Component {
       displayHistoryModal: false,
       historyModalId: null,
     });
-  }
-
-  // Updates a post status.
-  updatePost(postId, fields) {
-    fields.post_id = postId;
-
-    let request = this.api.put('reviews', fields);
-
-    request.then((result) => {
-      this.setState((previousState) => {
-        const newState = {...previousState};
-        newState.posts[postId].status = fields.status;
-
-        return newState;
-      });
-    });
-
   }
 
   // Tag a post.
@@ -144,8 +189,21 @@ class CampaignInbox extends React.Component {
   }
 
   render() {
-    const posts = this.state.posts;
-    const campaign = this.props.campaign;
+    const posts        = this.state.posts;
+    const campaign     = this.props.campaign;
+    const endOfPosts   = this.state.currentBatch * this.state.numberOfPosts >= this.state.allPosts.length;
+    const modalDetails = {
+      post: posts[this.state.historyModalId],
+      campaign: campaign,
+      signups: this.state.signups
+    };
+    const config = {
+      angle: 90,
+      spread: 60,
+      startVelocity: 28,
+      elementCount: 40,
+      decay: 0.95
+    };
 
     const nothingHere = [
       'https://media.giphy.com/media/3og0IT9dAZyMz3lXNe/giphy.gif',
@@ -159,11 +217,36 @@ class CampaignInbox extends React.Component {
       return (
         <div className="container">
 
-          { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: this.state.signups[post.signup_id]}} />) }
+          { map(posts, (post, key) =>
+            <InboxItem
+              allowReview={true}
+              onUpdate={this.updatePost}
+              onTag={this.updateTag}
+              showHistory={this.showHistory}
+              deletePost={this.deletePost}
+              key={key}
+              details={{
+                post: post,
+                campaign: campaign,
+                signup: this.state.signups[post.signup_id]
+              }} />) }
 
           <ModalContainer>
-            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups }}/> : null}
+            {this.state.displayHistoryModal ?
+              <HistoryModal
+                id={this.state.historyModalId}
+                onUpdate={this.updateQuantity}
+                onClose={e => this.hideHistory(e)}
+                details={modalDetails}/>
+              : null}
           </ModalContainer>
+            <button
+              className={classnames('button', 'accepted')}
+              disabled={!this.state.nextBatchButtonEnabled}
+              onClick={this.getPostBatch}>
+              <Confetti active={this.state.celebrateClick} config={config} />
+              {endOfPosts ? "DONE!" : "GIVE ME MORE!"}
+            </button>
         </div>
       )
     } else {
