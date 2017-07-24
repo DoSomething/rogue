@@ -5,19 +5,15 @@ class PagingButtons extends React.Component {
   render() {
     const prev = this.props.prev;
     const next = this.props.next;
-
-    const showPrev = (prev === null) ? "paging -no-show" : "paging";
-    const showNext = (next === null) ? "paging -next-page -noShow" : "paging -next-page";
-
+    const prevCopy = this.props.prevCopy;
+    const nextCopy = this.props.nextCopy;
 
     return (
         <div className="container__block">
-          <div className={showPrev}>
-            <a href={prev}>&larr; previous</a>
-          </div>
-          <div className={showNext}>
-            <a href={next}>next &rarr;</a>
-          </div>
+			<a href={prev}>{prevCopy}</a>
+			<div className="next-page">
+				<a href={next}>{nextCopy}</a>
+			</div>
         </div>
     )
   }

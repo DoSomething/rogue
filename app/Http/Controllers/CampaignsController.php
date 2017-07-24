@@ -92,7 +92,7 @@ class CampaignsController extends Controller
     public function showCampaign($id)
     {
         // @TODO: we should paginate here instead of just showing 100
-        $signups = Signup::campaign([$id])->has('posts')->with('posts')->paginate(1);
+        $signups = Signup::campaign([$id])->has('posts')->with('posts')->paginate(50);
 
         // @TODO EXTRACT AND FIGURE OUT HOW NOT TO HAVE TO DO THIS.
         $signups->each(function ($item) {
@@ -116,6 +116,8 @@ class CampaignsController extends Controller
                 ],
                 'next_page' => $signups->nextPageUrl(),
                 'previous_page' => $signups->previousPageUrl(),
+                'next_page_copy' => $signups->nextPageUrl() ? 'next >' : null,
+                'previous_page_copy' => $signups->previousPageUrl() ? '< previous' : null,
             ]);
     }
 }
