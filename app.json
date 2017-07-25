@@ -8,6 +8,9 @@
     "APP_KEY": {
       "required": true
     },
+  "scripts": {
+    "postdeploy": "npm run build"
+  },
   "buildpacks": [
     {
       "url": "heroku/php"
