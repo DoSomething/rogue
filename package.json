@@ -6,7 +6,8 @@
     "build:dev": "npm run clean && NODE_ENV=development webpack",
     "clean": "rm -rf public/dist",
     "test": "jest --watch",
-    "test:ci": "NODE_ENV=test && jest"
+    "test:ci": "NODE_ENV=test && jest",
+    "heroku-postbuild": "npm run build"
   },
   "babel": {
     "presets": [
