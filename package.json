@@ -9,6 +9,10 @@
     "test:ci": "NODE_ENV=test && jest",
     "heroku-postbuild": "npm run build"
   },
+  "engines": {
+    "node": "6.x",
+    "npm": "4.x"
+  },
   "babel": {
     "presets": [
       "@dosomething/babel-config"
