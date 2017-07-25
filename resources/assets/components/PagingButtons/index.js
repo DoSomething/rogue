@@ -1,4 +1,5 @@
 import React from 'react';
+import './paging-buttons.scss';
 
 class PagingButtons extends React.Component {
 
