@@ -19,6 +19,9 @@ GET /api/v1/reportbacks
 - **northstar_id** _(integer)_
   - The northstar_id to filter the response by.
   - e.g. `/reportbacks?filter[northstar_id]=47asdf23abc`
+- **status** _(string)_
+  - The string to filter the response by.
+  - e.g. `/reportbacks?filter[status]=accepted`
 - **exclude** _(integer)_
   - The post id(s) to exclude in response. 
   - e.g. `/reportbacks?filter[exclude]=2,3,4`
