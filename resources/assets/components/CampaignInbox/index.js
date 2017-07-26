@@ -16,10 +16,10 @@ class CampaignInbox extends React.Component {
 
     const posts = extractPostsFromSignups(props.signups);
     const allPosts = Object.keys(posts).map(elem => posts[elem]);
-    const initialPost = {};
-    allPosts.slice(0, 5).forEach(postElem => {
-      initialPost[postElem.id] = postElem;
-    });
+    const initialPost = allPosts.slice(0, 5).reduce((posts, postElem) => {
+      posts[postElem.id] = postElem;
+      return posts;
+    }, {});
 
     this.state = {
       allPosts: allPosts,
@@ -45,7 +45,7 @@ class CampaignInbox extends React.Component {
   }
 
   batchIsComplete(posts) {
-    return iscomplete =  Object.keys(posts)
+    return Object.keys(posts)
       .map(postKey => posts[postKey])
       .every(post => post.status !== 'pending');
   }
@@ -54,8 +54,10 @@ class CampaignInbox extends React.Component {
     const from          = this.state.currentBatch * this.state.numberOfPosts;
     const to            = from + this.state.numberOfPosts;
     const nextBatch     = this.state.currentBatch + 1;
-    const nextPostBatch = {};
-    this.state.allPosts.slice(from, to).forEach(postElem => nextPostBatch[postElem.id] = postElem);
+    const nextPostBatch = this.state.allPosts.slice(from, to).reduce((posts, postElem) => {
+      posts[postElem.id] = postElem;
+      return posts;
+    }, {});
 
 
     this.setState({
