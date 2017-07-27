@@ -24,9 +24,7 @@ class CampaignSingle extends React.Component {
       displayHistoryModal: false,
       historyModalId: null,
       nextPage: props.next_page,
-      nextPageCopy: props.next_page_copy,
       prevPage: props.previous_page,
-      prevPageCopy: props.previous_page_copy,
     };
 
     this.api = new RestApiClient;
@@ -108,7 +106,7 @@ class CampaignSingle extends React.Component {
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups}}/> : null}
         </ModalContainer>
         
-        <PagingButtons prev={this.state.prevPage} prevCopy={this.state.prevPageCopy} next={this.state.nextPage} nextCopy={this.state.nextPageCopy}></PagingButtons>
+        <PagingButtons prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
       </div>
     )
   }

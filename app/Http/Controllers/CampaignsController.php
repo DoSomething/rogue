@@ -115,8 +115,6 @@ class CampaignsController extends Controller
                 ],
                 'next_page' => $signups->nextPageUrl(),
                 'previous_page' => $signups->previousPageUrl(),
-                'next_page_copy' => $signups->nextPageUrl() ? 'next >' : null,
-                'previous_page_copy' => $signups->previousPageUrl() ? '< previous' : null,
             ]);
     }
 }
