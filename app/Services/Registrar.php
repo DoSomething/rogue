@@ -30,8 +30,10 @@ class Registrar
         if (! $user) {
             $user = $this->northstar->getUser('id', $id);
 
-            // @TODO - How long should we store users in Cache?
-            $this->cache->store($user->id, $user);
+            if ($user) {
+                // @TODO - How long should we store users in Cache?
+                $this->cache->store($user->id, $user);
+            }
         }
 
         return $user;

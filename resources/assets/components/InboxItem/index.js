@@ -52,11 +52,13 @@ class InboxItem extends React.Component {
           </ul>
         </div>
         <div className="container__block -third">
-          <h2>{post['user']['first_name']} {post['user']['last_name']}, {calculateAge(post['user']['birthdate'])}</h2>
-          <ul>
-            <li><em>{post['user']['email']}</em></li>
-            <li><em>{post['user']['mobile']}</em></li>
-          </ul>
+          {post['user'] ?
+            <h2>{post['user']['first_name']} {post['user']['last_name']}, {calculateAge(post['user']['birthdate'])}</h2>
+            <ul>
+              <li><em>{post['user']['email']}</em></li>
+              <li><em>{post['user']['mobile']}</em></li>
+            </ul>
+            : <h2>User Not Found</h2>}
           <br/>
           <article className="figure -left -center">
             { signup.quantity ?
