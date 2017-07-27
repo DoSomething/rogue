@@ -240,6 +240,54 @@ class CampaignService
     }
 
     /**
+     * Gets the count of pending stautses on each post for a collection of campaigns.
+     *
+     * @param  Illuminate\Support\Collection $campaigns
+     * @return Illuminate\Support\Collection $totals
+     */
+    public function getPendingTotals($campaigns)
+    {
+        $ids = $campaigns->pluck('id')->filter()->toArray();
+
+        $totals = DB::table('signups')
+                ->leftJoin('posts', 'signups.id', '=', 'posts.signup_id')
+                ->selectRaw('signups.campaign_id, count(posts.id) as pending_count')
+                ->where('status', '=', 'pending')
+                ->wherein('campaign_id', $ids)
+                ->groupBy('signups.campaign_id')
+                ->get();
+
+        return $totals ? collect($totals)->keyBy('campaign_id') : collect();
+    }
+
+    /**
+     * Appends count of pending posts to a collection of campaigns.
+     *
+     * @param  array $campaigns
+     * @return Illuminate\Support\Collection $campaigns | null
+     */
+    public function appendPendingCountsToCampaigns($campaigns)
+    {
+        $campaignsWithCounts = $this->getPostTotals($campaigns);
+
+        if ($campaignsWithCounts) {
+            $campaigns = $campaigns->map(function ($campaign, $key) use ($campaignsWithCounts) {
+                if ($campaign) {
+                    $statusCounts = $campaignsWithCounts->get($campaign['id']);
+
+                    $campaign['pending_count'] = $statusCounts ? (int) $statusCounts->pending_count : 0;
+                }
+
+                return $campaign;
+            });
+
+            return $campaigns;
+        }
+
+        return null;
+    }
+
+    /**
      * Appends status counts to a collection of campaigns.
      *
      * @param  array $campaigns
@@ -255,9 +303,9 @@ class CampaignService
                     $statusCounts = $campaignsWithCounts->get($campaign['id']);
 
                     if ($statusCounts) {
-                        $campaign['accepted_count'] = (int) $statusCounts->accepted_count;
+                        $campaign['accepted_count'] = 0; // (int) $statusCounts->accepted_count;
                         $campaign['pending_count'] = (int) $statusCounts->pending_count;
-                        $campaign['rejected_count'] = (int) $statusCounts->rejected_count;
+                        $campaign['rejected_count'] = 0; //(int) $statusCounts->rejected_count;
                     }
                 }
 
