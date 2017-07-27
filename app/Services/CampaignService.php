@@ -182,53 +182,12 @@ class CampaignService
     }
 
     /**
-     * Get Post totals for a collection of campaigns or a single campaign.
-     *
-     * @return Illuminate\Support\Collection| object $campaigns
-     */
-    public function getPostTotals($campaigns)
-    {
-        if ($campaigns instanceof \Illuminate\Support\Collection) {
-            return $this->getCollectionOfCampaignsPostTotals($campaigns);
-        }
-
-        if (is_array($campaigns)) {
-            return $this->getSingleCampaignPostTotals($campaigns);
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets the count of pending, accepted, and rejected stautses on each post for a collection of campaigns.
-     *
-     * @param  Illuminate\Support\Collection $campaigns
-     * @return Illuminate\Support\Collection $campaigns
-     */
-    public function getCollectionOfCampaignsPostTotals($campaigns)
-    {
-        $ids = $campaigns->pluck('id')->filter()->toArray();
-
-        $totals = DB::table('signups')
-                ->leftJoin('posts', 'signups.id', '=', 'posts.signup_id')
-                ->select('signups.campaign_id',
-                    DB::raw('SUM(case when posts.status = "accepted" then 1 else 0 end) as accepted_count'),
-                    DB::raw('SUM(case when posts.status = "pending" then 1 else 0 end) as pending_count'),
-                    DB::raw('SUM(case when posts.status = "rejected" then 1 else 0 end) as rejected_count'))
-                ->wherein('campaign_id', $ids)
-                ->groupBy('signups.campaign_id')
-                ->get();
-
-        return $totals ? collect($totals)->keyBy('campaign_id') : collect();
-    }
-
-    /**
      * Gets the count of pending, accepted, and rejected stautses on each post for a single campaign.
      *
      * @param  array $campaign
      * @return array $toals | null
      */
-    public function getSingleCampaignPostTotals($campaign)
+    public function getPostTotals($campaign)
     {
         return DB::table('signups')
                 ->leftJoin('posts', 'signups.id', '=', 'posts.signup_id')
@@ -247,7 +206,7 @@ class CampaignService
      * @param  Illuminate\Support\Collection $campaigns
      * @return Illuminate\Support\Collection $totals
      */
-    public function getPendingTotals($campaigns)
+    public function getPendingPostTotals($campaigns)
     {
         $ids = $campaigns->pluck('id')->filter()->toArray();
 
@@ -270,7 +229,7 @@ class CampaignService
      */
     public function appendPendingCountsToCampaigns($campaigns)
     {
-        $campaignsWithCounts = $this->getPostTotals($campaigns);
+        $campaignsWithCounts = $this->getPendingPostTotals($campaigns);
 
         if ($campaignsWithCounts) {
             $campaigns = $campaigns->map(function ($campaign, $key) use ($campaignsWithCounts) {
