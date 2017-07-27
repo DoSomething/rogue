@@ -9,7 +9,8 @@ class Row extends React.Component {
     return (
       <tr className="table__row">
         <td className="table__cell"><a href={campaignUrl}>{campaign ? campaign.title : 'Campaign Not Found'}</a></td>
-        <td className="table__cell"><a href={inboxUrl}>{this.props.pending}</a></td>
+        <td className="table__cell">{this.props.pending}</td>
+        <td className="table__cell"><a href={inboxUrl}>review</a></td>
       </tr>
     )
   }
