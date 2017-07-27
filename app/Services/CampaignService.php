@@ -39,7 +39,8 @@ class CampaignService
         if (! $campaign) {
             $campaign = $this->phoenix->getCampaign($id);
 
-            $this->cache->store($campaign['data']['id'], $campaign['data']);
+            // Cache campaign for a day.
+            $this->cache->store($campaign['data']['id'], $campaign['data'], 1440);
 
             $campaign = $campaign['data'];
         }
@@ -64,7 +65,8 @@ class CampaignService
                 if (count($campaigns)) {
                     $group = $campaigns->keyBy('id')->all();
 
-                    $this->cache->storeMany($group);
+                    // Cache campaigns for a day.
+                    $this->cache->storeMany($group, 1440);
                 }
             } else {
                 $campaigns = $this->resolveMissingCampaigns($campaigns);
@@ -303,9 +305,9 @@ class CampaignService
                     $statusCounts = $campaignsWithCounts->get($campaign['id']);
 
                     if ($statusCounts) {
-                        $campaign['accepted_count'] = 0; // (int) $statusCounts->accepted_count;
+                        $campaign['accepted_count'] = (int) $statusCounts->accepted_count;
                         $campaign['pending_count'] = (int) $statusCounts->pending_count;
-                        $campaign['rejected_count'] = 0; //(int) $statusCounts->rejected_count;
+                        $campaign['rejected_count'] = (int) $statusCounts->rejected_count;
                     }
                 }
 
