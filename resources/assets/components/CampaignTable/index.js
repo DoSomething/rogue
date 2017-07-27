@@ -10,7 +10,7 @@ class CampaignTable extends React.Component {
     return (
       <div className="table-responsive container__block">
         <h2>{cause}</h2>
-        <Table key={cause} className="table" headings={['Campaign Name', 'Pending', 'Approved', 'Rejected']} data={this.props.campaigns} />
+        <Table key={cause} className="table" headings={['Campaign Name', 'Pending', 'Inbox']} data={this.props.campaigns} />
       </div>
     )
   }
