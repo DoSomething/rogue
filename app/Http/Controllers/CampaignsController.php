@@ -98,7 +98,10 @@ class CampaignsController extends Controller
         $signups->each(function ($item) {
             $item->posts->each(function ($item) {
                 $user = $this->registrar->find($item->northstar_id);
-                $item->user = $user->toArray();
+
+                if ($user) {
+                    $item->user = $user->toArray();
+                }
             });
         });
 
