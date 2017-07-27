@@ -33,9 +33,9 @@ export function getImageUrlFromProp(photoProp) {
 };
 
 export function extractPostsFromSignups(signups) {
-    const posts = keyBy(flatMap(signups, signup => {
+    const posts = flatMap(signups, signup => {
       return signup.posts;
-    }), 'id');
+    });
 
     return posts;
 }
