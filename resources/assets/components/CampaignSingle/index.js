@@ -5,6 +5,7 @@ import { extractPostsFromSignups } from '../../helpers';
 import InboxItem from '../InboxItem';
 import ModalContainer from '../ModalContainer';
 import HistoryModal from '../HistoryModal';
+import PagingButtons from '../PagingButtons';
 import PostFilter from '../PostFilter';
 import StatusCounter from '../StatusCounter';
 import { RestApiClient} from '@dosomething/gateway';
@@ -22,6 +23,8 @@ class CampaignSingle extends React.Component {
       postTotals: props.post_totals,
       displayHistoryModal: false,
       historyModalId: null,
+      nextPage: props.next_page,
+      prevPage: props.previous_page,
     };
 
     this.api = new RestApiClient;
@@ -94,24 +97,16 @@ class CampaignSingle extends React.Component {
 
     return (
       <div className="container">
-        <div className="container__block">
-          <p>
-            Hey there 🐼! Why’s there only ~100 photos on this page you ask? <br/>
-            Good question! We’re only loading ~100 photos to help this page load <em>faster</em> for you! We’re working on showing all the photos while keeping the page load time <em>fast</em>  - this should be done the by 8/1! Stay tuned!<br/>
-            If you  need to see more accepted posts, reach out in #the-bleed in Slack!<br/>
-            Love,<br/>
-            Team Bleed
-          </p>
-        </div>
         <StatusCounter postTotals={this.state.postTotals} campaign={campaign} />
-        {/* @TODO - add back in when we deal with pagination on the single campaign view*/}
-        {/*<PostFilter onChange={this.filterPosts} />*/}
+        <PostFilter onChange={this.filterPosts} />
 
         { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: this.state.signups[post.signup_id]}} /> : null) }
 
         <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups}}/> : null}
         </ModalContainer>
+        
+        <PagingButtons prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
       </div>
     )
   }
