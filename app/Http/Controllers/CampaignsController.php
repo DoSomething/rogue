@@ -106,7 +106,7 @@ class CampaignsController extends Controller
 
         return view('pages.campaign_single')
             ->with('state', [
-                'signups' => $signups->toArray()['data'],
+                'signups' => $signups->items(),
                 'campaign' => $campaign,
                 'post_totals' => [
                     'accepted_count' => $totals->accepted_count,
