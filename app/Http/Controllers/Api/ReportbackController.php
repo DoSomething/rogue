@@ -45,17 +45,17 @@ class ReportbackController extends ApiController
     public function index(Request $request)
     {
         // Create an empty Post query, which we can filter and paginate
-        // Only return Posts that do not have 'Hide In Gallery' tag
-        $query = $this->newQuery(Post::class)->withoutTags(['Hide In Gallery']);
-
-        // 1. Join with signups so we can access the signup data and filter by campaign
-        // 2. Only return approved Posts
-        // 3. Select all the fields that we will be using
-        $query = $query->join('signups', 'signups.id', '=', 'posts.signup_id')
-            ->select('posts.id as id', 'signups.campaign_id as campaign_id', 'posts.status as status', 'posts.caption as caption', 'posts.url as url', 'posts.created_at as created_at', 'posts.signup_id as signup_id');
+        $query = $this->newQuery(Post::class)
+            // Eagerly load the `signup` relationship.
+            ->with('signup')
+            // And eagerly load the count of reactions per post.
+            ->withCount('reactions')
+            // Only return posts that have been approved by a campaign lead...
+            ->where('status', 'accepted')
+            // ...and haven't been hidden from the gallery.
+            ->withoutTags(['Hide In Gallery']);
 
         $filters = $request->query('filter');
-
         if (! empty($filters)) {
             // Only return Posts for the given campaign_id (if there is one)
             if (array_has($filters, 'campaign_id')) {
@@ -77,9 +77,6 @@ class ReportbackController extends ApiController
                 $query = $query->whereNotIn('posts.id', explode(',', $filters['exclude']));
             }
         }
-
-        // Eagerly load the count of all reactions on a post.
-        $query = $query->withCount('reactions');
 
         // If user param is passed, return whether or not the user has liked the particular post.
         if ($request->query('as_user')) {
