@@ -93,7 +93,7 @@ class CampaignsController extends Controller
     {
         // @TODO: currently we do not allow filtering so we only show accepted posts, so
         // remove the contraint on status once filtering is rockin' 'n' rollin' again
-        $signups = Signup::campaign([$id])->has('posts')->with(['posts' => function ($query){
+        $signups = Signup::campaign([$id])->has('posts')->with(['posts' => function ($query) {
             $query->where('status', '=', 'accepted');
         }])->orderBy('created_at', 'desc')->paginate(50);
 
