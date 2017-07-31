@@ -60,6 +60,7 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.r
 
     // posts
     Route::post('posts', 'Api\PostsController@store');
+    Route::get('posts', 'Api\PostsController@index');
 
     // reactions
     Route::post('reactions', 'Api\ReactionController@store');

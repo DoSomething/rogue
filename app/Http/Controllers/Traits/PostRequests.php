@@ -43,4 +43,9 @@ trait PostRequests
             }
         }
     }
+
+    public function index()
+    {
+        return "get posts";
+    }
 }
