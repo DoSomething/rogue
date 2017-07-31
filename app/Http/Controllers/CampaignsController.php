@@ -91,7 +91,10 @@ class CampaignsController extends Controller
      */
     public function showCampaign($id)
     {
-        $signups = Signup::campaign([$id])->has('posts')->with('posts')->orderBy('created_at', 'desc')->paginate(50);
+        // Always load the page with just accepted posts
+        $signups = Signup::campaign([$id])->has('posts')->with(['posts' => function ($query) {
+            $query->where('status', '=', 'accepted');
+        }])->orderBy('created_at', 'desc')->paginate(50);
 
         // @TODO EXTRACT AND FIGURE OUT HOW NOT TO HAVE TO DO THIS.
         $signups->each(function ($item) {
