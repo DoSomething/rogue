@@ -36,7 +36,23 @@ class CampaignSingle extends React.Component {
 
   // Filter posts based on status.
   filterPosts(status) {
-    this.setState({ filter: status.toLowerCase() });
+    console.log(status);
+    // @TODO: Make API request to Rogue to get filtered posts and and set the post's filter state based on response.
+    // @TODO: we also need to update the posts/signups?
+    let request = this.api.get('reportbacks', filter[status] = status);
+    console.log(request);
+    request.then((result) => {
+      // Update the state
+      this.setState((previousState) => {
+        const newState = {...previousState};
+
+        newState.signups[signup.id].quantity = result.quantity;
+
+        return newState;
+      });
+    });
+
+    // this.setState({ filter: status.toLowerCase() });
   }
 
   // Open the history modal of the given post
@@ -98,20 +114,15 @@ class CampaignSingle extends React.Component {
     return (
       <div className="container">
         <StatusCounter postTotals={this.state.postTotals} campaign={campaign} />
-        { /* @TODO: we will want this back oncefiltering is back */ }
-        { /* <PostFilter onChange={this.filterPosts} /> */}
 
-      { /* @TODO: remove this heading once filtering is back */}
-        <div className="heading -gamma">
-          Accepted Posts
-        </div>
+        <PostFilter onChange={this.filterPosts} />
 
         { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: this.state.signups[post.signup_id]}} /> : null) }
 
         <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups}}/> : null}
         </ModalContainer>
-        
+
         <PagingButtons prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
       </div>
     )
