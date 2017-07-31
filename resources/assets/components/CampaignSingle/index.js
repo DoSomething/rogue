@@ -101,6 +101,11 @@ class CampaignSingle extends React.Component {
         { /* @TODO: we will want this back oncefiltering is back */ }
         { /* <PostFilter onChange={this.filterPosts} /> */}
 
+      { /* @TODO: remove this heading once filtering is back */}
+        <div className="heading -gamma">
+          Accepted Posts
+        </div>
+
         { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: this.state.signups[post.signup_id]}} /> : null) }
 
         <ModalContainer>
