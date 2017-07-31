@@ -71,4 +71,7 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.r
 
     // signups
     Route::post('signups', 'Api\SignupsController@store');
+
+    // tags
+    Route::post('tags', 'Api\TagsController@store');
 });
