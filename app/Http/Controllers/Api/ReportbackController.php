@@ -58,7 +58,9 @@ class ReportbackController extends ApiController
         if (! empty($filters)) {
             // Only return Posts for the given campaign_id (if there is one)
             if (array_has($filters, 'campaign_id')) {
-                $query = $query->where('campaign_id', '=', $filters['campaign_id']);
+                $query = $query
+                    ->leftJoin('signups', 'signups.id', '=', 'posts.signup_id')
+                    ->where('signups.campaign_id', '=', $filters['campaign_id']);
             }
 
             // Only return Posts for the given northstar_id (if there is one)
