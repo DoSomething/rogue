@@ -119,7 +119,7 @@ class CampiagnsTest extends TestCase
 
 
         $campaignService = $this->app->make(CampaignService::class);
-        $campaignCounts = $campaignService->getPostTotals($testCampaigns);
+        $campaignCounts = $campaignService->getPostTotals($testCampaigns[0]);
 
         $this->assertEquals($campaignCounts->get($testCampaigns[0]['id'])->accepted_count, 30);
         $this->assertEquals($campaignCounts->get($testCampaigns[0]['id'])->pending_count, 30);
