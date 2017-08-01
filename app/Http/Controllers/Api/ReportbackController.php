@@ -63,7 +63,7 @@ class ReportbackController extends ApiController
 
             // Only return Posts for the given northstar_id (if there is one)
             if (array_has($filters, 'northstar_id')) {
-                $query = $query->where('signups.northstar_id', '=', $filters['northstar_id']);
+                $query = $query->where('northstar_id', '=', $filters['northstar_id']);
             }
 
             // Only return Posts for the given status (if there is one)
