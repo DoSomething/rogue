@@ -50,7 +50,9 @@ class PostApiTest extends TestCase
         $response = $this->decodeResponseJson();
 
         // Make sure the file_url is saved to the database.
-        $this->seeInDatabase('posts', ['url' => $response['data']['media']['url']]);
+        $this->seeInDatabase('posts', [
+            'id' => $response['data']['id'],
+        ]);
 
         $this->seeInDatabase('signups', [
             'id' => $response['data']['signup_id'],
