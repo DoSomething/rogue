@@ -54,6 +54,8 @@ class ReportbackController extends ApiController
             ->where('status', 'accepted')
             // ...and haven't been hidden from the gallery.
             ->withoutTags(['Hide In Gallery']);
+
+        // @TODO: Use `FiltersRequests` trait here!
         $filters = $request->query('filter');
         if (! empty($filters)) {
             // Only return Posts for the given campaign_id (if there is one)
