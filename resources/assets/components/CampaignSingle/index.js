@@ -36,19 +36,23 @@ class CampaignSingle extends React.Component {
 
   // Filter posts based on status.
   filterPosts(status) {
-    console.log(status);
     // @TODO: Make API request to Rogue to get filtered posts and and set the post's filter state based on response.
     // @TODO: we also need to update the posts/signups?
-    let request = this.api.get('reportbacks', filter[status] = status);
-    console.log(request);
+    let request = this.api.get('api/v1/reportbacks', {
+      filter: {
+        status: status.toLowerCase()
+      }
+    });
+
     request.then((result) => {
+      console.log(result);
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
 
-        newState.signups[signup.id].quantity = result.quantity;
+      //   // newState.signups[signup.id].quantity = result.quantity;
 
-        return newState;
+      //   return newState;
       });
     });
 
