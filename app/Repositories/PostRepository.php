@@ -3,10 +3,9 @@
 namespace Rogue\Repositories;
 
 use Rogue\Models\Post;
-use Rogue\Models\Event;
-use Rogue\Models\Signup;
 use Rogue\Services\AWS;
 use Rogue\Models\Review;
+use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
 
