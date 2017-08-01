@@ -195,7 +195,7 @@ class CampaignService
                     DB::raw('SUM(case when posts.status = "accepted" then 1 else 0 end) as accepted_count'),
                     DB::raw('SUM(case when posts.status = "pending" then 1 else 0 end) as pending_count'),
                     DB::raw('SUM(case when posts.status = "rejected" then 1 else 0 end) as rejected_count'))
-                ->where('campaign_id', '=', $campaign['id'])
+                ->where('signups.campaign_id', '=', $campaign['id'])
                 ->groupBy('signups.campaign_id')
                 ->first();
     }
