@@ -45,26 +45,27 @@ class ReportbackController extends ApiController
     public function index(Request $request)
     {
         // Create an empty Post query, which we can filter and paginate
-        // Only return Posts that do not have 'Hide In Gallery' tag
-        $query = $this->newQuery(Post::class)->withoutTags(['Hide In Gallery']);
+        $query = $this->newQuery(Post::class)
+            // Eagerly load the `signup` relationship.
+            ->with('signup')
+            // And eagerly load the count of reactions per post.
+            ->withCount('reactions')
+            // Only return posts that have been approved by a campaign lead...
+            ->where('status', 'accepted')
+            // ...and haven't been hidden from the gallery.
+            ->withoutTags(['Hide In Gallery']);
 
-        // 1. Join with signups so we can access the signup data and filter by campaign
-        // 2. Only return approved Posts
-        // 3. Select all the fields that we will be using
-        $query = $query->join('signups', 'signups.id', '=', 'posts.signup_id')
-            ->select('posts.id as id', 'signups.campaign_id as campaign_id', 'posts.status as status', 'posts.caption as caption', 'posts.url as url', 'posts.created_at as created_at', 'posts.signup_id as signup_id');
-
+        // @TODO: Use `FiltersRequests` trait here!
         $filters = $request->query('filter');
-
         if (! empty($filters)) {
             // Only return Posts for the given campaign_id (if there is one)
             if (array_has($filters, 'campaign_id')) {
-                $query = $query->where('signups.campaign_id', '=', $filters['campaign_id']);
+                $query = $query->where('campaign_id', '=', $filters['campaign_id']);
             }
 
             // Only return Posts for the given northstar_id (if there is one)
             if (array_has($filters, 'northstar_id')) {
-                $query = $query->where('signups.northstar_id', '=', $filters['northstar_id']);
+                $query = $query->where('northstar_id', '=', $filters['northstar_id']);
             }
 
             // Only return Posts for the given status (if there is one)
@@ -74,12 +75,9 @@ class ReportbackController extends ApiController
 
             // Exclude Posts if exclude param is present
             if (array_has($filters, 'exclude')) {
-                $query = $query->whereNotIn('posts.id', explode(',', $filters['exclude']));
+                $query = $query->whereNotIn('id', explode(',', $filters['exclude']));
             }
         }
-
-        // Eagerly load the count of all reactions on a post.
-        $query = $query->withCount('reactions');
 
         // If user param is passed, return whether or not the user has liked the particular post.
         if ($request->query('as_user')) {

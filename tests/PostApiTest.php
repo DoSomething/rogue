@@ -43,17 +43,22 @@ class PostApiTest extends TestCase
         // Mock sending image to AWS.
         Storage::shouldReceive('put')->andReturn(true);
 
-        $response = $this->authed()->json('POST', $this->postsApiUrl, $post);
+        $this->authed()->json('POST', $this->postsApiUrl, $post);
 
         $this->assertResponseStatus(200);
 
         $response = $this->decodeResponseJson();
 
         // Make sure the file_url is saved to the database.
-        $this->seeInDatabase('posts', ['url' => $response['data']['media']['url']]);
+        $this->seeInDatabase('posts', [
+            'id' => $response['data']['id'],
+            'signup_id' => $response['data']['signup_id'],
+            'campaign_id' => $post['campaign_id'],
+        ]);
 
         $this->seeInDatabase('signups', [
             'id' => $response['data']['signup_id'],
+            'campaign_id' => $post['campaign_id'],
             'quantity' => $post['quantity'],
         ]);
     }

@@ -29,7 +29,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'signup_id', 'northstar_id', 'url', 'caption', 'status', 'source', 'remote_addr'];
+    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'url', 'caption', 'status', 'source', 'remote_addr'];
 
     /**
      * Each post has events.
