@@ -3,9 +3,9 @@
 namespace Rogue\Repositories;
 
 use Rogue\Models\Post;
+use Rogue\Models\Event;
 use Rogue\Services\AWS;
 use Rogue\Models\Review;
-use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
 
@@ -63,13 +63,10 @@ class PostRepository
             $fileUrl = 'default';
         }
 
-        $signup = Signup::find($signupId);
-
         // Create a post.
         $post = new Post([
-            'signup_id' => $signup->id,
+            'signup_id' => $signupId,
             'northstar_id' => $data['northstar_id'],
-            'campaign_id' => $signup->campaign_id,
             'url' => $fileUrl,
             'caption' => $data['caption'],
             'status' => isset($data['status']) ? $data['status'] : 'pending',
