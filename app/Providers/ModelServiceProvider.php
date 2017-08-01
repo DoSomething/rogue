@@ -54,7 +54,7 @@ class ModelServiceProvider extends ServiceProvider
                 'eventable_type' => 'Rogue\Models\Post',
                 'content' => $post->toJson(),
                 // Only authenticated admins can tag, so grab the authenticated user.
-                'user' => auth()->user()->northstar_id,
+                'user' => (auth()->user()) ? auth()->user()->northstar_id : null,
             ]);
         });
     }
