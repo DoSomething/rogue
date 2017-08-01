@@ -3,8 +3,8 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Http\Requests\TagsRequest;
-use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Repositories\PostRepository;
+use Rogue\Http\Transformers\PostTransformer;
 
 class TagsController extends ApiController
 {
