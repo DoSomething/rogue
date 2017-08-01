@@ -95,9 +95,9 @@ class CampaignsController extends Controller
     public function showCampaign($id)
     {
         // Always load the page with just accepted posts
-        // @TODO: update this query - the below only loads the posts on a signup if they are accepted.
-        // We want to only load signups that have accepted posts with the accepted posts.
-        $signups = Signup::campaign([$id])->has('posts')->with(['posts' => function ($query) {
+        $signups = Signup::campaign([$id])->whereHas('posts', function ($query) {
+            $query->where('status', '=', 'accepted');
+        })->with(['posts' => function ($query) {
             $query->where('status', '=', 'accepted');
         }])->orderBy('created_at', 'desc')->paginate(50);
 
