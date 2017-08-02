@@ -63,6 +63,14 @@ trait PostRequests
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Post::$indexes);
 
+        // If user param is passed, return whether or not the user has liked the particular post.
+        if ($request->query('as_user')) {
+            $userId = $request->query('as_user');
+            $query = $query->with(['reactions' => function ($query) use ($userId) {
+                $query->where('northstar_id', '=', $userId);
+            }]);
+        }
+
         return $this->paginatedCollection($query, $request);
     }
 }
