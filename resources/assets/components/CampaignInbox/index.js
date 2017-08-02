@@ -53,13 +53,17 @@ class CampaignInbox extends React.Component {
 
   // Updates a post status.
   updatePost(postId, fields) {
+    console.log(postId);
+    console.log(fields);
     fields.post_id = postId;
 
     let request = this.api.put('reviews', fields);
 
     request.then((result) => {
+      console.log(result);
       this.setState((previousState) => {
         const newState = {...previousState};
+        console.log(newState.posts);
         newState.posts[postId].status = fields.status;
 
         return newState;

@@ -2,12 +2,14 @@
 
 namespace Rogue\Http\Controllers\Api;
 
+use Rogue\Http\Controllers\Traits\TagsRequests;
 use Rogue\Http\Requests\TagsRequest;
 use Rogue\Repositories\PostRepository;
 use Rogue\Http\Transformers\PostTransformer;
 
 class TagsController extends ApiController
 {
+    use TagsRequests;
     /**
      * The post service instance.
      *
@@ -30,14 +32,5 @@ class TagsController extends ApiController
     {
         $this->post = $post;
         $this->transformer = new PostTransformer;
-    }
-
-    public function store(TagsRequest $request)
-    {
-        $post = $this->post->find($request->post_id);
-
-        $taggedPost = $this->post->tag($post, $request->tag_name);
-
-        return $this->item($taggedPost);
     }
 }
