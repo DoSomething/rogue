@@ -15,7 +15,6 @@ class CampaignSingle extends React.Component {
     super(props);
 
     const posts = extractPostsFromSignups(props.signups);
-
     this.state = {
       signups: keyBy(props.signups, 'id'),
       posts: posts,
@@ -36,23 +35,26 @@ class CampaignSingle extends React.Component {
 
   // Filter posts based on status.
   filterPosts(status) {
-    // @TODO: Make API request to Rogue to get filtered posts and and set the post's filter state based on response.
-    // @TODO: we also need to update the posts/signups?
-    let request = this.api.get('api/v1/reportbacks', {
+    let request = this.api.get('api/v2/posts', {
       filter: {
-        status: status.toLowerCase()
+        status: status.toLowerCase(),
+        campaign_id: this.props.campaign.id,
       }
     });
 
     request.then((result) => {
-      console.log(result);
+      var signups = keyBy(result.data, 'id');
+      // console.log(extractPostsFromSignups(signups));
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
 
-      //   // newState.signups[signup.id].quantity = result.quantity;
+        newState.signups = signups;
+        newState.posts = extractPostsFromSignups(signups);
+      // console.log(status.toLowerCase());
+        newState.filter = this.status.toLowerCase();
 
-      //   return newState;
+        return newState;
       });
     });
 
