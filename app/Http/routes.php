@@ -29,6 +29,7 @@ Route::group(['middleware' => 'web'], function () {
 
     // posts
     Route::post('posts', 'PostController@store');
+    Route::get('posts', 'PostController@index');
     Route::delete('posts/{id}', 'PostController@destroy');
 
     // reviews
@@ -60,6 +61,7 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.r
 
     // posts
     Route::post('posts', 'Api\PostsController@store');
+    Route::get('posts', 'Api\PostsController@index');
 
     // reactions
     Route::post('reactions', 'Api\ReactionController@store');
