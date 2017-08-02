@@ -30,6 +30,14 @@ trait FiltersRequests
             return $query;
         }
 
+        // If there is an exclude filter, remove it from $filters and save the value.
+        if (array_key_exists('exclude', $filters)) {
+            $excludedValues = $filters['exclude'];
+            unset($filters['exclude']);
+        } else {
+            $excludedValues = false;
+        }
+
         // Requests may be filtered by indexed fields.
         $filters = array_intersect_key($filters, array_flip($indexes));
 
@@ -60,6 +68,10 @@ trait FiltersRequests
 
         if ($updatedAtValue) {
             $query->where('updated_at', '>', $updatedAtValue);
+        }
+
+        if ($excludedValues) {
+            $query->whereNotIn('id', explode(',', $excludedValues));
         }
 
         return $query;
