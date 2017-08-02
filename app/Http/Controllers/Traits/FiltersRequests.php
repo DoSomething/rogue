@@ -29,6 +29,7 @@ trait FiltersRequests
         if (! $filters) {
             return $query;
         }
+
         // Requests may be filtered by indexed fields.
         $filters = array_intersect_key($filters, array_flip($indexes));
 

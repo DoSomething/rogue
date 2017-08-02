@@ -10,6 +10,7 @@ use Rogue\Http\Controllers\Traits\PostRequests;
 class PostController extends Controller
 {
     use PostRequests;
+    use FiltersRequests;
 
     /**
      * The post service instance.
