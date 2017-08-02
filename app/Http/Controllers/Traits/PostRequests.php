@@ -5,7 +5,6 @@ namespace Rogue\Http\Controllers\Traits;
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Http\Requests\PostRequest;
-use Rogue\Http\Controllers\Traits\FiltersRequests;
 
 trait PostRequests
 {
