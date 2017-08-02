@@ -49,6 +49,13 @@ trait PostRequests
         }
     }
 
+    /**
+     * Returns Posts, filtered by params, if provided.
+     * GET /posts
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
         $query = $this->newQuery(Post::class)->with('signup');
