@@ -1,0 +1,34 @@
+box: dosomething/ds-docker-php
+
+build:
+    steps:
+      - leipert/composer-install@0.9.1
+      - wercker/npm-install
+      - script:
+          name: start mysql
+          code: sudo service mysql start
+      - script:
+          name: run phpunit test suite
+          code: |-
+            mysql -u homestead -psecret -e "CREATE DATABASE rogue_test;"
+            cp .env.example .env
+            php artisan key:generate
+            vendor/bin/phpunit
+      - script:
+          name: build front-end assets
+          code: npm run build
+
+deploy:
+  # steps:
+  #   - bundle-install
+  #   - script:
+  #       name: write private key env var
+  #       code: |-
+  #         export CAP_PRIVATE_KEY=`mktemp`
+  #         echo -e $WERCKER_APP_KEY_PRIVATE > $CAP_PRIVATE_KEY
+  #   - cap
+  # after-steps:
+  #   - sherzberg/slack-notify:
+  #       subdomain: dosomething
+  #       token: $SLACK_TOKEN
+  #       channel: $SLACK_ROOM
