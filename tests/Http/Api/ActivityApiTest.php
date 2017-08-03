@@ -1,9 +1,8 @@
 <?php
 
+use Carbon\Carbon;
 use Rogue\Models\Signup;
 use Rogue\Models\Post;
-use Rogue\Models\Event;
-use Faker\Generator;
 
 class ActivityApiTest extends TestCase
 {
@@ -134,14 +133,16 @@ class ActivityApiTest extends TestCase
 
     public function testActivityIndexWithUpdatedAtQuery()
     {
+        Carbon::setTestNow(new Carbon('8/01/2017 15:00:00'));
+
         // Create two signups and two posts. Associate the signups and posts respectively.
         $firstSignup = factory(Signup::class)->create();
         $firstPost = factory(Post::class)->create();
         $firstPost->signup()->associate($firstSignup);
         $firstPost->save();
 
-        // Wait 1 second before making the second signup and post so they have different timestamps.
-        sleep(1);
+        // Make another signup and post later on.
+        Carbon::setTestNow(new Carbon('8/01/2017 15:01:00'));
 
         $secondSignup = factory(Signup::class)->create();
         $secondPost = factory(Post::class)->create();
@@ -151,11 +152,10 @@ class ActivityApiTest extends TestCase
         $this->json('GET', $this->activityApiUrl . '?filter[updated_at]=' . $firstSignup->updated_at);
 
         $this->assertResponseStatus(200);
-
         $this->seeJsonSubset([
             'data' => [
                 0 => [
-                    'signup_id' => $secondSignup->id
+                    'signup_id' => $secondSignup->id,
                 ],
             ],
         ]);
