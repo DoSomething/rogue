@@ -77,12 +77,12 @@ class CampaignInbox extends React.Component {
     };
 
     let response = this.api.post('tags', fields);
-    response.then((data) => {
+    response.then((result) => {
       this.setState((previousState) => {
         const newState = {...previousState};
         const user = newState.posts[postId].user;
 
-        newState.posts[postId] = data['data'];
+        newState.posts[postId] = result['data'];
 
         // Keep the user from the initial page load.
         newState.posts[postId].user = user;

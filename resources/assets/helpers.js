@@ -26,6 +26,7 @@ export function getImageUrlFromProp(photoProp) {
 
   // Sometimes we get the url right on the post and sometimes it is nested under
   // media (in cases where it goes through the PostTransformer), so handle both cases
+  // @TODO: make sure everything goes through a transformer so we don't need this
   if ('url' in photoProp) {
     photo_url = photoProp['url'];
   }
