@@ -22,11 +22,19 @@ export function calculateAge(date) {
 };
 
 export function getImageUrlFromProp(photoProp) {
-	const photo_url = photoProp['url'];
+	var photo_url;
 
-	if (photo_url == "default") {
-	  return "https://www.dosomething.org/sites/default/files/JenBugError.png";
-	}
+  if ('url' in photoProp) {
+    photo_url = photoProp['url'];
+  }
+  else if ('media' in photoProp) {
+    photo_url = photoProp['media']['url'];
+  }
+
+
+  if (photo_url == "default") {
+    return "https://www.dosomething.org/sites/default/files/JenBugError.png";
+  }
 	else {
 	  return photo_url;
 	}
@@ -42,7 +50,16 @@ export function extractPostsFromSignups(signups) {
 
 export function getEditedImageUrl(photoProp) {
   const edited_file_name = `edited_${photoProp.id}.jpeg`;
-  const url_parts = photoProp['url'].split("/");
+  var url_parts;
+  if ('url' in photoProp) {
+    url_parts = photoProp['url'].split("/");
+  }
+  else if ('media' in photoProp) {
+    return photoProp['media']['url'];
+  }
+  else {
+    return null;
+  }
 
   url_parts.pop();
   url_parts.push(edited_file_name);

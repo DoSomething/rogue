@@ -1,5 +1,5 @@
 import React from 'react';
-import { map, findKey } from 'lodash';
+import { map } from 'lodash';
 import classnames from 'classnames';
 
 class Tags extends React.Component {
@@ -33,7 +33,7 @@ class Tags extends React.Component {
         <ul className="aligned-actions">
           {map(tags, (label, key) => (
             <li key={key}>
-              <button className={classnames('tag', {'is-active': findKey(this.props.tagged, {'tag_slug': key})})}
+              <button className={classnames('tag', {'is-active': this.props.tagged.includes(key)})}
                       onClick={() => this.handleClick(label)}>{label}</button>
             </li>
           ))}

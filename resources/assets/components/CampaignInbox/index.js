@@ -85,7 +85,7 @@ class CampaignInbox extends React.Component {
         const newState = {...previousState};
         const user = newState.posts[postId].user;
 
-        newState.posts[postId] = data;
+        newState.posts[postId] = data['data'];
 
         // Keep the user from the initial page load.
         newState.posts[postId].user = user;
