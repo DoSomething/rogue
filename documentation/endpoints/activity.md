@@ -58,8 +58,8 @@ Example Response:
               "caption": "Captioning captions",
             },
             "tagged": [
-              "Good Photo",
-              "Good Quote"
+              "good-photo",
+              "good-quote"
             ],
             "reactions": [
               {

@@ -24,6 +24,8 @@ export function calculateAge(date) {
 export function getImageUrlFromProp(photoProp) {
 	var photo_url;
 
+  // Sometimes we get the url right on the post and sometimes it is nested under
+  // media (in cases where it goes through the PostTransformer), so handle both cases
   if ('url' in photoProp) {
     photo_url = photoProp['url'];
   }
@@ -51,6 +53,9 @@ export function extractPostsFromSignups(signups) {
 export function getEditedImageUrl(photoProp) {
   const edited_file_name = `edited_${photoProp.id}.jpeg`;
   var url_parts;
+
+  // Sometimes we get the url right on the post and sometimes it is nested under
+  // media (in cases where it goes through the PostTransformer), so handle both cases
   if ('url' in photoProp) {
     url_parts = photoProp['url'].split("/");
   }
