@@ -1,9 +1,9 @@
 <?php
 
-use Rogue\Jobs\SendReportbackToPhoenix;
-
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
+    use RefreshDatabase;
+
     /**
      * The base URL to use while testing the application.
      *
@@ -29,8 +29,8 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     {
         parent::setUp();
 
-        // Before running tests, clear out the db and remigrate tables.
-        $this->artisan('db:clear', ['--migrate' => true]);
+        // Refresh database & enable transactions.
+        $this->refreshDatabase();
 
         // Get a new Faker generator from Laravel.
         $this->faker = app(\Faker\Generator::class);
