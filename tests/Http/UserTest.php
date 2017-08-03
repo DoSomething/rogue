@@ -9,11 +9,10 @@ class UserTest extends TestCase
 {
     /**
      * Test that an admin user can access a page in the app.
-     *
-     * @return void
      */
     public function testAuthenticatedUserDoesntGetRedirectedHome()
     {
+        $this->markTestIncomplete();
         $user = factory(User::class)->make([
             'role' => 'admin',
         ]);
