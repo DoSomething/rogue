@@ -59,16 +59,14 @@ export function getEditedImageUrl(photoProp) {
   // media (in cases where it goes through the PostTransformer), so handle both cases
   if ('url' in photoProp) {
     url_parts = photoProp['url'].split("/");
+    url_parts.pop();
+    url_parts.push(edited_file_name);
+
+    return url_parts.join('/');
   }
   else if ('media' in photoProp) {
     return photoProp['media']['url'];
   }
-  else {
-    return null;
-  }
 
-  url_parts.pop();
-  url_parts.push(edited_file_name);
-
-  return url_parts.join('/');
+  return null;
 };
