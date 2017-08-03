@@ -1,12 +1,12 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace Rogue\Http\Controllers\Api;
 
 use Rogue\Repositories\PostRepository;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Traits\TagsRequests;
 
-class TagsController extends Controller
+class TagsController extends ApiController
 {
     use TagsRequests;
     /**
@@ -17,21 +17,18 @@ class TagsController extends Controller
     protected $post;
 
     /**
-     * @var \Rogue\Http\Transformers\PostTransformer
+     * @var \League\Fractal\TransformerAbstract;
      */
     protected $transformer;
 
     /**
      * Create a controller instance.
      *
-     * @param PostContract $posts
+     * @param  PostContract $posts
      * @return void
      */
     public function __construct(PostRepository $post)
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin,staff');
-
         $this->post = $post;
         $this->transformer = new PostTransformer;
     }
