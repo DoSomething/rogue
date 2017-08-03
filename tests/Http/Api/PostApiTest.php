@@ -43,7 +43,7 @@ class PostApiTest extends TestCase
         // Mock sending image to AWS.
         Storage::shouldReceive('put')->andReturn(true);
 
-        $this->authed()->json('POST', $this->postsApiUrl, $post);
+        $this->withRogueApiKey()->json('POST', $this->postsApiUrl, $post);
 
         $this->assertResponseStatus(200);
 

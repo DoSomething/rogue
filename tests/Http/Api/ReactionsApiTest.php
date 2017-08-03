@@ -28,7 +28,7 @@ class ReactionsApiTest extends TestCase
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
-        $this->authed()->json('POST', $this->reactionsApiUrl, [
+        $this->withRogueApiKey()->json('POST', $this->reactionsApiUrl, [
             'northstar_id' => $northstarId,
             'post_id' => $post->id,
         ]);
@@ -43,7 +43,7 @@ class ReactionsApiTest extends TestCase
         ]);
 
         // React (unlike) again to the same post with the same user.
-         $this->authed()->json('POST', $this->reactionsApiUrl, [
+         $this->withRogueApiKey()->json('POST', $this->reactionsApiUrl, [
             'northstar_id' => $northstarId,
             'post_id' => $post->id,
         ]);
@@ -72,7 +72,7 @@ class ReactionsApiTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $this->authed()->json('POST', $this->reactionsApiUrl, [
+        $this->withRogueApiKey()->json('POST', $this->reactionsApiUrl, [
             'northstar_id' => $this->faker->uuid,
             'post_id' => $post->id,
         ]);
@@ -87,7 +87,7 @@ class ReactionsApiTest extends TestCase
         ]);
 
         // A second user reacts to the same post..
-        $this->authed()->json('POST', $this->reactionsApiUrl, [
+        $this->withRogueApiKey()->json('POST', $this->reactionsApiUrl, [
             'northstar_id' => $this->faker->uuid,
             'post_id' => $post->id,
         ]);

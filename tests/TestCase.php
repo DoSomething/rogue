@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\UploadedFile;
+
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     use RefreshDatabase;
@@ -10,8 +12,6 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      * @var string
      */
     protected $baseUrl = 'http://localhost';
-
-    protected $reportbackApiUrl = 'api/v1/reportbacks';
 
     /**
      * The Faker generator, for creating test data.
@@ -39,9 +39,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     /**
      * Mock Container dependencies.
      *
-     * @param string $class Class to mock
+     * @param string $class - Class to be mocked.
      *
-     * @return void
+     * @return \Mockery\MockInterface
      */
     public function mock($class)
     {
@@ -67,7 +67,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     /**
      * Creates a mock file.
      *
-     * @return mockfile
+     * @return UploadedFile
      */
     public function mockFile()
     {
@@ -76,10 +76,15 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         $mime_type = 'image/jpeg';
         $error = null;
         $test = true;
-        return new \Illuminate\Http\UploadedFile($path, $original_name, $mime_type, $error, $test);
+        return new UploadedFile($path, $original_name, $mime_type, $error, $test);
     }
 
-    public function authed()
+    /**
+     * Set the Rogue API key on the request.
+     *
+     * @return $this
+     */
+    public function withRogueApiKey()
     {
         $header = $this->transformHeadersToServerVars(['X-DS-Rogue-API-Key' => env('ROGUE_API_KEY')]);
 

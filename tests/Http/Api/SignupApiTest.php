@@ -25,7 +25,7 @@ class SignupApiTest extends TestCase
         ];
 
         // Send the signup and make sure the response has the data we expect
-        $response = $this->authed()->json('POST', $this->signupsApiUrl, $signup)
+        $response = $this->withRogueApiKey()->json('POST', $this->signupsApiUrl, $signup)
         				 ->seeJson([
                             'northstar_id' => $signup['northstar_id'],
                             'campaign_id' => $signup['campaign_id'],
