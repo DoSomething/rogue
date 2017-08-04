@@ -6,6 +6,15 @@ import { extractPostsFromSignups, updateCurrentBatchCount, updateTotalSignupsCou
 import InboxItem from '../InboxItem';
 import ModalContainer from '../ModalContainer';
 import HistoryModal from '../HistoryModal';
+import Confetti from 'react-dom-confetti';
+
+const confettiConfig = {
+    angle: 90,
+    spread: 185,
+    startVelocity: 50,
+    elementCount: 80,
+    decay: 0.95
+};
 
 class CampaignInbox extends React.Component {
   constructor(props) {
@@ -22,6 +31,7 @@ class CampaignInbox extends React.Component {
       totalSignupsCount: totalSignupsCount, // default value for total signups
       currentBatchCount: Object.keys(posts).length, // default value for number of pending posts
       gimmeMore: false,
+      activateConfetti: false,
     };
 
     this.api = new RestApiClient;
@@ -170,6 +180,7 @@ class CampaignInbox extends React.Component {
           { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: this.state.signups[post.signup_id]}} />) }
           {/* TODO find a better button solution, change href value, currently pulling from window... */}
           { this.state.gimmeMore ? <a className="button -accepted" role="button" href={window.location.pathname}>Gimme</a> : null }
+          <Confetti active={this.state.activateConfetti} config={confettiConfig} />
 
           <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups }}/> : null}

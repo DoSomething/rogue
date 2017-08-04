@@ -88,8 +88,9 @@ export function updateTotalSignupsCount(state, totalSignups) {
 
 export function gimmeMoreCheck(state) {
     if (state.totalSignupsCount === 0 && state.currentBatchTotal === 0) {
-        state.gimmeMore = false
+        state.gimmeMore = false;
         // show confetti on last accept/reject
+        state.activateConfetti = true;
     } else {
         state.gimmeMore = true;
     }
