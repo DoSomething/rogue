@@ -27,6 +27,8 @@ class Signup extends Model
 
     /**
      * Each signup has events.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function events()
     {
@@ -35,6 +37,8 @@ class Signup extends Model
 
     /**
      * Get the posts associated with this signup.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function posts()
     {

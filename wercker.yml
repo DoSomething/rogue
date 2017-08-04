@@ -5,6 +5,9 @@ build:
       - leipert/composer-install@0.9.1
       - wercker/npm-install
       - script:
+          name: build front-end assets
+          code: npm run build
+      - script:
           name: start mysql
           code: sudo service mysql start
       - script:
@@ -14,9 +17,6 @@ build:
             cp .env.example .env
             php artisan key:generate
             vendor/bin/phpunit
-      - script:
-          name: build front-end assets
-          code: npm run build
 
 deploy:
   # steps:

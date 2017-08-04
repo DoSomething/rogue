@@ -6,9 +6,8 @@ use Rogue\Services\Phoenix;
 use Rogue\Services\CampaignService;
 use Illuminate\Support\Facades\Cache;
 use Rogue\Repositories\CacheRepository;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class CampiagnsTest extends TestCase
+class CampaignTest extends TestCase
 {
     /**
      * A test finding a single campaign.
@@ -24,7 +23,7 @@ class CampiagnsTest extends TestCase
         ];
 
         // Mock the call to get the campaign from phoenix.
-        $phoenix = $this->mock(Phoenix::class)
+        $this->mock(Phoenix::class)
             ->shouldReceive('getCampaign')
             ->once()
             ->with($testCampaign['id'])
@@ -53,6 +52,7 @@ class CampiagnsTest extends TestCase
      */
     public function testFindingMultipleCampaigns()
     {
+        // @TODO: Doesn't work with in-memory cache, which is used in tests.
         $this->markTestIncomplete();
 
         $testIds = [57, 4];
@@ -69,7 +69,7 @@ class CampiagnsTest extends TestCase
         ];
 
         // Mock the call to get the campaign from phoenix.
-        $phoenix = $this->mock(Phoenix::class)
+        $this->mock(Phoenix::class)
             ->shouldReceive('getAllCampaigns')
             ->once()
             ->andReturn(['data' => $testCampaigns]);
@@ -87,7 +87,7 @@ class CampiagnsTest extends TestCase
         $campaigns = $campaignService->findAll($testIds);
         $cachedCampaigns = $cache->retrieveMany($testIds);
 
-        foreach($testCampaigns as $key => $test) {
+        foreach ($testCampaigns as $key => $test) {
             // Make sure the campaign was returned from phoenix.
             $this->assertEquals($test, $campaigns[$key]);
 
@@ -96,36 +96,28 @@ class CampiagnsTest extends TestCase
         }
     }
 
-    public function testGetCampaignPostStatusCounts() {
-        $this->markTestIncomplete();
-        $testCampaigns = collect([
-            [
-                'id' => 57,
-                'title' => 'Babysitters Club',
-            ],
-        ]);
+    public function testGetCampaignPostStatusCounts()
+    {
+        $testCampaign = [
+            'id' => 57,
+            'title' => 'Babysitters Club',
+        ];
 
-        $statuses = ['accepted', 'pending', 'rejected'];
-
-        // Create 10 signups for a single campaign.
-        $signups = factory(Signup::class, 10)->create(['campaign_id' => $testCampaigns[0]['id']])
-            ->each(function ($signup) use ($statuses) {
-                // For each signup, create 3 accepted, 3 pending, and 3 rejected posts.
-                foreach ($statuses as $status) {
-                     $post = factory(Post::class, 3)->create([
-                        'signup_id' => $signup->id,
-                        'northstar_id' => $signup->northstar_id,
-                        'status' =>  $status,
-                    ]);
-                }
+        // Create 10 signups for the campaign.
+        factory(Signup::class, 10)->create(['campaign_id' => $testCampaign['id']])
+            ->each(function (Signup $signup) {
+                // And for each signup, make 3 accepted, 3 rejected, and 3 pending posts.
+                $signup->posts()->saveMany(factory(Post::class, 3)->make());
+                $signup->posts()->saveMany(factory(Post::class, 'accepted', 3)->make());
+                $signup->posts()->saveMany(factory(Post::class, 'rejected', 3)->make());
             });
 
-
         $campaignService = $this->app->make(CampaignService::class);
-        $campaignCounts = $campaignService->getPostTotals($testCampaigns[0]);
+        $campaignCounts = $campaignService->getPostTotals($testCampaign);
 
-        $this->assertEquals($campaignCounts->get($testCampaigns[0]['id'])->accepted_count, 30);
-        $this->assertEquals($campaignCounts->get($testCampaigns[0]['id'])->pending_count, 30);
-        $this->assertEquals($campaignCounts->get($testCampaigns[0]['id'])->rejected_count, 30);
+        $this->assertEquals($campaignCounts->campaign_id, 57);
+        $this->assertEquals($campaignCounts->accepted_count, 30);
+        $this->assertEquals($campaignCounts->pending_count, 30);
+        $this->assertEquals($campaignCounts->rejected_count, 30);
     }
 }

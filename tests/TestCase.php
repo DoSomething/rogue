@@ -1,5 +1,9 @@
 <?php
 
+use Carbon\Carbon;
+use Rogue\Models\User;
+use Illuminate\Http\UploadedFile;
+
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     use RefreshDatabase;
@@ -10,8 +14,6 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      * @var string
      */
     protected $baseUrl = 'http://localhost';
-
-    protected $reportbackApiUrl = 'api/v1/reportbacks';
 
     /**
      * The Faker generator, for creating test data.
@@ -32,21 +34,65 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         // Refresh database & enable transactions.
         $this->refreshDatabase();
 
+        // Reset mocked time, if set.
+        Carbon::setTestNow(null);
+
         // Get a new Faker generator from Laravel.
         $this->faker = app(\Faker\Generator::class);
     }
 
     /**
+     * Create an administrator & log them in to the application.
+     *
+     * @return $this
+     */
+    public function actingAsAdmin()
+    {
+        $user = factory(User::class, 'admin')->create();
+
+        return $this->actingAs($user);
+    }
+
+    /**
+     * Assert that a soft-deleted record exists in the database.
+     *
+     * @param $table
+     * @param $id
+     * @return $this
+     */
+    public function seeSoftDeletedRecord($table, $id)
+    {
+        $this->seeInDatabase($table, ['id' => $id, 'url' => null])
+            ->notSeeInDatabase($table, ['id' => $id, 'deleted_at' => null]);
+
+        return $this;
+    }
+
+    /**
+     * "Freeze" time so we can make assertions based on it.
+     *
+     * @param string $time
+     * @return Carbon
+     */
+    public function mockTime($time = 'now')
+    {
+        Carbon::setTestNow((string) new Carbon($time));
+
+        return Carbon::getTestNow();
+    }
+
+    /**
      * Mock Container dependencies.
      *
-     * @param string $class Class to mock
+     * @param string $class - Class to be mocked.
      *
-     * @return void
+     * @return \Mockery\MockInterface
      */
     public function mock($class)
     {
         $mock = Mockery::mock($class);
         $this->app->instance($class, $mock);
+
         return $mock;
     }
 
@@ -67,7 +113,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     /**
      * Creates a mock file.
      *
-     * @return mockfile
+     * @return UploadedFile
      */
     public function mockFile()
     {
@@ -76,10 +122,16 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         $mime_type = 'image/jpeg';
         $error = null;
         $test = true;
-        return new \Illuminate\Http\UploadedFile($path, $original_name, $mime_type, $error, $test);
+
+        return new UploadedFile($path, $original_name, $mime_type, $error, $test);
     }
 
-    public function authed()
+    /**
+     * Set the Rogue API key on the request.
+     *
+     * @return $this
+     */
+    public function withRogueApiKey()
     {
         $header = $this->transformHeadersToServerVars(['X-DS-Rogue-API-Key' => env('ROGUE_API_KEY')]);
 

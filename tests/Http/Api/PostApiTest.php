@@ -1,14 +1,7 @@
 <?php
 
-use Rogue\Models\Post;
-
 class PostApiTest extends TestCase
 {
-    /*
-     * Base URL for the Api.
-     */
-    protected $postsApiUrl = 'api/v2/posts';
-
     /**
      * Test that a POST request to /posts creates a new photo post.
      *
@@ -39,11 +32,10 @@ class PostApiTest extends TestCase
             'crop_rotate'      => 90,
         ];
 
-
         // Mock sending image to AWS.
         Storage::shouldReceive('put')->andReturn(true);
 
-        $this->authed()->json('POST', $this->postsApiUrl, $post);
+        $this->withRogueApiKey()->json('POST', 'api/v2/posts', $post);
 
         $this->assertResponseStatus(200);
 

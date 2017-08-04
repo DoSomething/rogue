@@ -5,7 +5,6 @@ use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
-use Rogue\Models\Reportback;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,21 +21,29 @@ use Rogue\Models\Reportback;
 $factory->define(Post::class, function (Generator $faker) {
     return [
         'url' => 'https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg',
-        'caption' => $this->faker->sentence(),
+        'caption' => $faker->sentence(),
         'status' => 'pending',
         'source' => 'phoenix-web',
         'remote_addr' => '10.0.2.2',
     ];
 });
 
+$factory->defineAs(Post::class, 'accepted', function ($faker) use ($factory) {
+    return array_merge($factory->raw(Post::class), ['status' => 'accepted']);
+});
+
+$factory->defineAs(Post::class, 'rejected', function ($faker) use ($factory) {
+    return array_merge($factory->raw(Post::class), ['status' => 'rejected']);
+});
+
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
     return [
         'northstar_id' => str_random(24),
-        'campaign_id' => $this->faker->randomNumber(4),
-        'campaign_run_id' => $this->faker->randomNumber(4),
-        'quantity_pending' => $this->faker->randomNumber(4),
-        'why_participated' => $this->faker->sentence(),
+        'campaign_id' => $faker->randomNumber(4),
+        'campaign_run_id' => $faker->randomNumber(4),
+        'quantity_pending' => $faker->randomNumber(4),
+        'why_participated' => $faker->sentence(),
         'source' => 'phoenix-web',
     ];
 });
@@ -76,4 +83,8 @@ $factory->define(User::class, function (Generator $faker) {
         'remember_token' => str_random(10),
         'role' => 'user',
     ];
+});
+
+$factory->defineAs(User::class, 'admin', function ($faker) use ($factory) {
+    return array_merge($factory->raw(User::class), ['role' => 'admin']);
 });

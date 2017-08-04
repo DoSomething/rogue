@@ -54,7 +54,7 @@ class CampaignService
      * @param  array $ids
      * @return collection $campaigns|null
      */
-    public function findAll(array $ids = [])
+    public function findAll($ids = [])
     {
         if ($ids) {
             $campaigns = $this->cache->retrieveMany($ids);
@@ -77,7 +77,7 @@ class CampaignService
             return collect($campaigns);
         }
 
-        return null;
+        return collect();
     }
 
     /**
