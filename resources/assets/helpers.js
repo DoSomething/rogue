@@ -70,3 +70,14 @@ export function getEditedImageUrl(photoProp) {
 
   return null;
 };
+
+export function updateCurrentBatchCount(state) {
+    let count = 0;
+    for (let prop in state.posts) {
+        const status = state.posts[prop].status;
+        if (status === 'pending') {
+            count++;
+        }
+    }
+    return count
+};

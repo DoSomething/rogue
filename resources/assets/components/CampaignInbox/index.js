@@ -2,7 +2,7 @@ import React from 'react';
 import { keyBy, map, sample, forEach, reject } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
-import { extractPostsFromSignups } from '../../helpers';
+import { extractPostsFromSignups, updateCurrentBatchCount } from '../../helpers';
 import InboxItem from '../InboxItem';
 import ModalContainer from '../ModalContainer';
 import HistoryModal from '../HistoryModal';
@@ -12,12 +12,15 @@ class CampaignInbox extends React.Component {
     super(props);
 
     const posts = extractPostsFromSignups(props.signups);
+    const totalSignups = props.totalSignups;
 
     this.state = {
       signups: keyBy(props.signups, 'id'),
       posts: posts,
       displayHistoryModal: false,
       historyModalId: null,
+      totalSignups: totalSignups,
+      currentBatchCount: Object.keys(posts).length, // default value for number of pending posts
     };
 
     this.api = new RestApiClient;
@@ -62,7 +65,8 @@ class CampaignInbox extends React.Component {
         const newState = {...previousState};
 
         newState.posts[postId].status = fields.status;
-
+        // update currentBatchCount on post update
+        newState.currentBatchCount = updateCurrentBatchCount(newState);
         return newState;
       });
     });
