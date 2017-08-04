@@ -66,9 +66,6 @@ class ReviewsTest extends TestCase
      */
     public function testUpdatedPostAndSignupWithReview()
     {
-        // @TODO: This isn't currently working.
-        $this->markTestSkipped();
-
         // Create a signup and a post, and associate them to each other.
         $signup = factory(Signup::class)->create();
         $post = factory(Post::class)->create();
@@ -84,7 +81,10 @@ class ReviewsTest extends TestCase
         ]);
 
         // Make sure the signup and post's updated_at are both updated.
-        $this->assertEquals('2017-08-03 16:55:00', (string) $signup->fresh()->updated_at);
         $this->assertEquals('2017-08-03 16:55:00', (string) $post->fresh()->updated_at);
+
+        // @TODO: Signup timestamp isn't being touched.
+        // $this->assertEquals('2017-08-03 16:55:00', (string) $signup->fresh()->updated_at);
+        $this->markTestIncomplete();
     }
 }
