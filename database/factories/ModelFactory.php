@@ -28,6 +28,14 @@ $factory->define(Post::class, function (Generator $faker) {
     ];
 });
 
+$factory->defineAs(Post::class, 'accepted', function ($faker) use ($factory) {
+    return array_merge($factory->raw(Post::class), ['status' => 'accepted']);
+});
+
+$factory->defineAs(Post::class, 'rejected', function ($faker) use ($factory) {
+    return array_merge($factory->raw(Post::class), ['status' => 'rejected']);
+});
+
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
     return [
