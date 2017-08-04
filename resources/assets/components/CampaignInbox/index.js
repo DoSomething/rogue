@@ -80,6 +80,7 @@ class CampaignInbox extends React.Component {
         // update currentBatchCount & totalSignupsCount on post update
         newState.currentBatchCount = updateCurrentBatchCount(newState);
         newState.totalSignupsCount =  updateTotalSignupsCount(newState, this.props.totalSignups);
+        // perform a check and set props accordingly
         gimmeMoreCheck(newState);
         return newState;
       });
