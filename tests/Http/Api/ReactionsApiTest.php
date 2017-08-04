@@ -3,7 +3,6 @@
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
-use Faker\Generator;
 
 class ReactionsApiTest extends TestCase
 {

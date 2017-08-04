@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use DoSomething\Gateway\Northstar;
 use Rogue\Services\CampaignService;
 use Rogue\Models\User;

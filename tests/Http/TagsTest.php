@@ -2,7 +2,6 @@
 
 use Rogue\Models\Post;
 use Rogue\Models\User;
-use Faker\Generator;
 
 class TagsTest extends TestCase
 {

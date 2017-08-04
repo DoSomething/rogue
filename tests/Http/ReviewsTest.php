@@ -1,10 +1,8 @@
 <?php
 
-use Rogue\Models\Event;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Signup;
-use Faker\Generator;
 
 class ReviewsTest extends TestCase
 {

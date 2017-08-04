@@ -1,7 +1,5 @@
 <?php
 
-use Rogue\Models\Post;
-
 class PostApiTest extends TestCase
 {
     /*
