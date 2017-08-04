@@ -14,23 +14,45 @@ class CampaignSingle extends React.Component {
   constructor(props) {
     super(props);
 
-    const posts = extractPostsFromSignups(props.signups);
-    this.state = {
-      signups: keyBy(props.signups, 'id'),
-      posts: posts,
-      filter: 'accepted',
-      postTotals: props.post_totals,
-      displayHistoryModal: false,
-      historyModalId: null,
-      nextPage: props.next_page,
-      prevPage: props.previous_page,
-    };
+    this.state = {};
 
     this.api = new RestApiClient;
     this.updateQuantity = this.updateQuantity.bind(this);
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
     this.filterPosts = this.filterPosts.bind(this);
+  }
+
+  componentDidMount() {
+    this.api.get('api/v2/posts', {
+      filter: {
+        status: 'accepted',
+        campaign_id: this.props.campaign.id,
+      }
+    })
+    .then(json => this.setState({
+      // Hard code this for now until GET /posts endpoint is updated
+      signups: {
+        0: {
+          campaign_id: 10,
+          campaign_run_id: 1744,
+          created_at: "2017-07-26 17:31:56",
+          id: 128,
+          northstar_id: "5978afc27f43c27d8755558c",
+          quantity: 3,
+          source: "campaigns",
+          updated_at: "2017-08-01 20:48:26",
+          why_participated: "because",
+        },
+      },
+      posts: json.data,
+      filter: 'accepted',
+      postTotals: json.meta.pagination.total,
+      displayHistoryModal: null,
+      historyModalId: null,
+      nextPage: json.meta.pagination.links.next ? json.meta.pagination.links.next : null,
+      prevPage: json.meta.pagination.links.previous ? json.meta.pagination.links.previous : null,
+    }));
   }
 
   // Filter posts based on status.
@@ -41,24 +63,23 @@ class CampaignSingle extends React.Component {
         campaign_id: this.props.campaign.id,
       }
     });
-
     request.then((result) => {
-      var signups = keyBy(result.data, 'id');
-      // console.log(extractPostsFromSignups(signups));
+      var posts = keyBy(result.data, 'id');
+
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
 
-        newState.signups = signups;
-        newState.posts = extractPostsFromSignups(signups);
-      // console.log(status.toLowerCase());
-        newState.filter = this.status.toLowerCase();
+        // newState.signups = signups;
+        newState.posts = posts;
+        newState.filter = status.toLowerCase();
+        newState.postTotals = result.meta.pagination.total;
+        newState.nextPage = result.meta.pagination.links.next ? result.meta.pagination.links.next : null;
+        newState.prevPage = result.meta.pagination.links.previous ? result.meta.pagination.links.previous : null;
 
         return newState;
       });
     });
-
-    // this.setState({ filter: status.toLowerCase() });
   }
 
   // Open the history modal of the given post
@@ -119,7 +140,7 @@ class CampaignSingle extends React.Component {
 
     return (
       <div className="container">
-        <StatusCounter postTotals={this.state.postTotals} campaign={campaign} />
+        <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
 
         <PostFilter onChange={this.filterPosts} />
 
