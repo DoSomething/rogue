@@ -233,10 +233,10 @@ class CampaignService
 
         if ($campaignsWithCounts) {
             $campaigns = $campaigns->map(function ($campaign, $key) use ($campaignsWithCounts) {
-                if ($campaign) {
+                if ($campaign && gettype($campaign) == 'array') {
                     $statusCounts = $campaignsWithCounts->get($campaign['id']);
 
-                    $campaign['pending_count'] = $statusCounts ? (int) $statusCounts->pending_count : 0;
+                     $campaign['pending_count'] = $statusCounts ? (int) $statusCounts->pending_count : 0;
                 }
 
                 return $campaign;
