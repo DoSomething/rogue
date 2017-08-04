@@ -81,3 +81,7 @@ export function updateCurrentBatchCount(state) {
     }
     return count
 };
+
+export function updateTotalSignupsCount(state, totalSignups) {
+    return totalSignups - (Object.keys(state.posts).length - state.currentBatchCount)
+};
