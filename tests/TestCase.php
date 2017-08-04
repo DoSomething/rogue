@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\UploadedFile;
+use Rogue\Models\User;
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
@@ -37,6 +38,17 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     }
 
     /**
+     * Create an administrator & log them in to the application.
+     *
+     * @return $this
+     */
+    public function actingAsAdmin()
+    {
+        $user = factory(User::class, 'admin')->create();
+
+        return $this->actingAs($user);
+    }
+
      * Mock Container dependencies.
      *
      * @param string $class - Class to be mocked.
