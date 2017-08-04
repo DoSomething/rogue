@@ -76,3 +76,7 @@ $factory->define(User::class, function (Generator $faker) {
         'role' => 'user',
     ];
 });
+
+$factory->defineAs(User::class, 'admin', function ($faker) use ($factory) {
+    return array_merge($factory->raw(User::class), ['role' => 'admin']);
+});
