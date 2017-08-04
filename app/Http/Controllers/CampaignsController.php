@@ -79,7 +79,7 @@ class CampaignsController extends Controller
 
         return view('pages.campaign_inbox')
             ->with('state', [
-                'totalSignups' => collect($signups)->count() + 1,
+                'totalSignups' => collect($signups)->count(),
                 'signups' => collect($signups)->take(5),
                 'campaign' => $campaignData,
             ]);

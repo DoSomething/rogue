@@ -41,6 +41,7 @@ class CampaignInbox extends React.Component {
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
     this.deletePost = this.deletePost.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   // Open the history modal of the given post
@@ -161,6 +162,14 @@ class CampaignInbox extends React.Component {
     }
   }
 
+  handleClick() {
+    this.setState((previousState) => {
+      let newState = {...previousState};
+      newState.activateConfetti = true;
+      return newState;
+    });
+  }
+
   render() {
     const posts = this.state.posts;
     const campaign = this.props.campaign;
@@ -179,7 +188,7 @@ class CampaignInbox extends React.Component {
 
           { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: this.state.signups[post.signup_id]}} />) }
           {/* TODO find a better button solution, change href value, currently pulling from window... */}
-          { this.state.gimmeMore ? <a className="button -accepted" role="button" href={window.location.pathname}>Gimme</a> : null }
+          { this.state.gimmeMore ? <a className="button -accepted" role="button" href={window.location.pathname} onClick={this.handleClick}>Gimme</a> : null }
           <Confetti active={this.state.activateConfetti} config={confettiConfig} />
 
           <ModalContainer>
