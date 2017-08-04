@@ -6,9 +6,8 @@ use Rogue\Services\Phoenix;
 use Rogue\Services\CampaignService;
 use Illuminate\Support\Facades\Cache;
 use Rogue\Repositories\CacheRepository;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class CampiagnsTest extends TestCase
+class CampaignTest extends TestCase
 {
     /**
      * A test finding a single campaign.
