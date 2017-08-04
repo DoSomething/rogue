@@ -9,7 +9,3 @@ disabled:
  - phpdoc_no_package
  - phpdoc_summary
  - phpdoc_var_without_name
-
-finder:
-  exclude:
-    - "tests"
