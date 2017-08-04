@@ -49,6 +49,21 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         return $this->actingAs($user);
     }
 
+    /**
+     * Assert that a soft-deleted record exists in the database.
+     *
+     * @param $table
+     * @param $id
+     * @return $this
+     */
+    public function seeSoftDeletedRecord($table, $id)
+    {
+        $this->seeInDatabase($table, ['id' => $id, 'url' => null])
+            ->notSeeInDatabase($table, ['id' => $id, 'deleted_at' => null]);
+
+        return $this;
+    }
+
      * Mock Container dependencies.
      *
      * @param string $class - Class to be mocked.
