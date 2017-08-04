@@ -85,3 +85,12 @@ export function updateCurrentBatchCount(state) {
 export function updateTotalSignupsCount(state, totalSignups) {
     return totalSignups - (Object.keys(state.posts).length - state.currentBatchCount)
 };
+
+export function gimmeMoreCheck(state) {
+    if (state.totalSignupsCount === 0 && state.currentBatchTotal === 0) {
+        state.gimmeMore = false
+        // show confetti on last accept/reject
+    } else {
+        state.gimmeMore = true;
+    }
+}
