@@ -2,47 +2,41 @@
 
 class SignupApiTest extends TestCase
 {
-    /*
-     * Base URL for the Api.
-     */
-    protected $signupsApiUrl = 'api/v2/signups';
-
     /**
-     * Test that a POST request to /signupss creates a new signup.
+     * Test that a POST request to /signups creates a new signup.
      *
      * @group creatingAPhoto
      * @return void
      */
     public function testCreatingASignup()
     {
-    	// Create test signup
-        $signup = [
-            'northstar_id'     => str_random(24),
-            'campaign_id'      => $this->faker->randomNumber(4),
-            'campaign_run_id'  => $this->faker->randomNumber(4),
-            'source'           => 'the-fox-den',
-            'do_not_forward'   => true,
-        ];
+        $northstarId = '54fa272b469c64d7068b456a';
+        $campaignId = $this->faker->randomNumber(4);
+        $campaignRunId = $this->faker->randomNumber(4);
 
-        // Send the signup and make sure the response has the data we expect
-        $response = $this->withRogueApiKey()->json('POST', $this->signupsApiUrl, $signup)
-        				 ->seeJson([
-                            'northstar_id' => $signup['northstar_id'],
-                            'campaign_id' => $signup['campaign_id'],
-                            'campaign_run_id' => $signup['campaign_run_id'],
-                            'signup_source' => 'the-fox-den',
-                            'quantity' => null,
-                            'why_participated' => null,
-                        ]);
+        $this->withRogueApiKey()->json('POST', 'api/v2/signups', [
+            'northstar_id'     => $northstarId,
+            'campaign_id'      => $campaignId,
+            'campaign_run_id'  => $campaignRunId,
+            'source'           => 'the-fox-den',
+        ]);
 
         // Make sure we get the 201 Created response
         $this->assertResponseStatus(201);
+        $this->seeJson([
+            'northstar_id' => $northstarId,
+            'campaign_id' => $campaignId,
+            'campaign_run_id' => $campaignRunId,
+            'signup_source' => 'the-fox-den',
+            'quantity' => null,
+            'why_participated' => null,
+        ]);
 
-        $response = $this->decodeResponseJson();
-
-        // Make sure the signup got created
+        // Make sure the signup is persisted.
         $this->seeInDatabase('signups', [
-            'northstar_id' => $response['data']['northstar_id'],
+            'northstar_id' => $northstarId,
+            'campaign_id' => $campaignId,
+            'campaign_run_id' => $campaignRunId,
         ]);
     }
 }

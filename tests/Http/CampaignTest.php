@@ -24,7 +24,7 @@ class CampiagnsTest extends TestCase
         ];
 
         // Mock the call to get the campaign from phoenix.
-        $phoenix = $this->mock(Phoenix::class)
+        $this->mock(Phoenix::class)
             ->shouldReceive('getCampaign')
             ->once()
             ->with($testCampaign['id'])
@@ -69,7 +69,7 @@ class CampiagnsTest extends TestCase
         ];
 
         // Mock the call to get the campaign from phoenix.
-        $phoenix = $this->mock(Phoenix::class)
+        $this->mock(Phoenix::class)
             ->shouldReceive('getAllCampaigns')
             ->once()
             ->andReturn(['data' => $testCampaigns]);
@@ -108,7 +108,7 @@ class CampiagnsTest extends TestCase
         $statuses = ['accepted', 'pending', 'rejected'];
 
         // Create 10 signups for a single campaign.
-        $signups = factory(Signup::class, 10)->create(['campaign_id' => $testCampaigns[0]['id']])
+        factory(Signup::class, 10)->create(['campaign_id' => $testCampaigns[0]['id']])
             ->each(function ($signup) use ($statuses) {
                 // For each signup, create 3 accepted, 3 pending, and 3 rejected posts.
                 foreach ($statuses as $status) {

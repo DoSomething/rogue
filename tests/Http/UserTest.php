@@ -12,18 +12,15 @@ class UserTest extends TestCase
     public function testAuthenticatedUserDoesntGetRedirectedHome()
     {
         $this->markTestIncomplete();
-        $user = factory(User::class)->make([
-            'role' => 'admin',
-        ]);
 
-        $mock = $this->mock(CampaignService::class)
+        $this->mock(CampaignService::class)
             ->shouldReceive('getCampaignIdsFromSignups')->andReturn([])
             ->shouldReceive('findAll')
             ->shouldReceive('appendStatusCountsToCampaigns')
             ->shouldReceive('groupByCause')
             ->andReturn('true');
 
-        $this->actingAs($user)
+        $this->actingAsAdmin()
             ->visit('/campaigns')
             // Only authenticated users will see log out button.
             ->see('Log Out');
@@ -37,20 +34,21 @@ class UserTest extends TestCase
     public function testUnauthenticatedUserCantAccessPagesInApp()
     {
         $user = factory(User::class)->make();
-        $this->be($user);
 
-        $response = $this->call('GET', '/campaigns');
+        $this->actingAs($user)
+            ->get('/campaigns');
+
         $this->assertResponseStatus(403);
     }
 
     /**
-     * Test that northstar authorization is called when hiting the /login route
+     * Test that northstar authorization is called when hitting the /login route
      *
      * @return void
      */
     public function testLogin()
     {
-        $mock = $this->mock(Northstar::class)
+        $this->mock(Northstar::class)
             ->shouldReceive('authorize');
 
         $this->visit('/login');
@@ -63,7 +61,7 @@ class UserTest extends TestCase
      */
     public function testLogout()
     {
-        $mock = $this->mock(Northstar::class)
+        $this->mock(Northstar::class)
             ->shouldReceive('logout');
 
         $this->visit('/logout');
