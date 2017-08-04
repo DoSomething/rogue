@@ -1,7 +1,6 @@
 <?php
 
 use DoSomething\Gateway\Northstar;
-use Rogue\Services\CampaignService;
 use Rogue\Models\User;
 
 class UserTest extends TestCase
@@ -11,19 +10,10 @@ class UserTest extends TestCase
      */
     public function testAuthenticatedUserDoesntGetRedirectedHome()
     {
-        $this->markTestIncomplete();
-
-        $this->mock(CampaignService::class)
-            ->shouldReceive('getCampaignIdsFromSignups')->andReturn([])
-            ->shouldReceive('findAll')
-            ->shouldReceive('appendStatusCountsToCampaigns')
-            ->shouldReceive('groupByCause')
-            ->andReturn('true');
-
         $this->actingAsAdmin()
-            ->visit('/campaigns')
-            // Only authenticated users will see log out button.
-            ->see('Log Out');
+            ->visit('/campaigns');
+
+        $this->see('Campaign Overview');
     }
 
     /**
