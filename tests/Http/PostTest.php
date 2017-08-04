@@ -1,7 +1,7 @@
 <?php
 
-use Rogue\Models\User;
 use Rogue\Models\Post;
+use Rogue\Models\User;
 use Rogue\Models\Signup;
 
 class PostTest extends TestCase

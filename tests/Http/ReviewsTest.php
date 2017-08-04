@@ -37,7 +37,7 @@ class ReviewsTest extends TestCase
         // Make sure we created an event for the review.
         $this->seeInDatabase('events', [
             'eventable_type' => 'Rogue\Models\Review',
-            'created_at' => '2017-08-03 17:02:00'
+            'created_at' => '2017-08-03 17:02:00',
         ]);
     }
 

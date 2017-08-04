@@ -87,7 +87,7 @@ class CampaignTest extends TestCase
         $campaigns = $campaignService->findAll($testIds);
         $cachedCampaigns = $cache->retrieveMany($testIds);
 
-        foreach($testCampaigns as $key => $test) {
+        foreach ($testCampaigns as $key => $test) {
             // Make sure the campaign was returned from phoenix.
             $this->assertEquals($test, $campaigns[$key]);
 
@@ -96,7 +96,8 @@ class CampaignTest extends TestCase
         }
     }
 
-    public function testGetCampaignPostStatusCounts() {
+    public function testGetCampaignPostStatusCounts()
+    {
         $testCampaign = [
             'id' => 57,
             'title' => 'Babysitters Club',
@@ -110,7 +111,6 @@ class CampaignTest extends TestCase
                 $signup->posts()->saveMany(factory(Post::class, 'accepted', 3)->make());
                 $signup->posts()->saveMany(factory(Post::class, 'rejected', 3)->make());
             });
-
 
         $campaignService = $this->app->make(CampaignService::class);
         $campaignCounts = $campaignService->getPostTotals($testCampaign);

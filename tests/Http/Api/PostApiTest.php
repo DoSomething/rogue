@@ -32,7 +32,6 @@ class PostApiTest extends TestCase
             'crop_rotate'      => 90,
         ];
 
-
         // Mock sending image to AWS.
         Storage::shouldReceive('put')->andReturn(true);
 

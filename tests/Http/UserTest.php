@@ -1,7 +1,7 @@
 <?php
 
-use DoSomething\Gateway\Northstar;
 use Rogue\Models\User;
+use DoSomething\Gateway\Northstar;
 
 class UserTest extends TestCase
 {

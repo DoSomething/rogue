@@ -1,7 +1,7 @@
 <?php
 
-use Rogue\Models\Signup;
 use Rogue\Models\Post;
+use Rogue\Models\Signup;
 
 class ActivityApiTest extends TestCase
 {
@@ -19,9 +19,9 @@ class ActivityApiTest extends TestCase
         $this->seeJsonSubset([
             'meta' => [
                 'pagination' => [
-                    'per_page' => 8
+                    'per_page' => 8,
                 ],
-            ]
+            ],
         ]);
     }
 
@@ -40,9 +40,9 @@ class ActivityApiTest extends TestCase
         $this->seeJsonSubset([
             'meta' => [
                 'pagination' => [
-                    'current_page' => 3
+                    'current_page' => 3,
                 ],
-            ]
+            ],
         ]);
     }
 
@@ -62,7 +62,7 @@ class ActivityApiTest extends TestCase
         $this->seeJsonSubset([
             'data' => [
                 [
-                    'campaign_id' => $signup->campaign_id
+                    'campaign_id' => $signup->campaign_id,
                 ],
             ],
         ]);
@@ -84,7 +84,7 @@ class ActivityApiTest extends TestCase
         $this->seeJsonSubset([
             'data' => [
                 [
-                    'campaign_run_id' => $signup->campaign_run_id
+                    'campaign_run_id' => $signup->campaign_run_id,
                 ],
             ],
         ]);
@@ -107,7 +107,7 @@ class ActivityApiTest extends TestCase
         $this->seeJsonSubset([
             'meta' => [
                 'pagination' => [
-                    'total' => 0
+                    'total' => 0,
                 ],
             ],
         ]);
@@ -119,7 +119,6 @@ class ActivityApiTest extends TestCase
      * GET /activity?filter[updated_at]=2017-05-25 20:14:48
      * @return void
      */
-
     public function testActivityIndexWithUpdatedAtQuery()
     {
         $this->mockTime('8/01/2017 15:00:00');
@@ -146,6 +145,5 @@ class ActivityApiTest extends TestCase
                 ],
             ],
         ]);
-
     }
 }

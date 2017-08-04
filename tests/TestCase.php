@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Http\UploadedFile;
-use Rogue\Models\User;
 use Carbon\Carbon;
+use Rogue\Models\User;
+use Illuminate\Http\UploadedFile;
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
@@ -92,6 +92,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     {
         $mock = Mockery::mock($class);
         $this->app->instance($class, $mock);
+
         return $mock;
     }
 
@@ -121,6 +122,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         $mime_type = 'image/jpeg';
         $error = null;
         $test = true;
+
         return new UploadedFile($path, $original_name, $mime_type, $error, $test);
     }
 

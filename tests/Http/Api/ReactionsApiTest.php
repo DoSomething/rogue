@@ -33,7 +33,7 @@ class ReactionsApiTest extends TestCase
         $this->seeJsonSubset([
             'meta' => [
                 'total_reactions' => 1,
-            ]
+            ],
         ]);
 
         // React (unlike) again to the same post with the same user.
@@ -50,7 +50,7 @@ class ReactionsApiTest extends TestCase
         $this->seeJsonSubset([
             'meta' => [
                 'total_reactions' => 0,
-            ]
+            ],
         ]);
     }
 
@@ -75,7 +75,7 @@ class ReactionsApiTest extends TestCase
         $this->seeJsonSubset([
             'meta' => [
                 'total_reactions' => 1,
-            ]
+            ],
         ]);
 
         // A second user reacts to the same post..
@@ -89,7 +89,7 @@ class ReactionsApiTest extends TestCase
         $this->seeJsonSubset([
             'meta' => [
                 'total_reactions' => 2,
-            ]
+            ],
         ]);
     }
 
