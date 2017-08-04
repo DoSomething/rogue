@@ -52,6 +52,7 @@ class CampaignTest extends TestCase
      */
     public function testFindingMultipleCampaigns()
     {
+        // @TODO: Doesn't work with in-memory cache, which is used in tests.
         $this->markTestIncomplete();
 
         $testIds = [57, 4];
