@@ -21,7 +21,7 @@ use Rogue\Models\Reaction;
 $factory->define(Post::class, function (Generator $faker) {
     return [
         'url' => 'https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg',
-        'caption' => $this->faker->sentence(),
+        'caption' => $faker->sentence(),
         'status' => 'pending',
         'source' => 'phoenix-web',
         'remote_addr' => '10.0.2.2',
@@ -32,10 +32,10 @@ $factory->define(Post::class, function (Generator $faker) {
 $factory->define(Signup::class, function (Generator $faker) {
     return [
         'northstar_id' => str_random(24),
-        'campaign_id' => $this->faker->randomNumber(4),
-        'campaign_run_id' => $this->faker->randomNumber(4),
-        'quantity_pending' => $this->faker->randomNumber(4),
-        'why_participated' => $this->faker->sentence(),
+        'campaign_id' => $faker->randomNumber(4),
+        'campaign_run_id' => $faker->randomNumber(4),
+        'quantity_pending' => $faker->randomNumber(4),
+        'why_participated' => $faker->sentence(),
         'source' => 'phoenix-web',
     ];
 });
