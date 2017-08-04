@@ -2,6 +2,7 @@
 
 use Illuminate\Http\UploadedFile;
 use Rogue\Models\User;
+use Carbon\Carbon;
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
@@ -32,6 +33,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         // Refresh database & enable transactions.
         $this->refreshDatabase();
+
+        // Reset mocked time, if set.
+        Carbon::setTestNow(null);
 
         // Get a new Faker generator from Laravel.
         $this->faker = app(\Faker\Generator::class);
@@ -64,6 +68,20 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         return $this;
     }
 
+    /**
+     * "Freeze" time so we can make assertions based on it.
+     *
+     * @param string $time
+     * @return Carbon
+     */
+    public function mockTime($time = 'now')
+    {
+        Carbon::setTestNow((string) new Carbon($time));
+
+        return Carbon::getTestNow();
+    }
+
+    /**
      * Mock Container dependencies.
      *
      * @param string $class - Class to be mocked.
