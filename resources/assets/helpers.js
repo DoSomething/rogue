@@ -70,3 +70,31 @@ export function getEditedImageUrl(photoProp) {
 
   return null;
 };
+
+// returns an integer of pending posts in a batch
+export function updateCurrentBatchCount(state) {
+    let count = 0;
+    for (let prop in state.posts) {
+        const status = state.posts[prop].status;
+        if (status === 'pending') {
+            count++;
+        }
+    }
+    return count
+};
+
+// returns how many totalSignups are remaining
+export function updateTotalSignupsCount(state, totalSignups) {
+    return totalSignups - (Object.keys(state.posts).length - state.currentBatchCount)
+};
+
+
+export function gimmeMoreCheck(state) {
+    if (state.totalSignupsCount === 0 && state.currentBatchTotal === 0) {
+        state.gimmeMore = false;
+        // show confetti on last accept/reject
+        state.activateConfetti = true;
+    } else {
+        state.gimmeMore = true;
+    }
+}
