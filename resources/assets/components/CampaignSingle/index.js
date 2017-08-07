@@ -48,7 +48,8 @@ class CampaignSingle extends React.Component {
       filter: {
         status: status.toLowerCase(),
         campaign_id: this.props.campaign.id,
-      }
+      },
+      include: user,
     });
     request.then((result) => {
       var posts = keyBy(result.data, 'id');
@@ -122,7 +123,6 @@ class CampaignSingle extends React.Component {
   }
 
   render() {
-    console.log(this.state.signups);
     const posts = this.state.posts;
     const campaign = this.props.campaign;
 

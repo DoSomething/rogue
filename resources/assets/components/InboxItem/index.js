@@ -21,9 +21,10 @@ class InboxItem extends React.Component {
   getOtherPosts(post) {
     const post_id = post['id'];
     const signup = this.props.details.signup;
+    var posts = signup.posts.data ? signup.posts.data : signup.posts;
 
     // get array of posts
-    const other_posts = clone(signup.posts);
+    const other_posts = clone(posts);
 
     // find index that has that post_id and remove
     const big_post = remove(other_posts, function(current_post) {
@@ -42,9 +43,9 @@ class InboxItem extends React.Component {
     return (
       <div className="container__row inbox-item">
         <div className="container__block -third">
-          <img src={getImageUrlFromProp(post)}/>
+          <img src={getImageUrlFromProp(post) ? getImageUrlFromProp(post) : post.media['url']}/>
           <p>
-            <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a> | <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
+            <a href={getImageUrlFromProp(post) ? getImageUrlFromProp(post) : post.media['url']} target="_blank">Original Photo</a> | <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
           </p>
 
           <ul className="gallery -duo">
