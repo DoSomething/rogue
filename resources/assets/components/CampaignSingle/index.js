@@ -31,7 +31,6 @@ class CampaignSingle extends React.Component {
       }
     })
     .then(json => this.setState({
-      // Hard code this for now until GET /posts endpoint is updated
       signups: {
         0: {
           campaign_id: 10,
@@ -137,6 +136,8 @@ class CampaignSingle extends React.Component {
   render() {
     const posts = this.state.posts;
     const campaign = this.props.campaign;
+
+    // We need the signup object with all of it's posts. Insteadn of grabbing all of the signups via api, can we do this through database?
 
     return (
       <div className="container">

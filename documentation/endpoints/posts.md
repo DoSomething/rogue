@@ -1,6 +1,6 @@
 ## Posts
 
-Create a Post and/or Create/Update a Signup
+## Create a Post and/or Create/Update a Signup
 
 ```
 POST /api/v2/posts
@@ -56,6 +56,8 @@ Example Response:
 }
 ```
 
+## Delete a post 
+
 Allows admins to delete a post. Posts get soft deleted from the database.
 
 ```
@@ -71,7 +73,7 @@ Example Response:
 }
 ```
 
-Retrieve all Posts.
+## Retrieve all Posts
 
 ```
 GET /api/v2/posts

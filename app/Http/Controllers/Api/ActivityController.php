@@ -27,9 +27,22 @@ class ActivityController extends ApiController
     {
         // Create an empty Signup query and eager-load posts, which we
         // can either filter or paginate to retrieve all signup records.
-        $query = $this->newQuery(Signup::class)->with('posts');
+        $query = $this->newQuery(Signup::class);
 
         $filters = $request->query('filter');
+
+        if (array_key_exists('status', $filters)) {
+            // Constrain Eager Load, only returning posts with status query.
+            $query = $query->with(['posts' => function ($query) use ($filters) {
+                $query->where('status', $filters['status']);
+            }]);
+
+            // Remove status from $filters to query Signups.
+            unset($filters['status']);
+        } else {
+            $query->with('posts');
+        }
+
         $query = $this->filter($query, $filters, Signup::$indexes);
 
         return $this->paginatedCollection($query, $request);
