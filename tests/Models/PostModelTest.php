@@ -25,10 +25,7 @@ class PostModelTest extends TestCase
         $post->update(['caption' => 'new caption']);
 
         // Make sure the signup and post's updated_at are both updated.
-        $this->assertEquals((string)$post->updated_at, '2017-08-03 16:52:00');
-
-        // @TODO: Signup timestamp isn't being touched.
-        // $this->assertEquals((string) $signup->updated_at, '2017-08-03 16:52:00');
-        $this->markTestIncomplete();
+        $this->assertEquals('2017-08-03 16:52:00', (string) $post->fresh()->updated_at);
+        $this->assertEquals('2017-08-03 16:52:00', (string) $signup->fresh()->updated_at);
     }
 }
