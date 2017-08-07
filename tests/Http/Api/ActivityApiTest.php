@@ -11,18 +11,57 @@ class ActivityApiTest extends TestCase
      * GET /activity?limit=8
      * @return void
      */
+    public function testActivityIndex()
+    {
+        factory(Signup::class, 10)->create();
+
+        $this->get('api/v2/activity');
+        $this->assertResponseStatus(200);
+
+        $this->seeJsonStructure([
+            'data' => [
+                '*' => [
+                    'signup_id',
+                    'northstar_id',
+                    'campaign_id',
+                    'campaign_run_id',
+                    'quantity',
+                    'why_participated',
+                    'signup_source',
+                    'created_at',
+                    'updated_at',
+                    'posts' => []
+                ],
+            ],
+            'meta' => [
+                'pagination' => [
+                    'total',
+                    'count',
+                    'per_page',
+                    'current_page',
+                    'total_pages',
+                ]
+            ]
+        ]);
+    }
+
+    /**
+     * Test for retrieving a user's activity with limit query param.
+     *
+     * GET /activity?limit=8
+     * @return void
+     */
     public function testActivityIndexWithLimitQuery()
     {
+        factory(Signup::class, 10)->create();
+
         $this->get('api/v2/activity?limit=8');
         $this->assertResponseStatus(200);
 
-        $this->seeJsonSubset([
-            'meta' => [
-                'pagination' => [
-                    'per_page' => 8,
-                ],
-            ],
-        ]);
+        $response = $this->decodeResponseJson();
+        $this->assertCount(8, $response['data']);
+        $this->assertEquals(2, $response['meta']['pagination']['total_pages']);
+        $this->assertNotEmpty($response['meta']['pagination']['links']['next']);
     }
 
     /**
@@ -33,17 +72,15 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithPageQuery()
     {
-        $this->get('api/v2/activity?page=3');
+        factory(Signup::class, 22)->create();
+
+        $this->get('api/v2/activity?page=2');
 
         $this->assertResponseStatus(200);
 
-        $this->seeJsonSubset([
-            'meta' => [
-                'pagination' => [
-                    'current_page' => 3,
-                ],
-            ],
-        ]);
+        // By default, we show 20 posts per page, so we should see 2 here.
+        $response = $this->decodeResponseJson();
+        $this->assertCount(2, $response['data']);
     }
 
     /**
@@ -54,17 +91,23 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithCampaignIdQuery()
     {
-        $signup = factory(Signup::class)->create();
+        factory(Signup::class, 3)->create(['campaign_id' => 17]);
+        factory(Signup::class, 5)->create();
 
-        $this->get('api/v2/activity?filter[campaign_id]=' . $signup->campaign_id);
+        $this->get('api/v2/activity?filter[campaign_id]=17');
 
         $this->assertResponseStatus(200);
         $this->seeJsonSubset([
             'data' => [
                 [
-                    'campaign_id' => $signup->campaign_id,
+                    'campaign_id' => 17,
                 ],
             ],
+            'meta' => [
+                'pagination' => [
+                    'count' => 3,
+                ]
+            ]
         ]);
     }
 
@@ -76,15 +119,17 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithCampaignRunIdQuery()
     {
-        $signup = factory(Signup::class)->create();
+        factory(Signup::class, 3)->create(['campaign_run_id' => 132]);
+        factory(Signup::class, 5)->create();
 
-        $this->get('api/v2/activity?filter[campaign_run_id]=' . $signup->campaign_run_id);
+        $this->get('api/v2/activity?filter[campaign_run_id]=132');
 
         $this->assertResponseStatus(200);
         $this->seeJsonSubset([
             'data' => [
                 [
-                    'campaign_run_id' => $signup->campaign_run_id,
+                    'campaign_run_id' => 132,
+                    // ...
                 ],
             ],
         ]);
@@ -104,13 +149,7 @@ class ActivityApiTest extends TestCase
         $this->get('api/v2/activity?filter[campaign_id]=' . $signups[0]->campaign_id . ',' . $signups[1]->campaign_id . '&filter[campaign_run_id]=z');
 
         $this->assertResponseStatus(200);
-        $this->seeJsonSubset([
-            'meta' => [
-                'pagination' => [
-                    'total' => 0,
-                ],
-            ],
-        ]);
+        $this->seeJsonSubset(['data' => []]);
     }
 
     /**
