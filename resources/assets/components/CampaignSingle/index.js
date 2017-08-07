@@ -24,29 +24,17 @@ class CampaignSingle extends React.Component {
   }
 
   componentDidMount() {
-    this.api.get('api/v2/posts', {
+    this.api.get('api/v2/activity', {
       filter: {
         status: 'accepted',
         campaign_id: this.props.campaign.id,
       }
     })
     .then(json => this.setState({
-      signups: {
-        0: {
-          campaign_id: 10,
-          campaign_run_id: 1744,
-          created_at: "2017-07-26 17:31:56",
-          id: 128,
-          northstar_id: "5978afc27f43c27d8755558c",
-          quantity: 3,
-          source: "campaigns",
-          updated_at: "2017-08-01 20:48:26",
-          why_participated: "because",
-        },
-      },
-      posts: json.data,
+      signups: keyBy(json.data, 'signup_id'),
+      posts: extractPostsFromSignups(json.data),
       filter: 'accepted',
-      postTotals: json.meta.pagination.total,
+      // postTotals: json.meta.pagination.total,
       displayHistoryModal: null,
       historyModalId: null,
       nextPage: json.meta.pagination.links.next ? json.meta.pagination.links.next : null,
@@ -134,10 +122,9 @@ class CampaignSingle extends React.Component {
   }
 
   render() {
+    console.log(this.state.signups);
     const posts = this.state.posts;
     const campaign = this.props.campaign;
-
-    // We need the signup object with all of it's posts. Insteadn of grabbing all of the signups via api, can we do this through database?
 
     return (
       <div className="container">

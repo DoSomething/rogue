@@ -44,11 +44,18 @@ export function getImageUrlFromProp(photoProp) {
 };
 
 export function extractPostsFromSignups(signups) {
-    const posts = keyBy(flatMap(signups, signup => {
+  // If this is coming from the API, posts will be nested under data.
+  if (signups[0].posts.data) {
+    var posts = keyBy(flatMap(signups, signup => {
+      return signup.posts.data;
+    }), 'id');
+  } else {
+    var posts = keyBy(flatMap(signups, signup => {
       return signup.posts;
     }), 'id');
+  }
 
-    return posts;
+  return posts;
 }
 
 export function getEditedImageUrl(photoProp) {
