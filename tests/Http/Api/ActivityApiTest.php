@@ -30,7 +30,7 @@ class ActivityApiTest extends TestCase
                     'signup_source',
                     'created_at',
                     'updated_at',
-                    'posts' => []
+                    'posts' => [],
                 ],
             ],
             'meta' => [
@@ -40,8 +40,8 @@ class ActivityApiTest extends TestCase
                     'per_page',
                     'current_page',
                     'total_pages',
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -106,8 +106,8 @@ class ActivityApiTest extends TestCase
             'meta' => [
                 'pagination' => [
                     'count' => 3,
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
