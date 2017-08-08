@@ -11,49 +11,59 @@ class PostApiTest extends TestCase
      */
     public function testCreatingAPost()
     {
-        // Create test Post. Temporarily use the current test reportback data
-        // array as the requests are the same.
-        // Create an uploaded file.
-        $file = $this->mockFile();
+        $northstar_id = $this->faker->uuid;
+        $campaign_id = $this->faker->randomNumber(4);
+        $campaign_run_id = $this->faker->randomNumber(4);
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $caption = $this->faker->sentence;
 
-        $post = [
-            'northstar_id'     => str_random(24),
-            'campaign_id'      => $this->faker->randomNumber(4),
-            'campaign_run_id'  => $this->faker->randomNumber(4),
-            'quantity'         => $this->faker->numberBetween(10, 1000),
-            'why_participated' => $this->faker->paragraph(3),
+        // Mock file system operations.
+        $url = 'https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_1.jpeg';
+        Storage::shouldReceive('put')->andReturn(true);
+        Storage::shouldReceive('url')->andReturn($url);
+
+        // Create the post!
+        $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+            'northstar_id'     => $northstar_id,
+            'campaign_id'      => $campaign_id,
+            'campaign_run_id'  => $campaign_run_id,
+            'quantity'         => $quantity,
+            'why_participated' => $this->faker->paragraph,
             'num_participants' => null,
-            'caption'          => $this->faker->sentence(),
+            'caption'          => $caption,
             'source'           => 'runscope',
-            'remote_addr'      => '207.110.19.130',
-            'file'             => $file,
+            'remote_addr'      => $this->faker->ipv4,
+            'file'             => $this->mockFile(),
             'crop_x'           => 0,
             'crop_y'           => 0,
             'crop_width'       => 100,
             'crop_height'      => 100,
             'crop_rotate'      => 90,
-        ];
-
-        // Mock persisting the file to storage.
-        Storage::shouldReceive('put')->andReturn(true);
-
-        $this->withRogueApiKey()->json('POST', 'api/v2/posts', $post);
-
-        $this->assertResponseStatus(200);
-
-        $response = $this->decodeResponseJson();
-
-        // Make sure the file_url is saved to the database.
-        $this->seeInDatabase('posts', [
-            'id' => $response['data']['id'],
-            'signup_id' => $response['data']['signup_id'],
-            'campaign_id' => $post['campaign_id'],
         ]);
 
+        $this->assertResponseStatus(200);
+        $this->seeJsonSubset([
+            'data' => [
+                'northstar_id' => $northstar_id,
+                'status' => 'pending',
+                'media' => [
+                    'url' => $url,
+                    'caption' => $caption,
+                ],
+            ],
+        ]);
+
+        // Make sure the signup & post are persisted to the database.
         $this->seeInDatabase('signups', [
-            'id' => $response['data']['signup_id'],
-            'campaign_id' => $post['campaign_id'],
-            'quantity' => $post['quantity'],
+            'campaign_id' => $campaign_id,
+            'northstar_id' => $northstar_id,
+            'quantity' => $quantity,
+        ]);
+
+        $this->seeInDatabase('posts', [
+            'northstar_id' => $northstar_id,
+            'campaign_id' => $campaign_id,
+            'status' => 'pending',
         ]);
     }
 }
