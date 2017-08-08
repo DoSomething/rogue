@@ -40,7 +40,7 @@ class ActivityController extends ApiController
             // Remove status from $filters to query Signups.
             unset($filters['status']);
         } else {
-            $query->with('posts');
+            $query = $query->with('posts');
         }
 
         $query = $this->filter($query, $filters, Signup::$indexes);
