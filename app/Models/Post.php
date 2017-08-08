@@ -95,6 +95,6 @@ class Post extends Model
      */
     public function siblings()
     {
-        return $this->hasMany(Post::class, 'signup_id', 'signup_id');
+        return $this->hasMany(self::class, 'signup_id', 'signup_id');
     }
 }

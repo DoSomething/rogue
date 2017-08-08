@@ -102,6 +102,9 @@ GET /api/v2/posts
 - **as_user** _(string)_
   - The logged in user to display if they have reacted to the post or not.
   - e.g. `/posts?as_user=1234`
+- **include** _(string)_
+  - Include additional related records in the response: `signup`, `siblings`
+  - e.g. `/activity?include=signup,siblings`
 
 Example Response:
 
@@ -133,7 +136,6 @@ Example Response:
                 "caption": "Perhaps you CAN be of some assistance, Bill"
             },
             "tagged": [],
-            "reactions": [],
             "status": "accepted",
             "source": null,
             "remote_addr": "207.110.19.130, 207.110.19.130",
