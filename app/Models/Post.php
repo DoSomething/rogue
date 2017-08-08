@@ -89,4 +89,12 @@ class Post extends Model
 
         return url($path);
     }
+
+    /**
+     * Get the reactions associated with this post.
+     */
+    public function siblings()
+    {
+        return $this->hasMany(Post::class, 'signup_id', 'signup_id');
+    }
 }
