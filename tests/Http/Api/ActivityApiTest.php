@@ -1,9 +1,9 @@
 <?php
 
-use DoSomething\Gateway\Northstar;
-use DoSomething\Gateway\Resources\NorthstarUser;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
+use DoSomething\Gateway\Northstar;
+use DoSomething\Gateway\Resources\NorthstarUser;
 
 class ActivityApiTest extends TestCase
 {
@@ -183,8 +183,8 @@ class ActivityApiTest extends TestCase
                     'user' => [
                         'data' => [
                             'first_name',
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
             ],
         ]);
