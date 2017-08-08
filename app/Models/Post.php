@@ -72,4 +72,16 @@ class Post extends Model
     {
         return $this->hasMany(Reaction::class);
     }
+
+    /**
+     * Get the URL for the media for this post.
+     */
+    public function getMediaUrl()
+    {
+        if ($this->url === 'default') {
+            return 'default';
+        }
+
+        return config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . '/uploads/reportback-items/edited_' . $this->id . '.jpeg';
+    }
 }
