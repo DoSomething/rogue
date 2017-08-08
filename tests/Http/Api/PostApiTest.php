@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
+
 class PostApiTest extends TestCase
 {
     /**
@@ -32,7 +34,7 @@ class PostApiTest extends TestCase
             'crop_rotate'      => 90,
         ];
 
-        // Mock sending image to AWS.
+        // Mock persisting the file to storage.
         Storage::shouldReceive('put')->andReturn(true);
 
         $this->withRogueApiKey()->json('POST', 'api/v2/posts', $post);

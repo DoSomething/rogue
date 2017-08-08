@@ -52,8 +52,6 @@ class AWS
     /**
      * Store a reportback item (image) in S3.
      *
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|string $file
-     *  File object, or a base-64 encoded data URI
      * @param string $data - File data
      *
      * @return string - URL of stored image
@@ -109,7 +107,7 @@ class AWS
     /**
      * Delete a file from s3
      *
-     * @param $string $path
+     * @param string $path
      * @return bool
      */
     public function deleteImage($path)
