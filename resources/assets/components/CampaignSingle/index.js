@@ -35,7 +35,7 @@ class CampaignSingle extends React.Component {
       signups: keyBy(json.data, 'signup_id'),
       posts: extractPostsFromSignups(json.data),
       filter: 'accepted',
-      // postTotals: json.meta.pagination.total,
+      postTotals: json.meta.pagination.total,
       displayHistoryModal: null,
       historyModalId: null,
       nextPage: json.meta.pagination.links.next ? json.meta.pagination.links.next : null,
@@ -45,22 +45,20 @@ class CampaignSingle extends React.Component {
 
   // Filter posts based on status.
   filterPosts(status) {
-    let request = this.api.get('api/v2/posts', {
+    let request = this.api.get('api/v2/activity', {
       filter: {
         status: status.toLowerCase(),
         campaign_id: this.props.campaign.id,
       },
-      include: user,
+      include: 'user',
     });
     request.then((result) => {
-      var posts = keyBy(result.data, 'id');
-
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
 
-        // newState.signups = signups;
-        newState.posts = posts;
+        newState.signups = keyBy(result.data, 'signup_id');
+        newState.posts = extractPostsFromSignups(result.data);
         newState.filter = status.toLowerCase();
         newState.postTotals = result.meta.pagination.total;
         newState.nextPage = result.meta.pagination.links.next ? result.meta.pagination.links.next : null;

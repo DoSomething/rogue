@@ -39,7 +39,7 @@ class InboxItem extends React.Component {
     const post = this.props.details.post;
     const campaign = this.props.details.campaign;
     const signup = this.props.details.signup;
-
+    console.log(post);
     if (post['user']) {
       var first_name = post['user']['first_name'];
       var last_name = post['user']['last_name'];
@@ -53,6 +53,8 @@ class InboxItem extends React.Component {
       var email = signup.user.data['email'];
       var mobile = signup.user.data['mobile'];
     }
+
+    var caption = post['caption'] ? post['caption'] : post.media['caption'];
 
     return (
       <div className="container__row inbox-item">
@@ -92,10 +94,10 @@ class InboxItem extends React.Component {
           <a href="#" onClick={e => this.props.showHistory(post['id'], e)}>Edit | Show History</a>
           <br/>
           <br/>
-          {post['caption'] ?
+          {caption ?
             <div>
               <h4>Photo Caption</h4>
-              <p>{post['caption']}</p>
+              <p>{caption}</p>
             </div>
           : null}
           <h4>Why Statement</h4>
