@@ -39,7 +39,7 @@ class InboxItem extends React.Component {
     const post = this.props.details.post;
     const campaign = this.props.details.campaign;
     const signup = this.props.details.signup;
-    console.log(post);
+
     if (post['user']) {
       var first_name = post['user']['first_name'];
       var last_name = post['user']['last_name'];
