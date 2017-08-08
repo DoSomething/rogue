@@ -31,7 +31,7 @@ class ActivityController extends ApiController
 
         $filters = $request->query('filter');
 
-        if (array_key_exists('status', $filters)) {
+        if (array_has($filters, 'status')) {
             // Constrain Eager Load, only returning posts with status query.
             $query = $query->with(['posts' => function ($query) use ($filters) {
                 $query->where('status', $filters['status']);
