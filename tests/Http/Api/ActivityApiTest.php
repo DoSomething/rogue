@@ -2,9 +2,51 @@
 
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
+use DoSomething\Gateway\Northstar;
+use DoSomething\Gateway\Resources\NorthstarUser;
 
 class ActivityApiTest extends TestCase
 {
+    /**
+     * Test for retrieving activity.
+     *
+     * GET /activity?limit=8
+     * @return void
+     */
+    public function testActivityIndex()
+    {
+        factory(Signup::class, 10)->create();
+
+        $this->get('api/v2/activity');
+        $this->assertResponseStatus(200);
+
+        $this->seeJsonStructure([
+            'data' => [
+                '*' => [
+                    'signup_id',
+                    'northstar_id',
+                    'campaign_id',
+                    'campaign_run_id',
+                    'quantity',
+                    'why_participated',
+                    'signup_source',
+                    'created_at',
+                    'updated_at',
+                    'posts' => [],
+                ],
+            ],
+            'meta' => [
+                'pagination' => [
+                    'total',
+                    'count',
+                    'per_page',
+                    'current_page',
+                    'total_pages',
+                ],
+            ],
+        ]);
+    }
+
     /**
      * Test for retrieving a user's activity with limit query param.
      *
@@ -13,16 +55,15 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithLimitQuery()
     {
+        factory(Signup::class, 10)->create();
+
         $this->get('api/v2/activity?limit=8');
         $this->assertResponseStatus(200);
 
-        $this->seeJsonSubset([
-            'meta' => [
-                'pagination' => [
-                    'per_page' => 8,
-                ],
-            ],
-        ]);
+        $response = $this->decodeResponseJson();
+        $this->assertCount(8, $response['data']);
+        $this->assertEquals(2, $response['meta']['pagination']['total_pages']);
+        $this->assertNotEmpty($response['meta']['pagination']['links']['next']);
     }
 
     /**
@@ -33,58 +74,65 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithPageQuery()
     {
-        $this->get('api/v2/activity?page=3');
+        factory(Signup::class, 22)->create();
+
+        $this->get('api/v2/activity?page=2');
 
         $this->assertResponseStatus(200);
 
-        $this->seeJsonSubset([
-            'meta' => [
-                'pagination' => [
-                    'current_page' => 3,
-                ],
-            ],
-        ]);
+        // By default, we show 20 posts per page, so we should see 2 here.
+        $response = $this->decodeResponseJson();
+        $this->assertCount(2, $response['data']);
     }
 
     /**
      * Test for retrieving a user's activity with campaign_id query param.
      *
-     * GET /activity?filter[campaign_id]=47
+     * GET /activity?filter[]=
      * @return void
      */
-    public function testActivityIndexWithCampaignIdQuery()
+    public function testActivityIndexWithFilter()
     {
-        $signup = factory(Signup::class)->create();
+        factory(Signup::class, 3)->create(['campaign_id' => 17]);
+        factory(Signup::class, 5)->create();
 
-        $this->get('api/v2/activity?filter[campaign_id]=' . $signup->campaign_id);
+        $this->get('api/v2/activity?filter[campaign_id]=17');
 
         $this->assertResponseStatus(200);
         $this->seeJsonSubset([
             'data' => [
                 [
-                    'campaign_id' => $signup->campaign_id,
+                    'campaign_id' => 17,
+                ],
+            ],
+            'meta' => [
+                'pagination' => [
+                    'count' => 3,
                 ],
             ],
         ]);
     }
 
     /**
-     * Test for retrieving a user's activity with campaign_run_id query param.
+     * Test for retrieving a user's activity with multiple filters.
      *
-     * GET /activity?filter[campaign_run_id]=479
+     * GET /activity?filter[]=&filter[]=
      * @return void
      */
-    public function testActivityIndexWithCampaignRunIdQuery()
+    public function testActivityIndexWithMultipleFilters()
     {
-        $signup = factory(Signup::class)->create();
+        factory(Signup::class, 3)->create(['campaign_id' => 14, 'campaign_run_id' => 132]);
+        factory(Signup::class, 5)->create();
 
-        $this->get('api/v2/activity?filter[campaign_run_id]=' . $signup->campaign_run_id);
+        $this->get('api/v2/activity?filter[campaign_id]=14&filter[campaign_run_id]=132');
 
         $this->assertResponseStatus(200);
         $this->seeJsonSubset([
             'data' => [
                 [
-                    'campaign_run_id' => $signup->campaign_run_id,
+                    'campaign_id' => 14,
+                    'campaign_run_id' => 132,
+                    // ...
                 ],
             ],
         ]);
@@ -97,17 +145,46 @@ class ActivityApiTest extends TestCase
      * GET /activity?filter[campaign_run_id]=479,49&filter[campaign_run_id]=z
      * @return void
      */
-    public function testActivityIndexWithMixedQueryReturnsNoResults()
+    public function testActivityIndexWithFilterAndNoResults()
     {
         $signups = factory(Signup::class, 2)->create();
 
         $this->get('api/v2/activity?filter[campaign_id]=' . $signups[0]->campaign_id . ',' . $signups[1]->campaign_id . '&filter[campaign_run_id]=z');
 
         $this->assertResponseStatus(200);
-        $this->seeJsonSubset([
-            'meta' => [
-                'pagination' => [
-                    'total' => 0,
+        $this->seeJsonSubset(['data' => []]);
+    }
+
+    /**
+     * Test for retrieving a user's activity with included user info.
+     *
+     * GET /activity?include=user
+     * @return void
+     */
+    public function testActivityIndexWithIncludedUser()
+    {
+        factory(Signup::class, 10)->create();
+
+        $this->mock(Northstar::class)
+            ->shouldReceive('getUser')
+            ->andReturnUsing(function ($field, $id) {
+                return new NorthstarUser([
+                    'id' => $id,
+                    'first_name' => $this->faker->firstName,
+                ]);
+            });
+
+        $this->get('api/v2/activity?include=user');
+        $this->assertResponseStatus(200);
+
+        $this->seeJsonStructure([
+            'data' => [
+                '*' => [
+                    'user' => [
+                        'data' => [
+                            'first_name',
+                        ],
+                    ],
                 ],
             ],
         ]);

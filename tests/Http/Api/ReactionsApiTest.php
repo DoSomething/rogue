@@ -116,7 +116,7 @@ class ReactionsApiTest extends TestCase
         // Make sure the signup and post's updated_at matches the reaction created_at time.
         $this->assertEquals($reaction->created_at, $post->fresh()->updated_at);
 
-        // @TODO: Signup timestamp isn't being touched.
+        // @TODO: Laravel doesn't touch timestamps recursively - only direct relationships.
         // $this->assertEquals($reaction->created_at, $signup->fresh()->updated_at);
         $this->markTestIncomplete();
     }

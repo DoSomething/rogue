@@ -7,7 +7,7 @@ use Rogue\Services\CampaignService;
 use Illuminate\Support\Facades\Cache;
 use Rogue\Repositories\CacheRepository;
 
-class CampaignTest extends TestCase
+class CampaignServiceTest extends TestCase
 {
     /**
      * A test finding a single campaign.
