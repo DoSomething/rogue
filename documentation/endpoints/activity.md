@@ -22,8 +22,8 @@ GET /api/v2/activity
 - **filter[updated_at]** _(timestamp)_
   - Return records that have been updated after the given `updated_at` value. 
   - e.g. `/activity?filter[updated_at]=2017-05-25 20:14:48`
-- **status** _(string)_
-  - Only return posts with this status. 
+- **filter[status]** _(string)_
+  - Only return the signup's posts with the given status. 
   - e.g. `/activity?filter[status]=pending`
 
 
