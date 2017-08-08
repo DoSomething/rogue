@@ -6,29 +6,21 @@ Retrieve all user activity data.
 GET /api/v2/activity
 ```
 ### Optional Query Parameters
-- **id** _(integer)_
-  - The signup id(s) to filter the response by.
-  - e.g. `/activity?filter[id]=121,122`
+- **filter[column]** _(integer)_
+  - Filter results by the given column: `id`, `campaign_id`, `campaign_run_id`, `northstar_id`
+  - You can filter by more than one column, e.g. `/activity?filter[id]=4&filter[campaign_id]=5`
+  - You can filter by more than one value for a column, e.g. `/activity?filter[id]=121,122`
 - **limit** _(default is 20)_
   - Set the number of records to return in a single response.
   - e.g. `/activity?limit=35`
 - **page** _(integer)_
   - For pagination, specify page of activity to return in the response.
   - e.g. `/activity?page=2`
-- **campaign_id** _(integer)_
-  - The nid(s) to filter the response by.
-  - e.g. `/activity?filter[campaign_id]=47,49`
-- **campaign_run_id** _(integer)_
-  - The campaign run nid(s) to filter the response by.
-  - e.g. `/activity?filter[campaign_run_id]=1771`
-- **user** _(integer)_
-  - Whether or not to include information about the user with the response.
+- **include** _(integer)_
+  - Include additional related records in the response: `user`
   - e.g. `/activity?include=user`
-- **northstar_id** _(integer)_
-  - The northstar id(s) to filter the response by.
-  - e.g. `/activity?filter[northstar_id]=1234`
-- **updated_at** _(timestamp)_
-  - Return records that have been updated at after the updated_at param value. 
+- **filter[updated_at]** _(timestamp)_
+  - Return records that have been updated after the given `updated_at` value. 
   - e.g. `/activity?filter[updated_at]=2017-05-25 20:14:48`
 
 
