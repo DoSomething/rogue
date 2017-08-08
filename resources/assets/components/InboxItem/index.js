@@ -40,6 +40,20 @@ class InboxItem extends React.Component {
     const campaign = this.props.details.campaign;
     const signup = this.props.details.signup;
 
+    if (post['user']) {
+      var first_name = post['user']['first_name'];
+      var last_name = post['user']['last_name'];
+      var birthdate = calculateAge(post['user']['birthdate']);
+      var email = post['user']['email'];
+      var mobile = post['user']['mobile'];
+    } else if (signup.user) {
+      var first_name = signup.user.data['first_name'];
+      var last_name = signup.user.data['last_name'];
+      var birthdate = calculateAge(signup.user.data['birthdate']);
+      var email = signup.user.data['email'];
+      var mobile = signup.user.data['mobile'];
+    }
+
     return (
       <div className="container__row inbox-item">
         <div className="container__block -third">
@@ -53,12 +67,12 @@ class InboxItem extends React.Component {
           </ul>
         </div>
         <div className="container__block -third">
-          {post['user'] ?
+          {post['user'] || signup.user ?
             <div>
-              <h2>{post['user']['first_name']} {post['user']['last_name']}, {calculateAge(post['user']['birthdate'])}</h2>
+              <h2>{first_name} {last_name}, {birthdate}</h2>
               <ul>
-                <li><em>{post['user']['email']}</em></li>
-                <li><em>{post['user']['mobile']}</em></li>
+                <li><em>{email}</em></li>
+                <li><em>{mobile}</em></li>
               </ul>
             </div>
             : <h2>User Not Found</h2>}
