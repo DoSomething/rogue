@@ -1,5 +1,7 @@
 <?php
 
+use DoSomething\Gateway\Northstar;
+use DoSomething\Gateway\Resources\NorthstarUser;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 
@@ -151,6 +153,41 @@ class ActivityApiTest extends TestCase
 
         $this->assertResponseStatus(200);
         $this->seeJsonSubset(['data' => []]);
+    }
+
+    /**
+     * Test for retrieving a user's activity with included user info.
+     *
+     * GET /activity?include=user
+     * @return void
+     */
+    public function testActivityIndexWithIncludedUser()
+    {
+        factory(Signup::class, 10)->create();
+
+        $this->mock(Northstar::class)
+            ->shouldReceive('getUser')
+            ->andReturnUsing(function ($field, $id) {
+                return new NorthstarUser([
+                    'id' => $id,
+                    'first_name' => $this->faker->firstName,
+                ]);
+            });
+
+        $this->get('api/v2/activity?include=user');
+        $this->assertResponseStatus(200);
+
+        $this->seeJsonStructure([
+            'data' => [
+                '*' => [
+                    'user' => [
+                        'data' => [
+                            'first_name',
+                        ]
+                    ]
+                ],
+            ],
+        ]);
     }
 
     /**
