@@ -6,7 +6,7 @@ use Rogue\Models\Signup;
 class ActivityApiTest extends TestCase
 {
     /**
-     * Test for retrieving a user's activity with limit query param.
+     * Test for retrieving activity.
      *
      * GET /activity?limit=8
      * @return void
@@ -86,10 +86,10 @@ class ActivityApiTest extends TestCase
     /**
      * Test for retrieving a user's activity with campaign_id query param.
      *
-     * GET /activity?filter[campaign_id]=47
+     * GET /activity?filter[]=
      * @return void
      */
-    public function testActivityIndexWithCampaignIdQuery()
+    public function testActivityIndexWithFilter()
     {
         factory(Signup::class, 3)->create(['campaign_id' => 17]);
         factory(Signup::class, 5)->create();
@@ -112,22 +112,23 @@ class ActivityApiTest extends TestCase
     }
 
     /**
-     * Test for retrieving a user's activity with campaign_run_id query param.
+     * Test for retrieving a user's activity with multiple filters.
      *
-     * GET /activity?filter[campaign_run_id]=479
+     * GET /activity?filter[]=&filter[]=
      * @return void
      */
-    public function testActivityIndexWithCampaignRunIdQuery()
+    public function testActivityIndexWithMultipleFilters()
     {
-        factory(Signup::class, 3)->create(['campaign_run_id' => 132]);
+        factory(Signup::class, 3)->create(['campaign_id' => 14, 'campaign_run_id' => 132]);
         factory(Signup::class, 5)->create();
 
-        $this->get('api/v2/activity?filter[campaign_run_id]=132');
+        $this->get('api/v2/activity?filter[campaign_id]=14&filter[campaign_run_id]=132');
 
         $this->assertResponseStatus(200);
         $this->seeJsonSubset([
             'data' => [
                 [
+                    'campaign_id' => 14,
                     'campaign_run_id' => 132,
                     // ...
                 ],
@@ -142,7 +143,7 @@ class ActivityApiTest extends TestCase
      * GET /activity?filter[campaign_run_id]=479,49&filter[campaign_run_id]=z
      * @return void
      */
-    public function testActivityIndexWithMixedQueryReturnsNoResults()
+    public function testActivityIndexWithFilterAndNoResults()
     {
         $signups = factory(Signup::class, 2)->create();
 
