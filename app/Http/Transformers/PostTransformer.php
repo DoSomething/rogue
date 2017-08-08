@@ -20,7 +20,9 @@ class PostTransformer extends TransformerAbstract
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
             'media' => [
+
                 'url' => $post->getMediaUrl(),
+                'original_image_url' => $post->url,
                 'caption' => $post->caption,
             ],
             'tagged' => $post->tagSlugs(),

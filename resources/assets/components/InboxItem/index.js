@@ -59,9 +59,9 @@ class InboxItem extends React.Component {
     return (
       <div className="container__row inbox-item">
         <div className="container__block -third">
-          <img src={getImageUrlFromProp(post) ? getImageUrlFromProp(post) : post.media['url']}/>
+          <img src={getImageUrlFromProp(post)}/>
           <p>
-            <a href={getImageUrlFromProp(post) ? getImageUrlFromProp(post) : post.media['url']} target="_blank">Original Photo</a> | <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
+            <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a> | <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
           </p>
 
           <ul className="gallery -duo">
