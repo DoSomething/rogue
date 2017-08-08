@@ -5,6 +5,7 @@ namespace Rogue\Models;
 use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -82,6 +83,9 @@ class Post extends Model
             return 'default';
         }
 
-        return config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . '/uploads/reportback-items/edited_' . $this->id . '.jpeg';
+        // Ask the storage driver for the path to the image for this post.
+        $path = Storage::url('uploads/reportback-items/edited_' . $this->id . '.jpeg');
+
+        return url($path);
     }
 }
