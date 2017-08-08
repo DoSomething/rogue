@@ -28,7 +28,8 @@ class CampaignSingle extends React.Component {
       filter: {
         status: 'accepted',
         campaign_id: this.props.campaign.id,
-      }
+      },
+      include: 'user',
     })
     .then(json => this.setState({
       signups: keyBy(json.data, 'signup_id'),
@@ -123,6 +124,7 @@ class CampaignSingle extends React.Component {
   }
 
   render() {
+    console.log(this.state.json);
     const posts = this.state.posts;
     const campaign = this.props.campaign;
 
