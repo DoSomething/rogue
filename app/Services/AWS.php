@@ -4,7 +4,7 @@ namespace Rogue\Services;
 
 use Log;
 use finfo;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
@@ -46,14 +46,12 @@ class AWS
             throw new HttpException(500, 'Unable to save image to S3.');
         }
 
-        return config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . $path;
+        return Storage::url($path);
     }
 
     /**
      * Store a reportback item (image) in S3.
      *
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|string $file
-     *  File object, or a base-64 encoded data URI
      * @param string $data - File data
      *
      * @return string - URL of stored image
@@ -76,7 +74,7 @@ class AWS
             throw new HttpException(500, 'Unable to save image to S3.');
         }
 
-        return config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . $path;
+        return Storage::url($path);
     }
 
     /**
@@ -109,15 +107,13 @@ class AWS
     /**
      * Delete a file from s3
      *
-     * @param $string $path
+     * @param string $path
      * @return bool
      */
     public function deleteImage($path)
     {
-        $bucketBaseUrl = config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket');
-
         // We need to use the relative url for the request to s3.
-        $path = str_replace($bucketBaseUrl, '', $path);
+        $path = basename($path);
 
         // The delete() method always returns true because it doesn't seem to do anything with
         // any exception that is thrown while trying to delete and just returns true.

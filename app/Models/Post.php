@@ -4,6 +4,7 @@ namespace Rogue\Models;
 
 use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
@@ -71,5 +72,21 @@ class Post extends Model
     public function reactions()
     {
         return $this->hasMany(Reaction::class);
+    }
+
+    /**
+     * Get the URL for the media for this post.
+     */
+    public function getMediaUrl()
+    {
+        if ($this->url === 'default') {
+            return 'default';
+        }
+
+        // Ask the storage driver for the path to the image for this post.
+        // @TODO: Update this to provide a default Glide URL!
+        $path = Storage::url('uploads/reportback-items/edited_' . $this->id . '.jpeg');
+
+        return url($path);
     }
 }
