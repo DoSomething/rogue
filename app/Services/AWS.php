@@ -4,7 +4,7 @@ namespace Rogue\Services;
 
 use Log;
 use finfo;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
@@ -46,7 +46,7 @@ class AWS
             throw new HttpException(500, 'Unable to save image to S3.');
         }
 
-        return config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . $path;
+        return Storage::url($path);
     }
 
     /**
@@ -74,7 +74,7 @@ class AWS
             throw new HttpException(500, 'Unable to save image to S3.');
         }
 
-        return config('filesystems.disks.s3.public_url') . '/' . config('filesystems.disks.s3.bucket') . $path;
+        return Storage::url($path);
     }
 
     /**
