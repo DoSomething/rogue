@@ -84,6 +84,7 @@ class Post extends Model
         }
 
         // Ask the storage driver for the path to the image for this post.
+        // @TODO: Update this to provide a default Glide URL!
         $path = Storage::url('uploads/reportback-items/edited_' . $this->id . '.jpeg');
 
         return url($path);
