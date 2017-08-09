@@ -37,8 +37,8 @@ class CampaignSingle extends React.Component {
       postTotals: json.meta.pagination.total,
       displayHistoryModal: null,
       historyModalId: null,
-      nextPage: json.meta.pagination.links.next ? json.meta.pagination.links.next : null,
-      prevPage: json.meta.pagination.links.previous ? json.meta.pagination.links.previous : null,
+      nextPage: json.meta.pagination.links.next,
+      prevPage: json.meta.pagination.links.previous,
     }));
   }
 
@@ -59,8 +59,8 @@ class CampaignSingle extends React.Component {
         newState.posts = keyBy(result.data, 'id');
         newState.filter = status.toLowerCase();
         newState.postTotals = result.meta.pagination.total;
-        newState.nextPage = result.meta.pagination.links.next ? result.meta.pagination.links.next : null;
-        newState.prevPage = result.meta.pagination.links.previous ? result.meta.pagination.links.previous : null;
+        newState.nextPage = result.meta.pagination.links.next;
+        newState.prevPage = result.meta.pagination.links.previous;
 
         return newState;
       });
