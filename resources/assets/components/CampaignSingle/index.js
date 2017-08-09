@@ -24,16 +24,15 @@ class CampaignSingle extends React.Component {
   }
 
   componentDidMount() {
-    this.api.get('api/v2/activity', {
+    this.api.get('api/v2/posts', {
       filter: {
         status: 'accepted',
         campaign_id: this.props.campaign.id,
       },
-      include: 'user',
+      include: 'signup,siblings',
     })
     .then(json => this.setState({
-      signups: keyBy(json.data, 'signup_id'),
-      posts: extractPostsFromSignups(json.data),
+      posts: keyBy(json.data, 'id'),
       filter: 'accepted',
       postTotals: json.meta.pagination.total,
       displayHistoryModal: null,
@@ -45,20 +44,19 @@ class CampaignSingle extends React.Component {
 
   // Filter posts based on status.
   filterPosts(status) {
-    let request = this.api.get('api/v2/activity', {
+    let request = this.api.get('api/v2/posts', {
       filter: {
         status: status.toLowerCase(),
         campaign_id: this.props.campaign.id,
       },
-      include: 'user',
+      include: 'signup,siblings',
     });
     request.then((result) => {
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
 
-        newState.signups = keyBy(result.data, 'signup_id');
-        newState.posts = extractPostsFromSignups(result.data);
+        newState.posts = keyBy(result.data, 'id');
         newState.filter = status.toLowerCase();
         newState.postTotals = result.meta.pagination.total;
         newState.nextPage = result.meta.pagination.links.next ? result.meta.pagination.links.next : null;
@@ -131,7 +129,7 @@ class CampaignSingle extends React.Component {
 
         <PostFilter onChange={this.filterPosts} />
 
-        { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: this.state.signups[post.signup_id]}} /> : null) }
+        { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: post.signup.data}} /> : null) }
 
         <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups}}/> : null}

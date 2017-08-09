@@ -58,6 +58,20 @@ export function extractPostsFromSignups(signups) {
   return posts;
 }
 
+// export function extractSignupFromPost(post) {
+//   if (signups[0].posts.data) {
+//     var posts = keyBy(flatMap(signups, signup => {
+//       return signup.posts.data;
+//     }), 'id');
+//   } else {
+//     var posts = keyBy(flatMap(signups, signup => {
+//       return signup.posts;
+//     }), 'id');
+//   }
+
+//   return signup;
+// }
+
 export function getEditedImageUrl(photoProp) {
   const edited_file_name = `edited_${photoProp.id}.jpeg`;
   var url_parts;
