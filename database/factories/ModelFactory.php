@@ -48,23 +48,6 @@ $factory->define(Signup::class, function (Generator $faker) {
     ];
 });
 
-// Reportback Factory
-$factory->define(Reportback::class, function (Generator $faker) {
-    return [
-        'northstar_id'     => str_random(24),
-        'drupal_id'        => $faker->randomNumber(8),
-        'campaign_id'      => $faker->randomNumber(4),
-        'campaign_run_id'  => $faker->randomNumber(4),
-        'quantity'         => $faker->numberBetween(10, 1000),
-        'why_participated' => $faker->paragraph(3),
-        'num_participants' => $faker->optional(0.1)->numberBetween(2, 20),
-        'flagged'          => null,
-        'flagged_reason'   => null,
-        'promoted'         => null,
-        'promoted_reason'  => null,
-    ];
-});
-
 // Reaction Factory
 $factory->define(Reaction::class, function (Generator $faker) {
     return [
