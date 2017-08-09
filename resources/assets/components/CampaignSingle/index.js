@@ -134,6 +134,7 @@ class CampaignSingle extends React.Component {
         <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups}}/> : null}
         </ModalContainer>
+
         <PagingButtons prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
       </div>
     )
