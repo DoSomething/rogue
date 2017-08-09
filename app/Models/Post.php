@@ -4,8 +4,8 @@ namespace Rogue\Models;
 
 use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {

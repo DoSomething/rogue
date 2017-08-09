@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Storage;
 use Rogue\Models\Signup;
+use Illuminate\Support\Facades\Storage;
 
 class PostApiTest extends TestCase
 {
