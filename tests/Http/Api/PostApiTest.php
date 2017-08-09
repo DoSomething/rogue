@@ -81,7 +81,7 @@ class PostApiTest extends TestCase
         $caption = $this->faker->sentence;
 
         // Mock file system operations.
-        $url = 'https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_1.jpeg';
+        $url = 'https://ds-rogue-prod.s3.amazonaws.com/uploads/reportback-items/edited_1.jpeg';
         Storage::shouldReceive('put')->andReturn(true);
         Storage::shouldReceive('url')->andReturn($url);
 
