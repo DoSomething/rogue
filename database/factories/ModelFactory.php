@@ -5,6 +5,8 @@ use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
+use Intervention\Image\Facades\Image;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +41,7 @@ $factory->defineAs(Post::class, 'rejected', function ($faker) use ($factory) {
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
     return [
-        'northstar_id' => $faker->uuid,
+        'northstar_id' => $faker->northstar_id,
         'campaign_id' => $faker->randomElement([1144, 1508, 7656]), // <-- Drupal campaign IDs!
         'campaign_run_id' => $faker->randomNumber(4),
         'quantity_pending' => $faker->randomNumber(4),
