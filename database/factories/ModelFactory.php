@@ -22,9 +22,9 @@ $factory->define(Post::class, function (Generator $faker) {
     return [
         'url' => 'https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg',
         'caption' => $faker->sentence(),
+        'source' => $faker->randomElement(['phoenix-oauth', 'phoenix-next']),
+        'remote_addr' => $faker->ipv4,
         'status' => 'pending',
-        'source' => 'phoenix-web',
-        'remote_addr' => '10.0.2.2',
     ];
 });
 
@@ -39,8 +39,8 @@ $factory->defineAs(Post::class, 'rejected', function ($faker) use ($factory) {
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
     return [
-        'northstar_id' => str_random(24),
-        'campaign_id' => $faker->randomNumber(4),
+        'northstar_id' => $faker->uuid,
+        'campaign_id' => $faker->randomElement([1144, 1508, 7656]), // <-- Drupal campaign IDs!
         'campaign_run_id' => $faker->randomNumber(4),
         'quantity_pending' => $faker->randomNumber(4),
         'why_participated' => $faker->sentence(),
