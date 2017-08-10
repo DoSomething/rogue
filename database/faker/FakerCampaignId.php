@@ -5,14 +5,14 @@ use Faker\Provider\Base;
 class FakerCampaignId extends Base
 {
     /**
-     * A selection of campaign IDs from Phoenix Thor.
+     * A selection of campaign IDs from Phoenix Staging.
      *
      * @var array
      */
     protected static $ids = [
-        1144, // Teens For Jeans
-        1508, // Thumb Wars
-        7656, // Sincerely, Us
+        1173, // Thumb Wars
+        1631, // Space Jam
+        1283, // Patient Playbooks
     ];
 
     /**
