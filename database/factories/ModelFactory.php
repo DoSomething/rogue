@@ -3,9 +3,9 @@
 use Faker\Generator;
 use Rogue\Models\Post;
 use Rogue\Models\User;
+use Rogue\Services\AWS;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
-use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /*
@@ -21,8 +21,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
+    $uploadPath = $faker->file(storage_path('fixtures'));
+    $upload = new UploadedFile($uploadPath, basename($uploadPath), 'image/jpeg');
+    $url = app(AWS::class)->storeImage($upload, $faker->unique()->randomNumber(5));
+
     return [
-        'url' => 'https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg',
+        'url' => $url,
         'caption' => $faker->sentence(),
         'source' => $faker->randomElement(['phoenix-oauth', 'phoenix-next']),
         'remote_addr' => $faker->ipv4,
@@ -30,16 +34,18 @@ $factory->define(Post::class, function (Generator $faker) {
     ];
 });
 
-$factory->defineAs(Post::class, 'accepted', function ($faker) use ($factory) {
+$factory->defineAs(Post::class, 'accepted', function () use ($factory) {
     return array_merge($factory->raw(Post::class), ['status' => 'accepted']);
 });
 
-$factory->defineAs(Post::class, 'rejected', function ($faker) use ($factory) {
+$factory->defineAs(Post::class, 'rejected', function () use ($factory) {
     return array_merge($factory->raw(Post::class), ['status' => 'rejected']);
 });
 
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
+    $faker->addProvider(new FakerNorthstarId($faker));
+
     return [
         'northstar_id' => $faker->northstar_id,
         'campaign_id' => $faker->randomElement([1144, 1508, 7656]), // <-- Drupal campaign IDs!
