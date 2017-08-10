@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\User;
+use Illuminate\Http\Request;
 use Rogue\Services\Registrar as Registrar;
 
 class UsersController extends Controller
@@ -32,8 +33,29 @@ class UsersController extends Controller
         return view('users.index', compact('users'));
     }
 
-    public function search()
+    /**
+     * Search for users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
     {
-        //
+        $query = $request->query('query');
+
+        // Redirect empty queries to the user index.
+        if ($query === '') {
+            return redirect()->route('users.index');
+        }
+
+        // Attempt to fetch all users.
+        $users = $this->registrar->search($query);
+        dd($users);
+        if (! $users) {
+            return redirect()->route('users.index')->with('status', 'No user found!');
+        } elseif ($users->count() === 1) {
+            return redirect()->route('users.show', [$users->first()->id]);
+        }
+
+        return view('users.search')->with(compact('users', 'query'));
     }
 }
