@@ -117,13 +117,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function mockFile()
     {
-        $path = storage_path('images/huskycorgi.jpeg');
-        $original_name = 'huskycorgi.jpeg';
-        $mime_type = 'image/jpeg';
-        $error = null;
-        $test = true;
+        $uploadPath = $this->faker->file(storage_path('fixtures'));
 
-        return new UploadedFile($path, $original_name, $mime_type, $error, $test);
+        return new UploadedFile($uploadPath, basename($uploadPath), 'image/jpeg');
     }
 
     /**
