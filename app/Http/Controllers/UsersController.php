@@ -44,7 +44,7 @@ class UsersController extends Controller
         $user = $this->registrar->find($id);
 
         return view('users.show')
-            ->with('state', $user);
+            ->with('state', ['user' => $user->toArray()]);
     }
 
     /**
