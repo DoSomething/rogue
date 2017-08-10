@@ -70,7 +70,9 @@ class CampaignsController extends Controller
 
             $item->posts->each(function ($item) {
                 $user = $this->registrar->find($item->northstar_id);
-                $item->user = $user->toArray();
+
+                // @TODO: Can we handle failure better?
+                $item->user = $user->toArray() ?: ['first_name' => 'A Doer'];
             });
         });
 
@@ -88,6 +90,7 @@ class CampaignsController extends Controller
      * Show particular campaign and it's posts.
      *
      * @param  int $id
+     * @return \Illuminate\Http\Response
      */
     public function showCampaign($id)
     {
@@ -101,9 +104,8 @@ class CampaignsController extends Controller
             $item->posts->each(function ($item) {
                 $user = $this->registrar->find($item->northstar_id);
 
-                if ($user) {
-                    $item->user = $user->toArray();
-                }
+                // @TODO: Can we handle failure better?
+                $item->user = $user->toArray() ?: ['first_name' => 'A Doer'];
             });
         });
 

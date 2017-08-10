@@ -3,8 +3,10 @@
 use Faker\Generator;
 use Rogue\Models\Post;
 use Rogue\Models\User;
+use Rogue\Services\AWS;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,20 +21,24 @@ use Rogue\Models\Reaction;
 
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
+    $uploadPath = $faker->file(storage_path('fixtures'));
+    $upload = new UploadedFile($uploadPath, basename($uploadPath), 'image/jpeg');
+    $url = app(AWS::class)->storeImage($upload, $faker->unique()->randomNumber(5));
+
     return [
-        'url' => 'https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg',
+        'url' => $url,
         'caption' => $faker->sentence(),
+        'source' => $faker->randomElement(['phoenix-oauth', 'phoenix-next']),
+        'remote_addr' => $faker->ipv4,
         'status' => 'pending',
-        'source' => 'phoenix-web',
-        'remote_addr' => '10.0.2.2',
     ];
 });
 
-$factory->defineAs(Post::class, 'accepted', function ($faker) use ($factory) {
+$factory->defineAs(Post::class, 'accepted', function () use ($factory) {
     return array_merge($factory->raw(Post::class), ['status' => 'accepted']);
 });
 
-$factory->defineAs(Post::class, 'rejected', function ($faker) use ($factory) {
+$factory->defineAs(Post::class, 'rejected', function () use ($factory) {
     return array_merge($factory->raw(Post::class), ['status' => 'rejected']);
 });
 
@@ -40,28 +46,11 @@ $factory->defineAs(Post::class, 'rejected', function ($faker) use ($factory) {
 $factory->define(Signup::class, function (Generator $faker) {
     return [
         'northstar_id' => str_random(24),
-        'campaign_id' => $faker->randomNumber(4),
+        'campaign_id' => $faker->randomElement([1144, 1508, 7656]), // <-- Drupal campaign IDs!
         'campaign_run_id' => $faker->randomNumber(4),
         'quantity_pending' => $faker->randomNumber(4),
         'why_participated' => $faker->sentence(),
         'source' => 'phoenix-web',
-    ];
-});
-
-// Reportback Factory
-$factory->define(Reportback::class, function (Generator $faker) {
-    return [
-        'northstar_id'     => str_random(24),
-        'drupal_id'        => $faker->randomNumber(8),
-        'campaign_id'      => $faker->randomNumber(4),
-        'campaign_run_id'  => $faker->randomNumber(4),
-        'quantity'         => $faker->numberBetween(10, 1000),
-        'why_participated' => $faker->paragraph(3),
-        'num_participants' => $faker->optional(0.1)->numberBetween(2, 20),
-        'flagged'          => null,
-        'flagged_reason'   => null,
-        'promoted'         => null,
-        'promoted_reason'  => null,
     ];
 });
 
