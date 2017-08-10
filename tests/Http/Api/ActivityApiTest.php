@@ -139,37 +139,6 @@ class ActivityApiTest extends TestCase
     }
 
     /**
-     * Test for retrieving a user's activity when filtering by post status.
-     *
-     * GET /activity?filter[]=
-     * @return void
-     */
-    public function testActivityIndexWithStatusFilter()
-    {
-        factory(Signup::class, 5)->create()
-            ->each(function ($signup) {
-                $signup->posts()->save(factory(Post::class)->create());
-            });
-
-        factory(Signup::class, 2)->create()
-            ->each(function ($signup) {
-                $signup->posts()->save(factory(Post::class, 'accepted')->create());
-            });
-
-        $this->get('api/v2/activity?filter[status]=accepted');
-
-        $this->assertResponseStatus(200);
-
-        $response = $this->decodeResponseJson();
-        $this->assertCount(7, $response['data']);
-
-        // Posts are ordered chronologically, so the first one should have zero accepted posts,
-        // and the last one should have 1 accepted post.
-        $this->assertCount(0, $response['data'][0]['posts']['data']);
-        $this->assertCount(1, $response['data'][6]['posts']['data']);
-    }
-
-    /**
      * Test for retrieving a user's activity with combination of query params
      * where we expect nothing to be returned.
      *

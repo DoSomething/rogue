@@ -4,7 +4,6 @@
  * @param {Function} fn
  */
 import { flatMap, keyBy } from 'lodash';
-import { RestApiClient} from '@dosomething/gateway';
 
 export function ready(fn) {
   if (document.readyState !== 'loading'){
