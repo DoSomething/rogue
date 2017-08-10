@@ -36,12 +36,17 @@ Route::group(['middleware' => 'web'], function () {
     // Tags
     Route::post('tags', 'TagsController@store');
 
+<<<<<<< HEAD
     // Images
     Route::get('/images/{post}', 'ImagesController@show');
 
     // Users
     Route::get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
     Route::get('users/{id}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
+=======
+    // users
+    Route::get('users', 'UsersController@index');
+>>>>>>> Add search bar to users page
     Route::get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
 });
 
