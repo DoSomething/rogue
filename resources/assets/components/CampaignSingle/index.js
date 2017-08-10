@@ -24,47 +24,12 @@ class CampaignSingle extends React.Component {
   }
 
   componentDidMount() {
-    this.api.get('api/v2/posts', {
-      filter: {
-        status: 'accepted',
-        campaign_id: this.props.campaign.id,
-      },
-      include: 'signup,siblings',
-    })
-    .then(json => this.setState({
-      posts: keyBy(json.data, 'id'),
-      filter: 'accepted',
-      postTotals: json.meta.pagination.total,
-      displayHistoryModal: null,
-      historyModalId: null,
-      nextPage: json.meta.pagination.links.next,
-      prevPage: json.meta.pagination.links.previous,
-    }));
+    this.getPostsByStatus('accepted', this.props.campaign.id);
   }
 
   // Filter posts based on status.
   filterPosts(status) {
-    let request = this.api.get('api/v2/posts', {
-      filter: {
-        status: status.toLowerCase(),
-        campaign_id: this.props.campaign.id,
-      },
-      include: 'signup,siblings',
-    });
-    request.then((result) => {
-      // Update the state
-      this.setState((previousState) => {
-        const newState = {...previousState};
-
-        newState.posts = keyBy(result.data, 'id');
-        newState.filter = status.toLowerCase();
-        newState.postTotals = result.meta.pagination.total;
-        newState.nextPage = result.meta.pagination.links.next;
-        newState.prevPage = result.meta.pagination.links.previous;
-
-        return newState;
-      });
-    });
+    this.getPostsByStatus(status.toLowerCase(), this.props.campaign.id);
   }
 
   // Open the history modal of the given post
@@ -118,6 +83,28 @@ class CampaignSingle extends React.Component {
     // Close the modal
     this.hideHistory();
   }
+
+  // Make API call to GET /posts to get posts by filtered status.
+  getPostsByStatus(status, campaignId) {
+  this.api = new RestApiClient;
+
+  this.api.get('api/v2/posts', {
+    filter: {
+      status: status,
+      campaign_id: campaignId,
+    },
+    include: 'signup,siblings',
+  })
+  .then(json => this.setState({
+    posts: keyBy(json.data, 'id'),
+    filter: status,
+    postTotals: json.meta.pagination.total,
+    displayHistoryModal: null,
+    historyModalId: null,
+    nextPage: json.meta.pagination.links.next,
+    prevPage: json.meta.pagination.links.previous,
+  }));
+}
 
   render() {
     const posts = this.state.posts;
