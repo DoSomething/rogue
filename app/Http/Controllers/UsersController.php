@@ -34,6 +34,19 @@ class UsersController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  string  $id  Northstar ID
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $user = $this->registrar->find($id);
+
+        return view('users.show', compact('user'));
+    }
+
+    /**
      * Search for users.
      *
      * @return \Illuminate\Http\Response
@@ -49,7 +62,7 @@ class UsersController extends Controller
 
         // Attempt to fetch all users.
         $users = $this->registrar->search($query);
-        dd($users);
+
         if (! $users) {
             return redirect()->route('users.index')->with('status', 'No user found!');
         } elseif ($users->count() === 1) {

@@ -42,6 +42,7 @@ Route::group(['middleware' => 'web'], function () {
     // Users
     Route::get('users', 'UsersController@index');
     Route::get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
+    Route::get('users/{id}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
     Route::get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
 });
 
