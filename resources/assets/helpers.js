@@ -70,3 +70,19 @@ export function getEditedImageUrl(photoProp) {
 
   return null;
 };
+
+/**
+ * Returns a readable display name.
+ *
+ * @param {String} firstName
+ * @param {String} lastName
+ */
+export function displayName(firstName, lastName) {
+  let displayName = firstName;
+
+  if (lastName !== null) {
+    displayName = `${displayName} ${lastName}`;
+  }
+
+  return displayName;
+}
