@@ -24,7 +24,7 @@ return [
     ],
 
     'northstar' => [
-        'grant' => 'client_credentials',
+        'grant' => 'authorization_code',
         'url' => env('NORTHSTAR_URL'),
         'authorization_code' => [
             'client_id' => env('NORTHSTAR_AUTH_ID'),
@@ -32,18 +32,11 @@ return [
             'scope' => ['user', 'role:staff', 'role:admin'],
             'redirect_uri' => '/login',
         ],
-        'client_credentials' => [
-            'client_id' => env('NORTHSTAR_CLIENT_ID'),
-            'client_secret' => env('NORTHSTAR_CLIENT_SECRET'),
-            'scope' => ['user', 'admin'],
-        ],
     ],
 
     'phoenix' => [
         'uri' => env('PHOENIX_URI'),
         'version' => env('PHOENIX_API_VERSION'),
-        'username' => env('PHOENIX_USERNAME'),
-        'password' => env('PHOENIX_PASSWORD'),
     ],
 
     'ses' => [
