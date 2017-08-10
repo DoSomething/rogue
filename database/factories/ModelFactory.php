@@ -44,9 +44,12 @@ $factory->defineAs(Post::class, 'rejected', function () use ($factory) {
 
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
+    $faker->addProvider(new FakerNorthstarId($faker));
+    $faker->addProvider(new FakerCampaignId($faker));
+
     return [
-        'northstar_id' => str_random(24),
-        'campaign_id' => $faker->randomElement([1144, 1508, 7656]), // <-- Drupal campaign IDs!
+        'northstar_id' => $faker->northstar_id,
+        'campaign_id' => $faker->campaign_id,
         'campaign_run_id' => $faker->randomNumber(4),
         'quantity_pending' => $faker->randomNumber(4),
         'why_participated' => $faker->sentence(),
@@ -56,16 +59,20 @@ $factory->define(Signup::class, function (Generator $faker) {
 
 // Reaction Factory
 $factory->define(Reaction::class, function (Generator $faker) {
+    $faker->addProvider(new FakerNorthstarId($faker));
+
     return [
-        'northstar_id' => str_random(24),
+        'northstar_id' => $faker->northstar_id,
         'post_id' => $faker->randomNumber(7),
     ];
 });
 
 // Base User Factory
 $factory->define(User::class, function (Generator $faker) {
+    $faker->addProvider(new FakerNorthstarId($faker));
+
     return [
-        'northstar_id' => str_random(24),
+        'northstar_id' => $faker->northstar_id,
         'access_token' => str_random(1024),
         'access_token_expiration' => str_random(11),
         'refresh_token' => str_random(1024),
@@ -74,6 +81,6 @@ $factory->define(User::class, function (Generator $faker) {
     ];
 });
 
-$factory->defineAs(User::class, 'admin', function ($faker) use ($factory) {
+$factory->defineAs(User::class, 'admin', function () use ($factory) {
     return array_merge($factory->raw(User::class), ['role' => 'admin']);
 });
