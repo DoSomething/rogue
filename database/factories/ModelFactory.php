@@ -44,10 +44,8 @@ $factory->defineAs(Post::class, 'rejected', function () use ($factory) {
 
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
-    $faker->addProvider(new FakerNorthstarId($faker));
-
     return [
-        'northstar_id' => $faker->northstar_id,
+        'northstar_id' => str_random(24),
         'campaign_id' => $faker->randomElement([1144, 1508, 7656]), // <-- Drupal campaign IDs!
         'campaign_run_id' => $faker->randomNumber(4),
         'quantity_pending' => $faker->randomNumber(4),
