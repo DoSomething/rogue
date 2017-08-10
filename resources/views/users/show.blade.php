@@ -2,22 +2,12 @@
 
 @section('main_content')
 
-    @include('layouts.header',[
-        'header' => 'Users'
-    ])
+    @include('layouts.header', ['header' => 'User', 'subtitle' => ''])
 
-    <div class="container">
-        <div class="wrapper">
-            <div class="container__block">
-                <h1 class="heading">{{ $user->first_name }}</h1>
-
-                <div class="key-value">
-                    <dt>Email:</dt>
-                    <dd>{{ $user->email }}</dd>
-                    <dt>ID:</dt>
-                    <dd>{{ $user->id }}</dd>
-                </div>
-            </div>
+    <div class="container -padded">
+        <div id="userOverviewContainer" class="wrapper">
+            Loading...
         </div>
     </div>
+
 @stop

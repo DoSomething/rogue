@@ -43,7 +43,8 @@ class UsersController extends Controller
     {
         $user = $this->registrar->find($id);
 
-        return view('users.show', compact('user'));
+        return view('users.show')
+            ->with('state', $user);
     }
 
     /**
