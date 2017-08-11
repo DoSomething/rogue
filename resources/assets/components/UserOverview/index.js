@@ -1,4 +1,6 @@
 import React from 'react';
+import { map } from 'lodash';
+import SignupCard from '../SignupCard';
 import { RestApiClient } from '@dosomething/gateway';
 import { calculateAge, displayName, displayCityState } from '../../helpers';
 
@@ -36,6 +38,10 @@ class UserOverview extends React.Component {
     const cityState = displayCityState(user.addr_city, user.addr_state);
     const name = displayName(user.first_name, user.last_name);
 
+    const signupCards = map(this.state.signups, (signup, index) => {
+      return <SignupCard key={index} signup={signup} />;
+    });
+
     return (
       <div>
         <div className="container__block">
@@ -58,6 +64,10 @@ class UserOverview extends React.Component {
         </div>
         <div className="container__block">
           <h2 className="heading -emphasized -padded"><span>Campaigns</span></h2>
+        </div>
+
+        <div className="container__block">
+          {signupCards}
         </div>
       </div>
     )
