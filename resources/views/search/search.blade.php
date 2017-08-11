@@ -3,7 +3,8 @@
         {{ csrf_field() }}
 
         <li>
-            <input class="text-field -search" type="text" name="query" placeholder="Search"  />
+            {{-- @NOTE: The inline-style here is just temporary for now. We should look into this possibly being a react component. --}}
+            <input class="text-field -search" type="text" name="query" placeholder="Search by email, mobile, Northstar ID..." style="min-width: 400px;" />
         </li>
 
         <li>
