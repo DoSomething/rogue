@@ -4,6 +4,8 @@ namespace Rogue\Http\Controllers;
 
 use League\Glide\Responses\LaravelResponseFactory;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use League\Flysystem\Memory\MemoryAdapter;
+use League\Flysystem\Filesystem as Flysystem;
 use League\Glide\ServerFactory;
 use Illuminate\Http\Request;
 use Rogue\Models\Post;
@@ -39,9 +41,8 @@ class ImagesController extends Controller
         // Create the Glide server.
         $server = ServerFactory::create([
             'response' => new LaravelResponseFactory($request),
+            'cache' => new Flysystem(new MemoryAdapter()),
             'source' => $this->filesystem->getDriver(),
-            'cache' => $this->filesystem->getDriver(),
-            'cache_path_prefix' => '.cache',
             'base_url' => 'images',
             'defaults' => [
                 'w' => 400,
