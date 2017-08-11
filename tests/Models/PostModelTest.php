@@ -42,11 +42,11 @@ class PostModelTest extends TestCase
             });
 
         // Grab any old post.
-        $post = Post::where('signup_id', 4)->first();
+        $post = Signup::all()->first()->posts->first();
 
         // Asking for the siblings of the post, should only give other
         // posts with the same `signup_id` (including itself).
         $this->assertCount(3, $post->siblings);
-        $this->assertEquals(4, $post->siblings[0]->signup_id);
+        $this->assertEquals($post->signup_id, $post->siblings[0]->signup_id);
     }
 }
