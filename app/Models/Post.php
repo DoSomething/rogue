@@ -89,4 +89,14 @@ class Post extends Model
 
         return url($path);
     }
+
+    /**
+     * Return the filesystem path for this post.
+     */
+    public function getMediaPath()
+    {
+        $path = str_replace('/storage//', '', $this->url);
+
+        return $path;
+    }
 }
