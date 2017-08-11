@@ -38,6 +38,10 @@ class ImagesController extends Controller
      */
     public function show(Post $post, Request $request)
     {
+        if (! config('features.glide')) {
+            abort(501, 'Glide image URLs are not enabled in this environment.');
+        }
+
         // Create the Glide server.
         $server = ServerFactory::create([
             'response' => new LaravelResponseFactory($request),
