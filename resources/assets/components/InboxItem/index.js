@@ -41,6 +41,10 @@ class InboxItem extends React.Component {
     const campaign = this.props.campaign;
     const signup = this.props.signup;
 
+    // If post['user'], the data is coming from Campaigns Controller to populate the Campaign Inbox page.
+    // Otherwise, it is data coming from the API.
+    // @TODO see TODO in Campaigns Controller showInbox function to better grab informaiton
+    // and simplify the below so we don't have to use a conditional.
     if (post['user']) {
       var first_name = post['user']['first_name'];
       var last_name = post['user']['last_name'];
