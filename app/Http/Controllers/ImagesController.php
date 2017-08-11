@@ -49,6 +49,7 @@ class ImagesController extends Controller
             'source' => $this->filesystem->getDriver(),
             'base_url' => 'images',
             'defaults' => [
+                'or' => 'auto',
                 'w' => 400,
                 'h' => 400,
                 'fit' => 'crop',
