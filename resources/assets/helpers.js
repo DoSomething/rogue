@@ -80,9 +80,24 @@ export function getEditedImageUrl(photoProp) {
 export function displayName(firstName, lastName) {
   let displayName = firstName;
 
-  if (lastName !== null) {
+  if (lastName) {
     displayName = `${displayName} ${lastName}`;
   }
 
   return displayName;
+}
+
+/**
+ * Returns a readable City and State string.
+ *
+ * @param {String} city
+ * @param {String} state
+ * @return {Sting|null} City and State string.
+ */
+export function displayCityState(city, state) {
+  if (!city && !state) {
+    return null;
+  }
+
+  return `${city ? city : ''}${city && state ? ', ' : ''}${state ? state : ''}`
 }
