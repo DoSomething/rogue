@@ -2,13 +2,13 @@
 
 namespace Rogue\Http\Controllers;
 
-use League\Glide\Responses\LaravelResponseFactory;
-use Illuminate\Contracts\Filesystem\Filesystem;
+use Rogue\Models\Post;
+use Illuminate\Http\Request;
+use League\Glide\ServerFactory;
 use League\Flysystem\Memory\MemoryAdapter;
 use League\Flysystem\Filesystem as Flysystem;
-use League\Glide\ServerFactory;
-use Illuminate\Http\Request;
-use Rogue\Models\Post;
+use Illuminate\Contracts\Filesystem\Filesystem;
+use League\Glide\Responses\LaravelResponseFactory;
 
 class ImagesController extends Controller
 {
@@ -48,7 +48,7 @@ class ImagesController extends Controller
                 'w' => 400,
                 'h' => 400,
                 'fit' => 'crop',
-            ]
+            ],
         ]);
 
         return $server->getImageResponse($post->getMediaPath(), $request->all());
