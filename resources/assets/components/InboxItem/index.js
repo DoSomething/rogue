@@ -20,7 +20,7 @@ class InboxItem extends React.Component {
 
   getOtherPosts(post) {
     const post_id = post['id'];
-    const signup = this.props.details.signup;
+    const signup = this.props.signup;
 
     var posts = signup.posts ? signup.posts : post.siblings.data;
 
@@ -37,9 +37,9 @@ class InboxItem extends React.Component {
   }
 
   render() {
-    const post = this.props.details.post;
-    const campaign = this.props.details.campaign;
-    const signup = this.props.details.signup;
+    const post = this.props.post;
+    const campaign = this.props.campaign;
+    const signup = this.props.signup;
 
     if (post['user']) {
       var first_name = post['user']['first_name'];
