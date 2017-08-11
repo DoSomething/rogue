@@ -86,25 +86,25 @@ class CampaignSingle extends React.Component {
 
   // Make API call to GET /posts to get posts by filtered status.
   getPostsByStatus(status, campaignId) {
-  this.api = new RestApiClient;
+    this.api = new RestApiClient;
 
-  this.api.get('api/v2/posts', {
-    filter: {
-      status: status,
-      campaign_id: campaignId,
-    },
-    include: 'signup,siblings',
-  })
-  .then(json => this.setState({
-    posts: keyBy(json.data, 'id'),
-    filter: status,
-    postTotals: json.meta.pagination.total,
-    displayHistoryModal: null,
-    historyModalId: null,
-    nextPage: json.meta.pagination.links.next,
-    prevPage: json.meta.pagination.links.previous,
-  }));
-}
+    this.api.get('api/v2/posts', {
+      filter: {
+        status: status,
+        campaign_id: campaignId,
+      },
+      include: 'signup,siblings',
+    })
+    .then(json => this.setState({
+      posts: keyBy(json.data, 'id'),
+      filter: status,
+      postTotals: json.meta.pagination.total,
+      displayHistoryModal: null,
+      historyModalId: null,
+      nextPage: json.meta.pagination.links.next,
+      prevPage: json.meta.pagination.links.previous,
+    }));
+  }
 
   render() {
     const posts = this.state.posts;
