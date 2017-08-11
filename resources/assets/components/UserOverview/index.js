@@ -20,6 +20,13 @@ class UserOverview extends React.Component {
             {cityState ? <span>{cityState}<br/></span> : null }
           </p>
         </div>
+        <div className="container__block">
+          <h4 className="heading">Meta</h4>
+          <p>
+            <span>Source: {user.source}<br/></span>
+            <span>Northstar ID: {user.id}<br/></span>
+          </p>
+        </div>
       </div>
     )
   }
