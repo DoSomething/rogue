@@ -43,6 +43,11 @@ class ImagesController extends Controller
             'cache' => $this->filesystem->getDriver(),
             'cache_path_prefix' => '.cache',
             'base_url' => 'images',
+            'defaults' => [
+                'w' => 400,
+                'h' => 400,
+                'fit' => 'crop',
+            ]
         ]);
 
         return $server->getImageResponse($post->getMediaPath(), $request->all());
