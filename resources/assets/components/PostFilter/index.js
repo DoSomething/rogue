@@ -20,7 +20,11 @@ class PostFilter extends React.Component {
               <select onChange={(event) => this.change(event)}>
                   <option>Accepted</option>
                   <option>Pending</option>
-                  <option>Rejected</option>
+                  <option>Good Photo</option>
+                  <option>Good Quote</option>
+                  <option>Hide In Gallery 👻</option>
+                  <option>Good For Sponsor</option>
+                  <option>Good For Storytelling</option>
               </select>
           </div>
         </div>
