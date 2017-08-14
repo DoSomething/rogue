@@ -37,7 +37,7 @@ class ReactionsApiTest extends TestCase
         ]);
 
         // React (unlike) again to the same post with the same user.
-         $this->withRogueApiKey()->post('api/v2/reactions', [
+        $this->withRogueApiKey()->post('api/v2/reactions', [
             'northstar_id' => $northstarId,
             'post_id' => $post->id,
         ]);
