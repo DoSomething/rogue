@@ -23,7 +23,6 @@ GET /api/v2/activity
   - Return records that have been updated after the given `updated_at` value. 
   - e.g. `/activity?filter[updated_at]=2017-05-25 20:14:48`
 
-
 Example Response:
 
 ```
@@ -46,7 +45,8 @@ Example Response:
             "signup_id": 15,
             "northstar_id": "1234",
             "media": {
-              "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487182498.jpeg",
+              "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_214.jpeg",
+              "original_image_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/128-482cab927f6529c7f5e5c4bfd2594186-1501090354.jpeg",
               "caption": "Captioning captions",
             },
             "tagged": [

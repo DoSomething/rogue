@@ -18,8 +18,8 @@ class ActivityApiTest extends TestCase
         factory(Signup::class, 10)->create();
 
         $this->get('api/v2/activity');
-        $this->assertResponseStatus(200);
 
+        $this->assertResponseStatus(200);
         $this->seeJsonStructure([
             'data' => [
                 '*' => [

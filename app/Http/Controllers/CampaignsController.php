@@ -94,35 +94,17 @@ class CampaignsController extends Controller
      */
     public function showCampaign($id)
     {
-        // Always load the page with just accepted posts
-        $signups = Signup::campaign([$id])->has('posts')->with(['posts' => function ($query) {
-            $query->where('status', '=', 'accepted');
-        }])->orderBy('created_at', 'desc')->paginate(50);
-
-        // @TODO EXTRACT AND FIGURE OUT HOW NOT TO HAVE TO DO THIS.
-        $signups->each(function ($item) {
-            $item->posts->each(function ($item) {
-                $user = $this->registrar->find($item->northstar_id);
-
-                // @TODO: Can we handle failure better?
-                $item->user = $user->toArray() ?: ['first_name' => 'A Doer'];
-            });
-        });
-
         $campaign = $this->campaignService->find($id);
         $totals = $this->campaignService->getPostTotals($campaign);
 
         return view('pages.campaign_single')
             ->with('state', [
-                'signups' => $signups->items(),
                 'campaign' => $campaign,
                 'post_totals' => [
                     'accepted_count' => $totals->accepted_count,
                     'pending_count' => $totals->pending_count,
                     'rejected_count' => $totals->rejected_count,
                 ],
-                'next_page' => $signups->nextPageUrl(),
-                'previous_page' => $signups->previousPageUrl(),
             ]);
     }
 }

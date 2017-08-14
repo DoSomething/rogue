@@ -34,7 +34,11 @@ Endpoint                                       | Functionality
 #### Posts
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
-`POST /api/v2/posts`                           | [Create a post](endpoints/posts.md#posts)
+`POST /api/v2/posts`                           | [Create a post](endpoints/posts.md#create-a-post-and/or-create/Update-a-signup)
+---------------------------------------------- | --------------------------------------------------------
+`GET /api/v2/posts`                            | [Get posts](endpoints/posts.md#retrieve-all-posts)
+---------------------------------------------- | --------------------------------------------------------
+`DELETE /api/v2/posts`                         | [Delete a post](endpoints/posts.md#delete-a-post)
 
 #### Reactions
 Endpoint                                       | Functionality                                           

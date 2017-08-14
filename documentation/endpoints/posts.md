@@ -1,6 +1,6 @@
 ## Posts
 
-Create a Post and/or Create/Update a Signup
+## Create a Post and/or Create/Update a Signup
 
 ```
 POST /api/v2/posts
@@ -44,7 +44,8 @@ Example Response:
     "signup_id": 784,
     "northstar_id": "5571df46a59db12346dsb456d",
     "media": {
-      "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/18-1487182498.jpeg",
+      "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_214.jpeg",
+      "original_image_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/128-482cab927f6529c7f5e5c4bfd2594186-1501090354.jpeg",
       "caption": "Captioning captions",
     },
     "status": "pending",
@@ -55,6 +56,8 @@ Example Response:
   }
 }
 ```
+
+## Delete a post 
 
 Allows admins to delete a post. Posts get soft deleted from the database.
 
@@ -71,7 +74,7 @@ Example Response:
 }
 ```
 
-Retrieve all Posts.
+## Retrieve all Posts
 
 ```
 GET /api/v2/posts
@@ -99,6 +102,9 @@ GET /api/v2/posts
 - **as_user** _(string)_
   - The logged in user to display if they have reacted to the post or not.
   - e.g. `/posts?as_user=1234`
+- **include** _(string)_
+  - Include additional related records in the response: `signup`, `siblings`
+  - e.g. `/activity?include=signup,siblings`
 
 Example Response:
 
@@ -130,7 +136,6 @@ Example Response:
                 "caption": "Perhaps you CAN be of some assistance, Bill"
             },
             "tagged": [],
-            "reactions": [],
             "status": "accepted",
             "source": null,
             "remote_addr": "207.110.19.130, 207.110.19.130",
