@@ -15,6 +15,7 @@ class UserOverview extends React.Component {
 
   componentDidMount() {
     this.getUserSignups(this.props.user.id);
+    this.getCampaigns([]);
   }
 
   /**
@@ -30,6 +31,20 @@ class UserOverview extends React.Component {
       }
     }).then(json => this.setState({
       signups: json.data
+    }));
+  }
+
+  /**
+   * Gets campaigns associated with signups.
+   *
+   * @param {Array} ids
+   * @return {Object}
+   */
+  getCampaigns(ids) {
+    this.api.get('api/v2/campaigns', {
+      ids: "1454,1424"
+    }).then(json => this.setState({
+      campaigns: json
     }));
   }
 

@@ -52,7 +52,7 @@ class CampaignService
      * Finds a group of campagins in Rogue/Phoenix.
      *
      * @param  array $ids
-     * @return collection $campaigns|null
+     * @return collection $campaigns
      */
     public function findAll($ids = [])
     {
@@ -77,7 +77,7 @@ class CampaignService
             return collect($campaigns);
         }
 
-        return collect();
+        return collect($this->phoenix->getAllCampaigns());
     }
 
     /**
