@@ -10,12 +10,16 @@ class SignupCard extends React.Component {
     const signup = this.props.signup;
     const campaign = this.props.campaign;
 
+    const borderStyle = {
+      border: '1px solid #ddd',
+    };
+
     const posts = map(signup.posts.data, (post, index) => {
       return <InboxTile key={index} details={post} />;
     });
 
     return (
-        <article className="container__row signup-card">
+        <article className="container__row signup-card" style={borderStyle}>
           <div className="container__block -half">
             <div className="container__row">
               <h2 className="heading">{campaign ? campaign.title : signup.campaign_id}</h2>
