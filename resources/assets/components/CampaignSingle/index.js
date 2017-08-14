@@ -30,9 +30,13 @@ class CampaignSingle extends React.Component {
     this.getPostsByStatus('accepted', this.props.campaign.id);
   }
 
-  // Filter posts based on status.
-  filterPosts(status) {
-    this.getPostsByStatus(status.toLowerCase(), this.props.campaign.id);
+  // Filter posts based on status or tag(s).
+  filterPosts(filter) {
+    // If the filter is a status, make API call to get posts by status.
+
+    this.getPostsByStatus(filter.toLowerCase(), this.props.campaign.id);
+
+    // If the filter is a tag, make the API call to get posts by tag.
   }
 
   // Open the history modal of the given post
