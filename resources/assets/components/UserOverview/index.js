@@ -14,8 +14,7 @@ class UserOverview extends React.Component {
   }
 
   componentDidMount() {
-    this.getUserSignups(this.props.user.id);
-    this.getCampaigns([]);
+    this.getUserActivity(this.props.user.id);
   }
 
   /**
@@ -24,13 +23,17 @@ class UserOverview extends React.Component {
    * @param {String} id
    * @return {Object}
    */
-  getUserSignups(id) {
+  getUserActivity(id) {
     this.api.get('api/v2/activity', {
       filter: {
         northstar_id: id,
       }
     }).then(json => this.setState({
       signups: json.data
+    }, () => {
+      // After we grab the signups, get the campaign objects for each signup.
+      const ids = map(this.state.signups, 'campaign_id');
+      this.getCampaigns(ids);
     }));
   }
 
@@ -42,7 +45,7 @@ class UserOverview extends React.Component {
    */
   getCampaigns(ids) {
     this.api.get('api/v2/campaigns', {
-      ids: "1454,1424"
+      ids: ids.join()
     }).then(json => this.setState({
       campaigns: json
     }));
