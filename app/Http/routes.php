@@ -25,18 +25,22 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('campaigns/{id}/inbox', 'CampaignsController@showInbox');
     Route::get('campaigns/{id}', 'CampaignsController@showCampaign');
 
+    // Users
     Route::get('users', 'UsersController@index');
 
-    // posts
+    // Posts
     Route::post('posts', 'PostController@store');
     Route::get('posts', 'PostController@index');
     Route::delete('posts/{id}', 'PostController@destroy');
 
-    // reviews
+    // Reviews
     Route::put('reviews', 'ReviewsController@reviews');
 
-    // tags
+    // Tags
     Route::post('tags', 'TagsController@store');
+
+    // Images
+    Route::get('/images/{post}', 'ImagesController@show');
 });
 
 // Legacy API Routes

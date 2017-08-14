@@ -80,14 +80,42 @@ class Post extends Model
     public function getMediaUrl()
     {
         if ($this->url === 'default') {
+            // @TODO: We should either return a placeholder, or `null`.
             return 'default';
         }
 
+        // If Glide is enabled, provide the default image URL.
+        if (config('features.glide')) {
+            return url('images/' . $this->id);
+        }
+
         // Ask the storage driver for the path to the image for this post.
-        // @TODO: Update this to provide a default Glide URL!
         $path = Storage::url('uploads/reportback-items/edited_' . $this->id . '.jpeg');
 
         return url($path);
+    }
+
+    /**
+     * Return the filesystem path for this post.
+     *
+     * @return string|null
+     */
+    public function getMediaPath()
+    {
+        // We store local URLs prefixed with `/storage` when using the "public" adapter.
+        if (config('filesystems.default') == 'public') {
+            return str_replace('/storage/', '', $this->url);
+        }
+
+        // For S3, we store a full AWS URL, sometimes prefixed by bucket directory.
+        if (config('filesystems.default') == 's3') {
+            $path = parse_url($this->url, PHP_URL_PATH);
+            $path = str_replace('/'. config('filesystems.disks.s3.bucket') . '/', '', $path);
+
+            return $path;
+        }
+
+        return null;
     }
 
     /**

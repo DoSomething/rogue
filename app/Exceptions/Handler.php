@@ -10,6 +10,8 @@ use Illuminate\Http\Exception\HttpResponseException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use League\Glide\Filesystem\FileNotFoundException as GlideNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -50,6 +52,9 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         // Re-cast specific exceptions or uniquely render them:
+        if ($e instanceof GlideNotFoundException) {
+            $e = new NotFoundHttpException('That image could not be found.');
+        }
         if ($e instanceof AuthorizationException) {
             return parent::render($request, $e);
         }
