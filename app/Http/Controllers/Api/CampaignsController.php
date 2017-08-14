@@ -48,6 +48,6 @@ class CampaignsController extends ApiController
 
         $campaigns = $this->campaignService->findAll($ids);
 
-        return $campaigns;
+        return $campaigns->toJson();
     }
 }
