@@ -8,7 +8,7 @@ class InboxTile extends React.Component {
 
     return (
       <li>
-        <img src={getImageUrlFromProp(post)}/>
+        <img src={getImageUrlFromProp(post) || post.media['url']}/>
       </li>
     )
   }

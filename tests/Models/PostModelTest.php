@@ -28,4 +28,25 @@ class PostModelTest extends TestCase
         $this->assertEquals('2017-08-03 16:52:00', (string) $post->fresh()->updated_at);
         $this->assertEquals('2017-08-03 16:52:00', (string) $signup->fresh()->updated_at);
     }
+
+    /**
+     * Test that the siblings relationship returns other posts.
+     *
+     * @return void
+     */
+    public function testSiblingRelationship()
+    {
+        factory(Signup::class, 5)->create()
+            ->each(function ($signup) {
+                $signup->posts()->saveMany(factory(Post::class, 'accepted', 3)->create());
+            });
+
+        // Grab any old post.
+        $post = Signup::all()->first()->posts->first();
+
+        // Asking for the siblings of the post, should only give other
+        // posts with the same `signup_id` (including itself).
+        $this->assertCount(3, $post->siblings);
+        $this->assertEquals($post->signup_id, $post->siblings[0]->signup_id);
+    }
 }

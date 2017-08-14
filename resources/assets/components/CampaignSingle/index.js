@@ -14,18 +14,7 @@ class CampaignSingle extends React.Component {
   constructor(props) {
     super(props);
 
-    const posts = extractPostsFromSignups(props.signups);
-
-    this.state = {
-      signups: keyBy(props.signups, 'id'),
-      posts: posts,
-      filter: 'accepted',
-      postTotals: props.post_totals,
-      displayHistoryModal: false,
-      historyModalId: null,
-      nextPage: props.next_page,
-      prevPage: props.previous_page,
-    };
+    this.state = {};
 
     this.api = new RestApiClient;
     this.updateQuantity = this.updateQuantity.bind(this);
@@ -34,9 +23,13 @@ class CampaignSingle extends React.Component {
     this.filterPosts = this.filterPosts.bind(this);
   }
 
+  componentDidMount() {
+    this.getPostsByStatus('accepted', this.props.campaign.id);
+  }
+
   // Filter posts based on status.
   filterPosts(status) {
-    this.setState({ filter: status.toLowerCase() });
+    this.getPostsByStatus(status.toLowerCase(), this.props.campaign.id);
   }
 
   // Open the history modal of the given post
@@ -91,27 +84,44 @@ class CampaignSingle extends React.Component {
     this.hideHistory();
   }
 
+  // Make API call to GET /posts to get posts by filtered status.
+  getPostsByStatus(status, campaignId) {
+    this.api = new RestApiClient;
+
+    this.api.get('api/v2/posts', {
+      filter: {
+        status: status,
+        campaign_id: campaignId,
+      },
+      include: 'signup,siblings',
+    })
+    .then(json => this.setState({
+      posts: keyBy(json.data, 'id'),
+      filter: status,
+      postTotals: json.meta.pagination.total,
+      displayHistoryModal: null,
+      historyModalId: null,
+      nextPage: json.meta.pagination.links.next,
+      prevPage: json.meta.pagination.links.previous,
+    }));
+  }
+
   render() {
     const posts = this.state.posts;
     const campaign = this.props.campaign;
 
     return (
       <div className="container">
-        <StatusCounter postTotals={this.state.postTotals} campaign={campaign} />
-        { /* @TODO: we will want this back oncefiltering is back */ }
-        { /* <PostFilter onChange={this.filterPosts} /> */}
+        <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
 
-      { /* @TODO: remove this heading once filtering is back */}
-        <div className="heading -gamma">
-          Accepted Posts
-        </div>
+        <PostFilter onChange={this.filterPosts} />
 
-        { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} details={{post: post, campaign: campaign, signup: this.state.signups[post.signup_id]}} /> : null) }
+        { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} post={post} campaign={campaign} signup={post.signup.data} /> : null) }
 
         <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups}}/> : null}
         </ModalContainer>
-        
+
         <PagingButtons prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
       </div>
     )

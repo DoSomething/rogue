@@ -20,10 +20,12 @@ class InboxItem extends React.Component {
 
   getOtherPosts(post) {
     const post_id = post['id'];
-    const signup = this.props.details.signup;
+    const signup = this.props.signup;
+
+    var posts = signup.posts ? signup.posts : post.siblings.data;
 
     // get array of posts
-    const other_posts = clone(signup.posts);
+    const other_posts = clone(posts);
 
     // find index that has that post_id and remove
     const big_post = remove(other_posts, function(current_post) {
@@ -35,9 +37,29 @@ class InboxItem extends React.Component {
   }
 
   render() {
-    const post = this.props.details.post;
-    const campaign = this.props.details.campaign;
-    const signup = this.props.details.signup;
+    const post = this.props.post;
+    const campaign = this.props.campaign;
+    const signup = this.props.signup;
+
+    // If post['user'], the data is coming from Campaigns Controller to populate the Campaign Inbox page.
+    // Otherwise, it is data coming from the API.
+    // @TODO see TODO in Campaigns Controller showInbox function to better grab informaiton
+    // and simplify the below so we don't have to use a conditional.
+    if (post['user']) {
+      var first_name = post['user']['first_name'];
+      var last_name = post['user']['last_name'];
+      var birthdate = calculateAge(post['user']['birthdate']);
+      var email = post['user']['email'];
+      var mobile = post['user']['mobile'];
+    } else if (signup.user) {
+      var first_name = signup.user.data['first_name'];
+      var last_name = signup.user.data['last_name'];
+      var birthdate = calculateAge(signup.user.data['birthdate']);
+      var email = signup.user.data['email'];
+      var mobile = signup.user.data['mobile'];
+    }
+
+    var caption = post['caption'] ? post['caption'] : post.media['caption'];
 
     return (
       <div className="container__row inbox-item">
@@ -52,12 +74,12 @@ class InboxItem extends React.Component {
           </ul>
         </div>
         <div className="container__block -third">
-          {post['user'] ?
+          {post['user'] || signup.user ?
             <div>
-              <h2>{post['user']['first_name']} {post['user']['last_name']}, {calculateAge(post['user']['birthdate'])}</h2>
+              <h2>{first_name} {last_name}, {birthdate}</h2>
               <ul>
-                <li><em>{post['user']['email']}</em></li>
-                <li><em>{post['user']['mobile']}</em></li>
+                <li><em>{email}</em></li>
+                <li><em>{mobile}</em></li>
               </ul>
             </div>
             : <h2>User Not Found</h2>}
@@ -77,10 +99,10 @@ class InboxItem extends React.Component {
           <a href="#" onClick={e => this.props.showHistory(post['id'], e)}>Edit | Show History</a>
           <br/>
           <br/>
-          {post['caption'] ?
+          {caption ?
             <div>
               <h4>Photo Caption</h4>
-              <p>{post['caption']}</p>
+              <p>{caption}</p>
             </div>
           : null}
           <h4>Why Statement</h4>

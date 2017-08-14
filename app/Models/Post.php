@@ -117,4 +117,12 @@ class Post extends Model
 
         return null;
     }
+
+    /**
+     * Get the reactions associated with this post.
+     */
+    public function siblings()
+    {
+        return $this->hasMany(self::class, 'signup_id', 'signup_id');
+    }
 }
