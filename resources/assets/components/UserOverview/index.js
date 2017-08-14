@@ -83,7 +83,7 @@ class UserOverview extends React.Component {
         <div className="container__block">
           {this.state.campaigns ?
             map(this.state.signups, (signup, index) => {
-              return <SignupCard key={index} signup={signup} campaign={this.state.campaigns[signup.campaign_id]}/>;
+              return <SignupCard key={index} signup={signup} campaign={this.state.campaigns[signup.campaign_id]} gallerySize={4} />;
             })
           : <div className="spinner"></div> }
         </div>
