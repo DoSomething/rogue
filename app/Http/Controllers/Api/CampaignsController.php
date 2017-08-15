@@ -2,7 +2,6 @@
 
 namespace Rogue\Http\Controllers\Api;
 
-use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Services\Registrar;
 use Rogue\Services\CampaignService;
@@ -48,6 +47,6 @@ class CampaignsController extends ApiController
 
         $campaigns = $this->campaignService->findAll($ids);
 
-        return $campaigns->toJson();
+        return $campaigns;
     }
 }
