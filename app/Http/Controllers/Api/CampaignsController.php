@@ -3,18 +3,10 @@
 namespace Rogue\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use Rogue\Services\Registrar;
 use Rogue\Services\CampaignService;
 
 class CampaignsController extends ApiController
 {
-    /**
-     * Registrar instance
-     *
-     * @var Rogue\Services\Registrar
-     */
-    protected $registrar;
-
     /**
      * Phoenix instance
      *
@@ -28,9 +20,8 @@ class CampaignsController extends ApiController
      * @param Rogue\Services\Registrar $registrar
      * @param Rogue\Services\CampaignService $campaignService
      */
-    public function __construct(Registrar $registrar, CampaignService $campaignService)
+    public function __construct(CampaignService $campaignService)
     {
-        $this->registrar = $registrar;
         $this->campaignService = $campaignService;
     }
 
