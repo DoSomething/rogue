@@ -2,6 +2,7 @@ import React from 'react';
 import { map, keyBy } from 'lodash';
 import SignupCard from '../SignupCard';
 import { RestApiClient } from '@dosomething/gateway';
+import UserInformation from '../Users/UserInformation';
 import { calculateAge, displayName, displayCityState } from '../../helpers';
 
 class UserOverview extends React.Component {
@@ -61,21 +62,9 @@ class UserOverview extends React.Component {
         <div className="container__block">
           <h2 className="heading -emphasized -padded"><span>User Info</span></h2>
         </div>
-        <div className="container__block">
-          <h2 className="heading">{name}, {calculateAge(user.birthdate)}</h2>
-          <p>
-            {user.email ? <span>{user.email}<br/></span>: null}
-            {user.mobile ? <span>{user.mobile}<br/></span> : null }
-            {cityState ? <span>{cityState}<br/></span> : null }
-          </p>
-        </div>
-        <div className="container__block">
-          <h4 className="heading">Meta</h4>
-          <p>
-            <span>Source: {user.source}<br/></span>
-            <span>Northstar ID: {user.id}<br/></span>
-          </p>
-        </div>
+
+        <UserInformation user={user} includeMeta={true} />
+
         <div className="container__block">
           <h2 className="heading -emphasized -padded"><span>Campaigns</span></h2>
         </div>
