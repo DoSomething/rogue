@@ -45,6 +45,7 @@ class ModelServiceProvider extends ServiceProvider
             ]);
         });
 
+        // @TODO: create tag events again when tags are ready
         // Tagged::saved(function ($tagged) {
         //     $post = Post::find($tagged->taggable_id);
 
