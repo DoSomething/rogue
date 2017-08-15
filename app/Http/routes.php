@@ -80,4 +80,7 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.r
 
     // tags
     Route::post('tags', 'Api\TagsController@store');
+
+    // Campaigns
+    Route::get('campaigns', 'Api\CampaignsController@index');
 });

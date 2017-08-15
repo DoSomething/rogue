@@ -1,6 +1,7 @@
 <?php
 
 use Rogue\Models\User;
+use Rogue\Services\Phoenix;
 use DoSomething\Gateway\Northstar;
 
 class UserTest extends TestCase
@@ -10,6 +11,10 @@ class UserTest extends TestCase
      */
     public function testAuthenticatedUserDoesntGetRedirectedHome()
     {
+        $this->mock(Phoenix::class)
+            ->shouldReceive('getAllCampaigns')
+            ->andReturn(collect());
+
         $this->actingAsAdmin()
             ->visit('/campaigns');
 
