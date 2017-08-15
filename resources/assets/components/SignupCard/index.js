@@ -18,7 +18,7 @@ class SignupCard extends React.Component {
       return <InboxTile key={index} details={post} />;
     });
 
-    const signupUrl = `/signup/${signup.signup_id}`;
+    const signupUrl = `/signups/${signup.signup_id}`;
 
     return (
         <article className="container__row signup-card">

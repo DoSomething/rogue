@@ -33,6 +33,9 @@ Route::group(['middleware' => 'web'], function () {
     // Reviews
     Route::put('reviews', 'ReviewsController@reviews');
 
+    // Signups
+    Route::get('signups/{id}', 'SignupsController@show');
+
     // Tags
     Route::post('tags', 'TagsController@store');
 
