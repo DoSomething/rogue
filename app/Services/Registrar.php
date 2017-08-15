@@ -122,7 +122,7 @@ class Registrar
      * @param  int $page
      * @return collection|null
      */
-    public function search($query, $page = null)
+    public function search($query, $page = 1)
     {
         // Attempt to fetch all users.
         $users = $this->northstar->getAllUsers([
@@ -132,9 +132,9 @@ class Registrar
                 'email' => $query,
                 'mobile' => $query,
             ],
-            'page' => is_null($page) ? 1 : $page,
+            'page' => $page,
         ]);
 
-        return $users ? collect($users) : null;
+        return $users;
     }
 }
