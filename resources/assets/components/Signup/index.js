@@ -11,6 +11,11 @@ class Signup extends React.Component {
     return (
       <div>
         <UserInformation user={user} includeMeta={false} />
+
+        <div className="container__block">
+          <h4 className="heading">Why Statement</h4>
+          <p>{signup.why_participated}</p>
+        </div>
       </div>
     )
   }
