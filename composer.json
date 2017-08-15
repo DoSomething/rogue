@@ -18,7 +18,6 @@
     "league/fractal": "^0.13.0",
     "league/glide-laravel": "^1.0",
     "predis/predis": "~1.0",
-    "rtconner/laravel-tagging": "~2.2",
     "spatie/laravel-backup": "^4.19"
   },
   "require-dev": {

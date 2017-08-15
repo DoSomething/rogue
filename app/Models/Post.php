@@ -2,15 +2,14 @@
 
 namespace Rogue\Models;
 
-use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use Taggable, SoftDeletes;
-
+    // use Taggable, SoftDeletes;
+    use SoftDeletes;
     /**
      * The attributes that should be mutated to dates.
      *

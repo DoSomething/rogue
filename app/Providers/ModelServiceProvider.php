@@ -6,7 +6,6 @@ use Rogue\Models\Post;
 use Rogue\Models\Event;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
-use Conner\Tagging\Model\Tagged;
 use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider
@@ -46,17 +45,17 @@ class ModelServiceProvider extends ServiceProvider
             ]);
         });
 
-        Tagged::saved(function ($tagged) {
-            $post = Post::find($tagged->taggable_id);
+        // Tagged::saved(function ($tagged) {
+        //     $post = Post::find($tagged->taggable_id);
 
-            Event::create([
-                'eventable_id' => $post->id,
-                'eventable_type' => 'Rogue\Models\Post',
-                'content' => $post->toJson(),
-                // Only authenticated admins can tag, so grab the authenticated user.
-                'user' => (auth()->user()) ? auth()->user()->northstar_id : null,
-            ]);
-        });
+        //     Event::create([
+        //         'eventable_id' => $post->id,
+        //         'eventable_type' => 'Rogue\Models\Post',
+        //         'content' => $post->toJson(),
+        //         // Only authenticated admins can tag, so grab the authenticated user.
+        //         'user' => (auth()->user()) ? auth()->user()->northstar_id : null,
+        //     ]);
+        // });
     }
 
     /**
