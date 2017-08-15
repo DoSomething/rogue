@@ -7,6 +7,10 @@ $light-gray: #ddd !default;
 .signup-card {
   border: 2px solid $light-gray;
 
+  .reportback-noun-verb {
+    color: $purple;
+  }
+
   .gallery {
     @include clearfix;
     list-style-type: none;
@@ -17,16 +21,16 @@ $light-gray: #ddd !default;
       margin: gutter() 0;
       padding: 0 gutter();
       overflow: hidden;
-    }
 
-    &.-quintet {
-      > li {
-        @include media($tablet) {
-          @include span(3 of 15);
+      @include media($tablet) {
+        @include span(3 of 15);
 
-          &:nth-of-type(5n + 1) {
-            clear: both;
-          }
+        &:first-child {
+          padding-left: 0px;
+        }
+
+        &:nth-of-type(5n + 1) {
+          clear: both;
         }
       }
     }

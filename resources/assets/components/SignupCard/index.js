@@ -10,7 +10,7 @@ class SignupCard extends React.Component {
   render() {
     const signup = this.props.signup;
     const campaign = this.props.campaign;
-    const gallerySize = this.props.gallerySize;
+    const gallerySize = 4;
 
     const extraPostCount = signup.posts.data.length - gallerySize;
 
@@ -36,14 +36,14 @@ class SignupCard extends React.Component {
                   <div className="quantity">{signup.quantity}</div>
                 </div>
                 <div className="figure__body">
-                   {campaign ? `${campaign.reportback_info.noun} ${campaign.reportback_info.verb}` : '' }
+                   <h4 className="reportback-noun-verb">{campaign ? `${campaign.reportback_info.noun} ${campaign.reportback_info.verb}` : '' }</h4>
                 </div>
               </div>
             : null }
             {posts.length ?
               <div className="container__row">
                 <h4>Items</h4>
-                <ul className="gallery -quintet">
+                <ul className="gallery">
                   {posts}
                   {extraPostCount > 0 ?
                     <li className="figure__media">
