@@ -42,7 +42,8 @@ class Signup extends Model
      */
     public function posts()
     {
-        return $this->hasMany(Post::class)->with('tagged');
+        // @TODO: include tags with posts
+        return $this->hasMany(Post::class);
     }
 
     /**

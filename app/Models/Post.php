@@ -156,4 +156,16 @@ class Post extends Model
             'deleted_at' => $this->deleted_at ? $this->deleted_at->toIso8601String() : null,
         ];
     }
+
+    // @TODO: this is a placeholder until the new tags are ready to go
+    public function tag()
+    {
+        return $this;
+    }
+
+    // @TODO: this is a placeholder until the new tags are ready to go
+    public function tagged()
+    {
+        return $this;
+    }
 }
