@@ -92,7 +92,7 @@ export function displayName(firstName, lastName) {
  *
  * @param {String} city
  * @param {String} state
- * @return {Sting|null} City and State string.
+ * @return {String|null} City and State string.
  */
 export function displayCityState(city, state) {
   if (!city && !state) {
@@ -100,4 +100,21 @@ export function displayCityState(city, state) {
   }
 
   return `${city ? city : ''}${city && state ? ', ' : ''}${state ? state : ''}`
+}
+
+
+/**
+ * Returns a readable caption string.
+ *
+ * @param {Array} post
+ * @return {String|null} caption string.
+ */
+export function displayCaption(post) {
+  if (post['caption']) {
+    return post['caption'];
+  } else if (post.media) {
+    return post.media['caption'];
+  }
+
+  return null;
 }
