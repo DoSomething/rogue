@@ -8,6 +8,11 @@
                         <strong class="navigation__title">Campaign Overview</strong>
                     </a>
                 </li>
+                <li>
+                    <a href="/users">
+                        <strong class="navigation__title">User Search</strong>
+                    </a>
+                </li>
             </ul>
             <ul class="navigation__secondary">
                 <li>

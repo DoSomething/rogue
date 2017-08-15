@@ -25,9 +25,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('campaigns/{id}/inbox', 'CampaignsController@showInbox');
     Route::get('campaigns/{id}', 'CampaignsController@showCampaign');
 
-    // Users
-    Route::get('users', 'UsersController@index');
-
     // Posts
     Route::post('posts', 'PostController@store');
     Route::get('posts', 'PostController@index');
@@ -41,6 +38,11 @@ Route::group(['middleware' => 'web'], function () {
 
     // Images
     Route::get('/images/{post}', 'ImagesController@show');
+
+    // Users
+    Route::get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
+    Route::get('users/{id}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
+    Route::get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
 });
 
 // Legacy API Routes
