@@ -1,5 +1,5 @@
 import React from 'react';
-import { calculateAge, getImageUrlFromProp, getEditedImageUrl } from '../../helpers';
+import { calculateAge, getImageUrlFromProp, getEditedImageUrl, displayCaption } from '../../helpers';
 import { remove, map, clone } from 'lodash';
 
 import Tags from '../Tags';
@@ -59,7 +59,7 @@ class InboxItem extends React.Component {
       var mobile = signup.user.data['mobile'];
     }
 
-    var caption = post['caption'] ? post['caption'] : post.media['caption'];
+    var caption = displayCaption(post);
 
     return (
       <div className="container__row inbox-item">
