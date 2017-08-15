@@ -31,4 +31,17 @@
       }
     }
   }
+
+  a {
+    color: $black;
+    font-weight: $weight-normal;
+  }
+
+  &:hover {
+    border: 2px solid $blue;
+
+    h2 {
+      color: $blue;
+    }
+  }
 }

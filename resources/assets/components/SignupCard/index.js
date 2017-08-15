@@ -18,42 +18,46 @@ class SignupCard extends React.Component {
       return <InboxTile key={index} details={post} />;
     });
 
+    const signupUrl = `/signup/${signup.signup_id}`;
+
     return (
         <article className="container__row signup-card">
-          <div className="container__block -half">
-            <div className="container__row">
-              <h2 className="heading">{campaign ? campaign.title : signup.campaign_id}</h2>
-            </div>
-            <div className="container__row">
-              <h4 className="heading">Why Statement</h4>
-              <p>{signup.why_participated}</p>
-            </div>
-          </div>
-          <div className="container__block -half">
-            { signup.quantity ?
-              <div className="container__row figure -left -center">
-                <div className="figure__media">
-                  <div className="quantity">{signup.quantity}</div>
-                </div>
-                <div className="figure__body">
-                   <h4 className="reportback-noun-verb">{campaign ? `${campaign.reportback_info.noun} ${campaign.reportback_info.verb}` : '' }</h4>
-                </div>
-              </div>
-            : null }
-            {posts.length ?
+          <a href={signupUrl}>
+            <div className="container__block -half">
               <div className="container__row">
-                <h4>Items</h4>
-                <ul className="gallery">
-                  {posts}
-                  {extraPostCount > 0 ?
-                    <li className="figure__media">
-                      <div className="quantity">+{extraPostCount}</div>
-                    </li>
-                  : null}
-                </ul>
+                <h2 className="heading">{campaign ? campaign.title : signup.campaign_id}</h2>
               </div>
-            : null }
-          </div>
+              <div className="container__row">
+                <h4 className="heading">Why Statement</h4>
+                <p>{signup.why_participated}</p>
+              </div>
+            </div>
+            <div className="container__block -half">
+              { signup.quantity ?
+                <div className="container__row figure -left -center">
+                  <div className="figure__media">
+                    <div className="quantity">{signup.quantity}</div>
+                  </div>
+                  <div className="figure__body">
+                     <h4 className="reportback-noun-verb">{campaign ? `${campaign.reportback_info.noun} ${campaign.reportback_info.verb}` : '' }</h4>
+                  </div>
+                </div>
+              : null }
+              {posts.length ?
+                <div className="container__row">
+                  <h4>Items</h4>
+                  <ul className="gallery">
+                    {posts}
+                    {extraPostCount > 0 ?
+                      <li className="figure__media">
+                        <div className="quantity">+{extraPostCount}</div>
+                      </li>
+                    : null}
+                  </ul>
+                </div>
+              : null }
+            </div>
+          </a>
         </article>
     )
   }
