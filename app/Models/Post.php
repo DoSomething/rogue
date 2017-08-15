@@ -75,6 +75,14 @@ class Post extends Model
     }
 
     /**
+     * Get the tags associated with this post.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    /**
      * Get the URL for the media for this post.
      */
     public function getMediaUrl()
