@@ -15,7 +15,7 @@ class InboxItem extends React.Component {
 
   // @todo - define this on the StatusButton component that can set some sort of global state.
   setStatus(status) {
-    this.props.onUpdate(this.props.details.post.id, { status: status })
+    this.props.onUpdate(this.props.post.id, { status: status })
   }
 
   getOtherPosts(post) {
