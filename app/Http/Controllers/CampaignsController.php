@@ -72,7 +72,7 @@ class CampaignsController extends Controller
                 $user = $this->registrar->find($item->northstar_id);
 
                 // @TODO: Can we handle failure better?
-                $item->user = $user->toArray() ?: ['first_name' => 'A Doer'];
+                $item->user = $user ? $user->toArray() : ['first_name' => 'A Doer'];
             });
         });
 
