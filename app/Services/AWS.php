@@ -37,7 +37,7 @@ class AWS
 
         // Add a unique timestamp (e.g. uploads/folder/filename-1456498664.jpeg) to
         // uploads to prevent AWS cache giving the user an old upload.
-        $path = '/uploads/reportback-items' . '/' . $filename . '-' . md5($data) . '-' . time() . '.' . $extension;
+        $path = 'uploads/reportback-items' . '/' . $filename . '-' . md5($data) . '-' . time() . '.' . $extension;
 
         // Push file to S3.
         $success = Storage::put($path, $data);
@@ -65,7 +65,7 @@ class AWS
             throw new UnprocessableEntityHttpException('Invalid file type. Upload a JPEG, PNG or GIF.');
         }
 
-        $path = '/uploads/reportback-items/' . $filename . '.' . $extension;
+        $path = 'uploads/reportback-items/' . $filename . '.' . $extension;
 
         // Push file to S3.
         $success = Storage::put($path, $data);
