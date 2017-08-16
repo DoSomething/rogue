@@ -10,19 +10,27 @@ class CampaignService
     /**
      * Phoenix instance
      *
-     * @var Rogue\Services\Phoenix
+     * @var \Rogue\Services\Phoenix
      */
     protected $phoenix;
 
     /**
+     * The cache repository.
+     *
+     * @var CacheRepository
+     */
+    protected $cache;
+
+    /**
      * Create new Registrar instance.
      *
-     * @param Rogue\Services\Phoenix $phoenix
+     * @param Phoenix $phoenix
+     * @param CacheRepository $cache
      */
-    public function __construct(Phoenix $phoenix)
+    public function __construct(Phoenix $phoenix, CacheRepository $cache)
     {
         $this->phoenix = $phoenix;
-        $this->cache = new CacheRepository;
+        $this->cache = $cache;
     }
 
     /**
@@ -49,10 +57,10 @@ class CampaignService
     }
 
     /**
-     * Finds a group of campagins in Rogue/Phoenix.
+     * Finds a group of campaigns in Rogue/Phoenix.
      *
      * @param  array $ids
-     * @return collection $campaigns
+     * @return \Illuminate\Support\Collection
      */
     public function findAll($ids = [])
     {
@@ -83,7 +91,7 @@ class CampaignService
     /**
      * Resolving missing cached users in a user cache collection.
      *
-     * @param  array $users
+     * @param  array $campaigns
      * @return array
      */
     protected function resolveMissingCampaigns($campaigns)
@@ -129,8 +137,7 @@ class CampaignService
     /**
      * Group a collection of campaigns by cause space.
      *
-     * @param  array  $ids
-     * @param  int $size
+     * @param  array $campaigns
      * @return \Illuminate\Support\Collection
      */
     public function groupByCause($campaigns)
@@ -170,7 +177,7 @@ class CampaignService
     /**
      * Get a distinct set of campaign ids from the signups table.
      *
-     * @return array $ids
+     * @return array|null
      */
     public function getCampaignIdsFromSignups()
     {
@@ -185,7 +192,7 @@ class CampaignService
      * Gets the count of pending, accepted, and rejected stautses on each post for a single campaign.
      *
      * @param  array $campaign
-     * @return array $toals | null
+     * @return \Illuminate\Support\Collection
      */
     public function getPostTotals($campaign)
     {
@@ -203,8 +210,8 @@ class CampaignService
     /**
      * Gets the count of pending stautses on each post for a collection of campaigns.
      *
-     * @param  Illuminate\Support\Collection $campaigns
-     * @return Illuminate\Support\Collection $totals
+     * @param  \Illuminate\Support\Collection $campaigns
+     * @return \Illuminate\Support\Collection
      */
     public function getPendingPostTotals($campaigns)
     {
@@ -225,7 +232,7 @@ class CampaignService
      * Appends count of pending posts to a collection of campaigns.
      *
      * @param  array $campaigns
-     * @return Illuminate\Support\Collection $campaigns | null
+     * @return \Illuminate\Support\Collection|null
      */
     public function appendPendingCountsToCampaigns($campaigns)
     {
@@ -252,7 +259,7 @@ class CampaignService
      * Appends status counts to a collection of campaigns.
      *
      * @param  array $campaigns
-     * @return Illuminate\Support\Collection $campaigns | null
+     * @return \Illuminate\Support\Collection|null
      */
     public function appendStatusCountsToCampaigns($campaigns)
     {

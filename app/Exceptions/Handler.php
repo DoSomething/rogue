@@ -83,7 +83,7 @@ class Handler extends ExceptionHandler
      */
     public function unauthenticated($request, AuthenticationException $e)
     {
-        if ($request->ajax() || $request->wantsJson()) {
+        if ($request->expectsJson()) {
             return $this->buildJsonResponse(new HttpException(401, 'Unauthorized.'));
         }
 

@@ -2,15 +2,14 @@
 
 namespace Rogue\Models;
 
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use DoSomething\Gateway\Laravel\HasNorthstarToken;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use DoSomething\Gateway\Contracts\NorthstarUserContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class User extends Model implements AuthenticatableContract, NorthstarUserContract
+class User extends Authenticatable implements NorthstarUserContract
 {
-    use Authenticatable, HasNorthstarToken;
+    use HasNorthstarToken, Notifiable;
 
     /*
      * The attributes that are mass assignable.

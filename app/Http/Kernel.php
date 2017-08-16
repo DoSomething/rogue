@@ -29,9 +29,11 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Rogue\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
         'api' => [
+            'bindings',
             // 'throttle:60,1',
         ],
     ];
@@ -47,8 +49,10 @@ class Kernel extends HttpKernel
         'auth' => \Rogue\Http\Middleware\Authenticate::class,
         'auth.api' => \Rogue\Http\Middleware\AuthenticateApi::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Rogue\Http\Middleware\RedirectIfAuthenticated::class,
-        'role' => \Rogue\Http\Middleware\CheckRole::class,
         'log.received.request' => \Rogue\Http\Middleware\LogReceivedRequest::class,
+        'role' => \Rogue\Http\Middleware\CheckRole::class,
     ];
 }
