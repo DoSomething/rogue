@@ -1,4 +1,5 @@
 import React from 'react';
+import './signup.scss';
 import { RestApiClient } from '@dosomething/gateway';
 import UserInformation from '../Users/UserInformation';
 import { calculateAge, displayName, displayCityState } from '../../helpers';
@@ -49,7 +50,7 @@ class Signup extends React.Component {
     const campaign = this.props.campaign;
 
     return (
-      <div>
+      <div className="signup">
         <div className="container__block -half">
           <UserInformation user={user} includeMeta={false} />
 
@@ -67,6 +68,16 @@ class Signup extends React.Component {
             <ModalContainer>
               {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{campaign: campaign, signups: this.state.signups }}/> : null}
             </ModalContainer>
+          </div>
+
+          <div className="container__block meta">
+            <h4 className="heading">Meta</h4>
+            <p>
+              <span>Signup ID: {signup.id}<br/></span>
+              <span>Northstar ID: {user.id}<br/></span>
+              <span>Signup Source: {signup.source}<br/></span>
+              <span>Created At: {new Date(signup.created_at).toDateString()}<br/></span>
+            </p>
           </div>
         </div>
       </div>
