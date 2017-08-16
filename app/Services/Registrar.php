@@ -9,11 +9,14 @@ class Registrar
 {
     /**
      * Create new Registrar instance.
+     *
+     * @param Northstar $northstar
+     * @param CacheRepository $cache
      */
-    public function __construct()
+    public function __construct(Northstar $northstar, CacheRepository $cache)
     {
-        $this->northstar = gateway('northstar');
-        $this->cache = new CacheRepository;
+        $this->northstar = $northstar;
+        $this->cache = $cache;
     }
 
     /**

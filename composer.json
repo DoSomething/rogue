@@ -6,7 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
+        "laravel/framework": "5.3.*",
         "predis/predis": "~1.0",
         "spatie/laravel-backup": "^3.8",
         "maknz/slack": "^1.7",
@@ -27,8 +27,8 @@
         "fzaninotto/faker": "^1.6",
         "mockery/mockery": "^0.9.5",
         "phpunit/phpunit": "~4.0",
-        "symfony/css-selector": "2.8.*|3.0.*",
-        "symfony/dom-crawler": "2.8.*|3.0.*"
+        "symfony/css-selector": "3.1.*",
+        "symfony/dom-crawler": "3.1.*"
     },
     "autoload": {
         "classmap": [
