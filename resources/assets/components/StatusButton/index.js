@@ -2,8 +2,10 @@ import React from 'react';
 import './status-button.scss';
 import classnames from 'classnames';
 
-export default (props) => (
+const StatusButton = (props) => (
   <button className={classnames('button', `-${props.type}`, {'accepted' : props.status == 'accepted'}, {'rejected' : props.status == 'rejected'})} onClick={() => props.setStatus(props.type)}>
     {props.label}
   </button>
 );
+
+export default StatusButton;

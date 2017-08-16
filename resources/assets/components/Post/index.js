@@ -2,9 +2,10 @@ import React from 'react';
 import { remove, map, clone } from 'lodash';
 import { getImageUrlFromProp, getEditedImageUrl, displayCaption } from '../../helpers';
 
-// import Tags from '../Tags';
+import Tags from '../Tags';
 import TextBlock from '../TextBlock';
-// import StatusButton from '../StatusButton';
+import ReviewBlock from '../ReviewBlock';
+import StatusButton from '../StatusButton';
 
 class Post extends React.Component {
   render() {
@@ -28,7 +29,7 @@ class Post extends React.Component {
           </div>
         </div>
         <div className="container__block -third">
-          stuff goes here.
+          <ReviewBlock post={post} />
         </div>
       </div>
     )
