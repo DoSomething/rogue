@@ -20,6 +20,7 @@ class HistoryModal extends React.Component {
   	const signup = this.props.signup ? this.props.signup : this.props.signups[post.signup_id];
   	const campaign = this.props['campaign'];
 
+
 		return (
 			<div className="modal">
 				<a href="#" onClick={this.props.onClose} className="modal-close-button">&times;</a>
@@ -27,7 +28,8 @@ class HistoryModal extends React.Component {
 					<h3>Change Quantity</h3>
 					<div className="container__block -half">
 						<h4>Old Quantity</h4>
-						<p>{signup['quantity']} {campaign['reportback_info']['noun']} {campaign['reportback_info']['verb']}</p>
+            {/* <p>{signup['quantity']} {campaign['reportback_info']['noun']} {campaign['reportback_info']['verb']}</p>
+            */}
 					</div>
 					<div className="container__block -half">
 						<h4>New Quantity</h4>

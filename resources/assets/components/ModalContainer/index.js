@@ -12,7 +12,7 @@ const ModalContainer = (props) => {
 			{props.children}
 		</div>
 	);
-	
+
 };
 
 export default ModalContainer;
