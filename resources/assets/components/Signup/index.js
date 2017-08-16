@@ -6,6 +6,7 @@ import { calculateAge, displayName, displayCityState } from '../../helpers';
 
 // Components
 import InboxItem from '../InboxItem';
+import Post from '../Post';
 import WhyStatement from './WhyStatement';
 import HistoryModal from '../HistoryModal';
 import ModalContainer from '../ModalContainer';
@@ -91,11 +92,10 @@ class Signup extends React.Component {
           <div className="container__block">
               <h2>Accepted</h2>
           </div>
-
           {
             map(posts, (post, key) => {
               if (post['status'] === 'accepted') {
-                return <InboxItem allowReview={true} key={key} post={post} campaign={campaign} signup={signup} />;
+                return <Post key={key} post={post} />;
               }
             })
           }
