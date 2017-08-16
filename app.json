@@ -3,7 +3,7 @@
   "description": ":sparkles:",
   "env": {
     "APP_ENV": "local",
-    "APP_DEBUG": "true",
+    "APP_DEBUG": "false",
     "NPM_CONFIG_PRODUCTION": "false",
     "APP_KEY": {
       "required": true
