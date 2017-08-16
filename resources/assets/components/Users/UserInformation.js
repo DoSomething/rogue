@@ -13,16 +13,7 @@ const UserInformation = (props) => (
       </p>
     </div>
 
-    {props.includeMeta ?
-      <div className="container">
-        {props.meta.title ? <h4 className="heading">{props.meta.title}</h4> : null}
-        {
-          map(props.meta.details, (item, key) => {
-            return <span key={key}>{item}<br/></span>
-          })
-        }
-      </div>
-      : null }
+    {props.children}
   </div>
 );
 

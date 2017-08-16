@@ -6,8 +6,10 @@ import { calculateAge, displayName, displayCityState } from '../../helpers';
 
 // Components
 import InboxItem from '../InboxItem';
+import WhyStatement from './WhyStatement';
 import HistoryModal from '../HistoryModal';
 import ModalContainer from '../ModalContainer';
+import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
 
 // Styles
@@ -61,11 +63,13 @@ class Signup extends React.Component {
       <div className="signup">
         <div className="container__row">
           <div className="container__block -half">
-            <UserInformation user={user} includeMeta={true} meta={{title: 'Why Statement', details: [signup.why_participated] }}/>
+            <UserInformation user={user}>
+              <WhyStatement statement={signup.why_participated} />
+            </UserInformation>
           </div>
 
           <div className="container__block -half">
-            <div className="container -padded">
+            <div className="container__row">
 
               <a href="#" onClick={e => this.showHistory(signup['signup_id'], e)}>Edit | Show History</a>
 
@@ -74,15 +78,12 @@ class Signup extends React.Component {
               </ModalContainer>
             </div>
 
-            <div className="container meta">
-              <h4 className="heading">Meta</h4>
-              <p>
-                <span>Signup ID: {signup.id}<br/></span>
-                <span>Northstar ID: {user.id}<br/></span>
-                <span>Signup Source: {signup.source}<br/></span>
-                <span>Created At: {new Date(signup.created_at).toDateString()}<br/></span>
-              </p>
-            </div>
+            <MetaInformation title="Meta" details={{
+              "Signup ID": signup.id,
+              "Northstar ID": user.id,
+              "Signup Source": signup.source,
+              "Created At": new Date(signup.created_at).toDateString()
+            }} />
           </div>
         </div>
 

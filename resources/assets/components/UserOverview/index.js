@@ -2,6 +2,7 @@ import React from 'react';
 import { map, keyBy } from 'lodash';
 import SignupCard from '../SignupCard';
 import { RestApiClient } from '@dosomething/gateway';
+import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
 import { calculateAge, displayName, displayCityState } from '../../helpers';
 
@@ -64,7 +65,12 @@ class UserOverview extends React.Component {
         </div>
 
         <div className="container__block">
-          <UserInformation user={user} includeMeta={true} meta={{title: 'Meta', details: [`Source: ${user.source}`, `Northstar ID: ${user.id}`] }}/>
+          <UserInformation user={user} includeMeta={false}>
+            <MetaInformation title="Meta" details={{
+              "Source": user.source,
+              "Northstar ID": user.id,
+            }} />
+          </UserInformation>
         </div>
 
         <div className="container__block">
