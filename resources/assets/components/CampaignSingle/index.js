@@ -1,6 +1,6 @@
 import React from 'react';
 import { flatMap, keyBy, map, sample, forEach, reject, filter } from 'lodash';
-import { extractPostsFromSignups } from '../../helpers';
+import { RestApiClient} from '@dosomething/gateway';
 
 import InboxItem from '../InboxItem';
 import ModalContainer from '../ModalContainer';
@@ -8,7 +8,6 @@ import HistoryModal from '../HistoryModal';
 import PagingButtons from '../PagingButtons';
 import PostFilter from '../PostFilter';
 import StatusCounter from '../StatusCounter';
-import { RestApiClient} from '@dosomething/gateway';
 
 class CampaignSingle extends React.Component {
   constructor(props) {
@@ -17,9 +16,12 @@ class CampaignSingle extends React.Component {
     this.state = {};
 
     this.api = new RestApiClient;
+    this.updatePost = this.updatePost.bind(this);
+    this.updateTag = this.updateTag.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
+    this.deletePost = this.deletePost.bind(this);
     this.filterPosts = this.filterPosts.bind(this);
   }
 
@@ -84,6 +86,74 @@ class CampaignSingle extends React.Component {
     this.hideHistory();
   }
 
+    // Updates a post status.
+  updatePost(postId, fields) {
+    fields.post_id = postId;
+
+    let request = this.api.put('reviews', fields);
+
+    request.then((result) => {
+      this.setState((previousState) => {
+        const newState = {...previousState};
+
+        newState.posts[postId].status = fields.status;
+
+        return newState;
+      });
+    });
+
+  }
+
+  // Tag a post.
+  updateTag(postId, tag) {
+    const fields = {
+      post_id: postId,
+      tag_name: tag,
+    };
+
+    let response = this.api.post('tags', fields);
+    response.then((result) => {
+      this.setState((previousState) => {
+        const newState = {...previousState};
+        const user = newState.posts[postId].user;
+        const signup = newState.posts[postId].signup.data;
+
+        console.log(newState);
+        newState.posts[postId] = result['data'];
+
+        // Keep the user and signup from the initial page load.
+        newState.posts[postId].user = user;
+        // newState.posts[postId].signup.data = signup;
+
+        return newState;
+      });
+    });
+  }
+
+  // Delete a post.
+  deletePost(postId, event) {
+    event.preventDefault();
+    const confirmed = confirm('🚨🔥🚨Are you sure you want to delete this?🚨🔥🚨');
+
+    if (confirmed) {
+      // Make API request to Rogue to update the quantity on the backend
+      let response = this.api.delete('posts/'.concat(postId));
+
+      response.then((result) => {
+        // Update the state
+        this.setState((previousState) => {
+          var newState = {...previousState};
+
+          // Remove the deleted post from the state
+          delete(newState.posts[postId]);
+
+          // Return the new state
+          return newState;
+        });
+      });
+    }
+  }
+
   // Make API call to GET /posts to get posts by filtered status.
   getPostsByStatus(status, campaignId) {
     this.api = new RestApiClient;
@@ -116,7 +186,7 @@ class CampaignSingle extends React.Component {
 
         <PostFilter onChange={this.filterPosts} />
 
-        { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={false} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} post={post} campaign={campaign} signup={post.signup.data} /> : null) }
+        { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} post={post} campaign={campaign} signup={post.signup.data} /> : null) }
 
         <ModalContainer>
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups}}/> : null}
