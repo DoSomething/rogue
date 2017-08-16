@@ -65,7 +65,7 @@ class Signup extends React.Component {
           </div>
 
           <div className="container__block -half">
-            <div className="container__block">
+            <div className="container -padded">
 
               <a href="#" onClick={e => this.showHistory(signup['signup_id'], e)}>Edit | Show History</a>
 
@@ -74,7 +74,7 @@ class Signup extends React.Component {
               </ModalContainer>
             </div>
 
-            <div className="container__block meta">
+            <div className="container meta">
               <h4 className="heading">Meta</h4>
               <p>
                 <span>Signup ID: {signup.id}<br/></span>
@@ -87,30 +87,43 @@ class Signup extends React.Component {
         </div>
 
         <div className="container__row">
-            <h2>Accepted</h2>
+          <div className="container__block">
+              <h2>Accepted</h2>
+          </div>
 
+          {
+            map(posts, (post, key) => {
+              if (post['status'] === 'accepted') {
+                return <InboxItem allowReview={true} key={key} post={post} campaign={campaign} signup={signup} />;
+              }
+            })
+          }
         </div>
 
         <div className="container__row">
+          <div className="container__block">
             <h2>Pending</h2>
-            {
-              map(posts, (post, key) => {
-                if (post['status'] === 'pending') {
-                  return <InboxItem allowReview={true} key={key} post={post} campaign={campaign} signup={signup} />;
-                }
-              })
-            }
+          </div>
+          {
+            map(posts, (post, key) => {
+              if (post['status'] === 'pending') {
+                return <InboxItem allowReview={true} key={key} post={post} campaign={campaign} signup={signup} />;
+              }
+            })
+          }
         </div>
 
         <div className="container__row">
+          <div className="container__block">
             <h2>Rejected</h2>
-            {
-              map(posts, (post, key) => {
-                if (post['status'] === 'rejected') {
-                  return <InboxItem allowReview={true} key={key} post={post} campaign={campaign} signup={signup} />;
-                }
-              })
-            }
+          </div>
+          {
+            map(posts, (post, key) => {
+              if (post['status'] === 'rejected') {
+                return <InboxItem allowReview={true} key={key} post={post} campaign={campaign} signup={signup} />;
+              }
+            })
+          }
         </div>
       </div>
     )
