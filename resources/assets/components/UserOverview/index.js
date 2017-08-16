@@ -63,7 +63,9 @@ class UserOverview extends React.Component {
           <h2 className="heading -emphasized -padded"><span>User Info</span></h2>
         </div>
 
-        <UserInformation user={user} includeMeta={true} />
+        <div className="container__block">
+          <UserInformation user={user} includeMeta={true} meta={{title: 'Meta', details: [`Source: ${user.source}`, `Northstar ID: ${user.id}`] }}/>
+        </div>
 
         <div className="container__block">
           <h2 className="heading -emphasized -padded"><span>Campaigns</span></h2>

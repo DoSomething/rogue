@@ -61,12 +61,7 @@ class Signup extends React.Component {
       <div className="signup">
         <div className="container__row">
           <div className="container__block -half">
-            <UserInformation user={user} includeMeta={false} />
-
-            <div className="container__block">
-              <h4 className="heading">Why Statement</h4>
-              <p>{signup.why_participated}</p>
-            </div>
+            <UserInformation user={user} includeMeta={true} meta={{title: 'Why Statement', details: [signup.why_participated] }}/>
           </div>
 
           <div className="container__block -half">
@@ -93,13 +88,7 @@ class Signup extends React.Component {
 
         <div className="container__row">
             <h2>Accepted</h2>
-            {
-              map(posts, (post, key) => {
-                if (post['status'] === 'accepted') {
-                  return <InboxItem allowReview={true} key={key} post={post} campaign={campaign} signup={signup} />;
-                }
-              })
-            }
+
         </div>
 
         <div className="container__row">
