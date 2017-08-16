@@ -2,8 +2,9 @@ import React from 'react';
 import { remove, map, clone } from 'lodash';
 import { getImageUrlFromProp, getEditedImageUrl, displayCaption } from '../../helpers';
 
-import Tags from '../Tags';
-import StatusButton from '../StatusButton';
+// import Tags from '../Tags';
+import TextBlock from '../TextBlock';
+// import StatusButton from '../StatusButton';
 
 class Post extends React.Component {
   render() {
@@ -19,7 +20,12 @@ class Post extends React.Component {
           </p>
         </div>
         <div className="container__block -third">
-          stuff goes here.
+          <div className="container -padded">
+            <TextBlock title="Photo Caption" content={displayCaption(post)} />
+          </div>
+          <div className="container">
+            <TextBlock title="Why Statement" content={this.props.signup.why_participated} />
+          </div>
         </div>
         <div className="container__block -third">
           stuff goes here.

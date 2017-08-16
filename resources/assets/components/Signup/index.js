@@ -7,7 +7,7 @@ import { calculateAge, displayName, displayCityState } from '../../helpers';
 // Components
 import InboxItem from '../InboxItem';
 import Post from '../Post';
-import WhyStatement from './WhyStatement';
+import TextBlock from '../TextBlock';
 import HistoryModal from '../HistoryModal';
 import ModalContainer from '../ModalContainer';
 import MetaInformation from '../MetaInformation';
@@ -65,7 +65,7 @@ class Signup extends React.Component {
         <div className="container__row">
           <div className="container__block -half">
             <UserInformation user={user}>
-              <WhyStatement statement={signup.why_participated} />
+              <TextBlock title="Why Statement" content={signup.why_participated} />
             </UserInformation>
           </div>
 
@@ -95,7 +95,7 @@ class Signup extends React.Component {
           {
             map(posts, (post, key) => {
               if (post['status'] === 'accepted') {
-                return <Post key={key} post={post} />;
+                return <Post key={key} post={post} signup={signup} />;
               }
             })
           }
