@@ -1,10 +1,13 @@
 <?php
 
+namespace Tests\Http\Api;
+
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
+use Tests\BrowserKitTestCase;
 
-class ReactionsApiTest extends TestCase
+class ReactionsApiTest extends BrowserKitTestCase
 {
     /**
      * Test that the POST /reactions request creates a reaction for a post.

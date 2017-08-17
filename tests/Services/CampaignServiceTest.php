@@ -1,5 +1,8 @@
 <?php
 
+namespace Tests\Services;
+
+use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Rogue\Services\Phoenix;

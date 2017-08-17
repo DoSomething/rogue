@@ -1,10 +1,13 @@
 <?php
 
+namespace Tests\Http;
+
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Signup;
+use Tests\BrowserKitTestCase;
 
-class ReviewsTest extends TestCase
+class ReviewsTest extends BrowserKitTestCase
 {
     /**
      * Test that a PUT request to /reviews updates the post's status and creates a new event and review.

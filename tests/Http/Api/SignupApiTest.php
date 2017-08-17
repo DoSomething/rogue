@@ -1,6 +1,10 @@
 <?php
 
-class SignupApiTest extends TestCase
+namespace Tests\Http\Api;
+
+use Tests\BrowserKitTestCase;
+
+class SignupApiTest extends BrowserKitTestCase
 {
     /**
      * Test that a POST request to /signups creates a new signup.

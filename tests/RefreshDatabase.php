@@ -1,5 +1,9 @@
 <?php
 
+namespace Tests;
+
+use Schema;
+
 trait RefreshDatabase
 {
     /**

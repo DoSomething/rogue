@@ -1,9 +1,12 @@
 <?php
 
+namespace Tests\Http;
+
 use Rogue\Models\Post;
 use Rogue\Models\User;
+use Tests\BrowserKitTestCase;
 
-class TagsTest extends TestCase
+class TagsTest extends BrowserKitTestCase
 {
     /**
      * Test that a POST request to /tags updates the post's tags and
