@@ -16,9 +16,9 @@ class HistoryModal extends React.Component {
 	}
 
 	render() {
-  	const post = this.props.details['post'];
-  	const signup = this.props.details.signups[post.signup_id];
-  	const campaign = this.props.details['campaign'];
+  	const post = this.props['post'];
+  	const signup = this.props.signup;
+  	const campaign = this.props['campaign'];
 
 		return (
 			<div className="modal">

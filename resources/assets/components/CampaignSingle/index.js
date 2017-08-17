@@ -75,8 +75,9 @@ class CampaignSingle extends React.Component {
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
-
-        newState.signups[signup.id].quantity = result.quantity;
+        var signupId = signup.signup_id ? signup.signup_id : signup.id;
+        var firstPostId = Object.keys(newState.posts)[0];
+        newState.posts[firstPostId].signup.data.quantity = result.quantity;
 
         return newState;
       });
@@ -118,7 +119,6 @@ class CampaignSingle extends React.Component {
         const user = newState.posts[postId].user;
         const signup = newState.posts[postId].signup.data;
 
-        console.log(newState);
         newState.posts[postId] = result['data'];
 
         // Keep the user and signup from the initial page load.
@@ -189,7 +189,7 @@ class CampaignSingle extends React.Component {
         { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} post={post} campaign={campaign} signup={post.signup.data} /> : null) }
 
         <ModalContainer>
-            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups}}/> : null}
+            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} post={posts[this.state.historyModalId]} campaign={campaign} signup={posts[this.state.historyModalId].signup.data}/> : null}
         </ModalContainer>
 
         <PagingButtons prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
