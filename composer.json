@@ -1,68 +1,67 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
-    "type": "project",
-    "require": {
-        "php": ">=5.5.9",
-        "laravel/framework": "5.4.*",
-        "laravel/tinker": "^1.0",
-        "predis/predis": "~1.0",
-        "spatie/laravel-backup": "^4.19",
-        "league/flysystem-aws-s3-v3": "~1.0",
-        "aws/aws-sdk-php-laravel": "^3.1",
-        "league/fractal": "^0.13.0",
-        "guzzlehttp/guzzle": "^6.2",
-        "dosomething/gateway": "^1.5.2",
-        "doctrine/dbal": "^2.5",
-        "intervention/image": "^2.3",
-        "rtconner/laravel-tagging": "~2.2",
-        "barryvdh/laravel-debugbar": "^2.3",
-        "league/glide-laravel": "^1.0",
-        "league/flysystem-memory": "^1.0"
-    },
-    "require-dev": {
-        "fzaninotto/faker": "^1.6",
-        "mockery/mockery": "^0.9.5",
-        "phpunit/phpunit": "~5.7",
-        "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*",
-        "laravel/browser-kit-testing": "1.*"
-    },
-    "autoload": {
-        "classmap": [
-            "database"
-        ],
-        "files": [
-            "app/helpers.php"
-        ],
-        "psr-4": {
-            "Rogue\\": "app/"
-        }
-    },
-    "autoload-dev": {
-      "psr-4": {
-        "Tests\\": "tests/"
-      }
-    },
-    "scripts": {
-      "post-root-package-install": [
-        "php -r \"copy('.env.example', '.env');\""
-      ],
-      "post-create-project-cmd": [
-        "php artisan key:generate"
-      ],
-      "post-install-cmd": [
-        "Illuminate\\Foundation\\ComposerScripts::postInstall",
-        "php artisan optimize"
-      ],
-      "post-update-cmd": [
-        "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-        "php artisan optimize"
-      ]
-    },
-    "config": {
-        "preferred-install": "dist"
+  "name": "dosomething/rogue",
+  "description": "The Laravel Framework.",
+  "license": "MIT",
+  "type": "project",
+  "require": {
+    "php": ">=5.5.9",
+    "laravel/framework": "5.4.*",
+    "laravel/tinker": "^1.0",
+    "aws/aws-sdk-php-laravel": "^3.1",
+    "barryvdh/laravel-debugbar": "^2.3",
+    "doctrine/dbal": "^2.5",
+    "dosomething/gateway": "^1.5.2",
+    "guzzlehttp/guzzle": "^6.2",
+    "intervention/image": "^2.3",
+    "league/flysystem-aws-s3-v3": "~1.0",
+    "league/flysystem-memory": "^1.0",
+    "league/fractal": "^0.13.0",
+    "league/glide-laravel": "^1.0",
+    "predis/predis": "~1.0",
+    "rtconner/laravel-tagging": "~2.2",
+    "spatie/laravel-backup": "^4.19"
+  },
+  "require-dev": {
+    "fzaninotto/faker": "^1.6",
+    "laravel/browser-kit-testing": "1.*",
+    "mockery/mockery": "^0.9.5",
+    "phpunit/phpunit": "~5.7",
+    "symfony/css-selector": "3.1.*",
+    "symfony/dom-crawler": "3.1.*"
+  },
+  "autoload": {
+    "classmap": [
+      "database"
+    ],
+    "files": [
+      "app/helpers.php"
+    ],
+    "psr-4": {
+      "Rogue\\": "app/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "php -r \"copy('.env.example', '.env');\""
+    ],
+    "post-create-project-cmd": [
+      "php artisan key:generate"
+    ],
+    "post-install-cmd": [
+      "Illuminate\\Foundation\\ComposerScripts::postInstall",
+      "php artisan optimize"
+    ],
+    "post-update-cmd": [
+      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+      "php artisan optimize"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist"
+  }
 }
