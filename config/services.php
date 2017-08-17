@@ -26,6 +26,7 @@ return [
     'northstar' => [
         'grant' => 'authorization_code',
         'url' => env('NORTHSTAR_URL'),
+        'key' => storage_path('keys/public.key'),
         'authorization_code' => [
             'client_id' => env('NORTHSTAR_AUTH_ID'),
             'client_secret' => env('NORTHSTAR_AUTH_SECRET'),
