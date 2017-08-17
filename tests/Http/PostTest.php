@@ -1,9 +1,12 @@
 <?php
 
+namespace Tests\Http;
+
 use Rogue\Models\Post;
 use Rogue\Models\User;
+use Tests\BrowserKitTestCase;
 
-class PostTest extends TestCase
+class PostTest extends BrowserKitTestCase
 {
     /**
      * Test that posts get soft-deleted when hitting the DELETE endpoint.

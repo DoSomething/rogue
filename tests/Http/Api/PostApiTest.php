@@ -1,9 +1,12 @@
 <?php
 
+namespace Tests\Http\Api;
+
 use Rogue\Models\Signup;
+use Tests\BrowserKitTestCase;
 use Illuminate\Support\Facades\Storage;
 
-class PostApiTest extends TestCase
+class PostApiTest extends BrowserKitTestCase
 {
     /**
      * Test that a POST request to /posts creates a new

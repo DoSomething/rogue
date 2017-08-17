@@ -165,13 +165,13 @@ return [
         /*
          * Third-party Service Providers...
          */
-        DoSomething\Gateway\Laravel\GatewayServiceProvider::class,
-        Spatie\Backup\BackupServiceProvider::class,
-        Maknz\Slack\Laravel\ServiceProvider::class,
         Aws\Laravel\AwsServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
-        \Conner\Tagging\Providers\TaggingServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Conner\Tagging\Providers\TaggingServiceProvider::class,
+        DoSomething\Gateway\Laravel\GatewayServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        Laravel\Tinker\TinkerServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
 
         /*
          * Application Service Providers...

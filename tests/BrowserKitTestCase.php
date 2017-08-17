@@ -6,9 +6,9 @@ use Mockery;
 use Carbon\Carbon;
 use Rogue\Models\User;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
 
-class TestCase extends BaseTestCase
+class BrowserKitTestCase extends BaseTestCase
 {
     use RefreshDatabase, CreatesApplication;
 

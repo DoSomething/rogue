@@ -1,10 +1,13 @@
 <?php
 
+namespace Tests\Http;
+
 use Rogue\Models\User;
 use Rogue\Services\Phoenix;
+use Tests\BrowserKitTestCase;
 use DoSomething\Gateway\Northstar;
 
-class UserTest extends TestCase
+class UserTest extends BrowserKitTestCase
 {
     /**
      * Test that an admin user can access a page in the app.

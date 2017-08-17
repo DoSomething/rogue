@@ -1,11 +1,14 @@
 <?php
 
+namespace Tests\Http\Api;
+
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
+use Tests\BrowserKitTestCase;
 use DoSomething\Gateway\Northstar;
 use DoSomething\Gateway\Resources\NorthstarUser;
 
-class ActivityApiTest extends TestCase
+class ActivityApiTest extends BrowserKitTestCase
 {
     /**
      * Test for retrieving activity.
