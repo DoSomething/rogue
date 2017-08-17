@@ -34,8 +34,8 @@ class AuthenticateApi extends Authenticate
             return $next($request);
         }
 
-        // Otherwise, we can't do anything!
-        // @TODO: Instead, pass on to default auth middleware with Gateway guard.
-        throw new AuthenticationException;
+        // Otherwise, pass on to Laravel's default Authenticate
+        // middleware with the 'api' guard specified.
+        return parent::handle($request, $next, 'api');
     }
 }
