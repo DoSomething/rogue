@@ -52,7 +52,7 @@ class PostRepository
      */
     public function find($id)
     {
-        return Post::with('signup', 'tagged')->findOrFail($id);
+        return Post::with('signup', 'tags')->findOrFail($id);
     }
 
     /**
@@ -203,17 +203,17 @@ class PostRepository
      *
      * @return
      */
-    public function tag($post, $tag)
+    public function tag(Post $post, $tag)
     {
         // If the post already has the tag, soft delete. Otherwise, add the tag to the post.
-        if (in_array($tag, $post->tagNames(), true)) {
+        if ($post->tags()->pluck('tag_name')->contains($tag)) {
             $post->untag($tag);
         } else {
             $post->tag($tag);
         }
 
         // Return the post object including the tags that are related to it.
-        return Post::with('signup', 'tagged')->findOrFail($post->id);
+        return Post::with('signup', 'tags')->findOrFail($post->id);
     }
 
     /**

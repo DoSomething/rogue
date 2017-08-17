@@ -156,15 +156,19 @@ class Post extends Model
         ];
     }
 
-    // @TODO: this is a placeholder until the new tags are ready to go
-    public function tag()
+    // @TODO: add tag if not already there, remove if it is already there
+    public function tag($tagName)
     {
+        $tag = Tag::where('tag_name', '=', $tagName)->findOrFail();
+
+        $post->tags()->attach($tag);
+        dd('got here');
         return $this;
     }
 
     // @TODO: this is a placeholder until the new tags are ready to go
-    public function tagged()
-    {
-        return $this;
-    }
+    // public function tagged()
+    // {
+    //     return $this;
+    // }
 }
