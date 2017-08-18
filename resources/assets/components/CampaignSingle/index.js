@@ -75,7 +75,8 @@ class CampaignSingle extends React.Component {
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
-        var signupId = signup.signup_id ? signup.signup_id : signup.id;
+                console.log(newState);
+
         var firstPostId = Object.keys(newState.posts)[0];
         newState.posts[firstPostId].signup.data.quantity = result.quantity;
 
@@ -96,7 +97,6 @@ class CampaignSingle extends React.Component {
     request.then((result) => {
       this.setState((previousState) => {
         const newState = {...previousState};
-
         newState.posts[postId].status = fields.status;
 
         return newState;
@@ -113,17 +113,24 @@ class CampaignSingle extends React.Component {
     };
 
     let response = this.api.post('tags', fields);
+
     response.then((result) => {
       this.setState((previousState) => {
         const newState = {...previousState};
+
         const user = newState.posts[postId].user;
+
         const signup = newState.posts[postId].signup.data;
 
-        newState.posts[postId] = result['data'];
+        // Merge existing post with the newly updated values from API.
+        newState.posts[postId] = {
+          ...newState.posts[postId],
+          ...result['data']
+        };
 
         // Keep the user and signup from the initial page load.
         newState.posts[postId].user = user;
-        // newState.posts[postId].signup.data = signup;
+
 
         return newState;
       });
