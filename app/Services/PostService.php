@@ -67,12 +67,12 @@ class PostService
      */
     public function update($signup, $data, $transactionId)
     {
-        $post = $this->repository->update($signup, $data);
+        $postOrSignup = $this->repository->update($signup, $data);
 
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
 
-        return $post;
+        return $postOrSignup;
     }
 
     /**
