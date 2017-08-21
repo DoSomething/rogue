@@ -35,9 +35,10 @@ class CampaignServiceTest extends TestCase
             ]);
 
         $campaignService = $this->app->make(CampaignService::class);
+        $cache = new CacheRepository('campaign');
 
         // Test that the campaign is not in cache.
-        $campaign = Cache::get($testCampaign['id']);
+        $campaign = $cache->retrieve($testCampaign['id']);
         $this->assertNull($campaign);
 
         // If it's not in cache we should make the call to phoenix
@@ -45,7 +46,7 @@ class CampaignServiceTest extends TestCase
         // for future requests.
         $campaign = $campaignService->find($testCampaign['id']);
         $this->assertEquals($campaign, $testCampaign);
-        $this->assertEquals(Cache::get($testCampaign['id']), $testCampaign);
+        $this->assertEquals($cache->retrieve($testCampaign['id']), $testCampaign);
     }
 
     /**
@@ -78,7 +79,7 @@ class CampaignServiceTest extends TestCase
             ->andReturn(['data' => $testCampaigns]);
 
         $campaignService = $this->app->make(CampaignService::class);
-        $cache = $this->app->make(CacheRepository::class);
+        $cache = new CacheRepository('campaign');
 
         // Test that the campaign is not in cache.
         $campaigns = $cache->retrieveMany($testIds);
