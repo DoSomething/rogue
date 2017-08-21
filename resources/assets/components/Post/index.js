@@ -29,7 +29,7 @@ class Post extends React.Component {
           </div>
         </div>
         <div className="container__block -third">
-          <ReviewBlock post={post} />
+          <ReviewBlock post={post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
         </div>
       </div>
     )
