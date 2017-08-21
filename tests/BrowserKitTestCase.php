@@ -58,21 +58,6 @@ class BrowserKitTestCase extends BaseTestCase
     }
 
     /**
-     * Assert that a soft-deleted record exists in the database.
-     *
-     * @param $table
-     * @param $id
-     * @return $this
-     */
-    public function seeSoftDeletedRecord($table, $id)
-    {
-        $this->seeInDatabase($table, ['id' => $id, 'url' => null])
-            ->notSeeInDatabase($table, ['id' => $id, 'deleted_at' => null]);
-
-        return $this;
-    }
-
-    /**
      * "Freeze" time so we can make assertions based on it.
      *
      * @param string $time

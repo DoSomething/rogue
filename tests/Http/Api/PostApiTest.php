@@ -2,12 +2,12 @@
 
 namespace Tests\Http\Api;
 
+use Tests\TestCase;
 use Rogue\Models\Signup;
-use Tests\BrowserKitTestCase;
 use DoSomething\Gateway\Blink;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
-class PostApiTest extends BrowserKitTestCase
+class PostApiTest extends TestCase
 {
     /**
      * Test that a POST request to /posts creates a new
@@ -23,18 +23,13 @@ class PostApiTest extends BrowserKitTestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $caption = $this->faker->sentence;
 
-        // Mock file system operations.
-        $url = 'https://ds-rogue-prod.s3.amazonaws.com/uploads/reportback-items/edited_1.jpeg';
-        Storage::shouldReceive('put')->andReturn(true);
-        Storage::shouldReceive('url')->andReturn($url);
-
         // Mock the Blink API calls.
         $this->mock(Blink::class)
             ->shouldReceive('userSignup')
             ->shouldReceive('userSignupPost');
 
         // Create the post!
-        $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+        $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $northstar_id,
             'campaign_id'      => $campaign_id,
             'campaign_run_id'  => $campaign_run_id,
@@ -44,7 +39,7 @@ class PostApiTest extends BrowserKitTestCase
             'caption'          => $caption,
             'source'           => 'phpunit',
             'remote_addr'      => $this->faker->ipv4,
-            'file'             => $this->mockFile(),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
             'crop_x'           => 0,
             'crop_y'           => 0,
             'crop_width'       => 100,
@@ -52,26 +47,25 @@ class PostApiTest extends BrowserKitTestCase
             'crop_rotate'      => 90,
         ]);
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonSubset([
+        $response->assertStatus(200);
+        $response->assertJson([
             'data' => [
                 'northstar_id' => $northstar_id,
                 'status' => 'pending',
                 'media' => [
-                    'url' => $url,
                     'caption' => $caption,
                 ],
             ],
         ]);
 
         // Make sure the signup & post are persisted to the database.
-        $this->seeInDatabase('signups', [
+        $this->assertDatabaseHas('signups', [
             'campaign_id' => $campaign_id,
             'northstar_id' => $northstar_id,
             'quantity' => $quantity,
         ]);
 
-        $this->seeInDatabase('posts', [
+        $this->assertDatabaseHas('posts', [
             'northstar_id' => $northstar_id,
             'campaign_id' => $campaign_id,
             'status' => 'pending',
@@ -89,16 +83,11 @@ class PostApiTest extends BrowserKitTestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $caption = $this->faker->sentence;
 
-        // Mock file system operations.
-        $url = 'https://ds-rogue-prod.s3.amazonaws.com/uploads/reportback-items/edited_1.jpeg';
-        Storage::shouldReceive('put')->andReturn(true);
-        Storage::shouldReceive('url')->andReturn($url);
-
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+        $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -108,7 +97,7 @@ class PostApiTest extends BrowserKitTestCase
             'caption'          => $caption,
             'source'           => 'phpunit',
             'remote_addr'      => $this->faker->ipv4,
-            'file'             => $this->mockFile(),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
             'crop_x'           => 0,
             'crop_y'           => 0,
             'crop_width'       => 100,
@@ -116,19 +105,18 @@ class PostApiTest extends BrowserKitTestCase
             'crop_rotate'      => 90,
         ]);
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonSubset([
+        $response->assertStatus(200);
+        $response->assertJson([
             'data' => [
                 'northstar_id' => $signup->northstar_id,
                 'status' => 'pending',
                 'media' => [
-                    'url' => $url,
                     'caption' => $caption,
                 ],
             ],
         ]);
 
-        $this->seeInDatabase('posts', [
+        $this->assertDatabaseHas('posts', [
             'signup_id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
