@@ -115,7 +115,7 @@ class PostRepository
      * @param \Rogue\Models\Signup $signup
      * @param array $data
      *
-     * @return \Rogue\Models\Post
+     * @return Signup|Post
      */
     public function update($signup, $data)
     {
@@ -171,7 +171,7 @@ class PostRepository
      *
      * @param array $data
      *
-     * @return
+     * @return Post
      */
     public function reviews($data)
     {

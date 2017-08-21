@@ -63,7 +63,7 @@ class PostService
      * @param \Rogue\Models\Signup $signup
      * @param array $data
      * @param string $transactionId
-     * @return \Rogue\Models\Post
+     * @return \Rogue\Models\Post|\Rogue\Models\Signup
      */
     public function update($signup, $data, $transactionId)
     {
