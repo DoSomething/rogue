@@ -37,7 +37,7 @@ class CacheRepository
         $idsWithPrefix = [];
 
         foreach ($keys as $key => $id) {
-            array_push($idsWithPrefix, $this->setPrefix($id));
+            array_push($idsWithPrefix, $this->applyPrefix($id));
         }
 
         $retrieved = [];
@@ -55,12 +55,12 @@ class CacheRepository
     }
 
     /**
-     * Set a prefix on supplied string used as cache key.
+     * Apply a prefix on supplied string used as cache key.
      *
      * @param  string  $string
      * @return string
      */
-    public function setPrefix($string)
+    public function applyPrefix($string)
     {
         if (property_exists($this, 'prefix')) {
             return $this->prefix . ':' . $string;
@@ -92,7 +92,7 @@ class CacheRepository
     public function storeMany(array $values, $minutes = 15)
     {
         foreach ($values as $key => $value) {
-            $keyWithPrefix = $this->setPrefix($key);
+            $keyWithPrefix = $this->applyPrefix($key);
             $values[$keyWithPrefix] = $values[$key];
             unset($values[$key]);
         }
