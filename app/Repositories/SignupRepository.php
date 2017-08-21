@@ -3,27 +3,9 @@
 namespace Rogue\Repositories;
 
 use Rogue\Models\Signup;
-use DoSomething\Gateway\Blink;
 
 class SignupRepository
 {
-    /**
-     * Blink API client.
-     *
-     * @var \DoSomething\Gateway\Blink
-     */
-    protected $blink;
-
-    /**
-     * Create a SignupRepository.
-     *
-     * @param Blink $blink
-     */
-    public function __construct(Blink $blink)
-    {
-        $this->blink = $blink;
-    }
-
     /**
      * Create a signup.
      *
@@ -56,12 +38,6 @@ class SignupRepository
             $event->save(['timestamps' => false]);
         } else {
             $signup->save();
-        }
-
-        // Save the new signup in Customer.io, via Blink.
-        if (config('features.blink')) {
-            $payload = $signup->toBlinkPayload();
-            $this->blink->userSignup($payload);
         }
 
         return $signup;
