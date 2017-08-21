@@ -60,7 +60,6 @@ class CampaignInbox extends React.Component {
     request.then((result) => {
       this.setState((previousState) => {
         const newState = {...previousState};
-
         newState.posts[postId].status = fields.status;
 
         return newState;
@@ -83,9 +82,6 @@ class CampaignInbox extends React.Component {
         const user = newState.posts[postId].user;
 
         newState.posts[postId] = result['data'];
-
-        // Keep the user from the initial page load.
-        newState.posts[postId].user = user;
 
         return newState;
       });
@@ -163,7 +159,7 @@ class CampaignInbox extends React.Component {
           { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} post={post} campaign={campaign} signup={this.state.signups[post.signup_id]} />) }
 
           <ModalContainer>
-            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{post: posts[this.state.historyModalId], campaign: campaign, signups: this.state.signups }}/> : null}
+            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} post={posts[this.state.historyModalId]} campaign={campaign} signups={this.state.signups}/> : null}
           </ModalContainer>
         </div>
       )

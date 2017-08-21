@@ -1,7 +1,7 @@
 /vendor
 /node_modules
 /public/storage
-/storage/debugar
+/storage/debugbar
 Homestead.yaml
 Homestead.json
 .env
