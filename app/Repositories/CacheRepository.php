@@ -22,6 +22,8 @@ class CacheRepository
      */
     public function retrieve($key)
     {
+        $key = $this->applyPrefix($key);
+
         return Cache::get($key);
     }
 
@@ -79,6 +81,8 @@ class CacheRepository
      */
     public function store($key, $value, $minutes = 15)
     {
+        $key = $this->applyPrefix($key);
+
         Cache::put($key, $value, $minutes);
     }
 
