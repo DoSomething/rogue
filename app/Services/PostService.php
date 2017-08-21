@@ -2,6 +2,7 @@
 
 namespace Rogue\Services;
 
+use DoSomething\Gateway\Blink;
 use Rogue\Repositories\PostRepository;
 
 class PostService
@@ -14,13 +15,22 @@ class PostService
     protected $repository;
 
     /**
+     * Blink API client.
+     *
+     * @var \DoSomething\Gateway\Blink
+     */
+    protected $blink;
+
+    /**
      * Constructor
      *
-     * @param \Rogue\Repositories\PostRepository $posts
+     * @param PostRepository $posts
+     * @param Blink $blink
      */
-    public function __construct(PostRepository $posts)
+    public function __construct(PostRepository $posts, Blink $blink)
     {
         $this->repository = $posts;
+        $this->blink = $blink;
     }
 
     /**
@@ -29,11 +39,17 @@ class PostService
      * @param array $data
      * @param int $signupId
      * @param string $transactionId
-     * @return Illuminate\Database\Eloquent\Model $model
+     * @return \Rogue\Models\Post
      */
     public function create($data, $signupId, $transactionId)
     {
         $post = $this->repository->create($data, $signupId);
+
+        // Save the new post in Customer.io, via Blink.
+        if (config('features.blink')) {
+            $payload = $post->toBlinkPayload();
+            $this->blink->userSignupPost($payload);
+        }
 
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
@@ -47,17 +63,16 @@ class PostService
      * @param \Rogue\Models\Signup $signup
      * @param array $data
      * @param string $transactionId
-     *
-     * @return \Illuminate\Database\Eloquent\Model $model
+     * @return \Rogue\Models\Post|\Rogue\Models\Signup
      */
     public function update($signup, $data, $transactionId)
     {
-        $post = $this->repository->update($signup, $data);
+        $postOrSignup = $this->repository->update($signup, $data);
 
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
 
-        return $post;
+        return $postOrSignup;
     }
 
     /**

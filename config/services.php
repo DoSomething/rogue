@@ -39,6 +39,12 @@ return [
         'version' => env('PHOENIX_API_VERSION'),
     ],
 
+    'blink' => [
+        'url' => env('BLINK_URL'),
+        'user' => env('BLINK_USERNAME'),
+        'password' => env('BLINK_PASSWORD'),
+    ],
+
     'ses' => [
         'key' => env('SES_KEY'),
         'secret' => env('SES_SECRET'),

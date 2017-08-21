@@ -16,7 +16,14 @@ class PostRepository
      *
      * @var \Rogue\Services\AWS
      */
-    protected $AWS;
+    protected $aws;
+
+    /**
+     * The user repository.
+     *
+     * @var \Rogue\Services\Registrar
+     */
+    protected $registrar;
 
     /**
      * Array of properties needed for cropping and rotating.
@@ -26,7 +33,10 @@ class PostRepository
     protected $cropProperties = ['crop_x', 'crop_y', 'crop_width', 'crop_height', 'crop_rotate'];
 
     /**
-     * Constructor
+     * Create a PostRepository.
+     *
+     * @param AWS $aws
+     * @param Registrar $registrar
      */
     public function __construct(AWS $aws, Registrar $registrar)
     {
@@ -93,7 +103,7 @@ class PostRepository
 
         // Edit the image if there is one
         if (isset($data['file'])) {
-            $editedImage = $this->crop($data, $post->id);
+            $this->crop($data, $post->id);
         }
 
         return $post;
@@ -102,10 +112,10 @@ class PostRepository
     /**
      * Update an existing Post and Signup.
      *
-     * @param \Rogue\Models\Post $signup
+     * @param \Rogue\Models\Signup $signup
      * @param array $data
      *
-     * @return \Rogue\Models\Post
+     * @return Signup|Post
      */
     public function update($signup, $data)
     {
@@ -161,7 +171,7 @@ class PostRepository
      *
      * @param array $data
      *
-     * @return
+     * @return Post
      */
     public function reviews($data)
     {

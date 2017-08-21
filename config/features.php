@@ -14,4 +14,6 @@ return [
 
     'glide' => env('DS_ENABLE_GLIDE'),
 
+    'blink' => env('DS_ENABLE_BLINK'),
+
 ];

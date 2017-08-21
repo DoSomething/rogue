@@ -2,6 +2,7 @@
 
 namespace Rogue\Providers;
 
+use DoSomething\Gateway\Blink;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // @TODO: This should be registered in Gateway's service provider!
+        $this->app->singleton(Blink::class, function () {
+            return new Blink(config('services.blink'));
+        });
     }
 }

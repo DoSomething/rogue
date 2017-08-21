@@ -133,4 +133,28 @@ class Post extends Model
     {
         return $this->hasMany(self::class, 'signup_id', 'signup_id');
     }
+
+    /**
+     * Transform the post model for Blink.
+     *
+     * @return array
+     */
+    public function toBlinkPayload()
+    {
+        return [
+            'id' => $this->id,
+            'signup_id' => $this->signup_id,
+            'campaign_id' => $this->campaign_id,
+            'campaign_run_id' => $this->campaign_run_id,
+            'northstar_id' => $this->northstar_id,
+            'url' => $this->getMediaUrl(),
+            'caption' => $this->caption,
+            'status' => $this->status,
+            'remote_addr' => $this->remote_addr,
+            'source' => $this->source,
+            'created_at' => $this->created_at->toIso8601String(),
+            'updated_at' => $this->updated_at->toIso8601String(),
+            'deleted_at' => $this->deleted_at ? $this->deleted_at->toIso8601String() : null,
+        ];
+    }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Http\Api;
 
 use Tests\BrowserKitTestCase;
+use DoSomething\Gateway\Blink;
 
 class SignupApiTest extends BrowserKitTestCase
 {
@@ -17,6 +18,9 @@ class SignupApiTest extends BrowserKitTestCase
         $northstarId = '54fa272b469c64d7068b456a';
         $campaignId = $this->faker->randomNumber(4);
         $campaignRunId = $this->faker->randomNumber(4);
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignup');
 
         $this->withRogueApiKey()->json('POST', 'api/v2/signups', [
             'northstar_id'     => $northstarId,
