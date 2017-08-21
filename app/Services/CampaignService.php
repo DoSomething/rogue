@@ -65,7 +65,13 @@ class CampaignService
     public function findAll($ids = [])
     {
         if ($ids) {
-            $campaigns = $this->cache->retrieveMany($ids);
+            $idsWithPrefix = [];
+
+            foreach ($ids as $key => $id) {
+                array_push($idsWithPrefix, $this->cache->setPrefix($id));
+            }
+
+            $campaigns = $this->cache->retrieveMany($idsWithPrefix);
 
             if (! $campaigns) {
                 $campaigns = $this->getBatchedCollection($ids);
@@ -73,18 +79,20 @@ class CampaignService
                 if (count($campaigns)) {
                     $group = $campaigns->keyBy('id')->all();
 
+                    foreach ($group as $key => $value) {
+                        $keyWithPrefix = $this->cache->setPrefix($key);
+                        $group[$keyWithPrefix] = $group[$key];
+                        unset($group[$key]);
+                    }
                     // Cache campaigns for a day.
                     $this->cache->storeMany($group, 1440);
                 }
             } else {
                 $campaigns = $this->resolveMissingCampaigns($campaigns);
-
                 $campaigns = collect(array_values($campaigns));
             }
-
             return collect($campaigns);
         }
-
         return collect($this->phoenix->getAllCampaigns());
     }
 

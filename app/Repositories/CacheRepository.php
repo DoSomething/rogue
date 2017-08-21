@@ -7,6 +7,14 @@ use Illuminate\Support\Facades\Cache;
 class CacheRepository
 {
     /**
+     * Instantiate a new CacheRepository.
+     */
+    public function __construct()
+    {
+        $this->prefix = 'campaign';
+    }
+
+    /**
      * Retrieve an item from the cache by key.
      *
      * @param  string  $key
