@@ -1,7 +1,6 @@
 <?php
 
 use Rogue\Models\Tag;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class MoveTaggingTagsToTagsTable extends Migration

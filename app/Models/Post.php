@@ -2,7 +2,6 @@
 
 namespace Rogue\Models;
 
-use Rogue\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -78,7 +77,7 @@ class Post extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
     /**
@@ -166,7 +165,7 @@ class Post extends Model
         $tag = Tag::where('tag_name', $tagName)->first();
 
         // Create the tag if it doesn't already exist (so we don't have to create tags separately)
-        if (!$tag) {
+        if (! $tag) {
             $tag = Tag::create(['tag_name' => $tagName, 'tag_slug' => str_slug($tagName, '-')]);
         }
 
