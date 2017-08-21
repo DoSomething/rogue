@@ -9,9 +9,9 @@ class CacheRepository
     /**
      * Instantiate a new CacheRepository.
      */
-    public function __construct()
+    public function __construct($prefix)
     {
-        $this->prefix = 'campaign';
+        $this->prefix = $prefix;
     }
 
     /**

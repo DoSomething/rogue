@@ -25,12 +25,11 @@ class CampaignService
      * Create new Registrar instance.
      *
      * @param Phoenix $phoenix
-     * @param CacheRepository $cache
      */
-    public function __construct(Phoenix $phoenix, CacheRepository $cache)
+    public function __construct(Phoenix $phoenix)
     {
         $this->phoenix = $phoenix;
-        $this->cache = $cache;
+        $this->cache = new CacheRepository('campaign');
     }
 
     /**
