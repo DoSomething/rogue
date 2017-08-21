@@ -1,11 +1,10 @@
 // Utilities
 import React from 'react';
-import { map } from 'lodash';
+import { map, startCase} from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 import { calculateAge, displayName, displayCityState } from '../../helpers';
 
 // Components
-import InboxItem from '../InboxItem';
 import Post from '../Post';
 import TextBlock from '../TextBlock';
 import HistoryModal from '../HistoryModal';
@@ -16,6 +15,24 @@ import UserInformation from '../Users/UserInformation';
 // Styles
 import './signup.scss';
 
+class PostGroup extends React.Component {
+  render() {
+    return (
+      <div className="container__row">
+        <div className="container__block">
+            <h2>{startCase(this.props.groupType)}</h2>
+        </div>
+        {
+          map(this.props.posts, (post, key) => {
+            if (post['status'] === this.props.groupType) {
+              return <Post key={key} post={post} signup={this.props.signup} />;
+            }
+          })
+        }
+      </div>
+    )
+  }
+}
 
 class Signup extends React.Component {
   constructor(props) {
@@ -87,45 +104,11 @@ class Signup extends React.Component {
             }} />
           </div>
         </div>
-
-        <div className="container__row">
-          <div className="container__block">
-              <h2>Accepted</h2>
-          </div>
-          {
-            map(posts, (post, key) => {
-              if (post['status'] === 'accepted') {
-                return <Post key={key} post={post} signup={signup} />;
-              }
-            })
-          }
-        </div>
-
-        <div className="container__row">
-          <div className="container__block">
-            <h2>Pending</h2>
-          </div>
-          {
-            map(posts, (post, key) => {
-              if (post['status'] === 'pending') {
-                return <InboxItem allowReview={true} key={key} post={post} campaign={campaign} signup={signup} />;
-              }
-            })
-          }
-        </div>
-
-        <div className="container__row">
-          <div className="container__block">
-            <h2>Rejected</h2>
-          </div>
-          {
-            map(posts, (post, key) => {
-              if (post['status'] === 'rejected') {
-                return <InboxItem allowReview={true} key={key} post={post} campaign={campaign} signup={signup} />;
-              }
-            })
-          }
-        </div>
+        {
+          map(['accepted', 'pending', 'rejected'], (status, key) => {
+            return <PostGroup key={key} groupType={status} posts={posts} signup={signup} />
+          })
+        }
       </div>
     )
   }
