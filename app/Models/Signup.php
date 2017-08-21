@@ -88,4 +88,24 @@ class Signup extends Model
     {
         return $query->withCount(['accepted', 'pending', 'rejected']);
     }
+
+    /**
+     * Transform the signup model for Blink.
+     *
+     * @return array
+     */
+    public function toBlinkPayload()
+    {
+        return [
+            'id' => $this->id,
+            'northstar_id' => $this->northstar_id,
+            'campaign_id' => $this->campaign_id,
+            'campaign_run_id' => $this->campaign_run_id,
+            'quantity' => $this->quantity,
+            'why_participated' => $this->why_participated,
+            'source' => $this->source,
+            'created_at' => $this->created_at->toIso8601String(),
+            'updated_at' => $this->updated_at->toIso8601String(),
+        ];
+    }
 }

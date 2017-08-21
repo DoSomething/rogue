@@ -4,6 +4,7 @@ namespace Tests\Http\Api;
 
 use Rogue\Models\Signup;
 use Tests\BrowserKitTestCase;
+use DoSomething\Gateway\Blink;
 use Illuminate\Support\Facades\Storage;
 
 class PostApiTest extends BrowserKitTestCase
@@ -26,6 +27,11 @@ class PostApiTest extends BrowserKitTestCase
         $url = 'https://ds-rogue-prod.s3.amazonaws.com/uploads/reportback-items/edited_1.jpeg';
         Storage::shouldReceive('put')->andReturn(true);
         Storage::shouldReceive('url')->andReturn($url);
+
+        // Mock the Blink API calls.
+        $this->mock(Blink::class)
+            ->shouldReceive('userSignup')
+            ->shouldReceive('userSignupPost');
 
         // Create the post!
         $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
@@ -87,6 +93,9 @@ class PostApiTest extends BrowserKitTestCase
         $url = 'https://ds-rogue-prod.s3.amazonaws.com/uploads/reportback-items/edited_1.jpeg';
         Storage::shouldReceive('put')->andReturn(true);
         Storage::shouldReceive('url')->andReturn($url);
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
         $this->withRogueApiKey()->json('POST', 'api/v2/posts', [

@@ -7,6 +7,7 @@ use Rogue\Services\AWS;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
+use DoSomething\Gateway\Blink;
 use Intervention\Image\Facades\Image;
 
 class PostRepository
@@ -16,7 +17,21 @@ class PostRepository
      *
      * @var \Rogue\Services\AWS
      */
-    protected $AWS;
+    protected $aws;
+
+    /**
+     * The user repository.
+     *
+     * @var \Rogue\Services\Registrar
+     */
+    protected $registrar;
+
+    /**
+     * Blink API client.
+     *
+     * @var \DoSomething\Gateway\Blink
+     */
+    protected $blink;
 
     /**
      * Array of properties needed for cropping and rotating.
@@ -26,12 +41,17 @@ class PostRepository
     protected $cropProperties = ['crop_x', 'crop_y', 'crop_width', 'crop_height', 'crop_rotate'];
 
     /**
-     * Constructor
+     * Create a PostRepository.
+     *
+     * @param AWS $aws
+     * @param Registrar $registrar
+     * @param Blink $blink
      */
-    public function __construct(AWS $aws, Registrar $registrar)
+    public function __construct(AWS $aws, Registrar $registrar, Blink $blink)
     {
         $this->aws = $aws;
         $this->registrar = $registrar;
+        $this->blink = $blink;
     }
 
     /**
@@ -94,6 +114,12 @@ class PostRepository
         // Edit the image if there is one
         if (isset($data['file'])) {
             $this->crop($data, $post->id);
+        }
+
+        // Save the new post in Customer.io, via Blink.
+        if (config('features.blink')) {
+            $payload = $post->toBlinkPayload();
+            $this->blink->userSignupPost($payload);
         }
 
         return $post;
