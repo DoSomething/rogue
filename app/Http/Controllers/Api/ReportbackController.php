@@ -5,20 +5,11 @@ namespace Rogue\Http\Controllers\Api;
 use Rogue\Models\Post;
 use League\Fractal\Manager;
 use Illuminate\Http\Request;
-use Rogue\Models\Reportback;
-use Rogue\Services\ReportbackService;
-use Rogue\Http\Requests\ReportbackRequest;
 use Rogue\Http\Transformers\ReportbackTransformer;
 use Rogue\Http\Transformers\PaginatorForPhoenixAshesGallery;
 
 class ReportbackController extends ApiController
 {
-    /**
-     * The Reportback service.
-     *
-     * @var ReportbackService
-     */
-    protected $reportbackService;
 
     /**
      * @var ReportbackTransformer
@@ -28,12 +19,11 @@ class ReportbackController extends ApiController
     /**
      * Create new ReportbackController instance.
      *
-     * @param ReportbackService $reportbackService
+     * @param ReportbackTransformer $transformer
      */
-    public function __construct(ReportbackService $reportbackService)
+    public function __construct(ReportbackTransformer $transformer)
     {
-        $this->reportbackService = $reportbackService;
-        $this->transformer = new ReportbackTransformer;
+        $this->transformer = $transformer;
     }
 
     /**
@@ -88,65 +78,6 @@ class ReportbackController extends ApiController
         }
 
         return $this->paginatedCollection($query, $request);
-    }
-
-    /**
-     * Store a newly created resource in storage or
-     * update a reportback if it already exists.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(ReportbackRequest $request)
-    {
-        $transactionId = incrementTransactionId($request);
-
-        // @TODO - instead should probably just have a method that gets northstar_id by default from a drupal_id if that is the only thing provided and then use that to find the reportback.
-        $userId = $request['northstar_id'] ? $request['northstar_id'] : $request['drupal_id'];
-        $type = $request['northstar_id'] ? 'northstar_id' : 'drupal_id';
-
-        $reportback = $this->reportbackService->getReportback($request['campaign_id'], $request['campaign_run_id'], $userId, $type);
-
-        $updating = ! is_null($reportback);
-
-        if (! $updating) {
-            $reportback = $this->reportbackService->create($request->all(), $transactionId);
-
-            $code = 200;
-        } else {
-            $reportback = $this->reportbackService->update($reportback, $request->all(), $transactionId);
-
-            $code = 201;
-        }
-
-        return $this->item($reportback, $code);
-    }
-
-    /**
-     * Update reportbackitem(s) that already exists.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function updateReportbackItems(Request $request)
-    {
-        $this->validate($request, [
-            '*.rogue_reportback_item_id' => 'required',
-            '*.status' => 'required',
-            '*.reviewer' => 'required',
-        ]);
-
-        $items = $this->reportbackService->updateReportbackItems($request->all());
-
-        if (empty($items)) {
-            $code = 404;
-        } else {
-            $code = 201;
-        }
-
-        $meta = [];
-
-        return $this->collection($items, $code, $meta, $this->itemTransformer);
     }
 
     /**
