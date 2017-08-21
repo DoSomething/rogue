@@ -34,16 +34,21 @@ class CacheRepository
      */
     public function retrieveMany(array $keys)
     {
+        $idsWithPrefix = [];
+
+        foreach ($keys as $key => $id) {
+            array_push($idsWithPrefix, $this->setPrefix($id));
+        }
+
         $retrieved = [];
 
-        $data = Cache::many($keys);
+        $data = Cache::many($idsWithPrefix);
 
         foreach ($data as $item) {
             if ($item) {
                 $retrieved[] = $item;
             }
         }
-
         if (count($retrieved)) {
             return $data;
         }
@@ -86,6 +91,12 @@ class CacheRepository
      */
     public function storeMany(array $values, $minutes = 15)
     {
+        foreach ($values as $key => $value) {
+            $keyWithPrefix = $this->setPrefix($key);
+            $values[$keyWithPrefix] = $values[$key];
+            unset($values[$key]);
+        }
+
         Cache::putMany($values, $minutes);
     }
 
