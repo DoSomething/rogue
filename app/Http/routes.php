@@ -51,12 +51,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['auth.api', 'log.received.r
         return 'Rogue API version 1';
     });
 
-    // items
-    Route::put('items', 'Api\ReportbackController@updateReportbackItems');
-
     // reportbacks
     Route::get('reportbacks', 'Api\ReportbackController@index');
-    Route::post('reportbacks', 'Api\ReportbackController@store');
 });
 
 // v2 routes
