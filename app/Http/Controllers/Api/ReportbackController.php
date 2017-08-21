@@ -10,7 +10,6 @@ use Rogue\Http\Transformers\PaginatorForPhoenixAshesGallery;
 
 class ReportbackController extends ApiController
 {
-
     /**
      * @var ReportbackTransformer
      */
