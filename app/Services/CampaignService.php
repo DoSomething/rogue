@@ -79,8 +79,10 @@ class CampaignService
                 $campaigns = $this->resolveMissingCampaigns($campaigns);
                 $campaigns = collect(array_values($campaigns));
             }
+
             return collect($campaigns);
         }
+
         return collect($this->phoenix->getAllCampaigns());
     }
 
