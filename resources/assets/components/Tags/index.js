@@ -26,7 +26,7 @@ class Tags extends React.Component {
       'good-for-sponsor': 'Good For Sponsor',
       'good-for-storytelling': 'Good For Storytelling',
     };
-
+    console.log(this.props.tagged.includes(0));
     return (
       <div>
         <h4>Tags</h4>

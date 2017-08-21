@@ -51,7 +51,7 @@ class SignupsController extends Controller
         $user = $this->registrar->find($signup->northstar_id);
         return view('signups.show', compact('campaign'))
             ->with('state', [
-                'signup' => $signup,
+                'signup_id' => $signup->id,
                 'campaign' => $campaign,
                 'user' => $user->toArray(),
             ]);

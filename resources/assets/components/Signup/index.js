@@ -39,8 +39,8 @@ class Signup extends React.Component {
     super(props);
 
     this.state = {
-      signups: props.signup,
-      posts: keyBy(props.signup.posts, 'id'),
+      signup: '',
+      posts: '',
       displayHistoryModal: false,
       historyModalId: null,
     };
@@ -52,6 +52,27 @@ class Signup extends React.Component {
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
     this.deletePost = this.deletePost.bind(this);
+  }
+
+  componentDidMount() {
+    this.getUserActivity(this.props.signup_id);
+  }
+
+  /**
+   * Gets the user activity for the specified user and update state.
+   *
+   * @param {String} id
+   * @return {Object}
+   */
+  getUserActivity(id) {
+    this.api.get('api/v2/activity', {
+      filter: {
+        id: id,
+      }
+    }).then(json => this.setState({
+      signup: json.data[0],
+      posts: json.data[0].posts.data
+    }));
   }
 
   // Open the history modal of the given post
@@ -79,7 +100,7 @@ class Signup extends React.Component {
   // Updates a post status.
   updatePost(postId, fields) {
     fields.post_id = postId;
-    console.log(fields);
+
     let request = this.api.put('reviews', fields);
 
     request.then((result) => {
@@ -105,12 +126,8 @@ class Signup extends React.Component {
     response.then((result) => {
       this.setState((previousState) => {
         const newState = {...previousState};
-        const user = newState.posts[postId].user;
 
         newState.posts[postId] = result['data'];
-
-        // Keep the user from the initial page load.
-        newState.posts[postId].user = user;
 
         return newState;
       });
@@ -171,9 +188,9 @@ class Signup extends React.Component {
 
   render() {
     const user = this.props.user;
-    const signup = this.props.signup;
+    const signup = this.state.signup;
     const campaign = this.props.campaign;
-    const posts = this.props.signup.posts;
+    const posts = this.state.posts;
 
     return (
       <div className="signup">
