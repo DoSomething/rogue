@@ -60,7 +60,7 @@ class CacheRepository
      * @param  string  $string
      * @return string
      */
-    public function applyPrefix($string)
+    protected function applyPrefix($string)
     {
         if (property_exists($this, 'prefix')) {
             return $this->prefix . ':' . $string;
