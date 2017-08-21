@@ -25,12 +25,11 @@ class CampaignService
      * Create new Registrar instance.
      *
      * @param Phoenix $phoenix
-     * @param CacheRepository $cache
      */
-    public function __construct(Phoenix $phoenix, CacheRepository $cache)
+    public function __construct(Phoenix $phoenix)
     {
         $this->phoenix = $phoenix;
-        $this->cache = $cache;
+        $this->cache = new CacheRepository('campaign');
     }
 
     /**
@@ -43,7 +42,6 @@ class CampaignService
     public function find($id)
     {
         $campaign = $this->cache->retrieve($id);
-
         if (! $campaign) {
             $campaign = $this->phoenix->getCampaign($id);
 
@@ -78,7 +76,6 @@ class CampaignService
                 }
             } else {
                 $campaigns = $this->resolveMissingCampaigns($campaigns);
-
                 $campaigns = collect(array_values($campaigns));
             }
 

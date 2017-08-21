@@ -7,6 +7,14 @@ use Illuminate\Support\Facades\Cache;
 class CacheRepository
 {
     /**
+     * Instantiate a new CacheRepository.
+     */
+    public function __construct($prefix)
+    {
+        $this->prefix = $prefix;
+    }
+
+    /**
      * Retrieve an item from the cache by key.
      *
      * @param  string  $key
@@ -14,6 +22,8 @@ class CacheRepository
      */
     public function retrieve($key)
     {
+        $key = $this->applyPrefix($key);
+
         return Cache::get($key);
     }
 
@@ -26,28 +36,33 @@ class CacheRepository
      */
     public function retrieveMany(array $keys)
     {
+        $idsWithPrefix = [];
+
+        foreach ($keys as $key => $id) {
+            array_push($idsWithPrefix, $this->applyPrefix($id));
+        }
+
         $retrieved = [];
 
-        $data = Cache::many($keys);
+        $data = Cache::many($idsWithPrefix);
 
         foreach ($data as $item) {
             if ($item) {
                 $retrieved[] = $item;
             }
         }
-
         if (count($retrieved)) {
             return $data;
         }
     }
 
     /**
-     * Set a prefix on supplied string used as cache key.
+     * Apply a prefix on supplied string used as cache key.
      *
      * @param  string  $string
      * @return string
      */
-    public function setPrefix($string)
+    protected function applyPrefix($string)
     {
         if (property_exists($this, 'prefix')) {
             return $this->prefix . ':' . $string;
@@ -66,6 +81,8 @@ class CacheRepository
      */
     public function store($key, $value, $minutes = 15)
     {
+        $key = $this->applyPrefix($key);
+
         Cache::put($key, $value, $minutes);
     }
 
@@ -78,6 +95,12 @@ class CacheRepository
      */
     public function storeMany(array $values, $minutes = 15)
     {
+        foreach ($values as $key => $value) {
+            $keyWithPrefix = $this->applyPrefix($key);
+            $values[$keyWithPrefix] = $values[$key];
+            unset($values[$key]);
+        }
+
         Cache::putMany($values, $minutes);
     }
 
