@@ -93,7 +93,7 @@ class PostRepository
 
         // Edit the image if there is one
         if (isset($data['file'])) {
-            $editedImage = $this->crop($data, $post->id);
+            $this->crop($data, $post->id);
         }
 
         return $post;
