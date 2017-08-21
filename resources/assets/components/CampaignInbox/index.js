@@ -65,7 +65,6 @@ class CampaignInbox extends React.Component {
         return newState;
       });
     });
-
   }
 
   // Tag a post.

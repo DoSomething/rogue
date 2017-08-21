@@ -33,7 +33,7 @@ class Tags extends React.Component {
         <ul className="aligned-actions">
           {map(tags, (label, key) => (
             <li key={key}>
-              <button className={classnames('tag', {'is-active': this.props.tagged.includes(key)})}
+              <button className={classnames('tag', {'is-active': this.props.tagged.includes(label)})}
                       onClick={() => this.handleClick(label)}>{label}</button>
             </li>
           ))}

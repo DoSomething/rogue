@@ -17,6 +17,7 @@ class CreateTagsAndPostTagTables extends Migration
             $table->string('tag_name');
             $table->string('tag_slug');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('post_tag', function (Blueprint $table) {

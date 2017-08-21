@@ -2,6 +2,7 @@
 
 namespace Tests\Http;
 
+use Rogue\Models\Tag;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Tests\BrowserKitTestCase;
@@ -17,8 +18,10 @@ class TagsTest extends BrowserKitTestCase
      */
     public function testAddingATagToAPost()
     {
+        // Create the models that we will be using
         $post = factory(Post::class)->create();
 
+        // Apply the tag to the post
         $this->actingAsAdmin()->post('tags', [
                 'post_id' => $post->id,
                 'tag_name' => 'Good Photo',
@@ -27,7 +30,7 @@ class TagsTest extends BrowserKitTestCase
         $this->assertResponseStatus(200);
 
         // Make sure that the post's tags are updated.
-        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertContains('Good Photo', $post->tags()->pluck('tag_name'));
 
         // Make sure we created a event for the tag.
         $this->seeInDatabase('events', [
@@ -58,7 +61,39 @@ class TagsTest extends BrowserKitTestCase
 
         // Make sure that the tag is deleted.
         $this->assertResponseStatus(200);
-        $this->assertEmpty($post->tagNames());
+        $this->assertEmpty($post->tags()->pluck('tag_name'));
+
+        // Make sure we created an event for the tag.
+        $this->seeInDatabase('events', [
+            'eventable_type' => 'Rogue\Models\Post',
+        ]);
+    }
+
+    /**
+     * Test deleting one tag on a post only deletes that tag
+     *
+     * POST /tags
+     * @return void
+     */
+    public function testAddMultipleTagsAndDeleteOne()
+    {
+        // @TODO: Tag model event fails if no authenticated user.
+        $this->actingAsAdmin();
+
+        // Create a post with a tag.
+        $post = factory(Post::class)->create();
+        $post->tag('Good Photo');
+        $post->tag('Tag To Delete');
+
+        $this->post('tags', [
+            'post_id' => $post->id,
+            'tag_name' => 'Tag To Delete',
+        ]);
+
+        // Make sure that the tag is deleted.
+        $this->assertResponseStatus(200);
+        $this->assertContains('Good Photo', $post->tags()->pluck('tag_name'));
+        $this->assertNotContains('Tag To Delete', $post->tags()->pluck('tag_name'));
 
         // Make sure we created an event for the tag.
         $this->seeInDatabase('events', [

@@ -2,6 +2,7 @@
 
 namespace Rogue\Models;
 
+use Rogue\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -157,18 +158,32 @@ class Post extends Model
     }
 
     // @TODO: add tag if not already there, remove if it is already there
+    /**
+     * Apply the given tag to this post.
+     */
     public function tag($tagName)
     {
-        $tag = Tag::where('tag_name', '=', $tagName)->findOrFail();
+        $tag = Tag::where('tag_name', $tagName)->first();
 
-        $post->tags()->attach($tag);
-        dd('got here');
+        // Create the tag if it doesn't already exist (so we don't have to create tags separately)
+        if (!$tag) {
+            $tag = Tag::create(['tag_name' => $tagName, 'tag_slug' => str_slug($tagName, '-')]);
+        }
+
+        $this->tags()->attach($tag);
+
         return $this;
     }
 
-    // @TODO: this is a placeholder until the new tags are ready to go
-    // public function tagged()
-    // {
-    //     return $this;
-    // }
+    /**
+     * Apply the given tag to this post.
+     */
+    public function untag($tagName)
+    {
+        $tag = Tag::where('tag_name', $tagName)->first();
+
+        $this->tags()->detach($tag);
+
+        return $this;
+    }
 }
