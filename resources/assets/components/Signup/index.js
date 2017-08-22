@@ -13,9 +13,6 @@ import ModalContainer from '../ModalContainer';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
 
-// Styles
-import './signup.scss';
-
 class PostGroup extends React.Component {
   render() {
     return (
@@ -166,7 +163,7 @@ class Signup extends React.Component {
   // Delete a post.
   deletePost(postId, event) {
     event.preventDefault();
-    const confirmed = confirm('🚨🔥🚨Are you sure you want to delete this?🚨🔥🚨');
+    const confirmed = confirm('🚨🔥🚨 Are you sure you want to delete this? 🚨🔥🚨');
 
     if (confirmed) {
       // Make API request to Rogue to update the quantity on the backend
@@ -210,7 +207,14 @@ class Signup extends React.Component {
               <a href="#" onClick={e => this.showHistory(signup['signup_id'], e)}>Edit | Show History</a>
 
               <ModalContainer>
-                {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} signup={signup} campaign={campaign} /> : null}
+                {this.state.displayHistoryModal ?
+                  <HistoryModal id={this.state.historyModalId}
+                    onUpdate={this.updateQuantity}
+                    onClose={e => this.hideHistory(e)}
+                    signup={signup}
+                    campaign={campaign}
+                  />
+                : null}
               </ModalContainer>
             </div>
 
