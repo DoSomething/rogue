@@ -61,7 +61,7 @@ class TagsTest extends BrowserKitTestCase
 
         // Make sure that the tag is deleted.
         $this->assertResponseStatus(200);
-        $this->assertEmpty($post->tags()->tagNames();
+        $this->assertEmpty($post->tags()->tagNames());
 
         // Make sure we created an event for the tag.
         $this->seeInDatabase('events', [
@@ -102,8 +102,8 @@ class TagsTest extends BrowserKitTestCase
 
         // Make sure that the tag is deleted, but the other tag is still there
         $this->assertResponseStatus(200);
-        $this->assertContains('Good Photo', $post->tags()->tagNames();
-        $this->assertNotContains('Tag To Delete', $post->tags()->tagNames();
+        $this->assertContains('Good Photo', $post->tags()->tagNames());
+        $this->assertNotContains('Tag To Delete', $post->tags()->tagNames());
         $this->notSeeInDatabase('post_tag', [
             'tag_id' => '2',
         ]);
