@@ -39,8 +39,8 @@ class Signup extends React.Component {
     super(props);
 
     this.state = {
-      signup: '',
-      posts: '',
+      signup: {},
+      posts: {},
       displayHistoryModal: false,
       historyModalId: null,
     };
@@ -71,7 +71,7 @@ class Signup extends React.Component {
       }
     }).then(json => this.setState({
       signup: json.data[0],
-      posts: json.data[0].posts.data
+      posts: keyBy(json.data[0].posts.data, 'id')
     }));
   }
 
@@ -112,7 +112,6 @@ class Signup extends React.Component {
         return newState;
       });
     });
-
   }
 
   // Tag a post.
@@ -123,7 +122,8 @@ class Signup extends React.Component {
     };
 
     let response = this.api.post('tags', fields);
-    response.then((result) => {
+
+    return response.then((result) => {
       this.setState((previousState) => {
         const newState = {...previousState};
 
@@ -221,7 +221,7 @@ class Signup extends React.Component {
           </div>
         </div>
         {
-          map(['accepted', 'pending', 'rejected'], (status, key) => {
+          map(['pending', 'accepted', 'rejected'], (status, key) => {
             return <PostGroup key={key} groupType={status} posts={posts} signup={signup} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.deletePost} />
           })
         }

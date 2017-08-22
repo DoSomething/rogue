@@ -3,36 +3,6 @@ $forge-path: "~@dosomething/forge/assets/";
 // Import Forge.
 @import "~@dosomething/forge/scss/forge";
 
-.tag {
-  list-style-type: none;
-  clear: both;
-  background: $white;
-  color: $light-gray;
-  font-size: $font-regular;
-  font-weight: $weight-normal;
-  font-family: $font-proxima-nova;
-  text-align: center;
-  border-color: $light-gray;
-  border-width: 1px;
-  border-style: solid;
-  margin: 10px 10px 0 0;
-  border-radius: 5px;
-
-  &:hover {
-    background: $blue;
-    color: $white;
-  }
-
-  &:active, &.is-active {
-    background: $blue;
-    color: $white;
-  }
-}
-
-.aligned-actions li {
-  float: left;
-}
-
 .container__block.-third {
   @include media($tablet) {
     @include span(4 of 12);
