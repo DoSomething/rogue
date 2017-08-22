@@ -42,6 +42,7 @@ class CampaignService
     public function find($id)
     {
         $campaign = $this->cache->retrieve($id);
+
         if (! $campaign) {
             $campaign = $this->phoenix->getCampaign($id);
 
@@ -95,6 +96,7 @@ class CampaignService
     {
         foreach ($campaigns as $key => $value) {
             if ($value === false or $value === null) {
+                $key = $this->cache->unsetPrefix($key);
                 $campaigns[$key] = $this->find($key);
             }
         }
