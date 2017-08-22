@@ -85,15 +85,31 @@ class TagsTest extends BrowserKitTestCase
         $post->tag('Good Photo');
         $post->tag('Tag To Delete');
 
+        // Make sure both tags actually exist
+        $this->seeInDatabase('post_tag', [
+            'tag_id' => '1',
+        ]);
+
+        $this->seeInDatabase('post_tag', [
+            'tag_id' => '2',
+        ]);
+
+        // Send request to remove "Tag To Delete" tag
         $this->post('tags', [
             'post_id' => $post->id,
             'tag_name' => 'Tag To Delete',
         ]);
 
-        // Make sure that the tag is deleted.
+        // Make sure that the tag is deleted, but the other tag is still there
         $this->assertResponseStatus(200);
         $this->assertContains('Good Photo', $post->tags()->pluck('tag_name'));
         $this->assertNotContains('Tag To Delete', $post->tags()->pluck('tag_name'));
+        $this->notSeeInDatabase('post_tag', [
+            'tag_id' => '2',
+        ]);
+        $this->seeInDatabase('post_tag', [
+            'tag_id' => '1',
+        ]);
 
         // Make sure we created an event for the tag.
         $this->seeInDatabase('events', [
