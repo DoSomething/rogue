@@ -161,12 +161,7 @@ class Post extends Model
      */
     public function tag($tagName)
     {
-        $tag = Tag::where('tag_name', $tagName)->first();
-
-        // Create the tag if it doesn't already exist (so we don't have to create tags separately)
-        if (! $tag) {
-            $tag = Tag::create(['tag_name' => $tagName, 'tag_slug' => str_slug($tagName, '-')]);
-        }
+        $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
 
         $this->tags()->attach($tag);
 
