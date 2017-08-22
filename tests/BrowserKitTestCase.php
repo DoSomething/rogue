@@ -6,6 +6,7 @@ use Mockery;
 use Carbon\Carbon;
 use Rogue\Models\User;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
 
 class BrowserKitTestCase extends BaseTestCase
@@ -40,6 +41,9 @@ class BrowserKitTestCase extends BaseTestCase
 
         // Reset mocked time, if set.
         Carbon::setTestNow(null);
+
+        // Fake the storage driver.
+        Storage::fake('public');
 
         // Get a new Faker generator from Laravel.
         $this->faker = app(\Faker\Generator::class);
