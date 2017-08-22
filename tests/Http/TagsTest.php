@@ -30,7 +30,7 @@ class TagsTest extends BrowserKitTestCase
         $this->assertResponseStatus(200);
 
         // Make sure that the post's tags are updated.
-        $this->assertContains('Good Photo', $post->tags()->tagNames();
+        $this->assertContains('Good Photo', $post->tagNames());
 
         // Make sure we created a event for the tag.
         $this->seeInDatabase('events', [
