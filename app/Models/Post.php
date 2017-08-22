@@ -171,17 +171,23 @@ class Post extends Model
 
         $this->tags()->attach($tag);
 
+        // Update timestamps on the Post when adding a tag
+        $this->touch();
+
         return $this;
     }
 
     /**
-     * Apply the given tag to this post.
+     * Remove the given tag from this post.
      */
     public function untag($tagName)
     {
         $tag = Tag::where('tag_name', $tagName)->first();
 
         $this->tags()->detach($tag);
+
+        // Update timestamps on the Post when removing a tag
+        $this->touch();
 
         return $this;
     }
