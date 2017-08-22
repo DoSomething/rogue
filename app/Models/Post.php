@@ -156,7 +156,6 @@ class Post extends Model
         ];
     }
 
-    // @TODO: add tag if not already there, remove if it is already there
     /**
      * Apply the given tag to this post.
      */
