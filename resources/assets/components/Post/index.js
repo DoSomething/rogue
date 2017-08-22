@@ -6,6 +6,7 @@ import Tags from '../Tags';
 import TextBlock from '../TextBlock';
 import ReviewBlock from '../ReviewBlock';
 import StatusButton from '../StatusButton';
+import MetaInformation from '../MetaInformation';
 
 class Post extends React.Component {
   render() {
@@ -29,7 +30,16 @@ class Post extends React.Component {
           </div>
         </div>
         <div className="container__block -third">
-          <ReviewBlock post={post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
+          <div className="container__row">
+            <ReviewBlock post={post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
+          </div>
+          <div className="container__row">
+            <MetaInformation title="Meta" details={{
+              "Post ID": post.id,
+              "Submitted": new Date(post.created_at).toDateString(),
+              "Source": post.source,
+            }} />
+          </div>
         </div>
       </div>
     )

@@ -6,6 +6,7 @@ import { calculateAge, displayName, displayCityState } from '../../helpers';
 
 // Components
 import Post from '../Post';
+import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
 import HistoryModal from '../HistoryModal';
 import ModalContainer from '../ModalContainer';
@@ -152,7 +153,7 @@ class Signup extends React.Component {
       this.setState((previousState) => {
         const newState = {...previousState};
 
-        newState.signups[signup.id].quantity = result.quantity;
+        newState.signup.quantity = result.quantity;
 
         return newState;
       });
@@ -202,20 +203,21 @@ class Signup extends React.Component {
           </div>
 
           <div className="container__block -half">
-            {/* This whole thing could be a  component, */}
+            <Quantity quantity={signup.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
+
             <div className="container__row">
 
               <a href="#" onClick={e => this.showHistory(signup['signup_id'], e)}>Edit | Show History</a>
 
               <ModalContainer>
-                {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} details={{campaign: campaign, signups: this.state.signups }}/> : null}
+                {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} signup={signup} campaign={campaign} /> : null}
               </ModalContainer>
             </div>
 
             <MetaInformation title="Meta" details={{
-              "Signup ID": signup.id,
+              "Signup ID": signup.signup_id,
               "Northstar ID": user.id,
-              "Signup Source": signup.source,
+              "Signup Source": signup.signup_source,
               "Created At": new Date(signup.created_at).toDateString()
             }} />
           </div>
