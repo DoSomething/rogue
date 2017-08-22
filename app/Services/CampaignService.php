@@ -95,6 +95,7 @@ class CampaignService
     {
         foreach ($campaigns as $key => $value) {
             if ($value === false or $value === null) {
+                $key = (int) $this->cache->unsetPrefix($key);
                 $campaigns[$key] = $this->find($key);
             }
         }
