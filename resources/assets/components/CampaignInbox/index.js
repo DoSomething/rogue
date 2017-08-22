@@ -75,7 +75,8 @@ class CampaignInbox extends React.Component {
     };
 
     let response = this.api.post('tags', fields);
-    response.then((result) => {
+
+    return response.then((result) => {
       this.setState((previousState) => {
         const newState = {...previousState};
         const user = newState.posts[postId].user;
@@ -158,7 +159,15 @@ class CampaignInbox extends React.Component {
           { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} post={post} campaign={campaign} signup={this.state.signups[post.signup_id]} />) }
 
           <ModalContainer>
-            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} post={posts[this.state.historyModalId]} campaign={campaign} signups={this.state.signups}/> : null}
+            {this.state.displayHistoryModal ?
+              <HistoryModal
+                id={this.state.historyModalId}
+                onUpdate={this.updateQuantity}
+                onClose={e => this.hideHistory(e)}
+                campaign={campaign}
+                signup={this.state.signups[posts[this.state.historyModalId]['signup_id']]}
+              />
+            : null}
           </ModalContainer>
         </div>
       )
