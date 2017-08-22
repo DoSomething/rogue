@@ -42,6 +42,7 @@ class CampaignService
     public function find($id)
     {
         $campaign = $this->cache->retrieve($id);
+
         if (! $campaign) {
             $campaign = $this->phoenix->getCampaign($id);
 
