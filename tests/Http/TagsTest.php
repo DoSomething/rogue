@@ -118,4 +118,25 @@ class TagsTest extends BrowserKitTestCase
 
         $this->assertResponseStatus(403);
     }
+
+    /**
+     * Test post updated_at is updated when a new tag is applied to it
+     *
+     * @return void
+     */
+    public function testPostTimestampUpdatedWhenTagAdded()
+    {
+        // Create the models that we will be using
+        $post = factory(Post::class)->create();
+
+        // Later, apply the tag to the post
+        $this->mockTime('10/21/2017 13:05:00');
+
+        $this->actingAsAdmin()->post('tags', [
+                'post_id' => $post->id,
+                'tag_name' => 'Good Photo',
+            ]);
+
+        $this->assertEquals('2017-10-21 13:05:00', $post->fresh()->updated_at);
+    }
 }
