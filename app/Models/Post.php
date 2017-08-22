@@ -81,6 +81,14 @@ class Post extends Model
     }
 
     /**
+     * Get the tags associated with this post.
+     */
+    public function tagNames()
+    {
+        return $this->tags()->pluck('tag_name');
+    }
+
+    /**
      * Get the URL for the media for this post.
      */
     public function getMediaUrl()
