@@ -2,11 +2,11 @@
 
 namespace Tests\Http;
 
+use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\User;
-use Tests\BrowserKitTestCase;
 
-class PostTest extends BrowserKitTestCase
+class PostTest extends TestCase
 {
     /**
      * Test that posts get soft-deleted when hitting the DELETE endpoint.
@@ -17,10 +17,11 @@ class PostTest extends BrowserKitTestCase
     {
         $post = factory(Post::class)->create();
 
-        $this->actingAsAdmin()->delete('posts/' . $post->id);
+        $response = $this->actingAsAdmin()->delete('posts/' . $post->id);
 
-        $this->assertResponseStatus(200);
-        $this->seeSoftDeletedRecord('posts', $post->id);
+        $response->assertStatus(200);
+
+        $this->assertSoftDeleted('posts', ['id' => $post->id]);
     }
 
     /**
@@ -33,8 +34,8 @@ class PostTest extends BrowserKitTestCase
         $user = factory(User::class)->make();
         $post = factory(Post::class)->create();
 
-        $this->actingAs($user)->delete('posts/' . $post->id);
+        $response = $this->actingAs($user)->delete('posts/' . $post->id);
 
-        $this->assertResponseStatus(403);
+        $response->assertStatus(403);
     }
 }

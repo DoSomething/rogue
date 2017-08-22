@@ -6,6 +6,7 @@ use Mockery;
 use Carbon\Carbon;
 use Rogue\Models\User;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
 
 class BrowserKitTestCase extends BaseTestCase
@@ -41,6 +42,9 @@ class BrowserKitTestCase extends BaseTestCase
         // Reset mocked time, if set.
         Carbon::setTestNow(null);
 
+        // Fake the storage driver.
+        Storage::fake('public');
+
         // Get a new Faker generator from Laravel.
         $this->faker = app(\Faker\Generator::class);
     }
@@ -55,21 +59,6 @@ class BrowserKitTestCase extends BaseTestCase
         $user = factory(User::class, 'admin')->create();
 
         return $this->actingAs($user);
-    }
-
-    /**
-     * Assert that a soft-deleted record exists in the database.
-     *
-     * @param $table
-     * @param $id
-     * @return $this
-     */
-    public function seeSoftDeletedRecord($table, $id)
-    {
-        $this->seeInDatabase($table, ['id' => $id, 'url' => null])
-            ->notSeeInDatabase($table, ['id' => $id, 'deleted_at' => null]);
-
-        return $this;
     }
 
     /**

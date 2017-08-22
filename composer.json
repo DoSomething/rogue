@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": ">=5.5.9",
+    "php": "~7.0.0",
     "laravel/framework": "5.4.*",
     "laravel/tinker": "^1.0",
     "aws/aws-sdk-php-laravel": "^3.1",
