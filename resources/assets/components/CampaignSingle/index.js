@@ -113,7 +113,7 @@ class CampaignSingle extends React.Component {
 
     let response = this.api.post('tags', fields);
 
-    response.then((result) => {
+    return response.then((result) => {
       this.setState((previousState) => {
         const newState = {...previousState};
         const user = newState.posts[postId].user;
@@ -189,7 +189,14 @@ class CampaignSingle extends React.Component {
         { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} post={post} campaign={campaign} signup={post.signup.data} /> : null) }
 
         <ModalContainer>
-            {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} post={posts[this.state.historyModalId]} campaign={campaign} signup={posts[this.state.historyModalId].signup.data}/> : null}
+            {this.state.displayHistoryModal ?
+              <HistoryModal id={this.state.historyModalId}
+                onUpdate={this.updateQuantity}
+                onClose={e => this.hideHistory(e)}
+                campaign={campaign}
+                signup={posts[this.state.historyModalId].signup.data}
+              />
+            : null}
         </ModalContainer>
 
         <PagingButtons prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
