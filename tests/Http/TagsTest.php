@@ -136,9 +136,9 @@ class TagsTest extends BrowserKitTestCase
         $this->mockTime('10/21/2017 13:05:00');
 
         $this->actingAsAdmin()->post('tags', [
-                'post_id' => $post->id,
-                'tag_name' => 'Good Photo',
-            ]);
+            'post_id' => $post->id,
+            'tag_name' => 'Good Photo',
+        ]);
 
         $this->assertEquals('2017-10-21 13:05:00', $post->fresh()->updated_at);
     }

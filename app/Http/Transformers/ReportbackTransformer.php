@@ -26,7 +26,7 @@ class ReportbackTransformer extends TransformerAbstract
                 'uri' => $post->getMediaUrl(),
                 'type' => 'image',
             ],
-            'tagged' => $post->tags()->pluck('tag_names'),
+            'tagged' => $post->tagNames(),
             'created_at' => (string) $post->created_at->timestamp, // Phoenix quirk, this field is a string timestamp.
             'reportback' => [
                 'id' => (string) $signup->id,
