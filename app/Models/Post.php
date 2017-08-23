@@ -2,15 +2,13 @@
 
 namespace Rogue\Models;
 
-use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use Taggable, SoftDeletes;
-
+    use SoftDeletes;
     /**
      * The attributes that should be mutated to dates.
      *
@@ -79,7 +77,15 @@ class Post extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
+
+    /**
+     * Get the tags associated with this post.
+     */
+    public function tagNames()
+    {
+        return $this->tags()->pluck('tag_name');
     }
 
     /**
@@ -156,5 +162,35 @@ class Post extends Model
             'updated_at' => $this->updated_at->toIso8601String(),
             'deleted_at' => $this->deleted_at ? $this->deleted_at->toIso8601String() : null,
         ];
+    }
+
+    /**
+     * Apply the given tag to this post.
+     */
+    public function tag($tagName)
+    {
+        $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
+
+        $this->tags()->attach($tag);
+
+        // Update timestamps on the Post when adding a tag
+        $this->touch();
+
+        return $this;
+    }
+
+    /**
+     * Remove the given tag from this post.
+     */
+    public function untag($tagName)
+    {
+        $tag = Tag::where('tag_name', $tagName)->first();
+
+        $this->tags()->detach($tag);
+
+        // Update timestamps on the Post when removing a tag
+        $this->touch();
+
+        return $this;
     }
 }

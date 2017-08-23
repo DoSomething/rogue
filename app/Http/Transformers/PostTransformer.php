@@ -35,7 +35,8 @@ class PostTransformer extends TransformerAbstract
                 'original_image_url' => $post->url,
                 'caption' => $post->caption,
             ],
-            'tagged' => $post->tagSlugs(),
+            // @TODO: include tags
+            'tags' => $post->tagNames(),
             'status' => $post->status,
             'source' => $post->source,
             'remote_addr' => $post->remote_addr,

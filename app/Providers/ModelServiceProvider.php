@@ -6,7 +6,6 @@ use Rogue\Models\Post;
 use Rogue\Models\Event;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
-use Conner\Tagging\Model\Tagged;
 use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider
@@ -31,6 +30,7 @@ class ModelServiceProvider extends ServiceProvider
         // When Posts are saved create an event for them.
         Post::saved(function ($post) {
             $post->events()->create([
+                // @TODO: this should include the tags with the post
                 'content' => $post->toJson(),
                 // Use the authenticated user if coming from the web,
                 // otherwise use the id of the user in the request.
@@ -43,18 +43,6 @@ class ModelServiceProvider extends ServiceProvider
             $review->events()->create([
                 'content' => $review->toJson(),
                 'user' => $review->admin_northstar_id,
-            ]);
-        });
-
-        Tagged::saved(function ($tagged) {
-            $post = Post::find($tagged->taggable_id);
-
-            Event::create([
-                'eventable_id' => $post->id,
-                'eventable_type' => 'Rogue\Models\Post',
-                'content' => $post->toJson(),
-                // Only authenticated admins can tag, so grab the authenticated user.
-                'user' => (auth()->user()) ? auth()->user()->northstar_id : null,
             ]);
         });
     }
