@@ -3,7 +3,6 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Signup;
-use Illuminate\Http\Request;
 use Rogue\Services\Registrar;
 use Rogue\Services\CampaignService;
 
