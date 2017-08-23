@@ -48,6 +48,7 @@ class SignupsController extends Controller
         $signup = Signup::with('posts')->find($id);
         $campaign = $this->campaignService->find($signup->campaign_id);
         $user = $this->registrar->find($signup->northstar_id);
+
         return view('signups.show', compact('campaign'))
             ->with('state', [
                 'signup_id' => $signup->id,
