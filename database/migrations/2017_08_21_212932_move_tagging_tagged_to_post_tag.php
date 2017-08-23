@@ -16,7 +16,9 @@ class MoveTaggingTaggedToPostTag extends Migration
 
         foreach ($tags as $tag) {
             $post = Post::find($tag->taggable_id);
-            $post->tag($tag->tag_name);
+            if ($post) {
+                $post->tag($tag->tag_name);
+            }
         }
     }
 
