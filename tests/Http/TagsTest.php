@@ -47,7 +47,6 @@ class TagsTest extends BrowserKitTestCase
      */
     public function testDeleteTagOnAPost()
     {
-        // @TODO: Tag model event fails if no authenticated user.
         $this->actingAsAdmin();
 
         // Create a post with a tag.
@@ -61,7 +60,7 @@ class TagsTest extends BrowserKitTestCase
 
         // Make sure that the tag is deleted.
         $this->assertResponseStatus(200);
-        $this->assertEmpty($post->tags()->tagNames());
+        $this->assertEmpty($post->tagNames());
 
         // Make sure we created an event for the tag.
         $this->seeInDatabase('events', [
@@ -77,7 +76,6 @@ class TagsTest extends BrowserKitTestCase
      */
     public function testAddMultipleTagsAndDeleteOne()
     {
-        // @TODO: Tag model event fails if no authenticated user.
         $this->actingAsAdmin();
 
         // Create a post with a tag.
@@ -86,13 +84,8 @@ class TagsTest extends BrowserKitTestCase
         $post->tag('Tag To Delete');
 
         // Make sure both tags actually exist
-        $this->seeInDatabase('post_tag', [
-            'tag_id' => '1',
-        ]);
-
-        $this->seeInDatabase('post_tag', [
-            'tag_id' => '2',
-        ]);
+        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
         $this->post('tags', [
@@ -102,14 +95,8 @@ class TagsTest extends BrowserKitTestCase
 
         // Make sure that the tag is deleted, but the other tag is still there
         $this->assertResponseStatus(200);
-        $this->assertContains('Good Photo', $post->tags()->tagNames());
-        $this->assertNotContains('Tag To Delete', $post->tags()->tagNames());
-        $this->notSeeInDatabase('post_tag', [
-            'tag_id' => '2',
-        ]);
-        $this->seeInDatabase('post_tag', [
-            'tag_id' => '1',
-        ]);
+        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertNotContains('Tag To Delete', $post->tagNames());
 
         // Make sure we created an event for the tag.
         $this->seeInDatabase('events', [
