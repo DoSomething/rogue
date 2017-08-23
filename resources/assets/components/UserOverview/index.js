@@ -65,7 +65,7 @@ class UserOverview extends React.Component {
         </div>
 
         <div className="container__block">
-          <UserInformation user={user} includeMeta={false}>
+          <UserInformation user={user}>
             <MetaInformation title="Meta" details={{
               "Source": user.source,
               "Northstar ID": user.id,
