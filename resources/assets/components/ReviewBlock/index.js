@@ -21,7 +21,7 @@ class ReviewBlock extends React.Component {
           <li><button className="button delete -tertiary" onClick={e => this.props.deletePost(post['id'], e)}>Delete</button></li>
         </ul>
         {post.status === 'accepted' ?
-          <Tags id={post.id} tagged={post.tagged} onTag={this.props.onTag} />
+          <Tags id={post.id} tagged={post.tags} onTag={this.props.onTag} />
         : null}
       </div>
     )
