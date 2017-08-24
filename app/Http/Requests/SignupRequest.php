@@ -27,7 +27,7 @@ class SignupRequest extends Request
             'campaign_run_id' => 'required|int',
             'quantity' => 'int',
             'why_participated' => 'string',
-            'source' => 'string',
+            'source' => 'string|nullable',
         ];
     }
 }
