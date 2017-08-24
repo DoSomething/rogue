@@ -47,21 +47,19 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $e
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $e)
     {
         // Re-cast specific exceptions or uniquely render them:
         if ($e instanceof GlideNotFoundException) {
             $e = new NotFoundHttpException('That image could not be found.');
-        }
-        if ($e instanceof AuthorizationException) {
+        } elseif ($e instanceof AuthorizationException) {
             return parent::render($request, $e);
-        }
-        if ($e instanceof AuthenticationException) {
+        } elseif ($e instanceof AuthenticationException) {
             return $this->unauthenticated($request, $e);
-        } elseif ($e instanceof ValidationException || $e instanceof NorthstarValidationException) {
-            return $this->invalidated($request, $e);
+        } elseif ($e instanceof ValidationException) {
+            return $this->convertValidationExceptionToResponse($e, $request);
         } elseif ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException('That resource could not be found.');
         }
