@@ -23,6 +23,7 @@ class CampaignSingle extends React.Component {
     this.hideHistory = this.hideHistory.bind(this);
     this.deletePost = this.deletePost.bind(this);
     this.filterPosts = this.filterPosts.bind(this);
+    this.getPostsByPaginatedLink = this.getPostsByPaginatedLink.bind(this);
   }
 
   componentDidMount() {
@@ -38,7 +39,7 @@ class CampaignSingle extends React.Component {
   // @TODO - Figure out how to share this logic between components so it
   // doesn't need to be duplicated between components.
   showHistory(postId, event) {
-    event.preventDefault()
+    event.preventDefault();
 
     this.setState({
       displayHistoryModal: true,
@@ -154,10 +155,40 @@ class CampaignSingle extends React.Component {
     }
   }
 
+  // Make API call to paginated link to get next/previous batch of posts.
+  getPostsByPaginatedLink(url, event) {
+    event.preventDefault();
+
+    // Strip the url to get query parameters.
+    let splitEndpoint = url.split('/');
+    let path = splitEndpoint.slice(-1)[0];
+    let queryString = (path.split('?'))[1];
+    // let splitQueryStringParts = queryString.split('&');
+
+    // splitQueryStringParts.forEach(function(queryStringPart) {
+    //   console.log(queryStringPart);
+    //   let filterParts = queryStringPart.search('filter&');
+    //     console.log(filterParts);
+      // if (queryStringPart.search('filter')){
+        // var filters = [];
+      // }
+    // });
+
+    let response = this.api.get('api/v2/posts', queryString);
+    // console.log(response);
+    // .then(json => this.setState({
+    //   posts: keyBy(json.data, 'id'),
+    //   filter: status,
+    //   postTotals: json.meta.pagination.total,
+    //   displayHistoryModal: null,
+    //   historyModalId: null,
+    //   nextPage: json.meta.pagination.links.next,
+    //   prevPage: json.meta.pagination.links.previous,
+    // }));
+  }
+
   // Make API call to GET /posts to get posts by filtered status.
   getPostsByStatus(status, campaignId) {
-    this.api = new RestApiClient;
-
     this.api.get('api/v2/posts', {
       filter: {
         status: status,
@@ -192,7 +223,7 @@ class CampaignSingle extends React.Component {
             {this.state.displayHistoryModal ? <HistoryModal id={this.state.historyModalId} onUpdate={this.updateQuantity} onClose={e => this.hideHistory(e)} post={posts[this.state.historyModalId]} campaign={campaign} signup={posts[this.state.historyModalId].signup.data}/> : null}
         </ModalContainer>
 
-        <PagingButtons prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
+        <PagingButtons onPaginate={this.getPostsByPaginatedLink} prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
       </div>
     )
   }
