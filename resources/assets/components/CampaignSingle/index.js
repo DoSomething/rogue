@@ -163,28 +163,16 @@ class CampaignSingle extends React.Component {
     let splitEndpoint = url.split('/');
     let path = splitEndpoint.slice(-1)[0];
     let queryString = (path.split('?'))[1];
-    // let splitQueryStringParts = queryString.split('&');
 
-    // splitQueryStringParts.forEach(function(queryStringPart) {
-    //   console.log(queryStringPart);
-    //   let filterParts = queryStringPart.search('filter&');
-    //     console.log(filterParts);
-      // if (queryStringPart.search('filter')){
-        // var filters = [];
-      // }
-    // });
-
-    let response = this.api.get('api/v2/posts', queryString);
-    // console.log(response);
-    // .then(json => this.setState({
-    //   posts: keyBy(json.data, 'id'),
-    //   filter: status,
-    //   postTotals: json.meta.pagination.total,
-    //   displayHistoryModal: null,
-    //   historyModalId: null,
-    //   nextPage: json.meta.pagination.links.next,
-    //   prevPage: json.meta.pagination.links.previous,
-    // }));
+    this.api.get('api/v2/posts', queryString)
+    .then(json => this.setState({
+      posts: keyBy(json.data, 'id'),
+      postTotals: json.meta.pagination.total,
+      displayHistoryModal: null,
+      historyModalId: null,
+      nextPage: json.meta.pagination.links.next,
+      prevPage: json.meta.pagination.links.previous,
+    }));
   }
 
   // Make API call to GET /posts to get posts by filtered status.
@@ -210,7 +198,7 @@ class CampaignSingle extends React.Component {
   render() {
     const posts = this.state.posts;
     const campaign = this.props.campaign;
-
+    console.log(this.state.filter);
     return (
       <div className="container">
         <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
