@@ -2,22 +2,39 @@ import React from 'react';
 import { map } from 'lodash';
 import classnames from 'classnames';
 
-class Tags extends React.Component {
+import './tags.scss';
+
+class Tag extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      'sending': false,
+    }
 
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(label) {
-    // Ask the CampaignInbox to update the post's tags.
     if (label === 'Hide In Gallery 👻') {
       label = 'Hide In Gallery';
     }
 
-    this.props.onTag(this.props.id, label);
+    this.setState({ 'sending' : true });
+
+    this.props.isClicked(this.props.post, label)
+      .then(() => {
+        this.setState({ 'sending' : false });
+      });
   }
 
+  render() {
+    return <button className={classnames('tag', {'is-active': this.props.isActive}, {'is-loading': this.state.sending})}
+                onClick={() => this.handleClick(this.props.label)}>{this.props.label}</button>
+  }
+}
+
+class Tags extends React.Component {
   render() {
     const tags = {
       'good-photo': 'Good Photo',
@@ -33,8 +50,7 @@ class Tags extends React.Component {
         <ul className="aligned-actions">
           {map(tags, (label, key) => (
             <li key={key}>
-              <button className={classnames('tag', {'is-active': this.props.tagged.includes(key)})}
-                      onClick={() => this.handleClick(label)}>{label}</button>
+              <Tag isActive={this.props.tagged.includes(key)} isClicked={this.props.onTag} label={label} post={this.props.id} />
             </li>
           ))}
         </ul>
