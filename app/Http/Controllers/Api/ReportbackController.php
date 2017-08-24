@@ -42,9 +42,7 @@ class ReportbackController extends ApiController
             // Only return posts that have been approved by a campaign lead...
             ->where('status', 'accepted')
             // ...and haven't been hidden from the gallery.
-            ->whereDoesntHave('tags', function ($query) {
-                $query->where('tag_slug', '=', 'hide-in-gallery');
-            });
+            ->withoutTag('hide-in-gallery');
 
         // @TODO: Use `FiltersRequests` trait here!
         $filters = $request->query('filter');
