@@ -81,6 +81,7 @@ class Registrar
     {
         foreach ($users as $key => $value) {
             if ($value === false or $value === null) {
+                $key = $this->cache->unsetPrefix($key);
                 $users[$key] = $this->find($key);
             }
         }
