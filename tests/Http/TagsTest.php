@@ -142,4 +142,26 @@ class TagsTest extends BrowserKitTestCase
 
         $this->assertEquals('2017-10-21 13:05:00', $post->fresh()->updated_at);
     }
+
+    /**
+     * Test post updated_at is updated when a new tag is applied to it
+     *
+     * @return void
+     */
+    public function testWithoutTagScope()
+    {
+        // Create the models that we will be using
+        $posts = factory(Post::class, 20)->create();
+
+        // Later, apply the tag to the post
+        $this->actingAsAdmin()->post('tags', [
+            'post_id' => $posts->first()->id,
+            'tag_name' => 'get-outta-here',
+        ]);
+
+        $postsQuery = Post::withoutTag('get-outta-here')->get();
+
+        $this->assertEquals(19, $postsQuery->count());
+
+    }
 }
