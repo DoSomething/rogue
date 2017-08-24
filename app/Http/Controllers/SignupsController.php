@@ -16,7 +16,7 @@ class SignupsController extends Controller
     protected $registrar;
 
     /**
-     * Phoenix instance
+     * CampaignService Instance
      *
      * @var Rogue\Services\CampaignService
      */
@@ -45,7 +45,7 @@ class SignupsController extends Controller
      */
     public function show($id)
     {
-        $signup = Signup::with('posts')->find($id);
+        $signup = Signup::with('posts')->findOrFail($id);
         $campaign = $this->campaignService->find($signup->campaign_id);
         $user = $this->registrar->find($signup->northstar_id);
 
