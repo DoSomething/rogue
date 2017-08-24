@@ -113,7 +113,7 @@ class CacheRepository
     public function unsetPrefix($string)
     {
         if (property_exists($this, 'prefix')) {
-            return str_replace('campaign:', '', $string);
+            return str_replace($this->prefix . ':', '', $string);
         } else {
             return $string;
         }
