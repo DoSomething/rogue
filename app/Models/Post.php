@@ -89,6 +89,14 @@ class Post extends Model
     }
 
     /**
+     * Get the tags associated with this post.
+     */
+    public function tagSlugs()
+    {
+        return $this->tags()->pluck('tag_slug');
+    }
+
+    /**
      * Get the URL for the media for this post.
      */
     public function getMediaUrl()
