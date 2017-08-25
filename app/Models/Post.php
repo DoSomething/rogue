@@ -201,4 +201,14 @@ class Post extends Model
 
         return $this;
     }
+
+    /**
+     * Remove the given tag from this post.
+     */
+    public function scopeWithoutTag($query, $tagSlug)
+    {
+        return $query->whereDoesntHave('tags', function ($query) use ($tagSlug) {
+            $query->where('tag_slug', '=', $tagSlug);
+        });
+    }
 }
