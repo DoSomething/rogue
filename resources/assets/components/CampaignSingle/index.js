@@ -198,7 +198,7 @@ class CampaignSingle extends React.Component {
   render() {
     const posts = this.state.posts;
     const campaign = this.props.campaign;
-    console.log(this.state.filter);
+
     return (
       <div className="container">
         <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
