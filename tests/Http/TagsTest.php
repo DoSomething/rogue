@@ -162,6 +162,5 @@ class TagsTest extends BrowserKitTestCase
         $postsQuery = Post::withoutTag('get-outta-here')->get();
 
         $this->assertEquals(19, $postsQuery->count());
-
     }
 }

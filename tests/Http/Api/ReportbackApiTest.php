@@ -8,11 +8,10 @@ use Tests\BrowserKitTestCase;
 
 class ReportbackApiTest extends BrowserKitTestCase
 {
-
     public function testGetReportbacks()
     {
         $signups = factory(Signup::class, 10)->create();
-        
+
         // Give each signup a post and give it status of "accepted"
         foreach ($signups as $signup) {
             $post = factory(Post::class)->create();
@@ -53,6 +52,5 @@ class ReportbackApiTest extends BrowserKitTestCase
                 ],
             ],
         ]);
-
     }
 }
