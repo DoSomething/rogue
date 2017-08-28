@@ -120,7 +120,11 @@ class PostRepository
     public function update($signup, $data)
     {
         if (array_key_exists('updated_at', $data)) {
-            $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'why_participated', 'updated_at']));
+            if ($data['why_participated']) {
+                $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'why_participated', 'updated_at']));
+            } else {
+                $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'updated_at']));
+            }
 
             $signup->save(['timestamps' => false]);
 
@@ -129,15 +133,14 @@ class PostRepository
             $event->updated_at = $data['updated_at'];
             $event->save(['timestamps' => false]);
         } else {
-            $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'why_participated']));
+            if ($data['why_participated']) {
+                $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'why_participated']));
+            } else {
+                $signup->fill(array_only($data, ['quantity', 'quantity_pending']));
+            }
 
             // Triggers model event that logs the updated signup in the events table.
             $signup->save();
-        }
-
-        // If there is a file, create a new post.
-        if (array_key_exists('file', $data)) {
-            return $this->create($data, $signup->id);
         }
 
         return $signup;
