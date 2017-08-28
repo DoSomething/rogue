@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@dosomething/forge": "^6.7.4",
-    "@dosomething/gateway": "^1.1.4",
+    "@dosomething/gateway": "^1.1.5",
     "classnames": "^2.2.5",
     "dosomething-modal": "^0.3.0",
     "lodash": "^4.17.4",
