@@ -120,7 +120,11 @@ class PostRepository
     public function update($signup, $data)
     {
         if (array_key_exists('updated_at', $data)) {
-            $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'why_participated', 'updated_at']));
+            // Only update if the key is set (is not null).
+            $nonNullArrayKeys = array_filter($data);
+            $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
+
+            $signup->fill(array_only($data, $arrayKeysToUpdate));
 
             $signup->save(['timestamps' => false]);
 
@@ -129,7 +133,11 @@ class PostRepository
             $event->updated_at = $data['updated_at'];
             $event->save(['timestamps' => false]);
         } else {
-            $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'why_participated']));
+            // Only update if the key is set (is not null).
+            $nonNullArrayKeys = array_filter($data);
+            $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
+
+            $signup->fill(array_only($data, $arrayKeysToUpdate));
 
             // Triggers model event that logs the updated signup in the events table.
             $signup->save();
