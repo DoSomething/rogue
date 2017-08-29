@@ -121,17 +121,8 @@ class PostRepository
     {
         if (array_key_exists('updated_at', $data)) {
             // Only update if the key is set (is not null).
-            $arrayKeysToUpdate = ['why_participated', 'quantity'];
-
-            foreach ($arrayKeysToUpdate as $key => $value) {
-                if (! $data[$value]) {
-                    $key = array_search($value, $arrayKeysToUpdate);
-                    unset($arrayKeysToUpdate[$key]);
-                }
-            }
-
-            array_push($arrayKeysToUpdate, 'updated_at');
-            array_push($arrayKeysToUpdate, 'quantity_pending');
+            $nonNullArrayKeys = array_filter($data);
+            $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
 
             $signup->fill(array_only($data, $arrayKeysToUpdate));
 
@@ -143,15 +134,8 @@ class PostRepository
             $event->save(['timestamps' => false]);
         } else {
             // Only update if the key is set (is not null).
-            $arrayKeysToUpdate = ['why_participated', 'quantity'];
-
-            foreach ($arrayKeysToUpdate as $key => $value) {
-                if (! $data[$value]) {
-                    $key = array_search($value, $arrayKeysToUpdate);
-                    unset($arrayKeysToUpdate[$key]);
-                }
-            }
-            array_push($arrayKeysToUpdate, 'quantity_pending');
+            $nonNullArrayKeys = array_filter($data);
+            $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
 
             $signup->fill(array_only($data, $arrayKeysToUpdate));
 
