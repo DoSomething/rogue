@@ -70,6 +70,8 @@ trait PostRequests
             }]);
         }
 
+        // @TODO check to see if the filter['tagged'] is in Post's tagged array. If so, return it.
+
         return $this->paginatedCollection($query, $request);
     }
 }
