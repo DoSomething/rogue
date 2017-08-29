@@ -119,7 +119,7 @@ Example Response:
                 "url": "https://s3.amazonaws.com/ds-rogue-qa/uploads/reportback-items/edited_2984.jpeg",
                 "caption": null
             },
-            "tagged": [],
+            "tags": [],
             "reactions": [],
             "status": "accepted",
             "source": null,
@@ -135,7 +135,7 @@ Example Response:
                 "url": "https://s3.amazonaws.com/ds-rogue-qa/uploads/reportback-items/edited_3655.jpeg",
                 "caption": "Perhaps you CAN be of some assistance, Bill"
             },
-            "tagged": [],
+            "tags": [],
             "status": "accepted",
             "source": null,
             "remote_addr": "207.110.19.130, 207.110.19.130",
