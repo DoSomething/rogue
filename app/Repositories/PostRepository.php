@@ -120,11 +120,20 @@ class PostRepository
     public function update($signup, $data)
     {
         if (array_key_exists('updated_at', $data)) {
-            if ($data['why_participated']) {
-                $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'why_participated', 'updated_at']));
-            } else {
-                $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'updated_at']));
+            // Only update if the key is set (is not null).
+            $arrayKeysToUpdate = ['why_participated', 'quantity'];
+
+            foreach ($arrayKeysToUpdate as $key => $value) {
+                if (! $data[$value]) {
+                    $key = array_search($value, $arrayKeysToUpdate);
+                    unset($arrayKeysToUpdate[$key]);
+                }
             }
+
+            array_push($arrayKeysToUpdate, 'updated_at');
+            array_push($arrayKeysToUpdate, 'quantity_pending');
+
+            $signup->fill(array_only($data, $arrayKeysToUpdate));
 
             $signup->save(['timestamps' => false]);
 
@@ -133,11 +142,18 @@ class PostRepository
             $event->updated_at = $data['updated_at'];
             $event->save(['timestamps' => false]);
         } else {
-            if ($data['why_participated']) {
-                $signup->fill(array_only($data, ['quantity', 'quantity_pending', 'why_participated']));
-            } else {
-                $signup->fill(array_only($data, ['quantity', 'quantity_pending']));
+            // Only update if the key is set (is not null).
+            $arrayKeysToUpdate = ['why_participated', 'quantity'];
+
+            foreach ($arrayKeysToUpdate as $key => $value) {
+                if (! $data[$value]) {
+                    $key = array_search($value, $arrayKeysToUpdate);
+                    unset($arrayKeysToUpdate[$key]);
+                }
             }
+            array_push($arrayKeysToUpdate, 'quantity_pending');
+
+            $signup->fill(array_only($data, $arrayKeysToUpdate));
 
             // Triggers model event that logs the updated signup in the events table.
             $signup->save();
