@@ -104,7 +104,11 @@ GET /api/v2/posts
   - e.g. `/posts?as_user=1234`
 - **include** _(string)_
   - Include additional related records in the response: `signup`, `siblings`
-  - e.g. `/activity?include=signup,siblings`
+  - e.g. `/posts?include=signup,siblings`
+- **tag** _(string)_
+  - Only return posts with this tag.
+  - Tag is passed in as tag_slug.
+  - e.g. `/posts?filter[tag]=good-photo`
 
 Example Response:
 
