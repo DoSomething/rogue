@@ -25,6 +25,7 @@ class CampaignSingle extends React.Component {
     this.filterPosts = this.filterPosts.bind(this);
     this.getPostsByPaginatedLink = this.getPostsByPaginatedLink.bind(this);
     this.createTagSlug = this.createTagSlug.bind(this);
+    this.getPostsByTag = this.getPostsByTag.bind(this);
   }
 
   componentDidMount() {
@@ -37,8 +38,10 @@ class CampaignSingle extends React.Component {
     if (filter === 'Pending' || filter === 'Accepted' || filter === 'Rejected') {
       this.getPostsByStatus(filter.toLowerCase(), this.props.campaign.id);
     } else {
-    // If the filter is a tag, make the API call to get posts by tag.
+      // If the filter is a tag, make the API call to get posts by tag.
       var tagSlug = this.createTagSlug(filter);
+
+      this.getPostsByTag(tagSlug, this.props.campaign.id);
     }
 
   }
@@ -206,6 +209,25 @@ class CampaignSingle extends React.Component {
     .then(json => this.setState({
       posts: keyBy(json.data, 'id'),
       filter: status,
+      postTotals: json.meta.pagination.total,
+      displayHistoryModal: null,
+      historyModalId: null,
+      nextPage: json.meta.pagination.links.next,
+      prevPage: json.meta.pagination.links.previous,
+    }));
+  }
+
+  // Make API call to GET /posts to get posts by filtered tag.
+  getPostsByTag(tagSlug, campaignId) {
+    this.api.get('api/v2/posts', {
+      filter: {
+        tag: tagSlug,
+        campaign_id: campaignId,
+      },
+      include: 'signup,siblings',
+    })
+    .then(json => this.setState({
+      posts: keyBy(json.data, 'id'),
       postTotals: json.meta.pagination.total,
       displayHistoryModal: null,
       historyModalId: null,

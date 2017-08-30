@@ -70,7 +70,10 @@ trait PostRequests
             }]);
         }
 
-        // @TODO check to see if the filter['tagged'] is in Post's tagged array. If so, return it.
+        // If tag param is passed, only return posts that have that tag.
+        if (array_has($filters, 'tag')) {
+            $query = $query->withTag($filters['tag']);
+        }
 
         return $this->paginatedCollection($query, $request);
     }

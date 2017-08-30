@@ -203,11 +203,21 @@ class Post extends Model
     }
 
     /**
-     * Remove the given tag from this post.
+     * Returns posts without specific tag.
      */
     public function scopeWithoutTag($query, $tagSlug)
     {
         return $query->whereDoesntHave('tags', function ($query) use ($tagSlug) {
+            $query->where('tag_slug', '=', $tagSlug);
+        });
+    }
+
+    /**
+     * Returns posts with specific tag.
+     */
+    public function scopeWithTag($query, $tagSlug)
+    {
+        return $query->whereHas('tags', function ($query) use ($tagSlug) {
             $query->where('tag_slug', '=', $tagSlug);
         });
     }
