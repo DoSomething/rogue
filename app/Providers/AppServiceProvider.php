@@ -28,5 +28,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(Blink::class, function () {
             return new Blink(config('services.blink'));
         });
+
+        // Ensure that debugbar doesn't register on production.
+        if ($this->app->environment() !== 'production') {
+            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        }
     }
 }
