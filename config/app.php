@@ -177,7 +177,6 @@ return [
          * Third-party Service Providers...
          */
         Aws\Laravel\AwsServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
         DoSomething\Gateway\Laravel\GatewayServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
