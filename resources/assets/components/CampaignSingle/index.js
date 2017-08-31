@@ -35,7 +35,7 @@ class CampaignSingle extends React.Component {
   // Filter posts based on status or tag(s).
   filterPosts(filter) {
     // If the filter is a status, make API call to get posts by status.
-    if (filter === 'Pending' || filter === 'Accepted' || filter === 'Rejected') {
+    if (['Pending', 'Accepted', 'Rejected'].includes(filter)) {
       this.getPostsByStatus(filter.toLowerCase(), this.props.campaign.id);
     } else {
       // If the filter is a tag, make the API call to get posts by tag.
