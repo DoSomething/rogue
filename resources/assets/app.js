@@ -17,15 +17,10 @@ ready(() => {
     CampaignOverview: CampaignOverview,
   });
 
-  const overviewContainer = document.getElementById('overviewContainer');
   const inboxContainer = document.getElementById('inboxContainer');
   const singleCampaignContainer = document.getElementById('singleCampaignContainer');
   const userOverviewContainer = document.getElementById('userOverviewContainer');
   const signupContainer = document.getElementById('signupContainer');
-
-  // if (overviewContainer) {
-  //   ReactDom.render(<CampaignOverview {...window.STATE} />, overviewContainer);
-  // }
 
   if (inboxContainer) {
     ReactDom.render(<CampaignInbox {...window.STATE} />, inboxContainer);

@@ -5,7 +5,7 @@
     @include('layouts.header', ['header' => 'Campaign Overview', 'subtitle' => ''])
 
     <div class="container -padded">
-        <div id="overviewContainer" class="wrapper">
+        <div class="wrapper" data-container="CampaignOverview">
             Loading...
         </div>
     </div>
