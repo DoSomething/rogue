@@ -7,10 +7,13 @@ import ReactDOM from 'react-dom';
  */
 function mountContainer(components) {
   const reactElement = document.querySelector('[data-container]');
-  const container = reactElement.getAttribute('data-container');
 
-  if (components[container]) {
-    ReactDOM.render(React.createElement(components[container], {...window.STATE}), reactElement);
+  if (reactElement) {
+    const container = reactElement.getAttribute('data-container');
+
+    if (components[container]) {
+      ReactDOM.render(React.createElement(components[container], {...window.STATE}), reactElement);
+    }
   }
 }
 
