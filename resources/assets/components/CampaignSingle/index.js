@@ -24,7 +24,6 @@ class CampaignSingle extends React.Component {
     this.deletePost = this.deletePost.bind(this);
     this.filterPosts = this.filterPosts.bind(this);
     this.getPostsByPaginatedLink = this.getPostsByPaginatedLink.bind(this);
-    this.createTagSlug = this.createTagSlug.bind(this);
     this.getPostsByTag = this.getPostsByTag.bind(this);
   }
 
@@ -35,26 +34,13 @@ class CampaignSingle extends React.Component {
   // Filter posts based on status or tag(s).
   filterPosts(filter) {
     // If the filter is a status, make API call to get posts by status.
-    if (['Pending', 'Accepted', 'Rejected'].includes(filter)) {
-      this.getPostsByStatus(filter.toLowerCase(), this.props.campaign.id);
+    if (['pending', 'accepted', 'rejected'].includes(filter)) {
+      this.getPostsByStatus(filter, this.props.campaign.id);
     } else {
       // If the filter is a tag, make the API call to get posts by tag.
-      var tagSlug = this.createTagSlug(filter);
-
-      this.getPostsByTag(tagSlug, this.props.campaign.id);
+      this.getPostsByTag(filter, this.props.campaign.id);
     }
 
-  }
-
-  // Create tag slug
-  createTagSlug(filter) {
-    var splitFilter = filter.toLowerCase().split(' ');
-
-    if (splitFilter[splitFilter.length-1] === '👻') {
-      splitFilter.pop();
-    }
-
-    return splitFilter.join('-');
   }
 
   // Open the history modal of the given post
