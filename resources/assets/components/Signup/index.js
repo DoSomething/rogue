@@ -9,6 +9,7 @@ import Post from '../Post';
 import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
 import HistoryModal from '../HistoryModal';
+import UploaderModal from '../UploaderModal'
 import ModalContainer from '../ModalContainer';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
@@ -41,6 +42,7 @@ class Signup extends React.Component {
       posts: {},
       displayHistoryModal: false,
       historyModalId: null,
+      displayUploaderModal: false,
     };
 
     this.api = new RestApiClient;
@@ -50,6 +52,8 @@ class Signup extends React.Component {
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
     this.deletePost = this.deletePost.bind(this);
+    this.showUploader = this.showUploader.bind(this);
+    this.hideUploader = this.hideUploader.bind(this);
   }
 
   componentDidMount() {
@@ -75,7 +79,7 @@ class Signup extends React.Component {
 
   // Open the history modal of the given post
   showHistory(postId, event) {
-    event.preventDefault()
+    event.preventDefault();
 
     this.setState({
       displayHistoryModal: true,
@@ -92,6 +96,28 @@ class Signup extends React.Component {
     this.setState({
       displayHistoryModal: false,
       historyModalId: null,
+    });
+  }
+
+  // Open the uploader modal to upload a new post
+  showUploader(campaign, event) {
+    event.preventDefault();
+
+    this.setState({
+      displayUploaderModal: true,
+      campaign: campaign,
+    });
+  }
+
+  // Close the open uploader modal
+  hideUploader(event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    this.setState({
+      displayUploaderModal: false,
+      campaign: null,
     });
   }
 
@@ -206,7 +232,6 @@ class Signup extends React.Component {
 
               <a href="#" onClick={e => this.showHistory(signup['signup_id'], e)}>Edit | Show History</a>
 
-
               <ModalContainer>
                 {this.state.displayHistoryModal ?
                   <HistoryModal id={this.state.historyModalId}
@@ -220,7 +245,18 @@ class Signup extends React.Component {
             </div>
 
             <div className="container__row">
-              <a href="">Upload Photo</a>
+              <a href="#" onClick={e => this.showUploader(campaign, e)}>Upload Photo</a>
+
+                <ModalContainer>
+                  {this.state.displayUploaderModal ?
+                    <UploaderModal id={this.state.historyModalId}
+                      onUpdate={this.updateQuantity}
+                      onClose={e => this.hideUploader(e)}
+                      signup={signup}
+                      campaign={campaign}
+                    />
+                  : null}
+                </ModalContainer>
             </div>
 
             <MetaInformation title="Meta" details={{
