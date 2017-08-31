@@ -12,17 +12,11 @@ import CampaignSingle from './components/CampaignSingle';
 import CampaignOverview from './components/CampaignOverview';
 
 ready(() => {
-
   mountContainer({
     CampaignOverview: CampaignOverview,
     CampaignInbox: CampaignInbox,
     CampaignSingle: CampaignSingle,
     UserOverview: UserOverview,
+    Signup: Signup,
   });
-
-  const signupContainer = document.getElementById('signupContainer');
-
-  if (signupContainer) {
-    ReactDom.render(<Signup {...window.STATE} />, signupContainer);
-  }
 });

@@ -4,7 +4,7 @@
     @include('layouts.header', ['header' => $campaign['title'], 'subtitle' => ''])
 
     <div class="container -padded">
-        <div id="signupContainer" class="wrapper">
+        <div class="wrapper" data-container="Signup">
             Loading...
         </div>
     </div>
