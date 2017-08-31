@@ -17,6 +17,7 @@ class PostFilter extends React.Component {
         <div className="container__block -third">
           <h4>Post Filter</h4>
           <div className="select">
+          {/* @TODO create a <Filter> component that takes in an array of value/labels and renders the select list and handles the change event.*/}
               <select onChange={(event) => this.change(event)}>
                   <option value="accepted">Accepted</option>
                   <option value="pending">Pending</option>
