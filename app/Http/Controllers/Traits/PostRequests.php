@@ -70,6 +70,11 @@ trait PostRequests
             }]);
         }
 
+        // If tag param is passed, only return posts that have that tag.
+        if (array_has($filters, 'tag')) {
+            $query = $query->withTag($filters['tag']);
+        }
+
         return $this->paginatedCollection($query, $request);
     }
 }
