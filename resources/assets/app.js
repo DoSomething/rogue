@@ -15,16 +15,12 @@ ready(() => {
 
   mountContainer({
     CampaignOverview: CampaignOverview,
+    CampaignInbox: CampaignInbox,
   });
 
-  const inboxContainer = document.getElementById('inboxContainer');
   const singleCampaignContainer = document.getElementById('singleCampaignContainer');
   const userOverviewContainer = document.getElementById('userOverviewContainer');
   const signupContainer = document.getElementById('signupContainer');
-
-  if (inboxContainer) {
-    ReactDom.render(<CampaignInbox {...window.STATE} />, inboxContainer);
-  }
 
   if (singleCampaignContainer) {
     ReactDom.render(<CampaignSingle {...window.STATE} historyModalId={null} />, singleCampaignContainer);
