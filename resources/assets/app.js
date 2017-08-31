@@ -17,14 +17,10 @@ ready(() => {
     CampaignOverview: CampaignOverview,
     CampaignInbox: CampaignInbox,
     CampaignSingle: CampaignSingle,
+    UserOverview: UserOverview,
   });
 
-  const userOverviewContainer = document.getElementById('userOverviewContainer');
   const signupContainer = document.getElementById('signupContainer');
-
-  if (userOverviewContainer) {
-    ReactDom.render(<UserOverview {...window.STATE} />, userOverviewContainer);
-  }
 
   if (signupContainer) {
     ReactDom.render(<Signup {...window.STATE} />, signupContainer);
