@@ -10,7 +10,7 @@
             </div>
         </div>
 	    <div class='container -padded'>
-	        <div id='inboxContainer' class='wrapper'>
+	        <div class='wrapper' data-container="CampaignInbox">
 	            Loading...
 	        </div>
 	    </div>

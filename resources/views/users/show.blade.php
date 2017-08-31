@@ -4,7 +4,7 @@
     @include('layouts.header', ['header' => 'User', 'subtitle' => ''])
 
     <div class="container -padded">
-        <div id="userOverviewContainer" class="wrapper">
+        <div class="wrapper" data-container="UserOverview">
             Loading...
         </div>
     </div>
