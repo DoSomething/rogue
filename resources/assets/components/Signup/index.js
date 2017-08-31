@@ -206,6 +206,7 @@ class Signup extends React.Component {
 
               <a href="#" onClick={e => this.showHistory(signup['signup_id'], e)}>Edit | Show History</a>
 
+
               <ModalContainer>
                 {this.state.displayHistoryModal ?
                   <HistoryModal id={this.state.historyModalId}
@@ -216,6 +217,10 @@ class Signup extends React.Component {
                   />
                 : null}
               </ModalContainer>
+            </div>
+
+            <div className="container__row">
+              <a href="">Upload Photo</a>
             </div>
 
             <MetaInformation title="Meta" details={{
