@@ -16,14 +16,14 @@ class UploaderModal extends React.Component {
   // }
 
   render() {
-    // const signup = this.props.signup;
-    // const campaign = this.props['campaign'];
+    const signup = this.props.signup;
+    console.log(signup);
 
     return (
       <div className="modal">
         <a href="#" onClick={this.props.onClose} className="modal-close-button">&times;</a>
         <div className="modal__block">
-          <h3>Change Quantity</h3>
+          <h3>Photo Upload</h3>
         </div>
       </div>
     );

@@ -245,15 +245,15 @@ class Signup extends React.Component {
             </div>
 
             <div className="container__row">
-              <a href="#" onClick={e => this.showUploader(campaign, e)}>Upload Photo</a>
+              <a href="#" onClick={e => this.showUploader(signup, e)}>Upload Photo</a>
 
                 <ModalContainer>
                   {this.state.displayUploaderModal ?
                     <UploaderModal id={this.state.historyModalId}
-                      onUpdate={this.updateQuantity}
+                      // onUpdate={this.updateQuantity}
                       onClose={e => this.hideUploader(e)}
                       signup={signup}
-                      campaign={campaign}
+                      // campaign={campaign}
                     />
                   : null}
                 </ModalContainer>
