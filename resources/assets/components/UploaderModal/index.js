@@ -1,4 +1,8 @@
 import React from 'react';
+// import { BlockWrapper } from '../Block';
+import MediaUploader from '../MediaUploader';
+import FormMessage from '../FormMessage';
+import './uploader.scss';
 
 class UploaderModal extends React.Component {
   constructor() {
