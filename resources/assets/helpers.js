@@ -118,3 +118,26 @@ export function displayCaption(post) {
 
   return null;
 }
+
+/**
+ * Process file (provided as an ArrayBuffer) depending
+ * on its type.
+ *
+ * @param  {ArrayBuffer} file
+ * @return {Blob}
+ * @todo Eventually deal with other file types.
+ */
+export function processFile(file) {
+  const fileType = getFileType(file);
+  const dataView = new DataView(file);
+
+  if (fileType === 'image/png') {
+    return new Blob([dataView], { type: fileType });
+  }
+
+  if (fileType === 'image/jpeg') {
+    return stripExifData(file, dataView);
+  }
+
+  throw new Error('Unsupported file type.');
+}
