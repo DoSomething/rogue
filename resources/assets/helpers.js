@@ -141,3 +141,44 @@ export function processFile(file) {
 
   throw new Error('Unsupported file type.');
 }
+
+/**
+ * Make a hash from a specified string.
+ * @see  http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+ *
+ * @param  {String} string
+ * @return {String}
+ */
+export function makeHash(string) {
+  if (string === undefined || string === null) {
+    throw new Error('Cannot make hash from undefined or null value.');
+  }
+
+  let hash = 0;
+
+  if (! string.length) {
+    return hash;
+  }
+
+  string.split('').forEach((char, index) => {
+    const charCode = string.charCodeAt(index);
+    hash = ((hash << 5) - hash) + charCode; // eslint-disable-line no-bitwise
+    hash = hash & hash; // eslint-disable-line no-bitwise, operator-assignment
+  });
+
+  return Math.abs(hash);
+}
+
+/**
+ * Prefix a class name or array of class names.
+ * @param {String|Array} names
+ */
+export function modifiers(...names) {
+  let classes = names;
+
+  if (! Array.isArray(classes)) {
+    classes = [classes];
+  }
+
+  return classes.filter(className => className).map(className => `-${className}`);
+}
