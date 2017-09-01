@@ -17,7 +17,6 @@ class UploaderModal extends React.Component {
 
   render() {
     const signup = this.props.signup;
-    console.log(signup);
 
     return (
       <div className="modal">
