@@ -175,9 +175,7 @@ class CampaignInbox extends React.Component {
                 allowHistory={true} />
             )
           }
-          {/*
-          { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} post={post} campaign={campaign} signup={this.state.signups[post.signup_id]} />) }
-          */}
+
           <ModalContainer>
             {this.state.displayHistoryModal ?
               <HistoryModal

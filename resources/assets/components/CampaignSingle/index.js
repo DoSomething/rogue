@@ -1,13 +1,15 @@
 import React from 'react';
-import { flatMap, keyBy, map, sample, forEach, reject, filter } from 'lodash';
 import { RestApiClient} from '@dosomething/gateway';
+import { extractSignupsFromPosts } from '../../helpers';
+import { flatMap, keyBy, map, sample, forEach, reject, filter } from 'lodash';
 
-import InboxItem from '../InboxItem';
-import ModalContainer from '../ModalContainer';
+import Post from '../Post';
+// import InboxItem from '../InboxItem';
+import PostFilter from '../PostFilter';
 import HistoryModal from '../HistoryModal';
 import PagingButtons from '../PagingButtons';
-import PostFilter from '../PostFilter';
 import StatusCounter from '../StatusCounter';
+import ModalContainer from '../ModalContainer';
 
 class CampaignSingle extends React.Component {
   constructor(props) {
@@ -67,7 +69,7 @@ class CampaignSingle extends React.Component {
     });
   }
 
-   // Update a signups quanity.
+  // Update a signups quanity.
   updateQuantity(signup, newQuantity) {
     // Fields to send to /posts
     const fields = {
@@ -85,8 +87,7 @@ class CampaignSingle extends React.Component {
       this.setState((previousState) => {
         const newState = {...previousState};
 
-        var firstPostId = Object.keys(newState.posts)[0];
-        newState.posts[firstPostId].signup.data.quantity = result.quantity;
+        newState.signups[signup.signup_id].quantity = result.quantity;
 
         return newState;
       });
@@ -194,6 +195,7 @@ class CampaignSingle extends React.Component {
     })
     .then(json => this.setState({
       posts: keyBy(json.data, 'id'),
+      signups: extractSignupsFromPosts(keyBy(json.data, 'id')),
       filter: status,
       postTotals: json.meta.pagination.total,
       displayHistoryModal: null,
@@ -214,6 +216,7 @@ class CampaignSingle extends React.Component {
     })
     .then(json => this.setState({
       posts: keyBy(json.data, 'id'),
+      signups: extractSignupsFromPosts(keyBy(json.data, 'id')),
       postTotals: json.meta.pagination.total,
       displayHistoryModal: null,
       historyModalId: null,
@@ -232,7 +235,23 @@ class CampaignSingle extends React.Component {
 
         <PostFilter onChange={this.filterPosts} />
 
-        { map(posts, (post, key) => post.status === this.state.filter ? <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} post={post} campaign={campaign} signup={post.signup.data} /> : null) }
+        {
+          map(posts, (post, key) =>
+            <Post key={key}
+              post={post}
+              user={post.signup.data.user.data}
+              signup={post.signup.data}
+              campaign={campaign}
+              onUpdate={this.updatePost}
+              onTag={this.updateTag}
+              deletePost={this.props.deletePost}
+              showHistory={this.showHistory}
+              showSiblings={true}
+              showQuantity={true}
+              allowHistory={true} />
+          )
+        }
+
 
         <ModalContainer>
             {this.state.displayHistoryModal ?
