@@ -58,7 +58,7 @@ class ReportbackUploader extends React.Component {
       campaignRunId: this.props.campaignRunId,
       northstarId: this.props.northstarId,
       source: this.props.source,
-      status: 'pending',
+      status: 'accepted',
     };
 
     const fileType = reportback.media.file ? reportback.media.file.type : null;
@@ -108,7 +108,7 @@ class ReportbackUploader extends React.Component {
               <textarea className="text-field" id="why_participated" name="why_participated" placeholder="No need to write an essay, but we'd love to know why this matters to the user!" ref={input => (this.why_participated = input)} />
             </div>
 
-            <button className="button" type="submit" disabled={submissions.isStoring}>Submit a new photo</button>
+            <button className="button" type="submit">Submit a new photo</button>
           </form>
         </div>
     );

@@ -18,6 +18,8 @@ POST /api/v2/posts
     The reason why the user participated.
   - **caption**: (string).
     Corresponding caption for the post.
+  - **status**: (string).
+    Option to set status upon creation if admin uploads post for user.
   - **source**: (string).
     Where the post was submitted from.
   - **remote_addr**: (string).

@@ -27,7 +27,6 @@ class MediaUploader extends React.Component {
     fileReader.onloadend = () => {
       try {
         blob = processFile(fileReader.result);
-    console.log(blob);
 
         this.props.onChange({
           file: blob,

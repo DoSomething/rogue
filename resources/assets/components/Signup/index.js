@@ -210,9 +210,37 @@ class Signup extends React.Component {
     }
   }
 
-  // Async Action: submit a new reportback and place in submissions gallery.
+  // Submit a new reportback on behalf of the user.
   submitReportback(reportback) {
-    console.log('hi');
+    // Fields to send to /posts
+    const fields = {
+      northstar_id: reportback.northstarId,
+      campaign_id: reportback.campaignId,
+      campaign_run_id: reportback.campaignRunId,
+      quantity: reportback.impact,
+      why_participated: reportback.whyParticipated,
+      caption: reportback.caption,
+      source: reportback.source,
+      status: reportback.status,
+      file: reportback.media.filePreviewUrl,
+    };
+
+    // Make API request to Rogue to upload post
+    let request = this.api.post('posts', fields);
+
+    request.then((result) => {
+      // Update the state
+      this.setState((previousState) => {
+        const newState = {...previousState};
+
+        newState.submissions.messaging.success.message = 'Thanks!';
+
+        return newState;
+      });
+    });
+
+
+
     // return (dispatch) => {
     //   dispatch(storeReportback(reportback));
 
@@ -293,6 +321,7 @@ class Signup extends React.Component {
                     signup={signup}
                     campaign={campaign}
                     submitReportback={this.submitReportback}
+                    api={this.api}
                   />
                 : null}
               </ModalContainer>
