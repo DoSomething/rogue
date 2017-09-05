@@ -1,8 +1,7 @@
 import React from 'react';
 import { map } from 'lodash';
 import './signup-card.scss';
-// @TODO - InboxTile should be a higher level component now that we are using it elsewhere.
-import InboxTile from '../InboxItem/InboxTile';
+import PostTile from '../PostTile';
 import { RestApiClient } from '@dosomething/gateway';
 import { extractPostsFromSignups } from '../../helpers';
 
@@ -15,7 +14,7 @@ class SignupCard extends React.Component {
     const extraPostCount = signup.posts.data.length - gallerySize;
 
     const posts = signup.posts.data.slice(0, gallerySize).map((post, index) => {
-      return <InboxTile key={index} details={post} />;
+      return <PostTile key={index} details={post} />;
     });
 
     const signupUrl = `/signups/${signup.signup_id}`;

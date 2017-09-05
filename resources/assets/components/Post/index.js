@@ -5,24 +5,13 @@ import { getImageUrlFromProp, getEditedImageUrl, displayCaption } from '../../he
 import './post.scss';
 
 import Tags from '../Tags';
+import PostTile from '../PostTile';
 import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
 import ReviewBlock from '../ReviewBlock';
 import StatusButton from '../StatusButton';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
-
-class InboxTile extends React.Component {
-  render() {
-    const post = this.props.details;
-
-    return (
-      <li>
-        <img src={getImageUrlFromProp(post) || post.media['url']}/>
-      </li>
-    )
-  }
-}
 
 class Post extends React.Component {
   getOtherPosts(post) {
@@ -61,7 +50,7 @@ class Post extends React.Component {
           {this.props.showSiblings ?
             <ul className="gallery -duo">
               {
-                map(this.getOtherPosts(post), (post, key) => <InboxTile key={key} details={post} />)
+                map(this.getOtherPosts(post), (post, key) => <PostTile key={key} details={post} />)
               }
             </ul>
           : null}
