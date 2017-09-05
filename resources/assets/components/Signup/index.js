@@ -210,6 +210,45 @@ class Signup extends React.Component {
     }
   }
 
+  // Async Action: submit a new reportback and place in submissions gallery.
+  submitReportback(reportback) {
+    console.log('hi');
+    // return (dispatch) => {
+    //   dispatch(storeReportback(reportback));
+
+    //   const url = `${window.location.origin}/next/reportbacks`;
+
+    //   const token = document.querySelector('meta[name="csrf-token"]');
+
+    //   // @TODO: Refactor once update to Gateway JS is made
+    //   // to allow overriding header configs properly.
+    //   return window.fetch(url, {
+    //     method: 'POST',
+    //     headers: {
+    //       'X-CSRF-Token': token ? token.getAttribute('content') : null,
+    //       Accept: 'application/json',
+    //     },
+    //     credentials: 'same-origin',
+    //     body: reportback.formData,
+    //   })
+    //     .then((response) => {
+    //       if (response.status >= 300) {
+    //         response.json().then((json) => {
+    //           dispatch(storeReportbackFailed(json));
+    //         });
+    //       } else {
+    //         dispatch(storeReportbackSuccessful());
+
+    //         response.json().then((json) => {
+    //           dispatch(addSubmissionMetadata(reportback, json.shift()));
+    //           dispatch(addSubmissionItemToList(reportback));
+    //         });
+    //       }
+    //     })
+    //     .catch(error => console.log(error));
+    // };
+  }
+
   render() {
     const user = this.props.user;
     const signup = this.state.signup;
@@ -254,6 +293,7 @@ class Signup extends React.Component {
                       onClose={e => this.hideUploader(e)}
                       signup={signup}
                       // campaign={campaign}
+                      submitReportback={this.submitReportback}
                     />
                   : null}
                 </ModalContainer>

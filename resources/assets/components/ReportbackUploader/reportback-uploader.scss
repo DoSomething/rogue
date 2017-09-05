@@ -1,8 +1,8 @@
-@import '../../scss/next-toolbox.scss';
+@import '~@dosomething/forge/scss/toolkit';
 
-.reportback-uploader {
+.uploader {
   .heading {
-    background-color: $primary-color;
+    background-color: #F9DD27;
     color: $off-black;
     font-size: $font-medium;
     margin: -($base-spacing / 2);
