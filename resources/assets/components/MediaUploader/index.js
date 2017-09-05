@@ -1,5 +1,4 @@
-// import PropTypes from 'prop-types';
-// /* global FileReader, URL, Blob */
+/* global FileReader, URL, Blob */
 
 import React from 'react';
 import classnames from 'classnames';
@@ -61,15 +60,6 @@ class MediaUploader extends React.Component {
     );
   }
 }
-
-// MediaUploader.propTypes = {
-//   label: PropTypes.string,
-//   media: PropTypes.shape({
-//     file: PropTypes.instanceOf(Blob),
-//     filePreviewUrl: PropTypes.string,
-//   }),
-//   onChange: PropTypes.func.isRequired,
-// };
 
 MediaUploader.defaultProps = {
   label: 'Upload Media',

@@ -286,17 +286,16 @@ class Signup extends React.Component {
             <div className="container__row">
               <a href="#" onClick={e => this.showUploader(signup, e)}>Upload Photo</a>
 
-                <ModalContainer>
-                  {this.state.displayUploaderModal ?
-                    <UploaderModal id={this.state.historyModalId}
-                      // onUpdate={this.updateQuantity}
-                      onClose={e => this.hideUploader(e)}
-                      signup={signup}
-                      // campaign={campaign}
-                      submitReportback={this.submitReportback}
-                    />
-                  : null}
-                </ModalContainer>
+              <ModalContainer>
+                {this.state.displayUploaderModal ?
+                  <UploaderModal id={this.state.historyModalId}
+                    onClose={e => this.hideUploader(e)}
+                    signup={signup}
+                    campaign={campaign}
+                    submitReportback={this.submitReportback}
+                  />
+                : null}
+              </ModalContainer>
             </div>
 
             <MetaInformation title="Meta" details={{

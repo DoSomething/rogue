@@ -1,11 +1,9 @@
 import React from 'react';
-// import { BlockWrapper } from '../Block';
 import ReportbackUploader from '../ReportbackUploader';
 
 class UploaderModal extends React.Component {
   constructor() {
     super();
-    console.log(this.props);
 
     // this.state = {
     //   quantity: null
@@ -20,28 +18,26 @@ class UploaderModal extends React.Component {
 
   render() {
     const signup = this.props.signup;
+    const campaign = this.props.campaign;
 
     const photoUploaderProps = {
-      campaignId: "1JVycvW4XqEc6oGwciCW42",
-      legacyCampaignId: "7831",
+      campaignId: signup.campaign_id,
+      campaignRunId: signup.campaign_run_id,
+      northstarId: signup.northstar_id,
       noun: {
-        plural: "social posts",
-        singular: "social post"
+        plural: campaign.reportback_info.noun,
       },
-      quantityOverride: null,
+      // @TODO: do we want this to be the admin's northstar ID so we know who submitted this?
+      source: 'Rogue admin',
       submissions: {
-        isFetching: false,
-        isStoring: false,
         items: [],
         messaging: {
-          success: {
-            message: "Thanks!",
-          }
+          // success: {
+            // message: "Thanks!",
+          // }
         },
       },
-      reportback: {
-
-      },
+      reportback: {},
       submitReportback: this.props.submitReportback,
       uploads: {},
     }
@@ -50,7 +46,6 @@ class UploaderModal extends React.Component {
       <div className="modal">
         <a href="#" onClick={this.props.onClose} className="modal-close-button">&times;</a>
         <div className="modal__block">
-          <h3>Photo Upload</h3>
           <ReportbackUploader {...photoUploaderProps} />
         </div>
       </div>

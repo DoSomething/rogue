@@ -1,8 +1,4 @@
-/* global FormData */
-
-// import PropTypes from 'prop-types';
 import React from 'react';
-// import { BlockWrapper } from '../Block';
 import MediaUploader from '../MediaUploader';
 import FormMessage from '../FormMessage';
 import './reportback-uploader.scss';
@@ -56,9 +52,12 @@ class ReportbackUploader extends React.Component {
     const reportback = {
       media: this.state.media,
       caption: this.caption.value,
-      impact: this.props.quantityOverride || this.impact.value,
+      impact: this.impact.value,
       whyParticipated: this.why_participated.value,
-      campaignId: this.props.legacyCampaignId,
+      campaignId: this.props.campaignId,
+      campaignRunId: this.props.campaignRunId,
+      northstarId: this.props.northstarId,
+      source: this.props.source,
       status: 'pending',
     };
 
@@ -88,16 +87,16 @@ class ReportbackUploader extends React.Component {
 
     return (
         <div className="reportback-uploader">
-          <h2 className="heading">Upload your photos</h2>
+          <h2 className="heading">Upload photos</h2>
 
           { submissions.messaging ? <FormMessage messaging={submissions.messaging} /> : null }
 
           <form className="reportback-form" onSubmit={this.handleOnSubmitForm} ref={form => (this.form = form)}>
-            <MediaUploader label="Add your photo here" media={this.state.media} onChange={this.handleOnFileUpload} />
+            <MediaUploader label="Add photo here" media={this.state.media} onChange={this.handleOnFileUpload} />
 
             <div className="wrapper">
               <div className="form-item">
-                <label className="field-label" htmlFor="caption">Add a caption to your photo.</label>
+                <label className="field-label" htmlFor="caption">Add a caption to the photo.</label>
                 <input className="text-field" id="caption" name="caption" type="text" placeholder="60 characters or less" ref={input => (this.caption = input)} />
               </div>
 
@@ -105,8 +104,8 @@ class ReportbackUploader extends React.Component {
             </div>
 
             <div className="form-item">
-              <label className="field-label" htmlFor="why_participated">Why is this campaign important to you?</label>
-              <textarea className="text-field" id="why_participated" name="why_participated" placeholder="No need to write an essay, but we'd love to see why this matters to you!" ref={input => (this.why_participated = input)} />
+              <label className="field-label" htmlFor="why_participated">Why is this campaign important to the user?</label>
+              <textarea className="text-field" id="why_participated" name="why_participated" placeholder="No need to write an essay, but we'd love to know why this matters to the user!" ref={input => (this.why_participated = input)} />
             </div>
 
             <button className="button" type="submit" disabled={submissions.isStoring}>Submit a new photo</button>
@@ -116,29 +115,10 @@ class ReportbackUploader extends React.Component {
   }
 }
 
-// ReportbackUploader.propTypes = {
-//   legacyCampaignId: PropTypes.string.isRequired,
-//   submissions: PropTypes.shape({
-//     isFetching: PropTypes.bool,
-//     isStoring: PropTypes.bool,
-//     items: PropTypes.array,
-//     messaging: PropTypes.object,
-//     reportback: PropTypes.object,
-//   }).isRequired,
-//   submitReportback: PropTypes.func.isRequired,
-//   noun: PropTypes.shape({
-//     singular: PropTypes.string,
-//     plural: PropTypes.string,
-//   }),
-//   quantityOverride: PropTypes.number,
-// };
-
 ReportbackUploader.defaultProps = {
   noun: {
-    singular: 'item',
     plural: 'items',
   },
-  quantityOverride: null,
 };
 
 export default ReportbackUploader;
