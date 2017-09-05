@@ -17,6 +17,7 @@ class CampaignInbox extends React.Component {
     this.state = {
       signups: keyBy(props.signups, 'id'),
       posts: posts,
+      users: props.users,
       displayHistoryModal: false,
       historyModalId: null,
     };
@@ -143,7 +144,9 @@ class CampaignInbox extends React.Component {
 
   render() {
     const posts = this.state.posts;
+    const users = this.state.users;
     const campaign = this.props.campaign;
+    const signups = this.state.signups;
 
     const nothingHere = [
       'https://media.giphy.com/media/3og0IT9dAZyMz3lXNe/giphy.gif',
@@ -156,7 +159,18 @@ class CampaignInbox extends React.Component {
     if (posts.length !== 0) {
       return (
         <div className="container">
-          { map(posts, (post, key) => <Post key={key} post={post} signup={this.state.signups[post.signup_id]} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.props.deletePost} showSiblings={true} />) }
+          {
+            map(posts, (post, key) =>
+              <Post key={key}
+                post={post}
+                user={users[post.northstar_id]}
+                signup={signups[post.signup_id]}
+                onUpdate={this.updatePost}
+                onTag={this.updateTag}
+                deletePost={this.props.deletePost}
+                showSiblings={true} />
+            )
+          }
           {/*
           { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} post={post} campaign={campaign} signup={this.state.signups[post.signup_id]} />) }
           */}

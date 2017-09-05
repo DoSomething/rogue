@@ -61,19 +61,15 @@ class CampaignsController extends Controller
     {
         $signups = Signup::campaign([$campaignId])->has('pending')->with('pending')->get();
 
+        // Grab the user objects for each signup
+        $ids = $signups->pluck('northstar_id')->toArray();
+        $users = $this->registrar->findAll($ids)->keyBy('id')->map(function($user, $key) {
+            return $user->toArray();
+        });
+
         // For each pending post, get and include the user
-        // @TODO - we should rethink this logic. Making a request to northstar
-        // for each post might be heavy. Ideally we could grab/attach users in bulk when
-        // we grab the signup.
         $signups->each(function ($item) {
             $item->posts = $item->pending;
-
-            $item->posts->each(function ($item) {
-                $user = $this->registrar->find($item->northstar_id);
-
-                // @TODO: Can we handle failure better?
-                $item->user = $user ? $user->toArray() : ['first_name' => 'A Doer'];
-            });
         });
 
         // Get the campaign data
@@ -83,6 +79,7 @@ class CampaignsController extends Controller
             ->with('state', [
                 'signups' => $signups,
                 'campaign' => $campaignData,
+                'users' => $users,
             ]);
     }
 

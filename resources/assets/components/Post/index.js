@@ -9,6 +9,7 @@ import TextBlock from '../TextBlock';
 import ReviewBlock from '../ReviewBlock';
 import StatusButton from '../StatusButton';
 import MetaInformation from '../MetaInformation';
+import UserInformation from '../Users/UserInformation';
 
 class InboxTile extends React.Component {
   render() {
@@ -44,9 +45,11 @@ class Post extends React.Component {
   render() {
     const post = this.props.post;
     const caption = displayCaption(post);
+    const user = this.props.user ? this.props.user : null;
 
     return (
       <div className="container__row">
+        {/* Post Images */}
         <div className="container__block -third">
           <img src={getImageUrlFromProp(post)}/>
           <p>
@@ -60,14 +63,20 @@ class Post extends React.Component {
             </ul>
           : null}
         </div>
+
+        {/* User and Post information */}
         <div className="container__block -third">
-          <div className="container -padded">
-            <TextBlock title="Photo Caption" content={displayCaption(post)} />
-          </div>
-          <div className="container">
-            <TextBlock title="Why Statement" content={this.props.signup.why_participated} />
-          </div>
+          <UserInformation user={user}>
+            <div className="container -padded">
+              <TextBlock title="Photo Caption" content={displayCaption(post)} />
+            </div>
+            <div className="container">
+              <TextBlock title="Why Statement" content={this.props.signup.why_participated} />
+            </div>
+          </UserInformation>
         </div>
+
+        {/* Review block and meta data */}
         <div className="container__block -third">
           <div className="container__row">
             <ReviewBlock post={post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
