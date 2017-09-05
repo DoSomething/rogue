@@ -5,6 +5,7 @@ import { getImageUrlFromProp, getEditedImageUrl, displayCaption } from '../../he
 import './post.scss';
 
 import Tags from '../Tags';
+import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
 import ReviewBlock from '../ReviewBlock';
 import StatusButton from '../StatusButton';
@@ -46,6 +47,8 @@ class Post extends React.Component {
     const post = this.props.post;
     const caption = displayCaption(post);
     const user = this.props.user ? this.props.user : null;
+    const signup = this.props.signup;
+    const campaign = this.props.campaign;
 
     return (
       <div className="container__row">
@@ -67,9 +70,20 @@ class Post extends React.Component {
         {/* User and Post information */}
         <div className="container__block -third">
           <UserInformation user={user}>
+            {signup.quantity && this.props.showQuantity ?
+              <Quantity quantity={signup.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
+            : null}
+
+            {this.props.allowHistory ?
+              <div className="container">
+                <a href="#" onClick={e => this.props.showHistory(post['id'], e)}>Edit | Show History</a>
+              </div>
+            : null}
+
             <div className="container -padded">
               <TextBlock title="Photo Caption" content={displayCaption(post)} />
             </div>
+
             <div className="container">
               <TextBlock title="Why Statement" content={this.props.signup.why_participated} />
             </div>

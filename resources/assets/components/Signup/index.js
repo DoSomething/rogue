@@ -132,7 +132,7 @@ class Signup extends React.Component {
     });
   }
 
-  // Update a signups quanity.
+  // Update a signups quantity.
   updateQuantity(signup, newQuantity) {
     // Fields to send to /posts
     const fields = {

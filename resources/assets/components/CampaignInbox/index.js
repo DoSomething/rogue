@@ -165,10 +165,14 @@ class CampaignInbox extends React.Component {
                 post={post}
                 user={users[post.northstar_id]}
                 signup={signups[post.signup_id]}
+                campaign={campaign}
                 onUpdate={this.updatePost}
                 onTag={this.updateTag}
                 deletePost={this.props.deletePost}
-                showSiblings={true} />
+                showHistory={this.showHistory}
+                showSiblings={true}
+                showQuantity={true}
+                allowHistory={true} />
             )
           }
           {/*
