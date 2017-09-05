@@ -4,8 +4,9 @@ import { RestApiClient } from '@dosomething/gateway';
 
 import { extractPostsFromSignups } from '../../helpers';
 import InboxItem from '../InboxItem';
-import ModalContainer from '../ModalContainer';
+import Post from '../Post';
 import HistoryModal from '../HistoryModal';
+import ModalContainer from '../ModalContainer';
 
 class CampaignInbox extends React.Component {
   constructor(props) {
@@ -155,9 +156,10 @@ class CampaignInbox extends React.Component {
     if (posts.length !== 0) {
       return (
         <div className="container">
-
+          { map(posts, (post, key) => <Post key={key} post={post} signup={this.state.signups[post.signup_id]} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.props.deletePost} showSiblings={true} />) }
+          {/*
           { map(posts, (post, key) => <InboxItem allowReview={true} onUpdate={this.updatePost} onTag={this.updateTag} showHistory={this.showHistory} deletePost={this.deletePost} key={key} post={post} campaign={campaign} signup={this.state.signups[post.signup_id]} />) }
-
+          */}
           <ModalContainer>
             {this.state.displayHistoryModal ?
               <HistoryModal

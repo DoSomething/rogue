@@ -2,13 +2,45 @@ import React from 'react';
 import { remove, map, clone } from 'lodash';
 import { getImageUrlFromProp, getEditedImageUrl, displayCaption } from '../../helpers';
 
+import './post.scss';
+
 import Tags from '../Tags';
 import TextBlock from '../TextBlock';
 import ReviewBlock from '../ReviewBlock';
 import StatusButton from '../StatusButton';
 import MetaInformation from '../MetaInformation';
 
+class InboxTile extends React.Component {
+  render() {
+    const post = this.props.details;
+
+    return (
+      <li>
+        <img src={getImageUrlFromProp(post) || post.media['url']}/>
+      </li>
+    )
+  }
+}
+
 class Post extends React.Component {
+  getOtherPosts(post) {
+    const post_id = post['id'];
+    const signup = this.props.signup;
+
+    var posts = signup.posts ? signup.posts : post.siblings.data;
+
+    // get array of posts
+    const other_posts = clone(posts);
+
+    // find index that has that post_id and remove
+    const big_post = remove(other_posts, function(current_post) {
+      return current_post['id'] == post_id;
+    });
+
+    // return the rest of the original array
+    return other_posts;
+  }
+
   render() {
     const post = this.props.post;
     const caption = displayCaption(post);
@@ -20,6 +52,13 @@ class Post extends React.Component {
           <p>
             <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a> | <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
           </p>
+          {this.props.showSiblings ?
+            <ul className="gallery -duo">
+              {
+                map(this.getOtherPosts(post), (post, key) => <InboxTile key={key} details={post} />)
+              }
+            </ul>
+          : null}
         </div>
         <div className="container__block -third">
           <div className="container -padded">
