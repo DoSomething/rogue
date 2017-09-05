@@ -4,7 +4,6 @@ import { extractSignupsFromPosts } from '../../helpers';
 import { flatMap, keyBy, map, sample, forEach, reject, filter } from 'lodash';
 
 import Post from '../Post';
-// import InboxItem from '../InboxItem';
 import PostFilter from '../PostFilter';
 import HistoryModal from '../HistoryModal';
 import PagingButtons from '../PagingButtons';
@@ -251,7 +250,6 @@ class CampaignSingle extends React.Component {
               allowHistory={true} />
           )
         }
-
 
         <ModalContainer>
             {this.state.displayHistoryModal ?

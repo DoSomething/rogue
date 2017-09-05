@@ -63,7 +63,7 @@ class CampaignsController extends Controller
 
         // Grab the user objects for each signup
         $ids = $signups->pluck('northstar_id')->toArray();
-        $users = $this->registrar->findAll($ids)->keyBy('id')->map(function($user, $key) {
+        $users = $this->registrar->findAll($ids)->keyBy('id')->map(function ($user, $key) {
             return $user->toArray();
         });
 

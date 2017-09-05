@@ -3,7 +3,6 @@ import { keyBy, map, sample, forEach, reject } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
 import { extractPostsFromSignups } from '../../helpers';
-import InboxItem from '../InboxItem';
 import Post from '../Post';
 import HistoryModal from '../HistoryModal';
 import ModalContainer from '../ModalContainer';
