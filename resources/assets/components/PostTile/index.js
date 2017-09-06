@@ -1,8 +1,7 @@
 import React from 'react';
 import { getImageUrlFromProp } from '../../helpers';
 
-class InboxTile extends React.Component {
-
+class PostTile extends React.Component {
   render() {
     const post = this.props.details;
 
@@ -14,4 +13,4 @@ class InboxTile extends React.Component {
   }
 }
 
-export default InboxTile;
+export default PostTile;

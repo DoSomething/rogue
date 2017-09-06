@@ -1,0 +1,13 @@
+@import '~@dosomething/forge/scss/toolkit';
+
+.gallery.-duo {
+  > li {
+    &:nth-child(odd) {
+      padding-left: 0px;
+    }
+
+    &:nth-child(even) {
+      padding-right: 0px;
+    }
+  }
+}

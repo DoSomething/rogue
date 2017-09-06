@@ -23,7 +23,7 @@ class PostGroup extends React.Component {
         {
           map(this.props.posts, (post, key) => {
             if (post['status'] === this.props.groupType) {
-              return <Post key={key} post={post} signup={this.props.signup} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />;
+              return <Post key={key} post={post} signup={this.props.signup} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} showSiblings={false} />;
             }
           })
         }
@@ -132,7 +132,7 @@ class Signup extends React.Component {
     });
   }
 
-  // Update a signups quanity.
+  // Update a signups quantity.
   updateQuantity(signup, newQuantity) {
     // Fields to send to /posts
     const fields = {

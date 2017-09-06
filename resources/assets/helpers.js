@@ -44,11 +44,19 @@ export function getImageUrlFromProp(photoProp) {
 };
 
 export function extractPostsFromSignups(signups) {
-    const posts = keyBy(flatMap(signups, signup => {
-      return signup.posts;
-    }), 'id');
+  const posts = keyBy(flatMap(signups, signup => {
+    return signup.posts;
+  }), 'id');
 
   return posts;
+}
+
+export function extractSignupsFromPosts(posts) {
+  const signups = keyBy(flatMap(posts, post => {
+    return post.signup.data;
+  }), 'signup_id');
+
+  return signups;
 }
 
 export function getEditedImageUrl(photoProp) {
