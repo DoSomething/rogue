@@ -72,7 +72,6 @@ class PostService
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink')) {
             $payload = $postOrSignup->toBlinkPayload();
-            dd($payload);
             $this->blink->userSignupPost($payload);
         }
 
