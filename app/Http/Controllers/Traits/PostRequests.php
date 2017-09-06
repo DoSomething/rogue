@@ -28,8 +28,6 @@ trait PostRequests
         if (! $updating) {
             $signup = $this->signups->create($request->all());
 
-            // Send the data to the PostService class which will handle determining
-            // which type of post we are dealing with and which repostitory to use to actually create the post.
             $post = $this->posts->create($request->all(), $signup->id, $transactionId);
 
             $code = 200;

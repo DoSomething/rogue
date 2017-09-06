@@ -69,6 +69,12 @@ class PostService
     {
         $postOrSignup = $this->repository->update($signup, $data);
 
+        // Save the new post in Customer.io, via Blink.
+        if (config('features.blink')) {
+            $payload = $postOrSignup->toBlinkPayload();
+            $this->blink->userSignupPost($payload);
+        }
+
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
 
