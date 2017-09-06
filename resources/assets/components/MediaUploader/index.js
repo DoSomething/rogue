@@ -2,7 +2,7 @@
 
 import React from 'react';
 import classnames from 'classnames';
-import { processFile } from '../../helpers';
+import { processFile, processFile64 } from '../../helpers';
 import './media-uploader.scss';
 
 class MediaUploader extends React.Component {
@@ -28,10 +28,20 @@ class MediaUploader extends React.Component {
       try {
         blob = processFile(fileReader.result);
 
-        this.props.onChange({
-          file: blob,
-          filePreviewUrl: window.URL.createObjectURL(blob),
-        });
+        let result
+        var reader = new FileReader();
+
+        reader.readAsDataURL(blob);
+
+        reader.onloadend = () => {
+          let result = reader.result;
+
+          this.props.onChange({
+            file: blob,
+            dataURL: result,
+            filePreviewUrl: URL.createObjectURL(blob),
+          });
+        }
       } catch (error) {
         // @todo: need a nice way to handle this, display message?
         console.log(error);

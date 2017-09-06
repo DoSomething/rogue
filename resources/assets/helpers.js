@@ -142,6 +142,21 @@ export function processFile(file) {
   throw new Error('Unsupported file type.');
 }
 
+export function processFile64(file) {
+  const fileType = getFileType(file);
+  const dataView = new DataView(file);
+
+  if (fileType === 'image/png') {
+    return new Blob([dataView], { type: fileType });
+  }
+
+  if (fileType === 'image/jpeg') {
+    return new File([dataView], { type: fileType });
+  }
+
+  throw new Error('Unsupported file type.');
+}
+
 /**
  * Make a hash from a specified string.
  * @see  http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/

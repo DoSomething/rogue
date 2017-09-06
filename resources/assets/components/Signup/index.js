@@ -222,13 +222,15 @@ class Signup extends React.Component {
       caption: reportback.caption,
       source: reportback.source,
       status: reportback.status,
-      file: reportback.media.filePreviewUrl,
+      file: reportback.media.dataURL,
+      remote_addr: '',
     };
 
     // Make API request to Rogue to upload post
     let request = this.api.post('posts', fields);
 
     request.then((result) => {
+      console.log(result);
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
