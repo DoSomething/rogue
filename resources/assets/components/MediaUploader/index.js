@@ -28,7 +28,7 @@ class MediaUploader extends React.Component {
       try {
         blob = processFile(fileReader.result);
 
-        let result
+        let result;
         var reader = new FileReader();
 
         reader.readAsDataURL(blob);

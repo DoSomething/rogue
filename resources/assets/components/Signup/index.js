@@ -54,6 +54,7 @@ class Signup extends React.Component {
     this.deletePost = this.deletePost.bind(this);
     this.showUploader = this.showUploader.bind(this);
     this.hideUploader = this.hideUploader.bind(this);
+    this.submitReportback = this.submitReportback.bind(this);
   }
 
   componentDidMount() {
@@ -230,53 +231,24 @@ class Signup extends React.Component {
     let request = this.api.post('posts', fields);
 
     request.then((result) => {
-      console.log(result);
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
+        const post = keyBy(result,'id');
+        const key = Number(Object.keys(post));
 
-        newState.submissions.messaging.success.message = 'Thanks!';
+        newState.successfulSubmission = {
+          success: {
+            message: "Thanks for the photo! It has been automatically approved.",
+          }
+        };
+
+        newState.posts[key] = post[key];
 
         return newState;
       });
-    });
-
-
-
-    // return (dispatch) => {
-    //   dispatch(storeReportback(reportback));
-
-    //   const url = `${window.location.origin}/next/reportbacks`;
-
-    //   const token = document.querySelector('meta[name="csrf-token"]');
-
-    //   // @TODO: Refactor once update to Gateway JS is made
-    //   // to allow overriding header configs properly.
-    //   return window.fetch(url, {
-    //     method: 'POST',
-    //     headers: {
-    //       'X-CSRF-Token': token ? token.getAttribute('content') : null,
-    //       Accept: 'application/json',
-    //     },
-    //     credentials: 'same-origin',
-    //     body: reportback.formData,
-    //   })
-    //     .then((response) => {
-    //       if (response.status >= 300) {
-    //         response.json().then((json) => {
-    //           dispatch(storeReportbackFailed(json));
-    //         });
-    //       } else {
-    //         dispatch(storeReportbackSuccessful());
-
-    //         response.json().then((json) => {
-    //           dispatch(addSubmissionMetadata(reportback, json.shift()));
-    //           dispatch(addSubmissionItemToList(reportback));
-    //         });
-    //       }
-    //     })
-    //     .catch(error => console.log(error));
-    // };
+    })
+    .catch(error => console.log(error));
   }
 
   render() {
@@ -318,12 +290,12 @@ class Signup extends React.Component {
 
               <ModalContainer>
                 {this.state.displayUploaderModal ?
-                  <UploaderModal id={this.state.historyModalId}
+                  <UploaderModal
                     onClose={e => this.hideUploader(e)}
                     signup={signup}
                     campaign={campaign}
                     submitReportback={this.submitReportback}
-                    api={this.api}
+                    success={this.state.successfulSubmission}
                   />
                 : null}
               </ModalContainer>

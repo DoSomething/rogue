@@ -4,23 +4,6 @@ import FormMessage from '../FormMessage';
 import './reportback-uploader.scss';
 
 class ReportbackUploader extends React.Component {
-  static setFormData(container) {
-    const reportback = container;
-    const formData = new FormData();
-
-    Object.keys(reportback).forEach((item) => {
-      if (item === 'media') {
-        formData.append(item, (reportback[item].file || ''));
-      } else {
-        formData.append(item, reportback[item]);
-      }
-    });
-
-    reportback.formData = formData;
-
-    return reportback;
-  }
-
   constructor(props) {
     super(props);
 
@@ -37,8 +20,6 @@ class ReportbackUploader extends React.Component {
     this.state = {
       media: this.defaultMediaState,
       caption: null,
-      impact: null,
-      why_participated: null,
     };
   }
 
@@ -52,8 +33,6 @@ class ReportbackUploader extends React.Component {
     const reportback = {
       media: this.state.media,
       caption: this.caption.value,
-      impact: this.impact.value,
-      whyParticipated: this.why_participated.value,
       campaignId: this.props.campaignId,
       campaignRunId: this.props.campaignRunId,
       northstarId: this.props.northstarId,
@@ -65,11 +44,9 @@ class ReportbackUploader extends React.Component {
 
     reportback.media.type = fileType ? fileType.substring(0, fileType.indexOf('/')) : null;
 
-    this.props.submitReportback(ReportbackUploader.setFormData(reportback));
+    this.props.submitReportback(reportback);
 
     // @TODO: only reset form AFTER successful RB submission.
-    // We'll make this a lot better once we switch to storing all the state
-    // in the Redux store @_@
     this.form.reset();
     this.setState({
       media: this.defaultMediaState,
@@ -78,16 +55,10 @@ class ReportbackUploader extends React.Component {
 
   render() {
     const submissions = this.props.submissions;
-    const impactInput = (
-      <div>
-        <label className="field-label" htmlFor="impact">Total number of {this.props.noun.plural} made?</label>
-        <input className="text-field" id="impact" name="impact" type="text" placeholder="Enter # here -- like '300' or '5'" ref={input => (this.impact = input)} />
-      </div>
-    );
 
     return (
         <div className="reportback-uploader">
-          <h2 className="heading">Upload photos</h2>
+          <h2 className="heading">Upload photo</h2>
 
           { submissions.messaging ? <FormMessage messaging={submissions.messaging} /> : null }
 
@@ -96,16 +67,9 @@ class ReportbackUploader extends React.Component {
 
             <div className="wrapper">
               <div className="form-item">
-                <label className="field-label" htmlFor="caption">Add a caption to the photo.</label>
+                <label className="field-label" htmlFor="caption">Add a caption for the photo.</label>
                 <input className="text-field" id="caption" name="caption" type="text" placeholder="60 characters or less" ref={input => (this.caption = input)} />
               </div>
-
-              { this.props.quantityOverride ? null : impactInput }
-            </div>
-
-            <div className="form-item">
-              <label className="field-label" htmlFor="why_participated">Why is this campaign important to the user?</label>
-              <textarea className="text-field" id="why_participated" name="why_participated" placeholder="No need to write an essay, but we'd love to know why this matters to the user!" ref={input => (this.why_participated = input)} />
             </div>
 
             <button className="button" type="submit">Submit a new photo</button>

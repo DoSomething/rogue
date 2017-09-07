@@ -4,17 +4,7 @@ import ReportbackUploader from '../ReportbackUploader';
 class UploaderModal extends React.Component {
   constructor() {
     super();
-
-    // this.state = {
-    //   quantity: null
-    // };
-
-    // this.onUpdate = this.onUpdate.bind(this);
   }
-
-  // onUpdate(event) {
-  //   this.setState({ quantity: event.target.value });
-  // }
 
   render() {
     const signup = this.props.signup;
@@ -31,16 +21,11 @@ class UploaderModal extends React.Component {
       source: 'Rogue admin',
       submissions: {
         items: [],
-        messaging: {
-          // success: {
-            // message: "Thanks!",
-          // }
-        },
+        messaging: this.props.success,
       },
       reportback: {},
       submitReportback: this.props.submitReportback,
       uploads: {},
-      api: this.props.api,
     }
 
     return (
