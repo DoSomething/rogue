@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import reviewComponent from '../components/WithReviewing';
 
 /**
  * Mount any container component to a server rendered page.
@@ -12,7 +13,13 @@ function mountContainer(components) {
     const container = reactElement.getAttribute('data-container');
 
     if (components[container]) {
-      ReactDOM.render(React.createElement(components[container], {...window.STATE}), reactElement);
+      // @TODO - See if reviewing is needed before doing this.
+      const ComponentWithReviewing = reviewComponent(components[container], window.STATE);
+
+      ReactDOM.render(<ComponentWithReviewing />, reactElement);
+
+      // @TODO - if no reviewins is needed, just render the component on the page.
+      // ReactDOM.render(React.createElement(components[container], {...window.STATE}), reactElement);
     }
   }
 }
