@@ -32,10 +32,10 @@ class CampaignInbox extends React.Component {
                 user={users[post.northstar_id]}
                 signup={signups[post.signup_id]}
                 campaign={campaign}
-                onUpdate={this.updatePost}
-                onTag={this.updateTag}
-                deletePost={this.deletePost}
-                showHistory={this.showHistory}
+                onUpdate={this.props.updatePost}
+                onTag={this.props.updateTag}
+                deletePost={this.props.deletePost}
+                showHistory={this.props.showHistory}
                 showSiblings={true}
                 showQuantity={true}
                 allowHistory={true} />
@@ -46,7 +46,7 @@ class CampaignInbox extends React.Component {
             {this.props.displayHistoryModal ?
               <HistoryModal
                 id={this.props.historyModalId}
-                onUpdate={this.updateQuantity}
+                onUpdate={this.props.updateQuantity}
                 onClose={e => this.hideHistory(e)}
                 campaign={campaign}
                 signup={signups[posts[this.props.historyModalId]['signup_id']]}

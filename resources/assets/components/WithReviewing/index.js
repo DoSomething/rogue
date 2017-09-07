@@ -138,7 +138,16 @@ const reviewComponent = (Component, data) => {
     }
 
     render() {
-      return <Component {...this.state} />
+      const methods = {
+        updatePost: this.updatePost,
+        updateTag: this.updateTag,
+        updateQuantity: this.updateQuantity,
+        showHistory: this.showHistory,
+        hideHistory: this.hideHistory,
+        deletePost: this.deletePost,
+      };
+
+      return <Component {...this.state} {...methods} />;
     }
   }
 }
