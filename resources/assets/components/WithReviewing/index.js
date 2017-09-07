@@ -56,18 +56,19 @@ const reviewComponent = (Component, data) => {
       }));
     }
 
-    setNewPosts(posts, next, prev) {
+    setNewPosts(apiResponse) {
+      const posts = keyBy(apiResponse.data, 'id');
       this.setState({
         campaign: data.campaign,
         posts: posts,
         signups: extractSignupsFromPosts(posts),
         filter: status,
-        // postTotals: json.meta.pagination.total,
+        postTotals: apiResponse.meta.pagination.total,
         displayHistoryModal: null,
         historyModalId: null,
         loading: false,
-        nextPage: next,
-        prevPage: prev,
+        nextPage: apiResponse.meta.pagination.links.next,
+        prevPage: apiResponse.meta.pagination.links.previous,
       });
     }
 

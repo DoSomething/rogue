@@ -51,7 +51,7 @@ class CampaignSingle extends React.Component {
     this.api.get('api/v2/posts', queryString)
     .then(json => {
       this.setState({loadingNewPosts: false });
-      this.props.setNewPosts(keyBy(json.data, 'id'), json.meta.pagination.links.next, json.meta.pagination.links.previous);
+      this.props.setNewPosts(json);
     });
   }
 
@@ -68,7 +68,7 @@ class CampaignSingle extends React.Component {
     })
     .then(json => {
       this.setState({loadingNewPosts: false });
-      this.props.setNewPosts(keyBy(json.data, 'id'), json.meta.pagination.links.next, json.meta.pagination.links.previous);
+      this.props.setNewPosts(json);
     });
   }
 
@@ -85,7 +85,7 @@ class CampaignSingle extends React.Component {
     })
     .then(json => {
       this.setState({loadingNewPosts: false });
-      this.props.setNewPosts(keyBy(json.data, 'id'), json.meta.pagination.links.next, json.meta.pagination.links.previous);
+      this.props.setNewPosts(json);
     });
   }
 
