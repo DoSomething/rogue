@@ -1,28 +1,21 @@
 import React from 'react';
-import { keyBy, map, sample, forEach, reject, assign } from 'lodash';
+import { keyBy } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
-
 import { extractPostsFromSignups } from '../../helpers';
-import Post from '../Post';
-import HistoryModal from '../HistoryModal';
-import ModalContainer from '../ModalContainer';
 
 const reviewComponent = (Component, data) => {
   return class extends React.Component {
     constructor(props) {
       super(props);
 
-      const posts = extractPostsFromSignups(props.signups);
-
-      // this.state = {
-      //   signups: keyBy(props.signups, 'id'),
-      //   posts: posts,
-      //   campaign: props.campaign,
-      //   displayHistoryModal: false,
-      //   historyModalId: null,
-      // };
-
-      this.state = data;
+      this.state = {
+        signups: keyBy(data.signups, 'id'),
+        posts: extractPostsFromSignups(data.signups),
+        users: data.users,
+        campaign: data.campaign,
+        displayHistoryModal: false,
+        historyModalId: null,
+      };
 
       this.api = new RestApiClient;
       this.updatePost = this.updatePost.bind(this);
