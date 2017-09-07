@@ -14,22 +14,15 @@ class CampaignSingle extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      loadingNewPosts: false
+    };
 
     this.api = new RestApiClient;
-    this.updatePost = this.updatePost.bind(this);
-    this.updateTag = this.updateTag.bind(this);
-    this.updateQuantity = this.updateQuantity.bind(this);
-    this.showHistory = this.showHistory.bind(this);
-    this.hideHistory = this.hideHistory.bind(this);
-    this.deletePost = this.deletePost.bind(this);
     this.filterPosts = this.filterPosts.bind(this);
-    this.getPostsByPaginatedLink = this.getPostsByPaginatedLink.bind(this);
     this.getPostsByTag = this.getPostsByTag.bind(this);
-  }
-
-  componentDidMount() {
-    this.getPostsByStatus('accepted', this.props.campaign.id);
+    this.getPostsByStatus = this.getPostsByStatus.bind(this);
+    this.getPostsByPaginatedLink = this.getPostsByPaginatedLink.bind(this);
   }
 
   // Filter posts based on status or tag(s).
@@ -44,128 +37,11 @@ class CampaignSingle extends React.Component {
 
   }
 
-  // Open the history modal of the given post
-  // @TODO - Figure out how to share this logic between components so it
-  // doesn't need to be duplicated between components.
-  showHistory(postId, event) {
-    event.preventDefault();
-
-    this.setState({
-      displayHistoryModal: true,
-      historyModalId: postId,
-    });
-  }
-
-  // Close the open history modal
-  hideHistory(event) {
-    if (event) {
-      event.preventDefault();
-    }
-
-    this.setState({
-      displayHistoryModal: false,
-      historyModalId: null,
-    });
-  }
-
-  // Update a signups quanity.
-  updateQuantity(signup, newQuantity) {
-    // Fields to send to /posts
-    const fields = {
-      northstar_id: signup.northstar_id,
-      campaign_id: signup.campaign_id,
-      campaign_run_id: signup.campaign_run_id,
-      quantity: newQuantity,
-    };
-
-    // Make API request to Rogue to update the quantity on the backend
-    let request = this.api.post('posts', fields);
-
-    request.then((result) => {
-      // Update the state
-      this.setState((previousState) => {
-        const newState = {...previousState};
-
-        newState.signups[signup.signup_id].quantity = result.quantity;
-
-        return newState;
-      });
-    });
-
-    // Close the modal
-    this.hideHistory();
-  }
-
-    // Updates a post status.
-  updatePost(postId, fields) {
-    fields.post_id = postId;
-
-    let request = this.api.put('reviews', fields);
-
-    request.then((result) => {
-      this.setState((previousState) => {
-        const newState = {...previousState};
-        newState.posts[postId].status = fields.status;
-
-        return newState;
-      });
-    });
-
-  }
-
-  // Tag a post.
-  updateTag(postId, tag) {
-    const fields = {
-      post_id: postId,
-      tag_name: tag,
-    };
-
-    let response = this.api.post('tags', fields);
-
-    return response.then((result) => {
-      this.setState((previousState) => {
-        const newState = {...previousState};
-        const user = newState.posts[postId].user;
-        const signup = newState.posts[postId].signup.data;
-
-        // Merge existing post with the newly updated values from API.
-        newState.posts[postId] = {
-          ...newState.posts[postId],
-          ...result['data']
-        };
-
-        return newState;
-      });
-    });
-  }
-
-  // Delete a post.
-  deletePost(postId, event) {
-    event.preventDefault();
-    const confirmed = confirm('🚨🔥🚨Are you sure you want to delete this?🚨🔥🚨');
-
-    if (confirmed) {
-      // Make API request to Rogue to update the quantity on the backend
-      let response = this.api.delete('posts/'.concat(postId));
-
-      response.then((result) => {
-        // Update the state
-        this.setState((previousState) => {
-          var newState = {...previousState};
-
-          // Remove the deleted post from the state
-          delete(newState.posts[postId]);
-
-          // Return the new state
-          return newState;
-        });
-      });
-    }
-  }
-
   // Make API call to paginated link to get next/previous batch of posts.
   getPostsByPaginatedLink(url, event) {
     event.preventDefault();
+
+    this.setState({ loadingNewPosts: true });
 
     // Strip the url to get query parameters.
     let splitEndpoint = url.split('/');
@@ -173,18 +49,16 @@ class CampaignSingle extends React.Component {
     let queryString = (path.split('?'))[1];
 
     this.api.get('api/v2/posts', queryString)
-    .then(json => this.setState({
-      posts: keyBy(json.data, 'id'),
-      postTotals: json.meta.pagination.total,
-      displayHistoryModal: null,
-      historyModalId: null,
-      nextPage: json.meta.pagination.links.next,
-      prevPage: json.meta.pagination.links.previous,
-    }));
+    .then(json => {
+      this.setState({loadingNewPosts: false });
+      this.props.setNewPosts(keyBy(json.data, 'id'))
+    });
   }
 
   // Make API call to GET /posts to get posts by filtered status.
   getPostsByStatus(status, campaignId) {
+    this.setState({ loadingNewPosts: true });
+
     this.api.get('api/v2/posts', {
       filter: {
         status: status,
@@ -192,20 +66,16 @@ class CampaignSingle extends React.Component {
       },
       include: 'signup,siblings',
     })
-    .then(json => this.setState({
-      posts: keyBy(json.data, 'id'),
-      signups: extractSignupsFromPosts(keyBy(json.data, 'id')),
-      filter: status,
-      postTotals: json.meta.pagination.total,
-      displayHistoryModal: null,
-      historyModalId: null,
-      nextPage: json.meta.pagination.links.next,
-      prevPage: json.meta.pagination.links.previous,
-    }));
+    .then(json => {
+      this.setState({loadingNewPosts: false });
+      this.props.setNewPosts(keyBy(json.data, 'id'))
+    });
   }
 
   // Make API call to GET /posts to get posts by filtered tag.
   getPostsByTag(tagSlug, campaignId) {
+    this.setState({ loadingNewPosts: true });
+
     this.api.get('api/v2/posts', {
       filter: {
         tag: tagSlug,
@@ -213,20 +83,16 @@ class CampaignSingle extends React.Component {
       },
       include: 'signup,siblings',
     })
-    .then(json => this.setState({
-      posts: keyBy(json.data, 'id'),
-      signups: extractSignupsFromPosts(keyBy(json.data, 'id')),
-      postTotals: json.meta.pagination.total,
-      displayHistoryModal: null,
-      historyModalId: null,
-      nextPage: json.meta.pagination.links.next,
-      prevPage: json.meta.pagination.links.previous,
-    }));
+    .then(json => {
+      this.setState({loadingNewPosts: false });
+      this.props.setNewPosts(keyBy(json.data, 'id'))
+    });
   }
 
   render() {
-    const posts = this.state.posts;
+    const posts = this.props.posts;
     const campaign = this.props.campaign;
+    const signups = this.props.signups;
 
     return (
       <div className="container">
@@ -234,32 +100,36 @@ class CampaignSingle extends React.Component {
 
         <PostFilter onChange={this.filterPosts} />
 
-        {
+        {this.props.loading || this.state.loadingNewPosts ?
+          <div className="spinner"></div>
+        :
           map(posts, (post, key) =>
             <Post key={key}
               post={post}
-              user={post.signup.data.user.data}
-              signup={post.signup.data}
+              user={signups[post.signup_id].user.data}
+              signup={signups[post.signup_id]}
               campaign={campaign}
-              onUpdate={this.updatePost}
-              onTag={this.updateTag}
-              deletePost={this.deletePost}
-              showHistory={this.showHistory}
+              onUpdate={this.props.updatePost}
+              onTag={this.props.updateTag}
+              deletePost={this.props.deletePost}
+              showHistory={this.props.showHistory}
               showSiblings={true}
               showQuantity={true}
               allowHistory={true} />
           )
         }
 
+
         <ModalContainer>
-            {this.state.displayHistoryModal ?
-              <HistoryModal id={this.state.historyModalId}
-                onUpdate={this.updateQuantity}
-                onClose={e => this.hideHistory(e)}
-                campaign={campaign}
-                signup={posts[this.state.historyModalId].signup.data}
-              />
-            : null}
+          {this.props.displayHistoryModal ?
+            <HistoryModal
+              id={this.props.historyModalId}
+              onUpdate={this.props.updateQuantity}
+              onClose={e => this.hideHistory(e)}
+              campaign={campaign}
+              signup={signups[posts[this.props.historyModalId]['signup_id']]}
+            />
+          : null}
         </ModalContainer>
 
         <PagingButtons onPaginate={this.getPostsByPaginatedLink} prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
