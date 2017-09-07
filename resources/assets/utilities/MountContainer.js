@@ -11,15 +11,20 @@ function mountContainer(components) {
 
   if (reactElement) {
     const container = reactElement.getAttribute('data-container');
+    const reviewing = reactElement.getAttribute('data-reviewing');
 
     if (components[container]) {
-      // @TODO - See if reviewing is needed before doing this.
-      const ComponentWithReviewing = reviewComponent(components[container], window.STATE);
+      // If this is a component where reviewing happens, wrap the container component in the HoC for reviewing.
+      if (reviewing) {
+        const ComponentWithReviewing = reviewComponent(components[container], window.STATE);
 
-      ReactDOM.render(<ComponentWithReviewing />, reactElement);
+        ReactDOM.render(<ComponentWithReviewing />, reactElement);
 
-      // @TODO - if no reviewins is needed, just render the component on the page.
-      // ReactDOM.render(React.createElement(components[container], {...window.STATE}), reactElement);
+      // If there is no reviewing, just render the component on the page.
+      } else {
+        ReactDOM.render(React.createElement(components[container], {...window.STATE}), reactElement);
+      }
+
     }
   }
 }
