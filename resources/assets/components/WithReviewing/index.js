@@ -1,7 +1,7 @@
 import React from 'react';
 import { keyBy } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
-import { extractPostsFromSignups } from '../../helpers';
+import { extractPostsFromSignups, extractSignupsFromPosts } from '../../helpers';
 
 const reviewComponent = (Component, data) => {
   return class extends React.Component {
@@ -9,12 +9,7 @@ const reviewComponent = (Component, data) => {
       super(props);
 
       this.state = {
-        signups: keyBy(data.signups, 'id'),
-        posts: extractPostsFromSignups(data.signups),
-        users: data.users,
-        campaign: data.campaign,
-        displayHistoryModal: false,
-        historyModalId: null,
+        loading: true,
       };
 
       this.api = new RestApiClient;
@@ -25,6 +20,34 @@ const reviewComponent = (Component, data) => {
       this.hideHistory = this.hideHistory.bind(this);
       this.deletePost = this.deletePost.bind(this);
     }
+
+    componentDidMount() {
+      this.getPostsByStatus('pending', data.campaign.id);
+    }
+
+    // Make API call to GET /posts to get posts by filtered status.
+    getPostsByStatus(status, campaignId) {
+      this.api.get('api/v2/posts', {
+        filter: {
+          status: status,
+          campaign_id: campaignId,
+        },
+        include: 'signup,siblings',
+      })
+      .then(json => this.setState({
+        campaign: data.campaign,
+        posts: keyBy(json.data, 'id'),
+        signups: extractSignupsFromPosts(keyBy(json.data, 'id')),
+        filter: status,
+        postTotals: json.meta.pagination.total,
+        displayHistoryModal: null,
+        historyModalId: null,
+        loading: false,
+        nextPage: json.meta.pagination.links.next,
+        prevPage: json.meta.pagination.links.previous,
+      }));
+    }
+
 
     // Open the history modal of the given post
     showHistory(postId, event) {
@@ -77,8 +100,13 @@ const reviewComponent = (Component, data) => {
         this.setState((previousState) => {
           const newState = {...previousState};
           const user = newState.posts[postId].user;
+          const signup = newState.posts[postId].signup.data;
 
-          newState.posts[postId] = result['data'];
+          // Merge existing post with the newly updated values from API.
+          newState.posts[postId] = {
+            ...newState.posts[postId],
+            ...result['data']
+          };
 
           return newState;
         });

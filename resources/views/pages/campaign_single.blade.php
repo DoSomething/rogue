@@ -5,7 +5,7 @@
     @include('layouts.header', ['header' => $state['campaign']['title']])
 
         <div class="container -padded">
-            <div class="wrapper" data-container="CampaignSingle">
+            <div class="wrapper" data-container="CampaignSingle" data-reviewing="true">
                 <div id="status-counter"></div>
                 <div id="status-filter"></div>
                 <div id="posts">

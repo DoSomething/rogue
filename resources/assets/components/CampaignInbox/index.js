@@ -9,8 +9,11 @@ import ModalContainer from '../ModalContainer';
 
 class CampaignInbox extends React.Component {
   render() {
+    if (this.props.loading) {
+      return <div className="spinner"></div>;
+    }
+
     const posts = this.props.posts;
-    const users = this.props.users;
     const campaign = this.props.campaign;
     const signups = this.props.signups;
 
@@ -29,7 +32,7 @@ class CampaignInbox extends React.Component {
             map(posts, (post, key) =>
               <Post key={key}
                 post={post}
-                user={users[post.northstar_id]}
+                user={signups[post.signup_id].user.data}
                 signup={signups[post.signup_id]}
                 campaign={campaign}
                 onUpdate={this.props.updatePost}
