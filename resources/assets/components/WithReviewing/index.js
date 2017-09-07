@@ -56,7 +56,7 @@ const reviewComponent = (Component, data) => {
       }));
     }
 
-    setNewPosts(posts) {
+    setNewPosts(posts, next, prev) {
       this.setState({
         campaign: data.campaign,
         posts: posts,
@@ -66,6 +66,8 @@ const reviewComponent = (Component, data) => {
         displayHistoryModal: null,
         historyModalId: null,
         loading: false,
+        nextPage: next,
+        prevPage: prev,
       });
     }
 

@@ -51,7 +51,7 @@ class CampaignSingle extends React.Component {
     this.api.get('api/v2/posts', queryString)
     .then(json => {
       this.setState({loadingNewPosts: false });
-      this.props.setNewPosts(keyBy(json.data, 'id'))
+      this.props.setNewPosts(keyBy(json.data, 'id'), json.meta.pagination.links.next, json.meta.pagination.links.previous);
     });
   }
 
@@ -68,7 +68,7 @@ class CampaignSingle extends React.Component {
     })
     .then(json => {
       this.setState({loadingNewPosts: false });
-      this.props.setNewPosts(keyBy(json.data, 'id'))
+      this.props.setNewPosts(keyBy(json.data, 'id'), json.meta.pagination.links.next, json.meta.pagination.links.previous);
     });
   }
 
@@ -85,7 +85,7 @@ class CampaignSingle extends React.Component {
     })
     .then(json => {
       this.setState({loadingNewPosts: false });
-      this.props.setNewPosts(keyBy(json.data, 'id'))
+      this.props.setNewPosts(keyBy(json.data, 'id'), json.meta.pagination.links.next, json.meta.pagination.links.previous);
     });
   }
 
@@ -132,7 +132,7 @@ class CampaignSingle extends React.Component {
           : null}
         </ModalContainer>
 
-        <PagingButtons onPaginate={this.getPostsByPaginatedLink} prev={this.state.prevPage} next={this.state.nextPage}></PagingButtons>
+        <PagingButtons onPaginate={this.getPostsByPaginatedLink} prev={this.props.prevPage} next={this.props.nextPage}></PagingButtons>
       </div>
     )
   }
