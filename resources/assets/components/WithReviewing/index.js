@@ -19,10 +19,18 @@ const reviewComponent = (Component, data) => {
       this.showHistory = this.showHistory.bind(this);
       this.hideHistory = this.hideHistory.bind(this);
       this.deletePost = this.deletePost.bind(this);
+      this.setNewPosts = this.setNewPosts.bind(this);
     }
 
+    // Loads initial posts into state.
     componentDidMount() {
-      this.getPostsByStatus('pending', data.campaign.id);
+      // Require initial_posts and campaign parameters.
+      if (data.initial_posts && data.campaign) {
+        this.getPostsByStatus(data.initial_posts, data.campaign.id);
+      } else {
+        // @TODO - handle error better.
+        console.log("Error: need to know the initial posts to load and the campaign.");
+      }
     }
 
     // Make API call to GET /posts to get posts by filtered status.
@@ -48,6 +56,18 @@ const reviewComponent = (Component, data) => {
       }));
     }
 
+    setNewPosts(posts) {
+      this.setState({
+        campaign: data.campaign,
+        posts: posts,
+        signups: extractSignupsFromPosts(posts),
+        filter: status,
+        // postTotals: json.meta.pagination.total,
+        displayHistoryModal: null,
+        historyModalId: null,
+        loading: false,
+      });
+    }
 
     // Open the history modal of the given post
     showHistory(postId, event) {
@@ -131,7 +151,7 @@ const reviewComponent = (Component, data) => {
         this.setState((previousState) => {
           const newState = {...previousState};
 
-          newState.signups[signup.id].quantity = result.quantity;
+          newState.signups[signup.signup_id].quantity = result.quantity;
 
           return newState;
         });
@@ -173,9 +193,13 @@ const reviewComponent = (Component, data) => {
         showHistory: this.showHistory,
         hideHistory: this.hideHistory,
         deletePost: this.deletePost,
+        setNewPosts: this.setNewPosts,
       };
 
-      return <Component {...this.state} {...methods} />;
+      // Pass in the state from this HoC to trigger rendering down the DOM
+      // Also pass in methods bound to this instance.
+      // Also pass in original data pass to the HoC in case other components still need it down the line.
+      return <Component {...this.state} {...methods} {...data} />;
     }
   }
 }
