@@ -9,6 +9,7 @@ import Post from '../Post';
 import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
 import HistoryModal from '../HistoryModal';
+import UploaderModal from '../UploaderModal'
 import ModalContainer from '../ModalContainer';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
@@ -41,6 +42,7 @@ class Signup extends React.Component {
       posts: {},
       displayHistoryModal: false,
       historyModalId: null,
+      displayUploaderModal: false,
     };
 
     this.api = new RestApiClient;
@@ -50,6 +52,9 @@ class Signup extends React.Component {
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
     this.deletePost = this.deletePost.bind(this);
+    this.showUploader = this.showUploader.bind(this);
+    this.hideUploader = this.hideUploader.bind(this);
+    this.submitReportback = this.submitReportback.bind(this);
   }
 
   componentDidMount() {
@@ -75,7 +80,7 @@ class Signup extends React.Component {
 
   // Open the history modal of the given post
   showHistory(postId, event) {
-    event.preventDefault()
+    event.preventDefault();
 
     this.setState({
       displayHistoryModal: true,
@@ -92,6 +97,28 @@ class Signup extends React.Component {
     this.setState({
       displayHistoryModal: false,
       historyModalId: null,
+    });
+  }
+
+  // Open the uploader modal to upload a new post
+  showUploader(campaign, event) {
+    event.preventDefault();
+
+    this.setState({
+      displayUploaderModal: true,
+      campaign: campaign,
+    });
+  }
+
+  // Close the open uploader modal
+  hideUploader(event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    this.setState({
+      displayUploaderModal: false,
+      campaign: null,
     });
   }
 
@@ -184,6 +211,58 @@ class Signup extends React.Component {
     }
   }
 
+  // Submit a new reportback on behalf of the user.
+  submitReportback(reportback) {
+    // Fields to send to /posts
+    const fields = {
+      northstar_id: reportback.northstarId,
+      campaign_id: reportback.campaignId,
+      campaign_run_id: reportback.campaignRunId,
+      quantity: reportback.impact,
+      why_participated: reportback.whyParticipated,
+      caption: reportback.caption,
+      source: reportback.source,
+      status: reportback.status,
+      file: reportback.media.dataURL,
+      remote_addr: '',
+    };
+
+    // Make API request to Rogue to upload post
+    let request = this.api.post('posts', fields);
+
+    request.then((result) => {
+      // Update the state
+      this.setState((previousState) => {
+        const newState = {...previousState};
+        const post = keyBy(result,'id');
+        const key = Number(Object.keys(post));
+
+        newState.successfulSubmission = {
+          success: {
+            message: "Thanks for the photo! It has been automatically approved.",
+          }
+        };
+
+        newState.posts[key] = post[key];
+
+        return newState;
+      });
+    })
+    .catch(error =>
+      this.setState((previousState) => {
+        const newState = {...previousState};
+
+        newState.successfulSubmission = {
+          error: {
+            message: "Oops, looks like something went wrong.",
+          }
+        };
+
+        return newState;
+      })
+    );
+  }
+
   render() {
     const user = this.props.user;
     const signup = this.state.signup;
@@ -213,6 +292,22 @@ class Signup extends React.Component {
                     onClose={e => this.hideHistory(e)}
                     signup={signup}
                     campaign={campaign}
+                  />
+                : null}
+              </ModalContainer>
+            </div>
+
+            <div className="container__row">
+              <a href="#" onClick={e => this.showUploader(signup, e)}>Upload Photo</a>
+
+              <ModalContainer>
+                {this.state.displayUploaderModal ?
+                  <UploaderModal
+                    onClose={e => this.hideUploader(e)}
+                    signup={signup}
+                    campaign={campaign}
+                    submitReportback={this.submitReportback}
+                    success={this.state.successfulSubmission}
                   />
                 : null}
               </ModalContainer>

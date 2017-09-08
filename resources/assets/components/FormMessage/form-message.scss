@@ -1,0 +1,21 @@
+@import '~@dosomething/forge/scss/toolkit';
+
+.form-message {
+  margin-top: $base-spacing;
+
+  &.-error {
+    color: red;
+
+    h3, p {
+      color: red;
+    }
+  }
+
+  &.-success {
+    color: green;
+
+    h3, p {
+      color: green;
+    }
+  }
+}
