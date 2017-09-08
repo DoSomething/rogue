@@ -9,6 +9,7 @@ class ReportbackUploader extends React.Component {
 
     this.handleOnSubmitForm = this.handleOnSubmitForm.bind(this);
     this.handleOnFileUpload = this.handleOnFileUpload.bind(this);
+    this.handleOnCaptionUpdate = this.handleOnCaptionUpdate.bind(this);
 
     this.defaultMediaState = {
       file: null,
@@ -25,6 +26,10 @@ class ReportbackUploader extends React.Component {
 
   handleOnFileUpload(media) {
     this.setState({ media });
+  }
+
+  handleOnCaptionUpdate(event) {
+    this.setState({ caption: event.target.value });
   }
 
   handleOnSubmitForm(event) {
@@ -68,11 +73,11 @@ class ReportbackUploader extends React.Component {
             <div className="wrapper">
               <div className="form-item">
                 <label className="field-label" htmlFor="caption">Add a caption for the photo.</label>
-                <input className="text-field" id="caption" name="caption" type="text" placeholder="60 characters or less" ref={input => (this.caption = input)} />
+                <input className="text-field" id="caption" name="caption" type="text" onChange={this.handleOnCaptionUpdate} placeholder="60 characters or less" ref={input => (this.caption = input)} />
               </div>
             </div>
 
-            <button className="button" type="submit">Submit a new photo</button>
+            <button className="button" disabled={!this.state.media.filePreviewUrl || !this.state.caption} type="submit">Submit a new photo</button>
           </form>
         </div>
     );
