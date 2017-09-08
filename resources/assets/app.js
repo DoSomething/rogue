@@ -10,10 +10,6 @@ import CampaignSingle from './components/CampaignSingle';
 import Signup from './components/Signup';
 import UserOverview from './components/UserOverview';
 
-// URL constructor polyfill (http://caniuse.com/#feat=url)
-// @see: https://github.com/webcomponents/URL
-import '@publica/url-polyfill';
-
 ready(() => {
   const overviewContainer = document.getElementById('overviewContainer');
   const inboxContainer = document.getElementById('inboxContainer');

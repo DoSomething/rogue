@@ -17,7 +17,6 @@ class UploaderModal extends React.Component {
       noun: {
         plural: campaign.reportback_info.noun,
       },
-      // @TODO: do we want this to be the admin's northstar ID so we know who submitted this?
       source: 'Rogue admin',
       submissions: {
         items: [],
