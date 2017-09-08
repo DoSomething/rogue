@@ -17,7 +17,7 @@ class UploaderModal extends React.Component {
       noun: {
         plural: campaign.reportback_info.noun,
       },
-      source: 'Rogue admin',
+      source: 'rogue-admin',
       submissions: {
         items: [],
         messaging: this.props.success,
