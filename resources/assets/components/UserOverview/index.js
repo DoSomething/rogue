@@ -4,7 +4,6 @@ import SignupCard from '../SignupCard';
 import { RestApiClient } from '@dosomething/gateway';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
-import { calculateAge, displayName, displayCityState } from '../../helpers';
 
 class UserOverview extends React.Component {
   constructor(props) {
@@ -55,8 +54,6 @@ class UserOverview extends React.Component {
 
   render() {
     const user = this.props.user;
-    const cityState = displayCityState(user.addr_city, user.addr_state);
-    const name = displayName(user.first_name, user.last_name);
 
     return (
       <div>
