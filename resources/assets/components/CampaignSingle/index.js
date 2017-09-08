@@ -1,7 +1,7 @@
 import React from 'react';
+import { map } from 'lodash';
 import { RestApiClient} from '@dosomething/gateway';
 import { extractSignupsFromPosts } from '../../helpers';
-import { flatMap, keyBy, map, sample, forEach, reject, filter } from 'lodash';
 
 import Post from '../Post';
 import PostFilter from '../PostFilter';
