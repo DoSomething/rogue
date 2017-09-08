@@ -2,7 +2,6 @@
 import React from 'react';
 import { map, startCase, keyBy} from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
-import { calculateAge, displayName, displayCityState } from '../../helpers';
 
 // Components
 import Post from '../Post';

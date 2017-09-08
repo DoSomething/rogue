@@ -14,11 +14,15 @@ export function ready(fn) {
 }
 
 export function calculateAge(date) {
-	const birthdate = new Date(date);
-	const today = Date.now();
-	const age = Math.floor((today - birthdate) / 31536000000);
+  let formattedAge = null;
 
-	return age;
+  if (date) {
+  	const birthdate = new Date(date);
+  	const today = Date.now();
+  	formattedAge = Math.floor((today - birthdate) / 31536000000);
+  }
+
+  return formattedAge;
 };
 
 export function getImageUrlFromProp(photoProp) {
@@ -80,16 +84,21 @@ export function getEditedImageUrl(photoProp) {
 };
 
 /**
- * Returns a readable display name.
+ * Returns a readable display name and age (if provided).
  *
  * @param {String} firstName
  * @param {String} lastName
+ * @param {Date} birthDate
  */
-export function displayName(firstName, lastName) {
+export function displayUserInfo(firstName, lastName, birthDate) {
   let displayName = firstName;
-
   if (lastName) {
     displayName = `${displayName} ${lastName}`;
+  }
+
+  if (birthDate) {
+    let age = calculateAge(birthDate);
+    return displayName + ', ' + age;
   }
 
   return displayName;
