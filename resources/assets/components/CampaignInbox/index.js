@@ -167,7 +167,7 @@ class CampaignInbox extends React.Component {
                 campaign={campaign}
                 onUpdate={this.updatePost}
                 onTag={this.updateTag}
-                deletePost={this.props.deletePost}
+                deletePost={this.deletePost}
                 showHistory={this.showHistory}
                 showSiblings={true}
                 showQuantity={true}
