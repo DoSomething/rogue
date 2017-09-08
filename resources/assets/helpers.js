@@ -92,13 +92,12 @@ export function getEditedImageUrl(photoProp) {
  */
 export function displayUserInfo(firstName, lastName, birthDate) {
   let displayName = firstName;
-
   if (lastName) {
     displayName = `${displayName} ${lastName}`;
   }
 
   if (birthDate) {
-    let age = this.calculateAge(birthDate);
+    let age = calculateAge(birthDate);
     return displayName + ', ' + age;
   }
 
