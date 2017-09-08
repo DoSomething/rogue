@@ -248,7 +248,19 @@ class Signup extends React.Component {
         return newState;
       });
     })
-    .catch(error => console.log(error));
+    .catch(error =>
+      this.setState((previousState) => {
+        const newState = {...previousState};
+
+        newState.successfulSubmission = {
+          error: {
+            message: "Oops, looks like something went wrong.",
+          }
+        };
+
+        return newState;
+      })
+    );
   }
 
   render() {
