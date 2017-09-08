@@ -77,9 +77,8 @@ class CampaignsController extends Controller
 
         return view('pages.campaign_inbox')
             ->with('state', [
-                'signups' => $signups,
                 'campaign' => $campaignData,
-                'users' => $users,
+                'initial_posts' => 'pending',
             ]);
     }
 
@@ -97,6 +96,7 @@ class CampaignsController extends Controller
         return view('pages.campaign_single')
             ->with('state', [
                 'campaign' => $campaign,
+                'initial_posts' => 'accepted',
                 'post_totals' => [
                     'accepted_count' => $totals->accepted_count,
                     'pending_count' => $totals->pending_count,
