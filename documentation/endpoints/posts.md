@@ -108,9 +108,9 @@ GET /api/v2/posts
   - Include additional related records in the response: `signup`, `siblings`
   - e.g. `/posts?include=signup,siblings`
 - **tag** _(string)_
-  - Only return posts with this tag.
+  - The tag(s) to filter the response by.
   - Tag is passed in as tag_slug.
-  - e.g. `/posts?filter[tag]=good-photo`
+  - e.g. `/posts?filter[tag]=good-photo,good-for-sponsor`
 
 Example Response:
 

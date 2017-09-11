@@ -208,7 +208,6 @@ class Post extends Model
     public function scopeWithoutTag($query, $tagSlug)
     {
         return $query->whereDoesntHave('tags', function ($query) use ($tagSlug) {
-            // $query->where('tag_slug', '=', $tagSlug);
             $values = explode(',', $tagSlug);
             if (count($values) > 1) {
                 $query->where(function ($query) use ($values) {
