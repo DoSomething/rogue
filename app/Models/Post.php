@@ -203,7 +203,7 @@ class Post extends Model
     }
 
     /**
-     * Returns posts without specific tag.
+     * Returns posts without specific tag(s).
      */
     public function scopeWithoutTag($query, $tagSlug)
     {
@@ -213,12 +213,21 @@ class Post extends Model
     }
 
     /**
-     * Returns posts with specific tag.
+     * Returns posts with specific tag(s).
      */
     public function scopeWithTag($query, $tagSlug)
     {
         return $query->whereHas('tags', function ($query) use ($tagSlug) {
-            $query->where('tag_slug', '=', $tagSlug);
+            $values = explode(',', $tagSlug);
+            if (count($values) > 1) {
+                $query->where(function ($query) use ($values) {
+                    foreach ($values as $value) {
+                        $query->orWhere('tag_slug', $value);
+                    }
+                });
+            } else {
+                $query->where('tag_slug', $values[0], 'and');
+            }
         });
     }
 }
