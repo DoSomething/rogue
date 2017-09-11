@@ -55,7 +55,7 @@ function has_middleware($middleware = null)
 }
 
 /**
- * Runs query when there are multiple values.
+ * Runs query where there are multiple values provided from a comma-separated list.
  * e.g. `filter[tag]=good-quote,hide-in-gallery,good-photo`
  * @param query $query
  * @param string $queryString
