@@ -226,7 +226,8 @@ class Post extends Model
      * Runs query when there are multiple values.
      * e.g. `filter[tag]=good-quote,hide-in-gallery,good-photo`
      */
-    public function multipleValueQuery($query, $queryString) {
+    public function multipleValueQuery($query, $queryString)
+    {
         $values = explode(',', $queryString);
 
         if (count($values) > 1) {
