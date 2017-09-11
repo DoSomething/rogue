@@ -208,7 +208,7 @@ class Post extends Model
     public function scopeWithoutTag($query, $tagSlug)
     {
         return $query->whereDoesntHave('tags', function ($query) use ($tagSlug) {
-            $this->multipleValueQuery($query, $tagSlug);
+            multipleValueQuery($query, $tagSlug, 'tag_slug');
         });
     }
 
@@ -218,26 +218,7 @@ class Post extends Model
     public function scopeWithTag($query, $tagSlug)
     {
         return $query->whereHas('tags', function ($query) use ($tagSlug) {
-            $this->multipleValueQuery($query, $tagSlug);
+            multipleValueQuery($query, $tagSlug, 'tag_slug');
         });
-    }
-
-    /**
-     * Runs query when there are multiple values.
-     * e.g. `filter[tag]=good-quote,hide-in-gallery,good-photo`
-     */
-    public function multipleValueQuery($query, $queryString)
-    {
-        $values = explode(',', $queryString);
-
-        if (count($values) > 1) {
-            $query->where(function ($query) use ($values) {
-                foreach ($values as $value) {
-                    $query->orWhere('tag_slug', $value);
-                }
-            });
-        } else {
-            $query->where('tag_slug', $values[0], 'and');
-        }
     }
 }
