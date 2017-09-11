@@ -203,22 +203,22 @@ class Post extends Model
     }
 
     /**
-     * Returns posts without specific tag.
+     * Returns posts without specific tag(s).
      */
     public function scopeWithoutTag($query, $tagSlug)
     {
         return $query->whereDoesntHave('tags', function ($query) use ($tagSlug) {
-            $query->where('tag_slug', '=', $tagSlug);
+            multipleValueQuery($query, $tagSlug, 'tag_slug');
         });
     }
 
     /**
-     * Returns posts with specific tag.
+     * Returns posts with specific tag(s).
      */
     public function scopeWithTag($query, $tagSlug)
     {
         return $query->whereHas('tags', function ($query) use ($tagSlug) {
-            $query->where('tag_slug', '=', $tagSlug);
+            multipleValueQuery($query, $tagSlug, 'tag_slug');
         });
     }
 }

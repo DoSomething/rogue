@@ -53,3 +53,28 @@ function has_middleware($middleware = null)
 
     return $currentRoute->middleware() ? true : false;
 }
+
+/**
+ * Runs query where there are multiple values provided from a comma-separated list.
+ * e.g. `filter[tag]=good-quote,hide-in-gallery,good-photo`
+ * @param query $query
+ * @param string $queryString
+ * @param string $filter
+ * @return query result
+ */
+function multipleValueQuery($query, $queryString, $filter)
+{
+    $values = explode(',', $queryString);
+
+    if (count($values) > 1) {
+        // For the first `where` query, we want to limit results... from then on,
+        // we want to append (e.g. `SELECT * (WHERE _ OR WHERE _ OR WHERE _)` and (WHERE _ OR WHERE _))
+        $query->where(function ($query) use ($values, $filter) {
+            foreach ($values as $value) {
+                $query->orWhere($filter, $value);
+            }
+        });
+    } else {
+        $query->where($filter, $values[0], 'and');
+    }
+}
