@@ -4,7 +4,8 @@
     "start": "npm run clean && NODE_ENV=development webpack --watch",
     "build": "npm run clean && NODE_ENV=production webpack",
     "build:dev": "npm run clean && NODE_ENV=development webpack",
-    "clean": "rm -rf public/dist"
+    "clean": "rm -rf public/dist",
+    "test": "jest"
   },
   "babel": {
     "presets": [
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@dosomething/babel-config": "^1.0.0",
     "@dosomething/webpack-config": "^2.0.4",
+    "jest": "^21.0.2",
     "webpack": "^2.4.0",
     "webpack-dev-server": "^2.4.0"
   }
