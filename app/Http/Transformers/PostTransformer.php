@@ -25,17 +25,25 @@ class PostTransformer extends TransformerAbstract
      */
     public function transform(Post $post)
     {
+        $reacted = false;
+        if ($post->relationLoaded('reactions')) {
+            $reacted = $post->reactions->isNotEmpty();
+        }
+
         return [
             'id' => $post->id,
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
             'media' => [
-
                 'url' => $post->getMediaUrl(),
                 'original_image_url' => $post->url,
                 'caption' => $post->caption,
             ],
             'tags' => $post->tagSlugs(),
+            'reactions' => [
+                'reacted' => $reacted,
+                'total' => isset($post->reactions_count) ? $post->reactions_count : null,
+            ],
             'status' => $post->status,
             'source' => $post->source,
             'remote_addr' => $post->remote_addr,
