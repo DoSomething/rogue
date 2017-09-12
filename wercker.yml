@@ -17,6 +17,9 @@ build:
             cp .env.example .env
             php artisan key:generate
             vendor/bin/phpunit
+      - script:
+          name: test javascript code
+          code: npm run test:ci
 
 deploy:
   # steps:

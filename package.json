@@ -5,7 +5,8 @@
     "build": "npm run clean && NODE_ENV=production webpack",
     "build:dev": "npm run clean && NODE_ENV=development webpack",
     "clean": "rm -rf public/dist",
-    "test": "jest"
+    "test": "jest",
+    "test:ci": "NODE_ENV=test && jest"
   },
   "babel": {
     "presets": [
