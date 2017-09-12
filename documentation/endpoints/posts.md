@@ -126,7 +126,10 @@ Example Response:
                 "caption": null
             },
             "tags": [],
-            "reactions": [],
+            "reactions": {
+                "reacted": true,
+                "total": 2
+            },
             "status": "accepted",
             "source": null,
             "remote_addr": "52.3.68.224, 52.3.68.224",
@@ -142,6 +145,10 @@ Example Response:
                 "caption": "Perhaps you CAN be of some assistance, Bill"
             },
             "tags": [],
+            "reactions": {
+                "reacted": false,
+                "total": 8
+            },
             "status": "accepted",
             "source": null,
             "remote_addr": "207.110.19.130, 207.110.19.130",
