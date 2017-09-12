@@ -30,12 +30,15 @@ class PostTransformer extends TransformerAbstract
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
             'media' => [
-
                 'url' => $post->getMediaUrl(),
                 'original_image_url' => $post->url,
                 'caption' => $post->caption,
             ],
             'tags' => $post->tagSlugs(),
+            'reactions' => [
+                'reacted' => $post->reactions->isNotEmpty() ? true : false,
+                'total' => $post->reactions_count,
+            ],
             'status' => $post->status,
             'source' => $post->source,
             'remote_addr' => $post->remote_addr,
