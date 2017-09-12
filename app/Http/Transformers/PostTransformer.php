@@ -25,6 +25,11 @@ class PostTransformer extends TransformerAbstract
      */
     public function transform(Post $post)
     {
+        $reacted = false;
+        if ($post->relationLoaded('reactions')) {
+            $reacted = $post->reactions->isNotEmpty();
+        }
+
         return [
             'id' => $post->id,
             'signup_id' => $post->signup_id,
@@ -36,8 +41,8 @@ class PostTransformer extends TransformerAbstract
             ],
             'tags' => $post->tagSlugs(),
             'reactions' => [
-                'reacted' => $post->reactions->isNotEmpty(),
-                'total' => isset($post->reactions_count) ? $post->reactions_count : 'unavailable',
+                'reacted' => $reacted,
+                'total' => isset($post->reactions_count) ? $post->reactions_count : null,
             ],
             'status' => $post->status,
             'source' => $post->source,
