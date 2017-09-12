@@ -23,11 +23,6 @@ class PostFilter extends React.Component {
                   <option value="accepted">Accepted</option>
                   <option value="pending">Pending</option>
                   <option value="rejected">Rejected</option>
-                  <option value="good-photo">Good Photo</option>
-                  <option value="good-quote">Good Quote</option>
-                  <option value="hide-in-gallery">Hide In Gallery 👻</option>
-                  <option value="good-for-sponsor">Good For Sponsor</option>
-                  <option value="good-for-storytelling">Good For Storytelling</option>
               </select>
           </div>
         </div>
