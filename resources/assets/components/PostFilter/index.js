@@ -1,5 +1,7 @@
 import React from 'react';
 
+import TagsFilter from '../TagsFilter';
+
 class PostFilter extends React.Component {
   constructor() {
     super();
@@ -10,12 +12,11 @@ class PostFilter extends React.Component {
   change(event) {
     this.props.onChange(event.target.value);
   }
-
   render() {
     return (
       <div className="container">
         <div className="container__block -third">
-          <h4>Post Filter</h4>
+          <h4>Post Status</h4>
           <div className="select">
           {/* @TODO create a <Filter> component that takes in an array of value/labels and renders the select list and handles the change event.*/}
               <select onChange={(event) => this.change(event)}>
@@ -29,6 +30,10 @@ class PostFilter extends React.Component {
                   <option value="good-for-storytelling">Good For Storytelling</option>
               </select>
           </div>
+        </div>
+        <div className="container__block -third">
+          <h4>Tags</h4>
+            <TagsFilter/>
         </div>
       </div>
     )

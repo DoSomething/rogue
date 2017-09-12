@@ -98,8 +98,10 @@ class CampaignSingle extends React.Component {
       <div className="container">
         <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
 
+        <h2 className="heading -emphasized">Post Filters</h2>
         <PostFilter onChange={this.filterPosts} />
 
+        <h2 className="heading -emphasized">Posts</h2>
         {this.props.loading || this.state.loadingNewPosts ?
           <div className="spinner"></div>
         :
