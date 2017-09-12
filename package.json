@@ -24,7 +24,9 @@
   "devDependencies": {
     "@dosomething/babel-config": "^1.0.0",
     "@dosomething/webpack-config": "^2.0.4",
+    "babel-jest": "^21.0.2",
     "jest": "^21.0.2",
+    "regenerator-runtime": "^0.11.0",
     "webpack": "^2.4.0",
     "webpack-dev-server": "^2.4.0"
   }
