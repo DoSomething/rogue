@@ -36,8 +36,8 @@ class PostTransformer extends TransformerAbstract
             ],
             'tags' => $post->tagSlugs(),
             'reactions' => [
-                'reacted' => $post->reactions->isNotEmpty() ? true : false,
-                'total' => $post->reactions_count,
+                'reacted' => $post->reactions->isNotEmpty(),
+                'total' => isset($post->reactions_count) ? $post->reactions_count : 'unavailable',
             ],
             'status' => $post->status,
             'source' => $post->source,
