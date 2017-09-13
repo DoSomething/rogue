@@ -38,7 +38,6 @@ class PostFilter extends React.Component {
       return newState;
     });
   }
-
   render() {
     return (
       <div className="container">
@@ -46,7 +45,7 @@ class PostFilter extends React.Component {
           <h4>Post Status</h4>
           <div className="select">
           {/* @TODO create a <Filter> component that takes in an array of value/labels and renders the select list and handles the change event.*/}
-              <select onChange={(event) => this.setStatus(event)}>
+              <select onChange={(event) => this.setStatus(event.target.value)}>
                   <option value="accepted">Accepted</option>
                   <option value="pending">Pending</option>
                   <option value="rejected">Rejected</option>
@@ -58,7 +57,7 @@ class PostFilter extends React.Component {
             <TagsFilter onTag={this.setTags}/>
         </div>
         <div className="container__block -third">
-          <button className="button" onSubmit={() => props.setStatus(props.type)}>Filter</button>
+          <button className="button" onClick={() => this.props.setFilters(this.state)}>Filter</button>
         </div>
       </div>
     )

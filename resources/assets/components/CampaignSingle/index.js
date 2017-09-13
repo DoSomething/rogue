@@ -21,23 +21,21 @@ class CampaignSingle extends React.Component {
     this.api = new RestApiClient;
     this.filterPosts = this.filterPosts.bind(this);
     this.getPostsByFilter = this.getPostsByFilter.bind(this);
-    // this.getPostsByStatus = this.getPostsByStatus.bind(this);
     this.getPostsByPaginatedLink = this.getPostsByPaginatedLink.bind(this);
   }
 
   // Filter posts based on status or tag(s).
-  filterPosts(filter) {
-    console.log(filter);
-    // If the filter is a status, make API call to get posts by status.
-    // if (['pending', 'accepted', 'rejected'].includes(filter)) {
-    //   this.getPostsByStatus(filter, this.props.campaign.id);
-    // } else {
-    //   // If the filter is a tag, make the API call to get posts by tag.
-    //   this.getPostsByTag(filter, this.props.campaign.id);
-    // }
+  filterPosts(state) {
+    // Grab all of the active tags to send to API request.
+    let activeTags = [];
 
-    this.getPostsByFilter
+    Object.keys(state.tags).forEach(function(key) {
+      if (state.tags[key] === true) {
+       activeTags.push(key);
+      }
+    });
 
+    this.getPostsByFilter(this.props.campaign.id, state.status, activeTags);
   }
 
   // Make API call to paginated link to get next/previous batch of posts.
@@ -59,15 +57,20 @@ class CampaignSingle extends React.Component {
   }
 
   // Make API call to GET /posts to get posts by filtered status and/or tag(s).
-  getPostsByFilter(campaignId, status, tagSlug) {
+  getPostsByFilter(campaignId, status, activeTags) {
     this.setState({ loadingNewPosts: true });
 
-    this.api.get('posts', {
-      filter: {
-        status: status,
-        tag: tagSlug,
-        campaign_id: campaignId,
-      },
+    let filter = {
+      campaign_id: campaignId,
+      status: status,
+    };
+
+    if (activeTags.length > 0) {
+      filter['tag'] = activeTags.toString();
+    }
+
+    this.api.get('api/v2/posts', {
+      filter: filter,
       include: 'signup,siblings',
     })
     .then(json => {
@@ -93,6 +96,8 @@ class CampaignSingle extends React.Component {
     });
   }
 
+=======
+>>>>>>> everything working
   render() {
     const posts = this.props.posts;
     const campaign = this.props.campaign;
@@ -103,7 +108,7 @@ class CampaignSingle extends React.Component {
         <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
 
         <h2 className="heading -emphasized">Post Filters</h2>
-        <PostFilter onChange={this.filterPosts} />
+        <PostFilter setFilters={this.filterPosts} />
 
         <h2 className="heading -emphasized">Posts</h2>
         {this.props.loading || this.state.loadingNewPosts ?
