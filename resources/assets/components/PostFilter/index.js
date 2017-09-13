@@ -1,5 +1,6 @@
 import React from 'react';
 
+import StatusFilter from '../StatusFilter';
 import TagsFilter from '../TagsFilter';
 
 class PostFilter extends React.Component {
@@ -44,17 +45,12 @@ class PostFilter extends React.Component {
         <div className="container__block -third">
           <h4>Post Status</h4>
           <div className="select">
-          {/* @TODO create a <Filter> component that takes in an array of value/labels and renders the select list and handles the change event.*/}
-              <select onChange={(event) => this.setStatus(event.target.value)}>
-                  <option value="accepted">Accepted</option>
-                  <option value="pending">Pending</option>
-                  <option value="rejected">Rejected</option>
-              </select>
+            <StatusFilter setStatus={this.setStatus} />
           </div>
         </div>
         <div className="container__block -third">
           <h4>Tags</h4>
-            <TagsFilter onTag={this.setTags}/>
+            <TagsFilter onTag={this.setTags} />
         </div>
         <div className="container__block -third">
           <button className="button" onClick={() => this.props.setFilters(this.state)}>Filter</button>
