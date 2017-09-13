@@ -35,7 +35,7 @@ const reviewComponent = (Component, data) => {
 
     // Make API call to GET /posts to get posts by filtered status.
     getPostsByStatus(status, campaignId) {
-      this.api.get('api/v2/posts', {
+      this.api.get('posts', {
         filter: {
           status: status,
           campaign_id: campaignId,
