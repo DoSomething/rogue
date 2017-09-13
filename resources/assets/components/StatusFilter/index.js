@@ -1,6 +1,6 @@
 import React from 'react';
 
-class TagsFilter extends React.Component {
+class StatusFilter extends React.Component {
   render() {
     return (
       <select onChange={(event) => this.props.setStatus(event.target.value)}>
@@ -12,4 +12,4 @@ class TagsFilter extends React.Component {
   }
 }
 
-export default TagsFilter;
+export default StatusFilter;
