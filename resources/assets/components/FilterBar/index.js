@@ -3,7 +3,7 @@ import React from 'react';
 import StatusFilter from '../StatusFilter';
 import TagsFilter from '../TagsFilter';
 
-class PostFilter extends React.Component {
+class FilterBar extends React.Component {
   constructor() {
     super();
 
@@ -60,4 +60,4 @@ class PostFilter extends React.Component {
   }
 }
 
-export default PostFilter;
+export default FilterBar;

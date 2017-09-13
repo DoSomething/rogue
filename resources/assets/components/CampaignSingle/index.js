@@ -4,7 +4,7 @@ import { RestApiClient} from '@dosomething/gateway';
 import { extractSignupsFromPosts } from '../../helpers';
 
 import Post from '../Post';
-import PostFilter from '../PostFilter';
+import FilterBar from '../FilterBar';
 import HistoryModal from '../HistoryModal';
 import PagingButtons from '../PagingButtons';
 import StatusCounter from '../StatusCounter';
@@ -108,7 +108,7 @@ class CampaignSingle extends React.Component {
         <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
 
         <h2 className="heading -emphasized">Post Filters</h2>
-        <PostFilter setFilters={this.filterPosts} />
+        <FilterBar setFilters={this.filterPosts} />
 
         <h2 className="heading -emphasized">Posts</h2>
         {this.props.loading || this.state.loadingNewPosts ?
