@@ -35,7 +35,13 @@ class CampaignSingle extends React.Component {
       }
     });
 
-    this.getPostsByFilter(this.props.campaign.id, state.status, activeTags);
+    let filters = {
+      'campaignId': this.props.campaign.id,
+      'status': state.status,
+      'tags': activeTags,
+    };
+
+    this.getPostsByFilter(filters);
   }
 
   // Make API call to paginated link to get next/previous batch of posts.
@@ -57,20 +63,20 @@ class CampaignSingle extends React.Component {
   }
 
   // Make API call to GET /posts to get posts by filtered status and/or tag(s).
-  getPostsByFilter(campaignId, status, activeTags) {
+  getPostsByFilter(filters) {
     this.setState({ loadingNewPosts: true });
 
-    let filter = {
-      campaign_id: campaignId,
-      status: status,
+    let apiFilter = {
+      campaign_id: filters.campaignId,
+      status: filters.status,
     };
 
-    if (activeTags.length > 0) {
-      filter['tag'] = activeTags.toString();
+    if (filters.tags.length > 0) {
+      apiFilter['tag'] = filters.tags.toString();
     }
 
     this.api.get('api/v2/posts', {
-      filter: filter,
+      filter: apiFilter,
       include: 'signup,siblings',
     })
     .then(json => {
