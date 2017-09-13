@@ -121,7 +121,6 @@ class CampaignSingle extends React.Component {
           )
         }
 
-
         <ModalContainer>
           {this.props.displayHistoryModal ?
             <HistoryModal

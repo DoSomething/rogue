@@ -30,6 +30,9 @@ class PostFilter extends React.Component {
           <h4>Tags</h4>
             <TagsFilter/>
         </div>
+        <div className="container__block -third">
+          <button className="button">Filter</button>
+        </div>
       </div>
     )
   }
