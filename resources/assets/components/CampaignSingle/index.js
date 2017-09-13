@@ -20,20 +20,23 @@ class CampaignSingle extends React.Component {
 
     this.api = new RestApiClient;
     this.filterPosts = this.filterPosts.bind(this);
-    this.getPostsByTag = this.getPostsByTag.bind(this);
-    this.getPostsByStatus = this.getPostsByStatus.bind(this);
+    this.getPostsByFilter = this.getPostsByFilter.bind(this);
+    // this.getPostsByStatus = this.getPostsByStatus.bind(this);
     this.getPostsByPaginatedLink = this.getPostsByPaginatedLink.bind(this);
   }
 
   // Filter posts based on status or tag(s).
   filterPosts(filter) {
+    console.log(filter);
     // If the filter is a status, make API call to get posts by status.
-    if (['pending', 'accepted', 'rejected'].includes(filter)) {
-      this.getPostsByStatus(filter, this.props.campaign.id);
-    } else {
-      // If the filter is a tag, make the API call to get posts by tag.
-      this.getPostsByTag(filter, this.props.campaign.id);
-    }
+    // if (['pending', 'accepted', 'rejected'].includes(filter)) {
+    //   this.getPostsByStatus(filter, this.props.campaign.id);
+    // } else {
+    //   // If the filter is a tag, make the API call to get posts by tag.
+    //   this.getPostsByTag(filter, this.props.campaign.id);
+    // }
+
+    this.getPostsByFilter
 
   }
 
@@ -55,13 +58,14 @@ class CampaignSingle extends React.Component {
     });
   }
 
-  // Make API call to GET /posts to get posts by filtered status.
-  getPostsByStatus(status, campaignId) {
+  // Make API call to GET /posts to get posts by filtered status and/or tag(s).
+  getPostsByFilter(campaignId, status, tagSlug) {
     this.setState({ loadingNewPosts: true });
 
     this.api.get('posts', {
       filter: {
         status: status,
+        tag: tagSlug,
         campaign_id: campaignId,
       },
       include: 'signup,siblings',

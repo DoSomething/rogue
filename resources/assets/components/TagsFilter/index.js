@@ -20,13 +20,11 @@ class TagsFilter extends React.Component {
   }
 
   handleClick(key) {
-    if (key === 'Hide In Gallery 👻') {
-      key = 'Hide In Gallery';
-    }
-
     this.setState({
       [key]: !this.state[key]
     });
+
+    this.props.onTag(key, !this.state[key]);
   }
 
   render() {
