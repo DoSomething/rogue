@@ -6,6 +6,7 @@ import { extractSignupsFromPosts } from '../../helpers';
 import Post from '../Post';
 import FilterBar from '../FilterBar';
 import DropdownFilter from '../DropdownFilter';
+import MultiValueFilter from '../MultiValueFilter';
 import HistoryModal from '../HistoryModal';
 import PagingButtons from '../PagingButtons';
 import StatusCounter from '../StatusCounter';
@@ -30,11 +31,13 @@ class CampaignSingle extends React.Component {
     // Grab all of the active tags to send to API request.
     let activeTags = [];
 
-    Object.keys(state.tags).forEach(function(key) {
-      if (state.tags[key] === true) {
-       activeTags.push(key);
-      }
-    });
+    if (state.tags) {
+      Object.keys(state.tags).forEach(function(key) {
+        if (state.tags[key] === true) {
+         activeTags.push(key);
+        }
+      });
+    }
 
     let filters = {
       'campaignId': this.props.campaign.id,
@@ -117,6 +120,7 @@ class CampaignSingle extends React.Component {
         <h2 className="heading -emphasized">Post Filters</h2>
         <FilterBar onSubmit={this.filterPosts}>
           <DropdownFilter options={{accepted: 'Accepted', pending: 'Pending', rejected: 'Rejected'}} onChange={this.updateFilters} />
+          <MultiValueFilter options={{'good-photo': 'Good Photo', 'good-quote': 'Good Quote', 'hide-in-gallery': 'Hide In Gallery 👻', 'good-for-sponsor': 'Good For Sponsor', 'good-for-storytelling': 'Good For Storytelling'}} onChange={this.updateFilters} />
         </FilterBar>
 
         <h2 className="heading -emphasized">Posts</h2>

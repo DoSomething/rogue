@@ -1,44 +1,46 @@
 import React from 'react';
 
 import DropdownFilter from '../DropdownFilter';
-import TagsFilter from '../TagsFilter';
+import MultiValueFilter from '../MultiValueFilter';
 
 class FilterBar extends React.Component {
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      status: 'accepted',
+      tags: {
+        'good-photo': false,
+        'good-quote': false,
+        'hide-in-gallery': false,
+        'good-for-sponsor': false,
+        'good-for-storytelling': false,
+      }
+    };
 
     // The component provides a function the children components can use to update the state.
     this.updateFilters = this.updateFilters.bind(this);
-    // this.setStatus = this.setStatus.bind(this);
-    // this.setTags = this.setTags.bind(this);
   }
 
-  updateFilters(values){
-    if (['pending', 'accepted', 'rejected'].includes(values)) {
+  updateFilters(value){
+    if (['pending', 'accepted', 'rejected'].includes(value)) {
       this.setState({
-        status: values,
+        status: value,
+      });
+    }
+
+    if (['good-photo', 'good-quote', 'hide-in-gallery', 'good-for-sponsor', 'good-for-storytelling'].includes(Object.keys(value)[0])) {
+      let key = Object.keys(value)[0];
+
+      this.setState((previousState) => {
+        const newState = {...previousState};
+        newState.tags[key] = Object.values(value)[0];
+
+        return newState;
       });
     }
   }
-  // setStatus(event){
-  //   this.setState((previousState) => {
-  //     const newState = {...previousState};
-  //     newState.status = event;
 
-  //     return newState;
-  //   });
-  // }
-
-  // setTags(tag, bool){
-  //   this.setState((previousState) => {
-  //     const newState = {...previousState};
-  //     newState.tags[tag] = bool;
-
-  //     return newState;
-  //   });
-  // }
   render() {
     // ***Rendering the children**
 
@@ -55,31 +57,12 @@ class FilterBar extends React.Component {
     return (
       <div>
          <div>{childrenWithProps}</div>
-         <button className="button" onClick={() => this.props.onSubmit(this.state)}>Filter</button>
+         <div className="container__block -third">
+          <button className="button" onClick={() => this.props.onSubmit(this.state)}>Filter</button>
+         </div>
       </div>
     )
   }
-
-
-
-  //   return (
-  //     <div className="container">
-  //       <div className="container__block -third">
-  //         <h4>Post Status</h4>
-  //         <div className="select">
-  //           <StatusFilter setStatus={this.setStatus} />
-  //         </div>
-  //       </div>
-  //       <div className="container__block -third">
-  //         <h4>Tags</h4>
-  //           <TagsFilter onTag={this.setTags} />
-  //       </div>
-  //       <div className="container__block -third">
-  //         <button className="button" onClick={() => this.props.setFilters(this.state)}>Filter</button>
-  //       </div>
-  //     </div>
-  //   )
-  // }
 }
 
 export default FilterBar;

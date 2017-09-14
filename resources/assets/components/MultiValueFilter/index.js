@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 import '../Tags/tags.scss';
 
-class TagsFilter extends React.Component {
+class MultiValueFilter extends React.Component {
   constructor() {
     super();
 
@@ -24,25 +24,22 @@ class TagsFilter extends React.Component {
       [key]: !this.state[key]
     });
 
-    this.props.onTag(key, !this.state[key]);
+    // this.props.onTag(key, !this.state[key]);
+    let value = {
+      [key]: !this.state[key],
+    };
+
+    this.props.updateFilters(value);
   }
 
   render() {
-    const tags = {
-      'good-photo': 'Good Photo',
-      'good-quote': 'Good Quote',
-      'hide-in-gallery': 'Hide In Gallery 👻',
-      'good-for-sponsor': 'Good For Sponsor',
-      'good-for-storytelling': 'Good For Storytelling',
-    };
-
     return (
-      <div>
+      <div className="container__block -third">
         <ul className="aligned-actions">
-          {map(tags, (label, key) => (
+          {map(this.props.options, (option, key) => (
             <li key={key}>
               <button className={classnames('tag', {'is-active': this.state[key]})}
-                      onClick={() => this.handleClick(key)}>{label}</button>
+                      onClick={() => this.handleClick(key)}>{option}</button>
             </li>
           ))}
         </ul>
@@ -51,5 +48,4 @@ class TagsFilter extends React.Component {
   }
 }
 
-export default TagsFilter;
-
+export default MultiValueFilter;
