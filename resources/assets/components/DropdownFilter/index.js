@@ -14,7 +14,6 @@ class DropdownFilter extends React.Component {
 
   render() {
     return (
-      <div className="container">
         <div className="container__block -third">
           <div className="select">
             <select onChange={(event) => this.change(event)}>
@@ -24,7 +23,6 @@ class DropdownFilter extends React.Component {
             </select>
           </div>
         </div>
-      </div>
     )
   }
 }
