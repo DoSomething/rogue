@@ -5,6 +5,7 @@ import { extractSignupsFromPosts } from '../../helpers';
 
 import Post from '../Post';
 import FilterBar from '../FilterBar';
+import DropdownFilter from '../DropdownFilter';
 import HistoryModal from '../HistoryModal';
 import PagingButtons from '../PagingButtons';
 import StatusCounter from '../StatusCounter';
@@ -114,7 +115,9 @@ class CampaignSingle extends React.Component {
         <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
 
         <h2 className="heading -emphasized">Post Filters</h2>
-        <FilterBar setFilters={this.filterPosts} />
+        <FilterBar onSubmit={this.filterPosts}>
+          <DropdownFilter options={{accepted: 'Accepted', pending: 'Pending', rejected: 'Rejected'}} onChange={this.updateFilters} />
+        </FilterBar>
 
         <h2 className="heading -emphasized">Posts</h2>
         {this.props.loading || this.state.loadingNewPosts ?
