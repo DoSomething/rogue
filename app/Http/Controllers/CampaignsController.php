@@ -2,7 +2,6 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Rogue\Services\CampaignService;
 
