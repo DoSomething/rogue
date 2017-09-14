@@ -48,7 +48,7 @@ class CampaignSingle extends React.Component {
     let path = splitEndpoint.slice(-1)[0];
     let queryString = (path.split('?'))[1];
 
-    this.api.get('api/v2/posts', queryString)
+    this.api.get('posts', queryString)
     .then(json => {
       this.setState({loadingNewPosts: false });
       this.props.setNewPosts(json);
@@ -59,7 +59,7 @@ class CampaignSingle extends React.Component {
   getPostsByStatus(status, campaignId) {
     this.setState({ loadingNewPosts: true });
 
-    this.api.get('api/v2/posts', {
+    this.api.get('posts', {
       filter: {
         status: status,
         campaign_id: campaignId,
@@ -76,7 +76,7 @@ class CampaignSingle extends React.Component {
   getPostsByTag(tagSlug, campaignId) {
     this.setState({ loadingNewPosts: true });
 
-    this.api.get('api/v2/posts', {
+    this.api.get('posts', {
       filter: {
         tag: tagSlug,
         campaign_id: campaignId,
