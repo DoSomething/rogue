@@ -89,25 +89,6 @@ class CampaignSingle extends React.Component {
     });
   }
 
-  // Make API call to GET /posts to get posts by filtered tag.
-  getPostsByTag(tagSlug, campaignId) {
-    this.setState({ loadingNewPosts: true });
-
-    this.api.get('posts', {
-      filter: {
-        tag: tagSlug,
-        campaign_id: campaignId,
-      },
-      include: 'signup,siblings',
-    })
-    .then(json => {
-      this.setState({loadingNewPosts: false });
-      this.props.setNewPosts(json);
-    });
-  }
-
-=======
->>>>>>> everything working
   render() {
     const posts = this.props.posts;
     const campaign = this.props.campaign;
