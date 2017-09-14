@@ -59,7 +59,7 @@ class CampaignSingle extends React.Component {
   getPostsByStatus(status, campaignId) {
     this.setState({ loadingNewPosts: true });
 
-    this.api.get('api/v2/posts', {
+    this.api.get('posts', {
       filter: {
         status: status,
         campaign_id: campaignId,
@@ -76,7 +76,7 @@ class CampaignSingle extends React.Component {
   getPostsByTag(tagSlug, campaignId) {
     this.setState({ loadingNewPosts: true });
 
-    this.api.get('api/v2/posts', {
+    this.api.get('posts', {
       filter: {
         tag: tagSlug,
         campaign_id: campaignId,
