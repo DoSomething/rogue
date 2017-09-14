@@ -59,19 +59,6 @@ class CampaignsController extends Controller
      */
     public function showInbox($campaignId)
     {
-        $signups = Signup::campaign([$campaignId])->has('pending')->with('pending')->get();
-
-        // Grab the user objects for each signup
-        $ids = $signups->pluck('northstar_id')->toArray();
-        $users = $this->registrar->findAll($ids)->keyBy('id')->map(function ($user, $key) {
-            return $user->toArray();
-        });
-
-        // For each pending post, get and include the user
-        $signups->each(function ($item) {
-            $item->posts = $item->pending;
-        });
-
         // Get the campaign data
         $campaignData = $this->campaignService->find($campaignId);
 
