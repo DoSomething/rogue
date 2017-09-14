@@ -24,7 +24,6 @@ class MultiValueFilter extends React.Component {
       [key]: !this.state[key]
     });
 
-    // this.props.onTag(key, !this.state[key]);
     let value = {
       [key]: !this.state[key],
     };
