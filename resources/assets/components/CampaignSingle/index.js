@@ -79,7 +79,7 @@ class CampaignSingle extends React.Component {
       apiFilter['tag'] = filters.tags.toString();
     }
 
-    this.api.get('api/v2/posts', {
+    this.api.get('/posts', {
       filter: apiFilter,
       include: 'signup,siblings',
     })
