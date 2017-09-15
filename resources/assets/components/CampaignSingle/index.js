@@ -100,8 +100,8 @@ class CampaignSingle extends React.Component {
 
         <h2 className="heading -emphasized">Post Filters</h2>
         <FilterBar onSubmit={this.filterPosts}>
-          <DropdownFilter options={{accepted: 'Accepted', pending: 'Pending', rejected: 'Rejected'}} onChange={this.updateFilters} />
-          <MultiValueFilter options={{'good-photo': 'Good Photo', 'good-quote': 'Good Quote', 'hide-in-gallery': 'Hide In Gallery 👻', 'good-for-sponsor': 'Good For Sponsor', 'good-for-storytelling': 'Good For Storytelling'}} onChange={this.updateFilters} />
+          <DropdownFilter options={{accepted: 'Accepted', pending: 'Pending', rejected: 'Rejected'}} />
+          <MultiValueFilter options={{'good-photo': 'Good Photo', 'good-quote': 'Good Quote', 'hide-in-gallery': 'Hide In Gallery 👻', 'good-for-sponsor': 'Good For Sponsor', 'good-for-storytelling': 'Good For Storytelling'}} />
         </FilterBar>
 
         <h2 className="heading -emphasized">Posts</h2>
