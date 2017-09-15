@@ -81,6 +81,10 @@ class ImagesController extends Controller
             $originalImage =  Image::make($originalImage)->rotate($value)->encode('jpg', 75);
         }
 
-        return $this->aws->storeImageData((string) $originalImage, 'edited_' . $post->id);
+        $image = $this->aws->storeImageData((string) $originalImage, 'edited_' . $post->id);
+
+        return response()->json([
+            'url' => $image,
+        ]);
     }
 }
