@@ -18,24 +18,29 @@ class Post extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = this.props.post;
+    this.state = {
+      loading: false,
+      post: this.props.post
+    };
 
     this.api = new RestApiClient;
   }
 
   rotate(event) {
     event.preventDefault();
+    this.setState({loading: true});
 
     const post = this.props.post;
 
     this.api.post(`images/${post.id}?rotate=90`)
     .then((json) => {
-      // Update the state of the Post to use the same image url,
-      // but add cache-busting string changes and trigger re-render.
-      this.setState({
-        'media': {
-          'url' : `${json.url}?time=${new Date()}`,
-        }
+      this.setState((prevState) => {
+        const newState = {...prevState};
+
+        newState.loading = false;
+        newState.post.media.url = `${json.url}?time=${new Date()}`;
+
+        return newState;
       });
     });
   }
@@ -59,7 +64,7 @@ class Post extends React.Component {
   }
 
   render() {
-    const post = this.state;
+    const post = this.state.post;
     const caption = displayCaption(post);
     const user = this.props.user ? this.props.user : null;
     const signup = this.props.signup;
@@ -69,7 +74,13 @@ class Post extends React.Component {
       <div className="post container__row">
         {/* Post Images */}
         <div className="container__block -third">
-          <img src={getImageUrlFromProp(post)}/>
+          {this.state.loading ?
+            <div className="is-loading">
+              <div className="spinner"></div>
+            </div>
+          :
+            <img className="post__image" src={getImageUrlFromProp(post)}/>
+          }
           <div className="admin-tools">
             <div className="admin-tools__links">
               <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a>

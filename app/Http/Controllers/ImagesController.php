@@ -78,7 +78,7 @@ class ImagesController extends Controller
         if ($request->input('rotate')) {
             $value = (int) -$request->input('rotate');
 
-            $originalImage =  Image::make($originalImage)->rotate($value)->encode('jpg', 75);
+            $originalImage = Image::make($originalImage)->rotate($value)->encode('jpg', 75);
         }
 
         $image = $this->aws->storeImageData((string) $originalImage, 'edited_' . $post->id);

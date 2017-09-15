@@ -23,6 +23,22 @@
     }
   }
 
+  .post__image {
+    width: 300px;
+    height: 300px;
+  }
+
+  .is-loading {
+    display: table;
+    width: 300px;
+    height: 300px;
+
+    .spinner {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+
   .button.-tertiary {
     padding: 0px;
     &.rotate {
