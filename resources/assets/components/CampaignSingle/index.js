@@ -57,22 +57,25 @@ class CampaignSingle extends React.Component {
         filters: filters,
     });
 
-    // Grab all of the active tags to send to API request.
-    let activeTags = [];
+    let formattedFilters = {
+      'campaignId': this.props.campaign.id,
+      'status': filters.status,
+    };
 
+    // Grab all of the active tags to send to API request.
     if (filters.tags) {
+      let activeTags = [];
+
       Object.keys(filters.tags).forEach(function(key) {
         if (filters.tags[key].active === true) {
          activeTags.push(key);
         }
       });
-    }
 
-    let formattedFilters = {
-      'campaignId': this.props.campaign.id,
-      'status': filters.status,
-      'tags': activeTags,
-    };
+      if (activeTags.length > 0) {
+        formattedFilters['tag'] = activeTags.toString();
+      }
+    }
 
     this.getPostsByFilter(formattedFilters);
   }
@@ -99,17 +102,8 @@ class CampaignSingle extends React.Component {
   getPostsByFilter(filters) {
     this.setState({ loadingNewPosts: true });
 
-    let apiFilter = {
-      campaign_id: filters.campaignId,
-      status: filters.status,
-    };
-
-    if (filters.tags.length > 0) {
-      apiFilter['tag'] = filters.tags.toString();
-    }
-
     this.api.get('/posts', {
-      filter: apiFilter,
+      filter: filters,
       include: 'signup,siblings',
     })
     .then(json => {
