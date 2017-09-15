@@ -44,7 +44,6 @@ class FilterBar extends React.Component {
   render() {
     // ***Rendering the children**
 
-    // In this case DropdownFilter and MultiValueFilter are children of the FilterBar as layed out in Campaign Single.
     // This maps over any child of the FilterBar component and makes a copy of it so we can send props
     // (like our function to update state) to it from this component.
     const childrenWithProps = React.Children.map(this.props.children,
