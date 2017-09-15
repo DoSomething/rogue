@@ -1,5 +1,6 @@
 import React from 'react';
 import { remove, map, clone } from 'lodash';
+import { RestApiClient } from '@dosomething/gateway';
 import { getImageUrlFromProp, getEditedImageUrl, displayCaption } from '../../helpers';
 
 import './post.scss';
@@ -14,6 +15,31 @@ import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
 
 class Post extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = this.props.post;
+
+    this.api = new RestApiClient;
+  }
+
+  rotate(event) {
+    event.preventDefault();
+
+    const post = this.props.post;
+
+    this.api.post(`images/${post.id}?rotate=90`)
+    .then((json) => {
+      // Update the state of the Post to use the same image url,
+      // but add cache-busting string changes and trigger re-render.
+      this.setState({
+        'media': {
+          'url' : `${json.url}?time=${new Date()}`,
+        }
+      });
+    });
+  }
+
   getOtherPosts(post) {
     const post_id = post['id'];
     const signup = this.props.signup;
@@ -33,7 +59,7 @@ class Post extends React.Component {
   }
 
   render() {
-    const post = this.props.post;
+    const post = this.state;
     const caption = displayCaption(post);
     const user = this.props.user ? this.props.user : null;
     const signup = this.props.signup;
@@ -51,7 +77,7 @@ class Post extends React.Component {
               <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
             </div>
             <div className="admin-tools__rotate">
-              <a className="button -tertiary rotate"></a>
+              <a className="button -tertiary rotate" onClick={(event) => this.rotate(event) }></a>
             </div>
           </div>
           {this.props.showSiblings ?
