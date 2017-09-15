@@ -41,6 +41,7 @@ Route::group(['middleware' => 'web'], function () {
 
     // Images
     Route::get('/images/{post}', 'ImagesController@show');
+    Route::post('images/{postId}', 'ImagesController@update');
 
     // Users
     Route::get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
@@ -82,4 +83,7 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.r
 
     // Campaigns
     Route::get('campaigns', 'Api\CampaignsController@index');
+
+    // @TODO - remove this, just for postman testing.
+    Route::post('images/{postId}', 'ImagesController@update');
 });
