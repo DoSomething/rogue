@@ -40,13 +40,20 @@ class Post extends React.Component {
     const campaign = this.props.campaign;
 
     return (
-      <div className="container__row">
+      <div className="post container__row">
         {/* Post Images */}
         <div className="container__block -third">
           <img src={getImageUrlFromProp(post)}/>
-          <p>
-            <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a> | <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
-          </p>
+          <div className="admin-tools">
+            <div className="admin-tools__links">
+              <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a>
+              <br />
+              <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
+            </div>
+            <div className="admin-tools__rotate">
+              <a className="button -tertiary rotate"></a>
+            </div>
+          </div>
           {this.props.showSiblings ?
             <ul className="gallery -duo">
               {
