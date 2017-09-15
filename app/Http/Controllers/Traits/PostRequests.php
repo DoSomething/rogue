@@ -55,7 +55,7 @@ trait PostRequests
      */
     public function index(Request $request)
     {
-        $query = $this->newQuery(Post::class)->with('signup')->withCount('reactions');
+        $query = $this->newQuery(Post::class)->with('signup')->withCount('reactions')->orderBy('created_at', 'desc');
 
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Post::$indexes);

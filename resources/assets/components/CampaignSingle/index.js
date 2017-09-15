@@ -1,5 +1,5 @@
 import React from 'react';
-import { map } from 'lodash';
+import { map, orderBy, find } from 'lodash';
 import { RestApiClient} from '@dosomething/gateway';
 import { extractSignupsFromPosts } from '../../helpers';
 
@@ -91,8 +91,10 @@ class CampaignSingle extends React.Component {
 
   render() {
     const posts = this.props.posts;
+    const postOrder = map(orderBy(posts, 'created_at', 'desc'), 'id');
     const campaign = this.props.campaign;
     const signups = this.props.signups;
+    const props = this.props;
 
     return (
       <div className="container">
@@ -103,22 +105,24 @@ class CampaignSingle extends React.Component {
         {this.props.loading || this.state.loadingNewPosts ?
           <div className="spinner"></div>
         :
-          map(posts, (post, key) =>
-            <Post key={key}
+
+          map(postOrder, function (key, value) {
+            var post = find(posts, {'id': key});
+
+            return <Post key={key}
               post={post}
               user={signups[post.signup_id].user.data}
               signup={signups[post.signup_id]}
               campaign={campaign}
-              onUpdate={this.props.updatePost}
-              onTag={this.props.updateTag}
-              deletePost={this.props.deletePost}
-              showHistory={this.props.showHistory}
+              onUpdate={props.updatePost}
+              onTag={props.updateTag}
+              deletePost={props.deletePost}
+              showHistory={props.showHistory}
               showSiblings={true}
               showQuantity={true}
-              allowHistory={true} />
-          )
+              allowHistory={true} />;
+          })
         }
-
 
         <ModalContainer>
           {this.props.displayHistoryModal ?
