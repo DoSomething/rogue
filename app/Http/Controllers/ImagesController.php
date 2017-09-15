@@ -3,8 +3,10 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Post;
+use Rogue\Services\AWS;
 use Illuminate\Http\Request;
 use League\Glide\ServerFactory;
+use Intervention\Image\Facades\Image;
 use League\Flysystem\Memory\MemoryAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -24,9 +26,10 @@ class ImagesController extends Controller
      *
      * @param Filesystem $filesystem
      */
-    public function __construct(Filesystem $filesystem)
+    public function __construct(Filesystem $filesystem, AWS $aws)
     {
         $this->filesystem = $filesystem;
+        $this->aws = $aws;
     }
 
     /**
@@ -57,5 +60,27 @@ class ImagesController extends Controller
         ]);
 
         return $server->getImageResponse($post->getMediaPath(), $request->all());
+    }
+
+    /**
+     * Edits and overwrites an image based on given request parameters.
+     *
+     * @param  $id
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update($id, Request $request)
+    {
+        $post = Post::findOrFail($id);
+        $originalImage = $post->getMediaUrl();
+
+        // Only supports rotation, right now.
+        if ($request->input('rotate')) {
+            $value = (int) -$request->input('rotate');
+
+            $originalImage =  Image::make($originalImage)->rotate($value)->encode('jpg', 75);
+        }
+
+        return $this->aws->storeImageData((string) $originalImage, 'edited_' . $post->id);
     }
 }
