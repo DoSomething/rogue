@@ -8,13 +8,30 @@ class FilterBar extends React.Component {
     super();
 
     this.state = {
-      status: 'accepted',
-      tags: {
-        'good-photo': false,
-        'good-quote': false,
-        'hide-in-gallery': false,
-        'good-for-sponsor': false,
-        'good-for-storytelling': false,
+      filters: {
+        status: 'accepted',
+        tags: {
+          'good-photo': {
+            label: "Good Photo",
+            active: false,
+          },
+          'good-quote': {
+            label: "Good Quote",
+            active: false,
+          },
+          'hide-in-gallery': {
+             label: "Hide In Gallery 👻",
+             active: false,
+          },
+          'good-for-sponsor': {
+            label: "Good For Sponsor",
+            active: false,
+          },
+          'good-for-storytelling': {
+            label: "Good For Storytelling",
+            active: false,
+          },
+        }
       }
     };
 
@@ -24,8 +41,10 @@ class FilterBar extends React.Component {
 
   updateFilters(value){
     if (['pending', 'accepted', 'rejected'].includes(value)) {
-      this.setState({
-        status: value,
+      this.setState((previousState) => {
+        const newState = {...previousState};
+        newState.filters.status = value;
+        return newState;
       });
     }
 
@@ -34,8 +53,7 @@ class FilterBar extends React.Component {
 
       this.setState((previousState) => {
         const newState = {...previousState};
-        newState.tags[key] = Object.values(value)[0];
-
+        newState.filters.tags[key].active = Object.values(value)[0];
         return newState;
       });
     }
@@ -57,7 +75,7 @@ class FilterBar extends React.Component {
       <div>
          <div>{childrenWithProps}</div>
          <div className="container__block -third">
-          <button className="button" onClick={() => this.props.onSubmit(this.state)}>Filter</button>
+          <button className="button" onClick={() => this.props.onSubmit(this.state.filters)}>Filter</button>
          </div>
       </div>
     )

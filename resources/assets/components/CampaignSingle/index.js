@@ -17,7 +17,32 @@ class CampaignSingle extends React.Component {
     super(props);
 
     this.state = {
-      loadingNewPosts: false
+      loadingNewPosts: false,
+      filters: {
+        status: 'accepted',
+        tags: {
+          'good-photo': {
+            label: "Good Photo",
+            active: false,
+          },
+          'good-quote': {
+            label: "Good Quote",
+            active: false,
+          },
+          'hide-in-gallery': {
+             label: "Hide In Gallery 👻",
+             active: false,
+          },
+          'good-for-sponsor': {
+            label: "Good For Sponsor",
+            active: false,
+          },
+          'good-for-storytelling': {
+            label: "Good For Storytelling",
+            active: false,
+          },
+        }
+      }
     };
 
     this.api = new RestApiClient;
@@ -27,25 +52,29 @@ class CampaignSingle extends React.Component {
   }
 
   // Filter posts based on status or tag(s).
-  filterPosts(state) {
+  filterPosts(filters) {
+    this.setState({
+        filters: filters,
+    });
+
     // Grab all of the active tags to send to API request.
     let activeTags = [];
 
-    if (state.tags) {
-      Object.keys(state.tags).forEach(function(key) {
-        if (state.tags[key] === true) {
+    if (filters.tags) {
+      Object.keys(filters.tags).forEach(function(key) {
+        if (filters.tags[key].active === true) {
          activeTags.push(key);
         }
       });
     }
 
-    let filters = {
+    let formattedFilters = {
       'campaignId': this.props.campaign.id,
-      'status': state.status,
+      'status': filters.status,
       'tags': activeTags,
     };
 
-    this.getPostsByFilter(filters);
+    this.getPostsByFilter(formattedFilters);
   }
 
   // Make API call to paginated link to get next/previous batch of posts.
@@ -93,6 +122,7 @@ class CampaignSingle extends React.Component {
     const posts = this.props.posts;
     const campaign = this.props.campaign;
     const signups = this.props.signups;
+    const tagFilters = this.state.filters.tags;
 
     return (
       <div className="container">
@@ -101,7 +131,7 @@ class CampaignSingle extends React.Component {
         <h2 className="heading -emphasized">Post Filters</h2>
         <FilterBar onSubmit={this.filterPosts}>
           <DropdownFilter options={{accepted: 'Accepted', pending: 'Pending', rejected: 'Rejected'}} />
-          <MultiValueFilter options={{'good-photo': 'Good Photo', 'good-quote': 'Good Quote', 'hide-in-gallery': 'Hide In Gallery 👻', 'good-for-sponsor': 'Good For Sponsor', 'good-for-storytelling': 'Good For Storytelling'}} />
+          <MultiValueFilter options={tagFilters} />
         </FilterBar>
 
         <h2 className="heading -emphasized">Posts</h2>
