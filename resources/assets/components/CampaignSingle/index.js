@@ -94,7 +94,6 @@ class CampaignSingle extends React.Component {
     const postOrder = map(orderBy(posts, 'created_at', 'desc'), 'id');
     const campaign = this.props.campaign;
     const signups = this.props.signups;
-    const props = this.props;
 
     return (
       <div className="container">
@@ -106,7 +105,7 @@ class CampaignSingle extends React.Component {
           <div className="spinner"></div>
         :
 
-          map(postOrder, function (key, value) {
+          map(postOrder, (key, value) => {
             var post = find(posts, {'id': key});
 
             return <Post key={key}
@@ -114,10 +113,10 @@ class CampaignSingle extends React.Component {
               user={signups[post.signup_id].user.data}
               signup={signups[post.signup_id]}
               campaign={campaign}
-              onUpdate={props.updatePost}
-              onTag={props.updateTag}
-              deletePost={props.deletePost}
-              showHistory={props.showHistory}
+              onUpdate={this.props.updatePost}
+              onTag={this.props.updateTag}
+              deletePost={this.props.deletePost}
+              showHistory={this.props.showHistory}
               showSiblings={true}
               showQuantity={true}
               allowHistory={true} />;
