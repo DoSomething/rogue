@@ -41,7 +41,7 @@ class MultiValueFilter extends React.Component {
         <h2 className="heading -delta">{this.props.header}</h2>
 
         <ul className="aligned-actions">
-          {map(this.props.options, (option, key) => (
+          {map(this.state, (option, key) => (
             <li key={key}>
               {this.state[key] ?
                 <button className={classnames('tag', {'is-active':  this.state[key].active})}
