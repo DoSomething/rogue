@@ -83,7 +83,4 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.r
 
     // Campaigns
     Route::get('campaigns', 'Api\CampaignsController@index');
-
-    // @TODO - remove this, just for postman testing.
-    Route::post('images/{postId}', 'ImagesController@update');
 });

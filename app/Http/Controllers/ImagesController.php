@@ -65,6 +65,11 @@ class ImagesController extends Controller
     /**
      * Edits and overwrites an image based on given request parameters.
      *
+     * @TODO - Currently rotates and overwrites both the original image and
+     * processed, edited image. We will not need to work with the edited image
+     * when Glide processing is turned on, so we should remove this logic when
+     * that is live on prod.
+     *
      * @param  $id
      * @param  Request $request
      * @return \Illuminate\Http\Response
@@ -72,19 +77,48 @@ class ImagesController extends Controller
     public function update($id, Request $request)
     {
         $post = Post::findOrFail($id);
-        $originalImage = $post->getMediaUrl();
+
+        // Get the filename of the original image.
+        $originalImage = $post->url;
+        $originalFilename = $this->getFilenameFromUrl($originalImage);
+
+        // Get the url of the processed, edited image.
+        $editedImage = $post->getMediaUrl();
 
         // Only supports rotation, right now.
         if ($request->input('rotate')) {
             $value = (int) -$request->input('rotate');
 
             $originalImage = Image::make($originalImage)->rotate($value)->encode('jpg', 75);
+            $editedImage = Image::make($editedImage)->rotate($value)->encode('jpg', 75);
         }
 
-        $image = $this->aws->storeImageData((string) $originalImage, 'edited_' . $post->id);
+        $originalImage = $this->aws->storeImageData((string) $originalImage, $originalFilename);
+        $editedImage = $this->aws->storeImageData((string) $editedImage, 'edited_' . $post->id);
 
         return response()->json([
-            'url' => $image,
+            'url' => $editedImage,
+            'original_image_url' => $originalImage,
         ]);
+    }
+
+    /**
+     * Returns an image file name without the extension based on a given url
+     *
+     * @param  string $url
+     * @return string $filename
+     */
+    private function getFilenameFromUrl($url)
+    {
+        $path = explode('/', $url);
+
+        if ($path) {
+            $filename = end($path);
+            $filename = pathinfo($filename, PATHINFO_FILENAME);
+
+            return $filename;
+        }
+
+        return null;
     }
 }
