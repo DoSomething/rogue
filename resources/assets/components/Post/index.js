@@ -81,7 +81,7 @@ class Post extends React.Component {
               <div className="spinner"></div>
             </div>
           :
-            <img className="post__image" src={getImageUrlFromProp(post)}/>
+            <img className="post__image" src={getEditedImageUrl(post)}/>
           }
           <div className="admin-tools">
             <div className="admin-tools__links">
