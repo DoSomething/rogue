@@ -38,6 +38,8 @@ class Post extends React.Component {
         const newState = {...prevState};
 
         newState.loading = false;
+        // Add a cache-busting string to the end of the image url
+        // so that it changes and triggers a re-render.
         newState.post.media.url = `${json.url}?time=${new Date()}`;
 
         return newState;
