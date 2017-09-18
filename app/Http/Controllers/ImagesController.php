@@ -103,7 +103,7 @@ class ImagesController extends Controller
     }
 
     /**
-     * Returns an image file name without the extension based on a given url
+     * Returns an image file name, without the extension, based on a given url
      *
      * @param  string $url
      * @return string $filename
