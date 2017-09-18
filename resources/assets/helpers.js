@@ -35,7 +35,7 @@ export function getImageUrlFromProp(photoProp) {
     photo_url = photoProp['url'];
   }
   else if ('media' in photoProp) {
-    photo_url = photoProp['media']['url'];
+    photo_url = photoProp['media']['original_image_url'];
   }
 
 
