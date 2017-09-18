@@ -41,6 +41,7 @@ Route::group(['middleware' => 'web'], function () {
 
     // Images
     Route::get('/images/{post}', 'ImagesController@show');
+    Route::post('images/{postId}', 'ImagesController@update');
 
     // Users
     Route::get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);

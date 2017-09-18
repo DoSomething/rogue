@@ -11,3 +11,47 @@
     }
   }
 }
+
+.post {
+  .admin-tools {
+    .admin-tools__links {
+      float: left;
+    }
+
+    .admin-tools__rotate {
+      float: right;
+    }
+  }
+
+  .post__image {
+    width: 300px;
+    height: 300px;
+  }
+
+  .is-loading {
+    display: table;
+    width: 300px;
+    height: 300px;
+
+    .spinner {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+
+  .button.-tertiary {
+    padding: 0px;
+    &.rotate {
+      &:before {
+        background: transparent url('../../images/rotate_spinner.svg');
+        background-size: cover;
+        content: '';
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+        margin-right: 10px;
+        margin-top: 10px;
+      }
+    }
+  }
+}

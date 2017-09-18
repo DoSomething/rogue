@@ -26,7 +26,7 @@ export function calculateAge(date) {
 };
 
 export function getImageUrlFromProp(photoProp) {
-	var photo_url;
+	let photo_url;
 
   // Sometimes we get the url right on the post and sometimes it is nested under
   // media (in cases where it goes through the PostTransformer), so handle both cases
@@ -35,7 +35,7 @@ export function getImageUrlFromProp(photoProp) {
     photo_url = photoProp['url'];
   }
   else if ('media' in photoProp) {
-    photo_url = photoProp['media']['original_image_url'];
+    photo_url = photoProp['media']['url'];
   }
 
 
