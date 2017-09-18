@@ -1,5 +1,5 @@
 import React from 'react';
-import { map, orderBy, find } from 'lodash';
+import { map, find } from 'lodash';
 import { RestApiClient} from '@dosomething/gateway';
 import { extractSignupsFromPosts } from '../../helpers';
 
@@ -91,7 +91,6 @@ class CampaignSingle extends React.Component {
 
   render() {
     const posts = this.props.posts;
-    const postOrder = map(orderBy(posts, 'created_at', 'desc'), 'id');
     const campaign = this.props.campaign;
     const signups = this.props.signups;
 
@@ -105,7 +104,7 @@ class CampaignSingle extends React.Component {
           <div className="spinner"></div>
         :
 
-          map(postOrder, (key, value) => {
+          map(this.props.postIds, (key, value) => {
             var post = find(posts, {'id': key});
 
             return <Post key={key}

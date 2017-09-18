@@ -1,5 +1,5 @@
 import React from 'react';
-import { keyBy } from 'lodash';
+import { keyBy, orderBy, map } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 import { extractPostsFromSignups, extractSignupsFromPosts } from '../../helpers';
 
@@ -45,6 +45,7 @@ const reviewComponent = (Component, data) => {
       .then(json => this.setState({
         campaign: data.campaign,
         posts: keyBy(json.data, 'id'),
+        postIds: map(orderBy(json.data, 'created_at', 'desc'), 'id'),
         signups: extractSignupsFromPosts(keyBy(json.data, 'id')),
         filter: status,
         postTotals: json.meta.pagination.total,
