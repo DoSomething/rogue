@@ -1,4 +1,5 @@
 import React from 'react';
+import './filter-bar.scss';
 
 import DropdownFilter from '../DropdownFilter';
 import MultiValueFilter from '../MultiValueFilter';
@@ -45,10 +46,11 @@ class FilterBar extends React.Component {
 
     // Render the new children.
     return (
-      <div>
+      <div className="container__block -filter-bar">
+        <h2 className="heading -gamma">Post Filters</h2>
          <div>{childrenWithProps}</div>
          <div className="container__block -third">
-          <button className="button" onClick={() => this.props.onSubmit(this.state.filters)}>Filter</button>
+          <button className="button" onClick={() => this.props.onSubmit(this.state.filters)}>Apply Filters</button>
          </div>
       </div>
     )

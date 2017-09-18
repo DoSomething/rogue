@@ -131,10 +131,9 @@ class CampaignSingle extends React.Component {
       <div className="container">
         <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
 
-        <h2 className="heading -emphasized">Post Filters</h2>
         <FilterBar onSubmit={this.filterPosts}>
-          <DropdownFilter options={statusFilters} />
-          <MultiValueFilter options={tagFilters} />
+          <DropdownFilter options={statusFilters} header={'Post Status'}/>
+          <MultiValueFilter options={tagFilters} header={'Tags'}/>
         </FilterBar>
 
         <h2 className="heading -emphasized">Posts</h2>

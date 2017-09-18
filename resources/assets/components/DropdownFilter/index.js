@@ -24,6 +24,8 @@ class DropdownFilter extends React.Component {
   render() {
     return (
         <div className="container__block -third">
+          <h2 className="heading -delta">{this.props.header}</h2>
+
           <div className="select">
             <select onChange={(event) => this.change(event)}>
               {map(this.props.options.values, (option, key) => (

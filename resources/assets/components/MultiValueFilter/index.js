@@ -38,6 +38,8 @@ class MultiValueFilter extends React.Component {
   render() {
     return (
       <div className="container__block -third">
+        <h2 className="heading -delta">{this.props.header}</h2>
+
         <ul className="aligned-actions">
           {map(this.props.options, (option, key) => (
             <li key={key}>
