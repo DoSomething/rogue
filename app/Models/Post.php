@@ -158,6 +158,8 @@ class Post extends Model
         return [
             'id' => $this->id,
             'signup_id' => $this->signup_id,
+            'quantity' => $this->signup->quantity,
+            'why_participated' => $this->signup->why_participated,
             'campaign_id' => $this->campaign_id,
             'campaign_run_id' => $this->campaign_run_id,
             'northstar_id' => $this->northstar_id,
