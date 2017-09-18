@@ -89,11 +89,13 @@ class ImagesController extends Controller
         if ($request->input('rotate')) {
             $value = (int) -$request->input('rotate');
 
-            $originalImage = Image::make($originalImage)->rotate($value)->encode('jpg', 75);
+            // Save the original image with it's original format.
+            $originalImage = Image::make($originalImage)->rotate($value)->stream();
             $editedImage = Image::make($editedImage)->rotate($value)->encode('jpg', 75);
         }
 
-        $originalImage = $this->aws->storeImageData((string) $originalImage, $originalFilename);
+        // Store images in s3.
+        $originalImage = $this->aws->storeImageData($originalImage->__toString(), $originalFilename);
         $editedImage = $this->aws->storeImageData((string) $editedImage, 'edited_' . $post->id);
 
         return response()->json([
