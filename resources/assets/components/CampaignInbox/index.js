@@ -1,5 +1,5 @@
 import React from 'react';
-import { map, sample } from 'lodash';
+import { map, sample, find } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
 import { extractPostsFromSignups } from '../../helpers';
@@ -29,8 +29,10 @@ class CampaignInbox extends React.Component {
       return (
         <div className="container">
           {
-            map(posts, (post, key) =>
-              <Post key={key}
+            map(this.props.postIds, (key, value) => {
+              var post = find(posts, {'id': key});
+
+              return <Post key={key}
                 post={post}
                 user={signups[post.signup_id].user.data}
                 signup={signups[post.signup_id]}
@@ -42,7 +44,7 @@ class CampaignInbox extends React.Component {
                 showSiblings={true}
                 showQuantity={true}
                 allowHistory={true} />
-            )
+            })
           }
 
           <ModalContainer>
