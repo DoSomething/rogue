@@ -10,50 +10,26 @@ class FilterBar extends React.Component {
     this.state = {
       filters: {
         status: 'accepted',
-        tags: {
-          'good-photo': {
-            label: "Good Photo",
-            active: false,
-          },
-          'good-quote': {
-            label: "Good Quote",
-            active: false,
-          },
-          'hide-in-gallery': {
-             label: "Hide In Gallery 👻",
-             active: false,
-          },
-          'good-for-sponsor': {
-            label: "Good For Sponsor",
-            active: false,
-          },
-          'good-for-storytelling': {
-            label: "Good For Storytelling",
-            active: false,
-          },
-        }
-      }
+      },
     };
 
     // The component provides a function the children components can use to update the state.
     this.updateFilters = this.updateFilters.bind(this);
   }
 
-  updateFilters(value){
-    if (['pending', 'accepted', 'rejected'].includes(value)) {
+  updateFilters(values) {
+    if (['pending', 'accepted', 'rejected'].includes(values)) {
       this.setState((previousState) => {
         const newState = {...previousState};
-        newState.filters.status = value;
+        newState.filters.status = values;
         return newState;
       });
-    }
-
-    if (['good-photo', 'good-quote', 'hide-in-gallery', 'good-for-sponsor', 'good-for-storytelling'].includes(Object.keys(value)[0])) {
-      let key = Object.keys(value)[0];
+    } else {
+      let key = Object.keys(values)[0];
 
       this.setState((previousState) => {
         const newState = {...previousState};
-        newState.filters.tags[key].active = Object.values(value)[0];
+        newState.filters.tags = values;
         return newState;
       });
     }
@@ -61,7 +37,6 @@ class FilterBar extends React.Component {
 
   render() {
     // ***Rendering the children**
-
     // This maps over any child of the FilterBar component and makes a copy of it so we can send props
     // (like our function to update state) to it from this component.
     const childrenWithProps = React.Children.map(this.props.children,

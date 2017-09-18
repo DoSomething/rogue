@@ -8,8 +8,20 @@ class DropdownFilter extends React.Component {
     this.change = this.change.bind(this);
   }
 
+  componentDidMount() {
+    // {
+    //   this.props.type: this.props.default
+    // }
+    this.props.updateFilters({
+      this.props.type: this.props.default
+    });
+  }
+
   change(event) {
-    this.props.updateFilters(event.target.value);
+    // this.props.updateFilters(event.target.value);
+    this.props.updateFilters({
+      this.props.type: event.targe.value
+    });
   }
 
   render() {

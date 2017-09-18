@@ -8,27 +8,31 @@ class MultiValueFilter extends React.Component {
   constructor() {
     super();
 
-    // this.state = {
-    //   'good-photo': false,
-    //   'good-quote': false,
-    //   'hide-in-gallery': false,
-    //   'good-for-sponsor': false,
-    //   'good-for-storytelling': false,
-    // }
+    this.state = {};
 
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentDidMount() {
+    const options = this.props.options;
+    this.setState({ ...options });
+  }
+
+  componentDidUpdate() {
+    this.props.updateFilters(this.state);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState !== this.state;
+  }
+
   handleClick(key, activeFilter) {
-    // this.setState({
-    //   [key]: !this.state[key]
-    // });
-
-    let value = {
-      [key]: !activeFilter,
-    };
-
-    this.props.updateFilters(value);
+    this.setState({
+      [key]: {
+        active: !activeFilter,
+        label: this.state[key].label
+      }
+    });
   }
 
   render() {
@@ -37,8 +41,10 @@ class MultiValueFilter extends React.Component {
         <ul className="aligned-actions">
           {map(this.props.options, (option, key) => (
             <li key={key}>
-              <button className={classnames('tag', {'is-active': option.active})}
-                      onClick={() => this.handleClick(key, option.active)}>{option.label}</button>
+              {this.state[key] ?
+                <button className={classnames('tag', {'is-active':  this.state[key].active})}
+                      onClick={() => this.handleClick(key, this.state[key].active)}>{option.label}</button>
+              : null}
             </li>
           ))}
         </ul>
