@@ -117,6 +117,15 @@ class CampaignSingle extends React.Component {
     const campaign = this.props.campaign;
     const signups = this.props.signups;
     const tagFilters = this.state.filters.tags;
+    const statusFilters = {
+      values: {
+        accepted: 'Accepted',
+        pending: 'Pending',
+        rejected: 'Rejected'
+      },
+      type: 'status',
+      default: 'accepted',
+    };
 
     return (
       <div className="container">
@@ -124,7 +133,7 @@ class CampaignSingle extends React.Component {
 
         <h2 className="heading -emphasized">Post Filters</h2>
         <FilterBar onSubmit={this.filterPosts}>
-          <DropdownFilter options={{accepted: 'Accepted', pending: 'Pending', rejected: 'Rejected'}} />
+          <DropdownFilter options={statusFilters} />
           <MultiValueFilter options={tagFilters} />
         </FilterBar>
 

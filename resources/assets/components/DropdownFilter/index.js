@@ -9,19 +9,16 @@ class DropdownFilter extends React.Component {
   }
 
   componentDidMount() {
-    // {
-    //   this.props.type: this.props.default
-    // }
-    this.props.updateFilters({
-      this.props.type: this.props.default
-    });
+    const type = this.props.options.type;
+    const defaultValue = this.props.options.default;
+
+    this.props.updateFilters({ [type]: defaultValue });
   }
 
   change(event) {
-    // this.props.updateFilters(event.target.value);
-    this.props.updateFilters({
-      this.props.type: event.targe.value
-    });
+    const type = this.props.options.type;
+
+    this.props.updateFilters({ [type]: event.target.value });
   }
 
   render() {
@@ -29,7 +26,7 @@ class DropdownFilter extends React.Component {
         <div className="container__block -third">
           <div className="select">
             <select onChange={(event) => this.change(event)}>
-              {map(this.props.options, (option, key) => (
+              {map(this.props.options.values, (option, key) => (
                  <option value={key} key={key}>{option}</option>
               ))}
             </select>

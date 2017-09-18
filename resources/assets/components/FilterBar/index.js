@@ -8,9 +8,7 @@ class FilterBar extends React.Component {
     super();
 
     this.state = {
-      filters: {
-        status: 'accepted',
-      },
+      filters: {},
     };
 
     // The component provides a function the children components can use to update the state.
@@ -18,10 +16,10 @@ class FilterBar extends React.Component {
   }
 
   updateFilters(values) {
-    if (['pending', 'accepted', 'rejected'].includes(values)) {
+    if (['pending', 'accepted', 'rejected'].includes(values.status)) {
       this.setState((previousState) => {
         const newState = {...previousState};
-        newState.filters.status = values;
+        newState.filters.status = values.status;
         return newState;
       });
     } else {
