@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages.home');
-})->middleware('guest');
-
 Route::group(['middleware' => 'web'], function () {
+    Route::get('/', function () {
+        return view('pages.home');
+    })->middleware('guest');
+
     // Authentication
     Route::get('login', 'Auth\AuthController@getLogin');
     Route::get('logout', 'Auth\AuthController@getLogout');
