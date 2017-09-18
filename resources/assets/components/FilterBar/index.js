@@ -1,9 +1,6 @@
 import React from 'react';
 import './filter-bar.scss';
 
-import DropdownFilter from '../DropdownFilter';
-import MultiValueFilter from '../MultiValueFilter';
-
 class FilterBar extends React.Component {
   constructor() {
     super();
