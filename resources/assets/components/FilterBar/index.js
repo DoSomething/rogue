@@ -14,21 +14,11 @@ class FilterBar extends React.Component {
   }
 
   updateFilters(values) {
-    if (['pending', 'accepted', 'rejected'].includes(values.status)) {
-      this.setState((previousState) => {
-        const newState = {...previousState};
-        newState.filters.status = values.status;
-        return newState;
-      });
-    } else {
-      let key = Object.keys(values)[0];
-
-      this.setState((previousState) => {
-        const newState = {...previousState};
-        newState.filters.tags = values;
-        return newState;
-      });
-    }
+    this.setState((previousState) => {
+      const newState = {...previousState};
+      newState.filters[Object.keys(values)] = Object.values(values)[0];
+      return newState;
+    });
   }
 
   render() {

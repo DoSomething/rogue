@@ -14,7 +14,12 @@ class MultiValueFilter extends React.Component {
   }
 
   componentDidMount() {
-    const options = this.props.options;
+    const type = this.props.options.type;
+    const values = this.props.options.values;
+    const options = {
+      [type]: values,
+    };
+
     this.setState({ ...options });
   }
 
@@ -26,12 +31,17 @@ class MultiValueFilter extends React.Component {
     return nextState !== this.state;
   }
 
-  handleClick(key, activeFilter) {
-    this.setState({
-      [key]: {
-        active: !activeFilter,
-        label: this.state[key].label
-      }
+  handleClick(key, activeFilter, type) {
+    const values = {
+      active: !activeFilter,
+      label: this.state[type][key].label,
+    };
+
+    this.setState((previousState) => {
+      const newState = {...previousState};
+      newState[type][key] = values;
+
+      return newState;
     });
   }
 
@@ -39,13 +49,12 @@ class MultiValueFilter extends React.Component {
     return (
       <div className="container__block -third">
         <h2 className="heading -delta">{this.props.header}</h2>
-
         <ul className="aligned-actions">
-          {map(this.state, (option, key) => (
+          {map(Object.values(this.state)[0], (option, key) => (
             <li key={key}>
-              {this.state[key] ?
-                <button className={classnames('tag', {'is-active':  this.state[key].active})}
-                      onClick={() => this.handleClick(key, this.state[key].active)}>{option.label}</button>
+              {Object.values(this.state)[0] ?
+                <button className={classnames('tag', {'is-active':  option.active})}
+                      onClick={() => this.handleClick(key, option.active, this.props.options.type)}>{option.label}</button>
               : null}
             </li>
           ))}

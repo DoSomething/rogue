@@ -116,7 +116,12 @@ class CampaignSingle extends React.Component {
     const posts = this.props.posts;
     const campaign = this.props.campaign;
     const signups = this.props.signups;
-    const tagFilters = this.state.filters.tags;
+    const tags = this.state.filters.tags;
+    const tagFilters = {
+      values: tags,
+      type: 'tags',
+    };
+
     const statusFilters = {
       values: {
         accepted: 'Accepted',
