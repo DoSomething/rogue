@@ -82,6 +82,8 @@ Example Response:
 GET /api/v2/posts
 ```
 
+Posts are returned in reverse chronological order.
+
 ### Optional Query Parameters
 - **limit**
   - Set the number of records to return in a single response.

@@ -1,5 +1,5 @@
 import React from 'react';
-import { map } from 'lodash';
+import { map, find } from 'lodash';
 import { RestApiClient} from '@dosomething/gateway';
 import { extractSignupsFromPosts } from '../../helpers';
 
@@ -103,8 +103,11 @@ class CampaignSingle extends React.Component {
         {this.props.loading || this.state.loadingNewPosts ?
           <div className="spinner"></div>
         :
-          map(posts, (post, key) =>
-            <Post key={key}
+
+          map(this.props.postIds, (key, value) => {
+            var post = find(posts, {'id': key});
+
+            return <Post key={key}
               post={post}
               user={signups[post.signup_id].user.data}
               signup={signups[post.signup_id]}
@@ -115,10 +118,9 @@ class CampaignSingle extends React.Component {
               showHistory={this.props.showHistory}
               showSiblings={true}
               showQuantity={true}
-              allowHistory={true} />
-          )
+              allowHistory={true} />;
+          })
         }
-
 
         <ModalContainer>
           {this.props.displayHistoryModal ?
