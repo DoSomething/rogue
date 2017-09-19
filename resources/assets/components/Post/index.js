@@ -128,7 +128,7 @@ class Post extends React.Component {
         {/* Review block and meta data */}
         <div className="container__block -third">
           <div className="container__row">
-            <ReviewBlock post={post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
+            <ReviewBlock post={this.props.post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
           </div>
           <div className="container__row">
             <MetaInformation title="Meta" details={{
