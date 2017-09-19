@@ -62,7 +62,7 @@ const reviewComponent = (Component, data) => {
       this.setState({
         campaign: data.campaign,
         posts: posts,
-        postIds: map(posts, 'id'),
+        postIds: map(apiResponse.data, 'id'),
         signups: extractSignupsFromPosts(posts),
         filter: status,
         postTotals: apiResponse.meta.pagination.total,
