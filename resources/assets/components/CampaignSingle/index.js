@@ -4,7 +4,9 @@ import { RestApiClient} from '@dosomething/gateway';
 import { extractSignupsFromPosts } from '../../helpers';
 
 import Post from '../Post';
-import PostFilter from '../PostFilter';
+import FilterBar from '../FilterBar';
+import DropdownFilter from '../DropdownFilter';
+import MultiValueFilter from '../MultiValueFilter';
 import HistoryModal from '../HistoryModal';
 import PagingButtons from '../PagingButtons';
 import StatusCounter from '../StatusCounter';
@@ -15,26 +17,67 @@ class CampaignSingle extends React.Component {
     super(props);
 
     this.state = {
-      loadingNewPosts: false
+      loadingNewPosts: false,
+      filters: {
+        status: 'accepted',
+        tags: {
+          'good-photo': {
+            label: "Good Photo",
+            active: false,
+          },
+          'good-quote': {
+            label: "Good Quote",
+            active: false,
+          },
+          'hide-in-gallery': {
+             label: "Hide In Gallery 👻",
+             active: false,
+          },
+          'good-for-sponsor': {
+            label: "Good For Sponsor",
+            active: false,
+          },
+          'good-for-storytelling': {
+            label: "Good For Storytelling",
+            active: false,
+          },
+        }
+      }
     };
 
     this.api = new RestApiClient;
     this.filterPosts = this.filterPosts.bind(this);
-    this.getPostsByTag = this.getPostsByTag.bind(this);
-    this.getPostsByStatus = this.getPostsByStatus.bind(this);
+    this.getPostsByFilter = this.getPostsByFilter.bind(this);
     this.getPostsByPaginatedLink = this.getPostsByPaginatedLink.bind(this);
   }
 
   // Filter posts based on status or tag(s).
-  filterPosts(filter) {
-    // If the filter is a status, make API call to get posts by status.
-    if (['pending', 'accepted', 'rejected'].includes(filter)) {
-      this.getPostsByStatus(filter, this.props.campaign.id);
-    } else {
-      // If the filter is a tag, make the API call to get posts by tag.
-      this.getPostsByTag(filter, this.props.campaign.id);
+  filterPosts(filters) {
+    this.setState({
+        filters: filters,
+    });
+
+    let formattedFilters = {
+      'campaignId': this.props.campaign.id,
+      'status': filters.status,
+    };
+
+    // Grab all of the active tags to send to API request.
+    if (filters.tags) {
+      let activeTags = [];
+
+      Object.keys(filters.tags).forEach(function(key) {
+        if (filters.tags[key].active === true) {
+         activeTags.push(key);
+        }
+      });
+
+      if (activeTags.length > 0) {
+        formattedFilters['tag'] = activeTags.toString();
+      }
     }
 
+    this.getPostsByFilter(formattedFilters);
   }
 
   // Make API call to paginated link to get next/previous batch of posts.
@@ -55,32 +98,12 @@ class CampaignSingle extends React.Component {
     });
   }
 
-  // Make API call to GET /posts to get posts by filtered status.
-  getPostsByStatus(status, campaignId) {
+  // Make API call to GET /posts to get posts by filtered status and/or tag(s).
+  getPostsByFilter(filters) {
     this.setState({ loadingNewPosts: true });
 
-    this.api.get('posts', {
-      filter: {
-        status: status,
-        campaign_id: campaignId,
-      },
-      include: 'signup,siblings',
-    })
-    .then(json => {
-      this.setState({loadingNewPosts: false });
-      this.props.setNewPosts(json);
-    });
-  }
-
-  // Make API call to GET /posts to get posts by filtered tag.
-  getPostsByTag(tagSlug, campaignId) {
-    this.setState({ loadingNewPosts: true });
-
-    this.api.get('posts', {
-      filter: {
-        tag: tagSlug,
-        campaign_id: campaignId,
-      },
+    this.api.get('/posts', {
+      filter: filters,
       include: 'signup,siblings',
     })
     .then(json => {
@@ -93,13 +116,32 @@ class CampaignSingle extends React.Component {
     const posts = this.props.posts;
     const campaign = this.props.campaign;
     const signups = this.props.signups;
+    const tags = this.state.filters.tags;
+    const tagFilters = {
+      values: tags,
+      type: 'tags',
+    };
+
+    const statusFilters = {
+      values: {
+        accepted: 'Accepted',
+        pending: 'Pending',
+        rejected: 'Rejected'
+      },
+      type: 'status',
+      default: 'accepted',
+    };
 
     return (
       <div className="container">
         <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
 
-        <PostFilter onChange={this.filterPosts} />
+        <FilterBar onSubmit={this.filterPosts}>
+          <DropdownFilter options={statusFilters} header={'Post Status'}/>
+          <MultiValueFilter options={tagFilters} header={'Tags'}/>
+        </FilterBar>
 
+        <h2 className="heading -emphasized">Posts</h2>
         {this.props.loading || this.state.loadingNewPosts ?
           <div className="spinner"></div>
         :
