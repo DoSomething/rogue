@@ -20,10 +20,16 @@ class Post extends React.Component {
 
     this.state = {
       loading: false,
-      post: this.props.post
+      post: this.props.post,
     };
 
     this.api = new RestApiClient;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.post !== this.state.post) {
+      this.setState({ post: nextProps.post });
+    }
   }
 
   rotate(event) {
@@ -128,7 +134,7 @@ class Post extends React.Component {
         {/* Review block and meta data */}
         <div className="container__block -third">
           <div className="container__row">
-            <ReviewBlock post={this.props.post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
+            <ReviewBlock post={post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
           </div>
           <div className="container__row">
             <MetaInformation title="Meta" details={{
