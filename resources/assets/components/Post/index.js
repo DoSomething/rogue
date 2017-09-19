@@ -75,7 +75,7 @@ class Post extends React.Component {
     return (
       <div className="post container__row">
         {/* Post Images */}
-        <div className="container__block -third">
+        <div className="container__block -third images">
           {this.state.loading ?
             <div className="is-loading">
               <div className="spinner"></div>
