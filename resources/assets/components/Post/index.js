@@ -20,10 +20,16 @@ class Post extends React.Component {
 
     this.state = {
       loading: false,
-      post: this.props.post
+      post: this.props.post,
     };
 
     this.api = new RestApiClient;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.post !== this.state.post) {
+      this.setState({ post: nextProps.post });
+    }
   }
 
   rotate(event) {
@@ -75,7 +81,7 @@ class Post extends React.Component {
     return (
       <div className="post container__row">
         {/* Post Images */}
-        <div className="container__block -third">
+        <div className="container__block -third images">
           {this.state.loading ?
             <div className="is-loading">
               <div className="spinner"></div>
