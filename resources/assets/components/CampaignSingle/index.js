@@ -58,7 +58,7 @@ class CampaignSingle extends React.Component {
     });
 
     let formattedFilters = {
-      'campaignId': this.props.campaign.id,
+      'campaign_id': this.props.campaign.id,
       'status': filters.status,
     };
 
