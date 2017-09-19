@@ -99,8 +99,8 @@ class Signup extends Model
         return [
             'id' => $this->id,
             'northstar_id' => $this->northstar_id,
-            'campaign_id' => $this->campaign_id,
-            'campaign_run_id' => $this->campaign_run_id,
+            'campaign_id' => (string) $this->campaign_id,
+            'campaign_run_id' => (string) $this->campaign_run_id,
             'quantity' => $this->quantity,
             'why_participated' => $this->why_participated,
             'source' => $this->source,
