@@ -13,6 +13,12 @@
       "@dosomething/babel-config"
     ]
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/resources/assets/__mocks__/fileMock.js",
+      "\\.(css|scss)$": "identity-obj-proxy"
+    }
+  },
   "dependencies": {
     "@dosomething/forge": "^6.7.4",
     "@dosomething/gateway": "^1.1.5",
@@ -26,6 +32,7 @@
     "@dosomething/babel-config": "^1.0.0",
     "@dosomething/webpack-config": "^2.0.4",
     "babel-jest": "^21.0.2",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.2",
     "webpack": "^2.4.0",
     "webpack-dev-server": "^2.4.0"
