@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Transformers;
 
+use Carbon\Carbon;
 use Rogue\Models\Post;
 use League\Fractal\TransformerAbstract;
 
