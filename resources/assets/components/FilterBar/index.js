@@ -33,7 +33,7 @@ class FilterBar extends React.Component {
 
     // Render the new children.
     return (
-      <div className="container__block -filter-bar">
+      <div className="filter-bar container__block">
         <h2 className="heading -gamma">Post Filters</h2>
          <div>{childrenWithProps}</div>
          <div className="container__block -third">
