@@ -158,6 +158,7 @@ class CampaignSingle extends React.Component {
               onTag={this.props.updateTag}
               deletePost={this.props.deletePost}
               showHistory={this.props.showHistory}
+              rotate={this.props.rotate}
               showSiblings={true}
               showQuantity={true}
               allowHistory={true} />;

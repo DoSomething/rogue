@@ -20,37 +20,21 @@ class Post extends React.Component {
 
     this.state = {
       loading: false,
-      post: this.props.post,
     };
 
     this.api = new RestApiClient;
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.post !== this.state.post) {
-      this.setState({ post: nextProps.post });
-    }
-  }
-
-  rotate(event) {
+  handleClick(event) {
     event.preventDefault();
-    this.setState({loading: true});
 
-    const post = this.props.post;
+    this.setState({ loading: true });
 
-    this.api.post(`images/${post.id}?rotate=90`)
-    .then((json) => {
-      this.setState((prevState) => {
-        const newState = {...prevState};
-
-        newState.loading = false;
-        // Add a cache-busting string to the end of the image url
-        // so that it changes and triggers a re-render.
-        newState.post.media.url = `${json.url}?time=${new Date()}`;
-
-        return newState;
+    this.props.rotate(this.props.post.id)
+      .then(() => {
+        this.setState({ 'loading' : false });
       });
-    });
   }
 
   getOtherPosts(post) {
@@ -72,7 +56,7 @@ class Post extends React.Component {
   }
 
   render() {
-    const post = this.state.post;
+    const post = this.props.post;
     const caption = displayCaption(post);
     const user = this.props.user ? this.props.user : null;
     const signup = this.props.signup;
@@ -96,7 +80,7 @@ class Post extends React.Component {
               <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
             </div>
             <div className="admin-tools__rotate">
-              <a className="button -tertiary rotate" onClick={(event) => this.rotate(event) }></a>
+              <a className="button -tertiary rotate" onClick={(event) => this.handleClick(event)}></a>
             </div>
           </div>
           {this.props.showSiblings ?
