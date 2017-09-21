@@ -35,8 +35,8 @@ class PostTransformer extends TransformerAbstract
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
             'media' => [
-                'url' => $post->getMediaUrl(),
-                'original_image_url' => $post->url,
+                'url' => $post->getMediaUrl() . '?time='. Carbon::now(),
+                'original_image_url' => $post->url . '?time='. Carbon::now(),
                 'caption' => $post->caption,
             ],
             'tags' => $post->tagSlugs(),
