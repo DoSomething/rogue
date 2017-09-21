@@ -37,7 +37,6 @@
     "enzyme-to-json": "^2.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.2",
-    "react-dom": "^15.6.1",
     "react-test-renderer": "^15.6.1",
     "webpack": "^2.4.0",
     "webpack-dev-server": "^2.4.0"
