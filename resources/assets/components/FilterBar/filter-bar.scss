@@ -1,7 +1,7 @@
 @import '~@dosomething/forge/scss/toolkit';
 
 .filter-bar {
-  .container__block {
+  &.container__block {
     border-width: 1px;
     border-color: $light-gray;
     border-style: solid;

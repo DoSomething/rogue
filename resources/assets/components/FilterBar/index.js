@@ -33,14 +33,12 @@ class FilterBar extends React.Component {
 
     // Render the new children.
     return (
-      <div className="filter-bar">
-        <div className="container__block">
-          <h2 className="heading -gamma">Post Filters</h2>
-           <div>{childrenWithProps}</div>
-           <div className="container__block -third">
-            <button className="button" onClick={() => this.props.onSubmit(this.state.filters)}>Apply Filters</button>
-           </div>
-        </div>
+      <div className="filter-bar container__block">
+        <h2 className="heading -gamma">Post Filters</h2>
+         <div>{childrenWithProps}</div>
+         <div className="container__block -third">
+          <button className="button" onClick={() => this.props.onSubmit(this.state.filters)}>Apply Filters</button>
+         </div>
       </div>
     )
   }
