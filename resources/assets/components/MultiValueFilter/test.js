@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import sinon from 'sinon';
+import 'babel-polyfill';
 
 import MultiValueFilter from './index';
 
@@ -45,7 +46,7 @@ test('it renders an active button when clicked', () => {
   };
 
   const component = mount(
-    <MultiValueFilter options={filters} header="Tags" updateFilters={callback}/>
+    <MultiValueFilter options={filters} header="Tags" updateFilters={callback} />
   );
 
   // Click the first "tag" button in the filter.
