@@ -19,6 +19,7 @@ class MultiValueFilter extends React.Component {
     const options = {
       [type]: values,
     };
+
     this.setState({ ...options });
   }
 
