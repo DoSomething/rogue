@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders accepted, rejected, and delete buttons 1`] = `
+  <div>
+    <ul className="form-actions -inline" style={{'marginTop': 0}}>
+      <li><StatusButton type="accepted" label="accept" status=accepted setStatus={[Function]}/></li>
+      <li><StatusButton type="rejected" label="reject" status=rejected setStatus={[Function]}/></li>
+    </ul>
+    <ul className="form-actions -inline">
+      <li><button className="button delete -tertiary" onClick={[Function]}>Delete</button></li>
+    </ul>
+  </div>
+`;
+
+exports[`it renders the review block 1`] = `
+<div>
+  <ul
+    className="form-actions -inline"
+    style={
+      Object {
+        "marginTop": 0,
+      }
+    }
+  >
+    <li>
+      <Component
+        label="accept"
+        setStatus={[Function]}
+        status="accepted"
+        type="accepted"
+      />
+    </li>
+    <li>
+      <Component
+        label="reject"
+        setStatus={[Function]}
+        status="accepted"
+        type="rejected"
+      />
+    </li>
+  </ul>
+  <ul
+    className="form-actions -inline"
+  >
+    <li>
+      <button
+        className="button delete -tertiary"
+        onClick={[Function]}
+      >
+        Delete
+      </button>
+    </li>
+  </ul>
+  <Tags />
+</div>
+`;
