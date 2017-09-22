@@ -1,7 +1,7 @@
 import React from 'react';
 import { remove, map, clone } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
-import { getImageUrlFromProp, getEditedImageUrl, displayCaption } from '../../helpers';
+import { getImageUrlFromPost, getEditedImageUrl, displayCaption } from '../../helpers';
 
 import './post.scss';
 
@@ -66,21 +66,21 @@ class Post extends React.Component {
       <div className="post container__row">
         {/* Post Images */}
         <div className="container__block -third images">
-          {this.state.loading ?
-            <div className="is-loading">
-              <div className="spinner"></div>
-            </div>
-          :
-            <img className="post__image" src={getEditedImageUrl(post)}/>
-          }
+          <div className="post__image">
+            <img src={getImageUrlFromPost(post, 'edited')}/>
+          </div>
           <div className="admin-tools">
             <div className="admin-tools__links">
-              <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a>
+              <a href={getImageUrlFromPost(post, 'original')} target="_blank">Original Photo</a>
               <br />
-              <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
+              <a href={getImageUrlFromPost(post, 'edited')} target="_blank">Edited Photo</a>
             </div>
             <div className="admin-tools__rotate">
-              <a className="button -tertiary rotate" onClick={(event) => this.handleClick(event)}></a>
+              {this.state.loading ?
+                <div className="spinner"></div>
+              :
+                <a className="button -tertiary rotate" onClick={(event) => this.handleClick(event)}></a>
+              }
             </div>
           </div>
           {this.props.showSiblings ?
