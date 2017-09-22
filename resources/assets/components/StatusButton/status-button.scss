@@ -6,7 +6,7 @@
 $accepted-green: #80E85D;
 
 .button {
-  &.-accepted {
+  &.-outlined-button {
     background: $white;
     color: $light-gray;
     border-color: $light-gray;
@@ -14,37 +14,32 @@ $accepted-green: #80E85D;
     border-style: solid;
     text-transform: capitalize;
 
-    &:hover {
-      background: lighten($accepted-green, $color-tint);
-      color: $white;
-      border-color: $white;
+    &.-accepted {
+      &.-accepted:hover {
+        background: lighten($accepted-green, $color-tint);
+        color: $white;
+        border-color: $white;
+      }
+
+      &.-accepted:active, &.-accepted:focus, &.is-selected{
+        background: darken($accepted-green, $color-tint);
+        color: $white;
+        border: none;
+      }
     }
 
-    &:active, &:focus, &.accepted{
-      background: darken($accepted-green, $color-tint);
-      color: $white;
-      border: none;
-    }
-  }
+    &.-rejected {
+      &.-rejected:hover {
+        background: lighten($error-color, $color-tint);
+        color: $white;
+        border-color: $white;
+      }
 
-  &.-rejected {
-    background: $white;
-    color: $light-gray;
-    border-color: $light-gray;
-    border-width: 3px;
-    border-style: solid;
-    text-transform: capitalize;
-
-    &:hover {
-      background: lighten($error-color, $color-tint);
-      color: $white;
-      border-color: $white;
-    }
-
-    &:active, &:focus, &.rejected {
-      background: darken($error-color, $color-tint);
-      color: $white;
-      border: none;
+      &.-rejected:active, &.-rejected:focus, &.is-selected {
+        background: darken($error-color, $color-tint);
+        color: $white;
+        border: none;
+      }
     }
   }
 }

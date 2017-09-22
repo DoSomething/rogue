@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
 import ReviewBlock from './index';
@@ -37,11 +37,11 @@ test('it renders an active Accept button when clicked', () => {
     <ReviewBlock post={post} />
   );
 
-    // Click the "Accept" button.
-    component.find('.accepted').first().simulate('click');
+  // Click the "Accept" button.
+  component.find('.accepted').first().simulate('click');
 
-    // It should now show the active "Accept" button.
-    expect(component.find('.accepted').first().hasClass('button -accepted accepted'));
+  // It should now show the active "Accept" button.
+  expect(component.find('.accepted').first().hasClass('button -accepted accepted'));
 });
 
 test('it renders an active Reject button when clicked', () => {
