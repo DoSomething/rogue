@@ -25,28 +25,6 @@ export function calculateAge(date) {
   return formattedAge;
 };
 
-export function getImageUrlFromProp(photoProp) {
-	let photo_url;
-
-  // Sometimes we get the url right on the post and sometimes it is nested under
-  // media (in cases where it goes through the PostTransformer), so handle both cases
-  // @TODO: make sure everything goes through a transformer so we don't need this
-  if ('url' in photoProp) {
-    photo_url = photoProp['url'];
-  }
-  else if ('media' in photoProp) {
-    photo_url = photoProp['media']['original_image_url'];
-  }
-
-
-  if (photo_url == "default") {
-    return "https://www.dosomething.org/sites/default/files/JenBugError.png";
-  }
-	else {
-	  return photo_url;
-	}
-};
-
 export function extractPostsFromSignups(signups) {
   const posts = keyBy(flatMap(signups, signup => {
     return signup.posts;
@@ -62,26 +40,6 @@ export function extractSignupsFromPosts(posts) {
 
   return signups;
 }
-
-export function getEditedImageUrl(photoProp) {
-  const edited_file_name = `edited_${photoProp.id}.jpeg`;
-  var url_parts;
-
-  // Sometimes we get the url right on the post and sometimes it is nested under
-  // media (in cases where it goes through the PostTransformer), so handle both cases
-  if ('url' in photoProp) {
-    url_parts = photoProp['url'].split("/");
-    url_parts.pop();
-    url_parts.push(edited_file_name);
-
-    return url_parts.join('/');
-  }
-  else if ('media' in photoProp) {
-    return photoProp['media']['url'];
-  }
-
-  return null;
-};
 
 /**
  * Returns a readable display name and age (if provided).
@@ -298,3 +256,77 @@ function stripExifData(image, dv = null) {
   // We can just create a blob with the original data.
   return new Blob([dataView], { type: 'image/jpeg' });
 }
+
+// DEPRECIATED: Uses getImageUrlFromPost() instead.
+export function getImageUrlFromProp(photoProp) {
+  let photo_url;
+
+  // Sometimes we get the url right on the post and sometimes it is nested under
+  // media (in cases where it goes through the PostTransformer), so handle both cases
+  // @TODO: make sure everything goes through a transformer so we don't need this
+  if ('url' in photoProp) {
+    photo_url = photoProp['url'];
+  }
+  else if ('media' in photoProp) {
+    photo_url = photoProp['media']['original_image_url'];
+  }
+
+
+  if (photo_url == "default") {
+    return "https://www.dosomething.org/sites/default/files/JenBugError.png";
+  }
+  else {
+    return photo_url;
+  }
+};
+
+// DEPRECIATED: Uses getImageUrlFromPost() instead.
+export function getEditedImageUrl(photoProp) {
+  const edited_file_name = `edited_${photoProp.id}.jpeg`;
+  var url_parts;
+
+  // Sometimes we get the url right on the post and sometimes it is nested under
+  // media (in cases where it goes through the PostTransformer), so handle both cases
+  if ('url' in photoProp) {
+    url_parts = photoProp['url'].split("/");
+    url_parts.pop();
+    url_parts.push(edited_file_name);
+
+    return url_parts.join('/');
+  }
+  else if ('media' in photoProp) {
+    return photoProp['media']['url'];
+  }
+
+  return null;
+};
+
+/*
+ * Given a transformed post object, return the url based on type.
+ *
+ * @param  {Object} post
+ * @return {String|null}
+ * @todo Eventually deal with other file types.
+ */
+export function getImageUrlFromPost(post, type) {
+  let url = null;
+  const defaultPhotoUrl = "https://www.dosomething.org/sites/default/files/JenBugError.png";
+
+  // Make sure media property is included in the Post.
+  if (! ('media' in post)) {
+    return url;
+  }
+
+  switch(type) {
+    case 'original':
+      url = post['media']['original_image_url'];
+      break;
+    case 'edited':
+      url = post['media']['url'];
+      break;
+    default:
+      break;
+  }
+
+  return url === "default" ?  defaultPhotoUrl : url;
+};
