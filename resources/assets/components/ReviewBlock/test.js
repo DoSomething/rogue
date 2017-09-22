@@ -60,9 +60,6 @@ test('it renders an active Reject button when clicked', () => {
   expect(component.find('.rejected').first().hasClass('button -rejected rejected'));
 });
 
-//@TODO: how to do the delete button?
-// By testing the popup?
-
 test('it renders an active tag button when clicked', () => {
   const post = {
     status: 'pending',
