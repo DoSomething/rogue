@@ -20,24 +20,46 @@
 
     .admin-tools__rotate {
       float: right;
+
+      .spinner {
+        background-size: 20px;
+      }
     }
   }
 
   .post__image {
-    width: 300px;
-    height: 300px;
+    // .spinner {
+    //   width: 15px;
+    //   height: 15px;
+    // }
+    // // width: 250px;
+    // // height: 250px;
+    // background-color: grey;
+    // display: table;
+
+    // // img, .is-loading {
+    // //   display: table-cell;
+    // //   vertical-align: middle;
+    // // }
+
+    // // .is-loading {
+    // //   // display: table;
+    // //   width: 300px;
+    // //   height: 300px;
+    // //   // height: 300px;
+
+    // //   // .spinner {
+    // //   //   display: table-cell;
+    // //   //   vertical-align: middle;
+    // //   // }
+    // // }
+
+    // // img {
+    // //   width: 300px;
+    // //   height: auto;
+    // // }
   }
 
-  .images .is-loading {
-    display: table;
-    width: 300px;
-    height: 300px;
-
-    .spinner {
-      display: table-cell;
-      vertical-align: middle;
-    }
-  }
 
   .button.-tertiary {
     padding: 0px;
