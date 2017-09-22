@@ -83,7 +83,7 @@ class Post extends React.Component {
                   <a className="button -tertiary rotate" onClick={(event) => this.handleClick(event)}></a>
                 }
               </div>
-            }
+            : null}
           </div>
           {this.props.showSiblings ?
             <ul className="gallery -duo">
