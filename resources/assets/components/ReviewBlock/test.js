@@ -4,7 +4,19 @@ import toJson from 'enzyme-to-json';
 
 import ReviewBlock from './index';
 
-test('it renders the review block', () => {
+test('it renders accepted, rejected, and delete buttons', () => {
+    const post = {
+      status: 'pending',
+    };
+
+  const component = shallow(
+    <ReviewBlock post={post} />
+  );
+
+  expect(toJson(component)).toMatchSnapshot();
+});
+
+test('it renders the review block with tags', () => {
     const post = {
       status: 'accepted',
     };
