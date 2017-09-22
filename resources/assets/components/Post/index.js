@@ -75,13 +75,15 @@ class Post extends React.Component {
               <br />
               <a href={getImageUrlFromPost(post, 'edited')} target="_blank">Edited Photo</a>
             </div>
-            <div className="admin-tools__rotate">
-              {this.state.loading ?
-                <div className="spinner"></div>
-              :
-                <a className="button -tertiary rotate" onClick={(event) => this.handleClick(event)}></a>
-              }
-            </div>
+            {this.props.rotate ?
+              <div className="admin-tools__rotate">
+                {this.state.loading ?
+                  <div className="spinner"></div>
+                :
+                  <a className="button -tertiary rotate" onClick={(event) => this.handleClick(event)}></a>
+                }
+              </div>
+            }
           </div>
           {this.props.showSiblings ?
             <ul className="gallery -duo">
