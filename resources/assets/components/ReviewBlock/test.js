@@ -41,7 +41,7 @@ test('it renders an active Accept button when clicked', () => {
   component.find('.accepted').first().simulate('click');
 
   // It should now show the active "Accept" button.
-  expect(component.find('.accepted').first().hasClass('button -accepted accepted'));
+  expect(component.find('.accepted').first().hasClass('button -outlined-button -accepted is-selected'));
 });
 
 test('it renders an active Reject button when clicked', () => {
@@ -57,7 +57,7 @@ test('it renders an active Reject button when clicked', () => {
   component.find('.rejected').first().simulate('click');
 
   // It should now show the active "Reject" button.
-  expect(component.find('.rejected').first().hasClass('button -rejected rejected'));
+  expect(component.find('.rejected').first().hasClass('button -outlined-button -rejected is-selected'));
 });
 
 test('it renders an active tag button when clicked', () => {
