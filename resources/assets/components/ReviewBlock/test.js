@@ -63,7 +63,19 @@ test('it renders an active Reject button when clicked', () => {
 //@TODO: how to do the delete button?
 // By testing the popup?
 
-// test('it renders an active tag button when clicked', () => {
+test('it renders an active tag button when clicked', () => {
+  const post = {
+    status: 'pending',
+  };
 
-// });
+  const component = shallow(
+    <ReviewBlock post={post} />
+  );
+
+  // Click a tag button.
+  component.find('.tag').first().simulate('click');
+
+  // It should now show the active "Reject" button.
+  expect(component.find('.tag').first().hasClass('is-active'));
+});
 
