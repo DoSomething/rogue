@@ -6,7 +6,11 @@ const UserInformation = (props) => (
   <div>
     {props.user ?
       <div className="container -padded">
-        <h2 className="heading">{displayUserInfo(props.user.first_name, props.user.last_name, props.user.birthdate)}</h2>
+        {props.linkSignup ?
+          <h2 className="heading"><a href={`/signups/${props.linkSignup}`}>{displayUserInfo(props.user.first_name, props.user.last_name, props.user.birthdate)}</a></h2>
+        :
+          <h2 className="heading">{displayUserInfo(props.user.first_name, props.user.last_name, props.user.birthdate)}</h2>
+        }
         <p>
           {props.user.email ? <span>{props.user.email}<br/></span>: null}
           {props.user.mobile ? <span>{props.user.mobile}<br/></span> : null }
