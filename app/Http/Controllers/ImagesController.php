@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers;
 
+use Carbon\Carbon;
 use Rogue\Models\Post;
 use Rogue\Services\AWS;
 use Illuminate\Http\Request;
@@ -99,8 +100,8 @@ class ImagesController extends Controller
         $editedImage = $this->aws->storeImageData((string) $editedImage, 'edited_' . $post->id);
 
         return response()->json([
-            'url' => $editedImage,
-            'original_image_url' => $originalImage,
+            'url' => $editedImage . '?time='. Carbon::now()->timestamp,
+            'original_image_url' => $originalImage . '?time='. Carbon::now()->timestamp,
         ]);
     }
 
