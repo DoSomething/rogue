@@ -80,7 +80,7 @@ class Post extends React.Component {
                 {this.state.loading ?
                   <div className="spinner"></div>
                 :
-                  <a className="button -tertiary rotate" onClick={(event) => this.handleClick(event)}></a>
+                  <a className="button -tertiary rotate" onClick={this.handleClick}></a>
                 }
               </div>
             : null}

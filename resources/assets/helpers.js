@@ -257,7 +257,7 @@ function stripExifData(image, dv = null) {
   return new Blob([dataView], { type: 'image/jpeg' });
 }
 
-// DEPRECIATED: Uses getImageUrlFromPost() instead.
+// DEPRECATED: Uses getImageUrlFromPost() instead.
 export function getImageUrlFromProp(photoProp) {
   let photo_url;
 
@@ -280,7 +280,7 @@ export function getImageUrlFromProp(photoProp) {
   }
 };
 
-// DEPRECIATED: Uses getImageUrlFromPost() instead.
+// DEPRECATED: Uses getImageUrlFromPost() instead.
 export function getEditedImageUrl(photoProp) {
   const edited_file_name = `edited_${photoProp.id}.jpeg`;
   var url_parts;
