@@ -20,22 +20,10 @@
 
     .admin-tools__rotate {
       float: right;
-    }
-  }
 
-  .post__image {
-    width: 300px;
-    height: 300px;
-  }
-
-  .images .is-loading {
-    display: table;
-    width: 300px;
-    height: 300px;
-
-    .spinner {
-      display: table-cell;
-      vertical-align: middle;
+      .spinner {
+        background-size: 20px;
+      }
     }
   }
 

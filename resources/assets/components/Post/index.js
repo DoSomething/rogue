@@ -1,7 +1,7 @@
 import React from 'react';
 import { remove, map, clone } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
-import { getImageUrlFromProp, getEditedImageUrl, displayCaption } from '../../helpers';
+import { getImageUrlFromPost, getEditedImageUrl, displayCaption } from '../../helpers';
 
 import './post.scss';
 
@@ -20,37 +20,21 @@ class Post extends React.Component {
 
     this.state = {
       loading: false,
-      post: this.props.post,
     };
 
     this.api = new RestApiClient;
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.post !== this.state.post) {
-      this.setState({ post: nextProps.post });
-    }
-  }
-
-  rotate(event) {
+  handleClick(event) {
     event.preventDefault();
-    this.setState({loading: true});
 
-    const post = this.props.post;
+    this.setState({ loading: true });
 
-    this.api.post(`images/${post.id}?rotate=90`)
-    .then((json) => {
-      this.setState((prevState) => {
-        const newState = {...prevState};
-
-        newState.loading = false;
-        // Add a cache-busting string to the end of the image url
-        // so that it changes and triggers a re-render.
-        newState.post.media.url = `${json.url}?time=${new Date()}`;
-
-        return newState;
+    this.props.rotate(this.props.post.id)
+      .then(() => {
+        this.setState({ 'loading' : false });
       });
-    });
   }
 
   getOtherPosts(post) {
@@ -72,7 +56,7 @@ class Post extends React.Component {
   }
 
   render() {
-    const post = this.state.post;
+    const post = this.props.post;
     const caption = displayCaption(post);
     const user = this.props.user ? this.props.user : null;
     const signup = this.props.signup;
@@ -82,22 +66,24 @@ class Post extends React.Component {
       <div className="post container__row">
         {/* Post Images */}
         <div className="container__block -third images">
-          {this.state.loading ?
-            <div className="is-loading">
-              <div className="spinner"></div>
-            </div>
-          :
-            <img className="post__image" src={getEditedImageUrl(post)}/>
-          }
+          <div className="post__image">
+            <img src={getImageUrlFromPost(post, 'edited')}/>
+          </div>
           <div className="admin-tools">
             <div className="admin-tools__links">
-              <a href={getImageUrlFromProp(post)} target="_blank">Original Photo</a>
+              <a href={getImageUrlFromPost(post, 'original')} target="_blank">Original Photo</a>
               <br />
-              <a href={getEditedImageUrl(post)} target="_blank">Edited Photo</a>
+              <a href={getImageUrlFromPost(post, 'edited')} target="_blank">Edited Photo</a>
             </div>
-            <div className="admin-tools__rotate">
-              <a className="button -tertiary rotate" onClick={(event) => this.rotate(event) }></a>
-            </div>
+            {this.props.rotate ?
+              <div className="admin-tools__rotate">
+                {this.state.loading ?
+                  <div className="spinner"></div>
+                :
+                  <a className="button -tertiary rotate" onClick={this.handleClick}></a>
+                }
+              </div>
+            : null}
           </div>
           {this.props.showSiblings ?
             <ul className="gallery -duo">

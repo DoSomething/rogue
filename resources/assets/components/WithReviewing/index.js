@@ -20,6 +20,7 @@ const reviewComponent = (Component, data) => {
       this.hideHistory = this.hideHistory.bind(this);
       this.deletePost = this.deletePost.bind(this);
       this.setNewPosts = this.setNewPosts.bind(this);
+      this.rotate = this.rotate.bind(this);
     }
 
     // Loads initial posts into state.
@@ -190,6 +191,26 @@ const reviewComponent = (Component, data) => {
       }
     }
 
+    // Rotate a Post Image.
+    rotate(postId) {
+      const post = this.state.posts[postId];
+
+      let response = this.api.post(`images/${postId}?rotate=90`);
+
+      return response.then((json) => {
+        this.setState((prevState) => {
+          const newState = {...prevState};
+
+          // Add a cache-busting string to the end of the image url
+          // so that it changes and triggers a re-render.
+          newState.posts[postId].media.url = json.url;
+
+          return newState;
+        });
+      });
+    }
+
+
     render() {
       const methods = {
         updatePost: this.updatePost,
@@ -199,6 +220,7 @@ const reviewComponent = (Component, data) => {
         hideHistory: this.hideHistory,
         deletePost: this.deletePost,
         setNewPosts: this.setNewPosts,
+        rotate: this.rotate,
       };
 
       // Pass in the state from this HoC to trigger rendering down the DOM
