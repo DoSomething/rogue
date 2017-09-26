@@ -29,7 +29,7 @@ class UserOverview extends React.Component {
       filter: {
         northstar_id: id,
       },
-      orderBy: 'desc',
+      orderByPosts: 'desc',
     }).then(json => this.setState({
       signups: json.data
     }, () => {
