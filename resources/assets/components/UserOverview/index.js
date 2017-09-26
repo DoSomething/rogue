@@ -30,6 +30,7 @@ class UserOverview extends React.Component {
         northstar_id: id,
       },
       orderByPosts: 'desc',
+      limit: 100,
     }).then(json => this.setState({
       signups: json.data
     }, () => {
