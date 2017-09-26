@@ -16,7 +16,20 @@ class SignupCard extends React.Component {
     const posts = signup.posts.data.slice(0, gallerySize).map((post, index) => {
       return <PostTile key={index} details={post} />;
     });
+
     const signupUrl = `/signups/${signup.signup_id}`;
+
+    var campaign_run_start_date = null;
+
+    for (var key in campaign.campaign_runs.current) {
+      if (campaign.campaign_runs.current[key]['id'] == signup.campaign_run_id) {
+        const date = campaign.campaign_runs.current[key]['start_date'];
+
+        if (date) {
+          campaign_run_start_date = campaign.campaign_runs.current[key]['start_date'].split(" ")[0];
+        }
+      }
+    }
 
     return (
         <article className="container__row signup-card">
@@ -24,7 +37,11 @@ class SignupCard extends React.Component {
             <div className="container__block -half">
               <div className="container__row">
                 <h2 className="heading">{campaign ? campaign.title : signup.campaign_id}</h2>
+                <h4 className="heading">Campaign ID: {signup.campaign_id}</h4>
                 <h4 className="heading">Campaign Run ID: {signup.campaign_run_id}</h4>
+                { campaign_run_start_date ?
+                  <h4 className="heading">Campaign Run Start Date: {campaign_run_start_date}</h4>
+                :null }
               </div>
               <div className="container__row">
                 <h4 className="heading">Why Statement</h4>
