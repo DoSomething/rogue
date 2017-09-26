@@ -45,12 +45,10 @@ class SignupService
     {
         $signup = $this->signup->create($data);
 
-        // If details are included, save them
-        // Currently we only add details when the signup is created so no more can be added later
+        // Save details if included
         if (isset($data['details'])) {
             $details = new SignupDetail([
                 'signup_id' => $signup->id,
-                'details' => $data['details'],
             ]);
 
             $details->save();

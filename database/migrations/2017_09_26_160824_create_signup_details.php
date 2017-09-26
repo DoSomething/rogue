@@ -17,7 +17,6 @@ class CreateSignupDetails extends Migration
             $table->increments('id')->comment('Primary key.');
             $table->integer('signup_id')->unsigned()->index()->comment('The signup that owns these details.');
             $table->foreign('signup_id')->references('id')->on('signups')->onDelete('cascade');
-            $table->string('details')->comment('Details about the signup.');
             $table->timestamps();
         });
     }
