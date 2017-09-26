@@ -20,6 +20,8 @@ POST /api/v2/signups
     The reason why the user participated.
   - **source**: (string) optional (for migration purposes, there are signups on prod with no source).
     The source of the signup.
+  - **details**: (string) optional
+    If true, adds the signup to the `signup_details` table.
   - **created_at**: (string) optional.
     `Y-m-d H:i:s` format. When the signup was created.
   - **updated_at**: (string) optional.

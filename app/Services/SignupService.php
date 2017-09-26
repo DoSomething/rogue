@@ -46,7 +46,7 @@ class SignupService
         $signup = $this->signup->create($data);
 
         // Save details if included
-        if (isset($data['details'])) {
+        if (isset($data['details']) && $data['details'] !== "false") {
             $details = new SignupDetail([
                 'signup_id' => $signup->id,
             ]);
