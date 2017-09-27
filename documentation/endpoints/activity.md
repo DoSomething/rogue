@@ -19,10 +19,9 @@ GET /api/v2/activity
 - **include** _(integer)_
   - Include additional related records in the response: `user`
   - e.g. `/activity?include=user`
-- **orderByPosts** _(string)_
-  - Determines order the results are returned, based on the post's created_at timestamp.
+- **orderBy** _(string)_
+  - Determines order the results are returned, based on the signups's created_at timestamp.
   - If 'desc' is not passed through, defaults to return results by signup's created_at by ascending order. 
-  - Otherwise, results will be returned with the last created post first. 
   - e.g. `/activity'?orderByPost=desc`
 - **filter[updated_at]** _(timestamp)_
   - Return records that have been updated after the given `updated_at` value. 

@@ -27,7 +27,7 @@ class ActivityController extends ApiController
     {
         // Create an empty Signup query and eager-load posts, which we
         // can either filter or paginate to retrieve all signup records.
-        if ($request->query('orderByPost') === 'desc') {
+        if ($request->query('orderBy') === 'desc') {
             $query = $this->newQuery(Signup::class)->with('posts')->orderBy('created_at', 'desc');
         } else {
             $query = $this->newQuery(Signup::class)->with('posts');
@@ -37,12 +37,13 @@ class ActivityController extends ApiController
 
         $query = $this->filter($query, $filters, Signup::$indexes);
 
-        // if ($request->query('limit') === 'all') {
+        if (($request->query('limit') === 'all')) {
+            $signups = Signup::where([
+                'northstar_id' => $filters['northstar_id'],
+            ])->with('posts')->orderBy('created_at', 'desc')->get();
 
-        //     dd($request->query['parameters']);
-        //     // unset($request->query('limit'));
-        //     return $this->collection($query, $request);
-        // }
+            return $this->collection($signups);
+        }
 
         return $this->paginatedCollection($query, $request);
     }

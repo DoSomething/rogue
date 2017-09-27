@@ -29,8 +29,8 @@ class UserOverview extends React.Component {
       filter: {
         northstar_id: id,
       },
-      orderByPosts: 'desc',
-      limit: 100,
+      orderBy: 'desc',
+      limit: 'all',
     }).then(json => this.setState({
       signups: json.data
     }, () => {
