@@ -21,7 +21,7 @@ POST /api/v2/signups
   - **source**: (string) optional (for migration purposes, there are signups on prod with no source).
     The source of the signup.
   - **details**: (string) optional
-    If true, adds the signup to the `signup_details` table.
+    Details to be added to the "details" column on the signup, such as signed up to receive affiliate messaging.
   - **created_at**: (string) optional.
     `Y-m-d H:i:s` format. When the signup was created.
   - **updated_at**: (string) optional.
