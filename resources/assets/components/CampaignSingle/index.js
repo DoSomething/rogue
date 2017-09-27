@@ -104,7 +104,7 @@ class CampaignSingle extends React.Component {
 
     this.api.get('/posts', {
       filter: filters,
-      include: 'signup,siblings',
+      include: ['signup','siblings'],
     })
     .then(json => {
       this.setState({loadingNewPosts: false });
