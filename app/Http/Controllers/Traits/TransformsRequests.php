@@ -117,15 +117,12 @@ trait TransformsRequests
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
 
         $includes = null;
+
         if ($request->query('include')) {
-            // dd($request->query('include'));
             if (is_array($request->query('include'))) {
-                // dump('array');
                 $includes = $request->query('include');
             } else {
-                // dump('string');
                 $includes = explode(',', $request->query('include'));
-                // dump($includes);
             }
         }
 
