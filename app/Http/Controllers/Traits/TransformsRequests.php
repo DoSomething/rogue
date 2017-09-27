@@ -118,7 +118,15 @@ trait TransformsRequests
 
         $includes = null;
         if ($request->query('include')) {
-            $includes = explode(',', $request->query('include'));
+            // dd($request->query('include'));
+            if (is_array($request->query('include'))) {
+                // dump('array');
+                $includes = $request->query('include');
+            } else {
+                // dump('string');
+                $includes = explode(',', $request->query('include'));
+                // dump($includes);
+            }
         }
 
         return $this->transform($resource, $code, [], $includes);
