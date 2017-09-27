@@ -27,6 +27,7 @@ class SignupApiTest extends BrowserKitTestCase
             'campaign_id'      => $campaignId,
             'campaign_run_id'  => $campaignRunId,
             'source'           => 'the-fox-den',
+            'details'          => 'affiliate-messaging',
         ]);
 
         // Make sure we get the 201 Created response
@@ -45,6 +46,7 @@ class SignupApiTest extends BrowserKitTestCase
             'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
+            'details' => 'affiliate-messaging',
         ]);
     }
 }

@@ -24,6 +24,7 @@ class SignupRepository
         $signup->quantity_pending = isset($data['quantity_pending']) ? $data['quantity_pending'] : null;
         $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : null;
         $signup->source = isset($data['source']) ? $data['source'] : null;
+        $signup->details = isset($data['details']) ? $data['details'] : null;
 
         if (isset($data['created_at'])) {
             // Manually set created and updated times for the signup

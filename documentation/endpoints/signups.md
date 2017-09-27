@@ -20,6 +20,8 @@ POST /api/v2/signups
     The reason why the user participated.
   - **source**: (string) optional (for migration purposes, there are signups on prod with no source).
     The source of the signup.
+  - **details**: (string) optional
+    Details to be added to the "details" column on the signup, such as signed up to receive affiliate messaging.
   - **created_at**: (string) optional.
     `Y-m-d H:i:s` format. When the signup was created.
   - **updated_at**: (string) optional.
@@ -129,6 +131,7 @@ Example response:
     "quantity_pending": "200",
     "why_participated": "bcuz I luv endpointz",
     "signup_source": "phoenix-web",
+    "details": "affiliate-messaging",
     "created_at": "2017-01-19T19:11:14+0000",
     "updated_at": "2017-01-19T19:11:14+0000",
     "posts": {
