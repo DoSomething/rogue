@@ -21,7 +21,7 @@ class SignupCard extends React.Component {
 
     var campaign_run_start_date = null;
 
-    for (var key in campaign.campaign_runs.current) {
+    for (let key in campaign.campaign_runs.current) {
       if (campaign.campaign_runs.current[key]['id'] == signup.campaign_run_id) {
         const date = campaign.campaign_runs.current[key]['start_date'];
 
