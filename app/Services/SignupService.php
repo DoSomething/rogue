@@ -3,7 +3,6 @@
 namespace Rogue\Services;
 
 use DoSomething\Gateway\Blink;
-use Rogue\Models\SignupDetail;
 use Rogue\Repositories\SignupRepository;
 
 class SignupService
@@ -44,15 +43,6 @@ class SignupService
     public function create($data, $transactionId)
     {
         $signup = $this->signup->create($data);
-
-        // Save details if included
-        if (isset($data['details']) && $data['details'] === 'true') {
-            $details = new SignupDetail([
-                'signup_id' => $signup->id,
-            ]);
-
-            $details->save();
-        }
 
         // Save the new signup in Customer.io, via Blink.
         if (config('features.blink')) {
