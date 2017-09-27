@@ -36,6 +36,7 @@ Example Response:
       "quantity": null,
       "why_participated": "because i love to help!",
       "signup_source": "phoenix-web",
+      "details": "affiliate-messaging",
       "created_at": "2017-01-20T20:26:56+0000",
       "updated_at": "2017-01-20T20:26:56+0000",
       "posts": {

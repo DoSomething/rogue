@@ -131,6 +131,7 @@ Example response:
     "quantity_pending": "200",
     "why_participated": "bcuz I luv endpointz",
     "signup_source": "phoenix-web",
+    "details": "affiliate-messaging",
     "created_at": "2017-01-19T19:11:14+0000",
     "updated_at": "2017-01-19T19:11:14+0000",
     "posts": {
