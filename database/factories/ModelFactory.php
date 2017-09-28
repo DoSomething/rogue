@@ -46,7 +46,6 @@ $factory->defineAs(Post::class, 'rejected', function () use ($factory) {
 $factory->define(Signup::class, function (Generator $faker) {
     $faker->addProvider(new FakerNorthstarId($faker));
     $faker->addProvider(new FakerCampaignId($faker));
-    $details_options = [null, null, 'fun-affiliate-stuff', 'i-say-the-tails'];
 
     return [
         'northstar_id' => $faker->northstar_id,
@@ -55,7 +54,7 @@ $factory->define(Signup::class, function (Generator $faker) {
         'quantity_pending' => $faker->randomNumber(4),
         'why_participated' => $faker->sentence(),
         'source' => 'phoenix-web',
-        'details' => $details_options[rand(0, 3)],
+        'details' => $faker->randomElement([null, 'fun-affiliate-stuff', 'i-say-the-tails']),
     ];
 });
 
