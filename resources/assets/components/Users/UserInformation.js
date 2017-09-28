@@ -4,7 +4,7 @@ import { displayUserInfo, displayCityState } from '../../helpers';
 
 const UserInformation = (props) => (
   <div>
-    {props.user ?
+    {props.user.length ?
       <div className="container -padded">
         {props.linkSignup ?
           <h2 className="heading"><a href={`/signups/${props.linkSignup}`}>{displayUserInfo(props.user.first_name, props.user.last_name, props.user.birthdate)}</a></h2>
@@ -17,8 +17,9 @@ const UserInformation = (props) => (
           {displayCityState(props.user.addr_city, props.user.addr_state) ? <span>{displayCityState(props.user.addr_city, props.user.addr_state) }<br/></span> : null }
         </p>
       </div>
-    : null }
-
+    :
+      <h2 className="heading">User Not Found</h2>
+    }
     {props.children}
   </div>
 );
