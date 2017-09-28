@@ -12,6 +12,7 @@ GET /api/v2/activity
   - You can filter by more than one value for a column, e.g. `/activity?filter[id]=121,122`
 - **limit** _(default is 20)_
   - Set the number of records to return in a single response.
+  - If limit is set to 'all' (e.g. `limit='all'`), results will not be paginated.
   - e.g. `/activity?limit=35`
 - **page** _(integer)_
   - For pagination, specify page of activity to return in the response.
