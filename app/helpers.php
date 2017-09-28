@@ -78,3 +78,16 @@ function multipleValueQuery($query, $queryString, $filter)
         $query->where($filter, $values[0], 'and');
     }
 }
+
+function getAgeFromBirthdate($birthdate)
+{
+    // Make DateTime for right now
+    $now = new DateTime('now');
+
+    // Make DateTime for birthday
+    $birthday = new DateTime();
+    $birthday->setTimestamp(strtotime($birthdate));
+
+    // Calculate the difference and return the years
+    return $now->diff($birthday)->y;
+}
