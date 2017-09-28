@@ -38,10 +38,7 @@ class ActivityController extends ApiController
         $query = $this->filter($query, $filters, Signup::$indexes);
 
         if (($request->query('limit') === 'all')) {
-            $signups = Signup::where([
-                'northstar_id' => $filters['northstar_id'],
-            ])->with('posts')->orderBy('created_at', 'desc')->get();
-
+            $signups = $query->get();
             return $this->collection($signups);
         }
 
