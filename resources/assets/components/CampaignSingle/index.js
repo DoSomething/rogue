@@ -170,7 +170,7 @@ class CampaignSingle extends React.Component {
             <HistoryModal
               id={this.props.historyModalId}
               onUpdate={this.props.updateQuantity}
-              onClose={e => this.hideHistory(e)}
+              onClose={e => this.props.hideHistory(e)}
               campaign={campaign}
               signup={signups[posts[this.props.historyModalId]['signup_id']]}
             />
