@@ -39,6 +39,7 @@ class ActivityController extends ApiController
 
         if (($request->query('limit') === 'all')) {
             $signups = $query->get();
+
             return $this->collection($signups);
         }
 
