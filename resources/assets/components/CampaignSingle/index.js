@@ -122,6 +122,7 @@ class CampaignSingle extends React.Component {
       values: tags,
       type: 'tags',
     };
+    const downloads = this.props.export ? true : false;
 
     const statusFilters = {
       values: {
@@ -135,7 +136,7 @@ class CampaignSingle extends React.Component {
 
     return (
       <div className="container">
-        <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
+        <StatusCounter postTotals={this.props.post_totals} campaign={campaign} download={downloads}/>
 
         <FilterBar onSubmit={this.filterPosts}>
           <DropdownFilter options={statusFilters} header={'Post Status'}/>

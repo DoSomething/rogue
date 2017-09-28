@@ -7,7 +7,15 @@ export default (props) => (
           <li>
               <span className="count">{props.postTotals.pending_count}</span>
               <span className="status">Pending</span>
-              <a className="button -secondary" href={`/campaigns/${props.campaign.id}/inbox`}>Review</a>
+              <div>
+                <a className="button -secondary" href={`/campaigns/${props.campaign.id}/inbox`}>Review</a>
+              </div>
+              {props.download ?
+                <div>
+                  <a className="button -secondary" href={`/exports/${props.campaign.id}`}>📩 Export</a>
+                </div>
+                : null
+              }
           </li>
           {/* @TODO - add back in when we deal with pagination on the single campaign view
           <li>
