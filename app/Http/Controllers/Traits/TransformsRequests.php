@@ -116,14 +116,10 @@ trait TransformsRequests
 
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
 
-        $includes = null;
+        $includes = $request->query('include');
 
-        if ($request->query('include')) {
-            if (is_array($request->query('include'))) {
-                $includes = $request->query('include');
-            } else {
-                $includes = explode(',', $request->query('include'));
-            }
+        if (is_string($includes)) {
+            $includes = explode(',', $request->query('include'));
         }
 
         return $this->transform($resource, $code, [], $includes);
