@@ -85,7 +85,7 @@ class CampaignsController extends Controller
             ->with('state', [
                 'campaign' => $campaign,
                 'initial_posts' => 'accepted',
-                'export' => !$export->isEmpty(),
+                'export' => ! $export->isEmpty(),
                 'post_totals' => [
                     'accepted_count' => $totals->accepted_count,
                     'pending_count' => $totals->pending_count,
