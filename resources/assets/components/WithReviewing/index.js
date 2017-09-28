@@ -42,7 +42,7 @@ const reviewComponent = (Component, data) => {
           campaign_id: campaignId,
         },
         include: ['signup','siblings'],
-      })//.then(json => console.log(json));
+      })
       .then(json => this.setState({
         campaign: data.campaign,
         posts: keyBy(json.data, 'id'),
