@@ -83,6 +83,8 @@ class SignupTransformer extends TransformerAbstract
         $registrar = app(Registrar::class);
         $northstar_id = $signup->northstar_id;
 
-        return $this->item($registrar->find($northstar_id), new UserTransformer);
+        $user = $registrar->find($northstar_id);
+
+        return $user ? $this->item($user, new UserTransformer) : null;
     }
 }
