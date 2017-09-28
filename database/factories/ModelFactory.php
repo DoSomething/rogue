@@ -54,6 +54,7 @@ $factory->define(Signup::class, function (Generator $faker) {
         'quantity_pending' => $faker->randomNumber(4),
         'why_participated' => $faker->sentence(),
         'source' => 'phoenix-web',
+        'details' => $faker->randomElement([null, 'fun-affiliate-stuff', 'i-say-the-tails']),
     ];
 });
 
