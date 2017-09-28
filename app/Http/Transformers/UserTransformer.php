@@ -14,12 +14,16 @@ class UserTransformer extends TransformerAbstract
      */
     public function transform($user)
     {
-        return [
-            'first_name' => $user->first_name,
-            'last_name' => $user->last_name,
-            'birthdate' => $user->birthdate,
-            'email' => $user->email,
-            'mobile' => $user->mobile,
-        ];
+        if ($user) {
+            return [
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'birthdate' => $user->birthdate,
+                'email' => $user->email,
+                'mobile' => $user->mobile,
+            ];
+        }
+
+        return [];
     }
 }
