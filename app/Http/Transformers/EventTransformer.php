@@ -16,9 +16,9 @@ class EventTransformer extends TransformerAbstract
     public function transform(Event $event)
     {
         $content = [];
-        $contentString = substr($event->content,1,-1);
+        $contentString = substr($event->content, 1, -1);
         $contentStringWithNoQuotations = str_replace('"', '', $contentString);
-        $contentArray = explode(",", $contentStringWithNoQuotations);
+        $contentArray = explode(',', $contentStringWithNoQuotations);
 
         foreach ($contentArray as $attribute) {
             $attributeParts = explode(':', $attribute);
