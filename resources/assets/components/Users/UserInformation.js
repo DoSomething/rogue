@@ -1,10 +1,10 @@
 import React from 'react';
-import { map } from 'lodash';
+import { map, isEmpty } from 'lodash';
 import { displayUserInfo, displayCityState } from '../../helpers';
 
 const UserInformation = (props) => (
   <div>
-    {props.user.length ?
+    {!isEmpty(props.user) ?
       <div className="container -padded">
         {props.linkSignup ?
           <h2 className="heading"><a href={`/signups/${props.linkSignup}`}>{displayUserInfo(props.user.first_name, props.user.last_name, props.user.birthdate)}</a></h2>
