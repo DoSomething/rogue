@@ -6,6 +6,26 @@ import { RestApiClient } from '@dosomething/gateway';
 import { extractPostsFromSignups } from '../../helpers';
 
 class SignupCard extends React.Component {
+  /**
+   * Gets the campaign run start date.
+   *
+   * @param {Object} campaignRuns
+   * @param {String} campaignRunId
+   * @return {String}
+   */
+  getCampaignRunStartDate(campaignRuns, campaignRunId) {
+    for (let key in campaignRuns) {
+      if (campaignRuns[key]['id'] == campaignRunId) {
+        const date = campaignRuns[key]['start_date'];
+
+        if (date) {
+          return campaignRuns[key]['start_date'].split(" ")[0];
+        }
+      }
+      return null;
+    }
+  }
+
   render() {
     const signup = this.props.signup;
     const campaign = this.props.campaign;
@@ -19,17 +39,7 @@ class SignupCard extends React.Component {
 
     const signupUrl = `/signups/${signup.signup_id}`;
 
-    var campaign_run_start_date = null;
-
-    for (let key in campaign.campaign_runs.current) {
-      if (campaign.campaign_runs.current[key]['id'] == signup.campaign_run_id) {
-        const date = campaign.campaign_runs.current[key]['start_date'];
-
-        if (date) {
-          campaign_run_start_date = campaign.campaign_runs.current[key]['start_date'].split(" ")[0];
-        }
-      }
-    }
+    const campaignRunStartDate = this.getCampaignRunStartDate(campaign.campaign_runs.current, signup.campaign_run_id);
 
     return (
         <article className="container__row signup-card">
@@ -39,8 +49,8 @@ class SignupCard extends React.Component {
                 <h2 className="heading">{campaign ? campaign.title : signup.campaign_id}</h2>
                 <h4 className="heading">Campaign ID: {signup.campaign_id}</h4>
                 <h4 className="heading">Campaign Run ID: {signup.campaign_run_id}</h4>
-                { campaign_run_start_date ?
-                  <h4 className="heading">Campaign Run Start Date: {campaign_run_start_date}</h4>
+                { campaignRunStartDate ?
+                  <h4 className="heading">Campaign Run Start Date: {campaignRunStartDate}</h4>
                 :null }
               </div>
               <div className="container__row">
