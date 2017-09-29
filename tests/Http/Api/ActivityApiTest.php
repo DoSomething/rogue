@@ -39,11 +39,12 @@ class ActivityApiTest extends BrowserKitTestCase
                 ],
             ],
             'meta' => [
-                'cursor' => [
-                    'current',
-                    'prev',
-                    'next',
+                'pagination' => [
+                    'total',
                     'count',
+                    'per_page',
+                    'total_pages',
+                    'links',
                 ],
             ],
         ]);
@@ -64,9 +65,8 @@ class ActivityApiTest extends BrowserKitTestCase
 
         $response = $this->decodeResponseJson();
         $this->assertCount(8, $response['data']);
-        $this->assertNotEmpty($response['meta']['cursor']['next']);
-        $this->assertEquals(8, $response['meta']['cursor']['count']);
-        $this->assertEquals(1, $response['meta']['cursor']['current']);
+        $this->assertNotEmpty($response['meta']['pagination']['links']['next']);
+        $this->assertEquals(1, $response['meta']['pagination']['current_page']);
     }
 
     /**
@@ -109,8 +109,8 @@ class ActivityApiTest extends BrowserKitTestCase
                 ],
             ],
             'meta' => [
-                'cursor' => [
-                    'current' => 1,
+                'pagination' => [
+                    'current_page' => 1,
                     'count' => 3,
                 ],
             ],
@@ -223,6 +223,45 @@ class ActivityApiTest extends BrowserKitTestCase
             'data' => [
                 [
                     'signup_id' => $secondSignup->id,
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Test for retrieving activity using simplePagination
+     *
+     * GET /activity?pagination=cursor
+     * @return void
+     */
+    public function testActivityIndexWithFastPagination()
+    {
+        factory(Signup::class, 10)->create();
+
+        $this->get('api/v2/activity?pagination=cursor');
+
+        $this->assertResponseStatus(200);
+        $this->seeJsonStructure([
+            'data' => [
+                '*' => [
+                    'signup_id',
+                    'northstar_id',
+                    'campaign_id',
+                    'campaign_run_id',
+                    'quantity',
+                    'why_participated',
+                    'signup_source',
+                    'created_at',
+                    'updated_at',
+                    'posts' => [],
+                ],
+            ],
+            'meta' => [
+                'cursor' => [
+                    'current',
+                    'prev',
+                    'next',
+                    'count',
                 ],
             ],
         ]);

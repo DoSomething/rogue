@@ -28,9 +28,8 @@ GET /api/v2/activity
   - Return records that have been updated after the given `updated_at` value. 
   - e.g. `/activity?filter[updated_at]=2017-05-25 20:14:48`
 - **pagination** _(string)_
-  - If set to 'cursor' we use Laravel's `simplePaginate` to paginate the results which will return less meta data on each request, if `null` will use regular pagination.
-  - Note: we default to `cursor` pagination but you could opt out of that by explicity setting this parameter to `null` in your request.
-  - e.g. `/activity'?pagination=cursor`
+  - If set to 'cursor' we use Laravel's `simplePaginate` to paginate the results which will return less meta data on each request, if it is not passed it will use regular pagination.
+  - e.g. `/activity?pagination=cursor`
 
 Example Response:
 
