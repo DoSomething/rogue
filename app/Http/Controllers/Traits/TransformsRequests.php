@@ -99,7 +99,7 @@ trait TransformsRequests
      * @param $query - Eloquent query
      * @return \Illuminate\Http\Response
      */
-    public function paginatedCollection($query, $request, $code = 200, $meta = [], $transformer = null)
+    public function paginatedCollection($query, $request, $code = 200, $meta = [], $transformer = null, $pagination = null)
     {
         if (is_null($transformer)) {
             $transformer = $this->transformer;
@@ -107,7 +107,7 @@ trait TransformsRequests
 
         $pages = (int) $request->query('limit', 20);
 
-        $fastMode = $request->query('pagination') === 'cursor';
+        $fastMode = $request->query('pagination') === 'cursor' || $pagination === 'cursor';
 
         if ($fastMode) {
             $paginator = $query->simplePaginate(min($pages, 100));
@@ -133,16 +133,6 @@ trait TransformsRequests
         } else {
             $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
         }
-        // $paginator = $query->paginate(min($pages, 100));
-
-        // $queryParams = array_diff_key($request->query(), array_flip(['page']));
-        // $paginator->appends($queryParams);
-
-        // $resource = new Collection($paginator->getCollection(), $transformer);
-
-        // $resource->setMeta($meta);
-
-        // $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
 
         $includes = $request->query('include');
 
