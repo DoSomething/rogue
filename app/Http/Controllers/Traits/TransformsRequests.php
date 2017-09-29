@@ -4,9 +4,10 @@ namespace Rogue\Http\Controllers\Traits;
 
 use League\Fractal\Manager;
 use League\Fractal\Resource\Item;
-use League\Fractal\Resource\Collection;
+use League\Fractal\Pagination\Cursor;
 use League\Fractal\Serializer\DataArraySerializer;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
+use League\Fractal\Resource\Collection as FractalCollection;
 
 trait TransformsRequests
 {
@@ -105,16 +106,43 @@ trait TransformsRequests
         }
 
         $pages = (int) $request->query('limit', 20);
-        $paginator = $query->paginate(min($pages, 100));
+
+        $fastMode = $request->query('pagination') === 'cursor';
+
+        if ($fastMode) {
+            $paginator = $query->simplePaginate(min($pages, 100));
+        } else {
+            $paginator = $query->paginate(min($pages, 100));
+        }
 
         $queryParams = array_diff_key($request->query(), array_flip(['page']));
         $paginator->appends($queryParams);
 
-        $resource = new Collection($paginator->getCollection(), $transformer);
-
+        $resource = new FractalCollection($paginator->getCollection(), $transformer);
         $resource->setMeta($meta);
 
-        $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
+        // Attach the right paginator or cursor based on "speed".
+        if ($fastMode) {
+            $cursor = new Cursor(
+                $paginator->currentPage(),
+                $paginator->previousPageUrl(),
+                $paginator->nextPageUrl(),
+                $paginator->count()
+            );
+            $resource->setCursor($cursor);
+        } else {
+            $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
+        }
+        // $paginator = $query->paginate(min($pages, 100));
+
+        // $queryParams = array_diff_key($request->query(), array_flip(['page']));
+        // $paginator->appends($queryParams);
+
+        // $resource = new Collection($paginator->getCollection(), $transformer);
+
+        // $resource->setMeta($meta);
+
+        // $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
 
         $includes = $request->query('include');
 
