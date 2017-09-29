@@ -13,6 +13,15 @@ class Event extends Model
      */
     protected $fillable = ['eventable_id', 'eventable_type', 'content', 'user'];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'content' => 'array',
+    ];
+
     public function eventable()
     {
         return $this->morphTo();
