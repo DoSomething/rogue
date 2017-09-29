@@ -26,13 +26,13 @@ class EventController extends ApiController
     public function index(Request $request)
     {
         $query = $this->newQuery(Event::class);
-
         $filters = $request->query('filter');
 
         if ($filters['signup_id']) {
             $events = $query->where('eventable_id', $filters['signup_id'])->orderBy('created_at', 'desc')->get();
 
             $signupEvents = [];
+
             foreach ($events as $event) {
                 if ($event->eventable_type === "Rogue\Models\Signup") {
                     array_push($signupEvents, $event);
@@ -41,6 +41,7 @@ class EventController extends ApiController
 
             return $this->collection($signupEvents);
         }
+
         return $this->paginatedCollection($query, $request);
     }
 }
