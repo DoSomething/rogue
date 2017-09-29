@@ -14,6 +14,18 @@ class Event extends Model
     protected $fillable = ['eventable_id', 'eventable_type', 'content', 'user'];
 
     /**
+     * Attributes that can be queried when filtering.
+     *
+     * This array is manually maintained. It does not necessarily mean that
+     * any of these are actual indexes on the database... but they should be!
+     *
+     * @var array
+     */
+    public static $indexes = [
+        'eventable_id',
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array

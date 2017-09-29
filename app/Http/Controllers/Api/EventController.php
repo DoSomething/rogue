@@ -26,12 +26,13 @@ class EventController extends ApiController
     public function index(Request $request)
     {
         $query = $this->newQuery(Event::class);
+
         $filters = $request->query('filter');
 
-        if ($filters['signup_id']) {
-            $events = $query->forSignup($filters['signup_id'])->orderBy('created_at', 'desc')->get();
+        $query = $this->filter($query, $filters, Event::$indexes);
 
-            return $this->collection($events);
+        if ($filters['signup_id']) {
+            $query = $query->forSignup($filters['signup_id'])->orderBy('created_at', 'desc');
         }
 
         return $this->paginatedCollection($query, $request);
