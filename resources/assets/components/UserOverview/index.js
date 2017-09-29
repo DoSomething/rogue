@@ -28,7 +28,9 @@ class UserOverview extends React.Component {
     this.api.get('api/v2/activity', {
       filter: {
         northstar_id: id,
-      }
+      },
+      orderBy: 'desc',
+      limit: 'all',
     }).then(json => this.setState({
       signups: json.data
     }, () => {

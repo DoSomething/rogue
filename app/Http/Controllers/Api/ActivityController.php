@@ -29,8 +29,19 @@ class ActivityController extends ApiController
         // can either filter or paginate to retrieve all signup records.
         $query = $this->newQuery(Signup::class)->with('posts');
 
+        if ($request->query('orderBy') === 'desc') {
+            $query = $query->orderBy('created_at', 'desc');
+        }
+
         $filters = $request->query('filter');
+
         $query = $this->filter($query, $filters, Signup::$indexes);
+
+        if (($request->query('limit') === 'all')) {
+            $signups = $query->get();
+
+            return $this->collection($signups);
+        }
 
         return $this->paginatedCollection($query, $request);
     }

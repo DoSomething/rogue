@@ -12,6 +12,7 @@ GET /api/v2/activity
   - You can filter by more than one value for a column, e.g. `/activity?filter[id]=121,122`
 - **limit** _(default is 20)_
   - Set the number of records to return in a single response.
+  - If limit is set to 'all' (e.g. `limit='all'`), results will not be paginated.
   - e.g. `/activity?limit=35`
 - **page** _(integer)_
   - For pagination, specify page of activity to return in the response.
@@ -19,6 +20,10 @@ GET /api/v2/activity
 - **include** _(integer)_
   - Include additional related records in the response: `user`
   - e.g. `/activity?include=user`
+- **orderBy** _(string)_
+  - Determines order the results are returned, based on the signups's created_at timestamp.
+  - If 'desc' is not passed through, defaults to return results by signup's created_at by ascending order. 
+  - e.g. `/activity'?orderByPost=desc`
 - **filter[updated_at]** _(timestamp)_
   - Return records that have been updated after the given `updated_at` value. 
   - e.g. `/activity?filter[updated_at]=2017-05-25 20:14:48`
