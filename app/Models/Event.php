@@ -26,4 +26,10 @@ class Event extends Model
     {
         return $this->morphTo();
     }
+
+    public function scopeForSignup($query, $id)
+    {
+        return $query->where('eventable_type', 'Rogue\Models\Signup')
+                     ->where('eventable_id', $id);
+    }
 }
