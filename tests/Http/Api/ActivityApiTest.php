@@ -39,12 +39,11 @@ class ActivityApiTest extends BrowserKitTestCase
                 ],
             ],
             'meta' => [
-                'pagination' => [
-                    'total',
+                'cursor' => [
+                    'current',
+                    'prev',
+                    'next',
                     'count',
-                    'per_page',
-                    'current_page',
-                    'total_pages',
                 ],
             ],
         ]);
@@ -65,8 +64,9 @@ class ActivityApiTest extends BrowserKitTestCase
 
         $response = $this->decodeResponseJson();
         $this->assertCount(8, $response['data']);
-        $this->assertEquals(2, $response['meta']['pagination']['total_pages']);
-        $this->assertNotEmpty($response['meta']['pagination']['links']['next']);
+        $this->assertNotEmpty($response['meta']['cursor']['next']);
+        $this->assertEquals(8, $response['meta']['cursor']['count']);
+        $this->assertEquals(1, $response['meta']['cursor']['current']);
     }
 
     /**
@@ -109,7 +109,8 @@ class ActivityApiTest extends BrowserKitTestCase
                 ],
             ],
             'meta' => [
-                'pagination' => [
+                'cursor' => [
+                    'current' => 1,
                     'count' => 3,
                 ],
             ],

@@ -43,6 +43,6 @@ class ActivityController extends ApiController
             return $this->collection($signups);
         }
 
-        return $this->paginatedCollection($query, $request);
+        return $this->paginatedCollection($query, $request, 200, [], null, 'cursor');
     }
 }
