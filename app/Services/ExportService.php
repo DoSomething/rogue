@@ -3,7 +3,6 @@
 namespace Rogue\Services;
 
 use League\Csv\Writer;
-use Rogue\Services\Registrar;
 
 class ExportService
 {
@@ -32,7 +31,7 @@ class ExportService
      */
     public function exportSignups($signups, $campaignId)
     {
-    	$final_results = [];
+        $final_results = [];
 
         foreach ($signups as $signup) {
             $northstar_user = $this->registrar->find($signup->northstar_id);
@@ -68,8 +67,8 @@ class ExportService
         }
 
         // Create and return CSV file
-		$writer = Writer::createFromString($output);
+        $writer = Writer::createFromString($output);
 
-		return $writer->output('export_' . $campaignId . '.csv');
+        return $writer->output('export_' . $campaignId . '.csv');
     }
 }
