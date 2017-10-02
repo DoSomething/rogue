@@ -31,6 +31,11 @@ Endpoint                                       | Functionality
 ---------------------------------------------- | --------------------------------------------------------
 `GET /api/v2/activity`                         | [Get all user activity](endpoints/activity.md#activity)
 
+#### Events
+Endpoint                                       | Functionality                                           
+---------------------------------------------- | --------------------------------------------------------
+`GET /api/v2/events`                         | [Get all events](endpoints/events.md#events)
+
 #### Posts
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------

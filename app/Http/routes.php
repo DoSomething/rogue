@@ -65,6 +65,9 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.r
     // activity
     Route::get('activity', 'Api\ActivityController@index');
 
+    // events
+    Route::get('events', 'Api\EventController@index');
+
     // posts
     Route::post('posts', 'Api\PostsController@store');
     Route::get('posts', 'Api\PostsController@index');
