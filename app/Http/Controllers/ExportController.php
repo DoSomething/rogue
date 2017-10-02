@@ -36,21 +36,8 @@ class ExportController extends Controller
         $signups = Signup::whereNotNull('details')->where('campaign_id', $campaignId)->get();
 
         // Compile the data
-        $final_results = $this->export->exportSignups($signups);
+        $results = $this->export->exportSignups($signups, $campaignId);
 
-        // Format as csv
-        $output = '';
-        foreach ($final_results as $row) {
-            $output .= implode(',', array_values($row)) . "\n";
-        }
-
-        // Build and return the file
-        $filename = 'export_' . $campaignId . '.csv';
-        $headers = [
-          'Content-Type'        => 'text/csv',
-          'Content-Disposition' => 'attachment; filename="'.$filename.'"',
-        ];
-
-        return response($output, 200, $headers);
+        return response($results['output'], 200, $results['headers']);
     }
 }

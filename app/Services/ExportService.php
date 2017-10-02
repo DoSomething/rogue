@@ -23,7 +23,13 @@ class ExportService
         $this->registrar = $registrar;
     }
 
-    public function exportSignups($signups)
+    /**
+     * Prepare the export of signup details for the specified campaign.
+     *
+     * @param object $signups
+     * @param int $campaignId
+     */
+    public function exportSignups($signups, $campaignId)
     {
     	$final_results = [];
 
@@ -43,6 +49,33 @@ class ExportService
             array_push($final_results, $next_row);
         }
 
-        return $final_results;
+        return $this->makeCSV($final_results, $campaignId);
+    }
+
+    /**
+     * Build the CSV of signup details for the specified campaign.
+     *
+     * @param array $signups
+     * @param int $campaignId
+     */
+    public function makeCSV($data, $campaignId)
+    {
+        // Format as csv
+        $output = '';
+        foreach ($data as $row) {
+            $output .= implode(',', array_values($row)) . "\n";
+        }
+
+        // Build and return the file
+        $filename = 'export_' . $campaignId . '.csv';
+        $headers = [
+          'Content-Type'        => 'text/csv',
+          'Content-Disposition' => 'attachment; filename="'.$filename.'"',
+        ];
+
+        return $results = [
+			'output' => $output,
+			'headers' => $headers,
+        ];
     }
 }
