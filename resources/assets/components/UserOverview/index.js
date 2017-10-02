@@ -1,7 +1,9 @@
 import React from 'react';
 import { map, keyBy } from 'lodash';
-import SignupCard from '../SignupCard';
 import { RestApiClient } from '@dosomething/gateway';
+
+import Empty from '../Empty';
+import SignupCard from '../SignupCard';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
 
@@ -99,7 +101,7 @@ class UserOverview extends React.Component {
             <div className="spinner"></div>
           :
             this.state.signups.length === 0 ?
-              <div>EMPTY STATE</div>
+              <Empty />
             :
               map(this.state.signups, (signup, index) => {
                 return <SignupCard key={index} signup={signup} campaign={this.state.campaigns ? this.state.campaigns[signup.campaign_id] : null} />;
