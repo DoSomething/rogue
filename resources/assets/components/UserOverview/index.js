@@ -9,13 +9,27 @@ class UserOverview extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {},
+    this.state = {
+      loading: false,
+    },
 
     this.api = new RestApiClient;
   }
 
   componentDidMount() {
-    this.getUserActivity(this.props.user.id);
+    this.setState({
+      loading: true,
+    });
+
+    this.getUserActivity(this.props.user.id)
+    .then(() => {
+      const ids = map(this.state.signups, 'campaign_id');
+      this.getCampaigns(ids);
+
+      this.setState({
+        loading: false,
+      });
+    });
   }
 
   /**
@@ -25,19 +39,19 @@ class UserOverview extends React.Component {
    * @return {Object}
    */
   getUserActivity(id) {
-    this.api.get('api/v2/activity', {
+    let request = this.api.get('api/v2/activity', {
       filter: {
         northstar_id: id,
       },
       orderBy: 'desc',
       limit: 'all',
-    }).then(json => this.setState({
-      signups: json.data
-    }, () => {
-      // After we grab the signups, get the campaign objects for each signup.
-      const ids = map(this.state.signups, 'campaign_id');
-      this.getCampaigns(ids);
-    }));
+    });
+
+    return request.then((result) => {
+      this.setState({
+        signups: result.data
+      });
+    });
   }
 
   /**
@@ -77,12 +91,15 @@ class UserOverview extends React.Component {
         </div>
 
         <div className="container__block">
-          {this.state.campaigns ?
+          {this.state.loading ?
+            <div className="spinner"></div>
+          :
             map(this.state.signups, (signup, index) => {
               return <SignupCard key={index} signup={signup} campaign={this.state.campaigns[signup.campaign_id]} />;
             })
-          : <div className="spinner"></div> }
+          }
         </div>
+
       </div>
     )
   }
