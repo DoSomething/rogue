@@ -1,5 +1,13 @@
 @import '~@dosomething/forge/scss/toolkit';
 
 .empty {
-  background: red;
+  text-align: center;
+
+  .image {
+    background: red;
+  }
+
+  .heading.-gamma {
+    color: $purple;
+  }
 }
