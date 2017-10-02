@@ -11,6 +11,8 @@ class UserOverview extends React.Component {
 
     this.state = {
       loading: false,
+      signups: [],
+      campaigns: [],
     },
 
     this.api = new RestApiClient;
@@ -21,7 +23,9 @@ class UserOverview extends React.Component {
       loading: true,
     });
 
+    // Get user activity.
     this.getUserActivity(this.props.user.id)
+    // Then get the campaign data tied to that activity.
     .then(() => {
       const ids = map(this.state.signups, 'campaign_id');
       this.getCampaigns(ids);
@@ -94,9 +98,12 @@ class UserOverview extends React.Component {
           {this.state.loading ?
             <div className="spinner"></div>
           :
-            map(this.state.signups, (signup, index) => {
-              return <SignupCard key={index} signup={signup} campaign={this.state.campaigns[signup.campaign_id]} />;
-            })
+            this.state.signups.length === 0 ?
+              <div>EMPTY STATE</div>
+            :
+              map(this.state.signups, (signup, index) => {
+                return <SignupCard key={index} signup={signup} campaign={this.state.campaigns ? this.state.campaigns[signup.campaign_id] : null} />;
+              })
           }
         </div>
 
