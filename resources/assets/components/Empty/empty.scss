@@ -2,9 +2,16 @@
 
 .empty {
   text-align: center;
+  display:table;
 
   .image {
-    background: red;
+    background: transparent url('../../images/tonguecat.png');
+    background-size: cover;
+    content: '';
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: auto;
   }
 
   .heading.-gamma {
