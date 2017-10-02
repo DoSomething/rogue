@@ -1,0 +1,14 @@
+/**
+ * User Export
+ */
+@import '~@dosomething/forge/scss/toolkit';
+
+.user-export {
+	margin-bottom: $base-spacing * 2;
+    padding: $base-spacing;
+
+	.button {
+		margin-top: $base-spacing;
+		background-color: $blue;
+	}
+}

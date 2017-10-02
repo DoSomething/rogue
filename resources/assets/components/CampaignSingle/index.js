@@ -12,6 +12,7 @@ import StatusCounter from '../StatusCounter';
 import DropdownFilter from '../DropdownFilter';
 import ModalContainer from '../ModalContainer';
 import MultiValueFilter from '../MultiValueFilter';
+import UserExport from '../UserExport';
 
 class CampaignSingle extends React.Component {
   constructor(props) {
@@ -136,8 +137,16 @@ class CampaignSingle extends React.Component {
 
     return (
       <div className="container">
-        <StatusCounter postTotals={this.props.post_totals} campaign={campaign} download={downloads}/>
-
+        <div className="container__block">
+          <div className="container__row">
+            <div className="container__block -half">
+              <StatusCounter postTotals={this.props.post_totals} campaign={campaign}/>
+            </div>
+            <div className="container__block -half">
+              <UserExport campaign={campaign} download={downloads}/>
+            </div>
+          </div>
+        </div>
         <FilterBar onSubmit={this.filterPosts}>
           <DropdownFilter options={statusFilters} header={'Post Status'}/>
           <MultiValueFilter options={tagFilters} header={'Tags'}/>

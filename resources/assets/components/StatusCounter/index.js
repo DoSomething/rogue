@@ -10,12 +10,6 @@ export default (props) => (
               <div>
                 <a className="button -secondary" href={`/campaigns/${props.campaign.id}/inbox`}>Review</a>
               </div>
-              {props.download ?
-                <div>
-                  <a className="button -secondary" href={`/exports/${props.campaign.id}`}>📩 Export</a>
-                </div>
-                : null
-              }
           </li>
           {/* @TODO - add back in when we deal with pagination on the single campaign view
           <li>
