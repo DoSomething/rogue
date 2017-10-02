@@ -35,9 +35,7 @@ class ExportController extends Controller
         // Run the query
         $signups = Signup::whereNotNull('details')->where('campaign_id', $campaignId)->get();
 
-        // Compile the data
-        $results = $this->export->exportSignups($signups, $campaignId);
-
-        return response($results['output'], 200, $results['headers']);
+        // Compile the data and trigger the CSV download
+        return $this->export->exportSignups($signups, $campaignId);
     }
 }

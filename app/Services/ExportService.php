@@ -2,6 +2,7 @@
 
 namespace Rogue\Services;
 
+use League\Csv\Writer;
 use Rogue\Services\Registrar;
 
 class ExportService
@@ -60,22 +61,15 @@ class ExportService
      */
     public function makeCSV($data, $campaignId)
     {
-        // Format as csv
+        // Format as CSV
         $output = '';
         foreach ($data as $row) {
             $output .= implode(',', array_values($row)) . "\n";
         }
 
-        // Build and return the file
-        $filename = 'export_' . $campaignId . '.csv';
-        $headers = [
-          'Content-Type'        => 'text/csv',
-          'Content-Disposition' => 'attachment; filename="'.$filename.'"',
-        ];
+        // Create and return CSV file
+		$writer = Writer::createFromString($output);
 
-        return $results = [
-			'output' => $output,
-			'headers' => $headers,
-        ];
+		return $writer->output('export_' . $campaignId . '.csv');
     }
 }
