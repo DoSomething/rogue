@@ -32,7 +32,7 @@ trait TransformsRequests
      */
     public function collection($data, $code = 200, $meta = [], $transformer = null)
     {
-        $collection = new Collection($data, $this->setTransformer($transformer));
+        $collection = new FractalCollection($data, $this->setTransformer($transformer));
 
         return $this->transform($collection, $code, $meta);
     }
