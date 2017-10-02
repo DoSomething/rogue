@@ -39,8 +39,6 @@ class SignupCard extends React.Component {
 
     const signupUrl = `/signups/${signup.signup_id}`;
 
-    const campaignRunStartDate = this.getCampaignRunStartDate(campaign.campaign_runs.current, signup.campaign_run_id);
-
     return (
         <article className="container__row signup-card">
           <a href={signupUrl}>
@@ -49,8 +47,8 @@ class SignupCard extends React.Component {
                 <h2 className="heading">{campaign ? campaign.title : signup.campaign_id}</h2>
                 <h4 className="heading">Campaign ID: {signup.campaign_id}</h4>
                 <h4 className="heading">Campaign Run ID: {signup.campaign_run_id}</h4>
-                { campaignRunStartDate ?
-                  <h4 className="heading">Campaign Run Start Date: {campaignRunStartDate}</h4>
+                {campaign ?
+                  <h4 className="heading">Campaign Run Start Date: {this.getCampaignRunStartDate(campaign.campaign_runs.current, signup.campaign_run_id)}</h4>
                 :null }
               </div>
               <div className="container__row">
