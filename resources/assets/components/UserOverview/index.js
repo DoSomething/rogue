@@ -103,7 +103,6 @@ class UserOverview extends React.Component {
             this.state.signups.length === 0 ?
               <Empty details={{
                 "header": "This user has no campaign signups.",
-                "copy": ["Great job, there are no new posts to review! You can check out all posts for this campaign ", <a key={0} href="#">here</a>],
               }}/>
             :
               map(this.state.signups, (signup, index) => {

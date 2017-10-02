@@ -23,7 +23,14 @@ class PostGroup extends React.Component {
         {
           map(this.props.posts, (post, key) => {
             if (post['status'] === this.props.groupType) {
-              return <Post key={key} post={post} signup={this.props.signup} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} showSiblings={false} />;
+              return <Post key={key}
+                post={post}
+                displayUser={false}
+                signup={this.props.signup}
+                onUpdate={this.props.onUpdate}
+                onTag={this.props.onTag}
+                deletePost={this.props.deletePost}
+                showSiblings={false} />;
             }
           })
         }
