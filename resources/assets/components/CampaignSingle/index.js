@@ -165,10 +165,7 @@ class CampaignSingle extends React.Component {
                 allowHistory={true} />;
             })
           :
-            <Empty details={{
-              "header":  "There are no results!",
-              "copy": "Sorry, there are no posts that match your filters. Change or remove some tags and try again."
-            }}/>
+            <Empty header="There are no results!" copy="Sorry, there are no posts that match your filters. Change or remove some tags and try again." />
         }
 
         <ModalContainer>

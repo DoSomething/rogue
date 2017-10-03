@@ -101,9 +101,7 @@ class UserOverview extends React.Component {
             <div className="spinner"></div>
           :
             this.state.signups.length === 0 ?
-              <Empty details={{
-                "header": "This user has no campaign signups.",
-              }}/>
+              <Empty header="This user has no campaign signups." />
             :
               map(this.state.signups, (signup, index) => {
                 return <SignupCard key={index} signup={signup} campaign={this.state.campaigns ? this.state.campaigns[signup.campaign_id] : null} />;

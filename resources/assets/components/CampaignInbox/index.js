@@ -55,12 +55,7 @@ class CampaignInbox extends React.Component {
         </div>
       )
     } else {
-      return (
-        <Empty details={{
-          "header":  "There are no new posts!",
-          "copy": "Great job, there are no new posts to review! You can check out all posts for this campaign here",
-        }}/>
-      )
+      return <Empty header="There are no new posts!" copy="Great job, there are no new posts to review! You can check out all posts for this campaign here" />
     }
   }
 }

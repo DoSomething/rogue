@@ -45,9 +45,7 @@ class PostGroup extends React.Component {
                 showSiblings={false} />;
             })
           :
-            <Empty details={{
-              "header":  `This user has no ${this.props.groupType} posts`,
-            }}/>
+            <Empty header={`This user has no ${this.props.groupType} posts`} />
         }
       </div>
     )

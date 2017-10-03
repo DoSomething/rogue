@@ -5,8 +5,8 @@ const Empty = (props) => (
   <div className="container empty">
     <div className="empty__image" />
     <div className="empty__text">
-      <h2 className="heading -gamma">{props.details.header}</h2>
-      <span className="copy">{props.details.copy ? props.details.copy : null }</span>
+      <h2 className="heading -gamma">{props.header}</h2>
+      <span className="copy">{props.copy ? props.copy : null }</span>
     </div>
   </div>
 );
