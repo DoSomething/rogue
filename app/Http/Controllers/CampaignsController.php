@@ -79,13 +79,11 @@ class CampaignsController extends Controller
     {
         $campaign = $this->campaignService->find($id);
         $totals = $this->campaignService->getPostTotals($campaign);
-        $export = Signup::whereNotNull('details')->where('campaign_id', $id)->get();
 
         return view('pages.campaign_single')
             ->with('state', [
                 'campaign' => $campaign,
                 'initial_posts' => 'accepted',
-                'export' => ! $export->isEmpty(),
                 'post_totals' => [
                     'accepted_count' => $totals->accepted_count,
                     'pending_count' => $totals->pending_count,

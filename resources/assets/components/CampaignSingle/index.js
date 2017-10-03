@@ -123,7 +123,6 @@ class CampaignSingle extends React.Component {
       values: tags,
       type: 'tags',
     };
-    const downloads = this.props.export ? true : false;
 
     const statusFilters = {
       values: {
@@ -143,7 +142,7 @@ class CampaignSingle extends React.Component {
               <StatusCounter postTotals={this.props.post_totals} campaign={campaign}/>
             </div>
             <div className="container__block -half">
-              <UserExport campaign={campaign} download={downloads}/>
+              <UserExport campaign={campaign}/>
             </div>
           </div>
         </div>
