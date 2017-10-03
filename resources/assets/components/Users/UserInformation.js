@@ -17,9 +17,8 @@ const UserInformation = (props) => (
           {displayCityState(props.user.addr_city, props.user.addr_state) ? <span>{displayCityState(props.user.addr_city, props.user.addr_state) }<br/></span> : null }
         </p>
       </div>
-    :
-      <h2 className="heading">User Not Found</h2>
-    }
+    : null}
+
     {props.children}
   </div>
 );

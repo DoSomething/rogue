@@ -4,13 +4,14 @@ import { RestApiClient} from '@dosomething/gateway';
 import { extractSignupsFromPosts } from '../../helpers';
 
 import Post from '../Post';
+import Empty from '../Empty';
 import FilterBar from '../FilterBar';
-import DropdownFilter from '../DropdownFilter';
-import MultiValueFilter from '../MultiValueFilter';
 import HistoryModal from '../HistoryModal';
 import PagingButtons from '../PagingButtons';
 import StatusCounter from '../StatusCounter';
+import DropdownFilter from '../DropdownFilter';
 import ModalContainer from '../ModalContainer';
+import MultiValueFilter from '../MultiValueFilter';
 
 class CampaignSingle extends React.Component {
   constructor(props) {
@@ -145,24 +146,26 @@ class CampaignSingle extends React.Component {
         {this.props.loading || this.state.loadingNewPosts ?
           <div className="spinner"></div>
         :
+          this.props.postIds.length !== 0 ?
+            map(this.props.postIds, (key, value) => {
+              var post = find(posts, {'id': key});
 
-          map(this.props.postIds, (key, value) => {
-            var post = find(posts, {'id': key});
-
-            return <Post key={key}
-              post={post}
-              user={signups[post.signup_id].user.data}
-              signup={signups[post.signup_id]}
-              campaign={campaign}
-              onUpdate={this.props.updatePost}
-              onTag={this.props.updateTag}
-              deletePost={this.props.deletePost}
-              showHistory={this.props.showHistory}
-              rotate={this.props.rotate}
-              showSiblings={true}
-              showQuantity={true}
-              allowHistory={true} />;
-          })
+              return <Post key={key}
+                post={post}
+                user={signups[post.signup_id].user.data}
+                signup={signups[post.signup_id]}
+                campaign={campaign}
+                onUpdate={this.props.updatePost}
+                onTag={this.props.updateTag}
+                deletePost={this.props.deletePost}
+                showHistory={this.props.showHistory}
+                rotate={this.props.rotate}
+                showSiblings={true}
+                showQuantity={true}
+                allowHistory={true} />;
+            })
+          :
+            <Empty header="There are no results!" copy="Sorry, there are no posts that match your filters. Change or remove some tags and try again." />
         }
 
         <ModalContainer>

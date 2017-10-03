@@ -1,7 +1,9 @@
 import React from 'react';
 import { map, keyBy } from 'lodash';
-import SignupCard from '../SignupCard';
 import { RestApiClient } from '@dosomething/gateway';
+
+import Empty from '../Empty';
+import SignupCard from '../SignupCard';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
 
@@ -9,13 +11,31 @@ class UserOverview extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {},
+    this.state = {
+      loading: false,
+      signups: [],
+      campaigns: [],
+    },
 
     this.api = new RestApiClient;
   }
 
   componentDidMount() {
-    this.getUserActivity(this.props.user.id);
+    this.setState({
+      loading: true,
+    });
+
+    // Get user activity.
+    this.getUserActivity(this.props.user.id)
+    // Then get the campaign data tied to that activity.
+    .then(() => {
+      const ids = map(this.state.signups, 'campaign_id');
+      this.getCampaigns(ids);
+
+      this.setState({
+        loading: false,
+      });
+    });
   }
 
   /**
@@ -25,19 +45,19 @@ class UserOverview extends React.Component {
    * @return {Object}
    */
   getUserActivity(id) {
-    this.api.get('api/v2/activity', {
+    let request = this.api.get('api/v2/activity', {
       filter: {
         northstar_id: id,
       },
       orderBy: 'desc',
       limit: 'all',
-    }).then(json => this.setState({
-      signups: json.data
-    }, () => {
-      // After we grab the signups, get the campaign objects for each signup.
-      const ids = map(this.state.signups, 'campaign_id');
-      this.getCampaigns(ids);
-    }));
+    });
+
+    return request.then((result) => {
+      this.setState({
+        signups: result.data
+      });
+    });
   }
 
   /**
@@ -77,12 +97,18 @@ class UserOverview extends React.Component {
         </div>
 
         <div className="container__block">
-          {this.state.campaigns ?
-            map(this.state.signups, (signup, index) => {
-              return <SignupCard key={index} signup={signup} campaign={this.state.campaigns[signup.campaign_id]} />;
-            })
-          : <div className="spinner"></div> }
+          {this.state.loading ?
+            <div className="spinner"></div>
+          :
+            this.state.signups.length === 0 ?
+              <Empty header="This user has no campaign signups." />
+            :
+              map(this.state.signups, (signup, index) => {
+                return <SignupCard key={index} signup={signup} campaign={this.state.campaigns ? this.state.campaigns[signup.campaign_id] : null} />;
+              })
+          }
         </div>
+
       </div>
     )
   }

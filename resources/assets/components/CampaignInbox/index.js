@@ -1,9 +1,10 @@
 import React from 'react';
-import { map, sample, find } from 'lodash';
+import { map, find, isEmpty } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
 import { extractPostsFromSignups } from '../../helpers';
 import Post from '../Post';
+import Empty from '../Empty';
 import HistoryModal from '../HistoryModal';
 import ModalContainer from '../ModalContainer';
 
@@ -17,15 +18,7 @@ class CampaignInbox extends React.Component {
     const campaign = this.props.campaign;
     const signups = this.props.signups;
 
-    const nothingHere = [
-      'https://media.giphy.com/media/3og0IT9dAZyMz3lXNe/giphy.gif',
-      'https://media.giphy.com/media/Lny6Rw04nsOOc/giphy.gif',
-      'https://media.giphy.com/media/YdhvjTeL83pNS/giphy.gif',
-      'https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif',
-      'https://media.giphy.com/media/lYHbL5QY52Kcw/giphy.gif',
-    ];
-
-    if (posts.length !== 0) {
+    if (!isEmpty(posts)) {
       return (
         <div className="container">
           {
@@ -62,15 +55,7 @@ class CampaignInbox extends React.Component {
         </div>
       )
     } else {
-      // @todo - make this into an actual component.
-      return (
-        <div className="container">
-          <h2 className="-padded">No Posts to review!</h2>
-          <div className="container">
-            <img src={sample(nothingHere)} />
-          </div>
-        </div>
-      )
+      return <Empty header="There are no new posts!" copy="Great job, there are no new posts to review! You can check out all posts for this campaign here" />
     }
   }
 }

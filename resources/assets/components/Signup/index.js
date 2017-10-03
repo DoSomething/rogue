@@ -1,10 +1,11 @@
 // Utilities
 import React from 'react';
-import { map, startCase, keyBy} from 'lodash';
+import { map, startCase, keyBy, filter, isEmpty} from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
 // Components
 import Post from '../Post';
+import Empty from '../Empty';
 import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
 import HistoryModal from '../HistoryModal';
@@ -14,18 +15,37 @@ import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
 
 class PostGroup extends React.Component {
+  getPostsByStatus(status) {
+    const posts = filter(this.props.posts, (post) => {
+      return post['status'] === this.props.groupType;
+    });
+
+    return posts;
+  }
+
   render() {
+    const posts = this.getPostsByStatus(this.props.groupType);
+
     return (
       <div className="container__row">
         <div className="container__block">
-            <h2>{startCase(this.props.groupType)}</h2>
+            <h2 className="heading -emphasized -padded"><span>{startCase(this.props.groupType)}</span></h2>
         </div>
+
         {
-          map(this.props.posts, (post, key) => {
-            if (post['status'] === this.props.groupType) {
-              return <Post key={key} post={post} signup={this.props.signup} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} showSiblings={false} />;
-            }
-          })
+          !isEmpty(posts) ?
+            map(posts, (post, key) => {
+              return <Post key={key}
+                post={post}
+                displayUser={false}
+                signup={this.props.signup}
+                onUpdate={this.props.onUpdate}
+                onTag={this.props.onTag}
+                deletePost={this.props.deletePost}
+                showSiblings={false} />;
+            })
+          :
+            <Empty header={`This user has no ${this.props.groupType} posts`} />
         }
       </div>
     )
