@@ -3,8 +3,8 @@ import './empty.scss';
 
 const Empty = (props) => (
   <div className="container empty">
-    <div className="image" />
-    <div className="text">
+    <div className="empty__image" />
+    <div className="empty__text">
       <h2 className="heading -gamma">{props.details.header}</h2>
       <span className="copy">{props.details.copy ? props.details.copy : null }</span>
     </div>
