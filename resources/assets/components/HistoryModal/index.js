@@ -12,22 +12,38 @@ class HistoryModal extends React.Component {
     };
 
     this.onUpdate = this.onUpdate.bind(this);
+    this.parseEventData = this.parseEventData.bind(this);
   }
 
   onUpdate(event) {
     this.setState({ quantity: event.target.value });
   }
 
+  parseEventData(events) {
+        console.log(events);
+    var eventsWithChange = [];
+
+    for(var i = 0; i < events.length; i++) {
+        var current = events[i];
+        var next = events[i+1];
+
+        if (next) {
+          if (current.content.quantity != next.content.quantity || current.content.why_participated != next.content.why_participated || current.content.quantity_pending != next.content.quantity_pending) {
+            // If there is a difference in the record, add the next record
+            // since events are ordered by most recent created_at in desc order.
+            eventsWithChange.push(next);
+          }
+        }
+
+    }
+
+    return eventsWithChange;
+  }
+
   render() {
     const signup = this.props.signup;
     const campaign = this.props['campaign'];
-
-      // console.log(this.props.signupEvents);
-    // const historyModalTable = map(this.props.signupEvents, (signupEvent, index) => {
-    //   return <HistoryModalTable key={index} data={signupEvent}/>;
-    // });
-
-    // const historyModalTable = return <HistoryModalTable data={this.props.signupEvents}/>;
+    const parsedEvents = this.parseEventData(this.props.signupEvents);
 
     return (
       <div className="modal">
@@ -48,7 +64,7 @@ class HistoryModal extends React.Component {
           <h3>Reportback History</h3>
           <p>A log of the 20 most recent signup events! 📖</p>
           <div className="container">
-            <HistoryModalTable data={this.props.signupEvents} />
+            <HistoryModalTable data={parsedEvents} />
           </div>
         </div>
         <button className="button -history" disabled={!this.state.quantity} onClick={() => this.props.onUpdate(signup, this.state.quantity)}>Save</button>

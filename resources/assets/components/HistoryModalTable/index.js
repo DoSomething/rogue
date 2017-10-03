@@ -16,6 +16,7 @@ class HistoryModalTable extends React.Component {
     const heading = headings.map((title, index) => {
       return <th key={index} className="table__cell"><h3 className="heading -delta">{title}</h3></th>
     });
+
     const rows = this.props.data.map((content, index) => {
       return <HistoryModalRow key={index} data={content}/>;
     });
