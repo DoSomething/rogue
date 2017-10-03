@@ -103,7 +103,7 @@ class Post extends React.Component {
 
             {this.props.allowHistory ?
               <div className="container">
-                <a href="#" onClick={e => this.props.showHistory(post['id'], e)}>Edit | Show History</a>
+                <a href="#" onClick={e => this.props.showHistory(post['id'], e, signup.signup_id)}>Edit | Show History</a>
               </div>
             : null}
 

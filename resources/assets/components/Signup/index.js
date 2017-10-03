@@ -78,12 +78,23 @@ class Signup extends React.Component {
   }
 
   // Open the history modal of the given post
-  showHistory(postId, event) {
+  showHistory(postId, event, signupId) {
     event.preventDefault();
 
-    this.setState({
-      displayHistoryModal: true,
-      historyModalId: postId,
+    this.api.get('api/v2/events', {
+      filter: {
+        signup_id: signupId,
+      }
+    }).then((result) => {
+      this.setState((previousState) => {
+        const newState = {...previousState};
+
+        newState.displayHistoryModal = true;
+        newState.historyModalId = postId;
+        newState.signupEvents = Object.values(result.data);
+
+        return newState;
+      });
     });
   }
 
@@ -282,7 +293,7 @@ class Signup extends React.Component {
 
             <div className="container__row">
 
-              <a href="#" onClick={e => this.showHistory(signup['signup_id'], e)}>Edit | Show History</a>
+              <a href="#" onClick={e => this.showHistory(signup['signup_id'], e, signup.signup_id)}>Edit | Show History</a>
 
               <ModalContainer>
                 {this.state.displayHistoryModal ?
@@ -291,6 +302,7 @@ class Signup extends React.Component {
                     onClose={e => this.hideHistory(e)}
                     signup={signup}
                     campaign={campaign}
+                    signupEvents={this.state.signupEvents}
                   />
                 : null}
               </ModalContainer>

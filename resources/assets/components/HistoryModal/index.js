@@ -1,4 +1,7 @@
 import React from 'react';
+import { map } from 'lodash';
+
+import HistoryModalTable from '../HistoryModalTable';
 
 class HistoryModal extends React.Component {
   constructor() {
@@ -19,6 +22,13 @@ class HistoryModal extends React.Component {
     const signup = this.props.signup;
     const campaign = this.props['campaign'];
 
+      // console.log(this.props.signupEvents);
+    // const historyModalTable = map(this.props.signupEvents, (signupEvent, index) => {
+    //   return <HistoryModalTable key={index} data={signupEvent}/>;
+    // });
+
+    // const historyModalTable = return <HistoryModalTable data={this.props.signupEvents}/>;
+
     return (
       <div className="modal">
         <a href="#" onClick={this.props.onClose} className="modal-close-button">&times;</a>
@@ -36,7 +46,10 @@ class HistoryModal extends React.Component {
           </div>
 
           <h3>Reportback History</h3>
-          <p>table of all the history goes here 📖</p>
+          <p>A log of the 20 most recent signup events! 📖</p>
+          <div className="container">
+            <HistoryModalTable data={this.props.signupEvents} />
+          </div>
         </div>
         <button className="button -history" disabled={!this.state.quantity} onClick={() => this.props.onUpdate(signup, this.state.quantity)}>Save</button>
       </div>
