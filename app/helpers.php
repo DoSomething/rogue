@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\HtmlString;
 
 /**
@@ -79,15 +80,14 @@ function multipleValueQuery($query, $queryString, $filter)
     }
 }
 
+/**
+ * Returns age of user with given birthdate (or number of full years since given date).
+ * @param string $birthdate
+ */
 function getAgeFromBirthdate($birthdate)
 {
-    // Make DateTime for right now
-    $now = new DateTime('now');
+    $birthdate = new Carbon($birthdate);
+    $now = new Carbon();
 
-    // Make DateTime for birthday
-    $birthday = new DateTime();
-    $birthday->setTimestamp(strtotime($birthdate));
-
-    // Calculate the difference and return the years
-    return $now->diff($birthday)->y;
+    return $birthdate->diffInYears($now);
 }
