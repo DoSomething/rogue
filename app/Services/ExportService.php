@@ -2,8 +2,8 @@
 
 namespace Rogue\Services;
 
-use SplTempFileObject;
 use League\Csv\Writer;
+use SplTempFileObject;
 
 class ExportService
 {
