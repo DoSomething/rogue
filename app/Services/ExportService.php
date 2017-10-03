@@ -2,7 +2,7 @@
 
 namespace Rogue\Services;
 
-use SplFileObject;
+use SplTempFileObject;
 use League\Csv\Writer;
 
 class ExportService
@@ -61,21 +61,9 @@ class ExportService
      */
     public function makeCSV($data, $campaignId)
     {
-        // Format as CSV
-        // $output = '';
-        // foreach ($data as $row) {
-        //     $output .= implode(',', array_values($row)) . "\n";
-        // }
-
-        // // Create and return CSV file
-        // $writer = Writer::createFromString($output);
-
-        // return $writer->output('export_' . $campaignId . '.csv');
-
-        $writer = Writer::createFromFileObject(new SplFileObject('export_' . $campaignId . '.csv'));
-
+        // Create and return CSV file
+        $writer = Writer::createFromFileObject(new SplTempFileObject());
         $writer->insertAll($data);
-
 
         return $writer->output('export_' . $campaignId . '.csv');
     }
