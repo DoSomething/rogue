@@ -77,10 +77,6 @@ const reviewComponent = (Component, data) => {
 
     // Open the history modal of the given post
     showHistory(postId, event, signupId) {
-          console.log('hi');
-          console.log(postId);
-          console.log(event);
-          console.log(signupId);
       event.preventDefault();
 
       this.api.get('api/v2/events', {
@@ -93,7 +89,7 @@ const reviewComponent = (Component, data) => {
 
           newState.displayHistoryModal = true;
           newState.historyModalId = postId;
-          newState.signupEvents = result.data;
+          newState.signupEvents = Object.values(result.data);
           return newState;
         });
       });

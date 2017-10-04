@@ -20,6 +20,8 @@ class HistoryModal extends React.Component {
   }
 
   parseEventData(events) {
+    console.log('parsing events');
+    console.log(events);
     var eventsWithChange = [];
 
     for(var i = 0; i < events.length; i++) {
@@ -39,7 +41,8 @@ class HistoryModal extends React.Component {
     // so there is something in the table.
     // @TODO: change this when we start paginating.
     eventsWithChange.push(events[events.length-1]);
-
+    console.log('events with change');
+    console.log(eventsWithChange);
     return eventsWithChange;
   }
 
