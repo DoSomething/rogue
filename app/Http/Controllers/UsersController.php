@@ -17,6 +17,9 @@ class UsersController extends Controller
     public function __construct(Registrar $registrar)
     {
         $this->registrar = $registrar;
+
+        $this->middleware('auth');
+        $this->middleware('role:admin,staff');
     }
 
     /**
