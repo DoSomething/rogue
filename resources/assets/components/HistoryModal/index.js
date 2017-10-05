@@ -64,7 +64,7 @@ class HistoryModal extends React.Component {
           </div>
 
           <h3>Reportback History</h3>
-          <p>A log of the 20 most recent signup events! 📖</p>
+          <p>A log of up to 20 of the most recent signup events! 📖</p>
           <div className="container">
             <HistoryModalTable data={parsedEvents} />
           </div>
