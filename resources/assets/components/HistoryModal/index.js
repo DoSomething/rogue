@@ -20,29 +20,26 @@ class HistoryModal extends React.Component {
   }
 
   parseEventData(events) {
-    console.log('parsing events');
-    console.log(events);
     var eventsWithChange = [];
 
     for(var i = 0; i < events.length; i++) {
-        var current = events[i];
-        var next = events[i+1];
+      var current = events[i];
+      var next = events[i+1];
 
-        if (next) {
-          if (current.content.quantity != next.content.quantity || current.content.why_participated != next.content.why_participated || current.content.quantity_pending != next.content.quantity_pending) {
-            // If there is a difference in the record, add the next record
-            // since events are ordered by most recent created_at in desc order.
-            eventsWithChange.push(next);
-          }
+      if (next) {
+        if (current.content.quantity != next.content.quantity || current.content.why_participated != next.content.why_participated || current.content.quantity_pending != next.content.quantity_pending) {
+          // If there is a difference in the record, add the next record
+          // since events are ordered by most recent created_at in desc order.
+          eventsWithChange.push(next);
         }
+      }
     }
 
     // Always include the first event in the response
     // so there is something in the table.
     // @TODO: change this when we start paginating.
     eventsWithChange.push(events[events.length-1]);
-    console.log('events with change');
-    console.log(eventsWithChange);
+
     return eventsWithChange;
   }
 
