@@ -25,6 +25,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('campaigns/{id}/inbox', 'CampaignsController@showInbox');
     Route::get('campaigns/{id}', 'CampaignsController@showCampaign');
 
+    // Exports
+    Route::get('exports/{id}', 'ExportController@show');
+
     // Posts
     Route::post('posts', 'PostController@store');
     Route::get('posts', 'PostController@index');

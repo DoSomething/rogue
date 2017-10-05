@@ -18,7 +18,8 @@
     "league/fractal": "^0.13.0",
     "league/glide-laravel": "^1.0",
     "predis/predis": "~1.0",
-    "spatie/laravel-backup": "^4.19"
+    "spatie/laravel-backup": "^4.19",
+    "league/csv": "^9.0"
   },
   "require-dev": {
     "fzaninotto/faker": "^1.6",
