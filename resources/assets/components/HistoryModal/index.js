@@ -28,9 +28,8 @@ class HistoryModal extends React.Component {
 
       if (next) {
         if (current.content.quantity != next.content.quantity || current.content.why_participated != next.content.why_participated || current.content.quantity_pending != next.content.quantity_pending) {
-          // If there is a difference in the record, add the next record
-          // since events are ordered by most recent created_at in desc order.
-          eventsWithChange.push(next);
+          // If there is a difference in the record, add to the log.
+          eventsWithChange.push(current);
         }
       }
     }

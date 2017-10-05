@@ -40,6 +40,9 @@ class EventTransformer extends TransformerAbstract
             foreach ($integerValues as $integerValue) {
                 if (isset($content[$integerValue]) && $content[$integerValue] != 'null') {
                     $content[$integerValue] = (int) $content[$integerValue];
+                } elseif (isset($content[$integerValue]) && $content[$integerValue] === 'null') {
+                    // Return as null instead of a string.
+                    $content[$integerValue] = null;
                 }
             }
         }
