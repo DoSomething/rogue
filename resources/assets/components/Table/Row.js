@@ -1,21 +1,18 @@
 import React from 'react';
+import { map } from 'lodash';
 
 class Row extends React.Component {
   constructor() {
     super();
 
     this.createCampaignRow = this.createCampaignRow.bind(this);
+    this.createCell = this.createCell.bind(this);
   }
 
   createCampaignRow(campaign) {
-    const campaignUrl = campaign ? `/campaigns/${campaign.d}` : '/campaigns';
-    const campaignTitle = campaign ? campaign.title : 'Campaign Not Found';
-    const pendingCount = campaign ? campaign.pending_count : 0;
-    const inboxUrl = campaign ? `/campaigns/${campaign.id}/inbox` : '/campaigns';
-
-    var row = [
+    const row = [
       {
-        url: campaignUrl,
+        url: campaign ? `/campaigns/${campaign.id}` : '/campaigns',
         title: campaign ? campaign.title : 'Campaign Not Found',
       },
       {
@@ -23,7 +20,7 @@ class Row extends React.Component {
         title: campaign ? campaign.pending_count : 0,
       },
       {
-        url: inboxUrl,
+        url: campaign ? `/campaigns/${campaign.id}/inbox` : '/campaigns',
         title: 'review',
       }
     ];
@@ -31,18 +28,26 @@ class Row extends React.Component {
     return row;
   }
 
-  render() {
-    if (this.props.type === 'campaigns') {
-      const content = this.createCampaignRow(this.props.data);
-      console.log('here first');
-      console.log(content);
+  createCell(data) {
+    if (data.url) {
+      return <td className="table__cell"><a href={cell.url}>{cell.title}</a></td>
     }
+
+    return <td className="table__cell">{cell.title}</td>
+  }
+
+  render() {
+    const content = this.props.type === 'campaigns' ? this.createCampaignRow(this.props.data) : null;
 
     return (
       <tr className="table__row">
-      {console.log('here second')}
        {content.map(function(cell) {
-          return <td className="table__cell"><a href={cell.url}>{cell.title}</a></td>
+        { if (cell.url) {
+            return <td className="table__cell"><a href={cell.url}>{cell.title}</a></td>
+          }
+
+          return <td className="table__cell">{cell.title}</td>
+        }
         })}
       </tr>
     )
