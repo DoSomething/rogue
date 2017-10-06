@@ -1,7 +1,7 @@
 import React from 'react';
 import { map } from 'lodash';
 
-import HistoryModalTable from '../HistoryModalTable';
+import Table from '../Table';
 
 class HistoryModal extends React.Component {
   constructor() {
@@ -68,7 +68,7 @@ class HistoryModal extends React.Component {
 
 </p>
           <div className="container">
-            <HistoryModalTable data={parsedEvents} />
+            <Table headings={['Quantity','Why Participated','Updated At','User']} data={parsedEvents} type='events' />
           </div>
         </div>
         <button className="button -history" disabled={!this.state.quantity} onClick={() => this.props.onUpdate(signup, this.state.quantity)}>Save</button>

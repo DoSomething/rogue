@@ -6,6 +6,7 @@ class Row extends React.Component {
     super();
 
     this.createCampaignRow = this.createCampaignRow.bind(this);
+    this.createEventRow = this.createEventRow.bind(this);
     this.createCell = this.createCell.bind(this);
   }
 
@@ -28,6 +29,31 @@ class Row extends React.Component {
     return row;
   }
 
+  createEventRow(event) {
+    const newQuantity = event.content.quantity ? event.content.quantity : event.content.quantity_pending;
+
+    const row = [
+      {
+        url: null,
+        title: newQuantity,
+      },
+      {
+        url: null,
+        title: event.content.why_participated,
+      },
+      {
+        url: null,
+        title: event.content.updated_at,
+      },
+      {
+        url: null,
+        title: event.user,
+      }
+    ];
+
+    return row;
+  }
+
   createCell(data) {
     if (data.url) {
       return <td className="table__cell"><a href={cell.url}>{cell.title}</a></td>
@@ -37,7 +63,7 @@ class Row extends React.Component {
   }
 
   render() {
-    const content = this.props.type === 'campaigns' ? this.createCampaignRow(this.props.data) : null;
+    const content = this.props.type === 'campaigns' ? this.createCampaignRow(this.props.data) : this.createEventRow(this.props.data);
 
     return (
       <tr className="table__row">
