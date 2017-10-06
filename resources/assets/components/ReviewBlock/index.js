@@ -4,8 +4,14 @@ import Tags from '../Tags';
 import StatusButton from '../StatusButton';
 
 class ReviewBlock extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { loadingButtons: false };
+  }
+
   setStatus(status) {
-    this.props.onUpdate(this.props.post.id, { status: status });
+    return this.props.onUpdate(this.props.post.id, { status: status });
   }
 
   render() {

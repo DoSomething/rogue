@@ -1,9 +1,35 @@
 import React from 'react';
-import './status-button.scss';
 import classnames from 'classnames';
 
-export default (props) => (
-  <button className={classnames('button', '-outlined-button',  `-${props.type}`, {'is-selected' : props.status == props.type})} onClick={() => props.setStatus(props.type)}>
-    {props.label}
-  </button>
-);
+import './status-button.scss';
+
+class StatusButton extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      'sending': false,
+    }
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick () {
+    this.setState({ 'sending' : true });
+
+    this.props.setStatus(this.props.type)
+      .then(() => {
+        this.setState({ 'sending' : false });
+      });
+  }
+
+  render() {
+    return (
+      <button className={classnames('button', {'-outlined-button' : !this.state.sending},  `-${this.props.type}`, {'is-selected' : this.props.status == this.props.type}, {'is-loading' : this.state.sending})} onClick={() => this.handleClick()}>
+        {this.props.label}
+      </button>
+    )
+  }
+}
+
+export default StatusButton;

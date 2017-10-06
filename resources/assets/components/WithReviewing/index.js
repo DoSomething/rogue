@@ -101,9 +101,10 @@ const reviewComponent = (Component, data) => {
     updatePost(postId, fields) {
       fields.post_id = postId;
 
+
       let request = this.api.put('reviews', fields);
 
-      request.then((result) => {
+      return request.then((result) => {
         this.setState((previousState) => {
           const newState = {...previousState};
           newState.posts[postId].status = fields.status;
