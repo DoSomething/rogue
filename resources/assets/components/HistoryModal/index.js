@@ -2,6 +2,7 @@ import React from 'react';
 import { map } from 'lodash';
 
 import Table from '../Table';
+import './history-modal.scss';
 
 class HistoryModal extends React.Component {
   constructor() {
@@ -64,9 +65,7 @@ class HistoryModal extends React.Component {
           </div>
 
           <h3>📖 History 📖</h3>
-          <p>Below shows the 20 most recent changes to the member's signup. This includes changes to the quantity or why. If you need changes beyond the 20 listed here, please reach out to Team Bleed!
-
-</p>
+          <p>Below shows the 20 most recent changes to the member's signup. This includes changes to the quantity or why. If you need changes beyond the 20 listed here, please reach out to Team Bleed!</p>
           <div className="container">
             <Table headings={['Quantity','Why Participated','Updated At','User']} data={parsedEvents} type='events' />
           </div>
