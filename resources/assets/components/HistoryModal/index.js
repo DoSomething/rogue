@@ -63,8 +63,10 @@ class HistoryModal extends React.Component {
             </div>
           </div>
 
-          <h3>Reportback History</h3>
-          <p>A log of up to 20 of the most recent signup events! 📖</p>
+          <h3>📖 History 📖</h3>
+          <p>Below shows the 20 most recent changes to the member's signup. This includes changes to the quantity or why. If you need changes beyond the 20 listed here, please reach out to Team Bleed!
+
+</p>
           <div className="container">
             <HistoryModalTable data={parsedEvents} />
           </div>

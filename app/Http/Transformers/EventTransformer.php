@@ -23,11 +23,11 @@ class EventTransformer extends TransformerAbstract
         if (is_string($content)) {
             $trimmedString = substr($content, 1, -1);
 
-            $array = explode(",", $trimmedString);
+            $array = explode(',', $trimmedString);
             $content = [];
 
             foreach ($array as $key => $value) {
-                $keyValues = explode(":", $value);
+                $keyValues = explode(':', $value);
 
                 $key = trim($keyValues[0], '"');
                 $value = trim($keyValues[1], '"');
