@@ -78,12 +78,12 @@ class Signup extends React.Component {
   }
 
   // Open the history modal of the given post
-  showHistory(postId, event, signupId) {
+  showHistory(postId, event) {
     event.preventDefault();
 
     this.api.get('api/v2/events', {
       filter: {
-        signup_id: signupId,
+        signup_id: this.props.signup_id,
       }
     }).then((result) => {
       this.setState((previousState) => {
@@ -293,7 +293,7 @@ class Signup extends React.Component {
 
             <div className="container__row">
 
-              <a href="#" onClick={e => this.showHistory(signup['signup_id'], e, signup.signup_id)}>Edit | Show History</a>
+              <a href="#" onClick={e => this.showHistory(signup['signup_id'], e)}>Edit | Show History</a>
 
               <ModalContainer>
                 {this.state.displayHistoryModal ?
