@@ -32,7 +32,9 @@ class ExportService
      */
     public function exportSignups($signups, $campaignId)
     {
-        $final_results = [];
+        // Set up column headers
+        $column_headers = ['Campaign ID', 'Campaign Run ID', 'Northstar ID', 'First Name', 'Email', 'Mobile', 'Age'];
+        $final_results = [$column_headers];
 
         foreach ($signups as $signup) {
             $northstar_user = $this->registrar->find($signup->northstar_id);
