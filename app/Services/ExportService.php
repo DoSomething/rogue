@@ -65,7 +65,6 @@ class ExportService
     {
         // Create and return CSV file
         $writer = Writer::createFromFileObject(new SplTempFileObject());
-        $writer->insertOne(['Campaign ID', 'Campaign Run ID', 'Northstar ID', 'First Name', 'Email', 'Mobile', 'Age']);
         $writer->insertAll($data);
 
         return $writer->output('export_' . $campaignId . '.csv');
