@@ -185,6 +185,7 @@ class CampaignSingle extends React.Component {
               onClose={e => this.props.hideHistory(e)}
               campaign={campaign}
               signup={signups[posts[this.props.historyModalId]['signup_id']]}
+              signupEvents={this.props.signupEvents}
             />
           : null}
         </ModalContainer>

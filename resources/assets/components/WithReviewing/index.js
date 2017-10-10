@@ -76,12 +76,22 @@ const reviewComponent = (Component, data) => {
     }
 
     // Open the history modal of the given post
-    showHistory(postId, event) {
-      event.preventDefault()
+    showHistory(postId, event, signupId) {
+      event.preventDefault();
 
-      this.setState({
-        displayHistoryModal: true,
-        historyModalId: postId,
+      this.api.get('api/v2/events', {
+        filter: {
+          signup_id: signupId,
+        }
+      }).then((result) => {
+        this.setState((previousState) => {
+          const newState = {...previousState};
+
+          newState.displayHistoryModal = true;
+          newState.historyModalId = postId;
+          newState.signupEvents = Object.values(result.data);
+          return newState;
+        });
       });
     }
 

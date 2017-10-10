@@ -1,4 +1,8 @@
 import React from 'react';
+import { map } from 'lodash';
+
+import Table from '../Table';
+import './history-modal.scss';
 
 class HistoryModal extends React.Component {
   constructor() {
@@ -9,15 +13,40 @@ class HistoryModal extends React.Component {
     };
 
     this.onUpdate = this.onUpdate.bind(this);
+    this.parseEventData = this.parseEventData.bind(this);
   }
 
   onUpdate(event) {
     this.setState({ quantity: event.target.value });
   }
 
+  parseEventData(events) {
+    var eventsWithChange = [];
+
+    for(var i = 0; i < events.length; i++) {
+      var current = events[i];
+      var next = events[i+1];
+
+      if (next) {
+        if (current.content.quantity != next.content.quantity || current.content.why_participated != next.content.why_participated || current.content.quantity_pending != next.content.quantity_pending) {
+          // If there is a difference in the record, add to the log.
+          eventsWithChange.push(current);
+        }
+      }
+    }
+
+    // Always include the first event in the response
+    // so there is something in the table.
+    // @TODO: change this when we start paginating.
+    eventsWithChange.push(events[events.length-1]);
+
+    return eventsWithChange;
+  }
+
   render() {
     const signup = this.props.signup;
     const campaign = this.props['campaign'];
+    const parsedEvents = this.parseEventData(this.props.signupEvents);
 
     return (
       <div className="modal">
@@ -35,8 +64,11 @@ class HistoryModal extends React.Component {
             </div>
           </div>
 
-          <h3>Reportback History</h3>
-          <p>table of all the history goes here 📖</p>
+          <h3>📖 History 📖</h3>
+          <p>Below shows the 20 most recent changes to the member's signup. This includes changes to the quantity or why. If you need changes beyond the 20 listed here, please reach out to Team Bleed!</p>
+          <div className="container">
+            <Table headings={['Quantity','Why Participated','Updated At','User']} data={parsedEvents} type='events' />
+          </div>
         </div>
         <button className="button -history" disabled={!this.state.quantity} onClick={() => this.props.onUpdate(signup, this.state.quantity)}>Save</button>
       </div>

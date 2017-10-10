@@ -101,9 +101,20 @@ class Signup extends React.Component {
   showHistory(postId, event) {
     event.preventDefault();
 
-    this.setState({
-      displayHistoryModal: true,
-      historyModalId: postId,
+    this.api.get('api/v2/events', {
+      filter: {
+        signup_id: this.props.signup_id,
+      }
+    }).then((result) => {
+      this.setState((previousState) => {
+        const newState = {...previousState};
+
+        newState.displayHistoryModal = true;
+        newState.historyModalId = postId;
+        newState.signupEvents = Object.values(result.data);
+
+        return newState;
+      });
     });
   }
 
@@ -311,6 +322,7 @@ class Signup extends React.Component {
                     onClose={e => this.hideHistory(e)}
                     signup={signup}
                     campaign={campaign}
+                    signupEvents={this.state.signupEvents}
                   />
                 : null}
               </ModalContainer>
