@@ -115,7 +115,7 @@ class PostRepository
      * @param \Rogue\Models\Signup $signup
      * @param array $data
      *
-     * @return Signup
+     * @return Signup|Post
      */
     public function update($signup, $data)
     {
@@ -145,9 +145,7 @@ class PostRepository
 
         // If there is a file, create a new post.
         if (array_key_exists('file', $data)) {
-            $post = $this->create($data, $signup->id);
-
-            return $post->signup;
+            return $this->create($data, $signup->id);
         }
 
         return $signup;

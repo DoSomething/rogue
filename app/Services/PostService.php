@@ -2,6 +2,7 @@
 
 namespace Rogue\Services;
 
+use Rogue\Models\Post;
 use DoSomething\Gateway\Blink;
 use Rogue\Repositories\PostRepository;
 
@@ -63,22 +64,22 @@ class PostService
      * @param \Rogue\Models\Signup $signup
      * @param array $data
      * @param string $transactionId
-     * @return \Rogue\Models\Signup
+     * @return \Rogue\Models\Post|\Rogue\Models\Signup
      */
     public function update($signup, $data, $transactionId)
     {
-        $signup = $this->repository->update($signup, $data);
+        $postOrSignup = $this->repository->update($signup, $data);
 
         // Save the new post in Customer.io, via Blink.
-        if (config('features.blink')) {
-            $payload = $signup->toBlinkPayload();
+        if (config('features.blink') && $postOrSignup instanceof Post) {
+            $payload = $postOrSignup->toBlinkPayload();
             $this->blink->userSignupPost($payload);
         }
 
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
 
-        return $signup;
+        return $postOrSignup;
     }
 
     /**
