@@ -2,12 +2,12 @@
 
 namespace Rogue\Http\Controllers\Api;
 
+use Rogue\Models\Signup;
+use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Services\SignupService;
 use Rogue\Http\Requests\SignupRequest;
-use Illuminate\Http\Request;
 use Rogue\Http\Transformers\SignupTransformer;
-use Rogue\Models\Signup;
 
 class SignupsController extends ApiController
 {
@@ -38,7 +38,6 @@ class SignupsController extends ApiController
 
         $this->transformer = new SignupTransformer;
     }
-
 
     /**
      * Returns signups.
