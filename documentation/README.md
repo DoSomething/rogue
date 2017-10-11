@@ -51,4 +51,10 @@ Endpoint                                       | Functionality
 #### Signups
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
-`POST /api/v2/signups`                         | [Create a signup](endpoints/signups.md#signups)
+`POST /api/v2/signups`                         | [Create a signup](endpoints/signups.md#create-a-signup)
+
+### v3
+#### Signups
+Endpoint                                       | Functionality                                           
+---------------------------------------------- | --------------------------------------------------------
+`GET /api/v3/signups`                          | [Get signups](endpoints/signups.md#retrieve-all-signups)

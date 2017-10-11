@@ -1,6 +1,105 @@
 ## Signups
 
-Create a Signup
+## Retrieve all Signups
+
+```
+GET /api/v2/signups
+```
+Example Response: 
+
+```
+{
+  "data": [
+    {
+      "signup_id": 21,
+      "northstar_id": "581ba6dd7f43c26c6d2349d3",
+      "campaign_id": 46,
+      "campaign_run_id": 3088,
+      "quantity": 1100,
+      "why_participated": "Rerum eos molestias blanditiis consequuntur inventore qui.",
+      "signup_source": "phoenix-web",
+      "details": null,
+      "created_at": "2017-08-14T21:20:53+00:00",
+      "updated_at": "2017-08-14T21:20:53+00:00",
+      "posts": {
+        "data": [
+          {
+            "id": 81,
+            "signup_id": 21,
+            "northstar_id": "581ba6dd7f43c26c6d2349d3",
+            "media": {
+              "url": "http://localhost/storage/uploads/reportback-items/edited_81.jpeg?time=1507749564",
+              "original_image_url": "/storage//uploads/reportback-items/55349-6dba2dea32f35e93c6ec7c70e1f3ceab-1502745653.jpeg?time=1507749564",
+              "caption": "Sint consequuntur perferendis eaque voluptatem iste illo impedit."
+            },
+            "tags": [],
+            "reactions": {
+              "reacted": false,
+              "total": null
+            },
+            "status": "accepted",
+            "source": "phoenix-oauth",
+            "remote_addr": "247.62.90.49",
+            "created_at": "2017-08-14T21:20:53+00:00",
+            "updated_at": "2017-08-14T21:20:53+00:00"
+          }
+        ]
+      }
+    },
+    {
+      "signup_id": 22,
+      "northstar_id": "574dace47f43c21f1e0d674c",
+      "campaign_id": 46,
+      "campaign_run_id": 8932,
+      "quantity": 5023,
+      "why_participated": "Nisi consequatur reiciendis ut autem.",
+      "signup_source": "phoenix-web",
+      "details": null,
+      "created_at": "2017-08-14T21:20:53+00:00",
+      "updated_at": "2017-08-14T21:20:53+00:00",
+      "posts": {
+        "data": [
+          {
+            "id": 82,
+            "signup_id": 22,
+            "northstar_id": "574dace47f43c21f1e0d674c",
+            "media": {
+              "url": "http://localhost/storage/uploads/reportback-items/edited_82.jpeg?time=1507749564",
+              "original_image_url": "/storage//uploads/reportback-items/55921-676c9c02029df581d3668ae869d937b8-1502745653.jpeg?time=1507749564",
+              "caption": "Eum quam incidunt enim nobis quia commodi."
+            },
+            "tags": [],
+            "reactions": {
+              "reacted": false,
+              "total": null
+            },
+            "status": "accepted",
+            "source": "phoenix-next",
+            "remote_addr": "40.158.147.99",
+            "created_at": "2017-08-14T21:20:53+00:00",
+            "updated_at": "2017-08-14T21:20:53+00:00"
+          }
+        ]
+      }
+    },
+  ],
+  "meta": {
+    "pagination": {
+      "total": 288,
+      "count": 20,
+      "per_page": 20,
+      "current_page": 2,
+      "total_pages": 15,
+      "links": {
+        "previous": "http://rogue.dev/api/v3/signups?page=1",
+        "next": "http://rogue.dev/api/v3/signups?page=3"
+      }
+    }
+  }
+}
+
+```
+## Create a Signup
 
 ```
 POST /api/v2/signups
