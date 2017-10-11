@@ -101,7 +101,6 @@ const reviewComponent = (Component, data) => {
     updatePost(postId, fields) {
       fields.post_id = postId;
 
-
       let request = this.api.put('reviews', fields);
 
       return request.then((result) => {
