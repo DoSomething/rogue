@@ -5,15 +5,12 @@ namespace Rogue\Http\Controllers\Api;
 use Rogue\Services\PostService;
 use Rogue\Services\SignupService;
 use Rogue\Http\Requests\SignupRequest;
+use Illuminate\Http\Request;
 use Rogue\Http\Transformers\SignupTransformer;
+use Rogue\Models\Signup;
 
 class SignupsController extends ApiController
 {
-    /**
-     * @var \League\Fractal\TransformerAbstract;
-     */
-    protected $transformer;
-
     /**
      * The signup service instance.
      *
@@ -38,6 +35,23 @@ class SignupsController extends ApiController
     {
         $this->signups = $signups;
         $this->posts = $posts;
+
+        $this->transformer = new SignupTransformer;
+    }
+
+
+    /**
+     * Returns signups.
+     * GET /signups
+     *
+     * @param Request $request
+     * @return ]Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $query = $this->newQuery(Signup::class);
+
+        return $this->paginatedCollection($query, $request);
     }
 
     /**
@@ -58,9 +72,6 @@ class SignupsController extends ApiController
         if (! $signup) {
             $signup = $this->signups->create($request->all(), $transactionId);
         }
-
-        // Transform the data to return it
-        $this->transformer = new SignupTransformer;
 
         // check to see if there is a reportback too aka we are migratin'
         if ($request->has('photo')) {

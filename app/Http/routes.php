@@ -90,3 +90,11 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.r
     // Campaigns
     Route::get('campaigns', 'Api\CampaignsController@index');
 });
+
+// v3 routes
+Route::group(['prefix' => 'api/v3', 'middleware' => ['auth.api', 'log.received.request']], function () {
+
+    // signups
+    Route::get('signups', 'Api\SignupsController@index');
+
+});
