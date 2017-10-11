@@ -2,6 +2,7 @@
 
 namespace Rogue\Services;
 
+use Rogue\Models\Post;
 use DoSomething\Gateway\Blink;
 use Rogue\Repositories\PostRepository;
 
@@ -70,7 +71,7 @@ class PostService
         $postOrSignup = $this->repository->update($signup, $data);
 
         // Save the new post in Customer.io, via Blink.
-        if (config('features.blink')) {
+        if (config('features.blink') && $postOrSignup instanceof Post) {
             $payload = $postOrSignup->toBlinkPayload();
             $this->blink->userSignupPost($payload);
         }
