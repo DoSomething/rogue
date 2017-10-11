@@ -11,7 +11,7 @@ exports[`it renders accepted, rejected, and delete buttons 1`] = `
     }
   >
     <li>
-      <Component
+      <StatusButton
         label="accept"
         setStatus={[Function]}
         status="pending"
@@ -19,7 +19,7 @@ exports[`it renders accepted, rejected, and delete buttons 1`] = `
       />
     </li>
     <li>
-      <Component
+      <StatusButton
         label="reject"
         setStatus={[Function]}
         status="pending"
@@ -53,7 +53,7 @@ exports[`it renders the review block with tags 1`] = `
     }
   >
     <li>
-      <Component
+      <StatusButton
         label="accept"
         setStatus={[Function]}
         status="accepted"
@@ -61,7 +61,7 @@ exports[`it renders the review block with tags 1`] = `
       />
     </li>
     <li>
-      <Component
+      <StatusButton
         label="reject"
         setStatus={[Function]}
         status="accepted"
