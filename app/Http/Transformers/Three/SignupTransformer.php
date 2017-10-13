@@ -5,7 +5,7 @@ namespace Rogue\Http\Transformers\Three;
 use Rogue\Models\Signup;
 use League\Fractal\TransformerAbstract;
 
-class v3SignupTransformer extends TransformerAbstract
+class SignupTransformer extends TransformerAbstract
 {
     /**
      * Transform resource data.

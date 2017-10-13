@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers\Three;
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Http\Controllers\Api\ApiController;
-use Rogue\Http\Transformers\Three\v3SignupTransformer;
+use Rogue\Http\Transformers\Three\SignupTransformer;
 
 class SignupsController extends ApiController
 {
@@ -22,7 +22,7 @@ class SignupsController extends ApiController
      */
     public function __construct()
     {
-        $this->transformer = new v3SignupTransformer;
+        $this->transformer = new SignupTransformer;
     }
 
     /**
