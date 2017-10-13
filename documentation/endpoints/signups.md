@@ -12,7 +12,7 @@ Example Response:
   "data": [
     {
       "id": 1,
-      "northstar_id": "5589c991a59dbfa93d8b45ae",
+      "northstar_id": "12334",
       "campaign_id": 1173,
       "campaign_run_id": 6519,
       "quantity": 8570,
@@ -24,7 +24,7 @@ Example Response:
     },
     {
       "id": 2,
-      "northstar_id": "5589c991a59dbfa93d8b45ae",
+      "northstar_id": "345367",
       "campaign_id": 1631,
       "campaign_run_id": 1626,
       "quantity": 1338,
@@ -50,6 +50,30 @@ Example Response:
 }
 
 ```
+## Retrieve a specific signup
+
+```
+GET /api/v3/signups/:signup_id
+```
+Example Response: 
+
+```
+{
+  "data": {
+    "id": 1,
+    "northstar_id": "1234",
+    "campaign_id": 1173,
+    "campaign_run_id": 6519,
+    "quantity": 8570,
+    "why_participated": "Eos architecto et quibusdam quasi.",
+    "source": "phoenix-web",
+    "details": null,
+    "created_at": "2017-08-14T21:20:51+00:00",
+    "updated_at": "2017-08-15T16:03:25+00:00"
+  }
+}
+```
+
 ## Create a Signup
 
 ```
