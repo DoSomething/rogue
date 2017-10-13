@@ -3,7 +3,7 @@
 ## Retrieve all Signups
 
 ```
-GET /api/v2/signups
+GET /api/v3/signups
 ```
 Example Response: 
 
