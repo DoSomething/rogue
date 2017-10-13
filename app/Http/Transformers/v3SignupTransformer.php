@@ -3,7 +3,6 @@
 namespace Rogue\Http\Transformers;
 
 use Rogue\Models\Signup;
-use Rogue\Services\Registrar;
 use League\Fractal\TransformerAbstract;
 
 class v3SignupTransformer extends TransformerAbstract
