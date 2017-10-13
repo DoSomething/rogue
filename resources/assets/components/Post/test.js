@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 
 import Post from './index';
 
-it('renders correctly', () => {
+test('it renders correctly', () => {
   const post = {
     caption: 'Here is my awesome caption!',
   };
