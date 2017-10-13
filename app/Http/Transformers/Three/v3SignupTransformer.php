@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace Rogue\Http\Transformers\Three;
 
 use Rogue\Models\Signup;
 use League\Fractal\TransformerAbstract;

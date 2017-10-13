@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers\Three;
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Http\Controllers\Api\ApiController;
-use Rogue\Http\Transformers\v3SignupTransformer;
+use Rogue\Http\Transformers\Three\v3SignupTransformer;
 
 class SignupsController extends ApiController
 {
