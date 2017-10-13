@@ -127,6 +127,4 @@ class Signup extends Model
 
         return $this->quantity;
     }
-
-
 }
