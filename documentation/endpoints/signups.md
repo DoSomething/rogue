@@ -1,6 +1,56 @@
 ## Signups
 
-Create a Signup
+## Retrieve all Signups
+
+```
+GET /api/v3/signups
+```
+Example Response: 
+
+```
+{
+  "data": [
+    {
+      "id": 1,
+      "northstar_id": "5589c991a59dbfa93d8b45ae",
+      "campaign_id": 1173,
+      "campaign_run_id": 6519,
+      "quantity": 8570,
+      "why_participated": "Eos architecto et quibusdam quasi.",
+      "source": "phoenix-web",
+      "details": null,
+      "created_at": "2017-08-14T21:20:51+00:00",
+      "updated_at": "2017-08-15T16:03:25+00:00"
+    },
+    {
+      "id": 2,
+      "northstar_id": "5589c991a59dbfa93d8b45ae",
+      "campaign_id": 1631,
+      "campaign_run_id": 1626,
+      "quantity": 1338,
+      "why_participated": "Non nobis ab asperiores fuga.",
+      "source": "phoenix-web",
+      "details": null,
+      "created_at": "2017-08-14T21:20:51+00:00",
+      "updated_at": "2017-08-30T19:08:25+00:00"
+    },
+  ],
+  "meta": {
+    "pagination": {
+      "total": 288,
+      "count": 20,
+      "per_page": 20,
+      "current_page": 1,
+      "total_pages": 15,
+      "links": {
+        "next": "http://rogue.dev/api/v3/signups?page=2"
+      }
+    }
+  }
+}
+
+```
+## Create a Signup
 
 ```
 POST /api/v2/signups

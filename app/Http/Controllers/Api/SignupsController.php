@@ -38,6 +38,8 @@ class SignupsController extends ApiController
     {
         $this->signups = $signups;
         $this->posts = $posts;
+
+        $this->transformer = new SignupTransformer;
     }
 
     /**
@@ -58,9 +60,6 @@ class SignupsController extends ApiController
         if (! $signup) {
             $signup = $this->signups->create($request->all(), $transactionId);
         }
-
-        // Transform the data to return it
-        $this->transformer = new SignupTransformer;
 
         // check to see if there is a reportback too aka we are migratin'
         if ($request->has('photo')) {
