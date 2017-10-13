@@ -32,10 +32,7 @@ class ExportController extends Controller
      */
     public function show($campaignId)
     {
-        // Run the query
-        $signups = Signup::whereNull('details')->where('campaign_id', $campaignId)->get();
-
         // Compile the data and trigger the CSV download
-        return $this->export->exportSignups($signups, $campaignId);
+        return $this->export->exportSignups($campaignId);
     }
 }

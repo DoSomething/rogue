@@ -4,6 +4,7 @@ namespace Rogue\Services;
 
 use League\Csv\Writer;
 use SplTempFileObject;
+use Rogue\Models\Signup;
 
 class ExportService
 {
@@ -30,8 +31,10 @@ class ExportService
      * @param object $signups
      * @param int $campaignId
      */
-    public function exportSignups($signups, $campaignId)
+    public function exportSignups($campaignId)
     {
+        $signups = Signup::whereNull('details')->where('campaign_id', $campaignId)->cursor();
+
         // Set up column headers
         $column_headers = ['Campaign ID', 'Campaign Run ID', 'Northstar ID', 'First Name', 'Email', 'Mobile', 'Age'];
         $final_results = [$column_headers];
