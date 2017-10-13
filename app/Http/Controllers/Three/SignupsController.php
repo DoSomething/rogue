@@ -40,7 +40,7 @@ class SignupsController extends ApiController
     }
 
     /**
-     * Returns a specific signup(s).
+     * Returns a specific signup.
      * GET /signups/:id
      *
      * @param Request $request
