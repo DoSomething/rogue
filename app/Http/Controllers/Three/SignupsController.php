@@ -44,16 +44,12 @@ class SignupsController extends ApiController
      * GET /signups/:id
      *
      * @param Request $request
-     * @return ]Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function show($id)
     {
-        $signup = Signup::find($id);
+        $signup = Signup::findOrFail($id);
 
-        if ($signup) {
-            return $this->item($signup);
-        } else {
-            throw (new ModelNotFoundException)->setModel('Signup');
-        }
+        return $this->item($signup);
     }
 }
