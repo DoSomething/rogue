@@ -4,6 +4,7 @@ namespace Rogue\Services;
 
 use League\Csv\Writer;
 use SplTempFileObject;
+use Rogue\Models\Signup;
 
 class ExportService
 {
@@ -30,42 +31,32 @@ class ExportService
      * @param object $signups
      * @param int $campaignId
      */
-    public function exportSignups($signups, $campaignId)
+    public function exportSignups($campaignId)
     {
+        $writer = Writer::createFromFileObject(new SplTempFileObject());
+
         // Set up column headers
-        $column_headers = ['Campaign ID', 'Campaign Run ID', 'Northstar ID', 'First Name', 'Email', 'Mobile', 'Age'];
-        $final_results = [$column_headers];
+        $headers = ['Campaign ID', 'Campaign Run ID', 'Northstar ID', 'First Name', 'Email', 'Mobile', 'Age'];
+
+        $writer->insertOne($headers);
+
+        $signups = Signup::whereNull('details')->where('campaign_id', $campaignId)->cursor();
 
         foreach ($signups as $signup) {
-            $northstar_user = $this->registrar->find($signup->northstar_id);
+            $northstarUser = $this->registrar->find($signup->northstar_id);
 
-            $next_row = [
+            $nextRow = [
                 'campaign_id' => $signup->campaign_id,
                 'campaign_run_id' => $signup->campaign_run_id,
                 'northstar_id' => $signup->northstar_id,
-                'first_name' => $northstar_user->first_name,
-                'email' => $northstar_user->email,
-                'mobile' => $northstar_user->mobile,
-                'age' => getAgeFromBirthdate($northstar_user->birthdate),
+                'first_name' => $northstarUser->first_name,
+                'email' => $northstarUser->email,
+                'mobile' => $northstarUser->mobile,
+                'age' => getAgeFromBirthdate($northstarUser->birthdate),
             ];
 
-            array_push($final_results, $next_row);
+            $writer->insertOne($nextRow);
         }
-
-        return $this->makeCSV($final_results, $campaignId);
-    }
-
-    /**
-     * Build the CSV of signup details for the specified campaign.
-     *
-     * @param array $signups
-     * @param int $campaignId
-     */
-    public function makeCSV($data, $campaignId)
-    {
-        // Create and return CSV file
-        $writer = Writer::createFromFileObject(new SplTempFileObject());
-        $writer->insertAll($data);
 
         return $writer->output('export_' . $campaignId . '.csv');
     }
