@@ -19,4 +19,4 @@ set :npm_flags, ''
 set :composer_install_flags, '--no-dev --optimize-autoloader'
 
 set :linked_files, %w{.env}
-set :linked_dirs, %w{images storage/logs storage/dumps storage/system}
+set :linked_dirs, %w{images storage/logs storage/dumps storage/keys storage/system}
