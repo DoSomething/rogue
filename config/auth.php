@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'local',
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
+            'driver' => 'gateway',
+            'provider' => 'northstar',
         ],
     ],
 
@@ -65,8 +65,13 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'local' => [
             'driver' => 'eloquent',
+            'model' => Rogue\Models\User::class,
+        ],
+
+        'northstar' => [
+            'driver' => 'gateway',
             'model' => Rogue\Models\User::class,
         ],
 
