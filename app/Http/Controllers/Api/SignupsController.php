@@ -2,15 +2,20 @@
 
 namespace Rogue\Http\Controllers\Api;
 
-use Rogue\Models\Signup;
-use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Services\SignupService;
 use Rogue\Http\Requests\SignupRequest;
+use Illuminate\Http\Request;
 use Rogue\Http\Transformers\SignupTransformer;
+use Rogue\Models\Signup;
 
 class SignupsController extends ApiController
 {
+    /**
+     * @var \League\Fractal\TransformerAbstract;
+     */
+    protected $transformer;
+
     /**
      * The signup service instance.
      *
@@ -37,20 +42,6 @@ class SignupsController extends ApiController
         $this->posts = $posts;
 
         $this->transformer = new SignupTransformer;
-    }
-
-    /**
-     * Returns signups.
-     * GET /signups
-     *
-     * @param Request $request
-     * @return ]Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        $query = $this->newQuery(Signup::class);
-
-        return $this->paginatedCollection($query, $request);
     }
 
     /**
