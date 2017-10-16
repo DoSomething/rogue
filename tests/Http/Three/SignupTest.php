@@ -105,4 +105,22 @@ class SignupTest extends BrowserKitTestCase
             ],
         ]);
     }
+
+    /**
+     * Test that a signup gets deleted when hitting the DELETE endpoint.
+     *
+     * @return void
+     */
+    public function testDeletingASignup()
+    {
+        $signup = factory(Signup::class)->create();
+
+        // $response = $this->actingAsAdmin()->delete('api/v3/signups/' . $signup->id);
+        $response = $this->json('delete', 'api/v3/signups' . $signup->id, []);
+        dd($response);
+
+        $this->assertResponseStatus(200);
+
+        $this->notSeeInDatabase('signups', ['id' => $signup->id]);
+    }
 }
