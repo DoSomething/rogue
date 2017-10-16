@@ -8,6 +8,15 @@ use League\Fractal\TransformerAbstract;
 class SignupTransformer extends TransformerAbstract
 {
     /**
+     * List of resources possible to include
+     *
+     * @var array
+     */
+    protected $availableIncludes = [
+        'posts',
+    ];
+
+    /**
      * Transform resource data.
      *
      * @param \Rogue\Models\Signup $signup
@@ -27,5 +36,18 @@ class SignupTransformer extends TransformerAbstract
             'created_at' => $signup->created_at->toIso8601String(),
             'updated_at' => $signup->updated_at->toIso8601String(),
         ];
+    }
+
+    /**
+     * Include posts
+     *
+     * @param \Rogue\Models\Signup $signup
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includePosts(Signup $signup)
+    {
+        $post = $signup->posts;
+
+        return $this->collection($post, new PostTransformer);
     }
 }
