@@ -44,12 +44,13 @@ class SignupsController extends ApiController
      * GET /signups/:id
      *
      * @param Request $request
+     * @param int $id
      * @return Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $signup = Signup::findOrFail($id);
 
-        return $this->item($signup);
+        return $this->item($signup, 200, [], $this->transformer, $request->query('include'));
     }
 }

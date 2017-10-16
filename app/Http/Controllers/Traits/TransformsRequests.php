@@ -44,13 +44,14 @@ trait TransformsRequests
      * @param  int  $code
      * @param  array  $meta
      * @param  null|object  $transformer
+     * @param  null|string $include
      * @return \Illuminate\Http\JsonResponse
      */
-    public function item($data, $code = 200, $meta = [], $transformer = null)
+    public function item($data, $code = 200, $meta = [], $transformer = null, $include = null)
     {
         $item = new Item($data, $this->setTransformer($transformer));
 
-        return $this->transform($item, $code, $meta);
+        return $this->transform($item, $code, $meta, $include);
     }
 
     /**
@@ -59,6 +60,7 @@ trait TransformsRequests
      * @param  \League\Fractal\Resource\Item|\League\Fractal\Resource\Collection  $data
      * @param  int  $code
      * @param  array  $meta
+     * @param  null|string $include
      * @return \Illuminate\Http\JsonResponse
      */
     public function transform($data, $code = 200, $meta = [], $include = null)

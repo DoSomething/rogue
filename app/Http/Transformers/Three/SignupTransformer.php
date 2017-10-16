@@ -4,6 +4,7 @@ namespace Rogue\Http\Transformers\Three;
 
 use Rogue\Models\Signup;
 use League\Fractal\TransformerAbstract;
+use Rogue\Http\Transformers\PostTransformer;
 
 class SignupTransformer extends TransformerAbstract
 {
