@@ -50,6 +50,35 @@ Example Response:
 }
 
 ```
+## Retrieve a specific signup
+
+```
+GET /api/v3/signups/:signup_id
+```
+### Optional Query Parameters
+- **include** _(string)_
+  - Include additional related records in the response: `posts`
+  - e.g. `/api/v3/signups/1?include=posts`
+  
+Example Response: 
+
+```
+{
+  "data": {
+    "id": 1,
+    "northstar_id": "5589c991a59dbfa93d8b45ae",
+    "campaign_id": 1173,
+    "campaign_run_id": 6519,
+    "quantity": 8570,
+    "why_participated": "Eos architecto et quibusdam quasi.",
+    "source": "phoenix-web",
+    "details": null,
+    "created_at": "2017-08-14T21:20:51+00:00",
+    "updated_at": "2017-08-15T16:03:25+00:00"
+  }
+}
+```
+
 ## Create a Signup
 
 ```

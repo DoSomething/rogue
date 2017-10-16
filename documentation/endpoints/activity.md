@@ -17,7 +17,7 @@ GET /api/v2/activity
 - **page** _(integer)_
   - For pagination, specify page of activity to return in the response.
   - e.g. `/activity?page=2`
-- **include** _(integer)_
+- **include** _(string)_
   - Include additional related records in the response: `user`
   - e.g. `/activity?include=user`
 - **orderBy** _(string)_

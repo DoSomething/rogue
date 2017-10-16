@@ -38,4 +38,19 @@ class SignupsController extends ApiController
 
         return $this->paginatedCollection($query, $request);
     }
+
+    /**
+     * Returns a specific signup.
+     * GET /signups/:id
+     *
+     * @param Request $request
+     * @param int $id
+     * @return Illuminate\Http\Response
+     */
+    public function show(Request $request, $id)
+    {
+        $signup = Signup::findOrFail($id);
+
+        return $this->item($signup, 200, [], $this->transformer, $request->query('include'));
+    }
 }

@@ -10,6 +10,7 @@ GET /api/v2/events
   - Filter results by the given `signup_id`
   
 Example Response:
+```
 {
   "data": [
     {
@@ -55,3 +56,4 @@ Example Response:
     }
   ]
 }
+```
