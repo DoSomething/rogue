@@ -57,7 +57,7 @@ class SignupsController extends ApiController
     /**
      * Delete a signup.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

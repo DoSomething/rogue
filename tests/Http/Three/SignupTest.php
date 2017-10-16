@@ -124,7 +124,6 @@ class SignupTest extends BrowserKitTestCase
 
         // Make sure that the signup's deleted_at gets persisted in the database.
         $this->assertEquals($signup->fresh()->deleted_at->toTimeString(), '14:00:00');
-
     }
 
     /**
