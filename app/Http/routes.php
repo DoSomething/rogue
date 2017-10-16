@@ -97,4 +97,5 @@ Route::group(['prefix' => 'api/v3', 'middleware' => ['auth.api', 'log.received.r
     // signups
     Route::get('signups', 'Three\SignupsController@index');
     Route::get('signups/{id}', 'Three\SignupsController@show');
+    Route::delete('signups/{id}', 'Three\SignupsController@destroy');
 });
