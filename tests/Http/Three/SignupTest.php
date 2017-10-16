@@ -2,8 +2,8 @@
 
 namespace Tests\Http\Three;
 
-use Rogue\Models\Signup;
 use Rogue\Models\Post;
+use Rogue\Models\Signup;
 use Tests\BrowserKitTestCase;
 
 class SignupTest extends BrowserKitTestCase
@@ -77,7 +77,6 @@ class SignupTest extends BrowserKitTestCase
         ]);
     }
 
-
     /**
      * Test for retrieving a signup with included post info.
      *
@@ -89,10 +88,7 @@ class SignupTest extends BrowserKitTestCase
         $signup = factory(Signup::class)->create();
         $post = factory(Post::class)->create();
         $post->signup()->associate($signup);
-        $post->campaign_id = $signup->campaign_id;
-        $post->northstar_id = $signup->northstar_id;
         $post->save();
-
 
         $this->get('api/v3/signups/' . $signup->id . '?include=posts');
         $this->assertResponseStatus(200);
