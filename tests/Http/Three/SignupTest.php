@@ -3,6 +3,7 @@
 namespace Tests\Http\Three;
 
 use Rogue\Models\Signup;
+use Rogue\Models\Post;
 use Tests\BrowserKitTestCase;
 
 class SignupTest extends BrowserKitTestCase
@@ -51,7 +52,7 @@ class SignupTest extends BrowserKitTestCase
     /**
      * Test for retrieving a specific signup.
      *
-     * GET /api/v3/signups
+     * GET /api/v3/signups/:signup_id
      * @return void
      */
     public function testSignupShow()
@@ -72,6 +73,39 @@ class SignupTest extends BrowserKitTestCase
                 'details',
                 'created_at',
                 'updated_at',
+            ],
+        ]);
+    }
+
+
+    /**
+     * Test for retrieving a signup with included post info.
+     *
+     * GET /api/v3/signups/186?include=posts
+     * @return void
+     */
+    public function testSignupWithIncludedPosts()
+    {
+        $signup = factory(Signup::class)->create();
+        $post = factory(Post::class)->create();
+        $post->signup()->associate($signup);
+        $post->campaign_id = $signup->campaign_id;
+        $post->northstar_id = $signup->northstar_id;
+        $post->save();
+
+
+        $this->get('api/v3/signups/' . $signup->id . '?include=posts');
+        $this->assertResponseStatus(200);
+
+        $this->seeJsonStructure([
+            'data' => [
+                'posts' => [
+                    'data' => [
+                        '*' => [
+                            'id',
+                        ],
+                    ],
+                ],
             ],
         ]);
     }
