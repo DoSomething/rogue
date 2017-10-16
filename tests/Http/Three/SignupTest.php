@@ -115,12 +115,29 @@ class SignupTest extends BrowserKitTestCase
     {
         $signup = factory(Signup::class)->create();
 
-        // $response = $this->actingAsAdmin()->delete('api/v3/signups/' . $signup->id);
-        $response = $this->json('delete', 'api/v3/signups' . $signup->id, []);
-        dd($response);
+        // Mock time of when the signup is soft deleted.
+        $this->mockTime('8/3/2017 14:00:00');
+
+        $response = $this->withRogueApiKey()->delete('api/v3/signups/' . $signup->id);
 
         $this->assertResponseStatus(200);
 
-        $this->notSeeInDatabase('signups', ['id' => $signup->id]);
+        // Make sure that the signup's deleted_at gets persisted in the database.
+        $this->assertEquals($signup->fresh()->deleted_at->toTimeString(), '14:00:00');
+
+    }
+
+    /**
+     * Test that non-authenticated user's/apps can't delete signups.
+     *
+     * @return void
+     */
+    public function testUnauthenticatedUserDeletingASignup()
+    {
+        $signup = factory(Signup::class)->create();
+
+        $response = $this->delete('api/v3/signups/' . $signup->id);
+
+        $response->assertResponseStatus(401);
     }
 }

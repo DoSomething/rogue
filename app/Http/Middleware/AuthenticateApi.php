@@ -24,7 +24,6 @@ class AuthenticateApi extends Authenticate
         if (! in_array($request->method(), ['POST', 'PUT', 'DELETE'])) {
             return $next($request);
         }
-
         // Allow using the `X-DS-Rogue-API-Key` header to override auth.
         if ($request->hasHeader('X-DS-Rogue-API-Key')) {
             if ($request->header('X-DS-Rogue-API-Key') !== config('app.api_key')) {
