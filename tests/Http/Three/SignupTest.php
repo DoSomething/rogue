@@ -135,7 +135,7 @@ class SignupTest extends BrowserKitTestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->delete('api/v3/signups/' . $signup->id);
+        $response = $this->deleteJson('api/v3/signups/' . $signup->id);
 
         $response->assertResponseStatus(401);
     }
