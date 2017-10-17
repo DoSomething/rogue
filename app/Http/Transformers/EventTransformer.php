@@ -30,7 +30,7 @@ class EventTransformer extends TransformerAbstract
                 $keyValues = explode(':', $value);
 
                 $key = trim($keyValues[0], '"');
-                $value = trim($keyValues[1], '"');
+                $value = isset($keyValues[1]) ? trim($keyValues[1], '"') : '';
                 $content[$key] = $value;
             }
 
