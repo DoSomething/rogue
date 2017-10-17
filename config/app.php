@@ -191,7 +191,6 @@ return [
         Rogue\Providers\EventServiceProvider::class,
         Rogue\Providers\RouteServiceProvider::class,
         Rogue\Providers\ModelServiceProvider::class,
-        Rogue\Providers\QueueServiceProvider::class,
     ],
 
     /*
