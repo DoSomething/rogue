@@ -5,6 +5,7 @@ namespace Rogue\Services;
 use League\Csv\Writer;
 use SplTempFileObject;
 use Rogue\Models\Signup;
+use Illuminate\Support\Facades\Storage;
 
 class ExportService
 {
@@ -33,32 +34,32 @@ class ExportService
      */
     public function exportSignups($campaignId)
     {
-        return $campaignId;
-        // $writer = Writer::createFromFileObject(new SplTempFileObject());
+        // return $campaignId;
+        $writer = Writer::createFromFileObject(new SplTempFileObject());
 
-        // // Set up column headers
-        // $headers = ['Campaign ID', 'Campaign Run ID', 'Northstar ID', 'First Name', 'Email', 'Mobile', 'Age'];
+        // Set up column headers
+        $headers = ['Campaign ID', 'Campaign Run ID', 'Northstar ID', 'First Name', 'Email', 'Mobile', 'Age'];
 
-        // $writer->insertOne($headers);
+        $writer->insertOne($headers);
 
-        // $signups = Signup::whereNull('details')->where('campaign_id', $campaignId)->cursor();
+        $signups = Signup::whereNull('details')->where('campaign_id', $campaignId)->cursor();
 
-        // foreach ($signups as $signup) {
-        //     $northstarUser = $this->registrar->find($signup->northstar_id);
+        foreach ($signups as $signup) {
+            $northstarUser = $this->registrar->find($signup->northstar_id);
 
-        //     $nextRow = [
-        //         'campaign_id' => $signup->campaign_id,
-        //         'campaign_run_id' => $signup->campaign_run_id,
-        //         'northstar_id' => $signup->northstar_id,
-        //         'first_name' => $northstarUser->first_name,
-        //         'email' => $northstarUser->email,
-        //         'mobile' => $northstarUser->mobile,
-        //         'age' => getAgeFromBirthdate($northstarUser->birthdate),
-        //     ];
+            $nextRow = [
+                'campaign_id' => $signup->campaign_id,
+                'campaign_run_id' => $signup->campaign_run_id,
+                'northstar_id' => $signup->northstar_id,
+                'first_name' => $northstarUser->first_name,
+                'email' => $northstarUser->email,
+                'mobile' => $northstarUser->mobile,
+                'age' => getAgeFromBirthdate($northstarUser->birthdate),
+            ];
 
-        //     $writer->insertOne($nextRow);
-        // }
+            $writer->insertOne($nextRow);
+        }
 
-        // return $writer->output('export_' . $campaignId . '.csv');
+        Storage::put('export_'.$campaignId.'.csv', $writer->__toString());
     }
 }

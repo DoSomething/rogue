@@ -5,6 +5,7 @@ namespace Rogue\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ExportDone extends Mailable
@@ -29,8 +30,11 @@ class ExportDone extends Mailable
      */
     public function build()
     {
+        $pathToExport = Storage::url('export_'.$this->campaignId.'.csv');
+
         return $this->from('ssmith@dosomething.org')
                     ->subject('Your signup export is ready!')
+                    ->attach($pathToExport)
                     ->view('emails.export_done');
     }
 }
