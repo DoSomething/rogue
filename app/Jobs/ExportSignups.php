@@ -33,6 +33,6 @@ class ExportSignups implements ShouldQueue
      */
     public function handle(ExportService $export)
     {
-        return $export->exportSignups($campaignId);
+        return $export->exportSignups($this->campaignId);
     }
 }

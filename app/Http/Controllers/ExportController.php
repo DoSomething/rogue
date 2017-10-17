@@ -3,26 +3,18 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Signup;
-use Rogue\Services\ExportService;
+use Rogue\Jobs\ExportSignups;
 
 class ExportController extends Controller
 {
-    /**
-     * ExportService instance
-     *
-     * @var Rogue\Services\ExportService
-     */
-    protected $export;
-
     /**
      * Instantiate a new ExportController instance.
      *
      * @param Rogue\Services\Registrar $registrar
      */
-    public function __construct(ExportService $export)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->export = $export;
     }
 
     /**
@@ -32,7 +24,7 @@ class ExportController extends Controller
      */
     public function show($campaignId)
     {
-        // Compile the data and trigger the CSV download
-        return $this->export->exportSignups($campaignId);
+        // Dispatch an Export job to the queue.
+        dispatch((new ExportSignups($campaignId)));
     }
 }
