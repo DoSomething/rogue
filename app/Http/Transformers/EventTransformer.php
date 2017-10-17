@@ -29,7 +29,7 @@ class EventTransformer extends TransformerAbstract
             foreach ($array as $key => $value) {
                 $keyValues = explode(':', $value);
 
-                $key = isset($keyValues[0]) ? trim($keyValues[0], '"') : '';
+                $key = trim($keyValues[0], '"');
                 $value = isset($keyValues[1]) ? trim($keyValues[1], '"') : '';
                 $content[$key] = $value;
             }
