@@ -6,9 +6,12 @@ use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Http\Controllers\Api\ApiController;
 use Rogue\Http\Transformers\Three\SignupTransformer;
+use Northstar\Http\Controllers\Traits\TransformsResponses;
 
 class SignupsController extends ApiController
 {
+    use TransformsResponses;
+
     /**
      * @var \League\Fractal\TransformerAbstract;
      */
@@ -60,14 +63,10 @@ class SignupsController extends ApiController
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Signup $signup)
     {
-        $signupDeleted = Signup::findOrFail($id)->delete();
+        $signup->delete();
 
-        if ($signupDeleted) {
-            return response()->json(['code' => 200, 'message' => 'Signup deleted.']);
-        } else {
-            return response()->json(['code' => 500, 'message' => 'There was an error deleting the signup']);
-        }
+        return $this->respond('Signup deleted.', 200);
     }
 }
