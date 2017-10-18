@@ -18,14 +18,17 @@ class ExportSignups implements ShouldQueue
 
     protected $campaign;
 
+    protected $email;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($campaign)
+    public function __construct($campaign, $email)
     {
         $this->campaign = $campaign;
+        $this->email = $email;
     }
 
     /**
@@ -38,6 +41,6 @@ class ExportSignups implements ShouldQueue
         // Generate an export of signups for this campaign.
         $export = $export->exportSignups($this->campaign['id']);
 
-        Mail::to('ssmith@dosomething.org')->queue(new ExportDone($this->campaign, $export));
+        Mail::to($this->email)->queue(new ExportDone($this->campaign, $export));
     }
 }
