@@ -32,7 +32,7 @@ class ExportService
      * @param object $signups
      * @param int $campaignId
      */
-    public function exportSignups($campaignId)
+    public function exportSignups($campaignId, $campaignRunId)
     {
         // return $campaignId;
         $writer = Writer::createFromFileObject(new SplTempFileObject());
@@ -42,7 +42,10 @@ class ExportService
 
         $writer->insertOne($headers);
 
-        $signups = Signup::whereNull('details')->where('campaign_id', $campaignId)->cursor();
+        $signups = Signup::whereNull('details')->where([
+            ['campaign_id', '=', $campaignId],
+            ['campaign_run_id', '=', $campaignRunId],
+        ])->cursor();
 
         foreach ($signups as $signup) {
             $northstarUser = $this->registrar->find($signup->northstar_id);
