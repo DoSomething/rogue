@@ -12,7 +12,18 @@ class ExportDone extends Mailable
 {
     use Queueable, SerializesModels;
 
+    /**
+     * The full campaign array with campaign details.
+     *
+     * @var array
+     */
     protected $campaign;
+
+    /**
+     * The raw data of the generated CSV to attach to the email.
+     *
+     * @var string
+     */
     protected $csv;
 
     /**
@@ -33,6 +44,9 @@ class ExportDone extends Mailable
      */
     public function build()
     {
+        // Defaults to send from 'ssmith@dosomething.org',
+        // but we can change this if there is a better address to use.
+        // However, folks should feel lucky to get an email from Shae Smith.
         return $this->from('ssmith@dosomething.org')
                     ->subject('Your signup export is ready!')
                     ->attachData($this->csv, 'export_'.$this->campaign['id'].'.csv', [

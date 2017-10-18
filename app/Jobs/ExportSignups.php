@@ -16,8 +16,18 @@ class ExportSignups implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * The full campaign array with campaign details.
+     *
+     * @var array
+     */
     protected $campaign;
 
+    /**
+     * The email to send the export to.
+     *
+     * @var string
+     */
     protected $email;
 
     /**

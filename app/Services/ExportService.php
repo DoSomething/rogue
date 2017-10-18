@@ -31,6 +31,8 @@ class ExportService
      *
      * @param object $signups
      * @param int $campaignId
+     *
+     * @return string CSV data
      */
     public function exportSignups($campaignId, $campaignRunId)
     {

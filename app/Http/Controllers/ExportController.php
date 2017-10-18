@@ -9,7 +9,18 @@ use Rogue\Services\CampaignService;
 
 class ExportController extends Controller
 {
+    /**
+     * Campaign Service instance
+     *
+     * @var Rogue\Services\CampaignService
+     */
     protected $campaigns;
+
+    /**
+     * Registrar instance
+     *
+     * @var Rogue\Services\Registrar
+     */
     protected $registrar;
 
     /**
