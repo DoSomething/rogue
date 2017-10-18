@@ -16,16 +16,16 @@ class ExportSignups implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $campaignId;
+    protected $campaign;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($campaignId)
+    public function __construct($campaign)
     {
-        $this->campaignId = $campaignId;
+        $this->campaign = $campaign;
     }
 
     /**
@@ -35,8 +35,9 @@ class ExportSignups implements ShouldQueue
      */
     public function handle(ExportService $export)
     {
-        $export = $export->exportSignups($this->campaignId);
+        // Generate an export of signups for this campaign.
+        $export = $export->exportSignups($this->campaign['id']);
 
-        Mail::to('ssmith@dosomething.org')->queue(new ExportDone($this->campaignId, $export));
+        Mail::to('ssmith@dosomething.org')->queue(new ExportDone($this->campaign, $export));
     }
 }

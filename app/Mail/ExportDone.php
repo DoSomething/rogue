@@ -12,7 +12,7 @@ class ExportDone extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $campaignId;
+    protected $campaign;
     protected $csv;
 
     /**
@@ -20,9 +20,9 @@ class ExportDone extends Mailable
      *
      * @return void
      */
-    public function __construct($campaignId, $csv)
+    public function __construct($campaign, $csv)
     {
-        $this->campaignId = $campaignId;
+        $this->campaign = $campaign;
         $this->csv = $csv;
     }
 
@@ -35,9 +35,10 @@ class ExportDone extends Mailable
     {
         return $this->from('ssmith@dosomething.org')
                     ->subject('Your signup export is ready!')
-                    ->attachData($this->csv, 'export_'.$this->campaignId.'.csv', [
+                    ->attachData($this->csv, 'export_'.$this->campaign['id'].'.csv', [
                         'mime' => 'text/csv',
                     ])
-                    ->view('emails.export_done');
+                    ->view('emails.export_done')
+                    ->with([ 'campaign' => $this->campaign ]);
     }
 }
