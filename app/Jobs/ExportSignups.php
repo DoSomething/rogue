@@ -37,6 +37,6 @@ class ExportSignups implements ShouldQueue
     {
         $export = $export->exportSignups($this->campaignId);
 
-        Mail::to('ssmith@dosomething.org')->queue(new ExportDone($this->campaignId));
+        Mail::to('ssmith@dosomething.org')->queue(new ExportDone($this->campaignId, $export));
     }
 }

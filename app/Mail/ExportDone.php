@@ -13,14 +13,17 @@ class ExportDone extends Mailable
     use Queueable, SerializesModels;
 
     protected $campaignId;
+    protected $csv;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($campaignId)
+    public function __construct($campaignId, $csv)
     {
         $this->campaignId = $campaignId;
+        $this->csv = $csv;
     }
 
     /**
@@ -30,11 +33,11 @@ class ExportDone extends Mailable
      */
     public function build()
     {
-        $pathToExport = Storage::url('export_'.$this->campaignId.'.csv');
-
         return $this->from('ssmith@dosomething.org')
                     ->subject('Your signup export is ready!')
-                    ->attach($pathToExport)
+                    ->attachData($this->csv, 'export_'.$this->campaignId.'.csv', [
+                        'mime' => 'text/csv',
+                    ])
                     ->view('emails.export_done');
     }
 }

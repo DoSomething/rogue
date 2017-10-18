@@ -60,6 +60,6 @@ class ExportService
             $writer->insertOne($nextRow);
         }
 
-        Storage::put('export_'.$campaignId.'.csv', $writer->__toString());
+        return $writer->__toString();
     }
 }
