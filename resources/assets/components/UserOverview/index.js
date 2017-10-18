@@ -50,7 +50,7 @@ class UserOverview extends React.Component {
         northstar_id: id,
       },
       orderBy: 'desc',
-      limit: 'all',
+      limit: 80,
     });
 
     return request.then((result) => {
