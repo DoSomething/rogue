@@ -37,12 +37,6 @@ class ActivityController extends ApiController
 
         $query = $this->filter($query, $filters, Signup::$indexes);
 
-        if (($request->query('limit') === 'all')) {
-            $signups = $query->get();
-
-            return $this->collection($signups);
-        }
-
         return $this->paginatedCollection($query, $request, 200, [], null);
     }
 }
