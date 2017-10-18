@@ -26,5 +26,7 @@ class ExportController extends Controller
     {
         // Dispatch an Export job to the queue.
         dispatch((new ExportSignups($campaignId)));
+
+        return redirect()->route('campaigns.show', ['campaign_id' => $campaignId])->with('status', 'Your email is in the works! An email with your export will be sent to you shortly.');
     }
 }
