@@ -7,7 +7,7 @@ class UserExport extends React.Component {
 		return (
 			<div className="user-export">
 				<h1 className="heading -delta">User Export</h1>
-				<p>Download a .csv of all users who have opted to receive additional messaging.</p>
+				<p>Generate a .csv of all users who have opted in to receive additional messaging. The generated file will be emailed to you when complete.</p>
 				<div>
 				  <a className="button -secondary" href={`/exports/${this.props.campaign.id}`}>📩 Export</a>
 				</div>
