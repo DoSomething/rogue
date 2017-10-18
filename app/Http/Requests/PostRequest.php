@@ -23,8 +23,8 @@ class PostRequest extends Request
     {
         return [
             'northstar_id' => 'required|string',
-            'campaign_id' => 'required|int',
-            'campaign_run_id' => 'required|int',
+            'campaign_id' => 'required',
+            'campaign_run_id' => 'int',
             'caption' => 'string',
             'status' => 'in:pending,accepted,rejected',
             'source' => 'string',
