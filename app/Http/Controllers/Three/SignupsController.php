@@ -6,11 +6,11 @@ use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Http\Controllers\Api\ApiController;
 use Rogue\Http\Transformers\Three\SignupTransformer;
-use Northstar\Http\Controllers\Traits\TransformsResponses;
+use Rogue\Http\Controllers\Traits\TransformsRequests;
 
 class SignupsController extends ApiController
 {
-    use TransformsResponses;
+    use TransformsRequests;
 
     /**
      * @var \League\Fractal\TransformerAbstract;
@@ -60,7 +60,7 @@ class SignupsController extends ApiController
     /**
      * Delete a signup.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  Object $signup
      * @return \Illuminate\Http\Response
      */
     public function destroy(Signup $signup)

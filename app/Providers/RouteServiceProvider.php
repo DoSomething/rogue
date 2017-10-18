@@ -26,6 +26,7 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
     }
 
     /**
@@ -38,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes($router);
 
+        $router->model('signup', 'Rogue\Models\Signup');
         //
     }
 

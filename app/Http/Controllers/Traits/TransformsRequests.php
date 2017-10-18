@@ -144,4 +144,23 @@ trait TransformsRequests
 
         return $this->transform($resource, $code, [], $includes);
     }
+
+    /**
+     * Return a string as the API response.
+     *
+     * @param string $message - Message to send in the response
+     * @param int $code - Status code
+     * @param string $status - The name of the object enclosing the message
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function respond($message, $code = 200, $status = 'success')
+    {
+        $response = [
+            $status => [
+                'code' => $code,
+                'message' => $message,
+            ],
+        ];
+        return response()->json($response, $code, [], JSON_UNESCAPED_SLASHES);
+    }
 }
