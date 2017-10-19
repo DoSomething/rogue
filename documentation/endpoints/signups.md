@@ -234,3 +234,18 @@ Example response:
   }
 }
 ```
+
+## Delete a Signup
+
+```
+DELETE /api/v3/signups/:signup_id
+```
+Example Response: 
+
+```
+{
+    "code": 200,
+    "message": "Signup deleted."
+}
+
+```

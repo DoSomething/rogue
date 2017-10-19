@@ -34,6 +34,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             'bindings',
+            'log.received.request',
             // 'throttle:60,1',
         ],
     ];
