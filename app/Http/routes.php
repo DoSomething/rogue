@@ -53,7 +53,7 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 // Legacy API Routes
-Route::group(['prefix' => 'api/v1', 'middleware' => ['auth.api', 'log.received.request']], function () {
+Route::group(['prefix' => 'api/v1', 'middleware' => ['api', 'auth.api']], function () {
     Route::get('/', function () {
         return 'Rogue API version 1';
     });
@@ -63,7 +63,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['auth.api', 'log.received.r
 });
 
 // v2 routes
-Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.request']], function () {
+Route::group(['prefix' => 'api/v2', 'middleware' => ['api', 'auth.api']], function () {
 
     // activity
     Route::get('activity', 'Api\ActivityController@index');
@@ -92,10 +92,10 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['auth.api', 'log.received.r
 });
 
 // v3 routes
-Route::group(['prefix' => 'api/v3', 'middleware' => ['auth.api', 'log.received.request']], function () {
+Route::group(['prefix' => 'api/v3', 'middleware' => ['api']], function () {
 
     // signups
     Route::get('signups', 'Three\SignupsController@index');
-    Route::get('signups/{id}', 'Three\SignupsController@show');
+    Route::get('signups/{signup}', 'Three\SignupsController@show');
     Route::delete('signups/{signup}', 'Three\SignupsController@destroy');
 });

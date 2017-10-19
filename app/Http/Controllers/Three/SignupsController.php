@@ -26,6 +26,8 @@ class SignupsController extends ApiController
     public function __construct()
     {
         $this->transformer = new SignupTransformer;
+
+        $this->middleware('auth.api');
     }
 
     /**
@@ -47,20 +49,19 @@ class SignupsController extends ApiController
      * GET /signups/:id
      *
      * @param Request $request
-     * @param int $id
+     * @param Signup $signup
      * @return Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, Signup $signup)
     {
-        $signup = Signup::findOrFail($id);
-
         return $this->item($signup, 200, [], $this->transformer, $request->query('include'));
     }
 
     /**
      * Delete a signup.
+     * DELETE /signups/:id
      *
-     * @param  Object $signup
+     * @param  \Rogue\Models\Signup $signup
      * @return \Illuminate\Http\Response
      */
     public function destroy(Signup $signup)
