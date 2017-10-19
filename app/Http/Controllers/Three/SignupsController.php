@@ -21,7 +21,6 @@ class SignupsController extends ApiController
     /**
      * Create a controller instance.
      *
-     * @param PostContract  $posts
      * @return void
      */
     public function __construct()
@@ -82,6 +81,7 @@ class SignupsController extends ApiController
      */
     public function update(SignupRequest $request, Signup $signup)
     {
+        // dd('request');
         // @TODO: Remove `array_filter` with 'only' changes in Laravel 5.5.
         $fields = array_filter($request->only('quantity', 'why_participated'));
         $signup->update($fields);
