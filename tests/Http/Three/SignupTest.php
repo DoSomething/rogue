@@ -140,7 +140,7 @@ class SignupTest extends BrowserKitTestCase
         $response->assertResponseStatus(401);
     }
 
-        /**
+    /**
      * Test for updating a signup successfully.
      *
      * PATCH /api/v3/signups/186
