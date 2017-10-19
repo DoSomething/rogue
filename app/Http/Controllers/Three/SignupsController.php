@@ -58,6 +58,23 @@ class SignupsController extends ApiController
     }
 
     /**
+     * Updates a specific signup.
+     * PATCH /signups/:id
+     *
+     * @param SignupRequest $request
+     * @param \Rogue\Models\Signup $signup
+     * @return \Illuminate\Http\Response
+     */
+    public function update(SignupRequest $request, Signup $signup)
+    {
+        // @TODO: Remove `array_filter` with 'only' changes in Laravel 5.5.
+        $fields = array_filter($request->only('quantity', 'why_participated'));
+        $signup->update($fields);
+
+        return $this->item($signup);
+    }
+
+    /**
      * Delete a signup.
      * DELETE /signups/:id
      *
@@ -69,23 +86,5 @@ class SignupsController extends ApiController
         $signup->delete();
 
         return $this->respond('Signup deleted.', 200);
-    }
-
-    /**
-     * Updates a specific signup.
-     * PATCH /signups/:id
-     *
-     * @param SignupRequest $request
-     * @param \Rogue\Models\Signup $signup
-     * @return \Illuminate\Http\Response
-     */
-    public function update(SignupRequest $request, Signup $signup)
-    {
-        // dd('request');
-        // @TODO: Remove `array_filter` with 'only' changes in Laravel 5.5.
-        $fields = array_filter($request->only('quantity', 'why_participated'));
-        $signup->update($fields);
-
-        return $this->item($signup);
     }
 }
