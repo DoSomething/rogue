@@ -161,6 +161,7 @@ trait TransformsRequests
                 'message' => $message,
             ],
         ];
+
         return response()->json($response, $code, [], JSON_UNESCAPED_SLASHES);
     }
 }
