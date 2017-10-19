@@ -98,4 +98,5 @@ Route::group(['prefix' => 'api/v3', 'middleware' => ['api']], function () {
     Route::get('signups', 'Three\SignupsController@index');
     Route::get('signups/{signup}', 'Three\SignupsController@show');
     Route::delete('signups/{signup}', 'Three\SignupsController@destroy');
+    Route::patch('signups/{signup}', 'Three\SignupsController@update');
 });

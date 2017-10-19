@@ -60,3 +60,4 @@ Endpoint                                       | Functionality
 `GET /api/v3/signups`                          | [Get signups](endpoints/signups.md#retrieve-all-signups)
 `GET /api/v3/signups/:signup_id`               | [Get a signup](endpoints/signups.md#retrieve-a-specific-signup)
 `DELETE /api/v3/signups/:signup_id`            | [Delete a signup](endpoints/signups.md#delete-a-signup)
+`PATCH /api/v3/signups/:signup_id`             | [Update a signup](endpoints/signups.md#update-a-signup)   
