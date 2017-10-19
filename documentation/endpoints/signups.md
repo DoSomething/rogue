@@ -249,3 +249,29 @@ Example Response:
 }
 
 ```
+
+## Update a Signup
+
+```
+PATCH /api/v3/signups/:signup_id
+```
+
+  - **quantity**: (int) required if why_participated is not present.
+    The number of reportback nouns verbed.
+  - **why_participated**: (string) required if quantity is not present.
+    The reason why the user participated.
+  
+Example request body:
+```
+[
+  "quantity" => "200"
+  "why_participated" => "bcuz I luv endpointz"
+```
+
+Example response:
+```
+{  
+  "code":200,
+  "message":"Signup updated."
+}
+```
