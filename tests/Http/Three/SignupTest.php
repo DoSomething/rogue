@@ -139,4 +139,41 @@ class SignupTest extends BrowserKitTestCase
 
         $response->assertResponseStatus(401);
     }
+
+        /**
+     * Test for updating a signup successfully.
+     *
+     * PATCH /api/v3/signups/186
+     * @return void
+     */
+    public function testUpdatingASignup()
+    {
+        $signup = factory(Signup::class)->create();
+
+        $response = $this->withRogueApiKey()->json('PATCH', 'api/v3/signups/' . $signup->id, [
+            'quantity'     => 888,
+            'why_participated'  => 'new why participated',
+        ]);
+
+        $this->assertResponseStatus(200);
+
+        // Make sure that the signup's new quantity and why_participated gets persisted in the database.
+        $this->assertEquals($signup->fresh()->quantity, 888);
+        $this->assertEquals($signup->fresh()->why_participated, 'new why participated');
+    }
+
+    /**
+     * Test valudation for updating a signup.
+     *
+     * PATCH /api/v3/signups/186
+     * @return void
+     */
+    public function testValidationgForUpdatingASignup()
+    {
+        $signup = factory(Signup::class)->create();
+
+        $response = $this->withRogueApiKey()->json('PATCH', 'api/v3/signups/' . $signup->id);
+
+        $this->assertResponseStatus(422);
+    }
 }
