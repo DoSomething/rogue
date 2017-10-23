@@ -20,3 +20,11 @@ set :composer_install_flags, '--no-dev --optimize-autoloader'
 
 set :linked_files, %w{.env}
 set :linked_dirs, %w{images storage/logs storage/dumps storage/keys storage/system}
+
+namespace :deploy do
+  task :restart_queue_worker, :on_error => :continue do
+    run "ps -ef | grep 'queue:work' | awk '{print $2}' | xargs sudo kill -9"
+  end
+end
+
+after "deploy:restart_queue_worker"
