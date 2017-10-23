@@ -64,6 +64,6 @@ class ExportService
             $writer->insertOne($nextRow);
         }
 
-        return $writer->__toString();
+        return (string) $writer;
     }
 }
