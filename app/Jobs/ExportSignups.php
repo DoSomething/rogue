@@ -48,12 +48,18 @@ class ExportSignups implements ShouldQueue
      */
     public function handle(ExportService $export)
     {
-        // Generate an export of signups for this campaign and campaign run.
         // @TODO - Currently limiting the scope of this file to the current run of the campaign.
         // when we rid ourselves of campaign runs and/if exports becomes popular feature we can figure out
         // other ways to limit signups for a particular run of a campaign.
-        $export = $export->exportSignups($this->campaign['id'], $campaign['campaign_runs']['current']['en-global']['id']);
+        if (! isset($this->campaign['campaign_runs']['current']['en-global']['id'])) {
+            $campaignRun = $this->campaign['campaign_runs']['current']['en']['id'];
+        } else {
+            $campaignRun = $this->campaign['campaign_runs']['current']['en-global']['id'];
+        }
 
-        Mail::to($this->email)->queue(new ExportDone($this->campaign, $export));
+        // Generate an export of signups for this campaign and campaign run.
+        $export = $export->exportSignups($this->campaign['id'], $campaignRun);
+
+        Mail::to($this->email)->queue(new ExportDone($this->campaign, $campaignRun, $export));
     }
 }

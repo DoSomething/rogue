@@ -4,5 +4,5 @@
     <strong>Export Details:</strong><br />
     Campaign Title: {{ $campaign['title'] }}<br />
     Campaign ID: {{ $campaign['id'] }}<br />
-    Campaign Run ID: {{ $campaign['campaign_runs']['current']['en-global']['id'] }}
+    Campaign Run ID: {{ $campaignRun }}
 </p>

@@ -20,6 +20,13 @@ class ExportDone extends Mailable
     protected $campaign;
 
     /**
+     * The id of the campaign run.
+     *
+     * @var int
+     */
+    protected $campaignRun;
+
+    /**
      * The raw data of the generated CSV to attach to the email.
      *
      * @var string
@@ -31,9 +38,10 @@ class ExportDone extends Mailable
      *
      * @return void
      */
-    public function __construct($campaign, $csv)
+    public function __construct($campaign, $campaignRun, $csv)
     {
         $this->campaign = $campaign;
+        $this->campaignRun = $campaignRun;
         $this->csv = $csv;
     }
 
@@ -53,6 +61,9 @@ class ExportDone extends Mailable
                         'mime' => 'text/csv',
                     ])
                     ->view('emails.export_done')
-                    ->with([ 'campaign' => $this->campaign ]);
+                    ->with([
+                        'campaign' => $this->campaign,
+                        'campaignRun' => $this->campaignRun,
+                    ]);
     }
 }
