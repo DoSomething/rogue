@@ -86,6 +86,10 @@ function multipleValueQuery($query, $queryString, $filter)
  */
 function getAgeFromBirthdate($birthdate)
 {
+    if (! $birthdate) {
+        return null;
+    }
+
     $birthdate = new Carbon($birthdate);
     $now = new Carbon();
 

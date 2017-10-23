@@ -39,7 +39,7 @@ class ExportService
         $writer = Writer::createFromFileObject(new SplTempFileObject());
 
         // Set up column headers
-        $headers = ['Campaign ID', 'Campaign Run ID', 'Northstar ID', 'First Name', 'Email', 'Mobile', 'Age'];
+        $headers = ['Campaign ID', 'Campaign Run ID', 'Northstar ID', 'First Name', 'Last Name', 'Email', 'Mobile', 'Zip Code', 'DOB', 'Age'];
 
         $writer->insertOne($headers);
 
@@ -56,8 +56,11 @@ class ExportService
                 'campaign_run_id' => $signup->campaign_run_id,
                 'northstar_id' => $signup->northstar_id,
                 'first_name' => $northstarUser->first_name,
+                'last_name' => $northstarUser->last_name,
                 'email' => $northstarUser->email,
                 'mobile' => $northstarUser->mobile,
+                'zip_code' => $northstarUser->addr_zip,
+                'birthdate' => $northstarUser->birthdate,
                 'age' => getAgeFromBirthdate($northstarUser->birthdate),
             ];
 
