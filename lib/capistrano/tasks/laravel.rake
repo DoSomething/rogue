@@ -20,7 +20,9 @@ namespace :laravel do
   desc 'Restart queue'
   task :restart_queue_worker do
     on roles(:all) do
-      execute :php, "artisan queue:restart"
+      within "#{release_path}" do
+        execute :php, "artisan queue:restart"
+      end
     end
   end
 end
