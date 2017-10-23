@@ -30,9 +30,12 @@ class ExportService
      *
      * @param object $signups
      * @param int $campaignId
+     *
+     * @return string CSV data
      */
-    public function exportSignups($campaignId)
+    public function exportSignups($campaignId, $campaignRunId)
     {
+        // return $campaignId;
         $writer = Writer::createFromFileObject(new SplTempFileObject());
 
         // Set up column headers
@@ -40,7 +43,10 @@ class ExportService
 
         $writer->insertOne($headers);
 
-        $signups = Signup::whereNull('details')->where('campaign_id', $campaignId)->cursor();
+        $signups = Signup::whereNull('details')->where([
+            ['campaign_id', '=', $campaignId],
+            ['campaign_run_id', '=', $campaignRunId],
+        ])->cursor();
 
         foreach ($signups as $signup) {
             $northstarUser = $this->registrar->find($signup->northstar_id);
@@ -58,6 +64,6 @@ class ExportService
             $writer->insertOne($nextRow);
         }
 
-        return $writer->output('export_' . $campaignId . '.csv');
+        return (string) $writer;
     }
 }

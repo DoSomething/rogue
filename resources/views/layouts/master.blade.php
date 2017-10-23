@@ -13,6 +13,11 @@
     </head>
 
     <body>
+
+        @if (Session::has('status'))
+            <div class="messages">{{ Session::get('status') }}</div>
+        @endif
+
         <div class="chrome">
             <div class="wrapper">
 

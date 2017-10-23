@@ -3,26 +3,36 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Signup;
-use Rogue\Services\ExportService;
+use Rogue\Jobs\ExportSignups;
+use Rogue\Services\Registrar;
+use Rogue\Services\CampaignService;
 
 class ExportController extends Controller
 {
     /**
-     * ExportService instance
+     * Campaign Service instance
      *
-     * @var Rogue\Services\ExportService
+     * @var Rogue\Services\CampaignService
      */
-    protected $export;
+    protected $campaigns;
+
+    /**
+     * Registrar instance
+     *
+     * @var Rogue\Services\Registrar
+     */
+    protected $registrar;
 
     /**
      * Instantiate a new ExportController instance.
      *
      * @param Rogue\Services\Registrar $registrar
      */
-    public function __construct(ExportService $export)
+    public function __construct(CampaignService $campaigns, Registrar $registrar)
     {
         $this->middleware('auth');
-        $this->export = $export;
+        $this->campaigns = $campaigns;
+        $this->registrar = $registrar;
     }
 
     /**
@@ -32,7 +42,16 @@ class ExportController extends Controller
      */
     public function show($campaignId)
     {
-        // Compile the data and trigger the CSV download
-        return $this->export->exportSignups($campaignId);
+        // Get the full campaign object.
+        $campaign = $this->campaigns->find($campaignId);
+
+        // Get the email of the authenticated user that made the request.
+        $user = $this->registrar->find(auth()->user()->northstar_id);
+        $adminEmail = $user->email;
+
+        // Dispatch an Export job to the queue.
+        dispatch((new ExportSignups($campaign, $adminEmail)));
+
+        return redirect()->route('campaigns.show', ['campaign_id' => $campaignId])->with('status', 'Your email is in the works! An email with your export will be sent to you shortly.');
     }
 }
