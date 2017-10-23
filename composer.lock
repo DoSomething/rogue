@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b55efa4e9709a384c6c4ca2b7087636",
+    "content-hash": "ad29615eb0870054faca774b2fc6ccba",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -193,16 +193,16 @@
         },
         {
             "name": "dfurnes/environmentalist",
-            "version": "v0.0.1",
+            "version": "v0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DFurnes/environmentalist.git",
-                "reference": "27ead600b30e84c3276a924103a55f5c7d7e7447"
+                "reference": "d9cef13786c4f4396262040e90506256a8f2804c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DFurnes/environmentalist/zipball/27ead600b30e84c3276a924103a55f5c7d7e7447",
-                "reference": "27ead600b30e84c3276a924103a55f5c7d7e7447",
+                "url": "https://api.github.com/repos/DFurnes/environmentalist/zipball/d9cef13786c4f4396262040e90506256a8f2804c",
+                "reference": "d9cef13786c4f4396262040e90506256a8f2804c",
                 "shasum": ""
             },
             "type": "library",
@@ -222,7 +222,7 @@
                 }
             ],
             "description": "Dead-simple setup for Laravel apps.",
-            "time": "2017-10-23T04:03:44+00:00"
+            "time": "2017-10-23T20:12:57+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

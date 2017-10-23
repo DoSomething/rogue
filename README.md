@@ -15,11 +15,8 @@ Fork and clone this repository, and [add it to your Homestead](https://github.co
 # Install dependencies:
 $ composer install && npm install
     
-# Copy the default environment variables:
-$ cp .env.example .env
-
-# Run database migrations:
-$ php artisan migrate
+# Configure application & run migrations:
+$ php artisan rogue:setup
 
 # And finally, build the frontend assets:
 $ npm run build
