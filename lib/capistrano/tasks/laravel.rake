@@ -18,7 +18,7 @@ namespace :laravel do
   end
 
   desc 'Restart queue'
-  task :restart_queue_worker, :on_error => :continue do
+  task :restart_queue_worker do
     on roles(:all) do
       run "ps -ef | grep 'queue:work' | awk '{print $2}' | xargs sudo kill -9"
     end
