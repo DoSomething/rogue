@@ -2,7 +2,6 @@
 
 namespace Rogue\Jobs;
 
-use Rogue\Models\Signup;
 use Rogue\Mail\ExportDone;
 use Illuminate\Bus\Queueable;
 use Rogue\Services\ExportService;

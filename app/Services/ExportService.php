@@ -5,7 +5,6 @@ namespace Rogue\Services;
 use League\Csv\Writer;
 use SplTempFileObject;
 use Rogue\Models\Signup;
-use Illuminate\Support\Facades\Storage;
 
 class ExportService
 {
