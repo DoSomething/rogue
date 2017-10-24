@@ -1,12 +1,16 @@
 @import '~@dosomething/forge/scss/toolkit';
 
-.uploader {
+.reportback-uploader {
   .heading {
-    background-color: #F9DD27;
     color: $off-black;
     font-size: $font-medium;
     margin: -($base-spacing / 2);
     padding: $base-spacing / 2;
+  }
+
+  .warning {
+    color: $error-color;
+    font-weight: bold;
   }
 
   .button {
@@ -39,3 +43,5 @@
     clear: both;
   }
 }
+
+

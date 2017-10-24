@@ -82,6 +82,7 @@ class ReportbackUploader extends React.Component {
     return (
         <div className="reportback-uploader">
           <h2 className="heading">Upload photo</h2>
+          <p><span className="warning">Warning:</span> after uploading a photo, it will automatically be approved. You will still need to add tags in Rogue. No email will trigger telling the user we received their photo.</p>
 
           { submissions.messaging ? <FormMessage messaging={submissions.messaging} /> : null }
 
@@ -95,7 +96,7 @@ class ReportbackUploader extends React.Component {
               </div>
               <div className="form-item">
                 <label className="field-label" htmlFor="quantity">Update quantity:</label>
-                <input className="text-field" id="quantity" name="quantity" type="text" onChange={this.handleOnQuantityUpdate} placeholder="Enter a # e.g. 6 not six" ref={input => (this.quantity = input)} />
+                <input className="text-field" id="quantity" name="quantity" type="text" onChange={this.handleOnQuantityUpdate} placeholder="Quantity # (300)" ref={input => (this.quantity = input)} />
               </div>
               <div className="form-item">
                 <label className="field-label" htmlFor="why_participated">Update why participated:</label>
