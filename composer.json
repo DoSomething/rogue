@@ -21,7 +21,8 @@
     "spatie/laravel-backup": "^4.19",
     "league/csv": "^9.0",
     "dfurnes/environmentalist": "0.0.2",
-    "ext-gd" : "*"
+    "ext-gd" : "*",
+    "ext-exif":"*"
   },
   "require-dev": {
     "fzaninotto/faker": "^1.6",
