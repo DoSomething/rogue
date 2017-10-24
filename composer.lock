@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad29615eb0870054faca774b2fc6ccba",
+    "content-hash": "eb065a5b0a871697bba0f4975c307ff4",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.36.31",
+            "version": "3.36.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "e3135c1f6bc797ca0e0fbba7b2a27faae4e09d5e"
+                "reference": "7ba49dbd24366647a41cd4a13eab972b2264b8db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/e3135c1f6bc797ca0e0fbba7b2a27faae4e09d5e",
-                "reference": "e3135c1f6bc797ca0e0fbba7b2a27faae4e09d5e",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7ba49dbd24366647a41cd4a13eab972b2264b8db",
+                "reference": "7ba49dbd24366647a41cd4a13eab972b2264b8db",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2017-10-20T16:43:56+00:00"
+            "time": "2017-10-23T20:40:28+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -729,16 +729,16 @@
         },
         {
             "name": "dosomething/gateway",
-            "version": "v1.9.4",
+            "version": "v1.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DoSomething/gateway.git",
-                "reference": "813054c44917bed6f160ae23f7fc7e1a1379f77c"
+                "reference": "b8463adf406395d9d1fb1bad5e490894f793eba8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/813054c44917bed6f160ae23f7fc7e1a1379f77c",
-                "reference": "813054c44917bed6f160ae23f7fc7e1a1379f77c",
+                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/b8463adf406395d9d1fb1bad5e490894f793eba8",
+                "reference": "b8463adf406395d9d1fb1bad5e490894f793eba8",
                 "shasum": ""
             },
             "require": {
@@ -777,7 +777,7 @@
                 }
             ],
             "description": "Standard PHP API client for DoSomething.org services.",
-            "time": "2017-10-23T17:40:47+00:00"
+            "time": "2017-10-23T20:45:03+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -5648,7 +5648,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "~7.0.0"
+        "php": "~7.0.0",
+        "ext-gd": "*"
     },
     "platform-dev": []
 }
