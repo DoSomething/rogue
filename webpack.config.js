@@ -23,4 +23,15 @@ module.exports = configure({
       },
     ],
   },
+
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        eslint: {
+          failOnWarning: false,
+          failOnError: false,
+        },
+      },
+    }),
+  ],
 });
