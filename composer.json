@@ -20,7 +20,9 @@
     "predis/predis": "~1.0",
     "spatie/laravel-backup": "^4.19",
     "league/csv": "^9.0",
-    "dfurnes/environmentalist": "0.0.2"
+    "dfurnes/environmentalist": "0.0.2",
+    "ext-gd" : "*",
+    "ext-exif":"*"
   },
   "require-dev": {
     "fzaninotto/faker": "^1.6",
