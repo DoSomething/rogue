@@ -244,7 +244,6 @@ class Signup extends React.Component {
   // Submit a new reportback on behalf of the user.
   submitReportback(reportback) {
     // Fields to send to /posts
-    console.log(reportback);
     const fields = {
       northstar_id: reportback.northstarId,
       campaign_id: reportback.campaignId,
