@@ -96,11 +96,11 @@ class ReportbackUploader extends React.Component {
               </div>
               <div className="form-item">
                 <label className="field-label" htmlFor="quantity">Update quantity:</label>
-                <input className="text-field" id="quantity" name="quantity" type="text" onChange={this.handleOnQuantityUpdate} placeholder="Quantity # (300)" ref={input => (this.quantity = input)} />
+                <input className="text-field" id="quantity" name="quantity" type="text" onChange={this.handleOnQuantityUpdate} placeholder="Optional if it already exists" ref={input => (this.quantity = input)} />
               </div>
               <div className="form-item">
                 <label className="field-label" htmlFor="why_participated">Update why participated:</label>
-                <input className="text-field" id="why_participated" name="why_participated" type="text" onChange={this.handleOnWhyParticipatedUpdate} placeholder="60 characters or less" ref={input => (this.why_participated = input)} />
+                <input className="text-field" id="why_participated" name="why_participated" type="text" onChange={this.handleOnWhyParticipatedUpdate} placeholder="Optional if it already exists" ref={input => (this.why_participated = input)} />
               </div>
             </div>
 
