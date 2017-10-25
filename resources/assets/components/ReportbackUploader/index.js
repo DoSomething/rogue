@@ -10,6 +10,8 @@ class ReportbackUploader extends React.Component {
     this.handleOnSubmitForm = this.handleOnSubmitForm.bind(this);
     this.handleOnFileUpload = this.handleOnFileUpload.bind(this);
     this.handleOnCaptionUpdate = this.handleOnCaptionUpdate.bind(this);
+    this.handleOnQuantityUpdate = this.handleOnQuantityUpdate.bind(this);
+    this.handleOnWhyParticipatedUpdate = this.handleOnWhyParticipatedUpdate.bind(this);
 
     this.defaultMediaState = {
       file: null,
@@ -32,6 +34,14 @@ class ReportbackUploader extends React.Component {
     this.setState({ caption: event.target.value });
   }
 
+  handleOnQuantityUpdate(event) {
+    this.setState({ caption: event.target.value });
+  }
+
+  handleOnWhyParticipatedUpdate(event) {
+    this.setState({ caption: event.target.value });
+  }
+
   handleOnSubmitForm(event) {
     event.preventDefault();
 
@@ -44,6 +54,14 @@ class ReportbackUploader extends React.Component {
       source: this.props.source,
       status: 'accepted',
     };
+
+    if (this.quantity.value) {
+      reportback.impact = this.quantity.value;
+    }
+
+    if (this.why_participated.value) {
+      reportback.whyParticipated = this.why_participated.value;
+    }
 
     const fileType = reportback.media.file ? reportback.media.file.type : null;
 
@@ -64,6 +82,7 @@ class ReportbackUploader extends React.Component {
     return (
         <div className="reportback-uploader">
           <h2 className="heading">Upload photo</h2>
+          <p><span className="warning">Warning:</span> after uploading a photo, it will automatically be approved. You will still need to add tags in Rogue. No email will trigger telling the user we received their photo.</p>
 
           { submissions.messaging ? <FormMessage messaging={submissions.messaging} /> : null }
 
@@ -72,8 +91,16 @@ class ReportbackUploader extends React.Component {
 
             <div className="wrapper">
               <div className="form-item">
-                <label className="field-label" htmlFor="caption">Add a caption for the photo.</label>
+                <label className="field-label" htmlFor="caption">Add a caption for the photo:</label>
                 <input className="text-field" id="caption" name="caption" type="text" onChange={this.handleOnCaptionUpdate} placeholder="60 characters or less" ref={input => (this.caption = input)} />
+              </div>
+              <div className="form-item">
+                <label className="field-label" htmlFor="quantity">Update quantity:</label>
+                <input className="text-field" id="quantity" name="quantity" type="text" onChange={this.handleOnQuantityUpdate} placeholder="Optional if it already exists" ref={input => (this.quantity = input)} />
+              </div>
+              <div className="form-item">
+                <label className="field-label" htmlFor="why_participated">Update why participated:</label>
+                <input className="text-field" id="why_participated" name="why_participated" type="text" onChange={this.handleOnWhyParticipatedUpdate} placeholder="Optional if it already exists" ref={input => (this.why_participated = input)} />
               </div>
             </div>
 
