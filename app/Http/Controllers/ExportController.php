@@ -47,6 +47,7 @@ class ExportController extends Controller
 
         // Get the email of the authenticated user that made the request.
         $user = $this->registrar->find(auth()->user()->northstar_id);
+
         $adminEmail = $user->email;
 
         // Dispatch an Export job to the queue.

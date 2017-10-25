@@ -49,7 +49,7 @@ class ExportService
         ])->cursor();
 
         foreach ($signups as $signup) {
-            $northstarUser = gateway('northstar')->asClient()->getUser('id', $signup->northstar_id);
+            $northstarUser = $this->registrar->find($signup->northstar_id);
 
             $nextRow = [
                 'campaign_id' => $signup->campaign_id,

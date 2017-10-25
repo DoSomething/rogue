@@ -30,7 +30,7 @@ class Registrar
         $user = $this->cache->retrieve($id);
 
         if (! $user) {
-            $user = $this->northstar->getUser('id', $id);
+            $user = $this->northstar->asClient()->getUser('id', $id);
 
             if ($user) {
                 // @TODO - How long should we store users in Cache?
