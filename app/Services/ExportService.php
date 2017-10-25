@@ -64,7 +64,6 @@ class ExportService
                 'age' => isset($northstarUser->birthdate) ? getAgeFromBirthdate($northstarUser->birthdate) : 'N/A',
             ];
 
-
             $writer->insertOne($nextRow);
         }
 
