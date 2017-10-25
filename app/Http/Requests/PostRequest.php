@@ -25,10 +25,10 @@ class PostRequest extends Request
             'northstar_id' => 'required|string',
             'campaign_id' => 'required',
             'campaign_run_id' => 'int',
-            'caption' => 'string',
+            'caption' => 'nullable|string',
             'status' => 'in:pending,accepted,rejected',
-            'source' => 'string',
-            'remote_addr' => 'string',
+            'source' => 'nullable|string',
+            'remote_addr' => 'nullable|string',
             // 'file' => 'string', // @TODO - should do some better validation around files.
         ];
     }

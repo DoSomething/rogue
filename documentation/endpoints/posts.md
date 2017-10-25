@@ -36,6 +36,10 @@ POST /api/v2/posts
     The copy height coordinates of the post image if the user cropped the image.
   - **crop_rotate** (int).
     The copy rotate coordinates of the post image if the user cropped the image.
+  - **created_at** (string in format 2015-07-23 14:02:46).
+    Time that the post was created.
+  - **updated_at** (string in format 2015-07-23 14:02:46).
+    Time that the post was updated.
 
 Example Response:
 

@@ -91,7 +91,7 @@ class PostRepository
         // Let Laravel take care of the timestamps unless they are specified in the request
         if (isset($data['created_at'])) {
             $post->created_at = $data['created_at'];
-            $post->updated_at = $data['created_at'];
+            $post->updated_at = isset($data['updated_at']) ? $data['updated_at'] : $data['created_at'];
             $post->save(['timestamps' => false]);
 
             $post->events->first()->created_at = $data['created_at'];
