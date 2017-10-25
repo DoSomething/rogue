@@ -55,13 +55,13 @@ class ExportService
                 'campaign_id' => $signup->campaign_id,
                 'campaign_run_id' => $signup->campaign_run_id,
                 'northstar_id' => $signup->northstar_id,
-                'first_name' => $northstarUser->first_name,
-                'last_name' => $northstarUser->last_name,
-                'email' => $northstarUser->email,
-                'mobile' => $northstarUser->mobile,
-                'zip_code' => $northstarUser->addr_zip,
-                'birthdate' => $northstarUser->birthdate,
-                'age' => getAgeFromBirthdate($northstarUser->birthdate),
+                'first_name' => $northstarUser->first_name ?? 'N/A',
+                'last_name' => $northstarUser->last_name ?? 'N/A',
+                'email' => $northstarUser->email ?? 'N/A',
+                'mobile' => $northstarUser->mobile ?? 'N/A',
+                'zip_code' => $northstarUser->addr_zip ?? 'N/A',
+                'birthdate' => $northstarUser->birthdate ?? 'N/A',
+                'age' => isset($northstarUser->birthdate) ? getAgeFromBirthdate($northstarUser->birthdate) : 'N/A',
             ];
 
             $writer->insertOne($nextRow);

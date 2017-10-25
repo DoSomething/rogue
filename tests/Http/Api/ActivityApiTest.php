@@ -170,6 +170,8 @@ class ActivityApiTest extends BrowserKitTestCase
         factory(Signup::class, 10)->create();
 
         $this->mock(Northstar::class)
+            ->shouldReceive('asClient')
+            ->andReturnSelf()
             ->shouldReceive('getUser')
             ->andReturnUsing(function ($field, $id) {
                 return new NorthstarUser([

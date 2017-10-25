@@ -30,7 +30,7 @@ class Registrar
         $user = $this->cache->retrieve($id);
 
         if (! $user) {
-            $user = $this->northstar->getUser('id', $id);
+            $user = $this->northstar->asClient()->getUser('id', $id);
 
             if ($user) {
                 // @TODO - How long should we store users in Cache?
@@ -107,7 +107,7 @@ class Registrar
             $parameters['limit'] = '50';
             $parameters['filter[_id]'] = implode(',', $batch);
 
-            $accounts = $this->northstar->getAllUsers($parameters);
+            $accounts = $this->northstar->asClient()->getAllUsers($parameters);
 
             $data = array_merge($data, $accounts->toArray());
 
@@ -127,7 +127,7 @@ class Registrar
     public function search($query, $page = 1)
     {
         // Attempt to fetch all users.
-        $users = $this->northstar->getAllUsers([
+        $users = $this->northstar->asClient()->getAllUsers([
             'search' => [
                 '_id' => $query,
                 'drupal_id' => $query,
