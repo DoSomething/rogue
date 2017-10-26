@@ -57,6 +57,7 @@ class ReportbackUploader extends React.Component {
 
     if (this.quantity.value) {
       reportback.impact = this.quantity.value;
+      this.props.updateQuantity(this.props.signup, reportback.impact);
     }
 
     if (this.why_participated.value) {
@@ -68,6 +69,7 @@ class ReportbackUploader extends React.Component {
     reportback.media.type = fileType ? fileType.substring(0, fileType.indexOf('/')) : null;
 
     this.props.submitReportback(reportback);
+
 
     // @TODO: only reset form AFTER successful RB submission.
     this.form.reset();

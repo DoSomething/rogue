@@ -338,6 +338,7 @@ class Signup extends React.Component {
                     signup={signup}
                     campaign={campaign}
                     submitReportback={this.submitReportback}
+                    updateQuantity={this.updateQuantity}
                     success={this.state.successfulSubmission}
                   />
                 : null}
