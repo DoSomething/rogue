@@ -74,6 +74,7 @@ class Signup extends React.Component {
     this.showUploader = this.showUploader.bind(this);
     this.hideUploader = this.hideUploader.bind(this);
     this.submitReportback = this.submitReportback.bind(this);
+    this.updateQuantityOrWhyState = this.updateQuantityOrWhyState.bind(this);
   }
 
   componentDidMount() {
@@ -206,7 +207,7 @@ class Signup extends React.Component {
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
-
+        console.log(newState);
         newState.signup.quantity = result.quantity;
 
         return newState;
@@ -215,6 +216,18 @@ class Signup extends React.Component {
 
     // Close the modal
     this.hideHistory();
+  }
+
+  // Set newstate with updated quantity and why_participated.
+  updateQuantityOrWhyState(quantity, why) {
+    this.setState((previousState) => {
+      const newState = {...previousState};
+
+      newState.signup.quantity = quantity === null ? previousState.quantity : quantity;
+      newState.signup.why_participated = why === null ? previousState.why_participated : why;
+
+      return newState;
+    });
   }
 
   // Delete a post.
@@ -338,7 +351,7 @@ class Signup extends React.Component {
                     signup={signup}
                     campaign={campaign}
                     submitReportback={this.submitReportback}
-                    updateQuantity={this.updateQuantity}
+                    updateQuantityOrWhyState={this.updateQuantityOrWhyState}
                     success={this.state.successfulSubmission}
                   />
                 : null}
