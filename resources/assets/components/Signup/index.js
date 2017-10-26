@@ -207,7 +207,6 @@ class Signup extends React.Component {
       // Update the state
       this.setState((previousState) => {
         const newState = {...previousState};
-        console.log(newState);
         newState.signup.quantity = result.quantity;
 
         return newState;
