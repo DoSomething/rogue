@@ -36,10 +36,12 @@ POST /api/v2/posts
     The copy height coordinates of the post image if the user cropped the image.
   - **crop_rotate** (int).
     The copy rotate coordinates of the post image if the user cropped the image.
-  - **created_at** (string in format 2015-07-23 14:02:46).
-    Time that the post was created.
-  - **updated_at** (string in format 2015-07-23 14:02:46).
-    Time that the post was updated.
+  - **dont_send_to_blink** (boolean) optional.
+    If included and true, the data for this Post will not be sent to Blink.
+  - **created_at**: (string) optional.
+    `Y-m-d H:i:s` format. When the post was created.
+  - **updated_at**: (string) optional.
+    `Y-m-d H:i:s` format. When the post was last updated.
 
 Example Response:
 
