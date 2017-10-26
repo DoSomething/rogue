@@ -53,6 +53,7 @@ class PostService
         if (config('features.blink') && $should_send_to_blink) {
             $payload = $post->toBlinkPayload();
             $this->blink->userSignupPost($payload);
+            logger()->info('Post ' . $post->id . ' sent to Blink');
         }
 
         // Add new transaction id to header.
@@ -80,6 +81,7 @@ class PostService
         if (config('features.blink') && $postOrSignup instanceof Post && isset($data['dont_send_to_blink']) && $should_send_to_blink) {
             $payload = $postOrSignup->toBlinkPayload();
             $this->blink->userSignupPost($payload);
+            logger()->info('Post ' . $post->id . ' sent to Blink');
         }
 
         // Add new transaction id to header.

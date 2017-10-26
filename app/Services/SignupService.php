@@ -51,6 +51,7 @@ class SignupService
         if (config('features.blink') && $should_send_to_blink) {
             $payload = $signup->toBlinkPayload();
             $this->blink->userSignup($payload);
+            logger()->info('Signup ' . $signup->id . ' sent to Blink');
         }
 
         // Add new transaction id to header.
