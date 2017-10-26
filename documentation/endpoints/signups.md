@@ -101,6 +101,8 @@ POST /api/v2/signups
     The source of the signup.
   - **details**: (string) optional
     Details to be added to the "details" column on the signup, such as signed up to receive affiliate messaging.
+  - **dont_send_to_blink** (boolean) optional.
+    If included and true, the data for this Signup will not be sent to Blink.
   - **created_at**: (string) optional.
     `Y-m-d H:i:s` format. When the signup was created.
   - **updated_at**: (string) optional.
