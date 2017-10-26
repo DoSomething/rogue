@@ -46,8 +46,11 @@ class PostService
     {
         $post = $this->repository->create($data, $signupId);
 
+        // Send to Blink unless 'dont_send_to_blink' is TRUE
+        $should_send_to_blink = !(array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+
         // Save the new post in Customer.io, via Blink.
-        if (config('features.blink')) {
+        if (config('features.blink') && $should_send_to_blink) {
             $payload = $post->toBlinkPayload();
             $this->blink->userSignupPost($payload);
         }
@@ -70,8 +73,11 @@ class PostService
     {
         $postOrSignup = $this->repository->update($signup, $data);
 
+        // Send to Blink unless 'dont_send_to_blink' is TRUE
+        $should_send_to_blink = !(array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+
         // Save the new post in Customer.io, via Blink.
-        if (config('features.blink') && $postOrSignup instanceof Post) {
+        if (config('features.blink') && $postOrSignup instanceof Post && isset($data['dont_send_to_blink']) && $should_send_to_blink) {
             $payload = $postOrSignup->toBlinkPayload();
             $this->blink->userSignupPost($payload);
         }
