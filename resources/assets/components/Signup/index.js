@@ -223,8 +223,8 @@ class Signup extends React.Component {
     this.setState((previousState) => {
       const newState = {...previousState};
 
-      newState.signup.quantity = quantity === null ? previousState.quantity : quantity;
-      newState.signup.why_participated = why === null ? previousState.why_participated : why;
+      newState.signup.quantity = quantity === null ? newState.signup.quantity : quantity;
+      newState.signup.why_participated = why === null ? newState.signup.why_participated : why;
 
       return newState;
     });
