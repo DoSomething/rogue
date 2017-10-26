@@ -78,7 +78,7 @@ class PostService
         $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
 
         // Save the new post in Customer.io, via Blink.
-        if (config('features.blink') && $postOrSignup instanceof Post && isset($data['dont_send_to_blink']) && $should_send_to_blink) {
+        if (config('features.blink') && $postOrSignup instanceof Post && $should_send_to_blink) {
             $payload = $postOrSignup->toBlinkPayload();
             $this->blink->userSignupPost($payload);
             logger()->info('Post ' . $post->id . ' sent to Blink');
