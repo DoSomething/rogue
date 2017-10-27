@@ -17,14 +17,17 @@ class ModelServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // When Signups are saved create an event for them.
+        // When a Signup's why_participated, quantity, quantity_pending, or deleted_at are changed, create an event.
+        // @TODO: when we move quantity on the post, we'll want to remove this check below.
         Signup::saved(function ($signup) {
-            $signup->events()->create([
-                'content' => $signup->toJson(),
-                // Use the authenticated user if coming from the web,
-                // otherwise use the id of the user in the request.
-                'user' => auth()->user() ? auth()->user()->northstar_id : $signup->northstar_id,
-            ]);
+            if ($signup->isDirty('why_participated') || $signup->isDirty('quantity') || $signup->isDirty('quantity_pending') || $signup->isDirty('deleted_at')) {
+                $signup->events()->create([
+                    'content' => $signup->toJson(),
+                    // Use the authenticated user if coming from the web,
+                    // otherwise use the id of the user in the request.
+                    'user' => auth()->user() ? auth()->user()->northstar_id : $signup->northstar_id,
+                ]);
+            }
         });
 
         // When Posts are saved create an event for them.
