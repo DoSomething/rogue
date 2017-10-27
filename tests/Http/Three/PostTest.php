@@ -57,5 +57,39 @@ class PostTest extends BrowserKitTestCase
         ]);
     }
 
+    /**
+     * Test for retrieving a specific post.
+     *
+     * GET /api/v3/post/:post_id
+     * @return void
+     */
+    public function testPostShow()
+    {
+        $post = factory(Post::class)->create();
+        $this->get('api/v3/posts/' . $post->id);
 
+        $this->assertResponseStatus(200);
+        $this->seeJsonStructure([
+            'data' => [
+                'id',
+                'signup_id',
+                'northstar_id',
+                'media' => [
+                    'url',
+                    'original_image_url',
+                    'caption',
+                ],
+                'tags' => [],
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'source',
+                'remote_addr',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+    }
 }
