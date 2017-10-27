@@ -1,91 +1,9 @@
 ## Posts
 
-## Create a Post and/or Create/Update a Signup
-
-```
-POST /api/v2/posts
-```
-
-  - **northstar_id**: (string) required.
-    The northstar id of the user creating the post.
-  - **campaign_id**: (int|string) required.
-    The drupal node id of the campaign that the user's post is associated with. 
-  - **campaign_run_id**: (int) optional.
-    The drupal campaign run node id of the campaign that the user's post is associated with.
-  - **quantity**: (int).
-    The number of reportback nouns verbed. 
-  - **why_participated**: (string).
-    The reason why the user participated.
-  - **caption**: (string).
-    Corresponding caption for the post.
-  - **status**: (string).
-    Option to set status upon creation if admin uploads post for user.
-  - **source**: (string).
-    Where the post was submitted from.
-  - **remote_addr**: (string).
-    IP address of where the post is submitted from. 
-  - **file**: (string) required.
-    File string to save of post image.
-  - **crop_x**: (int).
-    The crop x coordinates of the post image if the user cropped the image.
-  - **crop_y**: (int).
-    The crop y coordinates of the post image if the user cropped the image.
-  - **crop_width** (int).
-    The copy width coordinates of the post image if the user cropped the image.
-  - **crop_height** (int).
-    The copy height coordinates of the post image if the user cropped the image.
-  - **crop_rotate** (int).
-    The copy rotate coordinates of the post image if the user cropped the image.
-  - **dont_send_to_blink** (boolean) optional.
-    If included and true, the data for this Post will not be sent to Blink.
-  - **created_at**: (string) optional.
-    `Y-m-d H:i:s` format. When the post was created.
-  - **updated_at**: (string) optional.
-    `Y-m-d H:i:s` format. When the post was last updated.
-
-Example Response:
-
-```
-{
-  "data": {
-    "id": 340,
-    "signup_id": 784,
-    "northstar_id": "5571df46a59db12346dsb456d",
-    "media": {
-      "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_214.jpeg",
-      "original_image_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/128-482cab927f6529c7f5e5c4bfd2594186-1501090354.jpeg",
-      "caption": "Captioning captions",
-    },
-    "status": "pending",
-    "remote_addr": "207.110.19.130",
-    "post_source": "runscope",
-    "created_at": "2017-02-15T18:14:58+0000",
-    "updated_at": "2017-02-15T18:14:58+0000"
-  }
-}
-```
-
-## Delete a post 
-
-Allows admins to delete a post. Posts get soft deleted from the database.
-
-```
-DELETE posts/{post_id}
-```
-
-Example Response:
-
-```
-{
-  "code": 200,
-  "message": "Post deleted."
-}
-```
-
 ## Retrieve all Posts
 
 ```
-GET /api/v2/posts
+GET /api/v2/posts or GET /api/v3/posts
 ```
 
 Posts are returned in reverse chronological order.
@@ -176,5 +94,120 @@ Example Response:
             }
         }
     }
+}
+```
+
+## Retrieve A Specific Post
+
+```
+GET /api/v3/posts/:post_id
+```
+
+Example Response: 
+
+```
+{
+  "data": {
+    "id": 332,
+    "signup_id": 289,
+    "northstar_id": "5589c991a59dbfa93d8b45ae",
+    "media": {
+      "url": "http://localhost/storage/uploads/reportback-items/edited_332.jpeg?time=1509129880",
+      "original_image_url": "http://localhost/storage/uploads/reportback-items/289-923df5957838355206574f72d5520f0f-1509115822.jpeg?time=1509129880",
+      "caption": "fe"
+    },
+    "tags": [],
+    "reactions": {
+      "reacted": false,
+      "total": null
+    },
+    "status": "accepted",
+    "source": "rogue-admin",
+    "remote_addr": "",
+    "created_at": "2017-10-27T14:50:22+00:00",
+    "updated_at": "2017-10-27T14:50:22+00:00"
+  }
+}
+```
+
+## Create a Post and/or Create/Update a Signup
+
+```
+POST /api/v2/posts 
+```
+
+  - **northstar_id**: (string) required.
+    The northstar id of the user creating the post.
+  - **campaign_id**: (int|string) required.
+    The drupal node id of the campaign that the user's post is associated with. 
+  - **campaign_run_id**: (int) optional.
+    The drupal campaign run node id of the campaign that the user's post is associated with.
+  - **quantity**: (int).
+    The number of reportback nouns verbed. 
+  - **why_participated**: (string).
+    The reason why the user participated.
+  - **caption**: (string).
+    Corresponding caption for the post.
+  - **status**: (string).
+    Option to set status upon creation if admin uploads post for user.
+  - **source**: (string).
+    Where the post was submitted from.
+  - **remote_addr**: (string).
+    IP address of where the post is submitted from. 
+  - **file**: (string) required.
+    File string to save of post image.
+  - **crop_x**: (int).
+    The crop x coordinates of the post image if the user cropped the image.
+  - **crop_y**: (int).
+    The crop y coordinates of the post image if the user cropped the image.
+  - **crop_width** (int).
+    The copy width coordinates of the post image if the user cropped the image.
+  - **crop_height** (int).
+    The copy height coordinates of the post image if the user cropped the image.
+  - **crop_rotate** (int).
+    The copy rotate coordinates of the post image if the user cropped the image.
+  - **dont_send_to_blink** (boolean) optional.
+    If included and true, the data for this Post will not be sent to Blink.
+  - **created_at**: (string) optional.
+    `Y-m-d H:i:s` format. When the post was created.
+  - **updated_at**: (string) optional.
+    `Y-m-d H:i:s` format. When the post was last updated.
+
+Example Response:
+
+```
+{
+  "data": {
+    "id": 340,
+    "signup_id": 784,
+    "northstar_id": "5571df46a59db12346dsb456d",
+    "media": {
+      "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_214.jpeg",
+      "original_image_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/128-482cab927f6529c7f5e5c4bfd2594186-1501090354.jpeg",
+      "caption": "Captioning captions",
+    },
+    "status": "pending",
+    "remote_addr": "207.110.19.130",
+    "post_source": "runscope",
+    "created_at": "2017-02-15T18:14:58+0000",
+    "updated_at": "2017-02-15T18:14:58+0000"
+  }
+}
+```
+
+## Delete a post 
+
+Allows admins to delete a post. Posts get soft deleted from the database.
+
+```
+DELETE posts/{post_id}
+```
+
+Example Response:
+
+```
+{
+  "code": 200,
+  "message": "Post deleted."
 }
 ```
