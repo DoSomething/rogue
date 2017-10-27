@@ -3,7 +3,6 @@
 namespace Tests\Http\Three;
 
 use Rogue\Models\Post;
-use Rogue\Models\Signup;
 use Tests\BrowserKitTestCase;
 
 class PostTest extends BrowserKitTestCase

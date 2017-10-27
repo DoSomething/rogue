@@ -103,5 +103,4 @@ Route::group(['prefix' => 'api/v3', 'middleware' => ['api']], function () {
     // posts
     Route::get('posts', 'Three\PostsController@index');
     Route::get('posts/{post}', 'Three\PostsController@show');
-
 });

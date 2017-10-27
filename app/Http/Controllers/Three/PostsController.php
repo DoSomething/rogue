@@ -2,13 +2,13 @@
 
 namespace Rogue\Http\Controllers\Three;
 
+use Rogue\Models\Post;
+use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Transformers\PostTransformer;
-use Rogue\Http\Controllers\Traits\PostRequests;
 use Rogue\Http\Controllers\Api\ApiController;
-use Illuminate\Http\Request;
-use Rogue\Models\Post;
+use Rogue\Http\Controllers\Traits\PostRequests;
 
 class PostsController extends ApiController
 {
