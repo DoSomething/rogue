@@ -25,7 +25,7 @@ class UploaderModal extends React.Component {
       reportback: {},
       submitReportback: this.props.submitReportback,
       uploads: {},
-      updateQuantityOrWhyState: this.props.updateQuantityOrWhyState,
+      updateSignup: this.props.updateSignup,
       signup: signup,
     }
 

@@ -74,7 +74,7 @@ class Signup extends React.Component {
     this.showUploader = this.showUploader.bind(this);
     this.hideUploader = this.hideUploader.bind(this);
     this.submitReportback = this.submitReportback.bind(this);
-    this.updateQuantityOrWhyState = this.updateQuantityOrWhyState.bind(this);
+    this.updateSignup = this.updateSignup.bind(this);
   }
 
   componentDidMount() {
@@ -218,12 +218,12 @@ class Signup extends React.Component {
   }
 
   // Set newstate with updated quantity and why_participated.
-  updateQuantityOrWhyState(quantity, why) {
+  updateSignup(signup) {
     this.setState((previousState) => {
       const newState = {...previousState};
 
-      newState.signup.quantity = quantity === null ? newState.signup.quantity : quantity;
-      newState.signup.why_participated = why === null ? newState.signup.why_participated : why;
+      newState.signup.quantity = signup.quantity;
+      newState.signup.why_participated = signup.why_participated;
 
       return newState;
     });
@@ -350,7 +350,7 @@ class Signup extends React.Component {
                     signup={signup}
                     campaign={campaign}
                     submitReportback={this.submitReportback}
-                    updateQuantityOrWhyState={this.updateQuantityOrWhyState}
+                    updateSignup={this.updateSignup}
                     success={this.state.successfulSubmission}
                   />
                 : null}
