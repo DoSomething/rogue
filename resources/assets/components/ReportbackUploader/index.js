@@ -55,12 +55,16 @@ class ReportbackUploader extends React.Component {
       status: 'accepted',
     };
 
+    var signup = this.props.signup;
+
     if (this.quantity.value) {
       reportback.impact = this.quantity.value;
+      signup.quantity = reportback.impact;
     }
 
     if (this.why_participated.value) {
       reportback.whyParticipated = this.why_participated.value;
+      signup.why_participated = reportback.whyParticipated;
     }
 
     const fileType = reportback.media.file ? reportback.media.file.type : null;
@@ -74,6 +78,8 @@ class ReportbackUploader extends React.Component {
     this.setState({
       media: this.defaultMediaState,
     });
+
+    this.props.updateSignup(signup);
   }
 
   render() {
