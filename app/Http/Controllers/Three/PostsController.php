@@ -7,6 +7,8 @@ use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Traits\PostRequests;
 use Rogue\Http\Controllers\Api\ApiController;
+use Illuminate\Http\Request;
+use Rogue\Models\Post;
 
 class PostsController extends ApiController
 {
@@ -43,5 +45,18 @@ class PostsController extends ApiController
         $this->signups = $signups;
 
         $this->transformer = new PostTransformer;
+    }
+
+    /**
+     * Returns a specific post.
+     * GET /posts/:id
+     *
+     * @param Request $request
+     * @param \Rogue\Models\Post $post
+     * @return Illuminate\Http\Response
+     */
+    public function show(Request $request, Post $post)
+    {
+        return $this->item($post, 200, [], $this->transformer);
     }
 }
