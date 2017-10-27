@@ -19,7 +19,7 @@ class ModelServiceProvider extends ServiceProvider
     {
         // When a Signup's why_participated, quantity, quantity_pending, or deleted_at are changed, create an event.
         // @TODO: when we move quantity on the post, we'll want to remove this check below.
-        Signup::saved(function ($signup) {
+        Signup::saving(function ($signup) {
             if ($signup->isDirty('why_participated') || $signup->isDirty('quantity') || $signup->isDirty('quantity_pending') || $signup->isDirty('deleted_at')) {
                 $signup->events()->create([
                     'content' => $signup->toJson(),
