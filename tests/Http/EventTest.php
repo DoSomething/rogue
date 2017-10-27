@@ -111,4 +111,25 @@ class EventTest extends BrowserKitTestCase
             'created_at' => '2017-08-04 18:02:00',
         ]);
     }
+
+    /**
+     * Test deleting a post via the API (DELETE 'posts/{id}') creates an event.
+     *
+     * @return void
+     */
+    public function testDeletingPostViaApiEvent()
+    {
+        // Create a post.
+        $post = factory(Post::class)->create();
+
+        // Delete the post via the API.
+        $this->mockTime('8/4/2017 18:02:00');
+        $this->actingAsAdmin()->delete('posts/' . $post->id);
+
+        // Make sure an event is created when the post is deleted.
+        $this->seeInDatabase('events', [
+            'eventable_type' => 'Rogue\Models\Post',
+            'created_at' => '2017-08-04 18:02:00',
+        ]);
+    }
 }
