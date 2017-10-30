@@ -29,7 +29,7 @@ class PostsController extends ApiController
     protected $signups;
 
     /**
-     * @var \League\Fractal\TransformerAbstract;
+     * @var \Rogue\Http\Transformers\PostTransformer;
      */
     protected $transformer;
 
@@ -39,12 +39,12 @@ class PostsController extends ApiController
      * @param  PostContract  $posts
      * @return void
      */
-    public function __construct(PostService $posts, SignupRepository $signups)
+    public function __construct(PostService $posts, SignupRepository $signups, PostTransformer $transformer)
     {
         $this->posts = $posts;
         $this->signups = $signups;
 
-        $this->transformer = new PostTransformer;
+        $this->transformer = $transformer;
     }
 
     /**
