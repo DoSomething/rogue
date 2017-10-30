@@ -71,7 +71,9 @@ class PostsController extends ApiController
      */
     public function update(PostRequest $request, Post $post)
     {
+        // @TODO: Remove `array_filter` with 'only' changes in Laravel 5.5.
         $fields = array_filter($request->only('status', 'caption'));
+
         $post->update($fields);
 
         return $this->item($post);
