@@ -64,11 +64,11 @@ class PostsController extends ApiController
      * Updates a specific post.
      * PATCH /posts/:id
      *
-     * @param PostRequest $request
+     * @param Request $request
      * @param \Rogue\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
         $fields = array_filter($request->only('status', 'caption'));
         $post->update($fields);
