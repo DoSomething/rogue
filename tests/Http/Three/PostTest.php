@@ -65,7 +65,7 @@ class PostTest extends BrowserKitTestCase
     public function testPostShow()
     {
         $post = factory(Post::class)->create();
-        $this->get('api/v3/posts/' . $post->id);
+        $response = $this->get('api/v3/posts/' . $post->id);
 
         $this->assertResponseStatus(200);
         $this->seeJsonStructure([
@@ -90,5 +90,7 @@ class PostTest extends BrowserKitTestCase
                 'updated_at',
             ],
         ]);
+
+        $this->assertEquals($post->id, $this->response->getOriginalContent()['data']['id']);
     }
 }
