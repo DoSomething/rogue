@@ -101,7 +101,7 @@ Route::group(['prefix' => 'api/v3', 'middleware' => ['api']], function () {
     Route::patch('signups/{signup}', 'Three\SignupsController@update');
 
     // posts
-    Route::get('posts', 'Three\{PostsController}@index');
+    Route::get('posts', 'Three\PostsController@index');
     Route::get('posts/{post}', 'Three\PostsController@show');
     Route::patch('posts/{post}', 'Three\PostsController@update');
 });

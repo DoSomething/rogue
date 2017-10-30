@@ -116,4 +116,21 @@ class PostTest extends BrowserKitTestCase
         $this->assertEquals($post->fresh()->caption, 'new caption');
     }
 
+    /**
+     * Test validation for updating a post.
+     *
+     * PATCH /api/v3/posts/195
+     * @return void
+     */
+    public function testValidationUpdatingAPost()
+    {
+        $post = factory(Post::class)->create();
+
+        $response = $this->withRogueApiKey()->json('PATCH', 'api/v3/posts/' . $post->id, [
+            'status' => 'approved',
+        ]);
+
+        $this->assertResponseStatus(422);
+        $this->assertEquals('The selected status is invalid.', $this->response->getOriginalContent()['status'][0]);
+    }
 }
