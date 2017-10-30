@@ -93,4 +93,27 @@ class PostTest extends BrowserKitTestCase
 
         $this->assertEquals($post->id, $this->response->getOriginalContent()['data']['id']);
     }
+
+    /**
+     * Test for updating a post successfully.
+     *
+     * PATCH /api/v3/posts/186
+     * @return void
+     */
+    public function testUpdatingAPost()
+    {
+        $post = factory(Post::class)->create();
+
+        $response = $this->withRogueApiKey()->json('PATCH', 'api/v3/posts/' . $post->id, [
+            'status' => 'accepted',
+            'caption' => 'new caption',
+        ]);
+
+        $this->assertResponseStatus(200);
+
+        // Make sure that the posts's new status and caption gets persisted in the database.
+        $this->assertEquals($post->fresh()->status, 'accepted');
+        $this->assertEquals($post->fresh()->caption, 'new caption');
+    }
+
 }
