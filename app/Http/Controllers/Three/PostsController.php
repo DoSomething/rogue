@@ -6,9 +6,9 @@ use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
+use Rogue\Http\Requests\Three\PostRequest;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Api\ApiController;
-use Rogue\Http\Requests\Three\PostRequest;
 use Rogue\Http\Controllers\Traits\PostRequests;
 
 class PostsController extends ApiController
