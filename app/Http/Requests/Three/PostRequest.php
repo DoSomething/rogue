@@ -25,6 +25,7 @@ class PostRequest extends Request
     {
         return [
             'status' => 'in:pending,accepted,rejected',
+            'caption' => 'string|max:140',
         ];
     }
 }
