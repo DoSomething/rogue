@@ -46,6 +46,8 @@ class PostsController extends ApiController
         $this->signups = $signups;
 
         $this->transformer = $transformer;
+
+        $this->middleware('auth.api');
     }
 
     /**
