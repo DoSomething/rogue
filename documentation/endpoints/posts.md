@@ -212,6 +212,19 @@ Example Response:
 }
 ```
 
+## Delete a Post
+
+```
+DELETE /api/v3/posts/:post_id
+```
+Example Response: 
+
+```
+{
+    "code": 200,
+    "message": "Post deleted."
+}
+
 ```
 
 ## Update a Post
