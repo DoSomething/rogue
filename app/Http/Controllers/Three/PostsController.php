@@ -78,4 +78,18 @@ class PostsController extends ApiController
 
         return $this->item($post);
     }
+
+    /**
+     * Delete a post.
+     * DELETE /posts/:id
+     *
+     * @param \Rogue\Models\Post $post
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        return $this->respond('Post deleted.', 200);
+    }
 }
