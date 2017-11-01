@@ -9,6 +9,49 @@ use Tests\BrowserKitTestCase;
 class SignupTest extends BrowserKitTestCase
 {
     /**
+     * Test that a POST request to /signups creates a new signup.
+     *
+     * POST /api/v3/signups
+     * @return void
+     */
+    public function testCreatingASignup()
+    {
+        $northstarId = '54fa272b469c64d7068b456a';
+        $campaignId = $this->faker->randomNumber(4);
+        $campaignRunId = $this->faker->randomNumber(4);
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignup');
+
+        $this->withRogueApiKey()->json('POST', 'api/v3/signups', [
+            'northstar_id'     => $northstarId,
+            'campaign_id'      => $campaignId,
+            'campaign_run_id'  => $campaignRunId,
+            'source'           => 'the-fox-den',
+            'details'          => 'affiliate-messaging',
+        ]);
+
+        // Make sure we get the 201 Created response
+        $this->assertResponseStatus(201);
+        $this->seeJson([
+            'northstar_id' => $northstarId,
+            'campaign_id' => $campaignId,
+            'campaign_run_id' => $campaignRunId,
+            'source' => 'the-fox-den',
+            'quantity' => null,
+            'why_participated' => null,
+        ]);
+
+        // Make sure the signup is persisted.
+        $this->seeInDatabase('signups', [
+            'northstar_id' => $northstarId,
+            'campaign_id' => $campaignId,
+            'campaign_run_id' => $campaignRunId,
+            'details' => 'affiliate-messaging',
+        ]);
+    }
+
+    /**
      * Test for retrieving all signups.
      *
      * GET /api/v3/signups
