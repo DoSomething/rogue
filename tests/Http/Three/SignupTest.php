@@ -17,7 +17,7 @@ class SignupTest extends BrowserKitTestCase
     public function testCreatingASignup()
     {
         $northstarId = '54fa272b469c64d7068b456a';
-        $campaignId = $this->faker->randomNumber(4);
+        $campaignId = '6LQzMvDNQcYQYwso8qSkQ8';
         $campaignRunId = $this->faker->randomNumber(4);
 
         // Mock the Blink API call.
@@ -48,6 +48,35 @@ class SignupTest extends BrowserKitTestCase
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
             'details' => 'affiliate-messaging',
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /signups doesn't create duplicate signups.
+     *
+     * POST /api/v3/signups
+     * @return void
+     */
+    public function testNotCreatingDuplicateSignups()
+    {
+        // $signup = factory(Signup::class)->create();
+        $signup = factory(Signup::class)->states('contentful')->create();
+        // Mock the Blink API call.
+        // dd($signup->campaign_id);
+        $this->mock(Blink::class)->shouldReceive('userSignup');
+
+        $this->withRogueApiKey()->json('POST', 'api/v3/signups', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'source'           => 'the-fox-den',
+            'details'          => 'affiliate-messaging',
+        ]);
+
+        // Make sure we get the 200 response
+        $this->assertResponseStatus(200);
+        $this->seeJson([
+            'campaign_id' => $signup->campaign_id,
+            'campaign_run_id' => null,
         ]);
     }
 
