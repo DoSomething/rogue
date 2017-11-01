@@ -82,7 +82,7 @@ Example Response:
 ## Create a Signup
 
 ```
-POST /api/v2/signups
+POST /api/v2/signups or /api/v3/signups
 ```
 
   - **northstar_id**: (string) required.
