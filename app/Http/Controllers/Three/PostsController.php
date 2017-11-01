@@ -46,6 +46,8 @@ class PostsController extends ApiController
         $this->signups = $signups;
 
         $this->transformer = $transformer;
+
+        $this->middleware('auth.api');
     }
 
     /**
@@ -77,5 +79,19 @@ class PostsController extends ApiController
         $post->update($fields);
 
         return $this->item($post);
+    }
+
+    /**
+     * Delete a post.
+     * DELETE /posts/:id
+     *
+     * @param \Rogue\Models\Post $post
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        return $this->respond('Post deleted.', 200);
     }
 }

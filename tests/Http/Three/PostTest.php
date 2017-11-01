@@ -137,4 +137,38 @@ class PostTest extends BrowserKitTestCase
 
         $this->assertEquals('The caption may not be greater than 140 characters.', $this->response->getOriginalContent()['caption'][0]);
     }
+
+    /**
+     * Test that a post gets deleted when hitting the DELETE endpoint.
+     *
+     * @return void
+     */
+    public function testDeletingAPost()
+    {
+        $post = factory(Post::class)->create();
+
+        // Mock time of when the post is soft deleted.
+        $this->mockTime('8/3/2017 14:00:00');
+
+        $response = $this->withRogueApiKey()->delete('api/v3/posts/' . $post->id);
+
+        $this->assertResponseStatus(200);
+
+        // Make sure that the post's deleted_at gets persisted in the database.
+        $this->assertEquals($post->fresh()->deleted_at->toTimeString(), '14:00:00');
+    }
+
+    /**
+     * Test that non-authenticated user's/apps can't delete posts.
+     *
+     * @return void
+     */
+    public function testUnauthenticatedUserDeletingAPost()
+    {
+        $post = factory(Post::class)->create();
+
+        $response = $this->deleteJson('api/v3/posts/' . $post->id);
+
+        $response->assertResponseStatus(401);
+    }
 }

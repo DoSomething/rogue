@@ -67,3 +67,5 @@ Endpoint                                       | Functionality
 ---------------------------------------------- | --------------------------------------------------------
 `GET /api/v3/posts`                            | [Get posts](endpoints/posts.md#retrieve-all-posts)
 `GET /api/v3/posts/:post_id`                   | [Get a post](endpoints/signups.md#retrieve-a-specific-post)
+`DELETE /api/v3/posts/:post_id`                | [Delete a post](endpoints/signups.md#delete-a-post)
+`PATCH /api/v3/posts/:post_id`                 | [Update a post](endpoints/signups.md#update-a-post)   
