@@ -4,7 +4,7 @@ namespace Rogue\Http\Requests\Three;
 
 use Rogue\Http\Requests\Request;
 
-class SignupRequest extends Request
+class SignupUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,8 @@ class SignupRequest extends Request
     public function rules()
     {
         return [
-            'northstar_id' => 'required|string',
-            'campaign_id' => 'required',
-            'campaign_run_id' => 'int',
-            'quantity' => 'int',
-            'why_participated' => 'string',
-            'source' => 'string|nullable',
+            'quantity' => 'required_without_all:why_participated',
+            'why_participated' => 'required_without_all:quantity',
         ];
     }
 }

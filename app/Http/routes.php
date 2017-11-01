@@ -95,10 +95,11 @@ Route::group(['prefix' => 'api/v2', 'middleware' => ['api', 'auth.api']], functi
 Route::group(['prefix' => 'api/v3', 'middleware' => ['api']], function () {
 
     // signups
+    Route::post('signups', 'Three\SignupsController@store');
     Route::get('signups', 'Three\SignupsController@index');
     Route::get('signups/{signup}', 'Three\SignupsController@show');
-    Route::delete('signups/{signup}', 'Three\SignupsController@destroy');
     Route::patch('signups/{signup}', 'Three\SignupsController@update');
+    Route::delete('signups/{signup}', 'Three\SignupsController@destroy');
 
     // posts
     Route::get('posts', 'Three\PostsController@index');

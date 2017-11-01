@@ -5,9 +5,11 @@ namespace Rogue\Http\Controllers\Three;
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Http\Requests\Three\SignupRequest;
+use Rogue\Http\Requests\Three\SignupUpdateRequest;
 use Rogue\Http\Controllers\Api\ApiController;
 use Rogue\Http\Transformers\Three\SignupTransformer;
 use Rogue\Http\Controllers\Traits\TransformsRequests;
+use Rogue\Services\SignupService;
 
 class SignupsController extends ApiController
 {
@@ -19,15 +21,45 @@ class SignupsController extends ApiController
     protected $transformer;
 
     /**
+     * The signup service instance.
+     *
+     * @var Rogue\Services\SignupService
+     */
+    protected $signups;
+
+    /**
      * Create a controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(SignupService $signups)
     {
+        $this->signups = $signups;
+
         $this->transformer = new SignupTransformer;
 
         $this->middleware('auth.api');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(SignupRequest $request)
+    {
+        $transactionId = incrementTransactionId($request);
+        // Check to see if the signup exists before creating one.
+        $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
+
+        $code = $signup ? 200 : 201;
+
+        if (! $signup) {
+            $signup = $this->signups->create($request->all(), $transactionId);
+        }
+
+        return $this->item($signup, $code);
     }
 
     /**
@@ -65,7 +97,7 @@ class SignupsController extends ApiController
      * @param \Rogue\Models\Signup $signup
      * @return \Illuminate\Http\Response
      */
-    public function update(SignupRequest $request, Signup $signup)
+    public function update(SignupUpdateRequest $request, Signup $signup)
     {
         // @TODO: Remove `array_filter` with 'only' changes in Laravel 5.5.
         $fields = array_filter($request->only('quantity', 'why_participated'));
