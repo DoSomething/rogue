@@ -133,7 +133,7 @@ Example Response:
 ## Create a Post and/or Create/Update a Signup
 
 ```
-POST /api/v2/posts 
+POST /api/v2/posts or POST /api/v3/posts
 ```
 
   - **northstar_id**: (string) required.
