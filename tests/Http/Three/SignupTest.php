@@ -5,6 +5,7 @@ namespace Tests\Http\Three;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Tests\BrowserKitTestCase;
+use DoSomething\Gateway\Blink;
 
 class SignupTest extends BrowserKitTestCase
 {
