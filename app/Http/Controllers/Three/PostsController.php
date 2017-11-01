@@ -6,6 +6,7 @@ use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
+use Rogue\Http\Requests\Three\PostRequest;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Api\ApiController;
 use Rogue\Http\Controllers\Traits\PostRequests;
@@ -58,5 +59,23 @@ class PostsController extends ApiController
     public function show(Request $request, Post $post)
     {
         return $this->item($post, 200, [], $this->transformer);
+    }
+
+    /**
+     * Updates a specific post.
+     * PATCH /posts/:id
+     *
+     * @param Request $request
+     * @param \Rogue\Models\Post $post
+     * @return \Illuminate\Http\Response
+     */
+    public function update(PostRequest $request, Post $post)
+    {
+        // @TODO: Remove `array_filter` with 'only' changes in Laravel 5.5.
+        $fields = array_filter($request->only('status', 'caption'));
+
+        $post->update($fields);
+
+        return $this->item($post);
     }
 }

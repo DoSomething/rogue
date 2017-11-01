@@ -268,6 +268,7 @@ Example request body:
 [
   "quantity" => "200"
   "why_participated" => "bcuz I luv endpointz"
+]
 ```
 
 Example response:
