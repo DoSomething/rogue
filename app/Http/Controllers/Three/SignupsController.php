@@ -4,12 +4,12 @@ namespace Rogue\Http\Controllers\Three;
 
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
+use Rogue\Services\SignupService;
 use Rogue\Http\Requests\Three\SignupRequest;
-use Rogue\Http\Requests\Three\SignupUpdateRequest;
 use Rogue\Http\Controllers\Api\ApiController;
+use Rogue\Http\Requests\Three\SignupUpdateRequest;
 use Rogue\Http\Transformers\Three\SignupTransformer;
 use Rogue\Http\Controllers\Traits\TransformsRequests;
-use Rogue\Services\SignupService;
 
 class SignupsController extends ApiController
 {

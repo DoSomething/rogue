@@ -53,6 +53,7 @@ class SignupService
             $this->blink->userSignup($payload);
             logger()->info('Signup ' . $signup->id . ' sent to Blink');
         }
+
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
 
