@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { map, keyBy } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
@@ -113,5 +114,12 @@ class UserOverview extends React.Component {
     )
   }
 }
+
+UserOverview.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    source: PropTypes.string,
+  }).isRequired,
+};
 
 export default UserOverview;
