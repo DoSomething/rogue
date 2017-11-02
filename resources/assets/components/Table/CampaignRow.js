@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import PropTypes from 'prop-types';
 
 class CampaignRow extends React.Component {
   constructor() {
@@ -44,5 +45,9 @@ class CampaignRow extends React.Component {
     )
   }
 }
+
+CampaignRow.propTypes = {
+  data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+};
 
 export default CampaignRow;
