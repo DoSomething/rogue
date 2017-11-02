@@ -7,7 +7,8 @@
     "clean": "rm -rf public/dist",
     "test": "jest --watch",
     "test:ci": "NODE_ENV=test && jest",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "lint": "eslint --ext .js resources/assets"
   },
   "engines": {
     "node": "6.x",
@@ -38,10 +39,13 @@
   },
   "devDependencies": {
     "@dosomething/babel-config": "^1.0.0",
+    "@dosomething/eslint-config": "^3.1.1",
     "@dosomething/webpack-config": "^2.0.4",
+    "babel-eslint": "^7.2.2",
     "babel-jest": "^21.0.2",
     "enzyme": "^2.9.1",
     "enzyme-to-json": "^2.0.0",
+    "eslint-loader": "^1.9.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.2",
     "react-test-renderer": "^15.6.1",

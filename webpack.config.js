@@ -7,6 +7,7 @@ module.exports = configure({
   entry: {
     app: './resources/assets/app.js',
   },
+
   output: {
     // Override output path for Laravel's "public" directory.
     path: path.join(__dirname, '/public/dist'),
