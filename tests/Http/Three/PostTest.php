@@ -258,6 +258,23 @@ class PostTest extends BrowserKitTestCase
     }
 
     /**
+     * Test that non-authenticated user's/apps can't update posts.
+     *
+     * @return void
+     */
+    public function testUnauthenticatedUserUpdatingAPost()
+    {
+        $post = factory(Post::class)->create();
+
+        $response = $this->json('PATCH', 'api/v3/posts/' . $post->id, [
+            'status' => 'accepted',
+            'caption' => 'new caption',
+        ]);
+
+        $response->assertResponseStatus(401);
+    }
+
+    /**
      * Test that a post gets deleted when hitting the DELETE endpoint.
      *
      * @return void
