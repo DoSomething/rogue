@@ -127,6 +127,42 @@ class PostTest extends BrowserKitTestCase
     }
 
     /**
+     * Test that non-authenticated user's/apps can't create a post.
+     *
+     * @return void
+     */
+    public function testUnauthenticatedUserCreatingAPost()
+    {
+        $signup = factory(Signup::class)->create();
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $caption = $this->faker->sentence;
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->json('POST', 'api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'quantity'         => $quantity,
+            'why_participated' => $this->faker->paragraph,
+            'num_participants' => null,
+            'caption'          => $caption,
+            'source'           => 'phpunit',
+            'remote_addr'      => $this->faker->ipv4,
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
+            'crop_x'           => 0,
+            'crop_y'           => 0,
+            'crop_width'       => 100,
+            'crop_height'      => 100,
+            'crop_rotate'      => 90,
+        ]);
+
+        $response->assertResponseStatus(401);
+    }
+
+    /**
      * Test for retrieving all posts.
      *
      * GET /api/v3/posts
