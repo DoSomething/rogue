@@ -43,5 +43,4 @@ Table.propTypes = {
   type: PropTypes.string.isRequired,
 };
 
-
 export default Table;
