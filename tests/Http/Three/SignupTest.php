@@ -5,9 +5,104 @@ namespace Tests\Http\Three;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Tests\BrowserKitTestCase;
+use DoSomething\Gateway\Blink;
 
 class SignupTest extends BrowserKitTestCase
 {
+    /**
+     * Test that a POST request to /signups creates a new signup.
+     *
+     * POST /api/v3/signups
+     * @return void
+     */
+    public function testCreatingASignup()
+    {
+        $northstarId = $this->faker->uuid;
+        $campaignId = str_random(22);
+        $campaignRunId = $this->faker->randomNumber(4);
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignup');
+
+        $this->withRogueApiKey()->json('POST', 'api/v3/signups', [
+            'northstar_id'     => $northstarId,
+            'campaign_id'      => $campaignId,
+            'campaign_run_id'  => $campaignRunId,
+            'source'           => 'the-fox-den',
+            'details'          => 'affiliate-messaging',
+        ]);
+
+        // Make sure we get the 201 Created response
+        $this->assertResponseStatus(201);
+        $this->seeJson([
+            'northstar_id' => $northstarId,
+            'campaign_id' => $campaignId,
+            'campaign_run_id' => $campaignRunId,
+            'source' => 'the-fox-den',
+            'quantity' => null,
+            'why_participated' => null,
+        ]);
+
+        // Make sure the signup is persisted.
+        $this->seeInDatabase('signups', [
+            'northstar_id' => $northstarId,
+            'campaign_id' => $campaignId,
+            'campaign_run_id' => $campaignRunId,
+            'details' => 'affiliate-messaging',
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /signups doesn't create duplicate signups.
+     *
+     * POST /api/v3/signups
+     * @return void
+     */
+    public function testNotCreatingDuplicateSignups()
+    {
+        // $signup = factory(Signup::class)->create();
+        $signup = factory(Signup::class)->states('contentful')->create();
+        // Mock the Blink API call.
+        // dd($signup->campaign_id);
+        $this->mock(Blink::class)->shouldReceive('userSignup');
+
+        $this->withRogueApiKey()->json('POST', 'api/v3/signups', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'source'           => 'the-fox-den',
+            'details'          => 'affiliate-messaging',
+        ]);
+
+        // Make sure we get the 200 response
+        $this->assertResponseStatus(200);
+        $this->seeJson([
+            'campaign_id' => $signup->campaign_id,
+            'campaign_run_id' => null,
+        ]);
+    }
+
+    /**
+     * Test that non-authenticated user's/apps can't post signups.
+     *
+     * @return void
+     */
+    public function testUnauthenticatedUserCreatingASignup()
+    {
+        $northstarId = '54fa272b469c64d7068b456a';
+        $campaignId = '6LQzMvDNQcYQYwso8qSkQ8';
+        $campaignRunId = $this->faker->randomNumber(4);
+
+        $response = $this->json('POST', 'api/v3/signups', [
+            'northstar_id'     => $northstarId,
+            'campaign_id'      => $campaignId,
+            'campaign_run_id'  => $campaignRunId,
+            'source'           => 'the-fox-den',
+            'details'          => 'affiliate-messaging',
+        ]);
+
+        $response->assertResponseStatus(401);
+    }
+
     /**
      * Test for retrieving all signups.
      *
@@ -175,5 +270,22 @@ class SignupTest extends BrowserKitTestCase
         $response = $this->withRogueApiKey()->json('PATCH', 'api/v3/signups/' . $signup->id);
 
         $this->assertResponseStatus(422);
+    }
+
+    /**
+     * Test that non-authenticated user's/apps can't update signups.
+     *
+     * @return void
+     */
+    public function testUnauthenticatedUserUpdatingASignup()
+    {
+        $signup = factory(Signup::class)->create();
+
+        $response = $this->json('PATCH', 'api/v3/signups/' . $signup->id, [
+            'quantity'     => 888,
+            'why_participated'  => 'new why participated',
+        ]);
+
+        $response->assertResponseStatus(401);
     }
 }
