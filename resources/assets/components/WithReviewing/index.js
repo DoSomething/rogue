@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import { keyBy, map } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
