@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\ClearDB::class,
         Commands\EditImagesCommand::class,
         Commands\SetupCommand::class,
+        Commands\ImportPreGambitSignupsCommand::class,
     ];
 
     /**
