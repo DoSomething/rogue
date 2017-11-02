@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import './tags.scss';
@@ -34,6 +35,13 @@ class Tag extends React.Component {
   }
 }
 
+Tag.propTypes = {
+  isClicked: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  isActive: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+};
+
 class Tags extends React.Component {
   render() {
     const tags = {
@@ -58,5 +66,11 @@ class Tags extends React.Component {
     )
   }
 }
+
+Tags.propTypes = {
+  tagged: PropTypes.bool.isRequired,
+  onTag: PropTypes.func.isRequired,
+  id: PropTypes.int.isRequired,
+};
 
 export default Tags;
