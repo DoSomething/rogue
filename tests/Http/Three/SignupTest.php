@@ -82,6 +82,28 @@ class SignupTest extends BrowserKitTestCase
     }
 
     /**
+     * Test that non-authenticated user's/apps can't post signups.
+     *
+     * @return void
+     */
+    public function testUnauthenticatedUserCreatingASignup()
+    {
+        $northstarId = '54fa272b469c64d7068b456a';
+        $campaignId = '6LQzMvDNQcYQYwso8qSkQ8';
+        $campaignRunId = $this->faker->randomNumber(4);
+
+        $response = $this->json('POST', 'api/v3/signups', [
+            'northstar_id'     => $northstarId,
+            'campaign_id'      => $campaignId,
+            'campaign_run_id'  => $campaignRunId,
+            'source'           => 'the-fox-den',
+            'details'          => 'affiliate-messaging',
+        ]);
+
+        $response->assertResponseStatus(401);
+    }
+
+    /**
      * Test for retrieving all signups.
      *
      * GET /api/v3/signups
@@ -248,5 +270,22 @@ class SignupTest extends BrowserKitTestCase
         $response = $this->withRogueApiKey()->json('PATCH', 'api/v3/signups/' . $signup->id);
 
         $this->assertResponseStatus(422);
+    }
+
+    /**
+     * Test that non-authenticated user's/apps can't update signups.
+     *
+     * @return void
+     */
+    public function testUnauthenticatedUserUpdatingASignup()
+    {
+        $signup = factory(Signup::class)->create();
+
+        $response = $this->json('PATCH', 'api/v3/signups/' . $signup->id, [
+            'quantity'     => 888,
+            'why_participated'  => 'new why participated',
+        ]);
+
+        $response->assertResponseStatus(401);
     }
 }

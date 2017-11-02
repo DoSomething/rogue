@@ -20,8 +20,8 @@ class AuthenticateApi extends Authenticate
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        // Only protected POST, PUT, and DELETE routes
-        if (! in_array($request->method(), ['POST', 'PUT', 'DELETE'])) {
+        // Only protected POST, PUT, PATCH, and DELETE routes
+        if (! in_array($request->method(), ['POST', 'PUT', 'PATCH', 'DELETE'])) {
             return $next($request);
         }
 
