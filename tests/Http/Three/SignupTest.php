@@ -17,8 +17,8 @@ class SignupTest extends BrowserKitTestCase
      */
     public function testCreatingASignup()
     {
-        $northstarId = '54fa272b469c64d7068b456a';
-        $campaignId = '6LQzMvDNQcYQYwso8qSkQ8';
+        $northstarId = $this->faker->uuid;
+        $campaignId =  str_random(22);
         $campaignRunId = $this->faker->randomNumber(4);
 
         // Mock the Blink API call.
