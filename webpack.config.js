@@ -12,26 +12,4 @@ module.exports = configure({
     // Override output path for Laravel's "public" directory.
     path: path.join(__dirname, '/public/dist'),
   },
-
-  module: {
-    loaders: [
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        use: 'eslint-loader',
-        include: path.join(__dirname, '/resources/assets'),
-      },
-    ],
-  },
-
-  plugins: [
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        eslint: {
-          failOnWarning: false,
-          failOnError: false,
-        },
-      },
-    }),
-  ],
 });
