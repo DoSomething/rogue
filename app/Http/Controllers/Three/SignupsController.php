@@ -5,9 +5,7 @@ namespace Rogue\Http\Controllers\Three;
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Services\SignupService;
-use Rogue\Http\Requests\Three\SignupRequest;
 use Rogue\Http\Controllers\Api\ApiController;
-use Rogue\Http\Requests\Three\SignupUpdateRequest;
 use Rogue\Http\Transformers\Three\SignupTransformer;
 use Rogue\Http\Controllers\Traits\TransformsRequests;
 
@@ -47,8 +45,17 @@ class SignupsController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SignupRequest $request)
+    public function store(Request $request)
     {
+        $this->validate($request, [
+            'northstar_id' => 'required|string',
+            'campaign_id' => 'required',
+            'campaign_run_id' => 'int',
+            'quantity' => 'int',
+            'why_participated' => 'string',
+            'source' => 'string|nullable',
+        ]);
+
         $transactionId = incrementTransactionId($request);
         // Check to see if the signup exists before creating one.
         $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
@@ -97,8 +104,13 @@ class SignupsController extends ApiController
      * @param \Rogue\Models\Signup $signup
      * @return \Illuminate\Http\Response
      */
-    public function update(SignupUpdateRequest $request, Signup $signup)
+    public function update(Request $request, Signup $signup)
     {
+        $this->validate($request, [
+            'quantity' => 'required_without_all:why_participated',
+            'why_participated' => 'required_without_all:quantity',
+        ]);
+
         // @TODO: Remove `array_filter` with 'only' changes in Laravel 5.5.
         $fields = array_filter($request->only('quantity', 'why_participated'));
         $signup->update($fields);
