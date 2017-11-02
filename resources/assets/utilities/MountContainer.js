@@ -1,3 +1,6 @@
+/* global document */
+/* global window */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reviewComponent from '../components/WithReviewing';
@@ -14,7 +17,8 @@ function mountContainer(components) {
     const reviewing = reactElement.getAttribute('data-reviewing');
 
     if (components[container]) {
-      // If this is a component where reviewing happens, wrap the container component in the HoC for reviewing.
+      // If this is a component where reviewing happens,
+      // wrap the container component in the HoC for reviewing.
       if (reviewing) {
         const ComponentWithReviewing = reviewComponent(components[container], window.STATE);
 
@@ -22,9 +26,12 @@ function mountContainer(components) {
 
       // If there is no reviewing, just render the component on the page.
       } else {
-        ReactDOM.render(React.createElement(components[container], {...window.STATE}), reactElement);
+        ReactDOM.render(
+          React.createElement(
+            components[container],
+            { ...window.STATE },
+          ), reactElement);
       }
-
     }
   }
 }
