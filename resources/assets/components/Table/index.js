@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import PropTypes from 'prop-types';
 
 import CampaignRow from './CampaignRow';
 import EventRow from './EventRow';
@@ -11,6 +12,7 @@ class Table extends React.Component {
       return <th key={index} className="table__cell"><h3 className="heading -delta">{title}</h3></th>
     });
 
+    // @TODO - Rethink this. Why are CampaignRow and EventRow different?
     const rows = this.props.data.map((content, index) => {
       if (this.props.type === 'campaigns') {
         return <CampaignRow key={index} data={content} />;
@@ -28,11 +30,18 @@ class Table extends React.Component {
           </tr>
         </thead>
         <tbody>
-            {rows}
+          {rows}
         </tbody>
       </table>
     )
   }
 }
+
+Table.propTypes = {
+  headings: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  type: PropTypes.string.isRequired,
+};
+
 
 export default Table;
