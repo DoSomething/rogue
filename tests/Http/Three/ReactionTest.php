@@ -25,7 +25,7 @@ class ReactionTest extends BrowserKitTestCase
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
-        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reaction', [
+        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
@@ -39,7 +39,7 @@ class ReactionTest extends BrowserKitTestCase
         ]);
 
         // React (unlike) again to the same post with the same user.
-        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reaction', [
+        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
@@ -66,7 +66,7 @@ class ReactionTest extends BrowserKitTestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reaction', [
+        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -79,7 +79,7 @@ class ReactionTest extends BrowserKitTestCase
         ]);
 
         // A second user reacts to the same post..
-        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reaction', [
+        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -130,7 +130,7 @@ class ReactionTest extends BrowserKitTestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $response = $this->json('POST', 'api/v3/post/' . $post->id . '/reaction', [
+        $response = $this->json('POST', 'api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
