@@ -1,7 +1,6 @@
 import React from 'react';
 import { map, find } from 'lodash';
-import { RestApiClient} from '@dosomething/gateway';
-import { extractSignupsFromPosts } from '../../helpers';
+import { RestApiClient } from '@dosomething/gateway';
 
 import Post from '../Post';
 import Empty from '../Empty';
@@ -139,7 +138,7 @@ class CampaignSingle extends React.Component {
         <div className="container__block">
           <div className="container__row">
             <div className="container__block -half">
-              <StatusCounter postTotals={this.props.post_totals} campaign={campaign}/>
+              <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
             </div>
             <div className="container__block -half">
               <UserExport campaign={campaign}/>
@@ -192,7 +191,7 @@ class CampaignSingle extends React.Component {
 
         <PagingButtons onPaginate={this.getPostsByPaginatedLink} prev={this.props.prevPage} next={this.props.nextPage}></PagingButtons>
       </div>
-    )
+    );
   }
 }
 

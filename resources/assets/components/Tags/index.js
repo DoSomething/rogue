@@ -70,7 +70,7 @@ class Tags extends React.Component {
 Tags.propTypes = {
   tagged: PropTypes.bool.isRequired,
   onTag: PropTypes.func.isRequired,
-  id: PropTypes.int.isRequired,
+  // id: PropTypes.int.isRequired,
 };
 
 export default Tags;

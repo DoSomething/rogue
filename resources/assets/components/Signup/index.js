@@ -387,7 +387,7 @@ class Signup extends React.Component {
 }
 
 Signup.propTypes = {
-  signup_id: PropTypes.int.isRequired,
+  // signup_id: PropTypes.int.isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };

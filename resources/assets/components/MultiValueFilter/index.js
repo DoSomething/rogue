@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import '../Tags/tags.scss';
@@ -63,5 +64,12 @@ class MultiValueFilter extends React.Component {
     )
   }
 }
+
+MultiValueFilter.propTypes = {
+  options: PropTypes.shape({
+    type: PropTypes.string,
+    tags: PropTypes.array,
+  }).isRequired,
+};
 
 export default MultiValueFilter;

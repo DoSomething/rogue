@@ -32,3 +32,5 @@ StatusCounter.propTypes = {
   postTotals: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
+
+export default StatusCounter;

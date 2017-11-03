@@ -20,9 +20,14 @@ class PagingButtons extends React.Component {
 }
 
 PagingButtons.propTypes = {
-  next: PropTypes.string.isRequired,
+  next: PropTypes.string,
   onPaginate: PropTypes.func.isRequired,
-  prev: PropTypes.string.isRequired,
+  prev: PropTypes.string,
+};
+
+PagingButtons.defaultProps = {
+  next: null,
+  prev: null,
 };
 
 export default PagingButtons;
