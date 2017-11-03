@@ -70,7 +70,7 @@ class Tags extends React.Component {
 Tags.propTypes = {
   tagged: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onTag: PropTypes.func.isRequired,
-  // id: PropTypes.int.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default Tags;

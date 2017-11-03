@@ -50,7 +50,7 @@ UploaderModal.propTypes = {
   campaign: PropTypes.shape({
     reportback_info: PropTypes.object,
   }).isRequired,
-  success: PropTypes.string,
+  success: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   submitReportback: PropTypes.func.isRequired,
   updateSignup: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

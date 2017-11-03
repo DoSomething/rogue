@@ -92,10 +92,10 @@ SignupCard.propTypes = {
   signup: PropTypes.shape({
     posts: PropTypes.object,
     why_participated: PropTypes.string,
-    signup_id: PropTypes.int,
-    campaign_id: PropTypes.int,
-    campaign_run_id: PropTypes.int,
-    quantity: PropTypes.int,
+    signup_id: PropTypes.number,
+    campaign_id: PropTypes.number,
+    campaign_run_id: PropTypes.number,
+    quantity: PropTypes.number,
   }).isRequired,
   campaign: PropTypes.shape({
     title: PropTypes.string,

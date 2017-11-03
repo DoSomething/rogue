@@ -20,7 +20,7 @@ class Quantity extends React.Component {
 
 Quantity.propTypes = {
   noun: PropTypes.string,
-  quantity: PropTypes.number,
+  quantity: PropTypes.string,
   verb: PropTypes.string,
 };
 

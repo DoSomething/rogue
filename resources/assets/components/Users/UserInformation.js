@@ -33,8 +33,11 @@ UserInformation.propTypes = {
   // @TODO: For the `user` and `children` props sometimes they come
   // in as an array and sometimes as an object.
   // Figure out why and update the validation.
-  user: PropTypes.any, // eslint-disable-line react/forbid-prop-types
-  children: PropTypes.any, // eslint-disable-line react/forbid-prop-types
+  user: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+  ]),
+  children: PropTypes.node,
   linkSignup: PropTypes.number,
 };
 
