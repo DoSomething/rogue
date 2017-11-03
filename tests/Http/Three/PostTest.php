@@ -5,8 +5,8 @@ namespace Tests\Http\Three;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Tests\BrowserKitTestCase;
-use Illuminate\Http\UploadedFile;
 use DoSomething\Gateway\Blink;
+use Illuminate\Http\UploadedFile;
 
 class PostTest extends BrowserKitTestCase
 {
