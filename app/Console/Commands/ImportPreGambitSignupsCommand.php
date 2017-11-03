@@ -2,9 +2,12 @@
 
 namespace Rogue\Console\Commands;
 
-use Illuminate\Console\Command;
+use Carbon\Carbon;
 use League\Csv\Reader;
+use Rogue\Models\Signup;
+
 use Rogue\Services\Registrar;
+use Illuminate\Console\Command;
 
 class ImportPreGambitSignupsCommand extends Command
 {
@@ -37,17 +40,6 @@ class ImportPreGambitSignupsCommand extends Command
      */
     public function handle()
     {
-        // Create array of campaign_ids keyed by campaign_run_id
-        $campaigns_csv = Reader::createFromPath('campaign_ids_with_run_ids.csv', 'r');
-        $campaigns_csv->setHeaderOffset(0);
-        $campaign_ids = $campaigns_csv->getRecords();
-
-        $run_then_campaign = [];
-
-        foreach ($campaign_ids as $record) {
-            $run_then_campaign[$record['campaign_run_id']] = $record['campaign_id'];
-        }
-
         // Load the missing signups
         $signups_csv = Reader::createFromPath('all_pre_gambit_sms_signups.csv', 'r');
         $signups_csv->setHeaderOffset(0);
@@ -55,18 +47,30 @@ class ImportPreGambitSignupsCommand extends Command
 
         // Create each missing signup
         foreach ($missing_signups as $missing_signup) {
-            // dd($missing_signup);
-            // We are given uid, grab Northstar ID from Northstar
-            dd($this->registrar->find($missing_signup['uid']));
+            // See if the signup exists
+            $existing_signup = Signup::where([
+                ['northstar_id', $missing_signup['northstar_id']],
+                ['campaign_id', $missing_signup['campaign_node_id']],
+                ['campaign_run_id', $missing_signup['campaign_run_id']],
+            ])->first();
 
-            $signup = new Signup([
-                // 'northstar_id' => ,
-                // 'campaign_id' => ,
-                'campaign_run_id' => $missing_signup['campaign_run_id'],
-                'created_at' => $missing_signup['signup_created_at'],
-                // 'updated_at' => NOW
-            ]);
-            //->with(['timstamps' => false]);
+            // Create a signup if there isn't on already
+            if (! $existing_signup) {
+                $signup = new Signup;
+                $signup->northstar_id = $missing_signup['northstar_id'];
+                $signup->campaign_id = $missing_signup['campaign_node_id'];
+                $signup->campaign_run_id = $missing_signup['campaign_run_id'];
+                $signup->source = 'sms';
+                $signup->created_at = $missing_signup['signup_created_at_timestamp'];
+                $signup->updated_at = Carbon::now();
+                $signup->save(['timstamps' => false]);
+
+                $this->line('Created signup ' . $signup->id);
+            } else {
+                $this->line('That signup already exists! Moving on.');
+            }
+
+            $this->line('ALL DONE!');
         }
     }
 }
