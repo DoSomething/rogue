@@ -7,7 +7,6 @@ use Rogue\Models\Signup;
 use Tests\BrowserKitTestCase;
 use Illuminate\Http\UploadedFile;
 use DoSomething\Gateway\Blink;
-use Tests\TestCase;
 
 class PostTest extends BrowserKitTestCase
 {
@@ -50,24 +49,37 @@ class PostTest extends BrowserKitTestCase
         ]);
 
         $response->assertResponseStatus(200);
-        $response->seeJson([
+        $response->seeJsonStructure([
             'data' => [
-                'northstar_id' => $northstar_id,
-                'status' => 'pending',
+                'id',
+                'signup_id',
+                'northstar_id',
                 'media' => [
-                    'caption' => $caption,
+                    'url',
+                    'original_image_url',
+                    'caption',
                 ],
+                'tags' => [],
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'source',
+                'remote_addr',
+                'created_at',
+                'updated_at',
             ],
         ]);
 
         // Make sure the signup & post are persisted to the database.
-        $this->assertDatabaseHas('signups', [
+        $this->seeInDatabase('signups', [
             'campaign_id' => $campaign_id,
             'northstar_id' => $northstar_id,
             'quantity' => $quantity,
         ]);
 
-        $this->assertDatabaseHas('posts', [
+        $this->seeInDatabase('posts', [
             'northstar_id' => $northstar_id,
             'campaign_id' => $campaign_id,
             'status' => 'pending',
@@ -108,17 +120,31 @@ class PostTest extends BrowserKitTestCase
         ]);
 
         $response->assertResponseStatus(200);
-        $response->seeJson([
+
+        $response->seeJsonStructure([
             'data' => [
-                'northstar_id' => $signup->northstar_id,
-                'status' => 'pending',
+                'id',
+                'signup_id',
+                'northstar_id',
                 'media' => [
-                    'caption' => $caption,
+                    'url',
+                    'original_image_url',
+                    'caption',
                 ],
+                'tags' => [],
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'source',
+                'remote_addr',
+                'created_at',
+                'updated_at',
             ],
         ]);
 
-        $this->assertDatabaseHas('posts', [
+        $this->seeInDatabase('posts', [
             'signup_id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
