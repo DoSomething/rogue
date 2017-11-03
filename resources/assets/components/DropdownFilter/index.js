@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import PropTypes from 'prop-types';
 
 class DropdownFilter extends React.Component {
   constructor() {
@@ -23,19 +24,33 @@ class DropdownFilter extends React.Component {
 
   render() {
     return (
-        <div className="container__block -third">
-          <h2 className="heading -delta">{this.props.header}</h2>
+      <div className="container__block -third">
+        <h2 className="heading -delta">{this.props.header}</h2>
 
-          <div className="select">
-            <select onChange={(event) => this.change(event)}>
-              {map(this.props.options.values, (option, key) => (
-                 <option value={key} key={key}>{option}</option>
-              ))}
-            </select>
-          </div>
+        <div className="select">
+          <select onChange={event => this.change(event)}>
+            {map(this.props.options.values, (option, key) => (
+              <option value={key} key={key}>{option}</option>
+            ))}
+          </select>
         </div>
-    )
+      </div>
+    );
   }
 }
+
+DropdownFilter.propTypes = {
+  options: PropTypes.shape({
+    default: PropTypes.string,
+    type: PropTypes.string,
+    values: PropTypes.object,
+  }).isRequired,
+  updateFilters: PropTypes.func,
+  header: PropTypes.string.isRequired,
+};
+
+DropdownFilter.defaultProps = {
+  updateFilters: null,
+};
 
 export default DropdownFilter;
