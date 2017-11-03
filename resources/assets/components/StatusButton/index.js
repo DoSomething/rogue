@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import './status-button.scss';
@@ -31,5 +32,12 @@ class StatusButton extends React.Component {
     )
   }
 }
+
+StatusButton.propTypes = {
+  setStatus: PropTypes.func.isRequired,
+  status: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+};
 
 export default StatusButton;
