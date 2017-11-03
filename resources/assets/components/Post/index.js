@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { remove, map, clone } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 import { getImageUrlFromPost, getEditedImageUrl, displayCaption } from '../../helpers';
@@ -135,5 +137,26 @@ class Post extends React.Component {
     )
   }
 }
+
+Post.propTypes = {
+  allowHistory: PropTypes.bool,
+  campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  deletePost: PropTypes.func.isRequired,
+  onTag: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  rotate: PropTypes.func.isRequired,
+  showHistory: PropTypes.func,
+  showQuantity: PropTypes.bool,
+  showSiblings: PropTypes.bool.isRequired,
+  signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+};
+
+Post.defaultProps = {
+  allowHistory: false,
+  showHistory: null,
+  showQuantity: false,
+};
 
 export default Post;
