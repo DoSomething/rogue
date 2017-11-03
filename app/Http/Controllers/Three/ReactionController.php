@@ -67,4 +67,3 @@ class ReactionController extends ApiController
 
         return $this->item($reaction, $code, $meta);
     }
-}
