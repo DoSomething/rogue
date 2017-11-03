@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import PropTypes from 'prop-types';
 
 import Table from '../Table';
 import './history-modal.scss';
@@ -45,7 +46,7 @@ class HistoryModal extends React.Component {
 
   render() {
     const signup = this.props.signup;
-    const campaign = this.props['campaign'];
+    const campaign = this.props.campaign;
     const parsedEvents = this.parseEventData(this.props.signupEvents);
 
     return (
@@ -75,5 +76,13 @@ class HistoryModal extends React.Component {
     );
   }
 }
+
+HistoryModal.propTypes = {
+  campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  onClose: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  signupEvents: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+};
 
 export default HistoryModal;
