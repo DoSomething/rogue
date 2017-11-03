@@ -19,9 +19,15 @@ class Quantity extends React.Component {
 }
 
 Quantity.propTypes = {
-  noun: PropTypes.string.isRequired,
-  // quantity: PropTypes.int.isRequired,
-  verb: PropTypes.string.isRequired,
+  noun: PropTypes.string,
+  quantity: PropTypes.number,
+  verb: PropTypes.string,
+};
+
+Quantity.defaultProps = {
+  noun: 'things',
+  quantity: 0,
+  verb: 'done',
 };
 
 export default Quantity;

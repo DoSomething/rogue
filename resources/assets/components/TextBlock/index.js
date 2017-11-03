@@ -10,8 +10,11 @@ const TextBlock = props => (
 
 TextBlock.propTypes = {
   title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
+  content: PropTypes.string,
 };
 
+TextBlock.defaultProps = {
+  content: null,
+};
 
 export default TextBlock;

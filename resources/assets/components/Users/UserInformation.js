@@ -30,22 +30,18 @@ const UserInformation = props => (
 );
 
 UserInformation.propTypes = {
-  user: PropTypes.shape({
-    first_name: PropTypes.string,
-    last_name: PropTypes.string,
-    birthdate: PropTypes.string,
-    email: PropTypes.string,
-    mobile: PropTypes.string,
-    addr_city: PropTypes.string,
-    addr_state: PropTypes.string,
-  }).isRequired,
-  children: PropTypes.string,
-  linkSignup: PropTypes.int,
+  // @TODO: For the `user` and `children` props sometimes they come
+  // in as an array and sometimes as an object.
+  // Figure out why and update the validation.
+  user: PropTypes.any, // eslint-disable-line react/forbid-prop-types
+  children: PropTypes.any, // eslint-disable-line react/forbid-prop-types
+  linkSignup: PropTypes.number,
 };
 
 UserInformation.defaultProps = {
   children: null,
   linkSignup: null,
+  user: null,
 };
 
 export default UserInformation;

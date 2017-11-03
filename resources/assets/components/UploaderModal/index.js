@@ -44,17 +44,21 @@ class UploaderModal extends React.Component {
 UploaderModal.propTypes = {
   signup: PropTypes.shape({
     campaign_id: PropTypes.string,
-    campaign_run_id: PropTypes.string,
+    campaign_run_id: PropTypes.number,
     northstar_id: PropTypes.string,
   }).isRequired,
   campaign: PropTypes.shape({
     reportback_info: PropTypes.object,
   }).isRequired,
-  success: PropTypes.string.isRequired,
+  success: PropTypes.string,
   submitReportback: PropTypes.func.isRequired,
   updateSignup: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
+
+UploaderModal.defaultProps = {
+  success: null,
+};
 
 export default UploaderModal;

@@ -35,8 +35,8 @@ class EventRow extends React.Component {
 
     return (
       <tr className="table__row">
-       {content.map(function(cell) {
-          return <td className="table__cell">{cell.title}</td>
+       {content.map(function(cell, index) {
+          return <td className="table__cell" key={index}>{cell.title}</td>
         })}
       </tr>
     )

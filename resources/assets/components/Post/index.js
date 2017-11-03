@@ -140,23 +140,26 @@ class Post extends React.Component {
 
 Post.propTypes = {
   allowHistory: PropTypes.bool,
-  campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  campaign: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   deletePost: PropTypes.func.isRequired,
   onTag: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  rotate: PropTypes.func.isRequired,
+  rotate: PropTypes.func,
   showHistory: PropTypes.func,
   showQuantity: PropTypes.bool,
   showSiblings: PropTypes.bool.isRequired,
   signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  user: PropTypes.array, // eslint-disable-line react/forbid-prop-types
 };
 
 Post.defaultProps = {
   allowHistory: false,
+  campaign: null,
+  rotate: null,
   showHistory: null,
   showQuantity: false,
+  user: null,
 };
 
 export default Post;

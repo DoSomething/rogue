@@ -39,7 +39,7 @@ class Table extends React.Component {
 
 Table.propTypes = {
   headings: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  data: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   type: PropTypes.string.isRequired,
 };
 

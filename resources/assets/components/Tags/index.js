@@ -37,7 +37,7 @@ class Tag extends React.Component {
 
 Tag.propTypes = {
   isClicked: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  post: PropTypes.number.isRequired,
   isActive: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
 };
@@ -68,7 +68,7 @@ class Tags extends React.Component {
 }
 
 Tags.propTypes = {
-  tagged: PropTypes.bool.isRequired,
+  tagged: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onTag: PropTypes.func.isRequired,
   // id: PropTypes.int.isRequired,
 };

@@ -101,7 +101,11 @@ SignupCard.propTypes = {
     title: PropTypes.string,
     campaign_runs: PropTypes.object,
     reportback_info: PropTypes.object,
-  }).isRequired,
+  }),
+};
+
+SignupCard.defaultProps = {
+  campaign: null,
 };
 
 
