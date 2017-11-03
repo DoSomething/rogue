@@ -68,8 +68,14 @@ class MultiValueFilter extends React.Component {
 MultiValueFilter.propTypes = {
   options: PropTypes.shape({
     type: PropTypes.string,
-    tags: PropTypes.array,
+    values: PropTypes.object,
   }).isRequired,
+  updateFilters: PropTypes.func.isRequired,
+  header: PropTypes.string,
+};
+
+MultiValueFilter.defaultProps = {
+  header: null,
 };
 
 export default MultiValueFilter;

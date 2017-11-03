@@ -150,7 +150,9 @@ Post.propTypes = {
   showQuantity: PropTypes.bool,
   showSiblings: PropTypes.bool.isRequired,
   signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  user: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  // @TODO: Sometimes comes in as an array, and sometimes as an object.
+  // Figure out why, and update the validation.
+  user: PropTypes.any, // eslint-disable-line react/forbid-prop-types
 };
 
 Post.defaultProps = {
