@@ -84,10 +84,24 @@ class SignupsController extends ApiController
     }
 
     /**
+     * Returns signups.
+     * GET /signups
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $query = $this->newQuery(Signup::class);
+
+        return $this->paginatedCollection($query, $request);
+    }
+
+    /**
      * Returns a specific signup.
      * GET /signups/:id
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @param \Rogue\Models\Signup $signup
      * @return \Illuminate\Http\JsonResponse
      */
@@ -100,9 +114,10 @@ class SignupsController extends ApiController
      * Updates a specific signup.
      * PATCH /signups/:id
      *
-     * @param Request $request
-     * @param Signup $signup
-     * @return \Illuminate\Http\JsonResponse
+
+     * @param \Illuminate\Http\Request $request
+     * @param \Rogue\Models\Signup $signup
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Signup $signup)
     {
