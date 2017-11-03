@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Quantity extends React.Component {
   render() {
@@ -16,5 +17,11 @@ class Quantity extends React.Component {
     )
   }
 }
+
+Quantity.propTypes = {
+  noun: PropTypes.string.isRequired,
+  quantity: PropTypes.int.isRequired,
+  verb: PropTypes.string.isRequired,
+};
 
 export default Quantity;
