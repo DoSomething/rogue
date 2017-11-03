@@ -67,3 +67,17 @@ class ReactionController extends ApiController
 
         return $this->item($reaction, $code, $meta);
     }
+
+    /**
+     * Returns all reactions for a post.
+     * GET /post/:post_id/reactions
+     *
+     * @param \Rogue\Models\Post $post
+     * @return Illuminate\Http\Response
+     */
+    public function index(Post $post)
+    {
+        $reactions = Reaction::withTrashed()->where(['post_id' => $post->id])->get();
+
+        return $this->collection($reactions);
+    }

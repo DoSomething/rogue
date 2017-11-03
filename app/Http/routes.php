@@ -109,5 +109,10 @@ Route::group(['prefix' => 'api/v3', 'middleware' => ['api']], function () {
     Route::delete('posts/{post}', 'Three\PostsController@destroy');
 
     // reactions
+<<<<<<< HEAD
     Route::post('posts/{post}/reaction', 'Three\ReactionController@store');
+=======
+    Route::post('post/{post}/reactions', 'Three\ReactionController@store');
+    Route::get('post/{post}/reactions', 'Three\ReactionController@index');
+>>>>>>> updates documentation
 });
