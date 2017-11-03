@@ -3,10 +3,9 @@
 namespace Tests\Http\Three;
 
 use Rogue\Models\Post;
-use Rogue\Models\Reaction;
 use Rogue\Models\Signup;
+use Rogue\Models\Reaction;
 use Tests\BrowserKitTestCase;
-// use DoSomething\Gateway\Blink;
 
 class ReactionTest extends BrowserKitTestCase
 {
