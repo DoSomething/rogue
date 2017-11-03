@@ -35,7 +35,7 @@ Example Response
 ## Create or update a Reaction v3
 
 ```
-POST /api/v3/posts/:post_id/reaction
+POST /api/v3/post/:post_id/reaction
 ```
 
 Example Request
