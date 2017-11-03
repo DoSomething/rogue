@@ -70,12 +70,13 @@ MultiValueFilter.propTypes = {
     type: PropTypes.string,
     values: PropTypes.object,
   }).isRequired,
-  updateFilters: PropTypes.func.isRequired,
+  updateFilters: PropTypes.func,
   header: PropTypes.string,
 };
 
 MultiValueFilter.defaultProps = {
   header: null,
+  updateFilters: null,
 };
 
 export default MultiValueFilter;
