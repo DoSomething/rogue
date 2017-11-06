@@ -50,14 +50,13 @@ class ImportSignupsCommand extends Command
 
             // Create a signup if there isn't on already
             if (! $existing_signup) {
-                $signup = new Signup;
-                $signup->northstar_id = $missing_signup['northstar_id'];
-                $signup->campaign_id = $missing_signup['campaign_node_id'];
-                $signup->campaign_run_id = $missing_signup['campaign_run_id'];
-                $signup->source = 'sms';
-                $signup->created_at = $missing_signup['signup_created_at_timestamp'];
-                $signup->updated_at = Carbon::now();
-                $signup->save(['timestamps' => false]);
+                $signup = Signup::create([
+                    'northstar_id' => $missing_signup['northstar_id'],
+                    'campaign_id' => $missing_signup['campaign_node_id'],
+                    'campaign_run_id' => $missing_signup['campaign_run_id'],
+                    'source' => 'sms',
+                    'created_at' => $missing_signup['signup_created_at_timestamp'],
+                ]);
 
                 $this->line('Created signup ' . $signup->id);
             } else {
