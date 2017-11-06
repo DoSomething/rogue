@@ -49,7 +49,7 @@ class ReactionController extends ApiController
             $code = 200;
             $action = 'liked';
 
-            if ($reaction->trashed()){
+            if ($reaction->trashed()) {
                 $reaction->restore();
                 $code = 201;
             }
