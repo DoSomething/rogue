@@ -102,8 +102,9 @@ Route::group(['prefix' => 'api/v3', 'middleware' => ['api']], function () {
     Route::delete('signups/{signup}', 'Three\SignupsController@destroy');
 
     // posts
+    Route::post('posts', 'Three\PostsController@store');
     Route::get('posts', 'Three\PostsController@index');
     Route::get('posts/{post}', 'Three\PostsController@show');
-    Route::delete('posts/{post}', 'Three\PostsController@destroy');
     Route::patch('posts/{post}', 'Three\PostsController@update');
+    Route::delete('posts/{post}', 'Three\PostsController@destroy');
 });
