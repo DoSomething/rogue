@@ -10,10 +10,10 @@ test('it renders correctly', () => {
 
   const signup = {
     signup_id: 7,
-  }
+  };
 
   const tree = renderer.create(
-    <Post post={post} signup={signup}></Post>
+    <Post post={post} signup={signup} />,
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });

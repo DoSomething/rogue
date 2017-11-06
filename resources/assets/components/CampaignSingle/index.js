@@ -24,30 +24,30 @@ class CampaignSingle extends React.Component {
         status: 'accepted',
         tags: {
           'good-photo': {
-            label: "Good Photo",
+            label: 'Good Photo',
             active: false,
           },
           'good-quote': {
-            label: "Good Quote",
+            label: 'Good Quote',
             active: false,
           },
           'hide-in-gallery': {
-             label: "Hide In Gallery 👻",
-             active: false,
+            label: 'Hide In Gallery 👻',
+            active: false,
           },
           'good-for-sponsor': {
-            label: "Good For Sponsor",
+            label: 'Good For Sponsor',
             active: false,
           },
           'good-for-storytelling': {
-            label: "Good For Storytelling",
+            label: 'Good For Storytelling',
             active: false,
           },
-        }
-      }
+        },
+      },
     };
 
-    this.api = new RestApiClient;
+    this.api = new RestApiClient();
     this.filterPosts = this.filterPosts.bind(this);
     this.getPostsByFilter = this.getPostsByFilter.bind(this);
     this.getPostsByPaginatedLink = this.getPostsByPaginatedLink.bind(this);
@@ -56,26 +56,26 @@ class CampaignSingle extends React.Component {
   // Filter posts based on status or tag(s).
   filterPosts(filters) {
     this.setState({
-        filters: filters,
+      filters,
     });
 
-    let formattedFilters = {
-      'campaign_id': this.props.campaign.id,
-      'status': filters.status,
+    const formattedFilters = {
+      campaign_id: this.props.campaign.id,
+      status: filters.status,
     };
 
     // Grab all of the active tags to send to API request.
     if (filters.tags) {
-      let activeTags = [];
+      const activeTags = [];
 
-      Object.keys(filters.tags).forEach(function(key) {
+      Object.keys(filters.tags).forEach((key) => {
         if (filters.tags[key].active === true) {
-         activeTags.push(key);
+          activeTags.push(key);
         }
       });
 
       if (activeTags.length > 0) {
-        formattedFilters['tag'] = activeTags.toString();
+        formattedFilters.tag = activeTags.toString();
       }
     }
 
@@ -89,15 +89,15 @@ class CampaignSingle extends React.Component {
     this.setState({ loadingNewPosts: true });
 
     // Strip the url to get query parameters.
-    let splitEndpoint = url.split('/');
-    let path = splitEndpoint.slice(-1)[0];
-    let queryString = (path.split('?'))[1];
+    const splitEndpoint = url.split('/');
+    const path = splitEndpoint.slice(-1)[0];
+    const queryString = (path.split('?'))[1];
 
     this.api.get('posts', queryString)
-    .then(json => {
-      this.setState({loadingNewPosts: false });
-      this.props.setNewPosts(json);
-    });
+      .then((json) => {
+        this.setState({ loadingNewPosts: false });
+        this.props.setNewPosts(json);
+      });
   }
 
   // Make API call to GET /posts to get posts by filtered status and/or tag(s).
@@ -106,12 +106,12 @@ class CampaignSingle extends React.Component {
 
     this.api.get('/posts', {
       filter: filters,
-      include: ['signup','siblings'],
+      include: ['signup', 'siblings'],
     })
-    .then(json => {
-      this.setState({loadingNewPosts: false });
-      this.props.setNewPosts(json);
-    });
+      .then((json) => {
+        this.setState({ loadingNewPosts: false });
+        this.props.setNewPosts(json);
+      });
   }
 
   render() {
@@ -128,7 +128,7 @@ class CampaignSingle extends React.Component {
       values: {
         accepted: 'Accepted',
         pending: 'Pending',
-        rejected: 'Rejected'
+        rejected: 'Rejected',
       },
       type: 'status',
       default: 'accepted',
@@ -142,24 +142,25 @@ class CampaignSingle extends React.Component {
               <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
             </div>
             <div className="container__block -half">
-              <UserExport campaign={campaign}/>
+              <UserExport campaign={campaign} />
             </div>
           </div>
         </div>
         <FilterBar onSubmit={this.filterPosts}>
-          <DropdownFilter options={statusFilters} header={'Post Status'}/>
-          <MultiValueFilter options={tagFilters} header={'Tags'}/>
+          <DropdownFilter options={statusFilters} header={'Post Status'} />
+          <MultiValueFilter options={tagFilters} header={'Tags'} />
         </FilterBar>
 
         <h2 className="heading -emphasized">Posts</h2>
         {this.props.loading || this.state.loadingNewPosts ?
-          <div className="spinner"></div>
-        :
+          <div className="spinner" />
+          :
           this.props.postIds.length !== 0 ?
             map(this.props.postIds, (key, value) => {
-              var post = find(posts, {'id': key});
+              const post = find(posts, { id: key });
 
-              return <Post key={key}
+              return (<Post
+                key={key}
                 post={post}
                 user={signups[post.signup_id].user.data}
                 signup={signups[post.signup_id]}
@@ -169,11 +170,12 @@ class CampaignSingle extends React.Component {
                 deletePost={this.props.deletePost}
                 showHistory={this.props.showHistory}
                 rotate={this.props.rotate}
-                showSiblings={true}
-                showQuantity={true}
-                allowHistory={true} />;
+                showSiblings
+                showQuantity
+                allowHistory
+              />);
             })
-          :
+            :
             <Empty header="There are no results!" copy="Sorry, there are no posts that match your filters. Change or remove some tags and try again." />
         }
 
@@ -184,13 +186,13 @@ class CampaignSingle extends React.Component {
               onUpdate={this.props.updateQuantity}
               onClose={e => this.props.hideHistory(e)}
               campaign={campaign}
-              signup={signups[posts[this.props.historyModalId]['signup_id']]}
+              signup={signups[posts[this.props.historyModalId].signup_id]}
               signupEvents={this.props.signupEvents}
             />
-          : null}
+            : null}
         </ModalContainer>
 
-        <PagingButtons onPaginate={this.getPostsByPaginatedLink} prev={this.props.prevPage} next={this.props.nextPage}></PagingButtons>
+        <PagingButtons onPaginate={this.getPostsByPaginatedLink} prev={this.props.prevPage} next={this.props.nextPage} />
       </div>
     );
   }

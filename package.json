@@ -8,7 +8,7 @@
     "test": "jest --watch",
     "test:ci": "NODE_ENV=test && jest",
     "heroku-postbuild": "npm run build",
-    "lint": "eslint --ext .js resources/assets"
+    "lint": "eslint --fix --ext .js resources/assets"
   },
   "engines": {
     "node": "6.x",

@@ -17,9 +17,7 @@ import UserInformation from '../Users/UserInformation';
 
 class PostGroup extends React.Component {
   getPostsByStatus(status) {
-    const posts = filter(this.props.posts, (post) => {
-      return post['status'] === this.props.groupType;
-    });
+    const posts = filter(this.props.posts, post => post.status === this.props.groupType);
 
     return posts;
   }
@@ -30,26 +28,26 @@ class PostGroup extends React.Component {
     return (
       <div className="container__row">
         <div className="container__block">
-            <h2 className="heading -emphasized -padded"><span>{startCase(this.props.groupType)}</span></h2>
+          <h2 className="heading -emphasized -padded"><span>{startCase(this.props.groupType)}</span></h2>
         </div>
 
         {
-          !isEmpty(posts) ?
-            map(posts, (post, key) => {
-              return <Post key={key}
-                post={post}
-                displayUser={false}
-                signup={this.props.signup}
-                onUpdate={this.props.onUpdate}
-                onTag={this.props.onTag}
-                deletePost={this.props.deletePost}
-                showSiblings={false} />;
-            })
-          :
+          ! isEmpty(posts) ?
+            map(posts, (post, key) => (<Post
+              key={key}
+              post={post}
+              displayUser={false}
+              signup={this.props.signup}
+              onUpdate={this.props.onUpdate}
+              onTag={this.props.onTag}
+              deletePost={this.props.deletePost}
+              showSiblings={false}
+            />))
+            :
             <Empty header={`This user has no ${this.props.groupType} posts`} />
         }
       </div>
-    )
+    );
   }
 }
 
@@ -75,7 +73,7 @@ class Signup extends React.Component {
       displayUploaderModal: false,
     };
 
-    this.api = new RestApiClient;
+    this.api = new RestApiClient();
     this.updatePost = this.updatePost.bind(this);
     this.updateTag = this.updateTag.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
@@ -101,11 +99,11 @@ class Signup extends React.Component {
   getUserActivity(id) {
     this.api.get('api/v2/activity', {
       filter: {
-        id: id,
-      }
+        id,
+      },
     }).then(json => this.setState({
       signup: json.data[0],
-      posts: keyBy(json.data[0].posts.data, 'id')
+      posts: keyBy(json.data[0].posts.data, 'id'),
     }));
   }
 
@@ -116,10 +114,10 @@ class Signup extends React.Component {
     this.api.get('api/v2/events', {
       filter: {
         signup_id: this.props.signup_id,
-      }
+      },
     }).then((result) => {
       this.setState((previousState) => {
-        const newState = {...previousState};
+        const newState = { ...previousState };
 
         newState.displayHistoryModal = true;
         newState.historyModalId = postId;
@@ -148,7 +146,7 @@ class Signup extends React.Component {
 
     this.setState({
       displayUploaderModal: true,
-      campaign: campaign,
+      campaign,
     });
   }
 
@@ -168,11 +166,11 @@ class Signup extends React.Component {
   updatePost(postId, fields) {
     fields.post_id = postId;
 
-    let request = this.api.put('reviews', fields);
+    const request = this.api.put('reviews', fields);
 
     request.then((result) => {
       this.setState((previousState) => {
-        const newState = {...previousState};
+        const newState = { ...previousState };
 
         newState.posts[postId].status = fields.status;
 
@@ -188,13 +186,13 @@ class Signup extends React.Component {
       tag_name: tag,
     };
 
-    let response = this.api.post('tags', fields);
+    const response = this.api.post('tags', fields);
 
     return response.then((result) => {
       this.setState((previousState) => {
-        const newState = {...previousState};
+        const newState = { ...previousState };
 
-        newState.posts[postId] = result['data'];
+        newState.posts[postId] = result.data;
 
         return newState;
       });
@@ -212,12 +210,12 @@ class Signup extends React.Component {
     };
 
     // Make API request to Rogue to update the quantity on the backend
-    let request = this.api.post('posts', fields);
+    const request = this.api.post('posts', fields);
 
     request.then((result) => {
       // Update the state
       this.setState((previousState) => {
-        const newState = {...previousState};
+        const newState = { ...previousState };
         newState.signup.quantity = result.quantity;
 
         return newState;
@@ -231,7 +229,7 @@ class Signup extends React.Component {
   // Set newstate with updated quantity and why_participated.
   updateSignup(signup) {
     this.setState((previousState) => {
-      const newState = {...previousState};
+      const newState = { ...previousState };
 
       newState.signup.quantity = signup.quantity;
       newState.signup.why_participated = signup.why_participated;
@@ -247,15 +245,15 @@ class Signup extends React.Component {
 
     if (confirmed) {
       // Make API request to Rogue to update the quantity on the backend
-      let response = this.api.delete('posts/'.concat(postId));
+      const response = this.api.delete('posts/'.concat(postId));
 
       response.then((result) => {
         // Update the state
         this.setState((previousState) => {
-          var newState = {...previousState};
+          const newState = { ...previousState };
 
           // Remove the deleted post from the state
-          delete(newState.posts[postId]);
+          delete (newState.posts[postId]);
 
           // Return the new state
           return newState;
@@ -281,19 +279,19 @@ class Signup extends React.Component {
     };
 
     // Make API request to Rogue to upload post
-    let request = this.api.post('posts', fields);
+    const request = this.api.post('posts', fields);
 
     request.then((result) => {
       // Update the state
       this.setState((previousState) => {
-        const newState = {...previousState};
-        const post = keyBy(result,'id');
+        const newState = { ...previousState };
+        const post = keyBy(result, 'id');
         const key = Number(Object.keys(post));
 
         newState.successfulSubmission = {
           success: {
-            message: "Thanks for the photo! It has been automatically approved.",
-          }
+            message: 'Thanks for the photo! It has been automatically approved.',
+          },
         };
 
         newState.posts[key] = post[key];
@@ -301,19 +299,19 @@ class Signup extends React.Component {
         return newState;
       });
     })
-    .catch(error =>
-      this.setState((previousState) => {
-        const newState = {...previousState};
+      .catch(error =>
+        this.setState((previousState) => {
+          const newState = { ...previousState };
 
-        newState.successfulSubmission = {
-          error: {
-            message: "Oops, looks like something went wrong.",
-          }
-        };
+          newState.successfulSubmission = {
+            error: {
+              message: 'Oops, looks like something went wrong.',
+            },
+          };
 
-        return newState;
-      })
-    );
+          return newState;
+        }),
+      );
   }
 
   render() {
@@ -336,18 +334,19 @@ class Signup extends React.Component {
 
             <div className="container__row">
 
-              <a href="#" onClick={e => this.showHistory(signup['signup_id'], e)}>Edit | Show History</a>
+              <a href="#" onClick={e => this.showHistory(signup.signup_id, e)}>Edit | Show History</a>
 
               <ModalContainer>
                 {this.state.displayHistoryModal ?
-                  <HistoryModal id={this.state.historyModalId}
+                  <HistoryModal
+                    id={this.state.historyModalId}
                     onUpdate={this.updateQuantity}
                     onClose={e => this.hideHistory(e)}
                     signup={signup}
                     campaign={campaign}
                     signupEvents={this.state.signupEvents}
                   />
-                : null}
+                  : null}
               </ModalContainer>
             </div>
 
@@ -364,25 +363,26 @@ class Signup extends React.Component {
                     updateSignup={this.updateSignup}
                     success={this.state.successfulSubmission}
                   />
-                : null}
+                  : null}
               </ModalContainer>
             </div>
 
-            <MetaInformation title="Meta" details={{
-              "Signup ID": signup.signup_id,
-              "Northstar ID": user.id,
-              "Signup Source": signup.signup_source,
-              "Created At": new Date(signup.created_at).toDateString()
-            }} />
+            <MetaInformation
+              title="Meta"
+              details={{
+                'Signup ID': signup.signup_id,
+                'Northstar ID': user.id,
+                'Signup Source': signup.signup_source,
+                'Created At': new Date(signup.created_at).toDateString(),
+              }}
+            />
           </div>
         </div>
         {
-          map(['pending', 'accepted', 'rejected'], (status, key) => {
-            return <PostGroup key={key} groupType={status} posts={posts} signup={signup} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.deletePost} />
-          })
+          map(['pending', 'accepted', 'rejected'], (status, key) => <PostGroup key={key} groupType={status} posts={posts} signup={signup} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.deletePost} />)
         }
       </div>
-    )
+    );
   }
 }
 

@@ -18,7 +18,7 @@ class UserOverview extends React.Component {
       campaigns: [],
     },
 
-    this.api = new RestApiClient;
+    this.api = new RestApiClient();
   }
 
   componentDidMount() {
@@ -29,14 +29,14 @@ class UserOverview extends React.Component {
     // Get user activity.
     this.getUserActivity(this.props.user.id)
     // Then get the campaign data tied to that activity.
-    .then(() => {
-      const ids = map(this.state.signups, 'campaign_id');
-      this.getCampaigns(ids);
+      .then(() => {
+        const ids = map(this.state.signups, 'campaign_id');
+        this.getCampaigns(ids);
 
-      this.setState({
-        loading: false,
+        this.setState({
+          loading: false,
+        });
       });
-    });
   }
 
   /**
@@ -46,7 +46,7 @@ class UserOverview extends React.Component {
    * @return {Object}
    */
   getUserActivity(id) {
-    let request = this.api.get('api/v2/activity', {
+    const request = this.api.get('api/v2/activity', {
       filter: {
         northstar_id: id,
       },
@@ -56,7 +56,7 @@ class UserOverview extends React.Component {
 
     return request.then((result) => {
       this.setState({
-        signups: result.data
+        signups: result.data,
       });
     });
   }
@@ -69,7 +69,7 @@ class UserOverview extends React.Component {
    */
   getCampaigns(ids) {
     this.api.get('api/v2/campaigns', {
-      ids: ids.join()
+      ids: ids.join(),
     }).then(json => this.setState({
       campaigns: keyBy(json, 'id'),
     }));
@@ -86,10 +86,13 @@ class UserOverview extends React.Component {
 
         <div className="container__block">
           <UserInformation user={user}>
-            <MetaInformation title="Meta" details={{
-              "Source": user.source,
-              "Northstar ID": user.id,
-            }} />
+            <MetaInformation
+              title="Meta"
+              details={{
+                Source: user.source,
+                'Northstar ID': user.id,
+              }}
+            />
           </UserInformation>
         </div>
 
@@ -99,19 +102,17 @@ class UserOverview extends React.Component {
 
         <div className="container__block">
           {this.state.loading ?
-            <div className="spinner"></div>
-          :
+            <div className="spinner" />
+            :
             this.state.signups.length === 0 ?
               <Empty header="This user has no campaign signups." />
-            :
-              map(this.state.signups, (signup, index) => {
-                return <SignupCard key={index} signup={signup} campaign={this.state.campaigns ? this.state.campaigns[signup.campaign_id] : null} />;
-              })
+              :
+              map(this.state.signups, (signup, index) => <SignupCard key={index} signup={signup} campaign={this.state.campaigns ? this.state.campaigns[signup.campaign_id] : null} />)
           }
         </div>
 
       </div>
-    )
+    );
   }
 }
 

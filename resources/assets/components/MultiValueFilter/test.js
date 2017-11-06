@@ -10,11 +10,11 @@ test('it renders a list of tags', () => {
   const filters = {
     values: {
       'good-photo': {
-        label: "Good Photo",
+        label: 'Good Photo',
         active: false,
       },
       'good-quote': {
-        label: "Good Quote",
+        label: 'Good Quote',
         active: false,
       },
     },
@@ -23,22 +23,22 @@ test('it renders a list of tags', () => {
 
 
   const component = mount(
-    <MultiValueFilter options={filters} header={'Tags'} updateFilters={() => {}}/>
+    <MultiValueFilter options={filters} header={'Tags'} updateFilters={() => {}} />,
   );
 
   expect(toJson(component)).toMatchSnapshot();
 });
 
 test('it renders an active button when clicked', () => {
-  var callback = sinon.spy();
+  const callback = sinon.spy();
   const filters = {
     values: {
       'good-photo': {
-        label: "Good Photo",
+        label: 'Good Photo',
         active: false,
       },
       'good-quote': {
-        label: "Good Quote",
+        label: 'Good Quote',
         active: false,
       },
     },
@@ -46,7 +46,7 @@ test('it renders an active button when clicked', () => {
   };
 
   const component = mount(
-    <MultiValueFilter options={filters} header="Tags" updateFilters={callback} />
+    <MultiValueFilter options={filters} header="Tags" updateFilters={callback} />,
   );
 
   // Click the first "tag" button in the filter.
@@ -56,5 +56,4 @@ test('it renders an active button when clicked', () => {
   // notified via the `updateFilters` prop callback.
   expect(component.find('button').first().hasClass('is-active'));
   expect(callback.calledOnce);
-
 });

@@ -12,21 +12,22 @@ import ModalContainer from '../ModalContainer';
 class CampaignInbox extends React.Component {
   render() {
     if (this.props.loading) {
-      return <div className="spinner"></div>;
+      return <div className="spinner" />;
     }
 
     const posts = this.props.posts;
     const campaign = this.props.campaign;
     const signups = this.props.signups;
 
-    if (!isEmpty(posts)) {
+    if (! isEmpty(posts)) {
       return (
         <div className="container">
           {
             map(this.props.postIds, (key, value) => {
-              var post = find(posts, {'id': key});
+              const post = find(posts, { id: key });
 
-              return <Post key={key}
+              return (<Post
+                key={key}
                 post={post}
                 user={signups[post.signup_id].user.data}
                 signup={signups[post.signup_id]}
@@ -36,9 +37,10 @@ class CampaignInbox extends React.Component {
                 deletePost={this.props.deletePost}
                 showHistory={this.props.showHistory}
                 rotate={this.props.rotate}
-                showSiblings={true}
-                showQuantity={true}
-                allowHistory={true} />
+                showSiblings
+                showQuantity
+                allowHistory
+              />);
             })
           }
 
@@ -49,16 +51,15 @@ class CampaignInbox extends React.Component {
                 onUpdate={this.props.updateQuantity}
                 onClose={e => this.props.hideHistory(e)}
                 campaign={campaign}
-                signup={signups[posts[this.props.historyModalId]['signup_id']]}
+                signup={signups[posts[this.props.historyModalId].signup_id]}
                 signupEvents={this.props.signupEvents}
               />
-            : null}
+              : null}
           </ModalContainer>
         </div>
-      )
-    } else {
-      return <Empty header="There are no new posts!" copy="Great job, there are no new posts to review! You can check out all posts for this campaign here" />
+      );
     }
+    return <Empty header="There are no new posts!" copy="Great job, there are no new posts to review! You can check out all posts for this campaign here" />;
   }
 }
 

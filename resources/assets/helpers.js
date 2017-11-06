@@ -6,7 +6,7 @@
 import { flatMap, keyBy, get } from 'lodash';
 
 export function ready(fn) {
-  if (document.readyState !== 'loading'){
+  if (document.readyState !== 'loading') {
     fn();
   } else {
     document.addEventListener('DOMContentLoaded', fn);
@@ -23,20 +23,16 @@ export function calculateAge(date) {
   }
 
   return formattedAge;
-};
+}
 
 export function extractPostsFromSignups(signups) {
-  const posts = keyBy(flatMap(signups, signup => {
-    return signup.posts;
-  }), 'id');
+  const posts = keyBy(flatMap(signups, signup => signup.posts), 'id');
 
   return posts;
 }
 
 export function extractSignupsFromPosts(posts) {
-  const signups = keyBy(flatMap(posts, post => {
-    return post.signup.data;
-  }), 'signup_id');
+  const signups = keyBy(flatMap(posts, post => post.signup.data), 'signup_id');
 
   return signups;
 }
@@ -55,8 +51,8 @@ export function displayUserInfo(firstName, lastName, birthDate) {
   }
 
   if (birthDate) {
-    let age = calculateAge(birthDate);
-    return displayName + ', ' + age;
+    const age = calculateAge(birthDate);
+    return `${displayName}, ${age}`;
   }
 
   return displayName;
@@ -70,11 +66,11 @@ export function displayUserInfo(firstName, lastName, birthDate) {
  * @return {String|null} City and State string.
  */
 export function displayCityState(city, state) {
-  if (!city && !state) {
+  if (! city && ! state) {
     return null;
   }
 
-  return `${city ? city : ''}${city && state ? ', ' : ''}${state ? state : ''}`
+  return `${city || ''}${city && state ? ', ' : ''}${state || ''}`;
 }
 
 
@@ -85,10 +81,10 @@ export function displayCityState(city, state) {
  * @return {String|null} caption string.
  */
 export function displayCaption(post) {
-  if (post['caption']) {
-    return post['caption'];
+  if (post.caption) {
+    return post.caption;
   } else if (post.media) {
-    return post.media['caption'];
+    return post.media.caption;
   }
 
   return null;
@@ -265,41 +261,38 @@ export function getImageUrlFromProp(photoProp) {
   // media (in cases where it goes through the PostTransformer), so handle both cases
   // @TODO: make sure everything goes through a transformer so we don't need this
   if ('url' in photoProp) {
-    photo_url = photoProp['url'];
-  }
-  else if ('media' in photoProp) {
-    photo_url = photoProp['media']['original_image_url'];
+    photo_url = photoProp.url;
+  } else if ('media' in photoProp) {
+    photo_url = photoProp.media.original_image_url;
   }
 
 
-  if (photo_url == "default") {
-    return "https://www.dosomething.org/sites/default/files/JenBugError.png";
+  if (photo_url == 'default') {
+    return 'https://www.dosomething.org/sites/default/files/JenBugError.png';
   }
-  else {
-    return photo_url;
-  }
-};
+
+  return photo_url;
+}
 
 // DEPRECATED: Uses getImageUrlFromPost() instead.
 export function getEditedImageUrl(photoProp) {
   const edited_file_name = `edited_${photoProp.id}.jpeg`;
-  var url_parts;
+  let url_parts;
 
   // Sometimes we get the url right on the post and sometimes it is nested under
   // media (in cases where it goes through the PostTransformer), so handle both cases
   if ('url' in photoProp) {
-    url_parts = photoProp['url'].split("/");
+    url_parts = photoProp.url.split('/');
     url_parts.pop();
     url_parts.push(edited_file_name);
 
     return url_parts.join('/');
-  }
-  else if ('media' in photoProp) {
-    return photoProp['media']['url'];
+  } else if ('media' in photoProp) {
+    return photoProp.media.url;
   }
 
   return null;
-};
+}
 
 /*
  * Given a transformed post object, return the url based on type.
@@ -310,23 +303,23 @@ export function getEditedImageUrl(photoProp) {
  */
 export function getImageUrlFromPost(post, type) {
   let url = null;
-  const defaultPhotoUrl = "https://www.dosomething.org/sites/default/files/JenBugError.png";
+  const defaultPhotoUrl = 'https://www.dosomething.org/sites/default/files/JenBugError.png';
 
   // Make sure media property is included in the Post.
   if (! ('media' in post)) {
     return url;
   }
 
-  switch(type) {
+  switch (type) {
     case 'original':
-      url = post['media']['original_image_url'];
+      url = post.media.original_image_url;
       break;
     case 'edited':
-      url = post['media']['url'];
+      url = post.media.url;
       break;
     default:
       break;
   }
 
-  return url === "default" ?  defaultPhotoUrl : url;
-};
+  return url === 'default' ? defaultPhotoUrl : url;
+}

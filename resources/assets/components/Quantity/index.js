@@ -11,10 +11,10 @@ class Quantity extends React.Component {
         <div className="figure__body">
           {this.props.noun && this.props.verb ?
             <h4 className="reportback-noun-verb">{this.props.noun} {this.props.verb}</h4>
-          : null}
+            : null}
         </div>
       </div>
-    )
+    );
   }
 }
 
