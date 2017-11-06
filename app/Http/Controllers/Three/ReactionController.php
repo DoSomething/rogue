@@ -72,12 +72,16 @@ class ReactionController extends ApiController
      * Returns all reactions for a post.
      * GET /post/:post_id/reactions
      *
+     * @param \Illuminate\Http\Request $request
      * @param \Rogue\Models\Post $post
      * @return Illuminate\Http\Response
      */
-    public function index(Post $post)
+    public function index(Request $request, Post $post)
     {
+        $query = $this->newQuery(Reaction::class);
+
         $reactions = Reaction::withTrashed()->where(['post_id' => $post->id])->get();
 
-        return $this->collection($reactions);
+        // return $this->collection($reactions);
+        return $this->paginatedCollection($query, $request);
     }
