@@ -41,28 +41,23 @@ class ReactionController extends ApiController
         ]);
 
         $userId = $request['northstar_id'];
-        // Check to see if the post has a reaction from this particular user with id of northstar_id.
-        $reaction = Reaction::withTrashed()->where(['northstar_id' => $userId, 'post_id' => $post->id])->first();
+        // Check to see if the post has a reaction from this particular user with id of northstar_id. If not, create one.
+        $reaction = Reaction::withTrashed()->firstOrCreate(['northstar_id' => $userId, 'post_id' => $post->id]);
 
-        // If a post does not have a reaction from this user, create a reaction.
-        if (is_null($reaction)) {
-            $reaction = Reaction::create([
-                'northstar_id' => $userId,
-                'post_id' => $post->id,
-            ]);
-
+        if ($reaction->wasRecentlyCreated || $reaction->trashed()) {
+            // We're adding a new reaction in these cases.
             $code = 200;
             $action = 'liked';
-        } else {
-            // If the post was previously "liked" by this user, soft delete the reaction. Otherwise, restore the reaction.
-            $code = 201;
-            if (is_null($reaction->deleted_at)) {
-                $action = 'unliked';
-                $reaction->delete();
-            } else {
-                $action = 'liked';
+
+            if ($reaction->trashed()){
                 $reaction->restore();
+                $code = 201;
             }
+        } else {
+            // Otherwise, we must be removing.
+            $code = 201;
+            $action = 'unliked';
+            $reaction->delete();
         }
 
         $meta = [
