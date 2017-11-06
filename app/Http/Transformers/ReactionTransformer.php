@@ -20,8 +20,6 @@ class ReactionTransformer extends TransformerAbstract
             'post_id' => (string) $reaction->post_id,
             'term' => [
                 'name' => 'heart',
-                'id' => 641,
-                'total' => 1,
             ],
             'created_at' => $reaction->created_at->toIso8601String(),
             'updated_at' => $reaction->updated_at->toIso8601String(),
