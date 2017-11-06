@@ -8,14 +8,14 @@ use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Illuminate\Console\Command;
 
-class ImportPreGambitSignupsCommand extends Command
+class ImportSignupsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'rogue:pregambit';
+    protected $signature = 'rogue:signupimport {path}';
 
     protected $registrar;
 
@@ -39,7 +39,7 @@ class ImportPreGambitSignupsCommand extends Command
     public function handle()
     {
         // Load the missing signups
-        $signups_csv = Reader::createFromPath('all_pre_gambit_sms_signups.csv', 'r');
+        $signups_csv = Reader::createFromPath($this->argument('path'), 'r');
         $signups_csv->setHeaderOffset(0);
         $missing_signups = $signups_csv->getRecords();
 
