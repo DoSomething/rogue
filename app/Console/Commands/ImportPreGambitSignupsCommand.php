@@ -5,7 +5,6 @@ namespace Rogue\Console\Commands;
 use Carbon\Carbon;
 use League\Csv\Reader;
 use Rogue\Models\Signup;
-
 use Rogue\Services\Registrar;
 use Illuminate\Console\Command;
 
@@ -19,7 +18,6 @@ class ImportPreGambitSignupsCommand extends Command
     protected $signature = 'rogue:pregambit';
 
     protected $registrar;
-
 
     /**
      * Create a new command instance.
