@@ -10,7 +10,7 @@ class HistoryModal extends React.Component {
     super();
 
     this.state = {
-      quantity: null
+      quantity: null,
     };
 
     this.onUpdate = this.onUpdate.bind(this);
@@ -22,11 +22,11 @@ class HistoryModal extends React.Component {
   }
 
   parseEventData(events) {
-    var eventsWithChange = [];
+    const eventsWithChange = [];
 
-    for(var i = 0; i < events.length; i++) {
-      var current = events[i];
-      var next = events[i+1];
+    for (let i = 0; i < events.length; i++) {
+      const current = events[i];
+      const next = events[i + 1];
 
       if (next) {
         if (current.content.quantity != next.content.quantity || current.content.why_participated != next.content.why_participated || current.content.quantity_pending != next.content.quantity_pending) {
@@ -39,7 +39,7 @@ class HistoryModal extends React.Component {
     // Always include the first event in the response
     // so there is something in the table.
     // @TODO: change this when we start paginating.
-    eventsWithChange.push(events[events.length-1]);
+    eventsWithChange.push(events[events.length - 1]);
 
     return eventsWithChange;
   }
@@ -56,22 +56,22 @@ class HistoryModal extends React.Component {
           <h3>Change Quantity</h3>
           <div className="container__block -half">
             <h4>Old Quantity</h4>
-            <p>{signup['quantity']} {campaign['reportback_info']['noun']} {campaign['reportback_info']['verb']}</p>
+            <p>{signup.quantity} {campaign.reportback_info.noun} {campaign.reportback_info.verb}</p>
           </div>
           <div className="container__block -half">
             <h4>New Quantity</h4>
             <div className="form-item">
-              <input type="text" onChange={this.onUpdate} className="text-field" placeholder="Enter # here"/>
+              <input type="text" onChange={this.onUpdate} className="text-field" placeholder="Enter # here" />
             </div>
           </div>
 
           <h3>📖 History 📖</h3>
           <p>Below shows the 20 most recent changes to the member's signup. This includes changes to the quantity or why. If you need changes beyond the 20 listed here, please reach out to Team Bleed!</p>
           <div className="container">
-            <Table headings={['Quantity','Why Participated','Updated At','User']} data={parsedEvents} type='events' />
+            <Table headings={['Quantity', 'Why Participated', 'Updated At', 'User']} data={parsedEvents} type="events" />
           </div>
         </div>
-        <button className="button -history" disabled={!this.state.quantity} onClick={() => this.props.onUpdate(signup, this.state.quantity)}>Save</button>
+        <button className="button -history" disabled={! this.state.quantity} onClick={() => this.props.onUpdate(signup, this.state.quantity)}>Save</button>
       </div>
     );
   }

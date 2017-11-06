@@ -7,15 +7,13 @@ class CampaignOverview extends React.Component {
   render() {
     const causeData = this.props;
 
-    const causeTables = map(causeData, (data, cause) => {
-      return <CampaignTable key={cause} cause={cause} campaigns={data} causeData={causeData} />;
-    });
+    const causeTables = map(causeData, (data, cause) => <CampaignTable key={cause} cause={cause} campaigns={data} causeData={causeData} />);
 
     return (
       <div className="container">
         {causeTables}
       </div>
-    )
+    );
   }
 }
 

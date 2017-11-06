@@ -17,7 +17,7 @@ class FilterBar extends React.Component {
 
   updateFilters(values) {
     this.setState((previousState) => {
-      const newState = {...previousState};
+      const newState = { ...previousState };
       newState.filters[Object.keys(values)] = Object.values(values)[0];
       return newState;
     });
@@ -28,21 +28,21 @@ class FilterBar extends React.Component {
     // This maps over any child of the FilterBar component and makes a copy of it so we can send props
     // (like our function to update state) to it from this component.
     const childrenWithProps = React.Children.map(this.props.children,
-     (child) => React.cloneElement(child, {
-       updateFilters: this.updateFilters
-     })
+      child => React.cloneElement(child, {
+        updateFilters: this.updateFilters,
+      }),
     );
 
     // Render the new children.
     return (
       <div className="filter-bar container__block">
         <h2 className="heading -gamma">Post Filters</h2>
-         <div>{childrenWithProps}</div>
-         <div className="container__block -third">
+        <div>{childrenWithProps}</div>
+        <div className="container__block -third">
           <button className="button" onClick={() => this.props.onSubmit(this.state.filters)}>Apply Filters</button>
-         </div>
+        </div>
       </div>
-    )
+    );
   }
 }
 

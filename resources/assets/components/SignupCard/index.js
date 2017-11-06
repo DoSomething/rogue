@@ -15,12 +15,12 @@ class SignupCard extends React.Component {
    * @return {String}
    */
   getCampaignRunStartDate(campaignRuns, campaignRunId) {
-    for (let key in campaignRuns) {
-      if (campaignRuns[key]['id'] == campaignRunId) {
-        const date = campaignRuns[key]['start_date'];
+    for (const key in campaignRuns) {
+      if (campaignRuns[key].id == campaignRunId) {
+        const date = campaignRuns[key].start_date;
 
         if (date) {
-          return campaignRuns[key]['start_date'].split(" ")[0];
+          return campaignRuns[key].start_date.split(' ')[0];
         }
       }
       return null;
@@ -34,57 +34,55 @@ class SignupCard extends React.Component {
 
     const extraPostCount = signup.posts.data.length - gallerySize;
 
-    const posts = signup.posts.data.slice(0, gallerySize).map((post, index) => {
-      return <PostTile key={index} details={post} />;
-    });
+    const posts = signup.posts.data.slice(0, gallerySize).map((post, index) => <PostTile key={index} details={post} />);
 
     const signupUrl = `/signups/${signup.signup_id}`;
 
     return (
-        <article className="container__row signup-card">
-          <a href={signupUrl}>
-            <div className="container__block -half">
-              <div className="container__row">
-                <h2 className="heading">{campaign ? campaign.title : signup.campaign_id}</h2>
-                <h4 className="heading">Campaign ID: {signup.campaign_id}</h4>
-                <h4 className="heading">Campaign Run ID: {signup.campaign_run_id}</h4>
-                {campaign ?
-                  <h4 className="heading">Campaign Run Start Date: {this.getCampaignRunStartDate(campaign.campaign_runs.current, signup.campaign_run_id)}</h4>
-                :null }
-              </div>
-              <div className="container__row">
-                <h4 className="heading">Why Statement</h4>
-                <p>{signup.why_participated}</p>
-              </div>
+      <article className="container__row signup-card">
+        <a href={signupUrl}>
+          <div className="container__block -half">
+            <div className="container__row">
+              <h2 className="heading">{campaign ? campaign.title : signup.campaign_id}</h2>
+              <h4 className="heading">Campaign ID: {signup.campaign_id}</h4>
+              <h4 className="heading">Campaign Run ID: {signup.campaign_run_id}</h4>
+              {campaign ?
+                <h4 className="heading">Campaign Run Start Date: {this.getCampaignRunStartDate(campaign.campaign_runs.current, signup.campaign_run_id)}</h4>
+                : null }
             </div>
-            <div className="container__block -half">
-              { signup.quantity ?
-                <div className="container__row figure -left -center">
-                  <div className="figure__media">
-                    <div className="quantity">{signup.quantity}</div>
-                  </div>
-                  <div className="figure__body">
-                     <h4 className="reportback-noun-verb">{campaign ? `${campaign.reportback_info.noun} ${campaign.reportback_info.verb}` : '' }</h4>
-                  </div>
+            <div className="container__row">
+              <h4 className="heading">Why Statement</h4>
+              <p>{signup.why_participated}</p>
+            </div>
+          </div>
+          <div className="container__block -half">
+            { signup.quantity ?
+              <div className="container__row figure -left -center">
+                <div className="figure__media">
+                  <div className="quantity">{signup.quantity}</div>
                 </div>
+                <div className="figure__body">
+                  <h4 className="reportback-noun-verb">{campaign ? `${campaign.reportback_info.noun} ${campaign.reportback_info.verb}` : '' }</h4>
+                </div>
+              </div>
               : null }
-              {posts.length ?
-                <div className="container__row">
-                  <h4>Items</h4>
-                  <ul className="gallery">
-                    {posts}
-                    {extraPostCount > 0 ?
-                      <li className="figure__media">
-                        <div className="quantity">+{extraPostCount}</div>
-                      </li>
+            {posts.length ?
+              <div className="container__row">
+                <h4>Items</h4>
+                <ul className="gallery">
+                  {posts}
+                  {extraPostCount > 0 ?
+                    <li className="figure__media">
+                      <div className="quantity">+{extraPostCount}</div>
+                    </li>
                     : null}
-                  </ul>
-                </div>
+                </ul>
+              </div>
               : null }
-            </div>
-          </a>
-        </article>
-    )
+          </div>
+        </a>
+      </article>
+    );
   }
 }
 

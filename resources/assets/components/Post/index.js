@@ -24,7 +24,7 @@ class Post extends React.Component {
       loading: false,
     };
 
-    this.api = new RestApiClient;
+    this.api = new RestApiClient();
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -35,23 +35,21 @@ class Post extends React.Component {
 
     this.props.rotate(this.props.post.id)
       .then(() => {
-        this.setState({ 'loading' : false });
+        this.setState({ loading: false });
       });
   }
 
   getOtherPosts(post) {
-    const post_id = post['id'];
+    const post_id = post.id;
     const signup = this.props.signup;
 
-    var posts = signup.posts ? signup.posts : post.siblings.data;
+    const posts = signup.posts ? signup.posts : post.siblings.data;
 
     // get array of posts
     const other_posts = clone(posts);
 
     // find index that has that post_id and remove
-    const big_post = remove(other_posts, function(current_post) {
-      return current_post['id'] == post_id;
-    });
+    const big_post = remove(other_posts, current_post => current_post.id == post_id);
 
     // return the rest of the original array
     return other_posts;
@@ -69,7 +67,7 @@ class Post extends React.Component {
         {/* Post Images */}
         <div className="container__block -third images">
           <div className="post__image">
-            <img src={getImageUrlFromPost(post, 'edited')}/>
+            <img src={getImageUrlFromPost(post, 'edited')} />
           </div>
           <div className="admin-tools">
             <div className="admin-tools__links">
@@ -80,12 +78,12 @@ class Post extends React.Component {
             {this.props.rotate ?
               <div className="admin-tools__rotate">
                 {this.state.loading ?
-                  <div className="spinner"></div>
-                :
-                  <a className="button -tertiary rotate" onClick={this.handleClick}></a>
+                  <div className="spinner" />
+                  :
+                  <a className="button -tertiary rotate" onClick={this.handleClick} />
                 }
               </div>
-            : null}
+              : null}
           </div>
           {this.props.showSiblings ?
             <ul className="gallery -duo">
@@ -93,7 +91,7 @@ class Post extends React.Component {
                 map(this.getOtherPosts(post), (post, key) => <PostTile key={key} details={post} />)
               }
             </ul>
-          : null}
+            : null}
         </div>
 
         {/* User and Post information */}
@@ -101,13 +99,13 @@ class Post extends React.Component {
           <UserInformation user={user} linkSignup={signup.signup_id}>
             {signup.quantity && this.props.showQuantity ?
               <Quantity quantity={signup.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
-            : null}
+              : null}
 
             {this.props.allowHistory ?
               <div className="container">
-                <a href="#" onClick={e => this.props.showHistory(post['id'], e, signup.signup_id)}>Edit | Show History</a>
+                <a href="#" onClick={e => this.props.showHistory(post.id, e, signup.signup_id)}>Edit | Show History</a>
               </div>
-            : null}
+              : null}
 
             <div className="container -padded">
               <TextBlock title="Photo Caption" content={displayCaption(post)} />
@@ -125,16 +123,19 @@ class Post extends React.Component {
             <ReviewBlock post={post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
           </div>
           <div className="container__row">
-            <MetaInformation title="Meta" details={{
-              "Post ID": post.id,
-              "Source": post.source,
-              "Submitted": new Date(post.created_at).toDateString(),
-              "Northstar Id": signup.northstar_id
-            }} />
+            <MetaInformation
+              title="Meta"
+              details={{
+                'Post ID': post.id,
+                Source: post.source,
+                Submitted: new Date(post.created_at).toDateString(),
+                'Northstar Id': signup.northstar_id,
+              }}
+            />
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

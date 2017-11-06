@@ -22,7 +22,7 @@ class CampaignRow extends React.Component {
       {
         url: campaign ? `/campaigns/${campaign.id}/inbox` : '/campaigns',
         title: 'review',
-      }
+      },
     ];
 
     return row;
@@ -33,17 +33,17 @@ class CampaignRow extends React.Component {
 
     return (
       <tr className="table__row">
-       {content.map(function(cell, index) {
-        {
-          if (cell.url) {
-            return <td className="table__cell" key={ index }><a href={cell.url}>{cell.title}</a></td>
-          }
+        {content.map((cell, index) => {
+          {
+            if (cell.url) {
+              return <td className="table__cell" key={index}><a href={cell.url}>{cell.title}</a></td>;
+            }
 
-          return <td className="table__cell" key={ index }>{cell.title}</td>
-        }
+            return <td className="table__cell" key={index}>{cell.title}</td>;
+          }
         })}
       </tr>
-    )
+    );
   }
 }
 

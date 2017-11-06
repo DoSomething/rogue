@@ -4,7 +4,7 @@ import './app.scss';
 import React from 'react';
 import ReactDom from 'react-dom';
 import mountContainer from './utilities/MountContainer';
-import "babel-polyfill";
+import 'babel-polyfill';
 
 import Signup from './components/Signup';
 import UserOverview from './components/UserOverview';
@@ -14,10 +14,10 @@ import CampaignOverview from './components/CampaignOverview';
 
 ready(() => {
   mountContainer({
-    CampaignOverview: CampaignOverview,
-    CampaignInbox: CampaignInbox,
-    CampaignSingle: CampaignSingle,
-    UserOverview: UserOverview,
-    Signup: Signup,
+    CampaignOverview,
+    CampaignInbox,
+    CampaignSingle,
+    UserOverview,
+    Signup,
   });
 });

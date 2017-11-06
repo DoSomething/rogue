@@ -5,24 +5,24 @@ import toJson from 'enzyme-to-json';
 import ReviewBlock from './index';
 
 test('it renders accepted, rejected, and delete buttons', () => {
-    const post = {
-      status: 'pending',
-    };
+  const post = {
+    status: 'pending',
+  };
 
   const component = shallow(
-    <ReviewBlock post={post} />
+    <ReviewBlock post={post} />,
   );
 
   expect(toJson(component)).toMatchSnapshot();
 });
 
 test('it renders the review block with tags', () => {
-    const post = {
-      status: 'accepted',
-    };
+  const post = {
+    status: 'accepted',
+  };
 
   const component = shallow(
-    <ReviewBlock post={post} />
+    <ReviewBlock post={post} />,
   );
 
   expect(toJson(component)).toMatchSnapshot();
@@ -34,7 +34,7 @@ test('it renders an active Accept button when clicked', () => {
   };
 
   const component = shallow(
-    <ReviewBlock post={post} />
+    <ReviewBlock post={post} />,
   );
 
   // Click the "Accept" button.
@@ -50,7 +50,7 @@ test('it renders an active Reject button when clicked', () => {
   };
 
   const component = shallow(
-    <ReviewBlock post={post} />
+    <ReviewBlock post={post} />,
   );
 
   // Click the "Reject" button.
@@ -66,7 +66,7 @@ test('it renders an active tag button when clicked', () => {
   };
 
   const component = shallow(
-    <ReviewBlock post={post} />
+    <ReviewBlock post={post} />,
   );
 
   // Click a tag button.

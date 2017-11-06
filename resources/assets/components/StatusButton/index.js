@@ -9,27 +9,27 @@ class StatusButton extends React.Component {
     super();
 
     this.state = {
-      'sending': false,
-    }
+      sending: false,
+    };
 
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick () {
-    this.setState({ 'sending' : true });
+  handleClick() {
+    this.setState({ sending: true });
 
     this.props.setStatus(this.props.type)
       .then(() => {
-        this.setState({ 'sending' : false });
+        this.setState({ sending: false });
       });
   }
 
   render() {
     return (
-      <button className={classnames('button', {'-outlined-button' : !this.state.sending},  `-${this.props.type}`, {'is-selected' : this.props.status == this.props.type}, {'is-loading' : this.state.sending})} onClick={() => this.handleClick()}>
+      <button className={classnames('button', { '-outlined-button': ! this.state.sending }, `-${this.props.type}`, { 'is-selected': this.props.status == this.props.type }, { 'is-loading': this.state.sending })} onClick={() => this.handleClick()}>
         {this.props.label}
       </button>
-    )
+    );
   }
 }
 

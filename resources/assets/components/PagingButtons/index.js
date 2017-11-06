@@ -10,12 +10,12 @@ class PagingButtons extends React.Component {
 
     return (
       <div className="container__block">
-        <a href={prev} onClick={e => this.props.onPaginate(prev, e)} disabled={prev}>{prev ? "< previous" : null}</a>
+        <a href={prev} onClick={e => this.props.onPaginate(prev, e)} disabled={prev}>{prev ? '< previous' : null}</a>
         <div className="next-page">
-          <a href={next} onClick={e => this.props.onPaginate(next, e)}>{next ? "next >" : null}</a>
+          <a href={next} onClick={e => this.props.onPaginate(next, e)}>{next ? 'next >' : null}</a>
         </div>
       </div>
-    )
+    );
   }
 }
 

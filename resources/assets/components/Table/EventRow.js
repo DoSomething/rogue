@@ -24,7 +24,7 @@ class EventRow extends React.Component {
       },
       {
         title: event.user,
-      }
+      },
     ];
 
     return row;
@@ -35,11 +35,9 @@ class EventRow extends React.Component {
 
     return (
       <tr className="table__row">
-       {content.map(function(cell, index) {
-          return <td className="table__cell" key={index}>{cell.title}</td>
-        })}
+        {content.map((cell, index) => <td className="table__cell" key={index}>{cell.title}</td>)}
       </tr>
-    )
+    );
   }
 }
 

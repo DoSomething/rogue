@@ -30,19 +30,19 @@ class MediaUploader extends React.Component {
         blob = processFile(fileReader.result);
 
         let result;
-        var reader = new FileReader();
+        const reader = new FileReader();
 
         reader.readAsDataURL(blob);
 
         reader.onloadend = () => {
-          let result = reader.result;
+          const result = reader.result;
 
           this.props.onChange({
             file: blob,
             dataURL: result,
             filePreviewUrl: URL.createObjectURL(blob),
           });
-        }
+        };
       } catch (error) {
         // @todo: need a nice way to handle this, display message?
         console.log(error);

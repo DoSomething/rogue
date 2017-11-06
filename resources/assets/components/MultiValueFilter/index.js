@@ -34,12 +34,12 @@ class MultiValueFilter extends React.Component {
 
   handleClick(key, activeFilter, type) {
     const values = {
-      active: !activeFilter,
+      active: ! activeFilter,
       label: this.state[type][key].label,
     };
 
     this.setState((previousState) => {
-      const newState = {...previousState};
+      const newState = { ...previousState };
       newState[type][key] = values;
 
       return newState;
@@ -54,14 +54,16 @@ class MultiValueFilter extends React.Component {
           {map(Object.values(this.state)[0], (option, key) => (
             <li key={key}>
               {Object.values(this.state)[0] ?
-                <button className={classnames('tag', {'is-active':  option.active})}
-                      onClick={() => this.handleClick(key, option.active, this.props.options.type)}>{option.label}</button>
-              : null}
+                <button
+                  className={classnames('tag', { 'is-active': option.active })}
+                  onClick={() => this.handleClick(key, option.active, this.props.options.type)}
+                >{option.label}</button>
+                : null}
             </li>
           ))}
         </ul>
       </div>
-    )
+    );
   }
 }
 
