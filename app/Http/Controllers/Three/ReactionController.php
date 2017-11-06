@@ -67,20 +67,9 @@ class ReactionController extends ApiController
 
         $meta = [
             'action' => $action,
-            'total_reactions' => $this->getTotalReactions($post->id),
+            'total_reactions' => $post->getTotalReactions($post->id),
         ];
 
         return $this->item($reaction, $code, $meta);
-    }
-
-    /**
-     * Get the number of reactions a post has.
-     *
-     * @param int $postId
-     * @return int
-     */
-    private function getTotalReactions($postId)
-    {
-        return count(Post::find($postId)->reactions);
     }
 }
