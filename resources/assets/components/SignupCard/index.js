@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import PropTypes from 'prop-types';
 import './signup-card.scss';
 import PostTile from '../PostTile';
 import { RestApiClient } from '@dosomething/gateway';
@@ -86,5 +87,26 @@ class SignupCard extends React.Component {
     )
   }
 }
+
+SignupCard.propTypes = {
+  signup: PropTypes.shape({
+    posts: PropTypes.object,
+    why_participated: PropTypes.string,
+    signup_id: PropTypes.number,
+    campaign_id: PropTypes.number,
+    campaign_run_id: PropTypes.number,
+    quantity: PropTypes.number,
+  }).isRequired,
+  campaign: PropTypes.shape({
+    title: PropTypes.string,
+    campaign_runs: PropTypes.object,
+    reportback_info: PropTypes.object,
+  }),
+};
+
+SignupCard.defaultProps = {
+  campaign: null,
+};
+
 
 export default SignupCard;

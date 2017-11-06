@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Tags from '../Tags';
 import StatusButton from '../StatusButton';
@@ -27,5 +28,12 @@ class ReviewBlock extends React.Component {
     )
   }
 }
+
+ReviewBlock.propTypes = {
+  deletePost: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  onTag: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+};
 
 export default ReviewBlock;

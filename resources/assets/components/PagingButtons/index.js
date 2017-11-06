@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './paging-buttons.scss';
 
 class PagingButtons extends React.Component {
@@ -16,5 +18,16 @@ class PagingButtons extends React.Component {
     )
   }
 }
+
+PagingButtons.propTypes = {
+  next: PropTypes.string,
+  onPaginate: PropTypes.func.isRequired,
+  prev: PropTypes.string,
+};
+
+PagingButtons.defaultProps = {
+  next: null,
+  prev: null,
+};
 
 export default PagingButtons;

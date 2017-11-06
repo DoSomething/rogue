@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { map, find } from 'lodash';
-import { RestApiClient} from '@dosomething/gateway';
-import { extractSignupsFromPosts } from '../../helpers';
+import { RestApiClient } from '@dosomething/gateway';
 
 import Post from '../Post';
 import Empty from '../Empty';
@@ -139,7 +139,7 @@ class CampaignSingle extends React.Component {
         <div className="container__block">
           <div className="container__row">
             <div className="container__block -half">
-              <StatusCounter postTotals={this.props.post_totals} campaign={campaign}/>
+              <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
             </div>
             <div className="container__block -half">
               <UserExport campaign={campaign}/>
@@ -192,8 +192,36 @@ class CampaignSingle extends React.Component {
 
         <PagingButtons onPaginate={this.getPostsByPaginatedLink} prev={this.props.prevPage} next={this.props.nextPage}></PagingButtons>
       </div>
-    )
+    );
   }
 }
+
+CampaignSingle.propTypes = {
+  campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  deletePost: PropTypes.func.isRequired,
+  displayHistoryModal: PropTypes.bool,
+  hideHistory: PropTypes.func.isRequired,
+  historyModalId: PropTypes.number,
+  loading: PropTypes.bool.isRequired,
+  postIds: PropTypes.arrayOf(PropTypes.number),
+  posts: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  rotate: PropTypes.func.isRequired,
+  setNewPosts: PropTypes.func.isRequired,
+  showHistory: PropTypes.func.isRequired,
+  signups: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  signupEvents: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  updatePost: PropTypes.func.isRequired,
+  updateQuantity: PropTypes.func.isRequired,
+  updateTag: PropTypes.func.isRequired,
+};
+
+CampaignSingle.defaultProps = {
+  displayHistoryModal: null,
+  historyModalId: null,
+  postIds: null,
+  posts: null,
+  signups: null,
+  signupEvents: null,
+};
 
 export default CampaignSingle;

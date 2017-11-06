@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Table from '../Table';
 
@@ -15,5 +16,14 @@ class CampaignTable extends React.Component {
     )
   }
 }
+
+CampaignTable.propTypes = {
+  cause: PropTypes.string.isRequired,
+  campaigns: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+};
+
+CampaignTable.defaultProps = {
+  campaigns: null,
+};
 
 export default CampaignTable;

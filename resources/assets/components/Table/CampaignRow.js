@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import PropTypes from 'prop-types';
 
 class CampaignRow extends React.Component {
   constructor() {
@@ -32,17 +33,26 @@ class CampaignRow extends React.Component {
 
     return (
       <tr className="table__row">
-       {content.map(function(cell) {
-        { if (cell.url) {
-            return <td className="table__cell"><a href={cell.url}>{cell.title}</a></td>
+       {content.map(function(cell, index) {
+        {
+          if (cell.url) {
+            return <td className="table__cell" key={ index }><a href={cell.url}>{cell.title}</a></td>
           }
 
-          return <td className="table__cell">{cell.title}</td>
+          return <td className="table__cell" key={ index }>{cell.title}</td>
         }
         })}
       </tr>
     )
   }
 }
+
+CampaignRow.propTypes = {
+  data: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+};
+
+CampaignRow.defaultProps = {
+  data: null,
+};
 
 export default CampaignRow;

@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './empty.scss';
 
-const Empty = (props) => (
+const Empty = props => (
   <div className="container empty">
     <div className="empty__image" />
     <div className="empty__text">
@@ -11,5 +13,14 @@ const Empty = (props) => (
   </div>
 );
 
+Empty.propTypes = {
+  header: PropTypes.string,
+  copy: PropTypes.string,
+};
+
+Empty.defaultProps = {
+  header: 'There are no results!',
+  copy: 'Nothing to see here.',
+};
 
 export default Empty;

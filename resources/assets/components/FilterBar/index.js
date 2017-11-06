@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './filter-bar.scss';
 
 class FilterBar extends React.Component {
@@ -43,5 +45,14 @@ class FilterBar extends React.Component {
     )
   }
 }
+
+FilterBar.propTypes = {
+  children: PropTypes.node,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+FilterBar.defaultProps = {
+  children: null,
+};
 
 export default FilterBar;

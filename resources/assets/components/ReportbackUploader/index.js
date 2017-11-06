@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import MediaUploader from '../MediaUploader';
 import FormMessage from '../FormMessage';
 import './reportback-uploader.scss';
@@ -117,10 +119,21 @@ class ReportbackUploader extends React.Component {
   }
 }
 
-ReportbackUploader.defaultProps = {
-  noun: {
-    plural: 'items',
-  },
+ReportbackUploader.propTypes = {
+  campaignId: PropTypes.number.isRequired,
+  campaignRunId: PropTypes.number.isRequired,
+  northstarId: PropTypes.string.isRequired,
+  signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  source: PropTypes.string.isRequired,
+  submitReportback: PropTypes.func.isRequired,
+  submissions: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    isStoring: PropTypes.bool,
+    items: PropTypes.array,
+    messaging: PropTypes.object,
+    reportback: PropTypes.object,
+  }).isRequired,
+  updateSignup: PropTypes.func.isRequired,
 };
 
 export default ReportbackUploader;

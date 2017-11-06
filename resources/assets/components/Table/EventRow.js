@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import PropTypes from 'prop-types';
 
 class EventRow extends React.Component {
   constructor() {
@@ -34,12 +35,16 @@ class EventRow extends React.Component {
 
     return (
       <tr className="table__row">
-       {content.map(function(cell) {
-          return <td className="table__cell">{cell.title}</td>
+       {content.map(function(cell, index) {
+          return <td className="table__cell" key={index}>{cell.title}</td>
         })}
       </tr>
     )
   }
 }
+
+EventRow.propTypes = {
+  data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+};
 
 export default EventRow;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { map, find, isEmpty } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
@@ -60,5 +61,32 @@ class CampaignInbox extends React.Component {
     }
   }
 }
+
+CampaignInbox.propTypes = {
+  campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  deletePost: PropTypes.func.isRequired,
+  displayHistoryModal: PropTypes.bool,
+  hideHistory: PropTypes.func.isRequired,
+  historyModalId: PropTypes.number,
+  loading: PropTypes.bool.isRequired,
+  postIds: PropTypes.arrayOf(PropTypes.number),
+  posts: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  rotate: PropTypes.func.isRequired,
+  showHistory: PropTypes.func.isRequired,
+  signups: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  signupEvents: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  updatePost: PropTypes.func.isRequired,
+  updateQuantity: PropTypes.func.isRequired,
+  updateTag: PropTypes.func.isRequired,
+};
+
+CampaignInbox.defaultProps = {
+  displayHistoryModal: null,
+  historyModalId: null,
+  postIds: null,
+  posts: null,
+  signups: null,
+  signupEvents: null,
+};
 
 export default CampaignInbox;

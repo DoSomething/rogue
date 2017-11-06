@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Quantity extends React.Component {
   render() {
@@ -16,5 +17,17 @@ class Quantity extends React.Component {
     )
   }
 }
+
+Quantity.propTypes = {
+  noun: PropTypes.string,
+  quantity: PropTypes.string,
+  verb: PropTypes.string,
+};
+
+Quantity.defaultProps = {
+  noun: 'things',
+  quantity: 0,
+  verb: 'done',
+};
 
 export default Quantity;

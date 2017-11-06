@@ -1,6 +1,7 @@
 // Utilities
 import React from 'react';
-import { map, startCase, keyBy, filter, isEmpty} from 'lodash';
+import PropTypes from 'prop-types';
+import { map, startCase, keyBy, filter, isEmpty } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
 // Components
@@ -9,7 +10,7 @@ import Empty from '../Empty';
 import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
 import HistoryModal from '../HistoryModal';
-import UploaderModal from '../UploaderModal'
+import UploaderModal from '../UploaderModal';
 import ModalContainer from '../ModalContainer';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
@@ -51,6 +52,16 @@ class PostGroup extends React.Component {
     )
   }
 }
+
+PostGroup.propTypes = {
+  posts: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  onUpdate: PropTypes.func.isRequired,
+  onTag: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
+  groupType: PropTypes.string.isRequired,
+};
+
 
 class Signup extends React.Component {
   constructor(props) {
@@ -374,5 +385,11 @@ class Signup extends React.Component {
     )
   }
 }
+
+Signup.propTypes = {
+  signup_id: PropTypes.number.isRequired,
+  user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+};
 
 export default Signup;
