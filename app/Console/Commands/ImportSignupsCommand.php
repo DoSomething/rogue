@@ -17,8 +17,6 @@ class ImportSignupsCommand extends Command
      */
     protected $signature = 'rogue:signupimport {path}';
 
-    protected $registrar;
-
     /**
      * Create a new command instance.
      *
@@ -27,8 +25,6 @@ class ImportSignupsCommand extends Command
     public function __construct(Registrar $registrar)
     {
         parent::__construct();
-
-        $this->registrar = $registrar;
     }
 
     /**
@@ -61,7 +57,7 @@ class ImportSignupsCommand extends Command
                 $signup->source = 'sms';
                 $signup->created_at = $missing_signup['signup_created_at_timestamp'];
                 $signup->updated_at = Carbon::now();
-                $signup->save(['timstamps' => false]);
+                $signup->save(['timestamps' => false]);
 
                 $this->line('Created signup ' . $signup->id);
             } else {
