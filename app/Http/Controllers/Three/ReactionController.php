@@ -78,7 +78,7 @@ class ReactionController extends ApiController
      */
     public function index(Request $request, Post $post)
     {
-        $query = $this->newQuery(Reaction::class);
+        $query = Reaction::withTrashed()->where(['post_id' => $post->id]);
 
         $reactions = Reaction::withTrashed()->where(['post_id' => $post->id])->get();
 
