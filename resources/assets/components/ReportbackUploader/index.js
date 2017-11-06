@@ -120,8 +120,8 @@ class ReportbackUploader extends React.Component {
 }
 
 ReportbackUploader.propTypes = {
-  // campaignId: PropTypes.int.isRequired,
-  // campaignRunId: PropTypes.int.isRequired,
+  campaignId: PropTypes.number.isRequired,
+  campaignRunId: PropTypes.number.isRequired,
   northstarId: PropTypes.string.isRequired,
   signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   source: PropTypes.string.isRequired,

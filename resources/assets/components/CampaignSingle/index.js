@@ -203,7 +203,7 @@ CampaignSingle.propTypes = {
   hideHistory: PropTypes.func.isRequired,
   historyModalId: PropTypes.number,
   loading: PropTypes.bool.isRequired,
-  postIds: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  postIds: PropTypes.arrayOf(PropTypes.number),
   posts: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   rotate: PropTypes.func.isRequired,
   setNewPosts: PropTypes.func.isRequired,
