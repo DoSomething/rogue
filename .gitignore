@@ -10,3 +10,5 @@ Homestead.json
 
 public/assets/**
 public/dist
+
+npm-debug.log
