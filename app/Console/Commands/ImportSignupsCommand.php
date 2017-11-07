@@ -2,7 +2,6 @@
 
 namespace Rogue\Console\Commands;
 
-use Carbon\Carbon;
 use League\Csv\Reader;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
