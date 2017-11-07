@@ -17,6 +17,13 @@ class ImportSignupsCommand extends Command
     protected $signature = 'rogue:signupimport {path}';
 
     /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Create signups based on the data in the given CSV file.';
+
+    /**
      * Create a new command instance.
      *
      * @return void
