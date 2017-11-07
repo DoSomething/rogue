@@ -40,20 +40,6 @@ class SignupsController extends ApiController
     }
 
     /**
-     * Returns signups.
-     * GET /signups
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(Request $request)
-    {
-        $query = $this->newQuery(Signup::class);
-
-        return $this->paginatedCollection($query, $request);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
