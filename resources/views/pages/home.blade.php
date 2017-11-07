@@ -19,7 +19,7 @@
                 </div>
                 <div class="container__block -half">
                     <article class="figure margin-bottom-none -left -small">
-                        <div class="figure__media">
+                        <div class="figure__media rounded-figure">
                             <img src={{asset('images/Jen.png')}}>
                         </div>
                         <div class="figure__body">
@@ -30,7 +30,7 @@
                     </article>
                     <br>
                     <article class="figure margin-bottom-none -left -small">
-                        <div class="figure__media">
+                        <div class="figure__media rounded-figure">
                             <img src={{asset('images/Shae.png')}}>
                         </div>
                         <div class="figure__body">
@@ -41,7 +41,7 @@
                     </article>
                     <br>
                     <article class="figure margin-bottom-none -left -small">
-                        <div class="figure__media">
+                        <div class="figure__media rounded-figure">
                             <img src={{asset('images/Katie.png')}}>
                         </div>
                         <div class="figure__body">
@@ -52,7 +52,7 @@
                     </article>
                     <br>
                     <article class="figure margin-bottom-none -left -small">
-                        <div class="figure__media">
+                        <div class="figure__media rounded-figure">
                             <img src={{asset('images/Chloe.png')}}>
                         </div>
                         <div class="figure__body">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="container__block -half">
                     <article class="figure margin-bottom-none -left -small">
-                        <div class="figure__media">
+                        <div class="figure__media rounded-figure">
                             <img src={{asset('images/Luke.png')}}>
                         </div>
                         <div class="figure__body">
@@ -75,7 +75,7 @@
                     </article>
                     <br>
                     <article class="figure margin-bottom-none -left -small">
-                        <div class="figure__media">
+                        <div class="figure__media rounded-figure">
                             <img src={{asset('images/Dave.png')}}>
                         </div>
                         <div class="figure__body">
@@ -86,7 +86,7 @@
                     </article>
                     <br>
                     <article class="figure margin-bottom-none -left -small">
-                        <div class="figure__media">
+                        <div class="figure__media rounded-figure">
                             <img src={{asset('images/TongueCat.png')}}>
                         </div>
                         <div class="figure__body">
