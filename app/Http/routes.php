@@ -107,4 +107,8 @@ Route::group(['prefix' => 'api/v3', 'middleware' => ['api']], function () {
     Route::get('posts/{post}', 'Three\PostsController@show');
     Route::patch('posts/{post}', 'Three\PostsController@update');
     Route::delete('posts/{post}', 'Three\PostsController@destroy');
+
+    // reactions
+    Route::post('post/{post}/reactions', 'Three\ReactionController@store');
+    Route::get('post/{post}/reactions', 'Three\ReactionController@index');
 });

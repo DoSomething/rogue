@@ -2,7 +2,8 @@
 
 @section('main_content')
 
-    @include('layouts.header', ['header' => 'Rogue', 'subtitle' => 'Please log in to continue.'])
+    @include('layouts.header', ['header' => 'Rogue', 'subtitle' => 'Please log in with your DoSomething.org admin account to continue.
+'])
 
     <div class="container -padded">
         <div class="wrapper">
