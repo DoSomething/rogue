@@ -35,7 +35,7 @@
                         <img src={{asset('images/Dave.png')}}>
                         <li>Dave - Staff Engineer</li>
                         <img src={{asset('images/TongueCat.png')}}>
-                        <li>Tongue Cat - Rogue mascot</li>
+                        <li>Tongue Cat - Rogue Mascot</li>
                     </ul>
                 </div>
             </div>
