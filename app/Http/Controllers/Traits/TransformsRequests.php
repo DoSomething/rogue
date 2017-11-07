@@ -12,7 +12,7 @@ use League\Fractal\Resource\Collection as FractalCollection;
 trait TransformsRequests
 {
     /**
-     * @var League\Fractal\Manager
+     * @var \League\Fractal\Manager
      */
     protected $manager;
 
@@ -83,8 +83,8 @@ trait TransformsRequests
     /**
      * Set the Transformer to use otherwise use resource controller default.
      *
-     * @param League\Fractal\TransformerAbstract|null $transformer
-     * @return League\Fractal\TransformerAbstract
+     * @param  \League\Fractal\TransformerAbstract|null $transformer
+     * @return \League\Fractal\TransformerAbstract
      */
     private function setTransformer($transformer = null)
     {
@@ -99,7 +99,7 @@ trait TransformsRequests
      * Format & return a paginated collection response.
      *
      * @param $query - Eloquent query
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function paginatedCollection($query, $request, $code = 200, $meta = [], $transformer = null)
     {
@@ -151,7 +151,7 @@ trait TransformsRequests
      * @param string $message - Message to send in the response
      * @param int $code - Status code
      * @param string $status - The name of the object enclosing the message
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function respond($message, $code = 200, $status = 'success')
     {

@@ -21,14 +21,14 @@ class SignupsController extends ApiController
     /**
      * The signup service instance.
      *
-     * @var Rogue\Services\SignupService
+     * @var \Rogue\Services\SignupService
      */
     protected $signups;
 
     /**
      * Create a controller instance.
      *
-     * @return void
+     * @param SignupService $signups
      */
     public function __construct(SignupService $signups)
     {
@@ -40,10 +40,24 @@ class SignupsController extends ApiController
     }
 
     /**
+     * Returns signups.
+     * GET /signups
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request)
+    {
+        $query = $this->newQuery(Signup::class);
+
+        return $this->paginatedCollection($query, $request);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -70,26 +84,12 @@ class SignupsController extends ApiController
     }
 
     /**
-     * Returns signups.
-     * GET /signups
-     *
-     * @param Request $request
-     * @return Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        $query = $this->newQuery(Signup::class);
-
-        return $this->paginatedCollection($query, $request);
-    }
-
-    /**
      * Returns a specific signup.
      * GET /signups/:id
      *
      * @param Request $request
      * @param \Rogue\Models\Signup $signup
-     * @return Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request, Signup $signup)
     {
@@ -100,9 +100,9 @@ class SignupsController extends ApiController
      * Updates a specific signup.
      * PATCH /signups/:id
      *
-     * @param SignupRequest $request
-     * @param \Rogue\Models\Signup $signup
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Signup $signup
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, Signup $signup)
     {
@@ -123,7 +123,7 @@ class SignupsController extends ApiController
      * DELETE /signups/:id
      *
      * @param \Rogue\Models\Signup $signup
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Signup $signup)
     {

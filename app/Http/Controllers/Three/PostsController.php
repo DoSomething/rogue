@@ -3,7 +3,6 @@
 namespace Rogue\Http\Controllers\Three;
 
 use Rogue\Models\Post;
-use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Requests\Three\PostRequest;
@@ -37,14 +36,14 @@ class PostsController extends ApiController
     /**
      * Create a controller instance.
      *
-     * @param  PostContract  $posts
-     * @return void
+     * @param PostService $posts
+     * @param SignupRepository $signups
+     * @param PostTransformer $transformer
      */
     public function __construct(PostService $posts, SignupRepository $signups, PostTransformer $transformer)
     {
         $this->posts = $posts;
         $this->signups = $signups;
-
         $this->transformer = $transformer;
 
         $this->middleware('auth.api');
@@ -53,7 +52,7 @@ class PostsController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  PostRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(PostRequest $request)
@@ -90,22 +89,21 @@ class PostsController extends ApiController
      * Returns a specific post.
      * GET /posts/:id
      *
-     * @param Request $request
      * @param \Rogue\Models\Post $post
-     * @return Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request, Post $post)
+    public function show(Post $post)
     {
-        return $this->item($post, 200, [], $this->transformer);
+        return $this->item($post);
     }
 
     /**
      * Updates a specific post.
      * PATCH /posts/:id
      *
-     * @param Request $request
+     * @param PostRequest $request
      * @param \Rogue\Models\Post $post
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(PostRequest $request, Post $post)
     {
@@ -119,7 +117,7 @@ class PostsController extends ApiController
      * DELETE /posts/:id
      *
      * @param \Rogue\Models\Post $post
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Post $post)
     {
