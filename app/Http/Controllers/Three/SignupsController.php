@@ -111,9 +111,9 @@ class SignupsController extends ApiController
             'why_participated' => 'required_without_all:quantity',
         ]);
 
-        // @TODO: Remove `array_filter` with 'only' changes in Laravel 5.5.
-        $fields = array_filter($request->only('quantity', 'why_participated'));
-        $signup->update($fields);
+        $signup->update(
+            $request->only('quantity', 'why_participated')
+        );
 
         return $this->item($signup);
     }
