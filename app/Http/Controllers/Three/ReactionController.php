@@ -82,6 +82,5 @@ class ReactionController extends ApiController
 
         $reactions = Reaction::withTrashed()->where(['post_id' => $post->id])->get();
 
-        // return $this->collection($reactions);
         return $this->paginatedCollection($query, $request);
     }
