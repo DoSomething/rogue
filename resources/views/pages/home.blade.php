@@ -9,7 +9,11 @@
         <div class="wrapper">
             <div class="container__block -narrow">
                 <p>
-                    Welcome to <strong>Rogue</strong>, our campaign activity admin tool.
+                    Welcome to <strong>Rogue</strong>, our one source of truth for all things user activity. Logging in will allow you to review and search for reportbacks.
+                </p>
+
+                <p>
+                    Please contact @jen for Rogue access.
                 </p>
 
                 <p>
