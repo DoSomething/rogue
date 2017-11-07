@@ -84,3 +84,4 @@ class ReactionController extends ApiController
 
         return $this->paginatedCollection($query, $request);
     }
+}
