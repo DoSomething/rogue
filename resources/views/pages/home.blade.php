@@ -14,43 +14,87 @@
 
                 <h4>We're Team Bleed - your friends behind building and improving Rogue!</h4>
                 <div class="container__block -half">
-                    <ul class>
-                        <li>
+                    <article class="figure margin-bottom-none -left -small">
+                        <div class="figure__media">
                             <img src={{asset('images/Jen.png')}}>
-                            <p>Jen - Product Manager</p>
-                        </li>
-                        <li>
+                        </div>
+                        <div class="figure__body">
+                            <strong>Jen</strong>
+                            <br>
+                            <p class="footnote">Product Manager</p>
+                        </div>
+                    </article>
+                    <br>
+                    <article class="figure margin-bottom-none -left -small">
+                        <div class="figure__media">
                             <img src={{asset('images/Shae.png')}}>
-                            <p>Shae - Tech Lead</p>
-                        </li>
-                        <li>
+                        </div>
+                        <div class="figure__body">
+                            <strong>Shae</strong>
+                            <br>
+                            <p class="footnote">Tech Lead</p>
+                        </div>
+                    </article>
+                    <br>
+                    <article class="figure margin-bottom-none -left -small">
+                        <div class="figure__media">
                             <img src={{asset('images/Katie.png')}}>
-                            <p>Katie - Engineer</p>
-                        </li>
-                        <li>
+                        </div>
+                        <div class="figure__body">
+                            <strong>Katie</strong>
+                            <br>
+                            <p class="footnote">Engineer</p>
+                        </div>
+                    </article>
+                    <br>
+                    <article class="figure margin-bottom-none -left -small">
+                        <div class="figure__media">
                             <img src={{asset('images/Chloe.png')}}>
-                            <p>Chloe - Engineer</p>
-                        </li>
-                    </ul>
-                    <p>Please contact @jen (in Slack) for Rogue access.</p>
-
-                    <a href="/login" class="button">Log In</a>
+                        </div>
+                        <div class="figure__body">
+                            <strong>Chloe</strong>
+                            <br>
+                            <p class="footnote">Engineer</p>
+                        </div>
+                    </article>
                 </div>
                 <div class="container__block -half">
-                    <ul class>
-                        <li>
+                    <article class="figure margin-bottom-none -left -small">
+                        <div class="figure__media">
                             <img src={{asset('images/Luke.png')}}>
-                            <p>Luke - Product Desginer</p>
-                        </li>
-                        <li>
+                        </div>
+                        <div class="figure__body">
+                            <strong>Luke</strong>
+                            <br>
+                            <p class="footnote">Product Designer</p>
+                        </div>
+                    </article>
+                    <br>
+                    <article class="figure margin-bottom-none -left -small">
+                        <div class="figure__media">
                             <img src={{asset('images/Dave.png')}}>
-                            <p>Dave - Staff Engineer</p>
-                        </li>
-                        <li>
+                        </div>
+                        <div class="figure__body">
+                            <strong>Dave</strong>
+                            <br>
+                            <p class="footnote">Staff Engineer</p>
+                        </div>
+                    </article>
+                    <br>
+                    <article class="figure margin-bottom-none -left -small">
+                        <div class="figure__media">
                             <img src={{asset('images/TongueCat.png')}}>
-                            <p>Tongue Cat - Rogue Mascot</p>
-                        </li>
-                    </ul>
+                        </div>
+                        <div class="figure__body">
+                            <strong>Tongue Cat</strong>
+                            <br>
+                            <p class="footnote">Rogue Mascot</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="container__block -narrow">
+                    <p>Please contact @jen (in Slack) for Rogue access.</p>
+                    <a href="/login" class="button">Log In</a>
                 </div>
             </div>
         </div>
