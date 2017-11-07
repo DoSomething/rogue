@@ -27,7 +27,7 @@
   "require-dev": {
     "fzaninotto/faker": "^1.6",
     "filp/whoops": "~2.0",
-    "laravel/browser-kit-testing": "1.*",
+    "laravel/browser-kit-testing": "2.*",
     "mockery/mockery": "^0.9.5",
     "phpunit/phpunit": "~6.0",
     "symfony/css-selector": "3.1.*",
