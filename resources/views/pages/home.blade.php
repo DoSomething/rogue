@@ -11,8 +11,12 @@
                 <p>
                     Welcome to <strong>Rogue</strong>, our one source of truth for all things user activity. Logging in will allow you to review and search for reportbacks.
                 </p>
-
-                <h4>We're Team Bleed - your friends behind building and improving Rogue!</h4>
+                <br>
+                <a href="/login" class="button">Log In</a>
+                <br>
+                <div class="container__block -narrow">
+                    <h4>We're Team Bleed - your friends behind building and improving Rogue!</h4>
+                </div>
                 <div class="container__block -half">
                     <article class="figure margin-bottom-none -left -small">
                         <div class="figure__media">
@@ -94,7 +98,6 @@
                 </div>
                 <div class="container__block -narrow">
                     <p>Please contact @jen (in Slack) for Rogue access.</p>
-                    <a href="/login" class="button">Log In</a>
                 </div>
             </div>
         </div>

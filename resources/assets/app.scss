@@ -27,3 +27,7 @@ button.delete {
   padding: $section-spacing 0;
   border-bottom: 2px solid $purple;
 }
+
+.figure__media img {
+  border-radius: 50%;
+}
