@@ -7,29 +7,38 @@
 
     <div class="container -padded">
         <div class="wrapper">
-            <div class="container__block -narrow">
+            <div class="container__block">
                 <p>
                     Welcome to <strong>Rogue</strong>, our one source of truth for all things user activity. Logging in will allow you to review and search for reportbacks.
                 </p>
 
-
                 <h4>We're Team Bleed - your friends behind building and improving Rogue!</h4>
-                <ul class="list">
-                    <li>Jen - Product Manager</li>
-                    <li>Shae - Tech Lead</li>
-                    <li>Katie - Engineer</li>
-                    <li>Chloe - Engineer</li>
-                    <li>Luke - Product Desginer</li>
-                    <li>Dave - Staff Engineer</li>
-                    <li>Tongue Cat - Rogue mascot</li>
-                </ul>
+                <div class="container__block -half">
+                    <ul class>
+                        <img src={{asset('images/Jen.png')}}>
+                        <li>Jen - Product Manager</li>
+                        <img src={{asset('images/Shae.png')}}>
+                        <li>Shae - Tech Lead</li>
+                        <img src={{asset('images/Katie.png')}}>
+                        <li>Katie - Engineer</li>
+                        <img src={{asset('images/Chloe.png')}}>
+                        <li>Chloe - Engineer</li>
+                    </ul>
+                    <p>Please contact @jen for Rogue access.</p>
 
-                <p>
-                    Please contact @jen for Rogue access.
-                </p>
-                <p>
                     <a href="/login" class="button">Log In</a>
-                </p>
+                </div>
+                <div class="container__block -half">
+                    <ul class>
+                        <img src={{asset('images/Luke.png')}}>
+                        <li>Luke - Product Desginer</li>
+                        <img src={{asset('images/Dave.png')}}>
+                        <li>Dave - Staff Engineer</li>
+                        <img src={{asset('images/TongueCat.png')}}>
+                        <li>Tongue Cat - Rogue mascot</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
