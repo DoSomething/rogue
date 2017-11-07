@@ -70,11 +70,6 @@ class SignupsController extends ApiController
     }
 
     /**
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> adds POST /posts/{post}/reaction
      * Returns signups.
      * GET /signups
      *
