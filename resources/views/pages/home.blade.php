@@ -32,7 +32,7 @@
                             <p>Chloe - Engineer</p>
                         </li>
                     </ul>
-                    <p>Please contact @jen for Rogue access.</p>
+                    <p>Please contact @jen (in Slack) for Rogue access.</p>
 
                     <a href="/login" class="button">Log In</a>
                 </div>
