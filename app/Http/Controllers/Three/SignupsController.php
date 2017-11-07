@@ -114,7 +114,6 @@ class SignupsController extends ApiController
      * Updates a specific signup.
      * PATCH /signups/:id
      *
-
      * @param \Illuminate\Http\Request $request
      * @param \Rogue\Models\Signup $signup
      * @return \Illuminate\Http\Response
