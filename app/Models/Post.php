@@ -223,4 +223,15 @@ class Post extends Model
             multipleValueQuery($query, $tagSlug, 'tag_slug');
         });
     }
+
+    /**
+     * Get the number of reactions a post has.
+     *
+     * @param int $postId
+     * @return int
+     */
+    public function getTotalReactions($postId)
+    {
+        return Reaction::where('post_id', $postId)->count();
+    }
 }

@@ -63,4 +63,7 @@ $router->group(['prefix' => 'v3'], function () {
     $this->get('posts/{post}', 'Three\PostsController@show');
     $this->patch('posts/{post}', 'Three\PostsController@update');
     $this->delete('posts/{post}', 'Three\PostsController@destroy');
+
+    // reactions
+    Route::post('post/{post}/reactions', 'Three\ReactionController@store');
 });
