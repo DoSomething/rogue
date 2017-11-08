@@ -49,3 +49,8 @@ $router->post('images/{postId}', 'ImagesController@update');
 $router->get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
 $router->get('users/{id}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
 $router->get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
+
+// FAQ
+$router->get('faq', function () {
+    return view('pages.faq');
+});
