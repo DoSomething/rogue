@@ -49,7 +49,6 @@ test('it renders the review block with tags', () => {
 
   const component = shallow(
     <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
-    // <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} />,
   );
 
   expect(toJson(component)).toMatchSnapshot();
@@ -58,6 +57,8 @@ test('it renders the review block with tags', () => {
 test('it renders an active Accept button when clicked', () => {
   const post = {
     status: 'pending',
+    tags: [],
+    id: 71,
   };
 
   const deletePost = function () {
@@ -86,6 +87,8 @@ test('it renders an active Accept button when clicked', () => {
 test('it renders an active Reject button when clicked', () => {
   const post = {
     status: 'pending',
+    tags: [],
+    id: 71,
   };
 
   const deletePost = function () {
@@ -114,6 +117,8 @@ test('it renders an active Reject button when clicked', () => {
 test('it renders an active tag button when clicked', () => {
   const post = {
     status: 'pending',
+    tags: [],
+    id: 71,
   };
 
   const deletePost = function () {
