@@ -23,6 +23,13 @@
                 </ul>
 
                 <h3>Can I...</h3>
+                <ul class="list">
+                    <li>Upload a photo for a member?</li>
+                    <li>Change the quantity for a member?</li>
+                    <li>Search for a member?</li>
+                    <li>Search posts by tag? By status? Both?</li>
+                    <li>...and so uch more!</li>
+                </ul>
                 <p>Yes! You can do all of these things! To learn how to do any of the above things, refer to the <a href="https://docs.google.com/document/u/1/d/1wpwwSWmYBIXwt5RKVCJkBZIMDXyZRza22527CW6eTdY/edit#heading=h.hg3m91ssxcr1" target="_blank">Rogue Admin 101 guide!</a></p>
 
                 <h3>Documentation</h3>
