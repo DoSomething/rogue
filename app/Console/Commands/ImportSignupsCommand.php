@@ -21,7 +21,7 @@ class ImportSignupsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Create signups based on the data in the given CSV file.';
+    protected $description = 'Create signups based on the data in the given (link to a) CSV file.';
 
     /**
      * Create a new command instance.
@@ -40,12 +40,20 @@ class ImportSignupsCommand extends Command
      */
     public function handle()
     {
-        // Load the missing signups
-        $signups_csv = Reader::createFromPath($this->argument('path'), 'r');
+        // Make a local copy of the CSV
+        $path = $this->argument('path');
+        info('rogue:signupimport: Loading in csv from ' . $path);
+
+        $temp = tempnam('temp', 'command_csv');
+        file_put_contents($temp, fopen($this->argument('path'), 'r'));
+
+        // Load the missing signups from the CSV
+        $signups_csv = Reader::createFromPath($temp, 'r');
         $signups_csv->setHeaderOffset(0);
         $missing_signups = $signups_csv->getRecords();
 
         // Create each missing signup
+        $this->line('Working on creating all the signups...');
         foreach ($missing_signups as $missing_signup) {
             // See if the signup exists
             $existing_signup = Signup::where([
@@ -54,7 +62,7 @@ class ImportSignupsCommand extends Command
                 ['campaign_run_id', $missing_signup['campaign_run_id']],
             ])->first();
 
-            // Create a signup if there isn't on already
+            // Create a signup if there isn't one already
             if (! $existing_signup) {
                 $signup = Signup::create([
                     'northstar_id' => $missing_signup['northstar_id'],
@@ -64,12 +72,12 @@ class ImportSignupsCommand extends Command
                     'created_at' => $missing_signup['signup_created_at_timestamp'],
                 ]);
 
-                $this->line('Created signup ' . $signup->id);
+                info('rogue:signupimport: Created signup ' . $signup->id);
             } else {
-                $this->line('That signup already exists! Moving on.');
+                info('rogue:signupimport: Signup ' . $existing_signup->id . ' already exists! Moving on.');
             }
-
-            $this->line('ALL DONE!');
         }
+        info('rogue:signupimport: ALL DONE!');
+        $this->line('ALL DONE!');
     }
 }
