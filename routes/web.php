@@ -51,6 +51,6 @@ $router->get('users/{id}', ['as' => 'users.show', 'uses' => 'UsersController@sho
 $router->get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
 
 // FAQ
-$router->get('faq', function() {
+$router->get('faq', function () {
     return view('pages.faq');
 });
