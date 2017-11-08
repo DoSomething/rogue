@@ -13,6 +13,11 @@
                         <strong class="navigation__title">User Search</strong>
                     </a>
                 </li>
+                <li>
+                    <a href="/faq">
+                        <strong class="navigation__title">FAQ</strong>
+                    </a>
+                </li>
             </ul>
             <ul class="navigation__secondary">
                 <li>
