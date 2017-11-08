@@ -161,11 +161,6 @@ class ReactionTest extends BrowserKitTestCase
                 '*' => [
                     'northstar_id',
                     'post_id',
-                    'term' => [
-                        'name',
-                        'id',
-                        'total',
-                    ],
                     'created_at',
                     'updated_at',
                     'deleted_at',
