@@ -67,10 +67,10 @@ class UsersController extends Controller
         // Attempt to fetch all users.
         $users = $this->registrar->search($query);
 
-        if ($users->count() === 1) {
-            return redirect()->route('users.show', [$users->first()->id]);
+        if ($users->count() === 0){
+            return redirect()->route('users.index')->with('status', 'No user found!');
         }
 
-        return redirect()->route('users.index')->with('status', 'No user found!');
+        return redirect()->route('users.show', [$users->first()->id]);
     }
 }
