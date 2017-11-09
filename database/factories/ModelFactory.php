@@ -26,6 +26,9 @@ $factory->define(Post::class, function (Generator $faker) {
     $url = app(AWS::class)->storeImage($upload, $faker->unique()->randomNumber(5));
 
     return [
+        'signup_id' => function () {
+            return factory(Signup::class)->create()->id;
+        },
         'url' => $url,
         'caption' => $faker->sentence(),
         'source' => $faker->randomElement(['phoenix-oauth', 'phoenix-next']),
