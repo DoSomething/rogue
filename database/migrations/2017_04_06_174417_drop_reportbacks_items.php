@@ -40,27 +40,29 @@ class DropReportbacksItems extends Migration
             $table->integer('promoted')->nullable()->comment('Whether the Reportback has been promoted.');
             $table->string('promoted_reason')->nullable()->comment('Reason why reportback was promoted.');
             $table->timestamps();
+            $table->unique(['northstar_id', 'campaign_id', 'campaign_run_id'], 'northstar_id_campaign_run');
+            $table->unique(['drupal_id', 'campaign_id', 'campaign_run_id'], 'drupal_id_campaign_run');
         });
 
         Schema::create('reportback_items', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('reportback_id')->unsigned();
-            $table->foreign('reportback_id')->references('id')->on('reportbacks')->onDelete('cascade');
-            $table->integer('file_id')->index()->unsigned();
+            $table->integer('reportback_id')->unsigned()->index('reportback_items_reportback_id_foreign');
+            $table->string('file_url');
+            $table->string('edited_file_url')->nullable();
             $table->string('caption')->nullable();
             $table->string('status')->index()->nullable()->default('pending');
             $table->integer('reviewed')->unsigned()->nullable();
-            $table->integer('reviewer')->unsigned()->nullable();
-            $table->string('review_source')->nullable()->comment('Source URL which review was submitted from.');
+            $table->string('reviewer')->nullable();
             $table->string('source')->nullable()->comment('Source which reportback file was submitted from.');
             $table->ipAddress('remote_addr')->nullable()->comment('The IP address of the user that submitted the file.');
             $table->timestamps();
+
+            $table->foreign('reportback_id')->references('id')->on('reportbacks')->onUpdate('RESTRICT')->onDelete('CASCADE');
         });
 
         Schema::create('reportback_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('reportback_id')->unsigned();
-            $table->foreign('reportback_id')->references('id')->on('reportbacks')->onDelete('cascade');
+            $table->integer('reportback_id')->unsigned()->index('reportback_logs_reportback_id_foreign');
             $table->string('northstar_id')->comment('The rogue users.id that updated.');
             $table->integer('drupal_id')->comment('The phoenix users.uid that updated.');
             $table->string('op')->nullable()->comment('Operation performed on the reportback.');
@@ -71,6 +73,8 @@ class DropReportbacksItems extends Migration
             $table->ipAddress('remote_addr')->nullable()->comment('The IP address of the user that submitted the file.');
             $table->text('reason')->nullable()->comment('The reason the reoportback item was flagged/promoted');
             $table->timestamps();
+
+            $table->foreign('reportback_id')->references('id')->on('reportbacks')->onUpdate('RESTRICT')->onDelete('CASCADE');
         });
     }
 }

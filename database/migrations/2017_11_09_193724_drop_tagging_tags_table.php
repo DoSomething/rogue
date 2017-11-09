@@ -35,7 +35,7 @@ class DropTaggingTagsTable extends Migration
             $table->boolean('suggest')->default(false);
             $table->integer('count')->unsigned()->default(0); // count of how many times this tag was used
 
-            $table->integer('tag_group_id')->unsigned()->nullable()->after('id');
+            $table->integer('tag_group_id')->unsigned()->nullable();
             $table->foreign('tag_group_id')->references('id')->on('tagging_tag_groups');
         });
     }
