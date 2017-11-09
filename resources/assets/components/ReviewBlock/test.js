@@ -9,8 +9,20 @@ test('it renders accepted, rejected, and delete buttons', () => {
     status: 'pending',
   };
 
+  const deletePost = function () {
+    return true;
+  };
+
+  const onUpdate = function () {
+    return true;
+  };
+
+  const onTag = function () {
+    return true;
+  };
+
   const component = shallow(
-    <ReviewBlock post={post} />,
+    <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
   );
 
   expect(toJson(component)).toMatchSnapshot();
@@ -19,10 +31,24 @@ test('it renders accepted, rejected, and delete buttons', () => {
 test('it renders the review block with tags', () => {
   const post = {
     status: 'accepted',
+    tags: [],
+    id: 71,
+  };
+
+  const deletePost = function () {
+    return true;
+  };
+
+  const onUpdate = function () {
+    return true;
+  };
+
+  const onTag = function () {
+    return true;
   };
 
   const component = shallow(
-    <ReviewBlock post={post} />,
+    <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
   );
 
   expect(toJson(component)).toMatchSnapshot();
@@ -31,10 +57,24 @@ test('it renders the review block with tags', () => {
 test('it renders an active Accept button when clicked', () => {
   const post = {
     status: 'pending',
+    tags: [],
+    id: 71,
+  };
+
+  const deletePost = function () {
+    return true;
+  };
+
+  const onUpdate = function () {
+    return true;
+  };
+
+  const onTag = function () {
+    return true;
   };
 
   const component = shallow(
-    <ReviewBlock post={post} />,
+    <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
   );
 
   // Click the "Accept" button.
@@ -47,10 +87,24 @@ test('it renders an active Accept button when clicked', () => {
 test('it renders an active Reject button when clicked', () => {
   const post = {
     status: 'pending',
+    tags: [],
+    id: 71,
+  };
+
+  const deletePost = function () {
+    return true;
+  };
+
+  const onUpdate = function () {
+    return true;
+  };
+
+  const onTag = function () {
+    return true;
   };
 
   const component = shallow(
-    <ReviewBlock post={post} />,
+    <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
   );
 
   // Click the "Reject" button.
@@ -63,10 +117,24 @@ test('it renders an active Reject button when clicked', () => {
 test('it renders an active tag button when clicked', () => {
   const post = {
     status: 'pending',
+    tags: [],
+    id: 71,
+  };
+
+  const deletePost = function () {
+    return true;
+  };
+
+  const onUpdate = function () {
+    return true;
+  };
+
+  const onTag = function () {
+    return true;
   };
 
   const component = shallow(
-    <ReviewBlock post={post} />,
+    <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
   );
 
   // Click a tag button.

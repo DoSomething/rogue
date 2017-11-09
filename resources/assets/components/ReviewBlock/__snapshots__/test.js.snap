@@ -81,6 +81,10 @@ exports[`it renders the review block with tags 1`] = `
       </button>
     </li>
   </ul>
-  <Tags />
+  <Tags
+    id={71}
+    onTag={[Function]}
+    tagged={Array []}
+  />
 </div>
 `;

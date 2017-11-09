@@ -149,7 +149,7 @@ Post.propTypes = {
   rotate: PropTypes.func,
   showHistory: PropTypes.func,
   showQuantity: PropTypes.bool,
-  showSiblings: PropTypes.bool.isRequired,
+  showSiblings: PropTypes.bool,
   signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   // @TODO: Sometimes comes in as an array, and sometimes as an object.
   // Figure out why, and update the validation.
@@ -165,6 +165,7 @@ Post.defaultProps = {
   rotate: null,
   showHistory: null,
   showQuantity: false,
+  showSiblings: false,
   user: null,
 };
 
