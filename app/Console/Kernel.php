@@ -13,7 +13,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\ClearDB::class,
         Commands\EditImagesCommand::class,
         Commands\SetupCommand::class,
         Commands\ImportSignupsCommand::class,
@@ -27,7 +26,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        //
     }
 }
