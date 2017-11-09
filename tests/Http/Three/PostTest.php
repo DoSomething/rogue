@@ -2,13 +2,13 @@
 
 namespace Tests\Http\Three;
 
+use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
-use Tests\BrowserKitTestCase;
 use DoSomething\Gateway\Blink;
 use Illuminate\Http\UploadedFile;
 
-class PostTest extends BrowserKitTestCase
+class PostTest extends TestCase
 {
     /**
      * Test that a POST request to /posts creates a new
@@ -48,8 +48,8 @@ class PostTest extends BrowserKitTestCase
             'crop_rotate'      => 90,
         ]);
 
-        $response->assertResponseStatus(200);
-        $response->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 'id',
                 'signup_id',
@@ -73,13 +73,13 @@ class PostTest extends BrowserKitTestCase
         ]);
 
         // Make sure the signup & post are persisted to the database.
-        $this->seeInDatabase('signups', [
+        $this->assertDatabaseHas('signups', [
             'campaign_id' => $campaign_id,
             'northstar_id' => $northstar_id,
             'quantity' => $quantity,
         ]);
 
-        $this->seeInDatabase('posts', [
+        $this->assertDatabaseHas('posts', [
             'northstar_id' => $northstar_id,
             'campaign_id' => $campaign_id,
             'status' => 'pending',
@@ -101,7 +101,7 @@ class PostTest extends BrowserKitTestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withRogueApiKey()->json('POST', 'api/v3/posts', [
+        $response = $this->withRogueApiKey()->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -119,9 +119,8 @@ class PostTest extends BrowserKitTestCase
             'crop_rotate'      => 90,
         ]);
 
-        $response->assertResponseStatus(200);
-
-        $response->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 'id',
                 'signup_id',
@@ -144,7 +143,7 @@ class PostTest extends BrowserKitTestCase
             ],
         ]);
 
-        $this->seeInDatabase('posts', [
+        $this->assertDatabaseHas('posts', [
             'signup_id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
@@ -167,7 +166,7 @@ class PostTest extends BrowserKitTestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->json('POST', 'api/v3/posts', [
+        $response = $this->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -185,7 +184,7 @@ class PostTest extends BrowserKitTestCase
             'crop_rotate'      => 90,
         ]);
 
-        $response->assertResponseStatus(401);
+        $response->assertStatus(401);
     }
 
     /**
@@ -198,10 +197,10 @@ class PostTest extends BrowserKitTestCase
     {
         factory(Post::class, 10)->create();
 
-        $this->get('api/v3/posts');
+        $response = $this->getJson('api/v3/posts');
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'id',
@@ -246,10 +245,10 @@ class PostTest extends BrowserKitTestCase
     public function testPostShow()
     {
         $post = factory(Post::class)->create();
-        $response = $this->get('api/v3/posts/' . $post->id);
+        $response = $this->getJson('api/v3/posts/' . $post->id);
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 'id',
                 'signup_id',
@@ -272,7 +271,8 @@ class PostTest extends BrowserKitTestCase
             ],
         ]);
 
-        $this->assertEquals($post->id, $this->response->getOriginalContent()['data']['id']);
+        $json = $response->json();
+        $this->assertEquals($post->id, $json['data']['id']);
     }
 
     /**
@@ -285,12 +285,12 @@ class PostTest extends BrowserKitTestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withRogueApiKey()->json('PATCH', 'api/v3/posts/' . $post->id, [
+        $response = $this->withRogueApiKey()->patchJson('api/v3/posts/' . $post->id, [
             'status' => 'accepted',
             'caption' => 'new caption',
         ]);
 
-        $this->assertResponseStatus(200);
+        $response->assertStatus(200);
 
         // Make sure that the posts's new status and caption gets persisted in the database.
         $this->assertEquals($post->fresh()->status, 'accepted');
@@ -307,16 +307,16 @@ class PostTest extends BrowserKitTestCase
     {
         $post = factory(Post::class)->create();
 
-        $this->withRogueApiKey()->json('PATCH', 'api/v3/posts/' . $post->id, [
+        $response = $this->withRogueApiKey()->patchJson('api/v3/posts/' . $post->id, [
             'status' => 'approved',
             'caption' => 'This must be longer than 140 characters to break the validation rules so here I will create a caption that is longer than 140 characters to test.',
         ]);
 
-        $this->assertResponseStatus(422);
+        $response->assertStatus(422);
 
-        $response = $this->decodeResponseJson();
-        $this->assertEquals('The selected status is invalid.', $response['errors']['status'][0]);
-        $this->assertEquals('The caption may not be greater than 140 characters.', $response['errors']['caption'][0]);
+        $json = $response->json();
+        $this->assertEquals('The selected status is invalid.', $json['errors']['status'][0]);
+        $this->assertEquals('The caption may not be greater than 140 characters.', $json['errors']['caption'][0]);
     }
 
     /**
@@ -333,7 +333,7 @@ class PostTest extends BrowserKitTestCase
             'caption' => 'new caption',
         ]);
 
-        $response->assertResponseStatus(401);
+        $response->assertStatus(401);
     }
 
     /**
@@ -348,9 +348,9 @@ class PostTest extends BrowserKitTestCase
         // Mock time of when the post is soft deleted.
         $this->mockTime('8/3/2017 14:00:00');
 
-        $response = $this->withRogueApiKey()->delete('api/v3/posts/' . $post->id);
+        $response = $this->withRogueApiKey()->deleteJson('api/v3/posts/' . $post->id);
 
-        $this->assertResponseStatus(200);
+        $response->assertStatus(200);
 
         // Make sure that the post's deleted_at gets persisted in the database.
         $this->assertEquals($post->fresh()->deleted_at->toTimeString(), '14:00:00');
@@ -367,6 +367,6 @@ class PostTest extends BrowserKitTestCase
 
         $response = $this->deleteJson('api/v3/posts/' . $post->id);
 
-        $response->assertResponseStatus(401);
+        $response->assertStatus(401);
     }
 }

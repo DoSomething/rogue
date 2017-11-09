@@ -2,12 +2,12 @@
 
 namespace Tests\Http\Three;
 
+use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
-use Tests\BrowserKitTestCase;
 use DoSomething\Gateway\Blink;
 
-class SignupTest extends BrowserKitTestCase
+class SignupTest extends TestCase
 {
     /**
      * Test that a POST request to /signups creates a new signup.
@@ -24,7 +24,7 @@ class SignupTest extends BrowserKitTestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $this->withRogueApiKey()->json('POST', 'api/v3/signups', [
+        $response = $this->withRogueApiKey()->postJson('api/v3/signups', [
             'northstar_id'     => $northstarId,
             'campaign_id'      => $campaignId,
             'campaign_run_id'  => $campaignRunId,
@@ -33,18 +33,20 @@ class SignupTest extends BrowserKitTestCase
         ]);
 
         // Make sure we get the 201 Created response
-        $this->assertResponseStatus(201);
-        $this->seeJson([
-            'northstar_id' => $northstarId,
-            'campaign_id' => $campaignId,
-            'campaign_run_id' => $campaignRunId,
-            'source' => 'the-fox-den',
-            'quantity' => null,
-            'why_participated' => null,
+        $response->assertStatus(201);
+        $response->assertJson([
+            'data' => [
+                'northstar_id' => $northstarId,
+                'campaign_id' => $campaignId,
+                'campaign_run_id' => $campaignRunId,
+                'source' => 'the-fox-den',
+                'quantity' => null,
+                'why_participated' => null,
+            ],
         ]);
 
         // Make sure the signup is persisted.
-        $this->seeInDatabase('signups', [
+        $this->assertDatabaseHas('signups', [
             'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
@@ -60,13 +62,12 @@ class SignupTest extends BrowserKitTestCase
      */
     public function testNotCreatingDuplicateSignups()
     {
-        // $signup = factory(Signup::class)->create();
         $signup = factory(Signup::class)->states('contentful')->create();
+
         // Mock the Blink API call.
-        // dd($signup->campaign_id);
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $this->withRogueApiKey()->json('POST', 'api/v3/signups', [
+        $response = $this->withRogueApiKey()->json('POST', 'api/v3/signups', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'source'           => 'the-fox-den',
@@ -74,10 +75,12 @@ class SignupTest extends BrowserKitTestCase
         ]);
 
         // Make sure we get the 200 response
-        $this->assertResponseStatus(200);
-        $this->seeJson([
-            'campaign_id' => $signup->campaign_id,
-            'campaign_run_id' => null,
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'campaign_id' => $signup->campaign_id,
+                'campaign_run_id' => null,
+            ],
         ]);
     }
 
@@ -88,19 +91,15 @@ class SignupTest extends BrowserKitTestCase
      */
     public function testUnauthenticatedUserCreatingASignup()
     {
-        $northstarId = '54fa272b469c64d7068b456a';
-        $campaignId = '6LQzMvDNQcYQYwso8qSkQ8';
-        $campaignRunId = $this->faker->randomNumber(4);
-
         $response = $this->json('POST', 'api/v3/signups', [
-            'northstar_id'     => $northstarId,
-            'campaign_id'      => $campaignId,
-            'campaign_run_id'  => $campaignRunId,
+            'northstar_id'     => '54fa272b469c64d7068b456a',
+            'campaign_id'      => '6LQzMvDNQcYQYwso8qSkQ8',
+            'campaign_run_id'  => $this->faker->randomNumber(4),
             'source'           => 'the-fox-den',
             'details'          => 'affiliate-messaging',
         ]);
 
-        $response->assertResponseStatus(401);
+        $response->assertStatus(401);
     }
 
     /**
@@ -113,10 +112,10 @@ class SignupTest extends BrowserKitTestCase
     {
         factory(Signup::class, 10)->create();
 
-        $this->get('api/v3/signups');
+        $response = $this->get('api/v3/signups');
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'id',
@@ -153,10 +152,10 @@ class SignupTest extends BrowserKitTestCase
     public function testSignupShow()
     {
         $signup = factory(Signup::class)->create();
-        $this->get('api/v3/signups/' . $signup->id);
+        $response = $this->getJson('api/v3/signups/' . $signup->id);
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 'id',
                 'northstar_id',
@@ -185,10 +184,10 @@ class SignupTest extends BrowserKitTestCase
         $post->signup()->associate($signup);
         $post->save();
 
-        $this->get('api/v3/signups/' . $signup->id . '?include=posts');
-        $this->assertResponseStatus(200);
+        $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
 
-        $this->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 'posts' => [
                     'data' => [
@@ -213,9 +212,9 @@ class SignupTest extends BrowserKitTestCase
         // Mock time of when the signup is soft deleted.
         $this->mockTime('8/3/2017 14:00:00');
 
-        $response = $this->withRogueApiKey()->delete('api/v3/signups/' . $signup->id);
+        $response = $this->withRogueApiKey()->deleteJson('api/v3/signups/' . $signup->id);
 
-        $this->assertResponseStatus(200);
+        $response->assertStatus(200);
 
         // Make sure that the signup's deleted_at gets persisted in the database.
         $this->assertEquals($signup->fresh()->deleted_at->toTimeString(), '14:00:00');
@@ -232,7 +231,7 @@ class SignupTest extends BrowserKitTestCase
 
         $response = $this->deleteJson('api/v3/signups/' . $signup->id);
 
-        $response->assertResponseStatus(401);
+        $response->assertStatus(401);
     }
 
     /**
@@ -250,7 +249,7 @@ class SignupTest extends BrowserKitTestCase
             'why_participated'  => 'new why participated',
         ]);
 
-        $this->assertResponseStatus(200);
+        $response->assertStatus(200);
 
         // Make sure that the signup's new quantity and why_participated gets persisted in the database.
         $this->assertEquals($signup->fresh()->quantity, 888);
@@ -267,9 +266,9 @@ class SignupTest extends BrowserKitTestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withRogueApiKey()->json('PATCH', 'api/v3/signups/' . $signup->id);
+        $response = $this->withRogueApiKey()->patchJson('api/v3/signups/' . $signup->id);
 
-        $this->assertResponseStatus(422);
+        $response->assertStatus(422);
     }
 
     /**
@@ -281,11 +280,11 @@ class SignupTest extends BrowserKitTestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->json('PATCH', 'api/v3/signups/' . $signup->id, [
+        $response = $this->patchJson('api/v3/signups/' . $signup->id, [
             'quantity'     => 888,
             'why_participated'  => 'new why participated',
         ]);
 
-        $response->assertResponseStatus(401);
+        $response->assertStatus(401);
     }
 }

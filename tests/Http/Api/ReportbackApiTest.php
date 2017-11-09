@@ -2,30 +2,34 @@
 
 namespace Tests\Http\Api;
 
+use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
-use Tests\BrowserKitTestCase;
 
-class ReportbackApiTest extends BrowserKitTestCase
+class ReportbackApiTest extends TestCase
 {
+    /**
+     * Test the "legacy" style reportback endpoint.
+     *
+     * GET api/v1/reportbacks
+     */
     public function testGetReportbacks()
     {
-        $signups = factory(Signup::class, 10)->create();
+        factory(Signup::class, 10)->create()
+            ->each(function (Signup $signup) {
+                // Give each signup a post and give it status of "accepted"
+                $post = factory(Post::class)->make();
+                $post->campaign_id = $signup->campaign_id;
+                $post->northstar_id = $signup->northstar_id;
+                $post->status = 'accepted';
 
-        // Give each signup a post and give it status of "accepted"
-        foreach ($signups as $signup) {
-            $post = factory(Post::class)->create();
-            $post->signup()->associate($signup);
-            $post->campaign_id = $signup->campaign_id;
-            $post->northstar_id = $signup->northstar_id;
-            $post->status = 'accepted';
-            $post->save();
-        }
+                $signup->posts()->save($post);
+            });
 
-        $this->get('api/v1/reportbacks');
+        $response = $this->get('api/v1/reportbacks');
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'id',
