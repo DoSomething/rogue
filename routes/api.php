@@ -66,4 +66,5 @@ $router->group(['prefix' => 'v3'], function () {
 
     // reactions
     Route::post('post/{post}/reactions', 'Three\ReactionController@store');
+    Route::get('post/{post}/reactions', 'Three\ReactionController@index');
 });

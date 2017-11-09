@@ -136,4 +136,36 @@ class ReactionTest extends BrowserKitTestCase
 
         $response->assertResponseStatus(401);
     }
+
+    /**
+     * Test for retrieving all reactions of a post.
+     *
+     * GET /api/v3/post/:post_id/reactions
+     * @return void
+     */
+    public function testReactionsIndex()
+    {
+        $post = factory(Post::class)->create();
+        $reactions = factory(Reaction::class, 10)->create();
+
+        foreach ($reactions as $reaction) {
+            $reaction->post()->associate($post);
+            $reaction->save();
+        }
+
+        $this->withRogueApiKey()->get('api/v3/post/' . $post->id . '/reactions');
+
+        $this->assertResponseStatus(200);
+        $this->seeJsonStructure([
+            'data' => [
+                '*' => [
+                    'northstar_id',
+                    'post_id',
+                    'created_at',
+                    'updated_at',
+                    'deleted_at',
+                ],
+            ],
+        ]);
+    }
 }
