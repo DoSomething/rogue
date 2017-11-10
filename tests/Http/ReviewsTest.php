@@ -22,7 +22,7 @@ class ReviewsTest extends TestCase
         $user = factory(User::class, 'admin')->create();
         $post = factory(Post::class)->create();
 
-        $response = $this->actingAs($user)->put('reviews', [
+        $response = $this->actingAs($user)->putJson('reviews', [
             'post_id' => $post->id,
             'status' => 'accepted',
         ]);
@@ -53,7 +53,7 @@ class ReviewsTest extends TestCase
         $user = factory(User::class)->create();
         $post = factory(Post::class)->create();
 
-        $response = $this->actingAs($user)->put('reviews', [
+        $response = $this->actingAs($user)->putJson('reviews', [
             'post_id' => $post->id,
             'status' => 'accepted',
         ]);
@@ -75,7 +75,7 @@ class ReviewsTest extends TestCase
         $this->mockTime('8/3/2017 16:55:00');
 
         // Review the post.
-        $this->actingAsAdmin()->put('reviews', [
+        $this->actingAsAdmin()->putJson('reviews', [
             'post_id' => $post->id,
             'status' => 'accepted',
         ]);

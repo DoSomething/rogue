@@ -20,7 +20,7 @@ class ActivityApiTest extends TestCase
     {
         factory(Signup::class, 10)->create();
 
-        $response = $this->get('api/v2/activity');
+        $response = $this->getJson('api/v2/activity');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -60,7 +60,7 @@ class ActivityApiTest extends TestCase
     {
         factory(Signup::class, 10)->create();
 
-        $response = $this->get('api/v2/activity?limit=8');
+        $response = $this->getJson('api/v2/activity?limit=8');
         $response->assertStatus(200);
 
         $json = $response->json();
@@ -79,7 +79,7 @@ class ActivityApiTest extends TestCase
     {
         factory(Signup::class, 22)->create();
 
-        $response = $this->get('api/v2/activity?page=2');
+        $response = $this->getJson('api/v2/activity?page=2');
 
         $response->assertStatus(200);
 
@@ -99,7 +99,7 @@ class ActivityApiTest extends TestCase
         factory(Signup::class, 3)->create(['campaign_id' => 17]);
         factory(Signup::class, 5)->create();
 
-        $response = $this->get('api/v2/activity?filter[campaign_id]=17');
+        $response = $this->getJson('api/v2/activity?filter[campaign_id]=17');
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -128,7 +128,7 @@ class ActivityApiTest extends TestCase
         factory(Signup::class, 3)->create(['campaign_id' => 14, 'campaign_run_id' => 132]);
         factory(Signup::class, 5)->create();
 
-        $response = $this->get('api/v2/activity?filter[campaign_id]=14&filter[campaign_run_id]=132');
+        $response = $this->getJson('api/v2/activity?filter[campaign_id]=14&filter[campaign_run_id]=132');
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -153,7 +153,7 @@ class ActivityApiTest extends TestCase
     {
         $signups = factory(Signup::class, 2)->create();
 
-        $response = $this->get('api/v2/activity?filter[campaign_id]=' . $signups[0]->campaign_id . ',' . $signups[1]->campaign_id . '&filter[campaign_run_id]=z');
+        $response = $this->getJson('api/v2/activity?filter[campaign_id]=' . $signups[0]->campaign_id . ',' . $signups[1]->campaign_id . '&filter[campaign_run_id]=z');
 
         $response->assertStatus(200);
         $response->assertJson(['data' => []]);
@@ -180,7 +180,7 @@ class ActivityApiTest extends TestCase
                 ]);
             });
 
-        $response = $this->get('api/v2/activity?include=user');
+        $response = $this->getJson('api/v2/activity?include=user');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -216,7 +216,7 @@ class ActivityApiTest extends TestCase
         $secondSignup = factory(Signup::class)->create();
         $secondSignup->posts()->save(factory(Post::class)->make());
 
-        $response = $this->get('api/v2/activity?filter[updated_at]=' . $firstSignup->updated_at);
+        $response = $this->getJson('api/v2/activity?filter[updated_at]=' . $firstSignup->updated_at);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -238,7 +238,7 @@ class ActivityApiTest extends TestCase
     {
         factory(Signup::class, 10)->create();
 
-        $response = $this->get('api/v2/activity?pagination=cursor');
+        $response = $this->getJson('api/v2/activity?pagination=cursor');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([

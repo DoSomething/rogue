@@ -21,7 +21,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $response = $this->actingAsAdmin()->post('tags', [
+        $response = $this->actingAsAdmin()->postJson('tags', [
             'post_id' => $post->id,
             'tag_name' => 'Good Photo',
         ]);
@@ -52,7 +52,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
         $post->tag('Good Photo');
 
-        $response = $this->post('tags', [
+        $response = $this->postJson('tags', [
             'post_id' => $post->id,
             'tag_name' => 'Good Photo',
         ]);
@@ -87,7 +87,7 @@ class TagsTest extends TestCase
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
-        $response = $this->post('tags', [
+        $response = $this->postJson('tags', [
             'post_id' => $post->id,
             'tag_name' => 'Tag To Delete',
         ]);
@@ -113,7 +113,7 @@ class TagsTest extends TestCase
         $user = factory(User::class)->create();
         $post = factory(Post::class)->create();
 
-        $response = $this->actingAs($user)->post('tags', [
+        $response = $this->actingAs($user)->postJson('tags', [
             'post_id' => $post->id,
             'tag_name' => 'Good Photo',
         ]);
@@ -134,7 +134,7 @@ class TagsTest extends TestCase
         // Later, apply the tag to the post
         $this->mockTime('10/21/2017 13:05:00');
 
-        $this->actingAsAdmin()->post('tags', [
+        $this->actingAsAdmin()->postJson('tags', [
             'post_id' => $post->id,
             'tag_name' => 'Good Photo',
         ]);
@@ -153,7 +153,7 @@ class TagsTest extends TestCase
         $posts = factory(Post::class, 20)->create();
 
         // Later, apply the tag to the post
-        $this->actingAsAdmin()->post('tags', [
+        $this->actingAsAdmin()->postJson('tags', [
             'post_id' => $posts->first()->id,
             'tag_name' => 'get-outta-here',
         ]);

@@ -17,7 +17,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->actingAsAdmin()->delete('posts/' . $post->id);
+        $response = $this->actingAsAdmin()->deleteJson('posts/' . $post->id);
 
         $response->assertStatus(200);
 
@@ -34,7 +34,7 @@ class PostTest extends TestCase
         $user = factory(User::class)->make();
         $post = factory(Post::class)->create();
 
-        $response = $this->actingAs($user)->delete('posts/' . $post->id);
+        $response = $this->actingAs($user)->deleteJson('posts/' . $post->id);
 
         $response->assertStatus(403);
     }

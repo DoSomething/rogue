@@ -26,7 +26,7 @@ class ReportbackApiTest extends TestCase
                 $signup->posts()->save($post);
             });
 
-        $response = $this->get('api/v1/reportbacks');
+        $response = $this->getJson('api/v1/reportbacks');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([

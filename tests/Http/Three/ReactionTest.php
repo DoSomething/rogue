@@ -25,7 +25,7 @@ class ReactionTest extends TestCase
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
-        $response = $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withRogueApiKey()->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
@@ -39,7 +39,7 @@ class ReactionTest extends TestCase
         ]);
 
         // React (unlike) again to the same post with the same user.
-        $response = $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withRogueApiKey()->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
@@ -66,7 +66,7 @@ class ReactionTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $response = $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withRogueApiKey()->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -79,7 +79,7 @@ class ReactionTest extends TestCase
         ]);
 
         // A second user reacts to the same post..
-        $response = $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withRogueApiKey()->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -100,11 +100,7 @@ class ReactionTest extends TestCase
     public function testUpdatedPostAndSignupWithReaction()
     {
         $this->mockTime('8/3/2017 14:00:00');
-
-        // Create a signup and a post, and associate them to each other.
-        $signup = factory(Signup::class)->create();
         $post = factory(Post::class)->create();
-        $post->signup()->associate($signup);
 
         // And then later on, someone likes the post.
         $this->mockTime('8/3/2017 17:30:00');
@@ -130,7 +126,7 @@ class ReactionTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $response = $this->json('POST', 'api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -150,7 +146,7 @@ class ReactionTest extends TestCase
             factory(Reaction::class, 10)->make()
         );
 
-        $response = $this->withRogueApiKey()->get('api/v3/post/' . $post->id . '/reactions');
+        $response = $this->withRogueApiKey()->getJson('api/v3/post/' . $post->id . '/reactions');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([

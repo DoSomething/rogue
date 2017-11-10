@@ -71,7 +71,7 @@ class ReactionsApiTest extends TestCase
         $post = $signup->posts->first();
 
         // Create a reaction.
-        $response = $this->withRogueApiKey()->post('api/v2/reactions', [
+        $response = $this->withRogueApiKey()->postJson('api/v2/reactions', [
             'northstar_id' => $this->faker->uuid,
             'post_id' => $post->id,
         ]);

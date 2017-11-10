@@ -67,7 +67,7 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withRogueApiKey()->json('POST', 'api/v3/signups', [
+        $response = $this->withRogueApiKey()->postJson('api/v3/signups', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'source'           => 'the-fox-den',
@@ -112,7 +112,7 @@ class SignupTest extends TestCase
     {
         factory(Signup::class, 10)->create();
 
-        $response = $this->get('api/v3/signups');
+        $response = $this->getJson('api/v3/signups');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([

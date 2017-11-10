@@ -124,7 +124,7 @@ class EventTest extends TestCase
 
         // Delete the post via the API.
         $this->mockTime('8/4/2017 18:02:00');
-        $this->actingAsAdmin()->delete('posts/' . $post->id);
+        $this->actingAsAdmin()->deleteJson('posts/' . $post->id);
 
         // Make sure an event is created when the post is deleted.
         $this->assertDatabaseHas('events', [
