@@ -8,16 +8,14 @@ use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| Here you may define all of your model factories. Model factories give
-| you a convenient way to create models for testing and seeding your
-| database. Just tell the factory how a default model should look.
-|
-*/
+/**
+ * Here you may define all of your model factories. Model factories give
+ * you a convenient way to create models for testing and seeding your
+ * database. Just tell the factory how a default model should look.
+ *
+ * @var Illuminate\Database\Eloquent\Factory $factory
+ * @see https://laravel.com/docs/5.5/database-testing#writing-factories
+ */
 
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
@@ -26,6 +24,9 @@ $factory->define(Post::class, function (Generator $faker) {
     $url = app(AWS::class)->storeImage($upload, $faker->unique()->randomNumber(5));
 
     return [
+        'signup_id' => function () {
+            return factory(Signup::class)->create()->id;
+        },
         'url' => $url,
         'caption' => $faker->sentence(),
         'source' => $faker->randomElement(['phoenix-oauth', 'phoenix-next']),

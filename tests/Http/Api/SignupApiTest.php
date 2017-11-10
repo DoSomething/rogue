@@ -2,10 +2,10 @@
 
 namespace Tests\Http\Api;
 
-use Tests\BrowserKitTestCase;
+use Tests\TestCase;
 use DoSomething\Gateway\Blink;
 
-class SignupApiTest extends BrowserKitTestCase
+class SignupApiTest extends TestCase
 {
     /**
      * Test that a POST request to /signups creates a new signup.
@@ -22,7 +22,7 @@ class SignupApiTest extends BrowserKitTestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $this->withRogueApiKey()->json('POST', 'api/v2/signups', [
+        $response = $this->withRogueApiKey()->postJson('api/v2/signups', [
             'northstar_id'     => $northstarId,
             'campaign_id'      => $campaignId,
             'campaign_run_id'  => $campaignRunId,
@@ -31,18 +31,20 @@ class SignupApiTest extends BrowserKitTestCase
         ]);
 
         // Make sure we get the 201 Created response
-        $this->assertResponseStatus(201);
-        $this->seeJson([
-            'northstar_id' => $northstarId,
-            'campaign_id' => $campaignId,
-            'campaign_run_id' => $campaignRunId,
-            'signup_source' => 'the-fox-den',
-            'quantity' => null,
-            'why_participated' => null,
+        $response->assertStatus(201);
+        $response->assertJson([
+            'data' => [
+                'northstar_id' => $northstarId,
+                'campaign_id' => $campaignId,
+                'campaign_run_id' => $campaignRunId,
+                'signup_source' => 'the-fox-den',
+                'quantity' => null,
+                'why_participated' => null,
+            ],
         ]);
 
         // Make sure the signup is persisted.
-        $this->seeInDatabase('signups', [
+        $this->assertDatabaseHas('signups', [
             'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
@@ -64,7 +66,7 @@ class SignupApiTest extends BrowserKitTestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $this->withRogueApiKey()->json('POST', 'api/v2/signups', [
+        $response = $this->withRogueApiKey()->postJson('api/v2/signups', [
             'northstar_id'     => $northstarId,
             'campaign_id'      => $campaignId,
             'source'           => 'phoenix-next',
@@ -72,18 +74,20 @@ class SignupApiTest extends BrowserKitTestCase
         ]);
 
         // Make sure we get the 201 Created response
-        $this->assertResponseStatus(201);
-        $this->seeJson([
-            'northstar_id' => $northstarId,
-            'campaign_id' => $campaignId,
-            'campaign_run_id' => null,
-            'signup_source' => 'phoenix-next',
-            'quantity' => null,
-            'why_participated' => null,
+        $response->assertStatus(201);
+        $response->assertJson([
+            'data' => [
+                'northstar_id' => $northstarId,
+                'campaign_id' => $campaignId,
+                'campaign_run_id' => null,
+                'signup_source' => 'phoenix-next',
+                'quantity' => null,
+                'why_participated' => null,
+            ],
         ]);
 
         // Make sure the signup is persisted.
-        $this->seeInDatabase('signups', [
+        $this->assertDatabaseHas('signups', [
             'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
             'campaign_run_id' => null,

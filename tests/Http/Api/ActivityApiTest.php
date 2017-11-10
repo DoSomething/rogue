@@ -2,13 +2,13 @@
 
 namespace Tests\Http\Api;
 
+use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
-use Tests\BrowserKitTestCase;
 use DoSomething\Gateway\Northstar;
 use DoSomething\Gateway\Resources\NorthstarUser;
 
-class ActivityApiTest extends BrowserKitTestCase
+class ActivityApiTest extends TestCase
 {
     /**
      * Test for retrieving activity.
@@ -20,10 +20,10 @@ class ActivityApiTest extends BrowserKitTestCase
     {
         factory(Signup::class, 10)->create();
 
-        $this->get('api/v2/activity');
+        $response = $this->getJson('api/v2/activity');
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'signup_id',
@@ -60,13 +60,13 @@ class ActivityApiTest extends BrowserKitTestCase
     {
         factory(Signup::class, 10)->create();
 
-        $this->get('api/v2/activity?limit=8');
-        $this->assertResponseStatus(200);
+        $response = $this->getJson('api/v2/activity?limit=8');
+        $response->assertStatus(200);
 
-        $response = $this->decodeResponseJson();
-        $this->assertCount(8, $response['data']);
-        $this->assertNotEmpty($response['meta']['pagination']['links']['next']);
-        $this->assertEquals(1, $response['meta']['pagination']['current_page']);
+        $json = $response->json();
+        $this->assertCount(8, $json['data']);
+        $this->assertNotEmpty($json['meta']['pagination']['links']['next']);
+        $this->assertEquals(1, $json['meta']['pagination']['current_page']);
     }
 
     /**
@@ -79,13 +79,13 @@ class ActivityApiTest extends BrowserKitTestCase
     {
         factory(Signup::class, 22)->create();
 
-        $this->get('api/v2/activity?page=2');
+        $response = $this->getJson('api/v2/activity?page=2');
 
-        $this->assertResponseStatus(200);
+        $response->assertStatus(200);
 
         // By default, we show 20 posts per page, so we should see 2 here.
-        $response = $this->decodeResponseJson();
-        $this->assertCount(2, $response['data']);
+        $json = $response->json();
+        $this->assertCount(2, $json['data']);
     }
 
     /**
@@ -99,10 +99,10 @@ class ActivityApiTest extends BrowserKitTestCase
         factory(Signup::class, 3)->create(['campaign_id' => 17]);
         factory(Signup::class, 5)->create();
 
-        $this->get('api/v2/activity?filter[campaign_id]=17');
+        $response = $this->getJson('api/v2/activity?filter[campaign_id]=17');
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonSubset([
+        $response->assertStatus(200);
+        $response->assertJson([
             'data' => [
                 [
                     'campaign_id' => 17,
@@ -128,10 +128,10 @@ class ActivityApiTest extends BrowserKitTestCase
         factory(Signup::class, 3)->create(['campaign_id' => 14, 'campaign_run_id' => 132]);
         factory(Signup::class, 5)->create();
 
-        $this->get('api/v2/activity?filter[campaign_id]=14&filter[campaign_run_id]=132');
+        $response = $this->getJson('api/v2/activity?filter[campaign_id]=14&filter[campaign_run_id]=132');
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonSubset([
+        $response->assertStatus(200);
+        $response->assertJson([
             'data' => [
                 [
                     'campaign_id' => 14,
@@ -153,10 +153,10 @@ class ActivityApiTest extends BrowserKitTestCase
     {
         $signups = factory(Signup::class, 2)->create();
 
-        $this->get('api/v2/activity?filter[campaign_id]=' . $signups[0]->campaign_id . ',' . $signups[1]->campaign_id . '&filter[campaign_run_id]=z');
+        $response = $this->getJson('api/v2/activity?filter[campaign_id]=' . $signups[0]->campaign_id . ',' . $signups[1]->campaign_id . '&filter[campaign_run_id]=z');
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonSubset(['data' => []]);
+        $response->assertStatus(200);
+        $response->assertJson(['data' => []]);
     }
 
     /**
@@ -180,10 +180,10 @@ class ActivityApiTest extends BrowserKitTestCase
                 ]);
             });
 
-        $this->get('api/v2/activity?include=user');
-        $this->assertResponseStatus(200);
+        $response = $this->getJson('api/v2/activity?include=user');
 
-        $this->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'user' => [
@@ -208,20 +208,18 @@ class ActivityApiTest extends BrowserKitTestCase
 
         // Create two signups and two posts. Associate the signups and posts respectively.
         $firstSignup = factory(Signup::class)->create();
-        $firstPost = factory(Post::class)->create();
-        $firstPost->signup()->associate($firstSignup);
+        $firstSignup->posts()->save(factory(Post::class)->make());
 
         // We'll create the second signup a minute later...
         $this->mockTime('8/01/2017 15:01:00');
 
         $secondSignup = factory(Signup::class)->create();
-        $secondPost = factory(Post::class)->create();
-        $secondPost->signup()->associate($secondSignup);
+        $secondSignup->posts()->save(factory(Post::class)->make());
 
-        $this->get('api/v2/activity?filter[updated_at]=' . $firstSignup->updated_at);
+        $response = $this->getJson('api/v2/activity?filter[updated_at]=' . $firstSignup->updated_at);
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonSubset([
+        $response->assertStatus(200);
+        $response->assertJson([
             'data' => [
                 [
                     'signup_id' => $secondSignup->id,
@@ -240,10 +238,10 @@ class ActivityApiTest extends BrowserKitTestCase
     {
         factory(Signup::class, 10)->create();
 
-        $this->get('api/v2/activity?pagination=cursor');
+        $response = $this->getJson('api/v2/activity?pagination=cursor');
 
-        $this->assertResponseStatus(200);
-        $this->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'signup_id',

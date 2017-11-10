@@ -6,9 +6,10 @@ use Mockery;
 use Carbon\Carbon;
 use Rogue\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
-class TestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
     use RefreshDatabase, CreatesApplication;
 
@@ -34,9 +35,6 @@ class TestCase extends BaseTestCase
     public function setUp()
     {
         parent::setUp();
-
-        // Refresh database & enable transactions.
-        $this->refreshDatabase();
 
         // Reset mocked time, if set.
         Carbon::setTestNow(null);

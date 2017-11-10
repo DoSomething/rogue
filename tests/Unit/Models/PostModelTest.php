@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Services;
+namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use Rogue\Models\Post;

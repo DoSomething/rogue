@@ -1,13 +1,12 @@
 <?php
 
-namespace Tests\Services;
+namespace Tests\Unit\Services;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Rogue\Services\Phoenix;
 use Rogue\Services\CampaignService;
-use Illuminate\Support\Facades\Cache;
 use Rogue\Repositories\CacheRepository;
 
 class CampaignServiceTest extends TestCase

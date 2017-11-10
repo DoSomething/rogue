@@ -2,12 +2,12 @@
 
 namespace Tests\Http\Three;
 
+use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
-use Tests\BrowserKitTestCase;
 
-class ReactionTest extends BrowserKitTestCase
+class ReactionTest extends TestCase
 {
     /**
      * Test that the POST /reactions request creates a reaction for a post.
@@ -25,30 +25,30 @@ class ReactionTest extends BrowserKitTestCase
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
-        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withRogueApiKey()->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
-        $this->assertResponseStatus(200);
+        $response->assertStatus(200);
 
         // Make sure this creates a reaction.
-        $this->seeJsonSubset([
+        $response->assertJson([
             'meta' => [
                 'total_reactions' => 1,
             ],
         ]);
 
         // React (unlike) again to the same post with the same user.
-        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withRogueApiKey()->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
         // This should now be a 201 code because it was updated.
         // @TODO update this when we do an audit of status codes in Rogue.
-        $this->assertResponseStatus(201);
+        $response->assertStatus(201);
 
         // Make sure this reaction is soft deleted.
-        $this->seeJsonSubset([
+        $response->assertJson([
             'meta' => [
                 'total_reactions' => 0,
             ],
@@ -66,26 +66,26 @@ class ReactionTest extends BrowserKitTestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withRogueApiKey()->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
         // Make sure this creates a reaction.
-        $this->assertResponseStatus(200);
-        $this->seeJsonSubset([
+        $response->assertStatus(200);
+        $response->assertJson([
             'meta' => [
                 'total_reactions' => 1,
             ],
         ]);
 
         // A second user reacts to the same post..
-        $this->withRogueApiKey()->post('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withRogueApiKey()->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
         // Make sure this creates a reaction and increases total_reaction count.
-        $this->assertResponseStatus(200);
-        $this->seeJsonSubset([
+        $response->assertStatus(200);
+        $response->assertJson([
             'meta' => [
                 'total_reactions' => 2,
             ],
@@ -100,11 +100,7 @@ class ReactionTest extends BrowserKitTestCase
     public function testUpdatedPostAndSignupWithReaction()
     {
         $this->mockTime('8/3/2017 14:00:00');
-
-        // Create a signup and a post, and associate them to each other.
-        $signup = factory(Signup::class)->create();
         $post = factory(Post::class)->create();
-        $post->signup()->associate($signup);
 
         // And then later on, someone likes the post.
         $this->mockTime('8/3/2017 17:30:00');
@@ -130,11 +126,11 @@ class ReactionTest extends BrowserKitTestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $response = $this->json('POST', 'api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
-        $response->assertResponseStatus(401);
+        $response->assertStatus(401);
     }
 
     /**
@@ -146,17 +142,14 @@ class ReactionTest extends BrowserKitTestCase
     public function testReactionsIndex()
     {
         $post = factory(Post::class)->create();
-        $reactions = factory(Reaction::class, 10)->create();
+        $post->reactions()->saveMany(
+            factory(Reaction::class, 10)->make()
+        );
 
-        foreach ($reactions as $reaction) {
-            $reaction->post()->associate($post);
-            $reaction->save();
-        }
+        $response = $this->withRogueApiKey()->getJson('api/v3/post/' . $post->id . '/reactions');
 
-        $this->withRogueApiKey()->get('api/v3/post/' . $post->id . '/reactions');
-
-        $this->assertResponseStatus(200);
-        $this->seeJsonStructure([
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'northstar_id',

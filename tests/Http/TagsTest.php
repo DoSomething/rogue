@@ -2,12 +2,11 @@
 
 namespace Tests\Http;
 
-use Rogue\Models\Tag;
+use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\User;
-use Tests\BrowserKitTestCase;
 
-class TagsTest extends BrowserKitTestCase
+class TagsTest extends TestCase
 {
     /**
      * Test that a POST request to /tags updates the post's tags and
@@ -22,18 +21,18 @@ class TagsTest extends BrowserKitTestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $this->actingAsAdmin()->post('tags', [
-                'post_id' => $post->id,
-                'tag_name' => 'Good Photo',
-            ]);
+        $response = $this->actingAsAdmin()->postJson('tags', [
+            'post_id' => $post->id,
+            'tag_name' => 'Good Photo',
+        ]);
 
-        $this->assertResponseStatus(200);
+        $response->assertSuccessful();
 
         // Make sure that the post's tags are updated.
         $this->assertContains('Good Photo', $post->tagNames());
 
         // Make sure we created a event for the tag.
-        $this->seeInDatabase('events', [
+        $this->assertDatabaseHas('events', [
             'eventable_type' => 'Rogue\Models\Post',
         ]);
     }
@@ -53,17 +52,17 @@ class TagsTest extends BrowserKitTestCase
         $post = factory(Post::class)->create();
         $post->tag('Good Photo');
 
-        $this->post('tags', [
+        $response = $this->postJson('tags', [
             'post_id' => $post->id,
             'tag_name' => 'Good Photo',
         ]);
 
         // Make sure that the tag is deleted.
-        $this->assertResponseStatus(200);
+        $response->assertStatus(200);
         $this->assertEmpty($post->tagNames());
 
         // Make sure we created an event for the tag.
-        $this->seeInDatabase('events', [
+        $this->assertDatabaseHas('events', [
             'eventable_type' => 'Rogue\Models\Post',
         ]);
     }
@@ -88,18 +87,18 @@ class TagsTest extends BrowserKitTestCase
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
-        $this->post('tags', [
+        $response = $this->postJson('tags', [
             'post_id' => $post->id,
             'tag_name' => 'Tag To Delete',
         ]);
 
         // Make sure that the tag is deleted, but the other tag is still there
-        $this->assertResponseStatus(200);
+        $response->assertStatus(200);
         $this->assertContains('Good Photo', $post->tagNames());
         $this->assertNotContains('Tag To Delete', $post->tagNames());
 
         // Make sure we created an event for the tag.
-        $this->seeInDatabase('events', [
+        $this->assertDatabaseHas('events', [
             'eventable_type' => 'Rogue\Models\Post',
         ]);
     }
@@ -114,12 +113,12 @@ class TagsTest extends BrowserKitTestCase
         $user = factory(User::class)->create();
         $post = factory(Post::class)->create();
 
-        $this->actingAs($user)->post('tags', [
+        $response = $this->actingAs($user)->postJson('tags', [
             'post_id' => $post->id,
             'tag_name' => 'Good Photo',
         ]);
 
-        $this->assertResponseStatus(403);
+        $response->assertStatus(403);
     }
 
     /**
@@ -135,7 +134,7 @@ class TagsTest extends BrowserKitTestCase
         // Later, apply the tag to the post
         $this->mockTime('10/21/2017 13:05:00');
 
-        $this->actingAsAdmin()->post('tags', [
+        $this->actingAsAdmin()->postJson('tags', [
             'post_id' => $post->id,
             'tag_name' => 'Good Photo',
         ]);
@@ -154,7 +153,7 @@ class TagsTest extends BrowserKitTestCase
         $posts = factory(Post::class, 20)->create();
 
         // Later, apply the tag to the post
-        $this->actingAsAdmin()->post('tags', [
+        $this->actingAsAdmin()->postJson('tags', [
             'post_id' => $posts->first()->id,
             'tag_name' => 'get-outta-here',
         ]);
