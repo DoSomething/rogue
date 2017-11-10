@@ -17,6 +17,7 @@ class ReactionsApiTest extends TestCase
      */
     public function testPostingAndSoftDeleteForReaction()
     {
+        // Create a post to react to.
         $post = factory(Post::class)->create();
         $northstarId = $this->faker->uuid;
 
@@ -61,6 +62,7 @@ class ReactionsApiTest extends TestCase
      */
     public function testAggregateReactions()
     {
+        // Create a post to react to.
         $post = factory(Post::class)->create();
 
         // Create a reaction.
