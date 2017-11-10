@@ -4,7 +4,6 @@ namespace Tests\Http\Api;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
-use Rogue\Models\Signup;
 
 class ReactionsApiTest extends TestCase
 {
@@ -18,11 +17,7 @@ class ReactionsApiTest extends TestCase
      */
     public function testPostingAndSoftDeleteForReaction()
     {
-        // Create a post to react to.
-        $signup = factory(Signup::class)->create();
-        $signup->posts()->save(factory(Post::class)->make());
-        $post = $signup->posts->first();
-
+        $post = factory(Post::class)->create();
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
@@ -66,9 +61,7 @@ class ReactionsApiTest extends TestCase
      */
     public function testAggregateReactions()
     {
-        $signup = factory(Signup::class)->create();
-        $signup->posts()->save(factory(Post::class)->make());
-        $post = $signup->posts->first();
+        $post = factory(Post::class)->create();
 
         // Create a reaction.
         $response = $this->withRogueApiKey()->postJson('api/v2/reactions', [
