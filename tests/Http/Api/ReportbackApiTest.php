@@ -4,7 +4,6 @@ namespace Tests\Http\Api;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
-use Rogue\Models\Signup;
 
 class ReportbackApiTest extends TestCase
 {
@@ -15,16 +14,7 @@ class ReportbackApiTest extends TestCase
      */
     public function testGetReportbacks()
     {
-        factory(Signup::class, 10)->create()
-            ->each(function (Signup $signup) {
-                // Give each signup a post and give it status of "accepted"
-                $post = factory(Post::class)->make();
-                $post->campaign_id = $signup->campaign_id;
-                $post->northstar_id = $signup->northstar_id;
-                $post->status = 'accepted';
-
-                $signup->posts()->save($post);
-            });
+        factory(Post::class, 'accepted', 10)->create();
 
         $response = $this->getJson('api/v1/reportbacks');
 
