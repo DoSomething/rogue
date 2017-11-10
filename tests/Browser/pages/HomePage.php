@@ -35,7 +35,7 @@ class HomePage extends Page
     public function elements()
     {
         return [
-            '@element' => '#selector',
+            '@title' => '.header__title',
         ];
     }
 }

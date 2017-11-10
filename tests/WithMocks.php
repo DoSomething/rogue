@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 trait WithMocks
 {
     /**
-     *
+     * Configure mocks for the application.
      */
     public function configureMocks()
     {

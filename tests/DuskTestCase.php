@@ -20,6 +20,18 @@ abstract class DuskTestCase extends BaseTestCase
     protected $faker;
 
     /**
+     * Setup the test environment.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->configureMocks();
+    }
+
+    /**
      * Prepare for Dusk test execution.
      *
      * @beforeClass
@@ -39,7 +51,8 @@ abstract class DuskTestCase extends BaseTestCase
     {
         $options = (new ChromeOptions)->addArguments([
             '--disable-gpu',
-            '--headless'
+            '--headless',
+            'no-sandbox',
         ]);
 
         return RemoteWebDriver::create(

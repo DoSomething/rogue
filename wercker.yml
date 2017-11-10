@@ -2,24 +2,47 @@ box: dosomething/ds-docker-php
 
 build:
     steps:
+      - script:
+          name: install chromedriver
+          code: |-
+            sudo apt-get update
+            sudo apt-get -y install libxpm4 libxrender1 libgtk2.0-0 libnss3 libgconf-2-4
+            sudo apt-get -y install chromium-browser
+      - script:
+          name: start mysql
+          code: sudo service mysql start
+      - script:
+          name: configure environment
+          code: |-
+            mysql -u homestead -psecret -e "CREATE DATABASE rogue_test;"
+            cp .env.example .env
       - leipert/composer-install@0.9.1
       - wercker/npm-install
       - script:
           name: build front-end assets
           code: npm run build
       - script:
-          name: start mysql
-          code: sudo service mysql start
-      - script:
           name: run phpunit test suite
           code: |-
-            mysql -u homestead -psecret -e "CREATE DATABASE rogue_test;"
-            cp .env.example .env
             php artisan key:generate
             vendor/bin/phpunit
       - script:
-          name: test javascript code
+          name: run jest/eslint test suite
           code: npm run test:ci
+      - script:
+          name: run dusk test suite
+          code: |-
+            cp .env.dusk.ci .env # switch to our dusk config
+            chmod +x vendor/laravel/dusk/bin/chromedriver-linux
+            ./vendor/laravel/dusk/bin/chromedriver-linux 2>&1 &
+            php artisan serve 2>&1 &
+            sleep 5 # wait for artisan server to start up
+            php artisan dusk
+      - script:
+          name: discover production packages
+          code: |-
+            rm .env # reset APP_ENV=production
+            php artisan package:discover
 
 deploy:
   # steps:
