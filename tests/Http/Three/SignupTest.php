@@ -91,7 +91,7 @@ class SignupTest extends TestCase
      */
     public function testUnauthenticatedUserCreatingASignup()
     {
-        $response = $this->json('POST', 'api/v3/signups', [
+        $response = $this->postJson('api/v3/signups', [
             'northstar_id'     => '54fa272b469c64d7068b456a',
             'campaign_id'      => '6LQzMvDNQcYQYwso8qSkQ8',
             'campaign_run_id'  => $this->faker->randomNumber(4),
@@ -244,7 +244,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withRogueApiKey()->json('PATCH', 'api/v3/signups/' . $signup->id, [
+        $response = $this->withRogueApiKey()->patchJson('api/v3/signups/' . $signup->id, [
             'quantity'     => 888,
             'why_participated'  => 'new why participated',
         ]);
