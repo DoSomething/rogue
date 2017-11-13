@@ -45,3 +45,7 @@
     white-space: nowrap;
   }
 }
+
+.table__row:nth-child(odd){
+  background: white;
+}
