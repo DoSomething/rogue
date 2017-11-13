@@ -35,11 +35,13 @@
 .table__row {
   display: table-row;
   background: $light-gray;
+  border: 1px solid $med-gray;
 }
 
 .table__cell {
   padding: 6px 12px;
   display: table-cell;
+  border: 1px solid $med-gray;
 
   @include media($small) {
     white-space: nowrap;
