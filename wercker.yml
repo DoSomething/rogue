@@ -42,6 +42,7 @@ build:
           name: discover production packages
           code: |-
             rm .env # reset APP_ENV=production
+            composer install --no-dev
             php artisan package:discover
 
 deploy:
