@@ -46,6 +46,7 @@ class ExportService
         $signups = Signup::whereNull('details')->where([
             ['campaign_id', '=', $campaignId],
             ['campaign_run_id', '=', $campaignRunId],
+            ['source', '=', 'phoenix-next'],
         ])->cursor();
 
         foreach ($signups as $signup) {
