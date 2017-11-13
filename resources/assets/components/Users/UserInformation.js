@@ -20,9 +20,9 @@ const UserInformation = props => (
               if (props.user.mobile) {
                 if (props.linkSignup && isEmpty(props.user.first_name)) {
                   return (<span><a href={`/signups/${props.linkSignup}`}>{props.user.mobile}</a><br /></span>);
-                } else {
-                  return (<span>{props.user.mobile}<br /></span>);
                 }
+
+                return (<span>{props.user.mobile}<br /></span>);
               }
               return (null);
             })()
