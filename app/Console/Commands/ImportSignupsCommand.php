@@ -52,6 +52,10 @@ class ImportSignupsCommand extends Command
         $signups_csv->setHeaderOffset(0);
         $missing_signups = $signups_csv->getRecords();
 
+        // Progress Bar
+        $number_of_missing_signups = count($signups_csv);
+        $bar = $this->output->createProgressBar(count($signups_csv));
+
         // Create each missing signup
         $this->line('Working on creating all the signups...');
         foreach ($missing_signups as $missing_signup) {
@@ -76,7 +80,15 @@ class ImportSignupsCommand extends Command
             } else {
                 info('rogue:signupimport: Signup ' . $existing_signup->id . ' already exists! Moving on.');
             }
+
+            // Move the progress bar forward
+            $bar->advance();
         }
+
+        // Finish the progress bar
+        $bar->finish();
+
+        // Tell everyone we're done!
         info('rogue:signupimport: ALL DONE!');
         $this->line('ALL DONE!');
     }
