@@ -2,15 +2,15 @@
 
 namespace Tests;
 
+use Rogue\Models\User;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use CreatesApplication, RefreshDatabase, WithMocks, WithAuthentication;
+    use CreatesApplication, WithMocks, WithAuthentication;
 
     /**
      * The Faker generator, for creating test data.
@@ -18,6 +18,16 @@ abstract class DuskTestCase extends BaseTestCase
      * @var \Faker\Generator
      */
     protected $faker;
+
+    /**
+     * Get the default user for Dusk's login() helper.
+     *
+     * @return User
+     */
+    protected function user()
+    {
+        return factory(User::class, 'admin')->create();
+    }
 
     /**
      * Setup the test environment.
