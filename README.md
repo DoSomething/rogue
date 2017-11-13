@@ -22,19 +22,26 @@ $ php artisan rogue:setup
 $ npm run build
 ```
 
-You can seed the database with test data:
-
-    $ php artisan db:seed
-
-You may run unit tests locally using PHPUnit:
-
-    $ vendor/bin/phpunit
-    
-We follow [Laravel's code style](http://laravel.com/docs/5.4/contributions#coding-style) and automatically
+We follow [Laravel's code style](http://laravel.com/docs/5.5/contributions#coding-style) and automatically
 lint all pull requests with [StyleCI](https://styleci.io/repos/64166359). Be sure to configure
 [EditorConfig](http://editorconfig.org) to ensure you have proper indentation settings.
 
-Consider [writing a test case](http://laravel.com/docs/5.4/testing) when adding or changing a feature.
+### Testing
+
+You can seed the database with test data for local development:
+
+    $ php artisan db:seed
+
+You may run unit tests locally using [PHPUnit](https://laravel.com/docs/5.5/http-tests) & [Jest](https://facebook.github.io/jest/):
+
+    $ phpunit
+    $ npm test
+    
+And our functional test suite can be run with [Laravel Dusk](https://laravel.com/docs/5.5/dusk):
+
+    $ dusk
+    
+Consider [writing a test case](http://laravel.com/docs/5.5/testing) when adding or changing a feature.
 Most steps you would take when manually testing your code can be automated, which makes it easier for
 yourself & others to review your code and ensures we don't accidentally break something later on!
 
