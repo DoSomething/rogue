@@ -10,14 +10,7 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use CreatesApplication, WithMocks, WithAuthentication;
-
-    /**
-     * The Faker generator, for creating test data.
-     *
-     * @var \Faker\Generator
-     */
-    protected $faker;
+    use CreatesApplication;
 
     /**
      * Get the default user for Dusk's login() helper.
@@ -27,18 +20,6 @@ abstract class DuskTestCase extends BaseTestCase
     protected function user()
     {
         return factory(User::class, 'admin')->create();
-    }
-
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->configureMocks();
     }
 
     /**
