@@ -53,7 +53,6 @@ class ImportSignupsCommand extends Command
         $missing_signups = $signups_csv->getRecords();
 
         // Progress Bar
-        $number_of_missing_signups = count($signups_csv);
         $bar = $this->output->createProgressBar(count($signups_csv));
 
         // Create each missing signup
