@@ -14,7 +14,7 @@ class HomeTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit(new HomePage);
 
-            $browser->assertSee('Rogue');
+            $browser->assertSeeIn('@title', 'Rogue');
         });
     }
 }
