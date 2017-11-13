@@ -14,7 +14,22 @@ const UserInformation = props => (
         }
         <p>
           {props.user.email ? <span>{props.user.email}<br /></span> : null}
-          {props.user.mobile ? <span>{props.user.mobile}<br /></span> : null }
+
+          {
+            (() => {
+              if (props.user.mobile) {
+                if (props.linkSignup && isEmpty(props.user.first_name)) {
+
+                  return (<span><a href={`/signups/${props.linkSignup}`}>{props.user.mobile}</a><br /></span>);
+                }
+
+                return (<span>{props.user.mobile}<br /></span>);
+              }
+
+              return (null);
+            })()
+          }
+
           {displayCityState(props.user.addr_city, props.user.addr_state) ?
             <span>{displayCityState(props.user.addr_city, props.user.addr_state) }<br /></span>
             :
