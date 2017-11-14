@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { keyBy, map } from 'lodash';
-import { RestApiClient } from '@dosomething/gateway';
+import RogueClient from '../../utilities/RogueClient';
 import { extractPostsFromSignups, extractSignupsFromPosts } from '../../helpers';
 
 const reviewComponent = (Component, data) => {
@@ -14,7 +14,7 @@ const reviewComponent = (Component, data) => {
         loading: true,
       };
 
-      this.api = new RestApiClient;
+      this.api = new RogueClient();
       this.updatePost = this.updatePost.bind(this);
       this.updateTag = this.updateTag.bind(this);
       this.updateQuantity = this.updateQuantity.bind(this);
@@ -38,14 +38,13 @@ const reviewComponent = (Component, data) => {
 
     // Make API call to GET /posts to get posts by filtered status.
     getPostsByStatus(status, campaignId) {
-      this.api.get('posts', {
+      this.api.getPosts({
         filter: {
           status: status,
           campaign_id: campaignId,
         },
         include: ['signup','siblings'],
-      })
-      .then(json => this.setState({
+      }).then(json => this.setState({
         campaign: data.campaign,
         posts: keyBy(json.data, 'id'),
         postIds: map(json.data, 'id'),
