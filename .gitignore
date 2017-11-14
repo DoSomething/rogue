@@ -5,6 +5,8 @@
 Homestead.yaml
 Homestead.json
 .env
+.env.dusk.ci
+.env.dusk.local
 
 .DS_Store
 

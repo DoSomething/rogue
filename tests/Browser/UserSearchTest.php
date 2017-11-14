@@ -28,12 +28,18 @@ class UserSearchTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit(new HomePage)
                     ->click('@login-button')
-                    ->dump();
-                    // ->assertPathIs('https://northstar-qa.dosomething.org/register');
-                    // ->type('username', 'clee@dosomething.org')
-                    // ->type('password', ENV)
-                    // ->press('Log In')
-                    // ->assertPathIs('/campaigns');
+                    ->assertPathIs('/register')
+                    ->clickLink('Log In')
+                    ->type('username', 'clee@dosomething.org')
+                    ->type('password', env('NORTHSTAR_PASSWORD'))
+                    ->press('Log In')
+                    ->assertPathIs('/campaigns');
+
+            // dd($browser->driver->getCurrentURL());
+                    // ->dump();
+                    // ->clickLink('User Search')
+                    // ->on(new UserSearchPage)
+                    // ->assertSeeIn('@title', 'Users');
         });
     }
 }
