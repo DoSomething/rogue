@@ -196,6 +196,13 @@ const reviewComponent = (Component, data) => {
             // Remove the deleted post from the state
             delete(newState.posts[postId]);
 
+            // Remove the postId from the state.
+            const postIdIndex = newState.postIds.indexOf(postId);
+
+            if (postIdIndex > -1) {
+              newState.postIds.splice(postIdIndex, 1);
+            }
+
             // Return the new state
             return newState;
           });
