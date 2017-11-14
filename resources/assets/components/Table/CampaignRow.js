@@ -21,7 +21,7 @@ class CampaignRow extends React.Component {
       },
       {
         url: campaign ? `/campaigns/${campaign.id}/inbox` : '/campaigns',
-        title: 'review',
+        title: 'Review',
       },
     ];
 

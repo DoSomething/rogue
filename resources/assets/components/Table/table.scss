@@ -16,14 +16,14 @@
 .table {
   display: table;
   width: 100%;
-  border: 1px solid $light-gray;
+  border: 1px solid $med-gray;
   border-radius: 2px;
 }
 
 .table__header {
-  background: $light-gray;
+  background: white;
   color: $black;
-  border: 1px solid $black;
+  border: 1px solid $med-gray;
   font-weight: $weight-bold;
   text-align: left;
 
@@ -35,13 +35,19 @@
 .table__row {
   display: table-row;
   background: $light-gray;
+  border: 1px solid $med-gray;
 }
 
 .table__cell {
   padding: 6px 12px;
   display: table-cell;
+  border: 1px solid $med-gray;
 
   @include media($small) {
     white-space: nowrap;
   }
+}
+
+.table__row:nth-child(odd){
+  background: white;
 }
