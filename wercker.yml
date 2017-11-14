@@ -1,16 +1,12 @@
-box: dosomething/ds-docker-php
+box: dosomething/ds-docker-php:build-updates
 
 build:
     steps:
       - script:
-          name: install chromedriver
-          code: |-
-            sudo apt-get update
-            sudo apt-get -y install libxpm4 libxrender1 libgtk2.0-0 libnss3 libgconf-2-4
-            sudo apt-get -y install chromium-browser
-      - script:
           name: start mysql
-          code: sudo service mysql start
+          code: |-
+            chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
+            sudo service mysql start
       - script:
           name: configure environment
           code: |-
