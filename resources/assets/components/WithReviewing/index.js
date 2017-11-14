@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { keyBy, map } from 'lodash';
-import { RestApiClient } from '@dosomething/gateway';
+import RogueClient from '../../utilities/RogueClient';
 import { extractPostsFromSignups, extractSignupsFromPosts } from '../../helpers';
 
 const reviewComponent = (Component, data) => {
@@ -14,7 +14,7 @@ const reviewComponent = (Component, data) => {
         loading: true,
       };
 
-      this.api = new RestApiClient;
+      this.api = new RogueClient();
       this.updatePost = this.updatePost.bind(this);
       this.updateTag = this.updateTag.bind(this);
       this.updateQuantity = this.updateQuantity.bind(this);
