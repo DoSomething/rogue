@@ -20,7 +20,10 @@ class Quantity extends React.Component {
 
 Quantity.propTypes = {
   noun: PropTypes.string,
-  quantity: PropTypes.string,
+  quantity: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   verb: PropTypes.string,
 };
 
