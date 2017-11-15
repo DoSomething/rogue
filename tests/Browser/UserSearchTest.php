@@ -3,11 +3,11 @@
 namespace Tests\Browser;
 
 use Tests\DuskTestCase;
+use Rogue\Models\Signup;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\UserSearchPage;
 use Tests\Browser\Pages\HomePage;
 use Tests\Browser\Pages\UserPage;
-use Rogue\Models\Signup;
+use Tests\Browser\Pages\UserSearchPage;
 
 class UserSearchTest extends DuskTestCase
 {
