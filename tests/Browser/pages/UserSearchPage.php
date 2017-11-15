@@ -36,8 +36,8 @@ class UserSearchPage extends Page
     {
         return [
             '@title' => '.header__title',
+            '@search' => 'query',
             '@messages' => '.messages',
-            '@search' => 'input',
         ];
     }
 }

@@ -6,6 +6,7 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\UserSearchPage;
 use Tests\Browser\Pages\HomePage;
+use Rogue\Models\Signup;
 
 class UserSearchTest extends DuskTestCase
 {
@@ -16,14 +17,8 @@ class UserSearchTest extends DuskTestCase
      */
     public function testIncorrectUserSearchPage()
     {
-        // $this->browse(function (Browser $browser) {
-        //     $browser->login()
-        //         ->visit(new UserSearchPage)
-        //         ->assertSeeIn('@title', 'Users');
-                // ->type('@search', 'taylor')
-                // ->press('Submit')
-                // ->assertSeeIn('@messages', 'No user found!');
-        // });
+        // Create a signup so that the campaign over page will load.
+        $signup = factory(Signup::class)->create();
 
         $this->browse(function (Browser $browser) {
             $browser->visit(new HomePage)
@@ -33,22 +28,14 @@ class UserSearchTest extends DuskTestCase
                     ->type('username', 'clee@dosomething.org')
                     ->type('password', env('NORTHSTAR_PASSWORD'))
                     ->press('Log In')
-                    ->assertPathIs('/campaigns');
-
-            // dd($browser->driver->getCurrentURL());
-                    // ->dump();
-                    // ->clickLink('User Search')
-                    // ->on(new UserSearchPage)
-                    // ->assertSeeIn('@title', 'Users');
+                    ->assertPathIs('/campaigns')
+                    ->clickLink('User Search')
+                    ->assertPathIs('/users')
+                    ->on(new UserSearchPage)
+                    ->assertSeeIn('@title', 'Users')
+                    ->type('@search', 'taylor')
+                    ->press('Submit')
+                    ->assertSeeIn('@messages', 'No user found!');
         });
     }
 }
-
-
-// $this->browse(function ($first, $second) {
-//     $first->loginAs(User::find(1))
-//           ->visit('/home');
-// });
-
-
-// $browser->visit(new HomePage);
