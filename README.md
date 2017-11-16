@@ -39,6 +39,7 @@ You may run unit tests locally using [PHPUnit](https://laravel.com/docs/5.5/http
     
 And our functional test suite can be run with [Laravel Dusk](https://laravel.com/docs/5.5/dusk):
 
+    $ cp .env.dusk.local.example .env.dusk.local # and add any missing values!
     $ dusk
     
 Consider [writing a test case](http://laravel.com/docs/5.5/testing) when adding or changing a feature.

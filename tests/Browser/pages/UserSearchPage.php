@@ -4,7 +4,7 @@ namespace Tests\Browser\Pages;
 
 use Laravel\Dusk\Browser;
 
-class HomePage extends Page
+class UserSearchPage extends Page
 {
     /**
      * Get the URL for the page.
@@ -13,7 +13,7 @@ class HomePage extends Page
      */
     public function url()
     {
-        return '/';
+        return '/users';
     }
 
     /**
@@ -36,7 +36,8 @@ class HomePage extends Page
     {
         return [
             '@title' => '.header__title',
-            '@login-button' => '.button',
+            '@search' => 'query',
+            '@messages' => '.messages',
         ];
     }
 }
