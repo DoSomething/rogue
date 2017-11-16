@@ -124,17 +124,16 @@ class Post extends Model
      */
     public function getMediaPath()
     {
+        $path = parse_url($this->url, PHP_URL_PATH);
+
         // We store local URLs prefixed with `/storage` when using the "public" adapter.
         if (config('filesystems.default') == 'public') {
-            return str_replace('/storage/', '', $this->url);
+            return str_replace('/storage/', '', $path);
         }
 
         // For S3, we store a full AWS URL, sometimes prefixed by bucket directory.
         if (config('filesystems.default') == 's3') {
-            $path = parse_url($this->url, PHP_URL_PATH);
-            $path = str_replace('/'. config('filesystems.disks.s3.bucket') . '/', '', $path);
-
-            return $path;
+            return str_replace('/'. config('filesystems.disks.s3.bucket') . '/', '', $path);
         }
 
         return null;
