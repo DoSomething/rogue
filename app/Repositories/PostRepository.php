@@ -125,7 +125,7 @@ class PostRepository
                 'quantity' => $data['quantity'],
                 'why_participated' => $data['why_participated'],
                 'updated_at' => $data['updated_at'],
-                'created_at' => array_key_exists('created_at', $data) ? $data['created_at'] : NULL,
+                'created_at' => array_key_exists('created_at', $data) ? $data['created_at'] : null,
             ];
 
             // Only update if the key is set (is not null).
