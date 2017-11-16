@@ -26,7 +26,7 @@ class UserSearchTest extends DuskTestCase
                     ->click('@login-button')
                     ->assertPathIs('/register')
                     ->clickLink('Log In')
-                    ->type('username', 'clee@dosomething.org')
+                    ->type('username', env('NORTHSTAR_EMAIL'))
                     ->type('password', env('NORTHSTAR_PASSWORD'))
                     ->press('Log In')
                     ->assertPathIs('/campaigns')
@@ -58,7 +58,7 @@ class UserSearchTest extends DuskTestCase
                     ->assertPathIs('/users')
                     ->on(new UserSearchPage)
                     ->assertSeeIn('@title', 'Users')
-                    ->type('@search', 'clee@dosomething.org')
+                    ->type('@search', env('NORTHSTAR_EMAIL'))
                     ->press('Submit')
                     ->on(new UserPage)
                     ->assertSeeIn('@title', 'User');
