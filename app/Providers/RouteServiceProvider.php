@@ -37,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        $this->mapAssetRoutes();
+        //
     }
 
     /**
@@ -57,28 +57,14 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define the "api" routes for the application.
      *
-     * These routes are usually protected by JWTs.
+     * These routes are typically stateless.
      *
      * @return void
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
-            ->middleware('api')
+        Route::middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
-    }
-
-    /**
-     * Define the "asset" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapAssetRoutes()
-    {
-        Route::namespace($this->namespace)
-            ->group(base_path('routes/assets.php'));
     }
 }

@@ -9,8 +9,11 @@
  * @see \Rogue\Providers\RouteServiceProvider
  */
 
+// Assets
+$router->get('images/{post}', 'ImagesController@show');
+
 // Legacy API Routes
-$router->group(['prefix' => 'v1', 'middleware' => ['auth.api']], function () {
+$router->group(['prefix' => 'api/v1', 'middleware' => ['auth.api']], function () {
     $this->get('/', function () {
         return 'Rogue API version 1';
     });
@@ -20,7 +23,7 @@ $router->group(['prefix' => 'v1', 'middleware' => ['auth.api']], function () {
 });
 
 // v2 routes
-$router->group(['prefix' => 'v2', 'middleware' => ['auth.api']], function () {
+$router->group(['prefix' => 'api/v2', 'middleware' => ['auth.api']], function () {
 
     // activity
     $this->get('activity', 'Api\ActivityController@index');
@@ -49,7 +52,7 @@ $router->group(['prefix' => 'v2', 'middleware' => ['auth.api']], function () {
 });
 
 // v3 routes
-$router->group(['prefix' => 'v3'], function () {
+$router->group(['prefix' => 'api/v3'], function () {
     // signups
     $this->post('signups', 'Three\SignupsController@store');
     $this->get('signups', 'Three\SignupsController@index');
