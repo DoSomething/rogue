@@ -92,7 +92,7 @@ class PostRepository
         if (isset($data['created_at'])) {
             $post->created_at = $data['created_at'];
             $post->updated_at = isset($data['updated_at']) ? $data['updated_at'] : $data['created_at'];
-            $post->save(['timestamps' => false]);
+            $post->save(['timestamps' => false, 'touch' => false]);
 
             $post->events->first()->created_at = $data['created_at'];
             $post->events->first()->updated_at = $data['created_at'];
@@ -120,12 +120,19 @@ class PostRepository
     public function update($signup, $data)
     {
         if (array_key_exists('updated_at', $data)) {
+            // Should only update quantity, why_participated, and timestamps on the signup
+            $signupFields = [
+                'quantity' => $data['quantity'],
+                'why_participated' => $data['why_participated'],
+                'updated_at' => $data['updated_at'],
+                'created_at' => array_key_exists('created_at', $data) ? $data['created_at'] : NULL,
+            ];
+
             // Only update if the key is set (is not null).
-            $nonNullArrayKeys = array_filter($data);
+            $nonNullArrayKeys = array_filter($signupFields);
             $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
 
             $signup->fill(array_only($data, $arrayKeysToUpdate));
-
             $signup->save(['timestamps' => false]);
 
             $event = $signup->events->last();
@@ -133,8 +140,14 @@ class PostRepository
             $event->updated_at = $data['updated_at'];
             $event->save(['timestamps' => false]);
         } else {
+            // Should only update quantity and why_participated on the signup
+            $signupFields = [
+                'quantity' => $data['quantity'],
+                'why_participated' => $data['why_participated'],
+            ];
+
             // Only update if the key is set (is not null).
-            $nonNullArrayKeys = array_filter($data);
+            $nonNullArrayKeys = array_filter($signupFields);
             $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
 
             $signup->fill(array_only($data, $arrayKeysToUpdate));
