@@ -19,7 +19,7 @@ class UserSearchTest extends DuskTestCase
     public function testIncorrectUserSearchPage()
     {
         // Create a signup so that the campaign over page will load.
-        $signup = factory(Signup::class)->create();
+        factory(Signup::class)->create();
 
         $this->browse(function (Browser $browser) {
             $browser->visit(new HomePage)
@@ -47,9 +47,6 @@ class UserSearchTest extends DuskTestCase
      */
     public function testCorrectUserSearchPage()
     {
-        // Create a signup so that the campaign over page will load.
-        $signup = factory(Signup::class)->create();
-
         $this->browse(function (Browser $browser) {
             $browser->visit(new HomePage)
                     // We're already logged in from the first test.
@@ -61,7 +58,8 @@ class UserSearchTest extends DuskTestCase
                     ->type('@search', env('NORTHSTAR_EMAIL'))
                     ->press('Submit')
                     ->on(new UserPage)
-                    ->assertSeeIn('@title', 'User');
+                    ->assertSeeIn('@title', 'User')
+                    ->assertSee(env('NORTHSTAR_EMAIL'));
         });
     }
 }
