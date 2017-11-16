@@ -92,7 +92,7 @@ class PostRepository
         if (isset($data['created_at'])) {
             $post->created_at = $data['created_at'];
             $post->updated_at = isset($data['updated_at']) ? $data['updated_at'] : $data['created_at'];
-            $post->save(['timestamps' => false, 'touch' => false]);
+            $post->save(['timestamps' => false]);
 
             $post->events->first()->created_at = $data['created_at'];
             $post->events->first()->updated_at = $data['created_at'];
