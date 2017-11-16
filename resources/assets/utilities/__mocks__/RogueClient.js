@@ -1,16 +1,17 @@
+/* eslint-disable class-methods-use-this */
 import { RestApiClient } from '@dosomething/gateway';
+import Posts from '../../_mocks_/__mockData__/posts.json';
 
 class RogueClient extends RestApiClient {
   getPosts() {
     return new Promise((resolve, reject) => {
-      // Get userID from supplied url string
-      // const lastSlash = url.lastIndexOf('/')
-      // const userID = url.substring(lastSlash + 1)
-      // Load user json data from a file in de subfolder for mock data
-      // fs.readFile(`./src/api/__mockData__/${userID}.json`, 'utf8', (err, data) => {
-      // if (err) reject(err)
-      // Parse the data as JSON and put in the key entity (just like the request library does)
-      resolve({ entity:'thing' });
+      const error = false;
+
+      if (error) {
+        reject(Error('It broke'));
+      }
+
+      resolve(Posts);
     });
   }
 }

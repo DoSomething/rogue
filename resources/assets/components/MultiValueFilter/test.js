@@ -27,6 +27,8 @@ test('it renders a list of tags', () => {
   );
 
   expect(toJson(component)).toMatchSnapshot();
+
+  component.unmount();
 });
 
 test('it renders an active button when clicked', () => {
@@ -56,4 +58,6 @@ test('it renders an active button when clicked', () => {
   // notified via the `updateFilters` prop callback.
   expect(component.find('button').first().hasClass('is-active'));
   expect(callback.calledOnce);
+
+  component.unmount();
 });
