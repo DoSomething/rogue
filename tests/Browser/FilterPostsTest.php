@@ -1,12 +1,14 @@
--<?php
+<?php
 
 namespace Tests\Browser;
 
 use Tests\DuskTestCase;
 use Rogue\Models\Signup;
+use Rogue\Models\Post;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\HomePage;
-use Tests\Browser\Components\Login;
+use Tests\Browser\Pages\CampaignSinglePage;
+// use Tests\Browser\Components\Login;
 
 class FilterPostsTest extends DuskTestCase
 {
@@ -21,10 +23,9 @@ class FilterPostsTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
-                    ->within(new Login, function($browser) {
-                        $browser->login($browser);
-                    })
-                    ->assertPathIs('/campaigns');
+                    // ->within(new Login, function($browser) {
+                    //     $browser->login($browser);
+                    // })
                     ->click('@login-button')
                     ->assertPathIs('/register')
                     ->clickLink('Log In')
@@ -32,11 +33,12 @@ class FilterPostsTest extends DuskTestCase
                     ->type('password', env('NORTHSTAR_PASSWORD'))
                     ->press('Log In')
                     ->assertPathIs('/campaigns')
-                    ->visit('/campaigns' . $signup->campaign_id)
-                    ->assertSee('Post Filters')
-                    ->select('option', 'pending')
-                    ->press('Apply Filters')
+                    ->visit('/campaigns/' . $signup->campaign_id)
+                    ->on(new CampaignSinglePage($signup->campaign_id))
                     ->screenshot('hi');
+                    // ->assertSee('Post Filters')
+                    // ->select('option', 'pending')
+                    // ->press('Apply Filters')
         });
     }
 }
