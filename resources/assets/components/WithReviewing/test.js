@@ -89,5 +89,15 @@ describe('WithReviewing', () => {
     expect(Wrapper.state('historyModalId')).toBeNull();
   });
 
+  it('updatePost', () => {
+    const instance = Wrapper.instance();
+
+    return instance.updatePost(70, { status: 'rejected' }).then((data) => {
+      const posts = Wrapper.state('posts');
+
+      expect(posts['70'].status).toEqual('rejected');
+    });
+  });
+
   // afterEach(() => console.log('After each'));
 });
