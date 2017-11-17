@@ -66,7 +66,6 @@ const reviewComponent = (Component, data) => {
         posts: posts,
         postIds: map(apiResponse.data, 'id'),
         signups: extractSignupsFromPosts(posts),
-        filter: status,
         postTotals: apiResponse.meta.pagination.total,
         displayHistoryModal: null,
         historyModalId: null,
@@ -80,7 +79,7 @@ const reviewComponent = (Component, data) => {
     showHistory(postId, event, signupId) {
       event.preventDefault();
 
-      this.api.get('api/v2/events', {
+      this.api.getEvents({
         filter: {
           signup_id: signupId,
         }
