@@ -1,50 +1,42 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-
+import { mount } from 'enzyme';
 import Campaign from '../../_mocks_/__mockData__/campaign.json';
-import CampaignInbox from '../CampaignInbox';
+import Posts from '../../_mocks_/__mockData__/posts.json';
 import reviewComponent from './index';
 
 jest.mock('../../utilities/RogueClient');
 
-test('CampaignInbox renders correctly when wrapped', () => {
-  const mockState = {
-    campaign: Campaign,
-  };
+describe('WithReviewing', () => {
+  let Wrapper;
+  let ReviewingComponent;
 
-  const ReviewingComponent = reviewComponent(CampaignInbox, mockState);
+  beforeEach(() => {
+    const mockState = {
+      campaign: Campaign,
+      initial_posts: 'accepted',
+    };
 
-  const wrapper = shallow(<ReviewingComponent />);
+    const EmptyComponent = () => <div />;
 
-  expect(wrapper.html()).not.toBe(null);
-});
+    ReviewingComponent = reviewComponent(EmptyComponent, mockState);
 
-
-test('GetPostsByStatus is called when mounted', () => {
-  const mockState = {
-    campaign: Campaign,
-    initial_posts: 'accepted',
-  };
-
-  const EmptyComponent = () => <div />;
-
-  const ReviewingComponent = reviewComponent(EmptyComponent, mockState);
-
-  const wrapper = mount(<ReviewingComponent />);
-
-  setTimeout(() => {
-    expect(wrapper.html()).not.toBe(null);
-
-    wrapper.unmount();
-
-    done();
+    Wrapper = mount(<ReviewingComponent />);
   });
 
-  // console.log(wrapper);
-  // expect(wrapper.getPostsByStatus()).toHaveBeenCalled();
-  //
-  // const getPostsByStatus = jest.fn();
-  // expect(getPostsByStatus).toHaveBeenCalled();
+  it('renders the MockReviewingComponent as the root element', () => {
+    expect(Wrapper.first().is(ReviewingComponent)).toBeTruthy();
+  });
 
+  it('It populates state to have campaign and post data after mounted', () => {
+    // console.log(Wrapper.state());
+    const state = Wrapper.state();
+    // const postCount = Object.keys(state.posts).length;
+
+    // Make sure campaign data is correct.
+    expect(state.campaign.data).toEqual(Campaign.data);
+
+    // Make sure post data is correct.
+    expect(state.posts['70']).toEqual(Posts.data[0]);
+    expect(state.posts['71']).toEqual(Posts.data[1]);
+  });
 });
-
