@@ -13,7 +13,7 @@ use Tests\Browser\Pages\CampaignSinglePage;
 class FilterPostsTest extends DuskTestCase
 {
     /**
-     * Test filtering by "Pending" returns accepted posts.
+     * Test filtering by "Pending" returns pending posts.
      */
     public function testFilterPendingPosts()
     {
@@ -35,10 +35,15 @@ class FilterPostsTest extends DuskTestCase
                     ->assertPathIs('/campaigns')
                     ->visit('/campaigns/' . $signup->campaign_id)
                     ->on(new CampaignSinglePage($signup->campaign_id))
-                    ->screenshot('hi');
-                    // ->assertSee('Post Filters')
-                    // ->select('option', 'pending')
+                    ->assertSee('Post Filters')
+                    ->select('filter_value')
+                    ->dump();
+                    // ->assertSelected('value', 'pending')
+                    // ->screenshot('hi');
                     // ->press('Apply Filters')
+                    // ->waitFor('@individualPost')
+                    // ->assertSeeIn('@heading -emphasized', 'POSTS');
+                    // ->assertSeeIn('@activeAcceptButton', 'Accept');
         });
     }
 }
