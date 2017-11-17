@@ -31,16 +31,12 @@ class FilterPostsTest extends DuskTestCase
                     ->type('username', env('NORTHSTAR_EMAIL'))
                     ->type('password', env('NORTHSTAR_PASSWORD'))
                     ->press('Log In')
-                    ->assertPathIs('/campaigns');
+                    ->assertPathIs('/campaigns')
                     ->visit('/campaigns' . $signup->campaign_id)
-                    ->assertSee('Post Filters');
-                    // ->clickLink('User Search')
-                    // ->assertPathIs('/users')
-                    // ->on(new UserSearchPage)
-                    // ->assertSeeIn('@title', 'Users')
-                    // ->type('@search', 'taylor')
-                    // ->press('Submit')
-                    // ->assertSeeIn('@messages', 'No user found!');
+                    ->assertSee('Post Filters')
+                    ->select('option', 'pending')
+                    ->press('Apply Filters')
+                    ->screenshot('hi');
         });
     }
 }
