@@ -58,7 +58,7 @@ describe('WithReviewing', () => {
     expect(state.posts['71']).toBeUndefined();
   });
 
-  it('showHistory', () => {
+  it('test showHistory updates state properly', (done) => {
     const instance = Wrapper.instance();
     const postId = 70;
     const signupId = 19;
@@ -73,6 +73,21 @@ describe('WithReviewing', () => {
       expect(Wrapper.state('displayHistoryModal')).toBe(true);
       expect(Wrapper.state('historyModalId')).toEqual(70);
       expect(Wrapper.state('signupEvents')).toEqual(Events.data);
+
+      done();
     });
   });
+
+  it('hideHistory updates state properly', () => {
+    const instance = Wrapper.instance();
+    const mockedEvent = { preventDefault: () => false };
+
+    // Call ShowHistory
+    instance.hideHistory(mockedEvent);
+
+    expect(Wrapper.state('displayHistoryModal')).toBe(false);
+    expect(Wrapper.state('historyModalId')).toBeNull();
+  });
+
+  // afterEach(() => console.log('After each'));
 });
