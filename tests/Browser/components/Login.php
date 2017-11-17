@@ -14,7 +14,7 @@ class Login extends BaseComponent
      */
     public function selector()
     {
-        return '.container__block -narrow';
+        return '.container__block.-narrow';
     }
 
     /**
@@ -45,13 +45,13 @@ class Login extends BaseComponent
      *
      * @param \Laravel\Dusk\Browser
      */
-    public function login(Browser $browser)
+    public function login($browser)
     {
         $browser->click('@login-button')
-                    ->assertPathIs('/register')
-                    ->clickLink('Log In')
-                    ->type('username', env('NORTHSTAR_EMAIL'))
-                    ->type('password', env('NORTHSTAR_PASSWORD'))
-                    ->press('Log In');
+                ->assertPathIs('/register')
+                ->clickLink('Log In')
+                ->type('username', env('NORTHSTAR_EMAIL'))
+                ->type('password', env('NORTHSTAR_PASSWORD'))
+                ->press('Log In');
     }
 }
