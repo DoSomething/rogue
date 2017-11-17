@@ -92,12 +92,10 @@ describe('WithReviewing', () => {
   it('updatePost', () => {
     const instance = Wrapper.instance();
 
-    return instance.updatePost(70, { status: 'rejected' }).then((data) => {
+    return instance.updatePost(70, { status: 'rejected' }).then(() => {
       const posts = Wrapper.state('posts');
 
       expect(posts['70'].status).toEqual('rejected');
     });
   });
-
-  // afterEach(() => console.log('After each'));
 });
