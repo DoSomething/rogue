@@ -19,6 +19,8 @@ class FilterPostsTest extends DuskTestCase
     {
         // Create a signup so that the campaign over page will load.
         $signup = factory(Signup::class)->create();
+
+        // Create a post so the filter will show results.
         $signup->posts()->save(factory(Post::class)->make());
 
         $this->browse(function (Browser $browser) use ($signup) {
@@ -39,38 +41,38 @@ class FilterPostsTest extends DuskTestCase
                     ->select('select', 'pending')
                     ->assertSelected('select', 'pending')
                     ->press('Apply Filters')
-                    ->assertDontSee('@activeAcceptButton', 'Accept');
+                    ->pause(5000)
+                    // ->screenshot('hello');
+                    ->dump();
+                    // ->assertDontSee('@activeAcceptButton', 'Accept');
         });
     }
 
     /**
      * Test filtering by "Rejected" returns rejected posts.
      */
-    public function testFilterRejectedPosts()
-    {
-        // Create a signup so that the campaign over page will load.
-        $signup = factory(Signup::class)->create();
-        dd($signup->posts()->save(factory(Post::class)->make(['status' => 'rejected'])));
+    // public function testFilterRejectedPosts()
+    // {
+    //     // Create a signup so that the campaign over page will load.
+    //     $signup = factory(Signup::class)->create();
 
-        // $this->browse(function (Browser $browser) use ($signup) {
-        //     $browser->visit(new HomePage)
-        //             // ->within(new Login, function($browser) {
-        //             //     $browser->login($browser);
-        //             // })
-        //             ->click('@login-button')
-        //             ->assertPathIs('/register')
-        //             ->clickLink('Log In')
-        //             ->type('username', env('NORTHSTAR_EMAIL'))
-        //             ->type('password', env('NORTHSTAR_PASSWORD'))
-        //             ->press('Log In')
-        //             ->assertPathIs('/campaigns')
-        //             ->visit('/campaigns/' . $signup->campaign_id)
-        //             ->on(new CampaignSinglePage($signup->campaign_id))
-        //             ->assertSee('Post Filters')
-        //             ->select('select', 'pending')
-        //             ->assertSelected('select', 'pending')
-        //             ->press('Apply Filters')
-        //             ->assertDontSee('@activeAcceptButton', 'Accept');
-        // });
-    }
+    //     // Create a post with a 'rejected' status so the filter will show results.
+    //     $signup->posts()->save(factory(Post::class)->make(['status' => 'rejected']));
+
+    //     $this->browse(function (Browser $browser) use ($signup) {
+    //         $browser->visit(new HomePage)
+    //                 // We're already logged in from the first test.
+    //                 ->assertPathIs('/campaigns')
+    //                 ->visit('/campaigns/' . $signup->campaign_id)
+    //                 ->on(new CampaignSinglePage($signup->campaign_id))
+    //                 ->assertSee('Post Filters')
+    //                 ->select('select', 'rejected')
+    //                 ->assertSelected('select', 'rejected')
+    //                 ->press('Apply Filters')
+    //                 ->pause(5000)
+    //                 ->dump();
+    //                 // ->assertSeeIn('@activeRejectButton', 'Reject');
+    //                 // ->assertSeeIn('.button > .-outlined-button > .-rejected > .is-selected', 'Reject');
+    //     });
+    // }
 }

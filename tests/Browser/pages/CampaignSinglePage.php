@@ -42,7 +42,9 @@ class CampaignSinglePage extends Page
     public function elements()
     {
         return [
-            '@activeAcceptButton' => '.button -outlined-button -accepted is-selected',
+            '@activeAcceptButton' => '.button.-outlined-button.-accepted.is-selected',
+            '@activeRejectButton' => '.button.-outlined-button.-rejected.is-selected',
         ];
     }
 }
+// $browser->click('.login-page .container div > button');
