@@ -1,7 +1,8 @@
 import React from 'react';
-import { map } from 'lodash';
+import { map, isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 
+import Empty from '../Empty';
 import Table from '../Table';
 import './history-modal.scss';
 
@@ -45,9 +46,10 @@ class HistoryModal extends React.Component {
   }
 
   render() {
+    console.log('history');
     const signup = this.props.signup;
     const campaign = this.props.campaign;
-    const parsedEvents = this.parseEventData(this.props.signupEvents);
+    const parsedEvents = ! isEmpty(this.props.signupEvents) ? this.parseEventData(this.props.signupEvents) : null;
 
     return (
       <div className="modal">
@@ -66,9 +68,13 @@ class HistoryModal extends React.Component {
           </div>
 
           <h3>📖 History 📖</h3>
-          <p>Below shows the 20 most recent changes to the member's signup. This includes changes to the quantity or why. If you need changes beyond the 20 listed here, please reach out to Team Bleed!</p>
           <div className="container">
-            <Table headings={['Quantity', 'Why Participated', 'Updated At', 'User']} data={parsedEvents} type="events" />
+            { ! isEmpty(parsedEvents) ?
+              <p>Below shows the 20 most recent changes to the member's signup. This includes changes to the quantity or why. If you need changes beyond the 20 listed here, please reach out to Team Bleed!</p>
+              <Table headings={['Quantity', 'Why Participated', 'Updated At', 'User']} data={parsedEvents} type="events" />
+              :
+              <Empty header="No History To Show!" copy="Sorry, but we don't have any history for this signup."/>
+            }
           </div>
         </div>
         <button className="button -history" disabled={! this.state.quantity} onClick={() => this.props.onUpdate(signup, this.state.quantity)}>Save</button>
