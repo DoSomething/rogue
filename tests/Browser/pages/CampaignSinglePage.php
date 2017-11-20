@@ -42,11 +42,7 @@ class CampaignSinglePage extends Page
     public function elements()
     {
         return [
-            '@filter_value' => 'filter_value',
-            '@individualPost' => '.post container__row',
             '@activeAcceptButton' => '.button -outlined-button -accepted is-selected',
-            '@postsTitle' => '.heading -emphasized',
         ];
     }
 }
-// $browser->click('.login-page .container div > button');
