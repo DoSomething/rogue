@@ -122,8 +122,8 @@ class PostRepository
         if (array_key_exists('updated_at', $data)) {
             // Should only update quantity, why_participated, and timestamps on the signup
             $signupFields = [
-                'quantity' => $data['quantity'],
-                'why_participated' => $data['why_participated'],
+                'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
+                'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
                 'updated_at' => $data['updated_at'],
                 'created_at' => array_key_exists('created_at', $data) ? $data['created_at'] : null,
             ];
@@ -142,8 +142,8 @@ class PostRepository
         } else {
             // Should only update quantity and why_participated on the signup
             $signupFields = [
-                'quantity' => $data['quantity'],
-                'why_participated' => $data['why_participated'],
+                'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
+                'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
             ];
 
             // Only update if the key is set (is not null).
