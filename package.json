@@ -27,15 +27,15 @@
     }
   },
   "dependencies": {
-    "@dosomething/forge": "^6.7.4",
+    "@dosomething/forge": "^6.7.10",
     "@dosomething/gateway": "^1.1.5",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
-    "dosomething-modal": "^0.3.0",
+    "dosomething-modal": "^0.3.3",
     "lodash": "^4.17.4",
-    "prop-types": "^15.5.8",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "prop-types": "^15.6.0",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2",
     "sinon": "^3.3.0"
   },
   "devDependencies": {

@@ -42,7 +42,6 @@ $router->get('signups/{id}', 'SignupsController@show');
 $router->post('tags', 'TagsController@store');
 
 // Images
-$router->get('/images/{post}', 'ImagesController@show');
 $router->post('images/{postId}', 'ImagesController@update');
 
 // Users
