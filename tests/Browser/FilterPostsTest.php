@@ -21,9 +21,8 @@ class FilterPostsTest extends DuskTestCase
         $signup = factory(Signup::class)->create();
 
         // Create a post so the filter will show results.
-        $post = $signup->posts()->save(factory(Post::class)->make());
-        $post->campaign_id = $signup->campaign_id;
-        $post->save();
+        $this->createAssociatedPostWithStatus($signup, 'pending');
+
 
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
@@ -56,9 +55,8 @@ class FilterPostsTest extends DuskTestCase
         // Create a signup and an associated post with a 'rejected' status
         // so the filter will show results.
         $signup = factory(Signup::class)->create();
-        $post = $signup->posts()->save(factory(Post::class)->make(['status' => 'rejected']));
-        $post->campaign_id = $signup->campaign_id;
-        $post->save();
+        $this->createAssociatedPostWithStatus($signup, 'rejected');
+
 
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
@@ -83,9 +81,7 @@ class FilterPostsTest extends DuskTestCase
         // Create a signup and an associated post with a 'accepted' status
         // so the filter will show results.
         $signup = factory(Signup::class)->create();
-        $post = $signup->posts()->save(factory(Post::class)->make(['status' => 'accepted']));
-        $post->campaign_id = $signup->campaign_id;
-        $post->save();
+        $this->createAssociatedPostWithStatus($signup, 'accepted');
 
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
@@ -100,5 +96,16 @@ class FilterPostsTest extends DuskTestCase
                     ->pause(5000)
                     ->assertSeeIn('@activeAcceptButton', 'Accept');
         });
+    }
+
+    /**
+     * Helper function to create a post with a specific status and associate it with a signup.
+     */
+    private function createAssociatedPostWithStatus($signup, $status)
+    {
+        $post = $signup->posts()->save(factory(Post::class)->make(['status' => $status]));
+        $post->campaign_id = $signup->campaign_id;
+        $post->save();
+        // return $post;
     }
 }
