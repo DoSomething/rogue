@@ -22,6 +22,8 @@ class FilterPostsTest extends DuskTestCase
 
         // Create a post so the filter will show results.
         $post = $signup->posts()->save(factory(Post::class)->make());
+        $post->campaign_id = $signup->campaign_id;
+        $post->save();
 
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
@@ -55,6 +57,8 @@ class FilterPostsTest extends DuskTestCase
         // so the filter will show results.
         $signup = factory(Signup::class)->create();
         $post = $signup->posts()->save(factory(Post::class)->make(['status' => 'rejected']));
+        $post->campaign_id = $signup->campaign_id;
+        $post->save();
 
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
@@ -68,6 +72,33 @@ class FilterPostsTest extends DuskTestCase
                     ->press('Apply Filters')
                     ->pause(5000)
                     ->assertSeeIn('@activeRejectButton', 'Reject');
+        });
+    }
+
+    /**
+     * Test filtering by "Accepted" returns accepted posts.
+     */
+    public function testFilterAcceptedPosts()
+    {
+        // Create a signup and an associated post with a 'accepted' status
+        // so the filter will show results.
+        $signup = factory(Signup::class)->create();
+        $post = $signup->posts()->save(factory(Post::class)->make(['status' => 'accepted']));
+        $post->campaign_id = $signup->campaign_id;
+        $post->save();
+
+        $this->browse(function (Browser $browser) use ($signup) {
+            $browser->visit(new HomePage)
+                    // We're already logged in from the first test.
+                    ->assertPathIs('/campaigns')
+                    ->visit('/campaigns/' . $signup->campaign_id)
+                    ->on(new CampaignSinglePage($signup->campaign_id))
+                    ->assertSee('Post Filters')
+                    ->select('select', 'accepted')
+                    ->assertSelected('select', 'accepted')
+                    ->press('Apply Filters')
+                    ->pause(5000)
+                    ->assertSeeIn('@activeAcceptButton', 'Accept');
         });
     }
 }
