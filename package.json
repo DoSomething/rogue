@@ -6,13 +6,13 @@
     "build:dev": "npm run clean && NODE_ENV=development webpack",
     "clean": "rm -rf public/dist",
     "test": "jest --watch",
-    "test:ci": "NODE_ENV=test && jest",
+    "test:ci": "jest",
     "heroku-postbuild": "npm run build",
     "lint": "eslint --fix --ext .js resources/assets"
   },
   "engines": {
-    "node": "6.x",
-    "npm": "4.x"
+    "node": "8.x",
+    "npm": "5.x"
   },
   "babel": {
     "presets": [
@@ -39,9 +39,9 @@
     "sinon": "^3.3.0"
   },
   "devDependencies": {
-    "@dosomething/babel-config": "^1.0.0",
+    "@dosomething/babel-config": "^2.0.1",
     "@dosomething/eslint-config": "^3.1.1",
-    "@dosomething/webpack-config": "^2.0.4",
+    "@dosomething/webpack-config": "^3.0.0",
     "babel-eslint": "^7.2.2",
     "babel-jest": "^21.0.2",
     "enzyme": "^2.9.1",
@@ -50,7 +50,6 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.2",
     "react-test-renderer": "^15.6.1",
-    "webpack": "^2.4.0",
-    "webpack-dev-server": "^2.4.0"
+    "webpack": "^3.8.1"
   }
 }
