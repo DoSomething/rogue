@@ -44,6 +44,8 @@ class CampaignSinglePage extends Page
         return [
             '@activeAcceptButton' => '.button.-outlined-button.-accepted.is-selected',
             '@activeRejectButton' => '.button.-outlined-button.-rejected.is-selected',
+            '@activeTagButton' => '.tag.is-active',
+            '@TagButton' => '.tag',
         ];
     }
 }

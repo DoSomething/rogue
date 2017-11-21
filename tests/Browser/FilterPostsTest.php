@@ -37,13 +37,13 @@ class FilterPostsTest extends DuskTestCase
                     ->press('Log In')
                     ->assertPathIs('/campaigns')
                     ->visit('/campaigns/' . $signup->campaign_id)
-                        ->on(new CampaignSinglePage($signup->campaign_id))
-                        ->assertSee('Post Filters')
-                        ->select('select', 'pending')
-                        ->assertSelected('select', 'pending')
-                        ->press('Apply Filters')
-                        ->pause(5000)
-                        ->assertDontSee('@activeAcceptButton', 'Accept');
+                    ->on(new CampaignSinglePage($signup->campaign_id))
+                    ->assertSee('Post Filters')
+                    ->select('select', 'pending')
+                    ->assertSelected('select', 'pending')
+                    ->press('Apply Filters')
+                    ->pause(5000)
+                    ->assertDontSee('@activeAcceptButton', 'Accept');
             });
         }
 
@@ -99,6 +99,59 @@ class FilterPostsTest extends DuskTestCase
     }
 
     /**
+     * Test filtering by tag.
+     */
+    public function testFilterByTag()
+    {
+        // Create a signup and an associated post with a 'accepted' status
+        // so the filter will show results.
+        $signup = factory(Signup::class)->create();
+        $post = $this->createAssociatedPostWithStatus($signup, 'accepted');
+        $post->tag('Good Photo');
+
+        $this->browse(function (Browser $browser) use ($signup) {
+            $browser->visit(new HomePage)
+                    // We're already logged in from the first test.
+                    ->assertPathIs('/campaigns')
+                    ->visit('/campaigns/' . $signup->campaign_id)
+                    ->on(new CampaignSinglePage($signup->campaign_id))
+                    ->assertSee('Post Filters')
+                    ->select('select', 'accepted')
+                    ->assertSelected('select', 'accepted')
+                    ->press('Good Photo')
+                    ->press('Apply Filters')
+                    ->pause(5000)
+                    ->assertSeeIn('@activeTagButton', 'Good Photo');
+        });
+    }
+
+    /**
+     * Test no results page.
+     */
+    public function testNoResultsPage()
+    {
+        // Create a signup and an associated post with a 'accepted' status
+        // so the filter will show results.
+        $signup = factory(Signup::class)->create();
+        $post = $this->createAssociatedPostWithStatus($signup, 'accepted');
+
+        $this->browse(function (Browser $browser) use ($signup) {
+            $browser->visit(new HomePage)
+                    // We're already logged in from the first test.
+                    ->assertPathIs('/campaigns')
+                    ->visit('/campaigns/' . $signup->campaign_id)
+                    ->on(new CampaignSinglePage($signup->campaign_id))
+                    ->assertSee('Post Filters')
+                    ->select('select', 'accepted')
+                    ->assertSelected('select', 'accepted')
+                    ->press('Good For Storytelling')
+                    ->press('Apply Filters')
+                    ->pause(5000)
+                    ->assertSee('There are no results!');
+        });
+    }
+
+    /**
      * Helper function to create a post with a specific status and associate it with a signup.
      */
     private function createAssociatedPostWithStatus($signup, $status)
@@ -106,6 +159,7 @@ class FilterPostsTest extends DuskTestCase
         $post = $signup->posts()->save(factory(Post::class)->make(['status' => $status]));
         $post->campaign_id = $signup->campaign_id;
         $post->save();
-        // return $post;
+
+        return $post;
     }
 }
