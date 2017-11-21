@@ -17,11 +17,11 @@ class FilterPostsTest extends DuskTestCase
      */
     public function testFilterPendingPosts()
     {
-        // Create a signup so that the campaign over page will load.
+        // Create a signup so that the campaign overview page will load.
         $signup = factory(Signup::class)->create();
 
         // Create a post so the filter will show results.
-        $signup->posts()->save(factory(Post::class)->make());
+        dd($signup->posts()->save(factory(Post::class)->make()));
 
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
@@ -53,10 +53,9 @@ class FilterPostsTest extends DuskTestCase
      */
     // public function testFilterRejectedPosts()
     // {
-    //     // Create a signup so that the campaign over page will load.
+    //     // Create a signup and an associated post with a 'rejected' status
+    //     // so the filter will show results.
     //     $signup = factory(Signup::class)->create();
-
-    //     // Create a post with a 'rejected' status so the filter will show results.
     //     $signup->posts()->save(factory(Post::class)->make(['status' => 'rejected']));
 
     //     $this->browse(function (Browser $browser) use ($signup) {

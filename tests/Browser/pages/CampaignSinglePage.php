@@ -20,7 +20,7 @@ class CampaignSinglePage extends Page
      */
     public function url()
     {
-        return '/campaigns' . $campaignId;
+        return '/campaigns/' . $this->campaignId;
     }
 
     /**
