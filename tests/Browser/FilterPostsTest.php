@@ -21,7 +21,7 @@ class FilterPostsTest extends DuskTestCase
         $signup = factory(Signup::class)->create();
 
         // Create a post so the filter will show results.
-        dd($signup->posts()->save(factory(Post::class)->make()));
+        $post = $signup->posts()->save(factory(Post::class)->make());
 
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)

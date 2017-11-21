@@ -10,6 +10,15 @@ class Signup extends Model
     use SoftDeletes;
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'campaign_id' => 'string',
+    ];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
