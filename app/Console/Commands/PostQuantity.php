@@ -77,7 +77,6 @@ class PostQuantity extends Command
                     $mostRecentPost->save(); // do we want to save without timestamps?
                     info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentPost->id);
                 }
-
                 // Put quantity of 0 on all other posts under this signup
                 foreach ($posts as $post) {
                     if (is_null($post->quantity)) {
