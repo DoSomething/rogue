@@ -21,11 +21,6 @@ Endpoint                                       | Functionality
 ---------------------------------------------- | --------------------------------------------------------
 `GET /api/v1/reportbacks`                      | [Get reportbacks](endpoints/reportbacks.md#reportbacks)
 
-#### Reportback Items
-Endpoint                                       | Functionality                                           
----------------------------------------------- | --------------------------------------------------------
-`PUT /api/v1/items`                            | [Reportback Items](endpoints/reportbackitems.md#reportbackitems)
-
 
 ### v2
 #### Activity
