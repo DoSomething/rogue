@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { remove, map, clone } from 'lodash';
-import { RestApiClient } from '@dosomething/gateway';
 import { getImageUrlFromPost, getEditedImageUrl, displayCaption } from '../../helpers';
 
 import './post.scss';
@@ -24,7 +23,6 @@ class Post extends React.Component {
       loading: false,
     };
 
-    this.api = new RestApiClient();
     this.handleClick = this.handleClick.bind(this);
   }
 
