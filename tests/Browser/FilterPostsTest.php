@@ -2,9 +2,9 @@
 
 namespace Tests\Browser;
 
+use Rogue\Models\Post;
 use Tests\DuskTestCase;
 use Rogue\Models\Signup;
-use Rogue\Models\Post;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\HomePage;
 use Tests\Browser\Pages\CampaignSinglePage;
@@ -21,7 +21,6 @@ class FilterPostsTest extends DuskTestCase
 
         // Create a post so the filter will show results.
         $this->createAssociatedPostWithStatus($signup, 'pending');
-
 
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
@@ -40,8 +39,8 @@ class FilterPostsTest extends DuskTestCase
                     ->press('Apply Filters')
                     ->pause(3000)
                     ->assertDontSee('@activeAcceptButton', 'Accept');
-            });
-        }
+        });
+    }
 
     /**
      * Test filtering by "Rejected" returns rejected posts.
@@ -52,7 +51,6 @@ class FilterPostsTest extends DuskTestCase
         // so the filter will show results.
         $signup = factory(Signup::class)->create();
         $this->createAssociatedPostWithStatus($signup, 'rejected');
-
 
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
@@ -93,7 +91,6 @@ class FilterPostsTest extends DuskTestCase
                     ->pause(3000)
                     ->assertDontSee('@activeRejectButton', 'Reject')
                     ->assertSeeIn('@activeAcceptButton', 'Accept');
-
         });
     }
 
