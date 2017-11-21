@@ -68,7 +68,6 @@ class PostQuantity extends Command
                     $mostRecentAcceptedPost->quantity = $quantity;
                     $mostRecentAcceptedPost->save();
                     info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentAcceptedPost->id);
-
                 }
                 // If no accepted posts, put quantity on most recent post (based on creation)
                 else {
