@@ -11,8 +11,8 @@
     "lint": "eslint --fix --ext .js resources/assets"
   },
   "engines": {
-    "node": "6.x",
-    "npm": "4.x"
+    "node": "8.x",
+    "npm": "5.x"
   },
   "babel": {
     "presets": [
