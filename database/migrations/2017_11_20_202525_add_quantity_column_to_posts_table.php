@@ -14,7 +14,7 @@ class AddQuantityColumnToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->integer('quantity')->after('northstar_id')->default(null)->nullable();
+            $table->integer('quantity')->after('northstar_id')->nullable();
         });
     }
 
