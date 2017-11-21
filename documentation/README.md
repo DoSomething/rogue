@@ -15,6 +15,13 @@ Endpoint                                       | Functionality
 ---------------------------------------------- | --------------------------------------------------------
 `POST /tags`                                 | [Add or delete a post's tag](endpoints/tags.md#tags)
 
+#### Posts
+Endpoint                                       | Functionality                                           
+---------------------------------------------- | --------------------------------------------------------
+`POST /posts`                           | [Create a post](endpoints/posts.md#create-a-post-and/or-create/Update-a-signup)
+`GET /posts`                            | [Get posts](endpoints/posts.md#retrieve-all-posts)
+`DELETE /posts`                         | [Delete a post](endpoints/posts.md#delete-a-post)
+
 ### v1
 #### Reportbacks
 Endpoint                                       | Functionality                                           
