@@ -45,8 +45,6 @@ class CampaignSinglePage extends Page
             '@activeAcceptButton' => '.button.-outlined-button.-accepted.is-selected',
             '@activeRejectButton' => '.button.-outlined-button.-rejected.is-selected',
             '@activeTagButton' => '.tag.is-active',
-            '@TagButton' => '.tag',
         ];
     }
 }
-// $browser->click('.login-page .container div > button');

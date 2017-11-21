@@ -8,7 +8,6 @@ use Rogue\Models\Post;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\HomePage;
 use Tests\Browser\Pages\CampaignSinglePage;
-// use Tests\Browser\Components\Login;
 
 class FilterPostsTest extends DuskTestCase
 {
@@ -26,9 +25,6 @@ class FilterPostsTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
-                    // ->within(new Login, function($browser) {
-                    //     $browser->login($browser);
-                    // })
                     ->click('@login-button')
                     ->assertPathIs('/register')
                     ->clickLink('Log In')
@@ -42,7 +38,7 @@ class FilterPostsTest extends DuskTestCase
                     ->select('select', 'pending')
                     ->assertSelected('select', 'pending')
                     ->press('Apply Filters')
-                    ->pause(5000)
+                    ->pause(3000)
                     ->assertDontSee('@activeAcceptButton', 'Accept');
             });
         }
@@ -68,7 +64,8 @@ class FilterPostsTest extends DuskTestCase
                     ->select('select', 'rejected')
                     ->assertSelected('select', 'rejected')
                     ->press('Apply Filters')
-                    ->pause(5000)
+                    ->pause(3000)
+                    ->assertDontSee('@activeAcceptButton', 'Accept')
                     ->assertSeeIn('@activeRejectButton', 'Reject');
         });
     }
@@ -93,8 +90,10 @@ class FilterPostsTest extends DuskTestCase
                     ->select('select', 'accepted')
                     ->assertSelected('select', 'accepted')
                     ->press('Apply Filters')
-                    ->pause(5000)
+                    ->pause(3000)
+                    ->assertDontSee('@activeRejectButton', 'Reject')
                     ->assertSeeIn('@activeAcceptButton', 'Accept');
+
         });
     }
 
@@ -120,7 +119,8 @@ class FilterPostsTest extends DuskTestCase
                     ->assertSelected('select', 'accepted')
                     ->press('Good Photo')
                     ->press('Apply Filters')
-                    ->pause(5000)
+                    ->pause(3000)
+                    ->assertDontSee('@activeTagButton', 'Good Quote')
                     ->assertSeeIn('@activeTagButton', 'Good Photo');
         });
     }
@@ -146,7 +146,7 @@ class FilterPostsTest extends DuskTestCase
                     ->assertSelected('select', 'accepted')
                     ->press('Good For Storytelling')
                     ->press('Apply Filters')
-                    ->pause(5000)
+                    ->pause(3000)
                     ->assertSee('There are no results!');
         });
     }
