@@ -51,6 +51,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        // If Intervention can't parse a file (corrupted or wrong type), return 422.
+        // @TODO: Handle this with a validation rule on our v3 routes.
+        if ($e instanceof \Intervention\Image\Exception\NotReadableException) {
+            abort(422, 'Invalid image provided.');
+        }
+
         // Re-cast specific exceptions or uniquely render them:
         if ($e instanceof GlideNotFoundException) {
             $e = new NotFoundHttpException('That image could not be found.');
