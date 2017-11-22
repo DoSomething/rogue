@@ -66,21 +66,21 @@ class PostQuantity extends Command
                 if ($acceptedPosts->isNotEmpty()) {
                     $mostRecentAcceptedPost = $acceptedPosts->first();
                     $mostRecentAcceptedPost->quantity = $quantity;
-                    $mostRecentAcceptedPost->save(['touches' => FALSE]);
+                    $mostRecentAcceptedPost->save(['touches' => false]);
                     info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentAcceptedPost->id);
                 }
                 // If no accepted posts, put quantity on most recent post (based on creation)
                 else {
                     $mostRecentPost = $posts->sortByDesc('created_at')->first();
                     $mostRecentPost->quantity = $quantity;
-                    $mostRecentPost->save(['touches' => FALSE]);
+                    $mostRecentPost->save(['touches' => false]);
                     info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentPost->id);
                 }
                 // Put quantity of 0 on all other posts under this signup
                 foreach ($posts as $post) {
                     if (is_null($post->quantity)) {
                         $post->quantity = 0;
-                        $post->save(['touches' => FALSE]);
+                        $post->save(['touches' => false]);
                         info('rogue:postquantity: Put quantity 0 on post ' . $post->id);
                     }
                 }
