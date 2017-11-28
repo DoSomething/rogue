@@ -138,7 +138,7 @@ class Signup extends Model
         // it means that the quantity is still on the signup.
         $posts = $this->posts;
 
-        if ($posts->count() <= 0 || is_null($posts->first()->quantity)) {
+        if ($posts->isEmpty() || is_null($posts->first()->quantity)) {
             if (! is_null($this->quantity_pending) && is_null($this->quantity)) {
                 return $this->quantity_pending;
             }
