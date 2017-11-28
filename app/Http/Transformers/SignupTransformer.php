@@ -34,14 +34,11 @@ class SignupTransformer extends TransformerAbstract
      */
     public function transform(Signup $signup)
     {
-        // $firstPost = $signup->posts()->first();
-
         return [
             'signup_id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'campaign_run_id' => $signup->campaign_run_id,
-            // 'quantity' => $firstPost ? $firstPost->getTotalQuantity() : $signup->getQuantity(),
             'quantity' => $signup->getQuantity(),
             'why_participated' => $signup->why_participated,
             'signup_source' => $signup->source,
