@@ -233,4 +233,29 @@ class Post extends Model
     {
         return Reaction::where('post_id', $postId)->count();
     }
+
+    /**
+     * Get the total quantity for all posts under the signup that this post is associated with.
+     *
+     * @return int
+     */
+    public function getTotalQuantity()
+    {
+        $signup = $this->signup;
+
+        // If the post has NULL quantity, it means that the quantity is still on the signup
+        if (is_null($this->quantity)) {
+            return $signup->quantity;
+        }
+
+        // Loop through all the posts and sum their quantities
+        $posts = $signup->posts;
+        $quantity = 0;
+
+        foreach ($posts as $post) {
+            $quantity += $post->quantity;
+        }
+
+        return $quantity;
+    }
 }
