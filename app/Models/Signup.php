@@ -120,21 +120,39 @@ class Signup extends Model
     }
 
     /**
-     * Get either the quantity or quantity_pending for a Signup.
+     * Get either the quantity or quantity_pending for a signup.
+     * If the quantity lives on the signup's posts,
+     * return quantity as a summed total of quantity across all posts under a signup.
      *
      * @return int
      */
     public function getQuantity()
-    {
+{
         // @TODO - This is temporary. We have migrated data that has stored quanity in the
         // quanity_pending column on the signup. However, since then we updated the business
         // logic to store everything in the quanity column and not use the quanity_pending
         // column at all. We only want to return what is in the quanity_pending column
         // if is the only place quanity is stored.
-        if (! is_null($this->quantity_pending) && is_null($this->quantity)) {
-            return $this->quantity_pending;
+
+        // If the there is at least one post and it has NULL quantity,
+        // it means that the quantity is still on the signup.
+        $posts = $this->posts;
+
+        if ($posts->count() <= 0 || is_null($posts->first()->quantity)) {
+            if (! is_null($this->quantity_pending) && is_null($this->quantity)) {
+                return $this->quantity_pending;
+            }
+
+            return $this->quantity;
         }
 
-        return $this->quantity;
+        // Loop through all the posts and sum their quantities.
+        $quantity = 0;
+
+        foreach ($posts as $post) {
+            $quantity += $post->quantity;
+        }
+
+        return $quantity;
     }
 }
