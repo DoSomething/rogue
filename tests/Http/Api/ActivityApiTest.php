@@ -291,7 +291,7 @@ class ActivityApiTest extends TestCase
         $thirdSignup->quantity_pending = null;
         $thirdSignup->save();
 
-        for ($i = 0 ; $i < 3; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             $post = $thirdSignup->posts()->save(factory(Post::class)->make());
             $post->quantity = 3;
             $post->save();
@@ -313,7 +313,7 @@ class ActivityApiTest extends TestCase
                 [
                     'quantity' => 9,
                     // ...
-                ]
+                ],
             ],
         ]);
     }
