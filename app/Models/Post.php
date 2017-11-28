@@ -245,7 +245,7 @@ class Post extends Model
 
         // If the post has NULL quantity, it means that the quantity is still on the signup
         if (is_null($this->quantity)) {
-            return $signup->quantity;
+            return $signup->getQuantity();
         }
 
         // Loop through all the posts and sum their quantities
