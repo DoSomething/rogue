@@ -13,7 +13,7 @@
 $router->get('images/{post}', 'ImagesController@show');
 
 // Legacy API Routes
-$router->group(['prefix' => 'api/v1', 'middleware' => ['auth.api']], function () {
+$router->group(['prefix' => 'api/v1', 'middleware' => ['legacy-auth']], function () {
     $this->get('/', function () {
         return 'Rogue API version 1';
     });
@@ -23,7 +23,7 @@ $router->group(['prefix' => 'api/v1', 'middleware' => ['auth.api']], function ()
 });
 
 // v2 routes
-$router->group(['prefix' => 'api/v2', 'middleware' => ['auth.api']], function () {
+$router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function () {
 
     // activity
     $this->get('activity', 'Api\ActivityController@index');
