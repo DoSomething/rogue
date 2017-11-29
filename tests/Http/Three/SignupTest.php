@@ -24,7 +24,7 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withRogueApiKey()->postJson('api/v3/signups', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/signups', [
             'northstar_id'     => $northstarId,
             'campaign_id'      => $campaignId,
             'campaign_run_id'  => $campaignRunId,
@@ -67,7 +67,7 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withRogueApiKey()->postJson('api/v3/signups', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/signups', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'source'           => 'the-fox-den',
@@ -212,7 +212,7 @@ class SignupTest extends TestCase
         // Mock time of when the signup is soft deleted.
         $this->mockTime('8/3/2017 14:00:00');
 
-        $response = $this->withRogueApiKey()->deleteJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAdminAccessToken()->deleteJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(200);
 
@@ -244,7 +244,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withRogueApiKey()->patchJson('api/v3/signups/' . $signup->id, [
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/signups/' . $signup->id, [
             'quantity'     => 888,
             'why_participated'  => 'new why participated',
         ]);
@@ -266,7 +266,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withRogueApiKey()->patchJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(422);
     }

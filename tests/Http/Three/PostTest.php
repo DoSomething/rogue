@@ -30,7 +30,7 @@ class PostTest extends TestCase
             ->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withRogueApiKey()->json('POST', 'api/v3/posts', [
+        $response = $this->withAdminAccessToken()->json('POST', 'api/v3/posts', [
             'northstar_id'     => $northstar_id,
             'campaign_id'      => $campaign_id,
             'campaign_run_id'  => $campaign_run_id,
@@ -101,7 +101,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withRogueApiKey()->postJson('api/v3/posts', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -285,7 +285,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withRogueApiKey()->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
             'status' => 'accepted',
             'caption' => 'new caption',
         ]);
@@ -307,7 +307,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withRogueApiKey()->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
             'status' => 'approved',
             'caption' => 'This must be longer than 140 characters to break the validation rules so here I will create a caption that is longer than 140 characters to test.',
         ]);
@@ -348,7 +348,7 @@ class PostTest extends TestCase
         // Mock time of when the post is soft deleted.
         $this->mockTime('8/3/2017 14:00:00');
 
-        $response = $this->withRogueApiKey()->deleteJson('api/v3/posts/' . $post->id);
+        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
 
