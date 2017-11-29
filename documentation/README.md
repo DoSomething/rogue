@@ -3,8 +3,10 @@ This is the Rogue API, it is used to capture activity from members.
 All `POST` and `PUT` endpoints require an api key (`X-DS-Rogue-API-Key`) in the header to be submitted with the request. 
 
 ## Endpoints
+
+### Web
 #### Reviews
-Endpoint                                       | Functionality                                           
+Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
 `PUT /reviews`                                 | [Update a post's status when admin reviews the post](endpoints/reviews.md#reviews)
 
@@ -13,16 +15,18 @@ Endpoint                                       | Functionality
 ---------------------------------------------- | --------------------------------------------------------
 `POST /tags`                                 | [Add or delete a post's tag](endpoints/tags.md#tags)
 
+#### Posts
+Endpoint                                       | Functionality                                           
+---------------------------------------------- | --------------------------------------------------------
+`POST /posts`                           | [Create a post](endpoints/posts.md#create-a-post-and/or-create/Update-a-signup)
+`GET /posts`                            | [Get posts](endpoints/posts.md#retrieve-all-posts)
+`DELETE /posts`                         | [Delete a post](endpoints/posts.md#delete-a-post)
+
 ### v1
 #### Reportbacks
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
 `GET /api/v1/reportbacks`                      | [Get reportbacks](endpoints/reportbacks.md#reportbacks)
-
-#### Reportback Items
-Endpoint                                       | Functionality                                           
----------------------------------------------- | --------------------------------------------------------
-`PUT /api/v1/items`                            | [Reportback Items](endpoints/reportbackitems.md#reportbackitems)
 
 
 ### v2
