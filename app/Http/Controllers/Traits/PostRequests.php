@@ -24,7 +24,6 @@ trait PostRequests
 
         $updating = ! is_null($signup);
 
-        // @TODO - should we eventually throw an error if a signup doesn't exist before a post is created? I create one here because we haven't implemented sending signups to rogue yet, so it will have to create a signup record for all posts.
         if (! $updating) {
             $signup = $this->signups->create($request->all());
 

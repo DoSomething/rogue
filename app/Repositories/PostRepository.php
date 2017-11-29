@@ -82,6 +82,7 @@ class PostRepository
             'campaign_id' => $signup->campaign_id,
             'url' => $fileUrl,
             'caption' => $data['caption'],
+            'quantity' => $data['quantity'],
             'status' => isset($data['status']) ? $data['status'] : 'pending',
             'source' => $data['source'],
             'remote_addr' => $data['remote_addr'],
