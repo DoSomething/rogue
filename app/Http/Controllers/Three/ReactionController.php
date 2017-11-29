@@ -17,14 +17,13 @@ class ReactionController extends ApiController
 
     /**
      * Create a controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
         $this->transformer = new ReactionTransformer;
 
-        $this->middleware('auth.api');
+        $this->middleware('auth:api', ['only' => ['store']]);
+        $this->middleware('role:admin', ['only' => ['store']]); // @TODO: Allow anyone to use this.
     }
 
     /**

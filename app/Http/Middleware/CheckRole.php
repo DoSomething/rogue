@@ -38,7 +38,7 @@ class CheckRole extends RequireRole
     {
         // If using the 'api' guard, use Gateway's role middleware.
         if (auth()->getDefaultDriver() === 'api') {
-            return parent::handle($request, $next, $roles);
+            return parent::handle($request, $next, ...$roles);
         }
 
         // Otherwise, check the local user.
