@@ -244,15 +244,13 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/signups/' . $signup->id, [
-            'quantity'     => 888,
+        $response = $this->withRogueApiKey()->patchJson('api/v3/signups/' . $signup->id, [
             'why_participated'  => 'new why participated',
         ]);
 
         $response->assertStatus(200);
 
-        // Make sure that the signup's new quantity and why_participated gets persisted in the database.
-        $this->assertEquals($signup->fresh()->quantity, 888);
+        // Make sure that the signup's new why_participated gets persisted in the database.
         $this->assertEquals($signup->fresh()->why_participated, 'new why participated');
     }
 
@@ -262,7 +260,7 @@ class SignupTest extends TestCase
      * PATCH /api/v3/signups/186
      * @return void
      */
-    public function testValidationgForUpdatingASignup()
+    public function testValidationForUpdatingASignup()
     {
         $signup = factory(Signup::class)->create();
 
@@ -281,7 +279,6 @@ class SignupTest extends TestCase
         $signup = factory(Signup::class)->create();
 
         $response = $this->patchJson('api/v3/signups/' . $signup->id, [
-            'quantity'     => 888,
             'why_participated'  => 'new why participated',
         ]);
 
