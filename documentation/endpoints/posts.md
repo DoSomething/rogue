@@ -181,6 +181,7 @@ Example Response:
     "id": 340,
     "signup_id": 784,
     "northstar_id": "5571df46a59db12346dsb456d",
+    "quantity": "6",
     "media": {
       "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_214.jpeg",
       "original_image_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/128-482cab927f6529c7f5e5c4bfd2594186-1501090354.jpeg",
