@@ -62,13 +62,13 @@ class PostApiTest extends TestCase
         $this->assertDatabaseHas('signups', [
             'campaign_id' => $campaign_id,
             'northstar_id' => $northstar_id,
-            'quantity' => $quantity,
         ]);
 
         $this->assertDatabaseHas('posts', [
             'northstar_id' => $northstar_id,
             'campaign_id' => $campaign_id,
             'status' => 'pending',
+            'quantity' => $quantity,
         ]);
     }
 
@@ -110,6 +110,7 @@ class PostApiTest extends TestCase
             'data' => [
                 'northstar_id' => $signup->northstar_id,
                 'status' => 'pending',
+                'quantity' => $quantity,
                 'media' => [
                     'caption' => $caption,
                 ],
@@ -121,6 +122,7 @@ class PostApiTest extends TestCase
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'status' => 'pending',
+            'quantity' => $quantity,
         ]);
     }
 
@@ -163,6 +165,7 @@ class PostApiTest extends TestCase
             'data' => [
                 'northstar_id' => $signup->northstar_id,
                 'status' => 'pending',
+                'quantity' => $quantity,
                 'media' => [
                     'caption' => $caption,
                 ],
@@ -174,6 +177,7 @@ class PostApiTest extends TestCase
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'status' => 'pending',
+            'quantity' => $quantity,
         ]);
     }
 }

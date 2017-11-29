@@ -28,7 +28,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'url', 'caption', 'status', 'source', 'remote_addr'];
+    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'quantity', 'url', 'caption', 'status', 'source', 'remote_addr'];
 
     /**
      * Attributes that can be queried when filtering.
@@ -38,7 +38,7 @@ class Post extends Model
      *
      * @var array
      */
-    public static $indexes = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'status'];
+    public static $indexes = ['id', 'signup_id', 'quantity', 'campaign_id', 'northstar_id', 'status'];
 
     /**
      * Each post has events.
@@ -157,7 +157,7 @@ class Post extends Model
         return [
             'id' => $this->id,
             'signup_id' => $this->signup_id,
-            'quantity' => $this->signup->quantity,
+            'quantity' => $this->signup->getQuantity(),
             'why_participated' => $this->signup->why_participated,
             'campaign_id' => (string) $this->campaign_id,
             'campaign_run_id' => (string) $this->signup->campaign_run_id,
