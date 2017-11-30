@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers\Three;
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Services\PostService;
-use Rogue\Repositories\SignupRepository;
+use Rogue\Repositories\Three\SignupRepository;
 use Rogue\Http\Requests\Three\PostRequest;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Api\ApiController;
@@ -25,7 +25,7 @@ class PostsController extends ApiController
     /**
      * The signup repository instance.
      *
-     * @var \Rogue\Repositories\SignupRepository
+     * @var \Rogue\Repositories\Three\SignupRepository
      */
     protected $signups;
 
