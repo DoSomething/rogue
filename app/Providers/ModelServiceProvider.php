@@ -25,7 +25,7 @@ class ModelServiceProvider extends ServiceProvider
                     'content' => $signup->toJson(),
                     // Use the authenticated user if coming from the web,
                     // otherwise use the id of the user in the request.
-                    'user' => auth()->user() ? auth()->user()->northstar_id : $signup->northstar_id,
+                    'user' => auth()->id() ? auth()->id() : $signup->northstar_id,
                 ]);
             }
         });
@@ -37,7 +37,7 @@ class ModelServiceProvider extends ServiceProvider
                 'content' => $post->toJson(),
                 // Use the authenticated user if coming from the web,
                 // otherwise use the id of the user in the request.
-                'user' => auth()->user() ? auth()->user()->northstar_id : $post->northstar_id,
+                'user' => auth()->id() ? auth()->id() : $post->northstar_id,
             ]);
         });
 

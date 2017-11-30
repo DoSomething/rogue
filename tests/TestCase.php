@@ -2,12 +2,14 @@
 
 namespace Tests;
 
+use DoSomething\Gateway\Testing\WithOAuthTokens;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, RefreshDatabase, WithMocks, WithAuthentication;
+    use CreatesApplication, RefreshDatabase, WithMocks,
+        WithAuthentication, WithOAuthTokens;
 
     /**
      * The base URL to use while testing the application.

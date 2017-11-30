@@ -13,7 +13,7 @@
 $router->get('images/{post}', 'ImagesController@show');
 
 // Legacy API Routes
-$router->group(['prefix' => 'api/v1', 'middleware' => ['auth.api']], function () {
+$router->group(['prefix' => 'api/v1', 'middleware' => ['legacy-auth']], function () {
     $this->get('/', function () {
         return 'Rogue API version 1';
     });
@@ -23,7 +23,7 @@ $router->group(['prefix' => 'api/v1', 'middleware' => ['auth.api']], function ()
 });
 
 // v2 routes
-$router->group(['prefix' => 'api/v2', 'middleware' => ['auth.api']], function () {
+$router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function () {
 
     // activity
     $this->get('activity', 'Api\ActivityController@index');
@@ -52,7 +52,7 @@ $router->group(['prefix' => 'api/v2', 'middleware' => ['auth.api']], function ()
 });
 
 // v3 routes
-$router->group(['prefix' => 'api/v3'], function () {
+$router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function () {
     // signups
     $this->post('signups', 'Three\SignupsController@store');
     $this->get('signups', 'Three\SignupsController@index');
@@ -68,6 +68,6 @@ $router->group(['prefix' => 'api/v3'], function () {
     $this->delete('posts/{post}', 'Three\PostsController@destroy');
 
     // reactions
-    Route::post('post/{post}/reactions', 'Three\ReactionController@store');
-    Route::get('post/{post}/reactions', 'Three\ReactionController@index');
+    $this->post('post/{post}/reactions', 'Three\ReactionController@store');
+    $this->get('post/{post}/reactions', 'Three\ReactionController@index');
 });

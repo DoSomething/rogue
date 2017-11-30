@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Storage;
 trait WithMocks
 {
     /**
+     * The Faker instance for the request.
+     *
+     * @var \Faker\Generator
+     */
+    protected $faker;
+
+    /**
      * Configure mocks for the application.
      */
     public function configureMocks()
@@ -21,6 +28,8 @@ trait WithMocks
 
         // Get a new Faker generator from Laravel.
         $this->faker = app(\Faker\Generator::class);
+        $this->faker->addProvider(new \FakerNorthstarId($this->faker));
+        $this->faker->addProvider(new \FakerCampaignId($this->faker));
     }
 
     /**
