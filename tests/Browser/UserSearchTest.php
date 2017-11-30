@@ -18,7 +18,7 @@ class UserSearchTest extends DuskTestCase
      */
     public function testIncorrectUserSearchPage()
     {
-        // Create a signup so that the campaign over page will load.
+        // Create a signup so that the campaign overview page will load.
         factory(Signup::class)->create();
 
         $this->browse(function (Browser $browser) {
