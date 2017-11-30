@@ -3,7 +3,7 @@
 ## Retrieve all Posts
 
 ```
-GET /api/v2/posts or GET /api/v3/posts
+GET /api/v2/posts
 ```
 
 Posts are returned in reverse chronological order.
