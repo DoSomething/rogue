@@ -3,16 +3,17 @@
 namespace Rogue\Http\Controllers\Three;
 
 use Rogue\Models\Post;
+use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Requests\Three\PostRequest;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Api\ApiController;
-use Rogue\Http\Controllers\Traits\PostRequests;
+use Rogue\Http\Controllers\Traits\FiltersRequests;
 
 class PostsController extends ApiController
 {
-    use PostRequests;
+    use FiltersRequests;
 
     /**
      * The post service instance.
@@ -48,6 +49,46 @@ class PostsController extends ApiController
 
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
         $this->middleware('role:admin', ['only' => ['store', 'update', 'destroy']]); // @TODO: Allow anyone to use this.
+    }
+
+    /**
+     * Returns Posts, filtered by params, if provided.
+     * GET /posts
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request)
+    {
+        $query = $this->newQuery(Post::class)
+            ->withCount('reactions')
+            ->orderBy('created_at', 'desc');
+
+        $filters = $request->query('filter');
+        $query = $this->filter($query, $filters, Post::$indexes);
+
+        // If a user made the request, return whether or not they liked each post.
+        if (auth()->check()) {
+            $query = $query->with(['reactions' => function ($query) {
+                $query->where('northstar_id', '=', auth()->id());
+            }]);
+        }
+
+        // Only allow admins or staff to see un-approved posts from other users.
+        $canSeeAllPosts = token()->exists() && in_array(token()->role, ['admin', 'staff']);
+        if (! $canSeeAllPosts) {
+            $query = $query->where(function ($query) {
+                $query->where('status', 'accepted')
+                    ->orWhere('northstar_id', auth()->id());
+            });
+        }
+
+        // If tag param is passed, only return posts that have that tag.
+        if (array_has($filters, 'tag')) {
+            $query = $query->withTag($filters['tag']);
+        }
+
+        return $this->paginatedCollection($query, $request);
     }
 
     /**

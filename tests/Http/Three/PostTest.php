@@ -195,11 +195,15 @@ class PostTest extends TestCase
      */
     public function testPostsIndex()
     {
-        factory(Post::class, 10)->create();
+        // Anonymous requests should only see accepted posts.
+        factory(Post::class, 'accepted', 10)->create();
+        factory(Post::class, 'rejected', 5)->create();
 
         $response = $this->getJson('api/v3/posts');
 
         $response->assertStatus(200);
+        $response->assertJsonCount(10, 'data');
+
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
@@ -234,6 +238,48 @@ class PostTest extends TestCase
                 ],
             ],
         ]);
+    }
+
+    /**
+     * Test for retrieving all posts as a user.
+     *
+     * GET /api/v3/posts
+     * @return void
+     */
+    public function testPostsIndexAsUser()
+    {
+        $userId = $this->faker->northstar_id;
+
+        // The user should only see accepted posts & their own.
+        factory(Post::class, 'accepted', 10)->create();
+        factory(Post::class, 3)->create(['northstar_id' => $userId]);
+        factory(Post::class, 'rejected', 5)->create();
+
+        $response = $this->withAccessToken($userId)->getJson('api/v3/posts');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(13, 'data');
+    }
+
+    /**
+     * Test for retrieving all posts as an admin.
+     *
+     * GET /api/v3/posts
+     * @return void
+     */
+    public function testPostsIndexAsAdmin()
+    {
+        $userId = $this->faker->northstar_id;
+
+        // The admin should be able to see all of these posts!
+        factory(Post::class, 'accepted', 10)->create();
+        factory(Post::class, 3)->create(['northstar_id' => $userId]);
+        factory(Post::class, 'rejected', 5)->create();
+
+        $response = $this->withAccessToken($userId, 'admin')->getJson('api/v3/posts');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(18, 'data');
     }
 
     /**
