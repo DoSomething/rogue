@@ -157,7 +157,7 @@ class Post extends Model
         return [
             'id' => $this->id,
             'signup_id' => $this->signup_id,
-            'quantity' => $this->signup->quantity,
+            'quantity' => is_null($this->quantity) ? $this->signup->quantity : $this->quantity,
             'why_participated' => $this->signup->why_participated,
             'campaign_id' => (string) $this->campaign_id,
             'campaign_run_id' => (string) $this->signup->campaign_run_id,

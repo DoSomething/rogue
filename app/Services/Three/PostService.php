@@ -52,6 +52,7 @@ class PostService
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $should_send_to_blink) {
             $payload = $post->toBlinkPayload();
+            // @TODO: now, the below will send quantity in the payload. Do we need to notify Blink of this?
             $this->blink->userSignupPost($payload);
             logger()->info('Post ' . $post->id . ' sent to Blink');
         }

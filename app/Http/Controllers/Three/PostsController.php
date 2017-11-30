@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers\Three;
 
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
-use Rogue\Services\PostService;
+use Rogue\Services\Three\PostService;
 use Rogue\Repositories\Three\SignupRepository;
 use Rogue\Http\Requests\Three\PostRequest;
 use Rogue\Http\Transformers\PostTransformer;

@@ -80,6 +80,7 @@ class PostRepository
             'signup_id' => $signup->id,
             'northstar_id' => $data['northstar_id'],
             'campaign_id' => $signup->campaign_id,
+            'quantity' => $data['quantity'],
             'url' => $fileUrl,
             'caption' => $data['caption'],
             'status' => isset($data['status']) ? $data['status'] : 'pending',
