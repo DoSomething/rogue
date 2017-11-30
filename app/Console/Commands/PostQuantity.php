@@ -58,6 +58,16 @@ class PostQuantity extends Command
                 }
                 info('rogue:postquantity: Updating posts for signup ' . $signup->id);
 
+                // sum quant of posts
+
+                    // if non null, see if any posts have null quant
+                        // if none have null quant, continue
+                        // if some have null quant, do some math
+                            // do signup quant - post quant sum = missing quant
+                            // put missing quant on post (most recent accepted and if not most recent)
+                            // set null quants to 0
+
+                    // if null, do this:
                 // Get the quantity
                 $quantity = $signup->quantity ? $signup->quantity : $signup->quantity_pending;
 
