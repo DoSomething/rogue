@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers\Three;
 
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
-use Rogue\Services\SignupService;
+use Rogue\Services\Three\SignupService;
 use Rogue\Http\Controllers\Api\ApiController;
 use Rogue\Http\Transformers\Three\SignupTransformer;
 use Rogue\Http\Controllers\Traits\TransformsRequests;

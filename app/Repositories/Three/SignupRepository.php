@@ -20,8 +20,6 @@ class SignupRepository
         $signup->northstar_id = $data['northstar_id'];
         $signup->campaign_id = $data['campaign_id'];
         $signup->campaign_run_id = isset($data['campaign_run_id']) ? $data['campaign_run_id'] : null;
-        $signup->quantity = isset($data['quantity']) ? $data['quantity'] : null;
-        $signup->quantity_pending = isset($data['quantity_pending']) ? $data['quantity_pending'] : null;
         $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : null;
         $signup->source = isset($data['source']) ? $data['source'] : null;
         $signup->details = isset($data['details']) ? $data['details'] : null;
