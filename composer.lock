@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc49405e6fe63de7ffa26a8341fd288b",
+    "content-hash": "3e3bf0986d001be29911111f8752d8c9",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.42.0",
+            "version": "3.43.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "8f684f089b1e9920064138e9fc0caa5a673d1138"
+                "reference": "11e3734531061cb21bc7b060c50a3e929fd7a916"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8f684f089b1e9920064138e9fc0caa5a673d1138",
-                "reference": "8f684f089b1e9920064138e9fc0caa5a673d1138",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/11e3734531061cb21bc7b060c50a3e929fd7a916",
+                "reference": "11e3734531061cb21bc7b060c50a3e929fd7a916",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2017-11-29T19:10:49+00:00"
+            "time": "2017-11-30T02:26:30+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -729,16 +729,16 @@
         },
         {
             "name": "dosomething/gateway",
-            "version": "dev-test-helpers",
+            "version": "v1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DoSomething/gateway.git",
-                "reference": "0e24f7de6cc962ec152e5dc0456527df097cdd17"
+                "reference": "b704361659be8e6f949c22258d6d8210182fb081"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/0e24f7de6cc962ec152e5dc0456527df097cdd17",
-                "reference": "0e24f7de6cc962ec152e5dc0456527df097cdd17",
+                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/b704361659be8e6f949c22258d6d8210182fb081",
+                "reference": "b704361659be8e6f949c22258d6d8210182fb081",
                 "shasum": ""
             },
             "require": {
@@ -777,7 +777,7 @@
                 }
             ],
             "description": "Standard PHP API client for DoSomething.org services.",
-            "time": "2017-11-29T21:46:42+00:00"
+            "time": "2017-11-30T16:35:29+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -6135,9 +6135,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "dosomething/gateway": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
