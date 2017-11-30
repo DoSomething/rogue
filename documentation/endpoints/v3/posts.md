@@ -27,9 +27,6 @@ Posts are returned in reverse chronological order. Anonymous requests will only 
 - **filter[exclude]** _(integer)_
   - The post id(s) to exclude in response.
   - e.g. `/posts?filter[exclude]=2,3,4`
-- **as_user** _(string)_
-  - The logged in user to display if they have reacted to the post or not.
-  - e.g. `/posts?as_user=1234`
 - **filter[tag]** _(string)_
   - The tag(s) to filter the response by.
   - Tag is passed in as tag_slug.
