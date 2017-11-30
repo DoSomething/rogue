@@ -241,12 +241,12 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test for retrieving all posts.
+     * Test for retrieving all posts as a user.
      *
      * GET /api/v3/posts
      * @return void
      */
-    public function testPostsIndexAsAnony()
+    public function testPostsIndexAsUser()
     {
         $userId = $this->faker->northstar_id;
 
@@ -262,7 +262,7 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test for retrieving all posts.
+     * Test for retrieving all posts as an admin.
      *
      * GET /api/v3/posts
      * @return void
