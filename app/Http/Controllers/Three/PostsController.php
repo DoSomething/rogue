@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Controllers\Three;
 
-use Illuminate\Http\Request;
 use Rogue\Models\Post;
+use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Requests\Three\PostRequest;
@@ -67,12 +67,20 @@ class PostsController extends ApiController
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Post::$indexes);
 
-        // If user param is passed, return whether or not the user has liked the particular post.
-        if ($request->query('as_user')) {
-            $userId = $request->query('as_user');
-            $query = $query->with(['reactions' => function ($query) use ($userId) {
-                $query->where('northstar_id', '=', $userId);
+        // If a user made the request, return whether or not they liked each post.
+        if (auth()->check()) {
+            $query = $query->with(['reactions' => function ($query) {
+                $query->where('northstar_id', '=', auth()->id());
             }]);
+        }
+
+        // Only allow admins or staff to see un-approved posts from other users.
+        $canSeeAllPosts = token()->exists() && in_array(token()->role, ['admin', 'staff']);
+        if (! $canSeeAllPosts) {
+            $query = $query->where(function ($query) {
+                $query->where('status', 'accepted')
+                    ->orWhere('northstar_id', auth()->id());
+            });
         }
 
         // If tag param is passed, only return posts that have that tag.
