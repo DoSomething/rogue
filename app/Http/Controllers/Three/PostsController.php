@@ -2,17 +2,18 @@
 
 namespace Rogue\Http\Controllers\Three;
 
+use Illuminate\Http\Request;
 use Rogue\Models\Post;
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Requests\Three\PostRequest;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Api\ApiController;
-use Rogue\Http\Controllers\Traits\PostRequests;
+use Rogue\Http\Controllers\Traits\FiltersRequests;
 
 class PostsController extends ApiController
 {
-    use PostRequests;
+    use FiltersRequests;
 
     /**
      * The post service instance.
@@ -48,6 +49,38 @@ class PostsController extends ApiController
 
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
         $this->middleware('role:admin', ['only' => ['store', 'update', 'destroy']]); // @TODO: Allow anyone to use this.
+    }
+
+    /**
+     * Returns Posts, filtered by params, if provided.
+     * GET /posts
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request)
+    {
+        $query = $this->newQuery(Post::class)
+            ->withCount('reactions')
+            ->orderBy('created_at', 'desc');
+
+        $filters = $request->query('filter');
+        $query = $this->filter($query, $filters, Post::$indexes);
+
+        // If user param is passed, return whether or not the user has liked the particular post.
+        if ($request->query('as_user')) {
+            $userId = $request->query('as_user');
+            $query = $query->with(['reactions' => function ($query) use ($userId) {
+                $query->where('northstar_id', '=', $userId);
+            }]);
+        }
+
+        // If tag param is passed, only return posts that have that tag.
+        if (array_has($filters, 'tag')) {
+            $query = $query->withTag($filters['tag']);
+        }
+
+        return $this->paginatedCollection($query, $request);
     }
 
     /**
