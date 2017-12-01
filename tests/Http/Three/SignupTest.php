@@ -286,4 +286,55 @@ class SignupTest extends TestCase
 
         $response->assertStatus(401);
     }
+
+    /**
+     * Test to make sure we are returning quantity correctly.
+     * Quantity is either summed total of quantity across all posts under a signup
+     * or quanttiy under signup if it is still on signup record.
+     *
+     * GET /signups
+     * @return void
+     */
+    public function testQuantityOnSignupIndex()
+    {
+        // Create one signup with a quantity_pending.
+        $firstSignup = factory(Signup::class)->create();
+
+        // Create another signup with a quantity.
+        $secondSignup = factory(Signup::class)->create();
+        $secondSignup->quantity_pending = null;
+        $secondSignup->quantity = 8;
+        $secondSignup->save();
+
+        // Create another signup with three posts with quantities.
+        $thirdSignup = factory(Signup::class)->create();
+        $thirdSignup->quantity_pending = null;
+        $thirdSignup->save();
+
+        for ($i = 0; $i < 3; $i++) {
+            $post = $thirdSignup->posts()->save(factory(Post::class)->make());
+            $post->quantity = 3;
+            $post->save();
+        }
+
+        $response = $this->getJson('api/v3/signups');
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                [
+                    'quantity' => $firstSignup->quantity_pending,
+                    // ...
+                ],
+                [
+                    'quantity' => 8,
+                    // ...
+                ],
+                [
+                    'quantity' => 9,
+                    // ...
+                ],
+            ],
+        ]);
+    }
 }
