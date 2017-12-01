@@ -39,6 +39,7 @@ class SignupTest extends TestCase
                 'northstar_id' => $northstarId,
                 'campaign_id' => $campaignId,
                 'campaign_run_id' => $campaignRunId,
+                'quantity' => null,
                 'source' => 'the-fox-den',
                 'why_participated' => null,
             ],
@@ -49,6 +50,7 @@ class SignupTest extends TestCase
             'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
+            'quantity' => null,
             'details' => 'affiliate-messaging',
         ]);
     }
@@ -79,6 +81,7 @@ class SignupTest extends TestCase
             'data' => [
                 'campaign_id' => $signup->campaign_id,
                 'campaign_run_id' => null,
+                'quantity' => $signup->getQuantity(),
             ],
         ]);
     }
@@ -121,6 +124,7 @@ class SignupTest extends TestCase
                     'northstar_id',
                     'campaign_id',
                     'campaign_run_id',
+                    'quantity',
                     'why_participated',
                     'source',
                     'details',
@@ -159,6 +163,7 @@ class SignupTest extends TestCase
                 'northstar_id',
                 'campaign_id',
                 'campaign_run_id',
+                'quantity',
                 'why_participated',
                 'source',
                 'details',
