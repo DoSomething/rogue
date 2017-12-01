@@ -54,6 +54,7 @@ class SignupsController extends ApiController
             'why_participated' => 'string',
             'source' => 'string|nullable',
         ]);
+
         $transactionId = incrementTransactionId($request);
 
         // Check to see if the signup exists before creating one.
@@ -106,12 +107,11 @@ class SignupsController extends ApiController
     public function update(Request $request, Signup $signup)
     {
         $this->validate($request, [
-            'quantity' => 'required_without_all:why_participated',
-            'why_participated' => 'required_without_all:quantity',
+            'why_participated' => 'required',
         ]);
 
         $signup->update(
-            $request->only('quantity', 'why_participated')
+            $request->only('why_participated')
         );
 
         return $this->item($signup);

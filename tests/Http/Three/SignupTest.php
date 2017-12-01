@@ -40,7 +40,6 @@ class SignupTest extends TestCase
                 'campaign_id' => $campaignId,
                 'campaign_run_id' => $campaignRunId,
                 'source' => 'the-fox-den',
-                'quantity' => null,
                 'why_participated' => null,
             ],
         ]);
@@ -122,7 +121,6 @@ class SignupTest extends TestCase
                     'northstar_id',
                     'campaign_id',
                     'campaign_run_id',
-                    'quantity',
                     'why_participated',
                     'source',
                     'details',
@@ -161,7 +159,6 @@ class SignupTest extends TestCase
                 'northstar_id',
                 'campaign_id',
                 'campaign_run_id',
-                'quantity',
                 'why_participated',
                 'source',
                 'details',
