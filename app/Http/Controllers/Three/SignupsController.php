@@ -51,11 +51,9 @@ class SignupsController extends ApiController
             'northstar_id' => 'required|string',
             'campaign_id' => 'required',
             'campaign_run_id' => 'int',
-            'quantity' => 'int',
             'why_participated' => 'string',
             'source' => 'string|nullable',
         ]);
-
         $transactionId = incrementTransactionId($request);
 
         // Check to see if the signup exists before creating one.
