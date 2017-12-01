@@ -155,13 +155,7 @@ class Signup extends Model
             return $this->quantity;
         }
 
-        // Loop through all the posts and sum their quantities.
-        $quantity = 0;
-
-        foreach ($posts as $post) {
-            $quantity += $post->quantity;
-        }
-
-        return $quantity;
+        // Sum the post quantities
+        return $posts->sum('quantity');
     }
 }

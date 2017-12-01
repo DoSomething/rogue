@@ -59,8 +59,20 @@ class PostQuantity extends Command
                 info('rogue:postquantity: Updating posts for signup ' . $signup->id);
 
                 // sum quant of posts
+                $postQuantityTotal = $posts->sum('quantity');
 
-                    // if non null, see if any posts have null quant
+                    // if >0, see if any posts have null quant
+                if ($postQuantityTotal) {
+                    $postQuantities = $posts->pluck('quantity');
+
+                    if (!in_array(null, $postQuantities)) {
+                        dd('no quants are null');
+                        continue;
+                    }
+
+                    dump($postQuantities);
+                    dd('doing math now');
+                }
                         // if none have null quant, continue
                         // if some have null quant, do some math
                             // do signup quant - post quant sum = missing quant
