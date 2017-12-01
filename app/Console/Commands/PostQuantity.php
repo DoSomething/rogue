@@ -56,56 +56,34 @@ class PostQuantity extends Command
                     $bar->advance();
                     continue;
                 }
-                info('rogue:postquantity: Updating posts for signup ' . $signup->id);
 
-                // sum quant of posts
+                // Sum quant of posts
+                info('rogue:postquantity: Updating posts for signup ' . $signup->id);
                 $postQuantityTotal = $posts->sum('quantity');
 
-                    // if >0, see if any posts have null quant
+                // If >0, see if any posts have null quant
                 if ($postQuantityTotal) {
-                    $postQuantities = $posts->pluck('quantity');
+                    $postQuantities = $posts->pluck('quantity')->toArray();
 
-                    if (!in_array(null, $postQuantities)) {
-                        dd('no quants are null');
+                    // If none have null quant, continue we are done here
+                    if (!in_array(null, $postQuantities, true)) {
                         continue;
                     }
 
-                    dump($postQuantities);
-                    dd('doing math now');
-                }
-                        // if none have null quant, continue
-                        // if some have null quant, do some math
-                            // do signup quant - post quant sum = missing quant
-                            // put missing quant on post (most recent accepted and if not most recent)
-                            // set null quants to 0
+                    // If some have null quant we need to fill them in
+                    $missingQuantity = $signup->getQuantity() - $postQuantityTotal;
+                    $this->putQuantityOnPosts($posts, $missingQuantity);
 
-                    // if null, do this:
-                // Get the quantity
-                $quantity = $signup->quantity ? $signup->quantity : $signup->quantity_pending;
+                    // Advance the progress bar
+                    $bar->advance();
 
-                // Put all the quantity on the most recent accepted post (based on creation)
-                $acceptedPosts = $posts->where('status', 'accepted')->sortByDesc('created_at');
-                if ($acceptedPosts->isNotEmpty()) {
-                    $mostRecentAcceptedPost = $acceptedPosts->first();
-                    $mostRecentAcceptedPost->quantity = $quantity;
-                    $mostRecentAcceptedPost->save();
-                    info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentAcceptedPost->id);
+                    // Move on to the next signup
+                    continue;
                 }
-                // If no accepted posts, put quantity on most recent post (based on creation)
-                else {
-                    $mostRecentPost = $posts->sortByDesc('created_at')->first();
-                    $mostRecentPost->quantity = $quantity;
-                    $mostRecentPost->save();
-                    info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentPost->id);
-                }
-                // Put quantity of 0 on all other posts under this signup
-                foreach ($posts as $post) {
-                    if (is_null($post->quantity)) {
-                        $post->quantity = 0;
-                        $post->save();
-                        info('rogue:postquantity: Put quantity 0 on post ' . $post->id);
-                    }
-                }
+
+                // If no posts have a quantity yet
+                $quantity = $signup->getQuantity();
+                $this->putQuantityOnPosts($posts, $quantity);
 
                 // Advance the progress bar
                 $bar->advance();
@@ -114,5 +92,32 @@ class PostQuantity extends Command
         // We did it!
         $bar->finish();
         info('rogue:postquantity: ALL DONE');
+    }
+
+    public function putQuantityOnPosts($posts, $quantity)
+    {
+        // Put all the quantity on the most recent accepted post (based on creation)
+        $acceptedPosts = $posts->where('status', 'accepted')->sortByDesc('created_at');
+        if ($acceptedPosts->isNotEmpty()) {
+            $mostRecentAcceptedPost = $acceptedPosts->first();
+            $mostRecentAcceptedPost->quantity = $quantity;
+            $mostRecentAcceptedPost->save();
+            info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentAcceptedPost->id);
+        }
+        // If no accepted posts, put quantity on most recent post (based on creation)
+        else {
+            $mostRecentPost = $posts->sortByDesc('created_at')->first();
+            $mostRecentPost->quantity = $quantity;
+            $mostRecentPost->save();
+            info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentPost->id);
+        }
+        // Put quantity of 0 on all other posts under this signup
+        foreach ($posts as $post) {
+            if (is_null($post->quantity)) {
+                $post->quantity = 0;
+                $post->save();
+                info('rogue:postquantity: Put quantity 0 on post ' . $post->id);
+            }
+        }
     }
 }
