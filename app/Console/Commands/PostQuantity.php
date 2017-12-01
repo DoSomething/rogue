@@ -66,7 +66,7 @@ class PostQuantity extends Command
                     $postQuantities = $posts->pluck('quantity')->toArray();
 
                     // If none have null quant, continue we are done here
-                    if (!in_array(null, $postQuantities, true)) {
+                    if (! in_array(null, $postQuantities, true)) {
                         continue;
                     }
 
