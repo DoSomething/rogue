@@ -241,7 +241,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withRogueApiKey()->patchJson('api/v3/signups/' . $signup->id, [
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/signups/' . $signup->id, [
             'why_participated'  => 'new why participated',
         ]);
 
