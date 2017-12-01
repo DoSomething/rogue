@@ -30,7 +30,6 @@ class SignupTransformer extends TransformerAbstract
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'campaign_run_id' => $signup->campaign_run_id,
-            'quantity' => $signup->getQuantity(),
             'why_participated' => $signup->why_participated,
             'source' => $signup->source,
             'details' => $signup->details,
