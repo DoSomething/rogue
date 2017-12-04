@@ -53,7 +53,6 @@ $factory->define(Signup::class, function (Generator $faker) {
         'northstar_id' => $faker->northstar_id,
         'campaign_id' => $faker->campaign_id,
         'campaign_run_id' => $faker->randomNumber(4),
-        'quantity_pending' => $faker->randomNumber(4),
         'why_participated' => $faker->sentence(),
         'source' => 'phoenix-web',
         'details' => $faker->randomElement([null, 'fun-affiliate-stuff', 'i-say-the-tails']),

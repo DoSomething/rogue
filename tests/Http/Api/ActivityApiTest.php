@@ -277,21 +277,22 @@ class ActivityApiTest extends TestCase
      */
     public function testQuantityOnActivityIndex()
     {
-        // Create one signup with a quantity_pending.
+        // Create one signup with no quantity.
         $firstSignup = factory(Signup::class)->create();
 
         // Create another signup with a quantity.
-        $secondSignup = factory(Signup::class)->create();
-        $secondSignup->quantity_pending = null;
-        $secondSignup->quantity = 8;
-        $secondSignup->save();
+        $secondSignup = factory(Signup::class)->create([
+            'quantity' => 8,
+        ]);
 
         // Create another signup with three posts with quantities.
         $thirdSignup = factory(Signup::class)->create();
-        $thirdSignup->quantity_pending = null;
-        $thirdSignup->save();
 
         $posts = factory(Post::class, 3)->create(['signup_id' => $thirdSignup->id]);
+
+        // Update the signup quantity to equal the sum of post quantities.
+        $thirdSignup->quantity = $thirdSignup->getQuantity();
+        $thirdSignup->save();
 
         $response = $this->getJson('api/v2/activity');
 
@@ -299,11 +300,11 @@ class ActivityApiTest extends TestCase
         $response->assertJson([
             'data' => [
                 [
-                    'quantity' => $firstSignup->quantity_pending,
+                    'quantity' => $firstSignup->quantity,
                     // ...
                 ],
                 [
-                    'quantity' => 8,
+                    'quantity' => $secondSignup->quantity,
                     // ...
                 ],
                 [

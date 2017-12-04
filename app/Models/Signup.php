@@ -137,7 +137,7 @@ class Signup extends Model
      */
     public function getQuantity()
     {
-        if (config('features.v3QuantitySupport')) {
+        if (! config('features.v3QuantitySupport')) {
             return $this->quantity;
         }
 
