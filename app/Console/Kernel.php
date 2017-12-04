@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\EditImagesCommand::class,
         Commands\SetupCommand::class,
         Commands\ImportSignupsCommand::class,
+        Commands\PostQuantity::class,
     ];
 
     /**
