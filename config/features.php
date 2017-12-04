@@ -16,4 +16,5 @@ return [
 
     'blink' => env('DS_ENABLE_BLINK'),
 
+    'v3QuantitySupport' => env('DS_ENABLE_V3_QUANTITY_SUPPORT'),
 ];

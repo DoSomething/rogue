@@ -299,16 +299,17 @@ class SignupTest extends TestCase
     {
         // Create a signup with a quantity.
         $firstSignup = factory(Signup::class)->create();
-        $firstSignup->quantity_pending = null;
         $firstSignup->quantity = 8;
         $firstSignup->save();
 
         // Create another signup with three posts with quantities.
         $secondSignup = factory(Signup::class)->create();
-        $secondSignup->quantity_pending = null;
-        $secondSignup->save();
 
         $posts = factory(Post::class, 3)->create(['signup_id' => $secondSignup->id]);
+
+        // Update the signup quantity to equal the sum of post quantities.
+        $secondSignup->quantity = $secondSignup->getQuantity();
+        $secondSignup->save();
 
         $response = $this->getJson('api/v3/signups');
 
@@ -320,7 +321,7 @@ class SignupTest extends TestCase
                     // ...
                 ],
                 [
-                    'quantity' => $secondSignup->posts->sum('quantity'),
+                    'quantity' => $secondSignup->quantity,
                     // ...
                 ],
             ],

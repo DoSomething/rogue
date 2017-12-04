@@ -137,6 +137,15 @@ class Signup extends Model
      */
     public function getQuantity()
     {
+        // @TODO - remove once we finish DB updates.
+        if (! config('features.v3QuantitySupport')) {
+            if (! is_null($this->quantity_pending) && is_null($this->quantity)) {
+                return $this->quantity_pending;
+            }
+
+            return $this->quantity;
+        }
+
         // @TODO - This is temporary. We have migrated data that has stored quanity in the
         // quanity_pending column on the signup. However, since then we updated the business
         // logic to store everything in the quanity column and not use the quanity_pending
