@@ -23,21 +23,7 @@ class SignupRepository
         $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : null;
         $signup->source = isset($data['source']) ? $data['source'] : null;
         $signup->details = isset($data['details']) ? $data['details'] : null;
-
-        if (isset($data['created_at'])) {
-            // Manually set created and updated times for the signup
-            $signup->created_at = $data['created_at'];
-            $signup->updated_at = isset($data['updated_at']) ? $data['updated_at'] : $data['created_at'];
-            $signup->save(['timestamps' => false]);
-
-            // Manually update the signup event timestamp.
-            $event = $signup->events->first();
-            $event->created_at = $data['created_at'];
-            $event->updated_at = isset($data['updated_at']) ? $data['updated_at'] : $data['created_at'];
-            $event->save(['timestamps' => false]);
-        } else {
-            $signup->save();
-        }
+        $signup->save();
 
         return $signup;
     }
