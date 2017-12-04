@@ -75,14 +75,6 @@ class PostRepository
 
         $signup = Signup::find($signupId);
 
-        if (isset($data['quantity'])) {
-            $quantityDiff = $data['quantity'] - $signup->quantity;
-
-            if ($quantityDiff < 0) {
-                $quantityDiff = $data['quantity'];
-            }
-        }
-
         // Create a post.
         $post = new Post([
             'signup_id' => $signup->id,
@@ -90,11 +82,24 @@ class PostRepository
             'campaign_id' => $signup->campaign_id,
             'url' => $fileUrl,
             'caption' => $data['caption'],
-            'quantity' => isset($quantityDiff) ? quantityDiff : null,
             'status' => isset($data['status']) ? $data['status'] : 'pending',
             'source' => $data['source'],
             'remote_addr' => $data['remote_addr'],
         ]);
+
+        // If we are supporting quantity on posts and
+        // we recieved a quantity in the request.
+        // Then, store correct quantity on the Post.
+        if (config('features.v3QuantitySupport') && isset($data['quantity'])) {
+            $quantityDiff = $data['quantity'] - $signup->quantity;
+
+            if ($quantityDiff < 0) {
+                $quantityDiff = $data['quantity'];
+            }
+
+            $post->quantity = $quantityDiff;
+            $post->save();
+        }
 
         // @TODO: This can be removed after the migration
         // Let Laravel take care of the timestamps unless they are specified in the request
@@ -110,11 +115,9 @@ class PostRepository
             $post->save();
         }
 
-
-        if (isset($data['quantity'])) {
-            $signup->quantity = $signup->getQuantity();
-            $signup->save();
-        }
+        // Update signup quantity. If supporting quantity on the post, we will get a summation of posts across the signup. Otherwise, we will just get the current signup quantity.
+        $signup->quantity = $signup->getQuantity();
+        $signup->save();
 
         // Edit the image if there is one
         if (isset($data['file'])) {
