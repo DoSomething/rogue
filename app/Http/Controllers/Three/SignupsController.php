@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers\Three;
 
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
-use Rogue\Services\SignupService;
+use Rogue\Services\Three\SignupService;
 use Rogue\Http\Controllers\Api\ApiController;
 use Rogue\Http\Transformers\Three\SignupTransformer;
 use Rogue\Http\Controllers\Traits\TransformsRequests;
@@ -51,7 +51,6 @@ class SignupsController extends ApiController
             'northstar_id' => 'required|string',
             'campaign_id' => 'required',
             'campaign_run_id' => 'int',
-            'quantity' => 'int',
             'why_participated' => 'string',
             'source' => 'string|nullable',
         ]);
@@ -108,12 +107,11 @@ class SignupsController extends ApiController
     public function update(Request $request, Signup $signup)
     {
         $this->validate($request, [
-            'quantity' => 'required_without_all:why_participated',
-            'why_participated' => 'required_without_all:quantity',
+            'why_participated' => 'required',
         ]);
 
         $signup->update(
-            $request->only('quantity', 'why_participated')
+            $request->only('why_participated')
         );
 
         return $this->item($signup);

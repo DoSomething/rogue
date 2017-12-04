@@ -39,8 +39,8 @@ class SignupTest extends TestCase
                 'northstar_id' => $northstarId,
                 'campaign_id' => $campaignId,
                 'campaign_run_id' => $campaignRunId,
-                'source' => 'the-fox-den',
                 'quantity' => null,
+                'source' => 'the-fox-den',
                 'why_participated' => null,
             ],
         ]);
@@ -50,6 +50,7 @@ class SignupTest extends TestCase
             'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
+            'quantity' => null,
             'details' => 'affiliate-messaging',
         ]);
     }
@@ -80,6 +81,7 @@ class SignupTest extends TestCase
             'data' => [
                 'campaign_id' => $signup->campaign_id,
                 'campaign_run_id' => null,
+                'quantity' => $signup->getQuantity(),
             ],
         ]);
     }
@@ -245,14 +247,12 @@ class SignupTest extends TestCase
         $signup = factory(Signup::class)->create();
 
         $response = $this->withAdminAccessToken()->patchJson('api/v3/signups/' . $signup->id, [
-            'quantity'     => 888,
             'why_participated'  => 'new why participated',
         ]);
 
         $response->assertStatus(200);
 
-        // Make sure that the signup's new quantity and why_participated gets persisted in the database.
-        $this->assertEquals($signup->fresh()->quantity, 888);
+        // Make sure that the signup's new why_participated gets persisted in the database.
         $this->assertEquals($signup->fresh()->why_participated, 'new why participated');
     }
 
@@ -262,7 +262,7 @@ class SignupTest extends TestCase
      * PATCH /api/v3/signups/186
      * @return void
      */
-    public function testValidationgForUpdatingASignup()
+    public function testValidationForUpdatingASignup()
     {
         $signup = factory(Signup::class)->create();
 
@@ -281,10 +281,49 @@ class SignupTest extends TestCase
         $signup = factory(Signup::class)->create();
 
         $response = $this->patchJson('api/v3/signups/' . $signup->id, [
-            'quantity'     => 888,
             'why_participated'  => 'new why participated',
         ]);
 
         $response->assertStatus(401);
+    }
+
+    /**
+     * Test to make sure we are returning quantity correctly.
+     * Quantity is either summed total of quantity across all posts under a signup
+     * or quanttiy under signup if it is still on signup record.
+     *
+     * GET /signups
+     * @return void
+     */
+    public function testQuantityOnSignupIndex()
+    {
+        // Create a signup with a quantity.
+        $firstSignup = factory(Signup::class)->create();
+        $firstSignup->quantity_pending = null;
+        $firstSignup->quantity = 8;
+        $firstSignup->save();
+
+        // Create another signup with three posts with quantities.
+        $secondSignup = factory(Signup::class)->create();
+        $secondSignup->quantity_pending = null;
+        $secondSignup->save();
+
+        $posts = factory(Post::class, 3)->create(['signup_id' => $secondSignup->id]);
+
+        $response = $this->getJson('api/v3/signups');
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                [
+                    'quantity' => 8,
+                    // ...
+                ],
+                [
+                    'quantity' => $secondSignup->posts->sum('quantity'),
+                    // ...
+                ],
+            ],
+        ]);
     }
 }
