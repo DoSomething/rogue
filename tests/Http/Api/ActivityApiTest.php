@@ -291,15 +291,7 @@ class ActivityApiTest extends TestCase
         $thirdSignup->quantity_pending = null;
         $thirdSignup->save();
 
-        $posts = factory(Post::class, 3)->create();
-        $postsTotalQuantity = [];
-
-        foreach ($posts as $post) {
-            $post->signup()->associate($thirdSignup);
-            $post->save();
-
-            array_push($postsTotalQuantity, $post->quantity);
-        }
+        $posts = factory(Post::class, 3)->create(['signup_id' => $thirdSignup->id]);
 
         $response = $this->getJson('api/v2/activity');
 
@@ -315,7 +307,7 @@ class ActivityApiTest extends TestCase
                     // ...
                 ],
                 [
-                    'quantity' => array_sum($postsTotalQuantity),
+                    'quantity' => $thirdSignup->posts->sum('quantity'),
                     // ...
                 ],
             ],

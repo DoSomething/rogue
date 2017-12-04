@@ -308,15 +308,7 @@ class SignupTest extends TestCase
         $secondSignup->quantity_pending = null;
         $secondSignup->save();
 
-        $posts = factory(Post::class, 3)->create();
-        $postsTotalQuantity = [];
-
-        foreach ($posts as $post) {
-            $post->signup()->associate($secondSignup);
-            $post->save();
-
-            array_push($postsTotalQuantity, $post->quantity);
-        }
+        $posts = factory(Post::class, 3)->create(['signup_id' => $secondSignup->id]);
 
         $response = $this->getJson('api/v3/signups');
 
@@ -328,7 +320,7 @@ class SignupTest extends TestCase
                     // ...
                 ],
                 [
-                    'quantity' => array_sum($postsTotalQuantity),
+                    'quantity' => $secondSignup->posts->sum('quantity'),
                     // ...
                 ],
             ],
