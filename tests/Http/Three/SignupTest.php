@@ -297,22 +297,19 @@ class SignupTest extends TestCase
      */
     public function testQuantityOnSignupIndex()
     {
-        // Create one signup with a quantity_pending.
+        // Create a signup with a quantity.
         $firstSignup = factory(Signup::class)->create();
-
-        // Create another signup with a quantity.
-        $secondSignup = factory(Signup::class)->create();
-        $secondSignup->quantity_pending = null;
-        $secondSignup->quantity = 8;
-        $secondSignup->save();
+        $firstSignup->quantity_pending = null;
+        $firstSignup->quantity = 8;
+        $firstSignup->save();
 
         // Create another signup with three posts with quantities.
-        $thirdSignup = factory(Signup::class)->create();
-        $thirdSignup->quantity_pending = null;
-        $thirdSignup->save();
+        $secondSignup = factory(Signup::class)->create();
+        $secondSignup->quantity_pending = null;
+        $secondSignup->save();
 
         for ($i = 0; $i < 3; $i++) {
-            $post = $thirdSignup->posts()->save(factory(Post::class)->make());
+            $post = $secondSignup->posts()->save(factory(Post::class)->make());
             $post->quantity = 3;
             $post->save();
         }
@@ -322,10 +319,6 @@ class SignupTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'data' => [
-                [
-                    'quantity' => $firstSignup->quantity_pending,
-                    // ...
-                ],
                 [
                     'quantity' => 8,
                     // ...
