@@ -77,6 +77,10 @@ class PostRepository
 
         if (isset($data['quantity'])) {
             $quantityDiff = $data['quantity'] - $signup->quantity;
+
+            if ($quantityDiff < 0) {
+                $quantityDiff = $data['quantity'];
+            }
         }
 
         // Create a post.
@@ -86,7 +90,7 @@ class PostRepository
             'campaign_id' => $signup->campaign_id,
             'url' => $fileUrl,
             'caption' => $data['caption'],
-            'quantity' => $quantityDiff,
+            'quantity' => isset($quantityDiff) ? quantityDiff : null,
             'status' => isset($data['status']) ? $data['status'] : 'pending',
             'source' => $data['source'],
             'remote_addr' => $data['remote_addr'],
@@ -111,7 +115,6 @@ class PostRepository
             $signup->quantity = $signup->getQuantity();
             $signup->save();
         }
-
 
         // Edit the image if there is one
         if (isset($data['file'])) {
