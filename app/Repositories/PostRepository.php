@@ -75,6 +75,10 @@ class PostRepository
 
         $signup = Signup::find($signupId);
 
+        if (isset($data['quantity'])) {
+            $quantityDiff = $data['quantity'] - $signup->quantity;
+        }
+
         // Create a post.
         $post = new Post([
             'signup_id' => $signup->id,
@@ -82,7 +86,7 @@ class PostRepository
             'campaign_id' => $signup->campaign_id,
             'url' => $fileUrl,
             'caption' => $data['caption'],
-            'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
+            'quantity' => $quantityDiff,
             'status' => isset($data['status']) ? $data['status'] : 'pending',
             'source' => $data['source'],
             'remote_addr' => $data['remote_addr'],
@@ -101,6 +105,13 @@ class PostRepository
         } else {
             $post->save();
         }
+
+
+        if (isset($data['quantity'])) {
+            $signup->quantity = $signup->getQuantity();
+            $signup->save();
+        }
+
 
         // Edit the image if there is one
         if (isset($data['file'])) {

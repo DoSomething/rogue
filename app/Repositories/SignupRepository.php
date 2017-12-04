@@ -17,14 +17,6 @@ class SignupRepository
         // Create the signup
         $signup = new Signup;
 
-        // $quantity = $signup->quantity;
-        // $isFirstSignup = is_null($quantity);
-        // $quantityWasSubmitted = isset($data['quantity']);
-
-        // if ($isFirstSignup && $quantityWasSubmitted) {
-        //     $quantity = $data['quantity'];
-        // }
-
         $signup->northstar_id = $data['northstar_id'];
         $signup->campaign_id = $data['campaign_id'];
         $signup->campaign_run_id = isset($data['campaign_run_id']) ? $data['campaign_run_id'] : null;
