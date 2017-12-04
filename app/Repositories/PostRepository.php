@@ -121,9 +121,8 @@ class PostRepository
     public function update($signup, $data)
     {
         if (array_key_exists('updated_at', $data)) {
-            // Should only update quantity, why_participated, and timestamps on the signup
+            // Should only update why_participated, and timestamps on the signup
             $signupFields = [
-                'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
                 'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
                 'updated_at' => $data['updated_at'],
                 'created_at' => array_key_exists('created_at', $data) ? $data['created_at'] : null,
@@ -141,9 +140,8 @@ class PostRepository
             $event->updated_at = $data['updated_at'];
             $event->save(['timestamps' => false]);
         } else {
-            // Should only update quantity and why_participated on the signup
+            // Should only update why_participated on the signup
             $signupFields = [
-                'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
                 'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
             ];
 
