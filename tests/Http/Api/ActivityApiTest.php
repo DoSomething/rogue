@@ -308,7 +308,7 @@ class ActivityApiTest extends TestCase
                     // ...
                 ],
                 [
-                    'quantity' => $thirdSignup->posts->sum('quantity'),
+                    'quantity' => $thirdSignup->quantity,
                     // ...
                 ],
             ],
