@@ -137,6 +137,11 @@ class Signup extends Model
      */
     public function getQuantity()
     {
+        if (config('features.v3QuantitySupport')) {
+            return $this->quantity;
+        }
+
+
         // @TODO - This is temporary. We have migrated data that has stored quanity in the
         // quanity_pending column on the signup. However, since then we updated the business
         // logic to store everything in the quanity column and not use the quanity_pending
