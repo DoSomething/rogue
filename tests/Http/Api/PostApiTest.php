@@ -180,7 +180,7 @@ class PostApiTest extends TestCase
     }
 
     /**
-     * Turn on quantity splitting and make sure we are handing use cases correctly
+     * Turn on quantity splitting and make sure we are handling quantity correctly.
      *
      * GET /signups
      * @return void
@@ -322,7 +322,7 @@ class PostApiTest extends TestCase
     }
 
     /**
-     * Turn off quantity splitting and make sure we are handing use cases correctly
+     * Turn off quantity splitting and make sure we are handling quantity correctly.
      *
      * GET /signups
      * @return void

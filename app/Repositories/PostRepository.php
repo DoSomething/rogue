@@ -183,6 +183,7 @@ class PostRepository
             $signup->save();
         }
 
+        // If we are not storing quantity on the post then we still need to put it on the signup.
         if (! config('features.v3QuantitySupport') && isset($data['quantity'])) {
             $signup->quantity = $data['quantity'];
             $signup->save();
