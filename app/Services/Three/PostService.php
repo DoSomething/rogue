@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Three\Services;
+namespace Rogue\Services\Three;
 
 use Rogue\Models\Post;
 use DoSomething\Gateway\Blink;

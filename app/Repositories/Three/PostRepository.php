@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Three\Repositories;
+namespace Rogue\Repositories\Three;
 
 use Rogue\Models\Post;
 use Rogue\Services\AWS;
@@ -78,29 +78,17 @@ class PostRepository
         // Create a post.
         $post = new Post([
             'signup_id' => $signup->id,
-            'northstar_id' => $data['northstar_id'],
+            'northstar_id' => auth()->id(),
             'campaign_id' => $signup->campaign_id,
             'quantity' => $data['quantity'],
             'url' => $fileUrl,
             'caption' => $data['caption'],
             'status' => isset($data['status']) ? $data['status'] : 'pending',
-            'source' => $data['source'],
-            'remote_addr' => $data['remote_addr'],
+            'source' => token()->client(),
+            'remote_addr' => isset($data['remote_addr']) ? $data['remote_addr'] : null,
         ]);
 
-        // @TODO: This can be removed after the migration
-        // Let Laravel take care of the timestamps unless they are specified in the request
-        if (isset($data['created_at'])) {
-            $post->created_at = $data['created_at'];
-            $post->updated_at = isset($data['updated_at']) ? $data['updated_at'] : $data['created_at'];
-            $post->save(['timestamps' => false]);
-
-            $post->events->first()->created_at = $data['created_at'];
-            $post->events->first()->updated_at = $data['created_at'];
-            $post->events->first()->save(['timestamps' => false]);
-        } else {
-            $post->save();
-        }
+        $post->save();
 
         // Edit the image if there is one
         if (isset($data['file'])) {
@@ -121,9 +109,8 @@ class PostRepository
     public function update($signup, $data)
     {
         if (array_key_exists('updated_at', $data)) {
-            // Should only update quantity, why_participated, and timestamps on the signup
+            // Should only update why_participated and timestamps on the signup
             $signupFields = [
-                'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
                 'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
                 'updated_at' => $data['updated_at'],
                 'created_at' => array_key_exists('created_at', $data) ? $data['created_at'] : null,
@@ -141,9 +128,8 @@ class PostRepository
             $event->updated_at = $data['updated_at'];
             $event->save(['timestamps' => false]);
         } else {
-            // Should only update quantity and why_participated on the signup
+            // Should only update why_participated on the signup
             $signupFields = [
-                'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
                 'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
             ];
 
