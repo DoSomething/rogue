@@ -17,7 +17,6 @@ class SignupTest extends TestCase
      */
     public function testCreatingASignup()
     {
-        $northstarId = $this->faker->uuid;
         $campaignId = str_random(22);
         $campaignRunId = $this->faker->randomNumber(4);
 
@@ -25,10 +24,8 @@ class SignupTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
         $response = $this->withAdminAccessToken()->postJson('api/v3/signups', [
-            'northstar_id'     => $northstarId,
             'campaign_id'      => $campaignId,
             'campaign_run_id'  => $campaignRunId,
-            'source'           => 'the-fox-den',
             'details'          => 'affiliate-messaging',
         ]);
 
@@ -36,18 +33,16 @@ class SignupTest extends TestCase
         $response->assertStatus(201);
         $response->assertJson([
             'data' => [
-                'northstar_id' => $northstarId,
                 'campaign_id' => $campaignId,
                 'campaign_run_id' => $campaignRunId,
                 'quantity' => null,
-                'source' => 'the-fox-den',
+                'source' => 'phpunit',
                 'why_participated' => null,
             ],
         ]);
 
         // Make sure the signup is persisted.
         $this->assertDatabaseHas('signups', [
-            'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
             'quantity' => null,
@@ -69,7 +64,6 @@ class SignupTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
         $response = $this->withAdminAccessToken()->postJson('api/v3/signups', [
-            'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'source'           => 'the-fox-den',
             'details'          => 'affiliate-messaging',

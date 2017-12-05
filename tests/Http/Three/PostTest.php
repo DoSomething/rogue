@@ -18,7 +18,6 @@ class PostTest extends TestCase
      */
     public function testCreatingAPostAndSignup()
     {
-        $northstar_id = $this->faker->uuid;
         $campaign_id = $this->faker->randomNumber(4);
         $campaign_run_id = $this->faker->randomNumber(4);
         $quantity = $this->faker->numberBetween(10, 1000);
@@ -31,7 +30,6 @@ class PostTest extends TestCase
 
         // Create the post!
         $response = $this->withAdminAccessToken()->json('POST', 'api/v3/posts', [
-            'northstar_id'     => $northstar_id,
             'campaign_id'      => $campaign_id,
             'campaign_run_id'  => $campaign_run_id,
             'quantity'         => $quantity,
@@ -76,12 +74,13 @@ class PostTest extends TestCase
         $this->assertDatabaseHas('signups', [
             'campaign_id' => $campaign_id,
             'northstar_id' => $northstar_id,
+            'quantity' => null,
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'northstar_id' => $northstar_id,
             'campaign_id' => $campaign_id,
             'status' => 'pending',
+            'quantity' => $quantity,
         ]);
     }
 
