@@ -57,6 +57,7 @@ class PostTest extends TestCase
                     'original_image_url',
                     'caption',
                 ],
+                'quantity',
                 'tags' => [],
                 'reactions' => [
                     'reacted',
@@ -128,6 +129,7 @@ class PostTest extends TestCase
                     'original_image_url',
                     'caption',
                 ],
+                'quantity',
                 'tags' => [],
                 'reactions' => [
                     'reacted',
@@ -146,6 +148,7 @@ class PostTest extends TestCase
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'status' => 'pending',
+            'quantity' => $quantity,
         ]);
     }
 
@@ -213,6 +216,7 @@ class PostTest extends TestCase
                         'original_image_url',
                         'caption',
                     ],
+                    'quantity',
                     'tags' => [],
                     'reactions' => [
                         'reacted',
@@ -302,6 +306,7 @@ class PostTest extends TestCase
                     'original_image_url',
                     'caption',
                 ],
+                'quantity',
                 'tags' => [],
                 'reactions' => [
                     'reacted',
@@ -332,6 +337,7 @@ class PostTest extends TestCase
         $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
             'status' => 'accepted',
             'caption' => 'new caption',
+            'quantity' => 8,
         ]);
 
         $response->assertStatus(200);
@@ -339,6 +345,7 @@ class PostTest extends TestCase
         // Make sure that the posts's new status and caption gets persisted in the database.
         $this->assertEquals($post->fresh()->status, 'accepted');
         $this->assertEquals($post->fresh()->caption, 'new caption');
+        $this->assertEquals($post->fresh()->quantity, 8);
     }
 
     /**
