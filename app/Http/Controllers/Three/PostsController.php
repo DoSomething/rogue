@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Rogue\Services\Three\PostService;
 use Rogue\Repositories\Three\SignupRepository;
 use Rogue\Http\Requests\Three\PostRequest;
-use Rogue\Http\Transformers\PostTransformer;
+use Rogue\Http\Transformers\Three\PostTransformer;
 use Rogue\Http\Controllers\Api\ApiController;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
 
