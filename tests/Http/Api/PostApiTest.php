@@ -180,13 +180,14 @@ class PostApiTest extends TestCase
     }
 
     /**
-     *
+     * Turn on quantity splitting and make sure we are handing use cases correctly
      *
      * GET /signups
      * @return void
      */
     public function testSplittingQuantityOnPosts()
     {
+        // Turn on feature flag that supports quantity splitting.
         config(['features.v3QuantitySupport' => true]);
 
         // Create a signup with no quantity.
@@ -202,7 +203,7 @@ class PostApiTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the first post via API with quantity 10.
-        $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+        $firstPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -210,7 +211,7 @@ class PostApiTest extends TestCase
             'caption'          => 'Fake caption',
             'source'           => 'testing',
             'file'             => UploadedFile::fake()->image('photo.jpg'),
-        ]);
+        ])->decodeResponseJson();
 
         // Confirm quantity is persisted between signups and posts correctly.
         $this->assertDatabaseHas('signups', [
@@ -219,12 +220,12 @@ class PostApiTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'id' => 1,
+            'id' => $firstPost['data']['id'],
             'quantity' => 10,
         ]);
 
         // Create another post with a new quantity.
-        $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+        $secondPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -232,7 +233,7 @@ class PostApiTest extends TestCase
             'caption'          => 'Fake caption',
             'source'           => 'testing',
             'file'             => UploadedFile::fake()->image('photo.jpg'),
-        ]);
+        ])->decodeResponseJson();
 
         // Confirm quantity is persisted between signups and posts correctly.
         $this->assertDatabaseHas('signups', [
@@ -241,17 +242,17 @@ class PostApiTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'id' => 1,
+            'id' => $firstPost['data']['id'],
             'quantity' => 10,
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'id' => 2,
+            'id' => $secondPost['data']['id'],
             'quantity' => 10,
         ]);
 
         // Create another post with a less quantity.
-        $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+        $thirdPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -259,7 +260,7 @@ class PostApiTest extends TestCase
             'caption'          => 'Fake caption',
             'source'           => 'testing',
             'file'             => UploadedFile::fake()->image('photo.jpg'),
-        ]);
+        ])->decodeResponseJson();
 
         // Confirm quantity is persisted between signups and posts correctly.
         $this->assertDatabaseHas('signups', [
@@ -268,22 +269,22 @@ class PostApiTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'id' => 1,
+            'id' => $firstPost['data']['id'],
             'quantity' => 10,
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'id' => 2,
+            'id' => $secondPost['data']['id'],
             'quantity' => 10,
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'id' => 3,
+            'id' => $thirdPost['data']['id'],
             'quantity' => 5,
         ]);
 
         // Create another post with the same quantity as the total.
-        $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+        $fourthPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -291,7 +292,7 @@ class PostApiTest extends TestCase
             'caption'          => 'Fake caption',
             'source'           => 'testing',
             'file'             => UploadedFile::fake()->image('photo.jpg'),
-        ]);
+        ])->decodeResponseJson();
 
         // Confirm quantity is persisted between signups and posts correctly.
         $this->assertDatabaseHas('signups', [
@@ -300,23 +301,96 @@ class PostApiTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'id' => 1,
+            'id' => $firstPost['data']['id'],
             'quantity' => 10,
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'id' => 2,
+            'id' => $secondPost['data']['id'],
             'quantity' => 10,
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'id' => 3,
+            'id' => $thirdPost['data']['id'],
             'quantity' => 5,
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'id' => 4,
+            'id' => $fourthPost['data']['id'],
             'quantity' => 0,
+        ]);
+    }
+
+    /**
+     * Turn off quantity splitting and make sure we are handing use cases correctly
+     *
+     * GET /signups
+     * @return void
+     */
+    public function testNotSplittingQuantityOnPosts()
+    {
+        // Turn off feature flag that supports quantity splitting.
+        config(['features.v3QuantitySupport' => false]);
+
+        // Create a signup with no quantity.
+        $signup = factory(Signup::class)->create();
+
+        // Make sure the signup is persisted with no quantity.
+        $this->assertDatabaseHas('signups', [
+            'id' => $signup->id,
+            'quantity' => null,
+        ]);
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the first post via API with quantity 10.
+        $firstPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'quantity'         => 10,
+            'caption'          => 'Fake caption',
+            'source'           => 'testing',
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
+        ])->decodeResponseJson();
+
+        // Confirm quantity is persisted between signups and posts correctly.
+        $this->assertDatabaseHas('signups', [
+            'id' => $signup->id,
+            'quantity' => 10,
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'id' => $firstPost['data']['id'],
+            'quantity' => null,
+        ]);
+
+        // Create another post with a new quantity.
+        $secondPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'quantity'         => 20,
+            'caption'          => 'Fake caption',
+            'source'           => 'testing',
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
+        ])->decodeResponseJson();
+
+        // Confirm quantity is persisted between signups and posts correctly.
+        $this->assertDatabaseHas('signups', [
+            'id' => $signup->id,
+            'quantity' => 20,
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'id' => $firstPost['data']['id'],
+            'quantity' => null,
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'id' => $secondPost['data']['id'],
+            'quantity' => null,
         ]);
     }
 }

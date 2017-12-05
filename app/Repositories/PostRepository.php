@@ -106,6 +106,12 @@ class PostRepository
 
             $post->quantity = $quantityDiff;
             $post->save();
+
+            $signup->quantity = $signup->getQuantity();
+            $signup->save();
+        } elseif (isset($data['quantity']) && !config('features.v3QuantitySupport') && is_null($signup->quantity)) {
+            $signup->quantity = $data['quantity'];
+            $signup->save();
         }
 
         // @TODO: This can be removed after the migration
@@ -123,8 +129,6 @@ class PostRepository
         }
 
         // Update signup quantity. If supporting quantity on the post, we will get a summation of posts across the signup. Otherwise, we will just get the current signup quantity.
-        $signup->quantity = $signup->getQuantity();
-        $signup->save();
 
         // Edit the image if there is one
         if (isset($data['file'])) {
@@ -176,6 +180,11 @@ class PostRepository
             $signup->fill(array_only($data, $arrayKeysToUpdate));
 
             // Triggers model event that logs the updated signup in the events table.
+            $signup->save();
+        }
+
+        if (! config('features.v3QuantitySupport') && isset($data['quantity'])) {
+            $signup->quantity = $data['quantity'];
             $signup->save();
         }
 
