@@ -73,7 +73,7 @@ class PostRepository
             $fileUrl = 'default';
         }
 
-        $signup = Signup::find($signupId);
+        $signup = Signup::withCount('posts')->find($signupId);
 
         // Create a post.
         $post = new Post([
@@ -83,8 +83,9 @@ class PostRepository
             'url' => $fileUrl,
             'caption' => $data['caption'],
             'status' => isset($data['status']) ? $data['status'] : 'pending',
-            'source' => $data['source'],
-            'remote_addr' => $data['remote_addr'],
+            'source' => isset($data['source']) ? $data['source'] : null,
+            'remote_addr' => isset($data['remote_addr']) ? $data['remote_addr'] : null,
+
         ]);
 
         // If we are supporting quantity on posts and
@@ -93,8 +94,14 @@ class PostRepository
         if (config('features.v3QuantitySupport') && isset($data['quantity'])) {
             $quantityDiff = $data['quantity'] - $signup->quantity;
 
-            if ($quantityDiff <= 0) {
+            // If the quantity difference is negative than we recieved an incremental submission
+            // and should just add that to the post.
+            if ($quantityDiff < 0) {
                 $quantityDiff = $data['quantity'];
+            // If the quantity difference equals zero, and this is not the first post,
+            // then we can assume there is no difference in quantity and store it as 0 on the post.
+            } elseif ($quantityDiff === 0 && $signup->posts_count > 0) {
+                $quantityDiff = 0;
             }
 
             $post->quantity = $quantityDiff;
