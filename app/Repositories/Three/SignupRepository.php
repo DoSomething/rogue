@@ -17,11 +17,11 @@ class SignupRepository
         // Create the signup
         $signup = new Signup;
 
-        $signup->northstar_id = $data['northstar_id'];
+        $signup->northstar_id = auth()->id();
         $signup->campaign_id = $data['campaign_id'];
         $signup->campaign_run_id = isset($data['campaign_run_id']) ? $data['campaign_run_id'] : null;
         $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : null;
-        $signup->source = isset($data['source']) ? $data['source'] : null;
+        $signup->source = token()->client();
         $signup->details = isset($data['details']) ? $data['details'] : null;
         $signup->save();
 
@@ -29,7 +29,7 @@ class SignupRepository
     }
 
     /**
-     * Get a signup
+     * Get a signup based on unique fields.
      *
      * @param  string $northstarId
      * @param  int $campaignId

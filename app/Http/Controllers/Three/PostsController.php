@@ -5,10 +5,10 @@ namespace Rogue\Http\Controllers\Three;
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Services\PostService;
-use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Requests\Three\PostRequest;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Api\ApiController;
+use Rogue\Repositories\Three\SignupRepository;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
 
 class PostsController extends ApiController
@@ -101,11 +101,10 @@ class PostsController extends ApiController
     {
         $transactionId = incrementTransactionId($request);
 
-        $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
+        $signup = $this->signups->get(auth()->id(), $request['campaign_id'], $request['campaign_run_id']);
 
         $updating = ! is_null($signup);
 
-        // @TODO - should we eventually throw an error if a signup doesn't exist before a post is created? I create one here because we haven't implemented sending signups to rogue yet, so it will have to create a signup record for all posts.
         if (! $updating) {
             $signup = $this->signups->create($request->all());
 
