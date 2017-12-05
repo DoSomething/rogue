@@ -148,7 +148,7 @@ class PostsController extends ApiController
      */
     public function update(PostRequest $request, Post $post)
     {
-        $post->update($request->only('status', 'caption'));
+        $post->update($request->only('status', 'caption', 'quantity'));
 
         return $this->item($post);
     }
