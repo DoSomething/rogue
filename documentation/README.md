@@ -1,6 +1,6 @@
 # Rogue API
 This is the Rogue API, it is used to capture activity from members.
-All `POST` and `PUT` endpoints require an api key (`X-DS-Rogue-API-Key`) in the header to be submitted with the request. 
+All `POST` and `PUT` endpoints (except v3 endpoints) require an api key (`X-DS-Rogue-API-Key`) in the header to be submitted with the request. 
 
 ## Endpoints
 
@@ -58,6 +58,8 @@ Endpoint                                       | Functionality
 `POST /api/v2/signups`                         | [Create a signup](endpoints/signups.md#create-a-signup)
 
 ### v3
+Instead of requiring an api key (`X-DS-Rogue-API-Key`) in the header to be submitted with the request, v3 endpoints use OAuth 2 to authenticate. 
+
 #### Signups
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
