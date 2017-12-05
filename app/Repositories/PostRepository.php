@@ -93,7 +93,7 @@ class PostRepository
         if (config('features.v3QuantitySupport') && isset($data['quantity'])) {
             $quantityDiff = $data['quantity'] - $signup->quantity;
 
-            if ($quantityDiff < 0) {
+            if ($quantityDiff <= 0) {
                 $quantityDiff = $data['quantity'];
             }
 
