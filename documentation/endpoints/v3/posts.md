@@ -134,9 +134,6 @@ Example Response:
 ```
 POST /api/v3/posts
 ```
-
-  - **northstar_id**: (string) required.
-    The northstar id of the user creating the post.
   - **campaign_id**: (int|string) required.
     The drupal node id of the campaign that the user's post is associated with. 
   - **campaign_run_id**: (int) optional.
