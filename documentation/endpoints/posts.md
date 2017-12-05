@@ -97,43 +97,10 @@ Example Response:
 }
 ```
 
-## Retrieve A Specific Post
-
-```
-GET /api/v3/posts/:post_id
-```
-
-Example Response: 
-
-```
-{
-  "data": {
-    "id": 332,
-    "signup_id": 289,
-    "northstar_id": "5589c991a59dbfa93d8b45ae",
-    "media": {
-      "url": "http://localhost/storage/uploads/reportback-items/edited_332.jpeg?time=1509129880",
-      "original_image_url": "http://localhost/storage/uploads/reportback-items/289-923df5957838355206574f72d5520f0f-1509115822.jpeg?time=1509129880",
-      "caption": "fe"
-    },
-    "tags": [],
-    "reactions": {
-      "reacted": false,
-      "total": null
-    },
-    "status": "accepted",
-    "source": "rogue-admin",
-    "remote_addr": "",
-    "created_at": "2017-10-27T14:50:22+00:00",
-    "updated_at": "2017-10-27T14:50:22+00:00"
-  }
-}
-```
-
 ## Create a Post and/or Create/Update a Signup
 
 ```
-POST /api/v2/posts or POST /api/v3/posts
+POST /api/v2/posts
 ```
 
   - **northstar_id**: (string) required.
@@ -201,7 +168,7 @@ Example Response:
 Allows admins to delete a post. Posts get soft deleted from the database.
 
 ```
-DELETE posts/{post_id}
+DELETE /api/v2/posts/{post_id}
 ```
 
 Example Response:
@@ -210,65 +177,5 @@ Example Response:
 {
   "code": 200,
   "message": "Post deleted."
-}
-```
-
-## Delete a Post
-
-```
-DELETE /api/v3/posts/:post_id
-```
-Example Response: 
-
-```
-{
-    "code": 200,
-    "message": "Post deleted."
-}
-
-```
-
-## Update a Post
-
-```
-PATCH /api/v3/posts/:post_id
-```
-
-  - **status**: (string) 
-    The status of a post. Must be either pending, accepted, or rejected.
-  - **caption**: (string) 
-    The caption of the post.
-  
-Example request body:
-```
-[
-  "status" => "accepted"
-  "why_participated" => "i love this cause"
-]
-```
-
-Example response:
-```
-{
-  "data": {
-      "id": 332,
-      "signup_id": 289,
-      "northstar_id": "5589c991a59dbfa93d8b45ae",
-      "media": {
-          "url": "http://localhost/storage/uploads/reportback-items/edited_332.jpeg?time=1509379493",
-          "original_image_url": "http://localhost/storage/uploads/reportback-items/289-923df5957838355206574f72d5520f0f-1509115822.jpeg?time=1509379493",
-          "caption": "i love this cause"
-      },
-      "tags": [],
-      "reactions": {
-          "reacted": false,
-          "total": null
-      },
-      "status": "accepted",
-      "source": "rogue-admin",
-      "remote_addr": "",
-      "created_at": "2017-10-27T14:50:22+00:00",
-      "updated_at": "2017-10-30T16:04:53+00:00"
-  }
 }
 ```
