@@ -98,19 +98,17 @@ class PostRepository
             // and should just add that to the post.
             if ($quantityDiff < 0) {
                 $quantityDiff = $data['quantity'];
-            // If the quantity difference equals zero, and this is not the first post,
-            // then we can assume there is no difference in quantity and store it as 0 on the post.
             } elseif ($quantityDiff === 0 && $signup->posts_count > 0) {
+                // If the quantity difference equals zero, and this is not the first post,
+                // then we can assume there is no difference in quantity and store it as 0 on the post.
                 $quantityDiff = 0;
             }
 
             $post->quantity = $quantityDiff;
             $post->save();
 
+            // Update signup quantity. If supporting quantity on the post, we will get a summation of posts across the signup. Otherwise, we will just get the current signup quantity.
             $signup->quantity = $signup->getQuantity();
-            $signup->save();
-        } elseif (isset($data['quantity']) && !config('features.v3QuantitySupport') && is_null($signup->quantity)) {
-            $signup->quantity = $data['quantity'];
             $signup->save();
         }
 
@@ -127,8 +125,6 @@ class PostRepository
         } else {
             $post->save();
         }
-
-        // Update signup quantity. If supporting quantity on the post, we will get a summation of posts across the signup. Otherwise, we will just get the current signup quantity.
 
         // Edit the image if there is one
         if (isset($data['file'])) {
