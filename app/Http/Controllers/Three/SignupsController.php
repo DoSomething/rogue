@@ -48,7 +48,6 @@ class SignupsController extends ApiController
     public function store(Request $request)
     {
         $this->validate($request, [
-            'northstar_id' => 'required|string',
             'campaign_id' => 'required',
             'campaign_run_id' => 'int',
             'why_participated' => 'string',
@@ -58,7 +57,7 @@ class SignupsController extends ApiController
         $transactionId = incrementTransactionId($request);
 
         // Check to see if the signup exists before creating one.
-        $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
+        $signup = $this->signups->get(auth()->id(), $request['campaign_id'], $request['campaign_run_id']);
 
         $code = $signup ? 200 : 201;
 
