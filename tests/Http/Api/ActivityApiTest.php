@@ -280,19 +280,14 @@ class ActivityApiTest extends TestCase
         // Create one signup with no quantity.
         $firstSignup = factory(Signup::class)->create();
 
-        // Create another signup with a quantity.
-        $secondSignup = factory(Signup::class)->create([
-            'quantity' => 8,
-        ]);
-
         // Create another signup with three posts with quantities.
-        $thirdSignup = factory(Signup::class)->create();
+        $secondSignup = factory(Signup::class)->create();
 
-        $posts = factory(Post::class, 3)->create(['signup_id' => $thirdSignup->id]);
+        $posts = factory(Post::class, 3)->create(['signup_id' => $secondSignup->id]);
 
         // Update the signup quantity to equal the sum of post quantities.
-        $thirdSignup->quantity = $thirdSignup->getQuantity();
-        $thirdSignup->save();
+        $secondSignup->quantity = $secondSignup->getQuantity();
+        $secondSignup->save();
 
         $response = $this->getJson('api/v2/activity');
 
@@ -305,10 +300,6 @@ class ActivityApiTest extends TestCase
                 ],
                 [
                     'quantity' => $secondSignup->quantity,
-                    // ...
-                ],
-                [
-                    'quantity' => $thirdSignup->quantity,
                     // ...
                 ],
             ],

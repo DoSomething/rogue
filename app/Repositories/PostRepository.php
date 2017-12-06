@@ -73,7 +73,7 @@ class PostRepository
             $fileUrl = 'default';
         }
 
-        $signup = Signup::find($signupId);
+        $signup = Signup::withCount('posts')->find($signupId);
 
         // Create a post.
         $post = new Post([
@@ -83,9 +83,29 @@ class PostRepository
             'url' => $fileUrl,
             'caption' => $data['caption'],
             'status' => isset($data['status']) ? $data['status'] : 'pending',
-            'source' => $data['source'],
-            'remote_addr' => $data['remote_addr'],
+            'source' => isset($data['source']) ? $data['source'] : null,
+            'remote_addr' => isset($data['remote_addr']) ? $data['remote_addr'] : null,
+
         ]);
+
+        // If we are supporting quantity on posts and
+        // we recieved a quantity in the request.
+        // Then, store correct quantity on the Post.
+        if (config('features.v3QuantitySupport') && isset($data['quantity'])) {
+            $quantityDiff = $data['quantity'] - $signup->quantity;
+
+            // If the quantity difference is negative than we recieved an incremental submission
+            // and should just add that to the post.
+            if ($quantityDiff < 0) {
+                $quantityDiff = $data['quantity'];
+            } elseif ($quantityDiff === 0 && $signup->posts_count > 0) {
+                // If the quantity difference equals zero, and this is not the first post,
+                // then we can assume there is no difference in quantity and store it as 0 on the post.
+                $quantityDiff = 0;
+            }
+
+            $post->quantity = $quantityDiff;
+        }
 
         // @TODO: This can be removed after the migration
         // Let Laravel take care of the timestamps unless they are specified in the request
@@ -99,6 +119,12 @@ class PostRepository
             $post->events->first()->save(['timestamps' => false]);
         } else {
             $post->save();
+        }
+
+        if (config('features.v3QuantitySupport') && isset($data['quantity'])) {
+            // Update signup quantity. If supporting quantity on the post, we will get a summation of posts across the signup. Otherwise, we will just get the current signup quantity.
+            $signup->quantity = $signup->getQuantity();
+            $signup->save();
         }
 
         // Edit the image if there is one
@@ -120,9 +146,8 @@ class PostRepository
     public function update($signup, $data)
     {
         if (array_key_exists('updated_at', $data)) {
-            // Should only update quantity, why_participated, and timestamps on the signup
+            // Should only update why_participated, and timestamps on the signup
             $signupFields = [
-                'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
                 'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
                 'updated_at' => $data['updated_at'],
                 'created_at' => array_key_exists('created_at', $data) ? $data['created_at'] : null,
@@ -140,9 +165,8 @@ class PostRepository
             $event->updated_at = $data['updated_at'];
             $event->save(['timestamps' => false]);
         } else {
-            // Should only update quantity and why_participated on the signup
+            // Should only update why_participated on the signup
             $signupFields = [
-                'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
                 'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
             ];
 
@@ -153,6 +177,12 @@ class PostRepository
             $signup->fill(array_only($data, $arrayKeysToUpdate));
 
             // Triggers model event that logs the updated signup in the events table.
+            $signup->save();
+        }
+
+        // If we are not storing quantity on the post then we still need to put it on the signup.
+        if (! config('features.v3QuantitySupport') && isset($data['quantity'])) {
+            $signup->quantity = $data['quantity'];
             $signup->save();
         }
 
