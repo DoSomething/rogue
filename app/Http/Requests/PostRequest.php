@@ -24,7 +24,6 @@ class PostRequest extends Request
         return [
             'northstar_id' => 'required|string',
             'campaign_id' => 'required',
-            'quantity' => 'nullable|int',
             'campaign_run_id' => 'int',
             'caption' => 'nullable|string',
             'status' => 'in:pending,accepted,rejected',
