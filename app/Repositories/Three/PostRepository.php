@@ -108,40 +108,19 @@ class PostRepository
      */
     public function update($signup, $data)
     {
-        if (array_key_exists('updated_at', $data)) {
-            // Should only update why_participated and timestamps on the signup
-            $signupFields = [
-                'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
-                'updated_at' => $data['updated_at'],
-                'created_at' => array_key_exists('created_at', $data) ? $data['created_at'] : null,
-            ];
+        // Should only update why_participated on the signup
+        $signupFields = [
+            'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
+        ];
 
-            // Only update if the key is set (is not null).
-            $nonNullArrayKeys = array_filter($signupFields);
-            $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
+        // Only update if the key is set (is not null).
+        $nonNullArrayKeys = array_filter($signupFields);
+        $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
 
-            $signup->fill(array_only($data, $arrayKeysToUpdate));
-            $signup->save(['timestamps' => false]);
+        $signup->fill(array_only($data, $arrayKeysToUpdate));
 
-            $event = $signup->events->last();
-            $event->created_at = $data['updated_at'];
-            $event->updated_at = $data['updated_at'];
-            $event->save(['timestamps' => false]);
-        } else {
-            // Should only update why_participated on the signup
-            $signupFields = [
-                'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
-            ];
-
-            // Only update if the key is set (is not null).
-            $nonNullArrayKeys = array_filter($signupFields);
-            $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
-
-            $signup->fill(array_only($data, $arrayKeysToUpdate));
-
-            // Triggers model event that logs the updated signup in the events table.
-            $signup->save();
-        }
+        // Triggers model event that logs the updated signup in the events table.
+        $signup->save();
 
         // If there is a file, create a new post.
         if (array_key_exists('file', $data)) {
