@@ -149,7 +149,8 @@ class PostsController extends ApiController
      */
     public function update(PostRequest $request, Post $post)
     {
-        if (token()->role() === 'admin') {
+        // Only allow an admin or the user who owns the post to update.
+        if (token()->role() === 'admin' || auth()->id() === $post->northstar_id) {
             $post->update($request->only('status', 'caption', 'quantity'));
 
             return $this->item($post);
