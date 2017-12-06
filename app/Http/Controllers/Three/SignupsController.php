@@ -80,6 +80,9 @@ class SignupsController extends ApiController
     {
         $query = $this->newQuery(Signup::class);
 
+        $filters = $request->query('filter');
+        $query = $this->filter($query, $filters, Signup::$indexes);
+
         return $this->paginatedCollection($query, $request);
     }
 
