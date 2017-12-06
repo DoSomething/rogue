@@ -18,8 +18,9 @@ class PostTest extends TestCase
      */
     public function testCreatingAPostAndSignup()
     {
-        $campaign_id = $this->faker->randomNumber(4);
-        $campaign_run_id = $this->faker->randomNumber(4);
+        $northstarId = $this->faker->northstar_id;
+        $campaignId = $this->faker->randomNumber(4);
+        $campaignRunId = $this->faker->randomNumber(4);
         $quantity = $this->faker->numberBetween(10, 1000);
         $caption = $this->faker->sentence;
 
@@ -29,9 +30,9 @@ class PostTest extends TestCase
             ->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAdminAccessToken()->json('POST', 'api/v3/posts', [
-            'campaign_id'      => $campaign_id,
-            'campaign_run_id'  => $campaign_run_id,
+        $response = $this->withAccessToken($northstarId, 'admin')->json('POST', 'api/v3/posts', [
+            'campaign_id'      => $campaignId,
+            'campaign_run_id'  => $campaignRunId,
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
             'num_participants' => null,
@@ -73,13 +74,13 @@ class PostTest extends TestCase
 
         // Make sure the signup & post are persisted to the database.
         $this->assertDatabaseHas('signups', [
-            'campaign_id' => $campaign_id,
-            'northstar_id' => $northstar_id,
-            'quantity' => null,
+            'campaign_id' => $campaignId,
+            'northstar_id' => $northstarId,
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'campaign_id' => $campaign_id,
+            'northstar_id' => $northstarId,
+            'campaign_id' => $campaignId,
             'status' => 'pending',
             'quantity' => $quantity,
         ]);
@@ -100,7 +101,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,

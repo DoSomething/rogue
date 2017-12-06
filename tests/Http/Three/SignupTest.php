@@ -17,22 +17,24 @@ class SignupTest extends TestCase
      */
     public function testCreatingASignup()
     {
+        $northstarId = $this->faker->northstar_id;
         $campaignId = str_random(22);
         $campaignRunId = $this->faker->randomNumber(4);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withAdminAccessToken()->postJson('api/v3/signups', [
-            'campaign_id'      => $campaignId,
-            'campaign_run_id'  => $campaignRunId,
-            'details'          => 'affiliate-messaging',
+        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/signups', [
+            'campaign_id' => $campaignId,
+            'campaign_run_id' => $campaignRunId,
+            'details' => 'affiliate-messaging',
         ]);
 
         // Make sure we get the 201 Created response
         $response->assertStatus(201);
         $response->assertJson([
             'data' => [
+                'northstar_id' => $northstarId,
                 'campaign_id' => $campaignId,
                 'campaign_run_id' => $campaignRunId,
                 'quantity' => null,
@@ -43,6 +45,7 @@ class SignupTest extends TestCase
 
         // Make sure the signup is persisted.
         $this->assertDatabaseHas('signups', [
+            'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
             'quantity' => null,
@@ -63,10 +66,11 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withAdminAccessToken()->postJson('api/v3/signups', [
-            'campaign_id'      => $signup->campaign_id,
-            'source'           => 'the-fox-den',
-            'details'          => 'affiliate-messaging',
+        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/signups', [
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'source' => 'the-fox-den',
+            'details' => 'affiliate-messaging',
         ]);
 
         // Make sure we get the 200 response
