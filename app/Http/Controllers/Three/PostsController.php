@@ -10,6 +10,7 @@ use Rogue\Http\Requests\Three\PostRequest;
 use Rogue\Http\Transformers\Three\PostTransformer;
 use Rogue\Http\Controllers\Api\ApiController;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class PostsController extends ApiController
 {
@@ -148,9 +149,13 @@ class PostsController extends ApiController
      */
     public function update(PostRequest $request, Post $post)
     {
-        $post->update($request->only('status', 'caption', 'quantity'));
+        if (token()->role() === 'admin') {
+            $post->update($request->only('status', 'caption', 'quantity'));
 
-        return $this->item($post);
+            return $this->item($post);
+        }
+
+        throw new AuthorizationException('You don\'t have the correct role to do that!');
     }
 
     /**
