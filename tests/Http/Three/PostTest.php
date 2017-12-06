@@ -76,7 +76,6 @@ class PostTest extends TestCase
         $this->assertDatabaseHas('signups', [
             'campaign_id' => $campaign_id,
             'northstar_id' => $northstar_id,
-            'quantity' => $quantity,
         ]);
 
         $this->assertDatabaseHas('posts', [
