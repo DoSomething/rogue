@@ -105,7 +105,6 @@ class PostRepository
             }
 
             $post->quantity = $quantityDiff;
-            $post->save();
 
             // Update signup quantity. If supporting quantity on the post, we will get a summation of posts across the signup. Otherwise, we will just get the current signup quantity.
             $signup->quantity = $signup->getQuantity();
