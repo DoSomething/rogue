@@ -26,7 +26,6 @@ class PostRequest extends Request
             'campaign_id' => 'required',
             'quantity' => 'int|required',
             'campaign_run_id' => 'int',
-            'quantity' => 'nullable|int',
             'caption' => 'nullable|string',
             'status' => 'in:pending,accepted,rejected',
             'source' => 'nullable|string',
