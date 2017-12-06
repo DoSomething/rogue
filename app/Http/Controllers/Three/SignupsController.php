@@ -51,7 +51,6 @@ class SignupsController extends ApiController
             'campaign_id' => 'required',
             'campaign_run_id' => 'int',
             'why_participated' => 'string',
-            'source' => 'string|nullable',
         ]);
 
         $transactionId = incrementTransactionId($request);
