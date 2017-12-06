@@ -5,12 +5,12 @@ namespace Rogue\Http\Controllers\Three;
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Services\Three\PostService;
-use Rogue\Repositories\Three\SignupRepository;
 use Rogue\Http\Requests\Three\PostRequest;
-use Rogue\Http\Transformers\Three\PostTransformer;
 use Rogue\Http\Controllers\Api\ApiController;
-use Rogue\Http\Controllers\Traits\FiltersRequests;
+use Rogue\Repositories\Three\SignupRepository;
 use Illuminate\Auth\Access\AuthorizationException;
+use Rogue\Http\Controllers\Traits\FiltersRequests;
+use Rogue\Http\Transformers\Three\PostTransformer;
 
 class PostsController extends ApiController
 {

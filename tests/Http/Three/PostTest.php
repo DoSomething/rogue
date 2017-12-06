@@ -4,10 +4,10 @@ namespace Tests\Http\Three;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
+use Rogue\Models\User;
 use Rogue\Models\Signup;
 use DoSomething\Gateway\Blink;
 use Illuminate\Http\UploadedFile;
-use Rogue\Models\User;
 
 class PostTest extends TestCase
 {
@@ -390,10 +390,10 @@ class PostTest extends TestCase
     }
 
     /**
-    * Test that a non-staff member or non-admin can't update posts.
-    *
-    * @return void
-    */
+     * Test that a non-staff member or non-admin can't update posts.
+     *
+     * @return void
+     */
     public function testUnAuthorizedUserUpdatingPost()
     {
         $user = factory(User::class)->create();
