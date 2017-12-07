@@ -70,7 +70,7 @@ class PostRepository
 
             $fileUrl = $this->aws->storeImage((string) $image->encode('data-url'), $signupId);
         } else {
-            $fileUrl = 'default';
+            $fileUrl = null;
         }
 
         $signup = Signup::find($signupId);
