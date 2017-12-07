@@ -101,7 +101,7 @@ class Post extends Model
      */
     public function getMediaUrl()
     {
-        if ($this->url === 'default') {
+        if ($this->url === null) {
             return null;
         }
 
