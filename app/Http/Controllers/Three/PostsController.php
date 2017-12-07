@@ -100,7 +100,7 @@ class PostsController extends ApiController
      */
     public function store(PostRequest $request)
     {
-        $northstarId = $request['northstar_id'] ? $request['northstar_id'] : auth()->id();
+        $northstarId = getNorthstarId($request);
 
         $transactionId = incrementTransactionId($request);
 

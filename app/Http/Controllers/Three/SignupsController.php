@@ -54,14 +54,15 @@ class SignupsController extends ApiController
         ]);
 
         $transactionId = incrementTransactionId($request);
+        $northstarId = getNorthstarId($request);
 
         // Check to see if the signup exists before creating one.
-        $signup = $this->signups->get(auth()->id(), $request['campaign_id'], $request['campaign_run_id']);
+        $signup = $this->signups->get($northstarId, $request['campaign_id'], $request['campaign_run_id']);
 
         $code = $signup ? 200 : 201;
 
         if (! $signup) {
-            $signup = $this->signups->create($request->all(), $transactionId);
+            $signup = $this->signups->create($request->all(), $transactionId, $northstarId);
         }
 
         return $this->item($signup, $code);

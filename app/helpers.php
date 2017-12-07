@@ -95,3 +95,19 @@ function getAgeFromBirthdate($birthdate)
 
     return $birthdate->diffInYears($now);
 }
+
+/**
+ * Helper function to determine where to grab the Northstar ID from.
+ * If the request is made by an admin, safe to grab custom user ID.
+ * Otherwise, grab Northstar ID from authorized request.
+ *
+ * @param $request
+ */
+function getNorthstarId($request)
+{
+    if (token()->role() === 'admin') {
+        return isset($request['northstar_id']) ? $request['northstar_id'] : auth()->id();
+    }
+
+    return auth()->id();
+}
