@@ -78,7 +78,7 @@ class PostRepository
         // Create a post.
         $post = new Post([
             'signup_id' => $signup->id,
-            'northstar_id' => auth()->id(),
+            'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'quantity' => $data['quantity'],
             'url' => $fileUrl,
