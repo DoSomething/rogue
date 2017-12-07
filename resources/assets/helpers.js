@@ -267,7 +267,7 @@ export function getImageUrlFromProp(photoProp) {
   }
 
 
-  if (photo_url == 'default') {
+  if (photo_url == 'default' || photo_url == null) {
     return 'https://www.dosomething.org/sites/default/files/JenBugError.png';
   }
 
