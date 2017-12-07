@@ -108,19 +108,13 @@ class PostRepository
      */
     public function update($signup, $data)
     {
-        // Should only update why_participated on the signup
-        $signupFields = [
-            'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
-        ];
+        // Should only update why_participated on the signup.
+        if (isset($data['why_participated']) {
+            $signup->fill(array_only($data, $data['why_participated']));
 
-        // Only update if the key is set (is not null).
-        $nonNullArrayKeys = array_filter($signupFields);
-        $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
-
-        $signup->fill(array_only($data, $arrayKeysToUpdate));
-
-        // Triggers model event that logs the updated signup in the events table.
-        $signup->save();
+            // Triggers model event that logs the updated signup in the events table.
+            $signup->save();
+        })
 
         // If there is a file, create a new post.
         if (array_key_exists('file', $data)) {
