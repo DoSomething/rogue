@@ -102,8 +102,7 @@ class Post extends Model
     public function getMediaUrl()
     {
         if ($this->url === 'default') {
-            // @TODO: We should either return a placeholder, or `null`.
-            return 'default';
+            return null;
         }
 
         // If Glide is enabled, provide the default image URL.
