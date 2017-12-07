@@ -109,12 +109,12 @@ class PostRepository
     public function update($signup, $data)
     {
         // Should only update why_participated on the signup.
-        if (isset($data['why_participated']) {
+        if (isset($data['why_participated'])) {
             $signup->fill(array_only($data, $data['why_participated']));
 
             // Triggers model event that logs the updated signup in the events table.
             $signup->save();
-        })
+        }
 
         // If there is a file, create a new post.
         if (array_key_exists('file', $data)) {

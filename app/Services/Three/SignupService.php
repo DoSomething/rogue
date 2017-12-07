@@ -42,7 +42,7 @@ class SignupService
      */
     public function create($data, $transactionId)
     {
-        $signup = $this->signup->create($data);
+        $signup = $this->signup->create($data, auth()->id());
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
         $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
