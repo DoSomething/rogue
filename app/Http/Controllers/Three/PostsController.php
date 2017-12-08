@@ -49,6 +49,7 @@ class PostsController extends ApiController
         $this->transformer = $transformer;
 
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('role:admin', ['only' => ['destroy']]);
     }
 
     /**
