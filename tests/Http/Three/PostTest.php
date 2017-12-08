@@ -373,23 +373,6 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test that non-authenticated user's/apps can't update posts.
-     *
-     * @return void
-     */
-    public function testUnauthenticatedUserUpdatingAPost()
-    {
-        $post = factory(Post::class)->create();
-
-        $response = $this->json('PATCH', 'api/v3/posts/' . $post->id, [
-            'status' => 'accepted',
-            'caption' => 'new caption',
-        ]);
-
-        $response->assertStatus(401);
-    }
-
-    /**
      * Test that a non-staff member or non-admin can't update posts.
      *
      * @return void
@@ -407,7 +390,8 @@ class PostTest extends TestCase
         $response->assertStatus(403);
 
         $json = $response->json();
-        $this->assertEquals('Requires one of the following roles: admin', $json['error']['message']);
+
+        $this->assertEquals('You don\'t have the correct role to update this post!', $json['message']);
     }
 
     /**

@@ -49,7 +49,7 @@ class PostsController extends ApiController
         $this->transformer = $transformer;
 
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
-        $this->middleware('role:admin', ['only' => ['store', 'update', 'destroy']]); // @TODO: Allow anyone to use this.
+        $this->middleware('role:admin', ['only' => ['destroy']]);
     }
 
     /**
@@ -159,7 +159,7 @@ class PostsController extends ApiController
             return $this->item($post);
         }
 
-        throw new AuthorizationException('You don\'t have the correct role to do that!');
+        throw new AuthorizationException('You don\'t have the correct role to update this post!');
     }
 
     /**
