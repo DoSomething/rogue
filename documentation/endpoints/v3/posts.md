@@ -33,7 +33,7 @@ Posts are returned in reverse chronological order. Anonymous requests will only 
   - e.g. `/posts?filter[tag]=good-photo,good-for-sponsor`
 - **include** _(string)_
   - Include additional related records in the response: `signup`, `siblings`
-  - e.g. `/posts?include=signup,siblings`
+  - e.g. `/posts?include=signups,siblings`
 
 Example Response:
 
