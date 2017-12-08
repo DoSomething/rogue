@@ -373,6 +373,28 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test that a non-staff member or non-admin can't update posts.
+     *
+     * @return void
+     */
+    public function testUnAuthorizedUserUpdatingPost()
+    {
+        $user = factory(User::class)->create();
+        $post = factory(Post::class)->create();
+
+        $response = $this->withAccessToken($user->id)->patchJson('api/v3/posts/' . $post->id, [
+            'status' => 'accepted',
+            'caption' => 'new caption',
+        ]);
+
+        $response->assertStatus(403);
+
+        $json = $response->json();
+
+        $this->assertEquals('You don\'t have the correct role to do that!', $json['message']);
+    }
+
+    /**
      * Test that a post gets deleted when hitting the DELETE endpoint.
      *
      * @return void
