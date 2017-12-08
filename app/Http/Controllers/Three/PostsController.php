@@ -11,6 +11,7 @@ use Rogue\Repositories\Three\SignupRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
 use Rogue\Http\Transformers\Three\PostTransformer;
+use Rogue\Http\Controllers\Controller;
 
 class PostsController extends ApiController
 {
@@ -49,6 +50,7 @@ class PostsController extends ApiController
         $this->transformer = $transformer;
 
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
+
         $this->middleware('role:admin', ['only' => ['destroy']]);
     }
 
@@ -76,13 +78,16 @@ class PostsController extends ApiController
         }
 
         // Only allow admins or staff to see un-approved posts from other users.
-        $canSeeAllPosts = token()->exists() && in_array(token()->role, ['admin', 'staff']);
-        if (! $canSeeAllPosts) {
+        // $canSeeAllPosts = token()->exists() && in_array(token()->role, ['admin', 'staff']);
+
+        if ($this->authorize('view', Post::class)) {
             $query = $query->where(function ($query) {
                 $query->where('status', 'accepted')
                     ->orWhere('northstar_id', auth()->id());
             });
         }
+        // if (! $canSeeAllPosts) {
+        // }
 
         // If tag param is passed, only return posts that have that tag.
         if (array_has($filters, 'tag')) {
@@ -139,7 +144,10 @@ class PostsController extends ApiController
      */
     public function show(Post $post)
     {
-        return $this->item($post);
+        if ($this->authorize('view', $post)) {
+            dd('hi');
+            return $this->item($post);
+        }
     }
 
     /**
