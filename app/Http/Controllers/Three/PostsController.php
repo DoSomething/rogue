@@ -159,7 +159,7 @@ class PostsController extends ApiController
             return $this->item($post);
         }
 
-        throw new AuthorizationException('You don\'t have the correct role to do update this post!');
+        throw new AuthorizationException('You don\'t have the correct role to update this post!');
     }
 
     /**

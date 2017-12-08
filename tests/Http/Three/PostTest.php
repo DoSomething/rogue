@@ -391,7 +391,7 @@ class PostTest extends TestCase
 
         $json = $response->json();
 
-        $this->assertEquals('You don\'t have the correct role to do that!', $json['message']);
+        $this->assertEquals('You don\'t have the correct role to update this post!', $json['message']);
     }
 
     /**
