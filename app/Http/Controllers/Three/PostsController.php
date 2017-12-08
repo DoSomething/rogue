@@ -63,6 +63,7 @@ class PostsController extends ApiController
     {
         $query = $this->newQuery(Post::class)
             ->withCount('reactions')
+            ->with('tags')
             ->orderBy('created_at', 'desc');
 
         $filters = $request->query('filter');
