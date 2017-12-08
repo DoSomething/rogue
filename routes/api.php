@@ -14,10 +14,6 @@ $router->get('images/{post}', 'ImagesController@show');
 
 // Legacy API Routes
 $router->group(['prefix' => 'api/v1', 'middleware' => ['legacy-auth']], function () {
-    $this->get('/', function () {
-        return 'Rogue API version 1';
-    });
-
     // reportbacks
     $this->get('reportbacks', 'Api\ReportbackController@index');
 });

@@ -10,10 +10,7 @@
  */
 
 // Homepage
-$router->get('/', function () {
-    // @TODO: Move this into a controller.
-    return view('pages.home');
-})->middleware('guest');
+$router->get('/', 'PagesController@home');
 
 // Authentication
 $router->get('login', 'Auth\AuthController@getLogin');
@@ -50,6 +47,4 @@ $router->get('users/{id}', ['as' => 'users.show', 'uses' => 'UsersController@sho
 $router->get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
 
 // FAQ
-$router->get('faq', function () {
-    return view('pages.faq');
-});
+$router->get('faq', 'PagesController@faq');
