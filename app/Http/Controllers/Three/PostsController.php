@@ -4,12 +4,13 @@ namespace Rogue\Http\Controllers\Three;
 
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
-use Rogue\Services\PostService;
-use Rogue\Repositories\SignupRepository;
+use Rogue\Services\Three\PostService;
 use Rogue\Http\Requests\Three\PostRequest;
-use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Api\ApiController;
+use Rogue\Repositories\Three\SignupRepository;
+use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
+use Rogue\Http\Transformers\Three\PostTransformer;
 
 class PostsController extends ApiController
 {
@@ -18,14 +19,14 @@ class PostsController extends ApiController
     /**
      * The post service instance.
      *
-     * @var \Rogue\Services\PostService
+     * @var \Rogue\Services\Three\PostService
      */
     protected $posts;
 
     /**
      * The signup repository instance.
      *
-     * @var \Rogue\Repositories\SignupRepository
+     * @var \Rogue\Repositories\Three\SignupRepository
      */
     protected $signups;
 
@@ -99,15 +100,17 @@ class PostsController extends ApiController
      */
     public function store(PostRequest $request)
     {
+        $northstarId = getNorthstarId($request);
+
         $transactionId = incrementTransactionId($request);
 
-        $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
+        $signup = $this->signups->get($northstarId, $request['campaign_id'], $request['campaign_run_id']);
 
         $updating = ! is_null($signup);
 
         // @TODO - should we eventually throw an error if a signup doesn't exist before a post is created? I create one here because we haven't implemented sending signups to rogue yet, so it will have to create a signup record for all posts.
         if (! $updating) {
-            $signup = $this->signups->create($request->all());
+            $signup = $this->signups->create($request->all(), $northstarId);
 
             $post = $this->posts->create($request->all(), $signup->id, $transactionId);
 
@@ -149,9 +152,14 @@ class PostsController extends ApiController
      */
     public function update(PostRequest $request, Post $post)
     {
-        $post->update($request->only('status', 'caption'));
+        // Only allow an admin or the user who owns the post to update.
+        if (token()->role() === 'admin' || auth()->id() === $post->northstar_id) {
+            $post->update($request->only('status', 'caption', 'quantity'));
 
-        return $this->item($post);
+            return $this->item($post);
+        }
+
+        throw new AuthorizationException('You don\'t have the correct role to do that!');
     }
 
     /**

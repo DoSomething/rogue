@@ -4,6 +4,7 @@ namespace Tests\Http\Three;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
+use Rogue\Models\User;
 use Rogue\Models\Signup;
 use DoSomething\Gateway\Blink;
 use Illuminate\Http\UploadedFile;
@@ -18,9 +19,9 @@ class PostTest extends TestCase
      */
     public function testCreatingAPostAndSignup()
     {
-        $northstar_id = $this->faker->uuid;
-        $campaign_id = $this->faker->randomNumber(4);
-        $campaign_run_id = $this->faker->randomNumber(4);
+        $northstarId = $this->faker->northstar_id;
+        $campaignId = $this->faker->randomNumber(4);
+        $campaignRunId = $this->faker->randomNumber(4);
         $quantity = $this->faker->numberBetween(10, 1000);
         $caption = $this->faker->sentence;
 
@@ -30,10 +31,9 @@ class PostTest extends TestCase
             ->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAdminAccessToken()->json('POST', 'api/v3/posts', [
-            'northstar_id'     => $northstar_id,
-            'campaign_id'      => $campaign_id,
-            'campaign_run_id'  => $campaign_run_id,
+        $response = $this->withAccessToken($northstarId, 'admin')->json('POST', 'api/v3/posts', [
+            'campaign_id'      => $campaignId,
+            'campaign_run_id'  => $campaignRunId,
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
             'num_participants' => null,
@@ -59,6 +59,7 @@ class PostTest extends TestCase
                     'original_image_url',
                     'caption',
                 ],
+                'quantity',
                 'tags' => [],
                 'reactions' => [
                     'reacted',
@@ -74,14 +75,15 @@ class PostTest extends TestCase
 
         // Make sure the signup & post are persisted to the database.
         $this->assertDatabaseHas('signups', [
-            'campaign_id' => $campaign_id,
-            'northstar_id' => $northstar_id,
+            'campaign_id' => $campaignId,
+            'northstar_id' => $northstarId,
         ]);
 
         $this->assertDatabaseHas('posts', [
-            'northstar_id' => $northstar_id,
-            'campaign_id' => $campaign_id,
+            'northstar_id' => $northstarId,
+            'campaign_id' => $campaignId,
             'status' => 'pending',
+            'quantity' => $quantity,
         ]);
     }
 
@@ -100,7 +102,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -129,6 +131,7 @@ class PostTest extends TestCase
                     'original_image_url',
                     'caption',
                 ],
+                'quantity',
                 'tags' => [],
                 'reactions' => [
                     'reacted',
@@ -147,6 +150,7 @@ class PostTest extends TestCase
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'status' => 'pending',
+            'quantity' => $quantity,
         ]);
     }
 
@@ -214,6 +218,7 @@ class PostTest extends TestCase
                         'original_image_url',
                         'caption',
                     ],
+                    'quantity',
                     'tags' => [],
                     'reactions' => [
                         'reacted',
@@ -303,6 +308,7 @@ class PostTest extends TestCase
                     'original_image_url',
                     'caption',
                 ],
+                'quantity',
                 'tags' => [],
                 'reactions' => [
                     'reacted',
@@ -333,6 +339,7 @@ class PostTest extends TestCase
         $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
             'status' => 'accepted',
             'caption' => 'new caption',
+            'quantity' => 8,
         ]);
 
         $response->assertStatus(200);
@@ -340,6 +347,7 @@ class PostTest extends TestCase
         // Make sure that the posts's new status and caption gets persisted in the database.
         $this->assertEquals($post->fresh()->status, 'accepted');
         $this->assertEquals($post->fresh()->caption, 'new caption');
+        $this->assertEquals($post->fresh()->quantity, 8);
     }
 
     /**
@@ -379,6 +387,27 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(401);
+    }
+
+    /**
+     * Test that a non-staff member or non-admin can't update posts.
+     *
+     * @return void
+     */
+    public function testUnAuthorizedUserUpdatingPost()
+    {
+        $user = factory(User::class)->create();
+        $post = factory(Post::class)->create();
+
+        $response = $this->withAccessToken($user->id)->patchJson('api/v3/posts/' . $post->id, [
+            'status' => 'accepted',
+            'caption' => 'new caption',
+        ]);
+
+        $response->assertStatus(403);
+
+        $json = $response->json();
+        $this->assertEquals('Requires one of the following roles: admin', $json['error']['message']);
     }
 
     /**

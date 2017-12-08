@@ -33,16 +33,17 @@ class SignupService
         $this->blink = $blink;
     }
 
-    /*
+    /**
      * Handles all business logic around creating signups.
      *
      * @param array $data
      * @param string $transactionId
+     * @param string $northstarId
      * @return Illuminate\Database\Eloquent\Model $model
      */
-    public function create($data, $transactionId)
+    public function create($data, $transactionId, $northstarId)
     {
-        $signup = $this->signup->create($data);
+        $signup = $this->signup->create($data, $northstarId);
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
         $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
