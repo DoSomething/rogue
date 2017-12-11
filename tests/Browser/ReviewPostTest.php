@@ -51,6 +51,36 @@ class ReviewPostTest extends DuskTestCase
     }
 
     /**
+     * Test user flow of rejecting a pending Post.
+     *
+     * @group ReviewPost
+     * @return void
+     */
+    public function testRejectingAPost()
+    {
+        // Create a signup and an associated post with a 'pending' status
+        // so there will be a post in the campaign inbox.
+        $signup = factory(Signup::class)->create();
+        $post = $this->createAssociatedPostWithStatus($signup, 'pending');
+
+        $this->browse(function (Browser $browser) use ($signup) {
+            $browser->visit(new HomePage)
+                    // We're already logged in from the first test.
+                    ->assertPathIs('/campaigns')
+                    ->visit('/campaigns/' . $signup->campaign_id)
+                    ->on(new CampaignSinglePage($signup->campaign_id))
+                    ->clickLink('Review')
+                    ->assertPathIs('/campaigns/' . $signup->campaign_id . '/inbox')
+                    ->on(new CampaignInboxPage($signup->campaign_id))
+                    ->pause(3000)
+                    ->press('Reject')
+                    ->pause(3000)
+                    ->assertSeeIn('@activeRejectButton', 'Reject')
+                    ->assertDontSee('@tagButton', 'Good Photo');
+        });
+    }
+
+    /**
      * Helper function to create a post with a specific status and associate it with a signup.
      */
     private function createAssociatedPostWithStatus($signup, $status)

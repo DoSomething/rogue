@@ -44,8 +44,9 @@ class CampaignInboxPage extends Page
         return [
             '@acceptButton' => '.button.-outlined-button.-accepted',
             '@activeAcceptButton' => '.button.-outlined-button.-accepted.is-selected',
+            '@activeRejectButton' => '.button.-outlined-button.-rejected.is-selected',
             '@activeTagButton' => '.tag.is-active',
-
+            '@tagButton' => '.tag',
         ];
     }
 }
