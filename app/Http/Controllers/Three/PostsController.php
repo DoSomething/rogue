@@ -78,16 +78,12 @@ class PostsController extends ApiController
         }
 
         // Only allow admins or staff to see un-approved posts from other users.
-        // $canSeeAllPosts = token()->exists() && in_array(token()->role, ['admin', 'staff']);
-
-        if ($this->authorize('view', Post::class)) {
+        if (! is_staff_user()) {
             $query = $query->where(function ($query) {
                 $query->where('status', 'accepted')
                     ->orWhere('northstar_id', auth()->id());
             });
         }
-        // if (! $canSeeAllPosts) {
-        // }
 
         // If tag param is passed, only return posts that have that tag.
         if (array_has($filters, 'tag')) {
@@ -144,10 +140,16 @@ class PostsController extends ApiController
      */
     public function show(Post $post)
     {
-        if ($this->authorize('view', $post)) {
-            dd('hi');
-            return $this->item($post);
+        // Only allow an admin or the user who owns the post to see thier own unapproved posts.
+        if ($post->status != 'accepted') {
+            if (is_staff_user() || auth()->id() === $post->northstar_id) {
+                return $this->item($post);
+            } else {
+                throw new AuthorizationException('You don\'t have the correct role to view this post!');
+            }
         }
+
+        return $this->item($post);
     }
 
     /**
