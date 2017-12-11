@@ -7,9 +7,8 @@ use Tests\DuskTestCase;
 use Rogue\Models\Signup;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\HomePage;
-use Tests\Browser\Pages\CampaignSinglePage;
 use Tests\Browser\Pages\CampaignInboxPage;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\Browser\Pages\CampaignSinglePage;
 
 class ReviewPostTest extends DuskTestCase
 {
