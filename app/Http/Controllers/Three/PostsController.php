@@ -11,7 +11,6 @@ use Rogue\Repositories\Three\SignupRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
 use Rogue\Http\Transformers\Three\PostTransformer;
-use Rogue\Http\Controllers\Controller;
 
 class PostsController extends ApiController
 {
@@ -50,7 +49,6 @@ class PostsController extends ApiController
         $this->transformer = $transformer;
 
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
-
         $this->middleware('role:admin', ['only' => ['destroy']]);
     }
 

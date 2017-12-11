@@ -295,7 +295,7 @@ class PostTest extends TestCase
     public function testPostShow()
     {
         $post = factory(Post::class)->create();
-        $response = $this->getJson('api/v3/posts/' . $post->id);
+        $response = $this->withAdminAccessToken()->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -426,5 +426,59 @@ class PostTest extends TestCase
         $response = $this->deleteJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(401);
+    }
+
+    /**
+     * Test that only non-staff users can see their own unapproved posts.
+     *
+     * @return void
+     */
+    public function testAuthorizationLogicForUnapprovedPostsByOwner()
+    {
+        $post = factory(Post::class)->create();
+
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/posts/' . $post->id);
+
+        $response->assertStatus(200);
+
+        $json = $response->json();
+
+        $this->assertEquals('pending', $json['data']['status']);
+    }
+
+    /**
+     * Test that users can't see other's unapproved posts.
+     *
+     * @return void
+     */
+    public function testAuthorizationLogicForUnapprovedPostsByNonOwner()
+    {
+        $post = factory(Post::class)->create();
+
+        $response = $this->getJson('api/v3/posts/' . $post->id);
+
+        $response->assertStatus(403);
+
+        $json = $response->json();
+
+        $this->assertEquals('You don\'t have the correct role to view this post!', $json['message']);
+    }
+
+    /**
+     * Test that admins can see unapproved posts.
+     *
+     * @return void
+     */
+    public function testAuthorizationLogicForUnapprovedPostsForAdmin()
+    {
+        $post = factory(Post::class)->create();
+
+        $response = $this->withAdminAccessToken()->getJson('api/v3/posts/' . $post->id);
+
+        $response->assertStatus(200);
+
+        $json = $response->json();
+
+        $this->assertEquals('pending', $json['data']['status']);
     }
 }
