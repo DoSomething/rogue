@@ -123,4 +123,3 @@ function is_staff_user()
 
     return false;
 }
-
