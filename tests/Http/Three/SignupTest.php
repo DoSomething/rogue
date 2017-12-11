@@ -131,13 +131,11 @@ class SignupTest extends TestCase
                 ],
             ],
             'meta' => [
-                'pagination' => [
-                    'total',
+                'cursor' => [
+                    'current',
+                    'prev',
+                    'next',
                     'count',
-                    'per_page',
-                    'current_page',
-                    'total_pages',
-                    'links',
                 ],
             ],
         ]);

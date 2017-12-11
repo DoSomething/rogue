@@ -85,7 +85,7 @@ class Post extends Model
      */
     public function tagNames()
     {
-        return $this->tags()->pluck('tag_name');
+        return $this->tags->pluck('tag_name');
     }
 
     /**
@@ -93,7 +93,7 @@ class Post extends Model
      */
     public function tagSlugs()
     {
-        return $this->tags()->pluck('tag_slug');
+        return $this->tags->pluck('tag_slug');
     }
 
     /**

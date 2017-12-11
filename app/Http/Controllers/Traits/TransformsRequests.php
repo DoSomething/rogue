@@ -109,7 +109,9 @@ trait TransformsRequests
 
         $pages = (int) $request->query('limit', 20);
 
-        $fastMode = $request->query('pagination') === 'cursor';
+        // Is cursor pagination enabled for this route? (Or opted-in using
+        // the `?pagination=cursor` query param?)
+        $fastMode = ! empty($this->useCursorPagination) || $request->query('pagination') === 'cursor';
 
         if ($fastMode) {
             $paginator = $query->simplePaginate(min($pages, 100));

@@ -8,7 +8,7 @@
     "laravel/framework": "5.5.*",
     "laravel/tinker": "^1.0",
     "aws/aws-sdk-php-laravel": "^3.1",
-    "barryvdh/laravel-debugbar": "^2.3",
+    "barryvdh/laravel-debugbar": "^3.1.0",
     "doctrine/dbal": "~2.5.13",
     "dosomething/gateway": "^1.12.0",
     "fideloper/proxy": "^3.3",
@@ -55,8 +55,10 @@
       "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
       "@php artisan package:discover"
     ],
-    "compile": [
-      "@php artisan gateway:key"
+    "warmup": [
+      "@php artisan gateway:key",
+      "@php artisan route:cache",
+      "@php artisan config:cache"
     ]
   },
   "config": {

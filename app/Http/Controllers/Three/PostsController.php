@@ -36,6 +36,13 @@ class PostsController extends ApiController
     protected $transformer;
 
     /**
+     * Use cursor pagination for these routes.
+     *
+     * @var bool
+     */
+    protected $useCursorPagination = true;
+
+    /**
      * Create a controller instance.
      *
      * @param PostService $posts
@@ -63,6 +70,7 @@ class PostsController extends ApiController
     {
         $query = $this->newQuery(Post::class)
             ->withCount('reactions')
+            ->with('tags')
             ->orderBy('created_at', 'desc');
 
         $filters = $request->query('filter');

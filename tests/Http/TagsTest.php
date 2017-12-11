@@ -95,7 +95,7 @@ class TagsTest extends TestCase
         // Make sure that the tag is deleted, but the other tag is still there
         $response->assertStatus(200);
         $this->assertContains('Good Photo', $post->tagNames());
-        $this->assertNotContains('Tag To Delete', $post->tagNames());
+        $this->assertNotContains('Tag To Delete', $post->fresh()->tagNames());
 
         // Make sure we created an event for the tag.
         $this->assertDatabaseHas('events', [

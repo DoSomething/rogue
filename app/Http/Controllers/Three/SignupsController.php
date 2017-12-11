@@ -26,6 +26,13 @@ class SignupsController extends ApiController
     protected $signups;
 
     /**
+     * Use cursor pagination for these routes.
+     *
+     * @var bool
+     */
+    protected $useCursorPagination = true;
+
+    /**
      * Create a controller instance.
      *
      * @param SignupService $signups
