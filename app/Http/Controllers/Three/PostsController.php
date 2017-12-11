@@ -36,6 +36,13 @@ class PostsController extends ApiController
     protected $transformer;
 
     /**
+     * Use cursor pagination for these routes.
+     *
+     * @var bool
+     */
+    protected $useCursorPagination = true;
+
+    /**
      * Create a controller instance.
      *
      * @param PostService $posts

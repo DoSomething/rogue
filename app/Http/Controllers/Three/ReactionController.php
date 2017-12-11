@@ -16,6 +16,13 @@ class ReactionController extends ApiController
     protected $transformer;
 
     /**
+     * Use cursor pagination for these routes.
+     *
+     * @var bool
+     */
+    protected $useCursorPagination = true;
+
+    /**
      * Create a controller instance.
      */
     public function __construct()
