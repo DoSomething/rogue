@@ -153,10 +153,13 @@ class Post extends Model
      */
     public function toBlinkPayload()
     {
+        // Blink expects quantity to be a number.
+        $quantity = $this->quantity = null ? 0 : $this->quantity;
+
         return [
             'id' => $this->id,
             'signup_id' => $this->signup_id,
-            'quantity' => $this->quantity,
+            'quantity' => $quantity,
             'why_participated' => $this->signup->why_participated,
             'campaign_id' => (string) $this->campaign_id,
             'campaign_run_id' => (string) $this->signup->campaign_run_id,
