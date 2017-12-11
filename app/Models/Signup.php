@@ -115,12 +115,15 @@ class Signup extends Model
      */
     public function toBlinkPayload()
     {
+        // Blink expects quantity to be a number.
+        $quantity = $this->quantity === null ? 0 : $this->quantity;
+
         return [
             'id' => $this->id,
             'northstar_id' => $this->northstar_id,
             'campaign_id' => (string) $this->campaign_id,
             'campaign_run_id' => (string) $this->campaign_run_id,
-            'quantity' => $this->quantity,
+            'quantity' => $quantity,
             'why_participated' => $this->why_participated,
             'source' => $this->source,
             'created_at' => $this->created_at->toIso8601String(),

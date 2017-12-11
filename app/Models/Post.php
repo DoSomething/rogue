@@ -154,7 +154,7 @@ class Post extends Model
     public function toBlinkPayload()
     {
         // Blink expects quantity to be a number.
-        $quantity = $this->quantity = null ? 0 : $this->quantity;
+        $quantity = $this->quantity === null ? 0 : $this->quantity;
 
         return [
             'id' => $this->id,
