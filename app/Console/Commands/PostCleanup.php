@@ -57,7 +57,9 @@ class PostCleanup extends Command
         // same caption per signup and delete all but the most recent one.
         foreach ($postsByCaption as $postCaption) {
             $this->info('Getting posts under signup ' . $postCaption->signup_id);
+
             $userPosts = Post::where('signup_id', $postCaption->signup_id)
+                ->where('caption', $postCaption->caption)
                 ->whereDate('created_at', $date)
                 ->orderBy('created_at', 'asc')
                 ->get();
