@@ -12,8 +12,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Rogue\Events\SomeEvent' => [
-            'Rogue\Listeners\EventListener',
+        'Rogue\Events\PostTagged' => [
+            'Rogue\Listeners\SendTaggedNotification',
         ],
     ];
 
