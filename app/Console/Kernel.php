@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\SetupCommand::class,
         Commands\ImportSignupsCommand::class,
         Commands\PostQuantity::class,
+        Commands\PostCleanup::class,
     ];
 
     /**
