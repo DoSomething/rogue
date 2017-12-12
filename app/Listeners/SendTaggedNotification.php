@@ -29,15 +29,13 @@ class SendTaggedNotification
     public function handle(PostTagged $event)
     {
         $post = $event->post;
-        $tagName = $event->tagName;
+        $tag = $event->tag;
 
-        info('Post tagged:', ['tag' => $tagName]);
+        info('Post tagged Good For Storytelling:', ['tag' => $tag->tag_name]);
 
-        // Notification::route('slack', '#team-bleed')
-        //     ->route('nexmo', '5555555555')
-        //     ->notify(new SlackTagNotification($post));
-
-        Notification::route("slack", 'https://hooks.slack.com/services/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')
-            ->notify(new SlackTagNotification($post));
+        if ($tag->tag_slug === 'good-for-storytelling') {
+            Notification::route("slack", config('services.slack.url'))
+                ->notify(new SlackTagNotification($post));
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace Rogue\Events;
 
 use Rogue\Models\Post;
+use Rogue\Models\Tag;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -16,17 +17,17 @@ class PostTagged
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $post;
-    public $tagName;
+    public $tag;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Post $post, $tagName)
+    public function __construct(Post $post, Tag $tag)
     {
         $this->post = $post;
-        $this->tagName = $tagName;
+        $this->tag = $tag;
     }
 
     /**

@@ -188,7 +188,7 @@ class Post extends Model
         // Update timestamps on the Post when adding a tag
         $this->touch();
 
-        event(new PostTagged($this, $tagName));
+        event(new PostTagged($this, $tag));
 
         return $this;
     }

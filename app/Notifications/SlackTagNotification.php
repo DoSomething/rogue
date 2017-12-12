@@ -44,11 +44,16 @@ class SlackTagNotification extends Notification
     public function toSlack($notifiable)
     {
         return (new SlackMessage)
-                    ->from('TongueCat', ':tonguecat:')
-                    ->content($this->post->caption)
+                    ->from('Tongue Cat', ':tonguecat:')
+                    ->content('Another badass member submitted a post!')
                     ->attachment(function ($attachment) {
-                        $attachment->title('Post Tagged')
-                               ->image('https://media.tenor.com/images/4728acfe03351f8ce9ba3426ff33667b/tenor.gif');
+                        $attachment->title('Click here for the full post on Rogue', route('signups.show',  [$this->post->signup_id], true))
+                                ->fields([
+                                    'Caption' => str_limit($this->post->caption, 140),
+                                    'Why Participated' => str_limit($this->post->signup->why_participated),
+                                ])
+                                ->color('#4e2b63')
+                                ->image($this->post->url);
                 });
     }
 
