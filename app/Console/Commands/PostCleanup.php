@@ -77,7 +77,6 @@ class PostCleanup extends Command
 
                     $this->info('post ' . $post->id . ' deleted!');
                 }
-
             }
         }
 
