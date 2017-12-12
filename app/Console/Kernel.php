@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\ImportSignupsCommand::class,
         Commands\PostQuantity::class,
         Commands\PostCleanup::class,
+        Commands\MakeDefaultURLsNull::class,
     ];
 
     /**
