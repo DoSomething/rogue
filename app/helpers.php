@@ -111,3 +111,15 @@ function getNorthstarId($request)
 
     return auth()->id();
 }
+
+/**
+ * Determines if the user is an admin or staff.
+ */
+function is_staff_user()
+{
+    if (token()->exists() && in_array(token()->role, ['admin', 'staff'])) {
+        return true;
+    }
+
+    return false;
+}
