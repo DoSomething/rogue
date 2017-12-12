@@ -2,6 +2,7 @@
 
 namespace Rogue\Notifications;
 
+use Rogue\Models\Post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,14 +12,16 @@ class SlackTagNotification extends Notification
 {
     use Queueable;
 
+    public $post;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Post $post)
     {
-        //
+        $this->post = $post;
     }
 
     /**
@@ -41,7 +44,12 @@ class SlackTagNotification extends Notification
     public function toSlack($notifiable)
     {
         return (new SlackMessage)
-                    ->content('A tag!');
+                    ->from('TongueCat', ':tonguecat:')
+                    ->content($this->post->caption)
+                    ->attachment(function ($attachment) {
+                        $attachment->title('Post Tagged')
+                               ->image('https://media.tenor.com/images/4728acfe03351f8ce9ba3426ff33667b/tenor.gif');
+                });
     }
 
     /**
