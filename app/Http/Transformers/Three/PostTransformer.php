@@ -5,6 +5,7 @@ namespace Rogue\Http\Transformers\Three;
 use Carbon\Carbon;
 use Rogue\Models\Post;
 use League\Fractal\TransformerAbstract;
+use Rogue\Http\Transformers\Three\SignupTransformer;
 
 class PostTransformer extends TransformerAbstract
 {
@@ -65,10 +66,7 @@ class PostTransformer extends TransformerAbstract
      */
     public function includeSignup(Post $post)
     {
-        // Don't include posts but include the user.
-        $transformer = (new SignupTransformer)->setDefaultIncludes(['user']);
-
-        return $this->item($post->signup, $transformer);
+        return $this->item($post->signup, new SignupTransformer);
     }
 
     /**
