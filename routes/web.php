@@ -9,9 +9,6 @@
  * @see \Rogue\Providers\RouteServiceProvider
  */
 
-// @TODO: Remove this!
-$router->get('/__info', 'PagesController@phpinfo');
-
 // Homepage
 $router->get('/', 'PagesController@home');
 
