@@ -5,7 +5,6 @@ namespace Rogue\Http\Controllers;
 use Rogue\Repositories\PostRepository;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Traits\TagsRequests;
-use Rogue\Events\PostTagged;
 
 class TagsController extends Controller
 {

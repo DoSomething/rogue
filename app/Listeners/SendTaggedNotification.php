@@ -2,11 +2,9 @@
 
 namespace Rogue\Listeners;
 
-use Rogue\Events\PostTagged;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Rogue\Notifications\SlackTagNotification;
 use Notification;
+use Rogue\Events\PostTagged;
+use Rogue\Notifications\SlackTagNotification;
 
 class SendTaggedNotification
 {
@@ -34,7 +32,7 @@ class SendTaggedNotification
         info('Post tagged Good For Storytelling:', ['tag' => $tag->tag_name]);
 
         if ($tag->tag_slug === 'good-for-storytelling') {
-            Notification::route("slack", config('services.slack.url'))
+            Notification::route('slack', config('services.slack.url'))
                 ->notify(new SlackTagNotification($post));
         }
     }

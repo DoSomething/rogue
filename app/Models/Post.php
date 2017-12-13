@@ -2,10 +2,10 @@
 
 namespace Rogue\Models;
 
+use Rogue\Events\PostTagged;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rogue\Events\PostTagged;
 
 class Post extends Model
 {
