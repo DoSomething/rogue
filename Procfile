@@ -1,4 +1,4 @@
-web: composer warmup && vendor/bin/heroku-php-nginx public/
+web: composer warmup && vendor/bin/heroku-php-nginx -C nginx.conf public/
 
 release: php artisan migrate --force
 
