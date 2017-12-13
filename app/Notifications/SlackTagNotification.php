@@ -42,18 +42,20 @@ class SlackTagNotification extends Notification
      */
     public function toSlack($notifiable)
     {
-        return (new SlackMessage)
-                    ->from('Tongue Cat', ':tonguecat:')
-                    ->content('Another badass member submitted a post!')
-                    ->attachment(function ($attachment) {
-                        $attachment->title('Click here for the full post on Rogue', route('signups.show', [$this->post->signup_id], true))
-                                ->fields([
-                                    'Caption' => str_limit($this->post->caption, 140),
-                                    'Why Participated' => str_limit($this->post->signup->why_participated),
-                                ])
-                                ->color(array_random(['#FCD116', '#23b7fb', '#4e2b63']))
-                                ->image($this->post->url);
-                    });
+        if (config('services.slack.url')) {
+            return (new SlackMessage)
+                ->from('Tongue Cat', ':tonguecat:')
+                ->content('Another badass member submitted a post!')
+                ->attachment(function ($attachment) {
+                    $attachment->title('Click here for the full post on Rogue', route('signups.show', [$this->post->signup_id], true))
+                            ->fields([
+                                'Caption' => str_limit($this->post->caption, 140),
+                                'Why Participated' => str_limit($this->post->signup->why_participated),
+                            ])
+                            ->color(array_random(['#FCD116', '#23b7fb', '#4e2b63']))
+                            ->image($this->post->url);
+                });
+        }
     }
 
     /**
