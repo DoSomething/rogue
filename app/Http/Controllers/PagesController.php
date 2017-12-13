@@ -31,14 +31,4 @@ class PagesController extends Controller
     {
         return view('pages.faq');
     }
-
-    /**
-     * Display PHP info.
-     *
-     * @return void
-     */
-    public function phpinfo()
-    {
-        phpinfo();
-    }
 }
