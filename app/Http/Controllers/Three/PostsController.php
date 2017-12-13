@@ -69,7 +69,6 @@ class PostsController extends ApiController
     public function index(Request $request)
     {
         $query = $this->newQuery(Post::class)
-            ->with('signup')
             ->withCount('reactions')
             ->with('tags')
             ->orderBy('created_at', 'desc');
