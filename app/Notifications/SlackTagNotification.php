@@ -51,7 +51,7 @@ class SlackTagNotification extends Notification
                                     'Caption' => str_limit($this->post->caption, 140),
                                     'Why Participated' => str_limit($this->post->signup->why_participated),
                                 ])
-                                ->color('#4e2b63')
+                                ->color(array_random(['#FCD116', '#23b7fb', '#4e2b63']))
                                 ->image($this->post->url);
                     });
     }
