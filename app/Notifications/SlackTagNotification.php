@@ -44,10 +44,10 @@ class SlackTagNotification extends Notification
     {
         if (config('services.slack.url')) {
             return (new SlackMessage)
-                ->from('Tongue Cat', ':tonguecat:')
+                ->from('Rogue', ':tonguecat:')
                 ->content('Another badass member submitted a post!')
                 ->attachment(function ($attachment) {
-                    $attachment->title('Click here for the full post on Rogue', route('signups.show', [$this->post->signup_id], true))
+                    $attachment->title('Click here for more details in Rogue! We\'ll be adding member info. in Slack soon.', route('signups.show', [$this->post->signup_id], true))
                             ->fields([
                                 'Caption' => str_limit($this->post->caption, 140),
                                 'Why Participated' => str_limit($this->post->signup->why_participated),
