@@ -29,7 +29,7 @@ class SendTaggedNotification
         $post = $event->post;
         $tag = $event->tag;
 
-        info('Post tagged Good For Storytelling:', ['tag' => $tag->tag_name]);
+        info('Post tagged:', ['tag' => $tag->tag_name]);
 
         if ($tag->tag_slug === 'good-for-storytelling') {
             Notification::route('slack', config('services.slack.url'))
