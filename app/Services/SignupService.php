@@ -2,8 +2,8 @@
 
 namespace Rogue\Services;
 
-use DoSomething\Gateway\Blink;
 use Rogue\Repositories\SignupRepository;
+use Rogue\Jobs\SendToBlink;
 
 class SignupService
 {
@@ -15,22 +15,14 @@ class SignupService
     protected $signup;
 
     /**
-     * Blink API client.
-     *
-     * @var \DoSomething\Gateway\Blink
-     */
-    protected $blink;
-
-    /**
      * Constructor
      *
      * @param SignupRepository $signup
      * @param Blink $blink
      */
-    public function __construct(SignupRepository $signup, Blink $blink)
+    public function __construct(SignupRepository $signup)
     {
         $this->signup = $signup;
-        $this->blink = $blink;
     }
 
     /*
@@ -50,8 +42,7 @@ class SignupService
         // Save the new signup in Customer.io, via Blink.
         if (config('features.blink') && $should_send_to_blink) {
             $payload = $signup->toBlinkPayload();
-            $this->blink->userSignup($payload);
-            logger()->info('Signup ' . $signup->id . ' sent to Blink');
+            SendToBlink::dispatch($payload);
         }
 
         // Add new transaction id to header.
