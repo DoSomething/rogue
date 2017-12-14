@@ -26,14 +26,9 @@ class ReviewPostTest extends DuskTestCase
         $post = $this->createAssociatedPostWithStatus($signup, 'pending');
 
         $this->browse(function (Browser $browser) use ($signup) {
-            $browser->visit(new HomePage)
-                    ->click('@login-button')
-                    ->assertPathIs('/register')
-                    ->clickLink('Log In')
-                    ->type('username', env('NORTHSTAR_EMAIL'))
-                    ->type('password', env('NORTHSTAR_PASSWORD'))
-                    ->press('Log In')
-                    ->assertPathIs('/campaigns')
+            $this->login($browser);
+
+            $browser->assertPathIs('/campaigns')
                     ->visit('/campaigns/' . $signup->campaign_id)
                     ->on(new CampaignSinglePage($signup->campaign_id))
                     ->clickLink('Review')

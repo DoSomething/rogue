@@ -22,14 +22,9 @@ class UserSearchTest extends DuskTestCase
         factory(Signup::class)->create();
 
         $this->browse(function (Browser $browser) {
-            $browser->visit(new HomePage)
-                    ->click('@login-button')
-                    ->assertPathIs('/register')
-                    ->clickLink('Log In')
-                    ->type('username', env('NORTHSTAR_EMAIL'))
-                    ->type('password', env('NORTHSTAR_PASSWORD'))
-                    ->press('Log In')
-                    ->assertPathIs('/campaigns')
+            $this->login($browser);
+
+            $browser->assertPathIs('/campaigns')
                     ->clickLink('User Search')
                     ->assertPathIs('/users')
                     ->on(new UserSearchPage)
