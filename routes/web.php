@@ -33,7 +33,7 @@ $router->delete('posts/{id}', 'PostController@destroy');
 $router->put('reviews', 'ReviewsController@reviews');
 
 // Signups
-$router->get('signups/{id}', 'SignupsController@show');
+$router->get('signups/{id}', 'SignupsController@show')->name('signups.show');
 
 // Tags
 $router->post('tags', 'TagsController@store');

@@ -2,6 +2,7 @@
 
 namespace Rogue\Models;
 
+use Rogue\Events\PostTagged;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -186,6 +187,8 @@ class Post extends Model
 
         // Update timestamps on the Post when adding a tag
         $this->touch();
+
+        event(new PostTagged($this, $tag));
 
         return $this;
     }
