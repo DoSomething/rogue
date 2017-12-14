@@ -11,6 +11,11 @@ class SlackTagNotification extends Notification
 {
     use Queueable;
 
+    /*
+     * Post Instance
+     *
+     * @var Rogue\Models\Post;
+     */
     public $post;
 
     /**

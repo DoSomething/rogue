@@ -13,7 +13,18 @@ class PostTagged
 {
     use Dispatchable, SerializesModels;
 
+    /*
+     * Post Instance
+     *
+     * @var Rogue\Models\Post;
+     */
     public $post;
+
+    /*
+     * Tag Instance
+     *
+     * @var Rogue\Models\Tag;
+     */
     public $tag;
 
     /**
