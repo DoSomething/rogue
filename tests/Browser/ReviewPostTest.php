@@ -39,12 +39,12 @@ class ReviewPostTest extends DuskTestCase
                     ->clickLink('Review')
                     ->assertPathIs('/campaigns/' . $signup->campaign_id . '/inbox')
                     ->on(new CampaignInboxPage($signup->campaign_id))
-                    ->pause(3000)
+                    ->waitFor('@acceptButton')
                     ->press('Accept')
-                    ->pause(3000)
+                    ->waitFor('@activeAcceptButton')
                     ->assertSeeIn('@activeAcceptButton', 'Accept')
                     ->press('Good Photo')
-                    ->pause(3000)
+                    ->waitFor('@activeTagButton')
                     ->assertSeeIn('@activeTagButton', 'Good Photo');
         });
     }
@@ -71,9 +71,9 @@ class ReviewPostTest extends DuskTestCase
                     ->clickLink('Review')
                     ->assertPathIs('/campaigns/' . $signup->campaign_id . '/inbox')
                     ->on(new CampaignInboxPage($signup->campaign_id))
-                    ->pause(3000)
+                    ->waitFor('@rejectButton')
                     ->press('Reject')
-                    ->pause(3000)
+                    ->waitFor('@activeRejectButton')
                     ->assertSeeIn('@activeRejectButton', 'Reject')
                     ->assertDontSee('@tagButton', 'Good Photo');
         });
@@ -101,13 +101,13 @@ class ReviewPostTest extends DuskTestCase
                     ->clickLink('Review')
                     ->assertPathIs('/campaigns/' . $signup->campaign_id . '/inbox')
                     ->on(new CampaignInboxPage($signup->campaign_id))
-                    ->pause(3000)
+                    ->waitFor('@rejectButton')
                     ->press('Reject')
-                    ->pause(3000)
+                    ->waitFor('@activeRejectButton')
                     ->assertSeeIn('@activeRejectButton', 'Reject')
                     ->assertDontSee('@tagButton', 'Good Photo')
                     ->press('Accept')
-                    ->pause(3000)
+                    ->waitFor('@activeAcceptButton')
                     ->assertSeeIn('@activeAcceptButton', 'Accept')
                     ->assertDontSee('@activeRejectButton', 'Reject');
         });
