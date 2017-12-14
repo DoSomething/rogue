@@ -2,8 +2,8 @@
 
 namespace Rogue\Services;
 
-use Rogue\Repositories\SignupRepository;
 use Rogue\Jobs\SendToBlink;
+use Rogue\Repositories\SignupRepository;
 
 class SignupService
 {
