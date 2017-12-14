@@ -23,14 +23,9 @@ class FilterPostsTest extends DuskTestCase
         $this->createAssociatedPostWithStatus($signup, 'pending');
 
         $this->browse(function (Browser $browser) use ($signup) {
-            $browser->visit(new HomePage)
-                    ->click('@login-button')
-                    ->assertPathIs('/register')
-                    ->clickLink('Log In')
-                    ->type('username', env('NORTHSTAR_EMAIL'))
-                    ->type('password', env('NORTHSTAR_PASSWORD'))
-                    ->press('Log In')
-                    ->assertPathIs('/campaigns')
+            $this->login($browser);
+
+            $browser->assertAuthenticated()
                     ->visit('/campaigns/' . $signup->campaign_id)
                     ->on(new CampaignSinglePage($signup->campaign_id))
                     ->assertSee('Post Filters')
@@ -55,7 +50,7 @@ class FilterPostsTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
                     // We're already logged in from the first test.
-                    ->assertPathIs('/campaigns')
+                    ->assertAuthenticated()
                     ->visit('/campaigns/' . $signup->campaign_id)
                     ->on(new CampaignSinglePage($signup->campaign_id))
                     ->assertSee('Post Filters')
@@ -81,7 +76,7 @@ class FilterPostsTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
                     // We're already logged in from the first test.
-                    ->assertPathIs('/campaigns')
+                    ->assertAuthenticated()
                     ->visit('/campaigns/' . $signup->campaign_id)
                     ->on(new CampaignSinglePage($signup->campaign_id))
                     ->assertSee('Post Filters')
@@ -108,7 +103,7 @@ class FilterPostsTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
                     // We're already logged in from the first test.
-                    ->assertPathIs('/campaigns')
+                    ->assertAuthenticated()
                     ->visit('/campaigns/' . $signup->campaign_id)
                     ->on(new CampaignSinglePage($signup->campaign_id))
                     ->assertSee('Post Filters')
@@ -135,7 +130,7 @@ class FilterPostsTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
                     // We're already logged in from the first test.
-                    ->assertPathIs('/campaigns')
+                    ->assertAuthenticated()
                     ->visit('/campaigns/' . $signup->campaign_id)
                     ->on(new CampaignSinglePage($signup->campaign_id))
                     ->assertSee('Post Filters')

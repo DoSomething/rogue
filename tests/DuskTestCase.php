@@ -3,6 +3,8 @@
 namespace Tests;
 
 use Rogue\Models\User;
+use Laravel\Dusk\Browser;
+use Tests\Browser\Pages\HomePage;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
@@ -51,5 +53,19 @@ abstract class DuskTestCase extends BaseTestCase
                 ChromeOptions::CAPABILITY, $options
             )
         );
+    }
+
+    /**
+     *  Logs user into Rogue.
+     */
+    public function login(Browser $browser)
+    {
+        $browser->visit(new HomePage)
+                ->click('@login-button')
+                ->assertPathIs('/register')
+                ->clickLink('Log In')
+                ->type('username', env('NORTHSTAR_EMAIL'))
+                ->type('password', env('NORTHSTAR_PASSWORD'))
+                ->press('Log In');
     }
 }
