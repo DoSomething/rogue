@@ -28,7 +28,7 @@ class ReviewPostTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($signup) {
             $this->login($browser);
 
-            $browser->assertPathIs('/campaigns')
+            $browser->assertAuthenticated()
                     ->visit('/campaigns/' . $signup->campaign_id)
                     ->on(new CampaignSinglePage($signup->campaign_id))
                     ->clickLink('Review')
@@ -60,7 +60,7 @@ class ReviewPostTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
                     // We're already logged in from the first test.
-                    ->assertPathIs('/campaigns')
+                    ->assertAuthenticated()
                     ->visit('/campaigns/' . $signup->campaign_id)
                     ->on(new CampaignSinglePage($signup->campaign_id))
                     ->clickLink('Review')
@@ -90,7 +90,7 @@ class ReviewPostTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($signup) {
             $browser->visit(new HomePage)
                     // We're already logged in from the first test.
-                    ->assertPathIs('/campaigns')
+                    ->assertAuthenticated()
                     ->visit('/campaigns/' . $signup->campaign_id)
                     ->on(new CampaignSinglePage($signup->campaign_id))
                     ->clickLink('Review')
