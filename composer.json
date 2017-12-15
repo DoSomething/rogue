@@ -23,7 +23,8 @@
     "league/csv": "^9.0",
     "dfurnes/environmentalist": "0.0.2",
     "ext-gd" : "*",
-    "ext-exif":"*"
+    "ext-exif":"*",
+    "ext-imagick": "*"
   },
   "require-dev": {
     "fzaninotto/faker": "^1.6",

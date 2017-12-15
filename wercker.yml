@@ -12,6 +12,12 @@ build:
           code: |-
             mysql -u homestead -psecret -e "CREATE DATABASE rogue_test;"
             cp .env.example .env
+      - script:
+          name: install imagemagick
+          code: |-
+            sudo apt-get update
+            sudo apt-get install -y imagemagick php-imagick
+            sudo service php7.0-fpm restart
       - leipert/composer-install@0.9.1
       - wercker/npm-install
       - script:

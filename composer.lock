@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "db2a21ac76ef1c11c1aee142821f2358",
+    "content-hash": "3f8ebea1c416612465a6228c8f0da1bc",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.45.3",
+            "version": "3.47.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "d0abb0b1194fa64973b135191f56df991bc5787c"
+                "reference": "6707345b9e6d670aa45209310b930857043a4557"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d0abb0b1194fa64973b135191f56df991bc5787c",
-                "reference": "d0abb0b1194fa64973b135191f56df991bc5787c",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/6707345b9e6d670aa45209310b930857043a4557",
+                "reference": "6707345b9e6d670aa45209310b930857043a4557",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2017-12-08T21:36:50+00:00"
+            "time": "2017-12-12T20:10:41+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -6226,7 +6226,8 @@
     "platform": {
         "php": "~7.0.0",
         "ext-gd": "*",
-        "ext-exif": "*"
+        "ext-exif": "*",
+        "ext-imagick": "*"
     },
     "platform-dev": []
 }
