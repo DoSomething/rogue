@@ -3,7 +3,7 @@
 namespace Rogue\Services;
 
 use Rogue\Models\Post;
-use Rogue\Jobs\SendToBlink;
+use Rogue\Jobs\SendPostToBlink;
 use Rogue\Repositories\PostRepository;
 
 class PostService
@@ -43,8 +43,7 @@ class PostService
 
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $should_send_to_blink) {
-            $payload = $post->toBlinkPayload();
-            SendToBlink::dispatch($payload);
+            SendPostToBlink::dispatch($post);
         }
 
         // Add new transaction id to header.
@@ -70,8 +69,7 @@ class PostService
 
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $postOrSignup instanceof Post && $should_send_to_blink) {
-            $payload = $postOrSignup->toBlinkPayload();
-            SendToBlink::dispatch($payload);
+            SendPostToBlink::dispatch($postOrSignup);
         }
 
         // Add new transaction id to header.
