@@ -3,7 +3,7 @@
 namespace Rogue\Services\Three;
 
 use Rogue\Models\Post;
-use DoSomething\Gateway\Blink;
+use Rogue\Jobs\SendPostToBlink;
 use Rogue\Repositories\Three\PostRepository;
 
 class PostService
@@ -16,22 +16,14 @@ class PostService
     protected $repository;
 
     /**
-     * Blink API client.
-     *
-     * @var \DoSomething\Gateway\Blink
-     */
-    protected $blink;
-
-    /**
      * Constructor
      *
      * @param PostRepository $posts
      * @param Blink $blink
      */
-    public function __construct(PostRepository $posts, Blink $blink)
+    public function __construct(PostRepository $posts)
     {
         $this->repository = $posts;
-        $this->blink = $blink;
     }
 
     /**
@@ -51,10 +43,8 @@ class PostService
 
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $should_send_to_blink) {
-            $payload = $post->toBlinkPayload();
             // @TODO: now, the below will send quantity in the payload. Do we need to notify Blink of this?
-            $this->blink->userSignupPost($payload);
-            logger()->info('Post ' . $post->id . ' sent to Blink');
+            SendPostToBlink::dispatch($post);
         }
 
         // Add new transaction id to header.
@@ -80,9 +70,7 @@ class PostService
 
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $postOrSignup instanceof Post && $should_send_to_blink) {
-            $payload = $postOrSignup->toBlinkPayload();
-            $this->blink->userSignupPost($payload);
-            logger()->info('Post ' . $postOrSignup->id . ' sent to Blink');
+            SendPostToBlink::dispatch($postOrSignup);
         }
 
         // Add new transaction id to header.
