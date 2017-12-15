@@ -70,7 +70,7 @@ class PostService
 
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $postOrSignup instanceof Post && $should_send_to_blink) {
-            SendToBlink::dispatch($postOrSignup);
+            SendPostToBlink::dispatch($postOrSignup);
         }
 
         // Add new transaction id to header.

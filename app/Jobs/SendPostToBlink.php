@@ -15,8 +15,7 @@ class SendPostToBlink implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     *
-     * @var Post to send to Blink.
+     * Post to send to Blink.
      */
     protected $post;
 

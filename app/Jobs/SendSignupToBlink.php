@@ -15,8 +15,7 @@ class SendSignupToBlink implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     *
-     * @var Signup to send to Blink.
+     * Signup to send to Blink.
      */
     protected $signup;
 
