@@ -15,7 +15,9 @@ class SendSignupToBlink implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Signup to send to Blink.
+     * The signup to send to Blink.
+     *
+     * @var Signup
      */
     protected $signup;
 
@@ -36,11 +38,9 @@ class SendSignupToBlink implements ShouldQueue
      */
     public function handle(Blink $blink)
     {
-        $this->blink = $blink;
-
         $payload = $this->signup->toBlinkPayload();
 
-        $this->blink->userSignup($payload);
+        $blink->userSignup($payload);
         logger()->info('Signup ' . $payload['id'] . ' sent to Blink');
     }
 }
