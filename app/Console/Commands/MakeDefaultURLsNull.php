@@ -40,11 +40,14 @@ class MakeDefaultURLsNull extends Command
     {
         info('rogue:nullurl: Starting!');
 
-        // Create the progress bar
-        $bar = $this->output->createProgressBar(Post::where('url', 'default')->count());
+        // All posts that have "default" set as their url
+        $query = Post::where('url', 'default');
 
-        // Get all posts with "default" for the url
-        $posts = Post::where('url', 'default')->chunkById(100, function ($posts) use ($bar) {
+        // Create the progress bar
+        $bar = $this->output->createProgressBar($query->count());
+
+        // Update all the posts
+        $query->chunkById(100, function ($posts) use ($bar) {
             // Set all of the "default"s to null
             foreach ($posts as $post) {
                 info('rogue:nullurl: Nulling url for post ' . $post->id);
@@ -54,6 +57,7 @@ class MakeDefaultURLsNull extends Command
             }
         });
 
+        // Finish the progress bar
         $bar->finish();
         info('rogue:nullurl: All done!');
     }
