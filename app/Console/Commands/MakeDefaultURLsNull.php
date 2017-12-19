@@ -44,7 +44,7 @@ class MakeDefaultURLsNull extends Command
         $bar = $this->output->createProgressBar(Post::where('url', 'default')->count());
 
         // Get all posts with "default" for the url
-        $posts = Post::where('url', 'default')->orderBy('id')->chunk(100, function ($posts) use ($bar) {
+        $posts = Post::where('url', 'default')->chunkById(100, function ($posts) use ($bar) {
             // Set all of the "default"s to null
             foreach ($posts as $post) {
                 info('rogue:nullurl: Nulling url for post ' . $post->id);
