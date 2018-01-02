@@ -10,7 +10,6 @@ class CampaignRow extends React.Component {
   }
 
   createCampaignRow(campaign) {
-    console.log('hi');
     const row = [
       {
         url: campaign ? `/campaigns/${campaign.id}` : '/campaigns',
