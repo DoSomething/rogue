@@ -89,6 +89,10 @@ class PostService
      */
     public function destroy($postId)
     {
+        info('post_deleted', [
+            'id' => $postId,
+        ]);
+
         return $this->repository->destroy($postId);
     }
 }
