@@ -49,7 +49,7 @@ class SignupService
         request()->headers->set('X-Request-ID', $transactionId);
 
         // Log that a signup was created.
-        logger()->info('signup_created', ['id' => $signup->id]);
+        info('signup_created', ['id' => $signup->id]);
 
         return $signup;
     }

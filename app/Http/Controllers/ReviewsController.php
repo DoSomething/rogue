@@ -59,10 +59,10 @@ class ReviewsController extends Controller
         $meta = [];
 
         if (isset($reviewedPost)) {
-            logger()->info('post_reviewed', [
+            info('post_reviewed', [
                 'id' => $reviewedPost->id,
                 'admin_northstar_id' => $review['admin_northstar_id'],
-                'status' => $reviewedPost->status
+                'status' => $reviewedPost->status,
             ]);
 
             return $this->item($reviewedPost, $reviewedPostCode);
