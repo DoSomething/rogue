@@ -73,13 +73,16 @@ class Signup extends React.Component {
       displayUploaderModal: false,
     };
 
-    this.api = new RestApiClient();
+    this.api = new RestApiClient(window.location.origin, {
+        headers: { 'Authorization' : `Bearer ${window.AUTH}`}
+    });
     this.updatePost = this.updatePost.bind(this);
     this.updateTag = this.updateTag.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
     this.deletePost = this.deletePost.bind(this);
+    this.deleteSignup = this.deleteSignup.bind(this);
     this.showUploader = this.showUploader.bind(this);
     this.hideUploader = this.hideUploader.bind(this);
     this.submitReportback = this.submitReportback.bind(this);
@@ -262,6 +265,30 @@ class Signup extends React.Component {
     }
   }
 
+  // Delete a signup.
+  deleteSignup(signupId, event) {
+    event.preventDefault();
+    const confirmed = confirm('🚨🔥🚨 Are you sure you want to delete this? 🚨🔥🚨');
+
+    if (confirmed) {
+      // Make API request to Rogue to delete the signup on the backend.
+      const response = this.api.delete(`api/v3/signups/${signupId}`);
+
+      response.then((result) => {
+        // Update the state.
+        this.setState((previousState) => {
+          const newState = { ...previousState };
+
+          // Set the deleted signup to undefined.
+          newState.signup = undefined;
+
+          // Return the new state
+          return newState;
+        });
+      });
+    }
+  }
+
   // Submit a new reportback on behalf of the user.
   submitReportback(reportback) {
     // Fields to send to /posts
@@ -320,6 +347,10 @@ class Signup extends React.Component {
     const campaign = this.props.campaign;
     const posts = this.state.posts;
 
+    if (! this.state.signup) {
+      return <Empty header={`This signup has been deleted`} />;
+    }
+
     return (
       <div className="signup">
         <div className="container__row">
@@ -365,6 +396,10 @@ class Signup extends React.Component {
                   />
                   : null}
               </ModalContainer>
+            </div>
+
+            <div className="container__row">
+              <button className="button delete -tertiary" onClick={e => this.deleteSignup(signup.signup_id, e)}>Delete Signup</button>
             </div>
 
             <MetaInformation
