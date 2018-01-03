@@ -73,6 +73,9 @@ class PostService
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $postOrSignup instanceof Post && $should_send_to_blink) {
             SendPostToBlink::dispatch($postOrSignup);
+
+            // Log that a post was created.
+            info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);
         }
 
         // Add new transaction id to header.
