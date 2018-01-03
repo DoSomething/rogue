@@ -72,7 +72,8 @@ return [
 
         'northstar' => [
             'driver' => 'gateway',
-            'model' => Rogue\Models\User::class,
+            'url' => env('NORTHSTAR_URL'),
+            'key' => storage_path('keys/public.key'),
         ],
 
         // 'users' => [
