@@ -349,75 +349,76 @@ class Signup extends React.Component {
     const campaign = this.props.campaign;
     const posts = this.state.posts;
 
+    if (! this.state.signup) {
+      return <Empty header={`This signup has been deleted`} />;
+    }
+
     return (
-      this.state.signup != undefined ?
-        <div className="signup">
-          <div className="container__row">
-            <div className="container__block -half">
-              <UserInformation user={user}>
-                <TextBlock title="Why Statement" content={signup.why_participated} />
-              </UserInformation>
-            </div>
-
-            <div className="container__block -half">
-              <Quantity quantity={signup.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
-
-              <div className="container__row">
-
-                <a href="#" onClick={e => this.showHistory(signup.signup_id, e)}>Edit | Show History</a>
-
-                <ModalContainer>
-                  {this.state.displayHistoryModal ?
-                    <HistoryModal
-                      id={this.state.historyModalId}
-                      onUpdate={this.updateQuantity}
-                      onClose={e => this.hideHistory(e)}
-                      signup={signup}
-                      campaign={campaign}
-                      signupEvents={this.state.signupEvents}
-                    />
-                    : null}
-                </ModalContainer>
-              </div>
-
-              <div className="container__row">
-                <a href="#" onClick={e => this.showUploader(signup, e)}>Upload Photo</a>
-
-                <ModalContainer>
-                  {this.state.displayUploaderModal ?
-                    <UploaderModal
-                      onClose={e => this.hideUploader(e)}
-                      signup={signup}
-                      campaign={campaign}
-                      submitReportback={this.submitReportback}
-                      updateSignup={this.updateSignup}
-                      success={this.state.successfulSubmission}
-                    />
-                    : null}
-                </ModalContainer>
-              </div>
-
-              <div className="container__row">
-                <button className="button delete -tertiary" onClick={e => this.deleteSignup(signup.signup_id, e)}>Delete Signup</button>
-              </div>
-
-              <MetaInformation
-                title="Meta"
-                details={{
-                  'Signup ID': signup.signup_id,
-                  'Northstar ID': user.id,
-                  'Signup Source': signup.signup_source,
-                  'Created At': new Date(signup.created_at).toDateString(),
-                }}
-              />
-            </div>
+      <div className="signup">
+        <div className="container__row">
+          <div className="container__block -half">
+            <UserInformation user={user}>
+              <TextBlock title="Why Statement" content={signup.why_participated} />
+            </UserInformation>
           </div>
-          {
-            map(['pending', 'accepted', 'rejected'], (status, key) => <PostGroup key={key} groupType={status} posts={posts} signup={signup} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.deletePost} />)
-          }
-        </div>
-        : <Empty header={`This signup has been deleted`} />
 
+          <div className="container__block -half">
+            <Quantity quantity={signup.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
+
+            <div className="container__row">
+
+              <a href="#" onClick={e => this.showHistory(signup.signup_id, e)}>Edit | Show History</a>
+
+              <ModalContainer>
+                {this.state.displayHistoryModal ?
+                  <HistoryModal
+                    id={this.state.historyModalId}
+                    onUpdate={this.updateQuantity}
+                    onClose={e => this.hideHistory(e)}
+                    signup={signup}
+                    campaign={campaign}
+                    signupEvents={this.state.signupEvents}
+                  />
+                  : null}
+              </ModalContainer>
+            </div>
+
+            <div className="container__row">
+              <a href="#" onClick={e => this.showUploader(signup, e)}>Upload Photo</a>
+
+              <ModalContainer>
+                {this.state.displayUploaderModal ?
+                  <UploaderModal
+                    onClose={e => this.hideUploader(e)}
+                    signup={signup}
+                    campaign={campaign}
+                    submitReportback={this.submitReportback}
+                    updateSignup={this.updateSignup}
+                    success={this.state.successfulSubmission}
+                  />
+                  : null}
+              </ModalContainer>
+            </div>
+
+            <div className="container__row">
+              <button className="button delete -tertiary" onClick={e => this.deleteSignup(signup.signup_id, e)}>Delete Signup</button>
+            </div>
+
+            <MetaInformation
+              title="Meta"
+              details={{
+                'Signup ID': signup.signup_id,
+                'Northstar ID': user.id,
+                'Signup Source': signup.signup_source,
+                'Created At': new Date(signup.created_at).toDateString(),
+              }}
+            />
+          </div>
+        </div>
+        {
+          map(['pending', 'accepted', 'rejected'], (status, key) => <PostGroup key={key} groupType={status} posts={posts} signup={signup} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.deletePost} />)
+        }
+      </div>
     );
   }
 }
