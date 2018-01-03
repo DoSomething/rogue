@@ -73,7 +73,9 @@ class Signup extends React.Component {
       displayUploaderModal: false,
     };
 
-    this.api = new RestApiClient();
+    this.api = new RestApiClient(window.location.origin, {
+        headers: { 'Authorization' : `Bearer ${window.AUTH}`}
+    });
     this.updatePost = this.updatePost.bind(this);
     this.updateTag = this.updateTag.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
@@ -270,11 +272,7 @@ class Signup extends React.Component {
 
     if (confirmed) {
       // Make API request to Rogue to delete the signup on the backend.
-      const authorizedRequest = new RestApiClient(window.location.origin, {
-        headers: { 'Authorization' : `Bearer ${window.AUTH}`}
-      });
-
-      const response = authorizedRequest.delete(`api/v3/signups/${signupId}`);
+      const response = this.api.delete(`api/v3/signups/${signupId}`);
 
       response.then((result) => {
         // Update the state.
