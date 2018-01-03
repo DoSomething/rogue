@@ -49,6 +49,9 @@ class PostService
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
 
+        // Log that a post was created.
+        info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
+
         return $post;
     }
 
@@ -86,6 +89,10 @@ class PostService
      */
     public function destroy($postId)
     {
+        info('post_deleted', [
+            'id' => $postId,
+        ]);
+
         return $this->repository->destroy($postId);
     }
 }

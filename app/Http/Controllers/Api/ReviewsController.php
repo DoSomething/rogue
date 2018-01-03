@@ -57,6 +57,12 @@ class ReviewsController extends ApiController
         $reviewedPostCode = $this->code($reviewedPost);
 
         if (isset($reviewedPost)) {
+            info('post_reviewed', [
+                'id' => $reviewedPost->id,
+                'admin_northstar_id' => $review['admin_northstar_id'],
+                'status' => $reviewedPost->status,
+            ]);
+
             return $this->item($reviewedPost, $reviewedPostCode);
         } else {
             throw (new ModelNotFoundException)->setModel('Post');

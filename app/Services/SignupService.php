@@ -47,6 +47,9 @@ class SignupService
         // Add new transaction id to header.
         request()->headers->set('X-Request-ID', $transactionId);
 
+        // Log that a signup was created.
+        info('signup_created', ['id' => $signup->id]);
+
         return $signup;
     }
 
