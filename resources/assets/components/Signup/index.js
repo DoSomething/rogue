@@ -80,6 +80,7 @@ class Signup extends React.Component {
     this.showHistory = this.showHistory.bind(this);
     this.hideHistory = this.hideHistory.bind(this);
     this.deletePost = this.deletePost.bind(this);
+    this.deleteSignup = this.deleteSignup.bind(this);
     this.showUploader = this.showUploader.bind(this);
     this.hideUploader = this.hideUploader.bind(this);
     this.submitReportback = this.submitReportback.bind(this);
@@ -262,6 +263,34 @@ class Signup extends React.Component {
     }
   }
 
+  // Delete a signup.
+  deleteSignup(signupId, event) {
+    event.preventDefault();
+    const confirmed = confirm('🚨🔥🚨 Are you sure you want to delete this? 🚨🔥🚨');
+
+    if (confirmed) {
+      // Make API request to Rogue to delete the signup on the backend.
+      const authorizedRequest = new RestApiClient(window.location.origin, {
+        headers: { 'Authorization' : `Bearer ${window.AUTH}`}
+      });
+
+      const response = authorizedRequest.delete('api/v3/signups/'.concat(signupId));
+
+      response.then((result) => {
+        // Update the state.
+        this.setState((previousState) => {
+          const newState = { ...previousState };
+
+          // Set the deleted signup to undefined.
+          newState.signup = undefined;
+
+          // Return the new state
+          return newState;
+        });
+      });
+    }
+  }
+
   // Submit a new reportback on behalf of the user.
   submitReportback(reportback) {
     // Fields to send to /posts
@@ -321,67 +350,74 @@ class Signup extends React.Component {
     const posts = this.state.posts;
 
     return (
-      <div className="signup">
-        <div className="container__row">
-          <div className="container__block -half">
-            <UserInformation user={user}>
-              <TextBlock title="Why Statement" content={signup.why_participated} />
-            </UserInformation>
-          </div>
-
-          <div className="container__block -half">
-            <Quantity quantity={signup.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
-
-            <div className="container__row">
-
-              <a href="#" onClick={e => this.showHistory(signup.signup_id, e)}>Edit | Show History</a>
-
-              <ModalContainer>
-                {this.state.displayHistoryModal ?
-                  <HistoryModal
-                    id={this.state.historyModalId}
-                    onUpdate={this.updateQuantity}
-                    onClose={e => this.hideHistory(e)}
-                    signup={signup}
-                    campaign={campaign}
-                    signupEvents={this.state.signupEvents}
-                  />
-                  : null}
-              </ModalContainer>
+      this.state.signup != undefined ?
+        <div className="signup">
+          <div className="container__row">
+            <div className="container__block -half">
+              <UserInformation user={user}>
+                <TextBlock title="Why Statement" content={signup.why_participated} />
+              </UserInformation>
             </div>
 
-            <div className="container__row">
-              <a href="#" onClick={e => this.showUploader(signup, e)}>Upload Photo</a>
+            <div className="container__block -half">
+              <Quantity quantity={signup.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
 
-              <ModalContainer>
-                {this.state.displayUploaderModal ?
-                  <UploaderModal
-                    onClose={e => this.hideUploader(e)}
-                    signup={signup}
-                    campaign={campaign}
-                    submitReportback={this.submitReportback}
-                    updateSignup={this.updateSignup}
-                    success={this.state.successfulSubmission}
-                  />
-                  : null}
-              </ModalContainer>
+              <div className="container__row">
+
+                <a href="#" onClick={e => this.showHistory(signup.signup_id, e)}>Edit | Show History</a>
+
+                <ModalContainer>
+                  {this.state.displayHistoryModal ?
+                    <HistoryModal
+                      id={this.state.historyModalId}
+                      onUpdate={this.updateQuantity}
+                      onClose={e => this.hideHistory(e)}
+                      signup={signup}
+                      campaign={campaign}
+                      signupEvents={this.state.signupEvents}
+                    />
+                    : null}
+                </ModalContainer>
+              </div>
+
+              <div className="container__row">
+                <a href="#" onClick={e => this.showUploader(signup, e)}>Upload Photo</a>
+
+                <ModalContainer>
+                  {this.state.displayUploaderModal ?
+                    <UploaderModal
+                      onClose={e => this.hideUploader(e)}
+                      signup={signup}
+                      campaign={campaign}
+                      submitReportback={this.submitReportback}
+                      updateSignup={this.updateSignup}
+                      success={this.state.successfulSubmission}
+                    />
+                    : null}
+                </ModalContainer>
+              </div>
+
+              <div className="container__row">
+                <button className="button delete -tertiary" onClick={e => this.deleteSignup(signup.signup_id, e)}>Delete Signup</button>
+              </div>
+
+              <MetaInformation
+                title="Meta"
+                details={{
+                  'Signup ID': signup.signup_id,
+                  'Northstar ID': user.id,
+                  'Signup Source': signup.signup_source,
+                  'Created At': new Date(signup.created_at).toDateString(),
+                }}
+              />
             </div>
-
-            <MetaInformation
-              title="Meta"
-              details={{
-                'Signup ID': signup.signup_id,
-                'Northstar ID': user.id,
-                'Signup Source': signup.signup_source,
-                'Created At': new Date(signup.created_at).toDateString(),
-              }}
-            />
           </div>
+          {
+            map(['pending', 'accepted', 'rejected'], (status, key) => <PostGroup key={key} groupType={status} posts={posts} signup={signup} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.deletePost} />)
+          }
         </div>
-        {
-          map(['pending', 'accepted', 'rejected'], (status, key) => <PostGroup key={key} groupType={status} posts={posts} signup={signup} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.deletePost} />)
-        }
-      </div>
+        : <Empty header={`This signup has been deleted`} />
+
     );
   }
 }
