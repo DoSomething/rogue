@@ -60,19 +60,8 @@ class Handler extends ExceptionHandler
         // Re-cast specific exceptions or uniquely render them:
         if ($e instanceof GlideNotFoundException) {
             $e = new NotFoundHttpException('That image could not be found.');
-        } elseif ($e instanceof AuthorizationException) {
-            return parent::render($request, $e);
-        } elseif ($e instanceof AuthenticationException) {
-            return $this->unauthenticated($request, $e);
-        } elseif ($e instanceof ValidationException) {
-            return $this->convertValidationExceptionToResponse($e, $request);
         } elseif ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException('That resource could not be found.');
-        }
-        // If request has 'Accepts: application/json' header or we're on a route that
-        // is in the `api` middleware group, render the exception as JSON object.
-        if ($request->ajax() || $request->wantsJson() || has_middleware('api')) {
-            return $this->buildJsonResponse($e);
         }
 
         return parent::render($request, $e);
