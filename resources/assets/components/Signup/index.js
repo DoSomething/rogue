@@ -274,7 +274,7 @@ class Signup extends React.Component {
         headers: { 'Authorization' : `Bearer ${window.AUTH}`}
       });
 
-      const response = authorizedRequest.delete('api/v3/signups/'.concat(signupId));
+      const response = authorizedRequest.delete(`api/v3/signups/${signupId}`);
 
       response.then((result) => {
         // Update the state.
