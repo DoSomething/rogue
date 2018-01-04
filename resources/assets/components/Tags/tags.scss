@@ -20,6 +20,11 @@
     color: $white;
   }
 
+  &:hover {
+    background: $blue;
+    color: $white;
+  }
+
   &:focus {
     outline: 0;
   }
