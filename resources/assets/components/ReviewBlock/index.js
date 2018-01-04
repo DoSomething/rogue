@@ -11,6 +11,7 @@ class ReviewBlock extends React.Component {
 
   render() {
     const post = this.props.post;
+    const disableTags = post.status === 'accepted' || post.status === 'rejected' ? false : true;
 
     return (
       <div>
@@ -21,9 +22,7 @@ class ReviewBlock extends React.Component {
         <ul className="form-actions -inline">
           <li><button className="button delete -tertiary" onClick={e => this.props.deletePost(post.id, e)}>Delete</button></li>
         </ul>
-        {post.status === 'accepted' ?
-          <Tags id={post.id} tagged={post.tags} onTag={this.props.onTag} />
-          : null}
+        <Tags id={post.id} tagged={post.tags} onTag={this.props.onTag} disableTags={disableTags}/>
       </div>
     );
   }

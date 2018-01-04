@@ -20,9 +20,11 @@
     color: $white;
   }
 
-  &:hover {
-    background: $blue;
-    color: $white;
+  &:enabled {
+    &:hover {
+      background: $blue;
+      color: $white;
+    }
   }
 
   &:focus {
