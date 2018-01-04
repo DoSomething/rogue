@@ -10,7 +10,7 @@
  */
 
 // Homepage
-$router->get('/', 'PagesController@home');
+$router->get('/', 'PagesController@home')->name('login');
 
 // Authentication
 $router->get('login', 'Auth\AuthController@getLogin');
