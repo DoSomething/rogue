@@ -52,6 +52,11 @@ class Tags extends React.Component {
       'hide-in-gallery': 'Hide In Gallery 👻',
       'good-for-sponsor': 'Good For Sponsor',
       'good-for-storytelling': 'Good For Storytelling',
+      'irrelevant': 'Irrelevant',
+      'inappropriate': 'Inappropriate',
+      'unrealistic-quantity': 'Unrealistic Quantity',
+      'test': 'Test',
+      'incomplete-action': 'Incomplete Action',
     };
 
     return (
