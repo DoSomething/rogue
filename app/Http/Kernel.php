@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            'guard:api',
             'bindings',
             'log.received.request',
             // 'throttle:60,1',
@@ -54,7 +55,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guard' => \Rogue\Http\Middleware\SetGuard::class,
+        'guard' => \DoSomething\Gateway\Server\Middleware\SetGuard::class,
         'scopes' => \DoSomething\Gateway\Server\Middleware\RequireScope::class,
         'legacy-auth' => \Rogue\Http\Middleware\AuthenticateWithApiKey::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
