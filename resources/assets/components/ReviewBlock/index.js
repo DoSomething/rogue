@@ -11,7 +11,7 @@ class ReviewBlock extends React.Component {
 
   render() {
     const post = this.props.post;
-    const disableTags = post.status === 'accepted' || post.status === 'rejected' ? false : true;
+    const disableTags = ! (post.status === 'accepted' || post.status === 'rejected');
 
     return (
       <div>
