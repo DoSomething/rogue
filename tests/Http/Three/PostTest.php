@@ -36,16 +36,8 @@ class PostTest extends TestCase
             'campaign_run_id'  => $campaignRunId,
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
-            'num_participants' => null,
             'caption'          => $caption,
-            'source'           => 'phpunit',
-            'remote_addr'      => $this->faker->ipv4,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            'crop_x'           => 0,
-            'crop_y'           => 0,
-            'crop_width'       => 100,
-            'crop_height'      => 100,
-            'crop_rotate'      => 90,
         ]);
 
         $response->assertStatus(201);
@@ -108,16 +100,8 @@ class PostTest extends TestCase
             'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
-            'num_participants' => null,
             'caption'          => $caption,
-            'source'           => 'phpunit',
-            'remote_addr'      => $this->faker->ipv4,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            'crop_x'           => 0,
-            'crop_y'           => 0,
-            'crop_width'       => 100,
-            'crop_height'      => 100,
-            'crop_rotate'      => 90,
         ]);
 
         $response->assertStatus(200);
@@ -175,16 +159,8 @@ class PostTest extends TestCase
             'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
-            'num_participants' => null,
             'caption'          => $caption,
-            'source'           => 'phpunit',
-            'remote_addr'      => $this->faker->ipv4,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            'crop_x'           => 0,
-            'crop_y'           => 0,
-            'crop_width'       => 100,
-            'crop_height'      => 100,
-            'crop_rotate'      => 90,
         ]);
 
         $response->assertStatus(401);
