@@ -83,10 +83,15 @@ class PostRepository
             'quantity' => $data['quantity'],
             'url' => $fileUrl,
             'caption' => $data['caption'],
-            'status' => isset($data['status']) ? $data['status'] : 'pending',
+            'status' => 'pending',
             'source' => token()->client(),
             'remote_addr' => request()->ip(),
         ]);
+
+        // Admin users may provide a review status when uploading a post.
+        if (isset($data['status']) && token()->role === 'admin') {
+            $post->status = $data['status'];
+        }
 
         $post->save();
 
