@@ -24,9 +24,14 @@ class PostRequest extends Request
     public function rules()
     {
         return [
+            'campaign_id' => 'required',
+            'campaign_run_id' => 'required_with:campaign_id|integer',
+            'northstar_id' => 'nullable|objectid',
+            'why_participated' => 'nullable|string',
+            'caption' => 'required|nullable|string|max:140',
+            'quantity' => 'required|nullable|integer',
+            'file' => 'image|dimensions:min_width=400,min_height=400',
             'status' => 'in:pending,accepted,rejected',
-            'caption' => 'string|max:140',
-            'quantity' => 'int',
         ];
     }
 }

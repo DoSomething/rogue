@@ -129,13 +129,15 @@ Example Response:
 }
 ```
 
-## Create a Post and/or Create/Update a Signup
+## Create a Post
+
+This will automatically create or update the corresponding signup.
 
 ```
 POST /api/v3/posts
 ```
   - **campaign_id**: (int|string) required.
-    The drupal node id of the campaign that the user's post is associated with. 
+    The Drupal/Contentful ID of the campaign that the user's post is associated with.
   - **campaign_run_id**: (int) optional.
     The drupal campaign run node id of the campaign that the user's post is associated with.
   - **quantity**: (int).
@@ -146,28 +148,10 @@ POST /api/v3/posts
     Corresponding caption for the post.
   - **status**: (string).
     Option to set status upon creation if admin uploads post for user.
-  - **source**: (string).
-    Where the post was submitted from.
-  - **remote_addr**: (string).
-    IP address of where the post is submitted from. 
-  - **file**: (string) required.
+  - **file**: (file) required.
     File string to save of post image.
-  - **crop_x**: (int).
-    The crop x coordinates of the post image if the user cropped the image.
-  - **crop_y**: (int).
-    The crop y coordinates of the post image if the user cropped the image.
-  - **crop_width** (int).
-    The copy width coordinates of the post image if the user cropped the image.
-  - **crop_height** (int).
-    The copy height coordinates of the post image if the user cropped the image.
-  - **crop_rotate** (int).
-    The copy rotate coordinates of the post image if the user cropped the image.
   - **dont_send_to_blink** (boolean) optional.
     If included and true, the data for this Post will not be sent to Blink.
-  - **created_at**: (string) optional.
-    `Y-m-d H:i:s` format. When the post was created.
-  - **updated_at**: (string) optional.
-    `Y-m-d H:i:s` format. When the post was last updated.
 
 Example Response:
 

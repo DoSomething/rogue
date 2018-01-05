@@ -3,6 +3,7 @@
 namespace Rogue\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Add a custom validator for Mongo ObjectIDs.
+        Validator::extend('objectid', function ($attribute, $value, $parameters, $validator) {
+            return preg_match('/^[a-f\d]{24}$/i', $value);
+        }, 'The :attribute must be a valid ObjectID.');
     }
 
     /**

@@ -115,26 +115,16 @@ class PostsController extends ApiController
 
         $updating = ! is_null($signup);
 
-        // @TODO - should we eventually throw an error if a signup doesn't exist before a post is created? I create one here because we haven't implemented sending signups to rogue yet, so it will have to create a signup record for all posts.
         if (! $updating) {
             $signup = $this->signups->create($request->all(), $northstarId);
-
             $post = $this->posts->create($request->all(), $signup->id, $transactionId);
-
-            $code = 200;
-
-            return $this->item($post);
         } else {
             $post = $this->posts->update($signup, $request->all(), $transactionId);
-
-            $code = 201;
-
-            if (isset($request['file'])) {
-                return $this->item($post);
-            } else {
-                return $signup;
-            }
         }
+
+        $code = $updating ? 200 : 201;
+
+        return $this->item($post, $code, [], null, 'signup');
     }
 
     /**
@@ -166,11 +156,17 @@ class PostsController extends ApiController
      * @param \Rogue\Models\Post $post
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
+        $validatedRequest = $request->validate([
+            'status' => 'in:pending,accepted,rejected',
+            'caption' => 'nullable|string|max:140',
+            'quantity' => 'nullable|integer',
+        ]);
+
         // Only allow an admin or the user who owns the post to update.
         if (token()->role() === 'admin' || auth()->id() === $post->northstar_id) {
-            $post->update($request->only('status', 'caption', 'quantity'));
+            $post->update($validatedRequest);
 
             return $this->item($post);
         }
