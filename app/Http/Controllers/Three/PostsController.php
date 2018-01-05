@@ -156,11 +156,17 @@ class PostsController extends ApiController
      * @param \Rogue\Models\Post $post
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
+        $validatedRequest = $request->validate([
+            'status' => 'in:pending,accepted,rejected',
+            'caption' => 'nullable|string|max:140',
+            'quantity' => 'nullable|integer',
+        ]);
+
         // Only allow an admin or the user who owns the post to update.
         if (token()->role() === 'admin' || auth()->id() === $post->northstar_id) {
-            $post->update($request->only('status', 'caption', 'quantity'));
+            $post->update($validatedRequest);
 
             return $this->item($post);
         }
