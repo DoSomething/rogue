@@ -48,7 +48,7 @@ class PostTest extends TestCase
             'crop_rotate'      => 90,
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
                 'id',
