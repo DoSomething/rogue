@@ -30,7 +30,7 @@ class Tag extends React.Component {
   }
 
   render() {
-    return (<button disabled={this.props.disable}
+    return (<button disabled={this.props.disabled}
       className={classnames('tag', { 'is-active': this.props.isActive }, { 'is-loading': this.state.sending })}
       onClick={() => this.handleClick(this.props.label)}
     >{this.props.label}</button>);
@@ -59,7 +59,7 @@ class Tags extends React.Component {
       'incomplete-action': 'Incomplete Action',
     };
 
-    const h2ClassName = this.props.disableTags ? 'disabled' : 'enabled';
+    const h2ClassName = this.props.disabled ? 'disabled' : 'enabled';
 
     return (
       <div>
@@ -67,7 +67,7 @@ class Tags extends React.Component {
         <ul className="aligned-actions">
           {map(tags, (label, key) => (
             <li key={key}>
-              <Tag isActive={this.props.tagged.includes(key)} isClicked={this.props.onTag} label={label} post={this.props.id} disable={this.props.disableTags} />
+              <Tag isActive={this.props.tagged.includes(key)} isClicked={this.props.onTag} label={label} post={this.props.id} disabled={this.props.disabled} />
             </li>
           ))}
         </ul>

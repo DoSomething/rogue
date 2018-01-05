@@ -22,7 +22,7 @@ class ReviewBlock extends React.Component {
         <ul className="form-actions -inline">
           <li><button className="button delete -tertiary" onClick={e => this.props.deletePost(post.id, e)}>Delete</button></li>
         </ul>
-        <Tags id={post.id} tagged={post.tags} onTag={this.props.onTag} disableTags={disableTags}/>
+        <Tags id={post.id} tagged={post.tags} onTag={this.props.onTag} disabled={disableTags}/>
       </div>
     );
   }
