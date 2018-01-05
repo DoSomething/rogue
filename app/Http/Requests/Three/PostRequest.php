@@ -26,6 +26,7 @@ class PostRequest extends Request
         return [
             'campaign_id' => 'required',
             'campaign_run_id' => 'required_with:campaign_id|integer',
+            'northstar_id' => 'nullable|objectid',
             'why_participated' => 'nullable|string',
             'caption' => 'required|nullable|string|max:140',
             'quantity' => 'required|nullable|integer',
