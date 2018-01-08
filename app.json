@@ -8,12 +8,104 @@
     "APP_KEY": {
       "required": true
     },
-  "buildpacks": [
-    {
-      "url": "heroku/php"
+    "APP_LOG": "errorlog",
+    "APP_URL": "https://ds-rogue-staging.herokuapp.com/",
+    "scripts": {
+      "postdeploy": "php artisan migrate:refresh --seed"
     },
-    {
-      "url": "heroku/nodejs"
+    "addons": [
+      "papertrail",
+    ],
+    "buildpacks": [
+      {
+        "url": "heroku/php"
+      },
+      {
+        "url": "heroku/nodejs"
+      }
+    ],
+    "AWS_ACCESS_KEY_ID": {
+      "required": true
+    },
+    "AWS_REGION": {
+      "required": true
+    },
+    "AWS_SECRET_KEY": {
+      "required": true
+    },
+    "BLINK_URL": {
+      "required": true
+    },
+    "BLINK_USERNAME": {
+      "required": true
+    },
+    "BLINK_PASSWORD": {
+      "required": true
+    },
+    "CACHE_DRIVER": {
+      "required": true
+    },
+    "DB_DATABASE": {
+      "required": true
+    },
+    "DB_HOST": {
+      "required": true
+    },
+    "DB_PASSWORD": {
+      "required": true
+    },
+    "DB_USERNAME": {
+      "required": true
+    },
+    "DS_ENABLE_BLINK": "true",
+    "DS_ENABLE_V3_QUANTITY_SUPPORT": "false",
+    "LOG_REQUEST_DETAILS": {
+      "required": true
+    },
+    "NORTHSTAR_AUTH_ID": {
+      "required": true
+    },
+    "NORTHSTAR_AUTH_SECRET": {
+      "required": true
+    },
+    "NORTHSTAR_CLIENT_ID": {
+      "required": true
+    },
+    "NORTHSTAR_CLIENT_SECRET": {
+      "required": true
+    },
+    "NORTHSTAR_URL": {
+      "required": true
+    },
+    "PHOENIX_API_VERSION": {
+      "required": true
+    },
+    "PHOENIX_PASSWORD": {
+      "required": true
+    },
+    "PHOENIX_URI": {
+      "required": true
+    },
+    "PHOENIX_USERNAME": {
+      "required": true
+    },
+    "ROGUE_API_KEY": {
+      "required": true
+    },
+    "S3_BUCKET": {
+      "required": true
+    },
+    "S3_KEY": {
+      "required": true
+    },
+    "S3_REGION": {
+      "required": true
+    },
+    "S3_SECRET": {
+      "required": true
+    },
+    "S3_URL": {
+      "required": true
     }
-  ]
+  }
 }
