@@ -8,7 +8,7 @@
         <div class="wrapper">
             <div class="container__block -narrow">
                 <p>
-                    Welcome to <strong>Rogue</strong>, our one source of truth for all things user activity. Logging in will allow you to review and search for reportbacks.
+                    Welcome to <strong>Space Jam</strong>, our one source of truth for all things user activity. Logging in will allow you to review and search for reportbacks.
                 </p>
                 <br>
                 <a href="/login" class="button">Log In</a>
