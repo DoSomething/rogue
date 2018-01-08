@@ -52,84 +52,50 @@ test('it renders an active Accept button when clicked', () => {
   );
 
   // Tags should be disabled.
-  expect(component.find('.disabled').first().text()).toBe('Tags');
-  // expect(component.find('.tag').first().is('[disabled]')).toBe(true);
+  expect(component.find('.tag').first().is('[disabled]')).toBe(true);
 
   // Click the "Accept" button.
   component.find('StatusButton').findWhere(n => n.prop('type') === 'accepted').simulate('click');
   expect(onUpdate).toHaveBeenCalled();
 
-  component.update();
-  console.log(component.debug());
+  // The "Accept" button should be "loading".
+  expect(component.find('StatusButton').findWhere(n => n.prop('type') === 'accepted').first().hasClass('button -accepted is-loading'));
 
-  // It should now show the active "Accept" button.
-  expect(component.find('StatusButton').findWhere(n => n.prop('type') === 'accepted').first().hasClass('button -outlined-button -accepted is-selected'));
-  // const acceptButton = component.find('StatusButton').findWhere(n => n.prop('type') === 'accepted').first();
-  // expect(acceptButton.props().status).to.equal('accepted');
-  // expect(component.find('.accepted').first().hasClass('button -outlined-button -accepted is-selected'));
-
-  // Tags should now be enabled.
-  // expect(component.find('.tag').first().is('[disabled]')).toBe(false);
-  // expect(component.find('.enabled').first().text()).toBe('Tags');
+  // The "Reject" button should not be "loading".
+  expect(component.find('StatusButton').findWhere(n => n.prop('type') === 'rejected').first().hasClass('button -outlined-button -rejected'));
 });
 
-// test('it renders an active Reject button when clicked', () => {
-//   const post = {
-//     status: 'pending',
-//     tags: [],
-//     id: 71,
-//   };
+test('it renders an active Reject button when clicked', () => {
+  const post = {
+    status: 'pending',
+    tags: [],
+    id: 71,
+  };
 
-//   const deletePost = function () {
-//     return true;
-//   };
+  const deletePost = function () {
+    return true;
+  };
 
-//   const onUpdate = function () {
-//     return true;
-//   };
+  const onUpdate = jest.fn(() => Promise.resolve(true));
 
-//   const onTag = function () {
-//     return true;
-//   };
+  const onTag = function () {
+    return true;
+  };
 
-//   const component = mount(
-//     <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
-//   );
+  const component = mount(
+    <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
+  );
 
-//   // Click the "Reject" button.
-//   component.find('.rejected').first().simulate('click');
+  // Tags should be disabled.
+  expect(component.find('.tag').first().is('[disabled]')).toBe(true);
 
-//   // It should now show the active "Reject" button.
-//   expect(component.find('.rejected').first().hasClass('button -outlined-button -rejected is-selected'));
-// });
+  // Click the "Reject" button.
+  component.find('StatusButton').findWhere(n => n.prop('type') === 'rejected').simulate('click');
+  expect(onUpdate).toHaveBeenCalled();
 
-// test('it renders an active tag button when clicked', () => {
-//   const post = {
-//     status: 'accepted',
-//     tags: [],
-//     id: 71,
-//   };
+  // The "Reject" button should be "loading".
+  expect(component.find('StatusButton').findWhere(n => n.prop('type') === 'accepted').first().hasClass('button -rejected is-loading'));
 
-//   const deletePost = function () {
-//     return true;
-//   };
-
-//   const onUpdate = function () {
-//     return true;
-//   };
-
-//   const onTag = function () {
-//     return true;
-//   };
-
-//   const component = mount(
-//     <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
-//   );
-
-//   // Click a tag button.
-//   component.find('.tag').first().simulate('click');
-
-//   // It should now show the active tag button.
-//   expect(component.find('.tag').first().hasClass('is-active'));
-// });
-
+  // The "Accept" button should not be "loading".
+  expect(component.find('StatusButton').findWhere(n => n.prop('type') === 'rejected').first().hasClass('button -outlined-button -accepted'));
+});
