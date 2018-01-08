@@ -10,6 +10,12 @@
     },
     "APP_LOG": "errorlog",
     "APP_URL": "https://ds-rogue-staging.herokuapp.com/",
+    "scripts": {
+      "postdeploy": "php artisan migrate:refresh --seed"
+    },
+    "addons": [
+      "papertrail",
+    ],
     "buildpacks": [
       {
         "url": "heroku/php"
