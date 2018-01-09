@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         Commands\PostQuantity::class,
         Commands\PostCleanup::class,
         Commands\MakeDefaultURLsNull::class,
+        Commands\MakeSourceSms::class,
     ];
 
     /**
