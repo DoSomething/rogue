@@ -12,7 +12,7 @@ class PostQuantity extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:postquantity {start=1}';
+    protected $signature = 'rogue:postquantity {start=1} {sleeptime=0}';
 
     /**
      * The console command description.
@@ -45,7 +45,7 @@ class PostQuantity extends Command
         $bar = $this->output->createProgressBar(Signup::where('id', '>=', $start)->count());
 
         // Get all signups starting from $start in order of ID
-        Signup::where('id', '>=', $start)->orderBy('id')->with('posts')->chunk(100, function ($signups) use ($bar) {
+        Signup::where('id', '>=', $start)->orderBy('id')->with('posts')->chunk(1000, function ($signups) use ($bar) {
             foreach ($signups as $signup) {
                 // Get the posts for the signup
                 $posts = $signup->posts;
@@ -96,6 +96,9 @@ class PostQuantity extends Command
 
     public function putQuantityOnPosts($posts, $quantity)
     {
+        // Signup that we should start with
+        $sleeptime = $this->argument('sleeptime');
+
         // Put all the quantity on the most recent accepted post (based on creation)
         $acceptedPosts = $posts->where('status', 'accepted')->sortByDesc('created_at');
         if ($acceptedPosts->isNotEmpty()) {
@@ -103,6 +106,7 @@ class PostQuantity extends Command
             $mostRecentAcceptedPost->quantity = $quantity;
             $mostRecentAcceptedPost->save();
             info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentAcceptedPost->id);
+            usleep($sleeptime);
         }
         // If no accepted posts, put quantity on most recent post (based on creation)
         else {
@@ -110,6 +114,7 @@ class PostQuantity extends Command
             $mostRecentPost->quantity = $quantity;
             $mostRecentPost->save();
             info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentPost->id);
+            usleep($sleeptime);
         }
         // Put quantity of 0 on all other posts under this signup
         foreach ($posts as $post) {
@@ -117,6 +122,7 @@ class PostQuantity extends Command
                 $post->quantity = 0;
                 $post->save();
                 info('rogue:postquantity: Put quantity 0 on post ' . $post->id);
+                usleep($sleeptime);
             }
         }
     }
