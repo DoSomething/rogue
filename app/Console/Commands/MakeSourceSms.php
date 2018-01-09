@@ -2,8 +2,8 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Signup;
 use Rogue\Models\Post;
+use Rogue\Models\Signup;
 use Illuminate\Console\Command;
 
 class MakeSourceSms extends Command
