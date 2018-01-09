@@ -42,12 +42,8 @@ class MakeSourceSms extends Command
         // Start updating signups
         info('rogue:smssource: Starting to update signups!');
 
-        // Get all signups that have "sms-mobilecommons" set as their source
-        $query = Signup::where('source', 'sms-mobilecommons');
-
-        // Update all the signups
-        $query->chunkById(100, function ($signups) {
-            // Set all the "sms-mobilecommons" to "sms"
+        // Get all signups that have "sms-mobilecommons" set as their source and update to "sms"
+        Signup::where('source', 'sms-mobilecommons')->chunkById(100, function ($signups) {
             foreach ($signups as $signup) {
                 info('rogue:smssource: changing source to sms for signup ' . $signup->id);
                 $signup->source = 'sms';
@@ -61,12 +57,8 @@ class MakeSourceSms extends Command
         // Start updating posts
         info('rogue:smssource: Starting to update posts!');
 
-        // Get all posts that have "sms-mobilecommons" set as their source
-        $query = Post::where('source', 'sms-mobilecommons');
-
-        // Update all the signups
-        $query->chunkById(100, function ($posts) {
-            // Set all the "sms-mobilecommons" to "sms"
+        // Get all posts that have "sms-mobilecommons" set as their source and update to "sms"
+        Post::where('source', 'sms-mobilecommons')->chunkById(100, function ($posts) {
             foreach ($posts as $post) {
                 info('rogue:smssource: changing source to sms for post ' . $post->id);
                 $post->source = 'sms';
