@@ -40,7 +40,6 @@ class Kernel extends HttpKernel
         'api' => [
             'guard:api',
             'bindings',
-            'log.received.request',
             // 'throttle:60,1',
         ],
     ];
@@ -61,7 +60,6 @@ class Kernel extends HttpKernel
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Rogue\Http\Middleware\RedirectIfAuthenticated::class,
-        'log.received.request' => \Rogue\Http\Middleware\LogReceivedRequest::class,
         'role' => \Rogue\Http\Middleware\CheckRole::class,
     ];
 }

@@ -109,17 +109,15 @@ class PostsController extends ApiController
     {
         $northstarId = getNorthstarId($request);
 
-        $transactionId = incrementTransactionId($request);
-
         $signup = $this->signups->get($northstarId, $request['campaign_id'], $request['campaign_run_id']);
 
         $updating = ! is_null($signup);
 
         if (! $updating) {
             $signup = $this->signups->create($request->all(), $northstarId);
-            $post = $this->posts->create($request->all(), $signup->id, $transactionId);
+            $post = $this->posts->create($request->all(), $signup->id);
         } else {
-            $post = $this->posts->update($signup, $request->all(), $transactionId);
+            $post = $this->posts->update($signup, $request->all());
         }
 
         $code = $updating ? 200 : 201;

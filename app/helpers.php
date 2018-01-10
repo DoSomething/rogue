@@ -16,27 +16,6 @@ function scriptify($json = [], $store = 'STATE')
 }
 
 /**
- * Helper function to increment transaction id.
- *
- * @param \Illuminate\Http\Request $request
- * @return $newTransactionId
- */
-function incrementTransactionId($request)
-{
-    $transactionId = $request->header('X-Request-ID');
-
-    if ($transactionId) {
-        $transactionIdParts = explode('-', $transactionId);
-        $incrementedStep = $transactionIdParts[1] + 1;
-        $newTransactionId = $transactionIdParts[0] . '-' . $incrementedStep;
-
-        return $newTransactionId;
-    }
-
-    return null;
-}
-
-/**
  * Check if the current route has any middleware attached.
  *
  * @param  null|string  $middleware

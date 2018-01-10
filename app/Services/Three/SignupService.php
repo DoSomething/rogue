@@ -29,11 +29,10 @@ class SignupService
      * Handles all business logic around creating signups.
      *
      * @param array $data
-     * @param string $transactionId
      * @param string $northstarId
      * @return Illuminate\Database\Eloquent\Model $model
      */
-    public function create($data, $transactionId, $northstarId)
+    public function create($data, $northstarId)
     {
         $signup = $this->signup->create($data, $northstarId);
 
@@ -44,9 +43,6 @@ class SignupService
         if (config('features.blink') && $should_send_to_blink) {
             SendSignupToBlink::dispatch($signup);
         }
-
-        // Add new transaction id to header.
-        request()->headers->set('X-Request-ID', $transactionId);
 
         // Log that a signup was created.
         info('signup_created', ['id' => $signup->id]);

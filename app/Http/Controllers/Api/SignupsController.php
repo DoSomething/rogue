@@ -50,22 +50,20 @@ class SignupsController extends ApiController
      */
     public function store(SignupRequest $request)
     {
-        $transactionId = incrementTransactionId($request);
-
         // Check to see if the signup exists before creating one.
         $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
 
         $code = $signup ? 200 : 201;
 
         if (! $signup) {
-            $signup = $this->signups->create($request->all(), $transactionId);
+            $signup = $this->signups->create($request->all());
         }
 
         // check to see if there is a reportback too aka we are migratin'
         if ($request->has('photo')) {
             // create the photo and tie it to this signup
             foreach ($request->photo as $photo) {
-                $this->posts->create($photo, $signup->id, $transactionId);
+                $this->posts->create($photo, $signup->id);
             }
         }
 

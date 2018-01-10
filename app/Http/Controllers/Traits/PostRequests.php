@@ -18,8 +18,6 @@ trait PostRequests
      */
     public function store(PostRequest $request)
     {
-        $transactionId = incrementTransactionId($request);
-
         $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
 
         $updating = ! is_null($signup);
@@ -28,13 +26,13 @@ trait PostRequests
         if (! $updating) {
             $signup = $this->signups->create($request->all());
 
-            $post = $this->posts->create($request->all(), $signup->id, $transactionId);
+            $post = $this->posts->create($request->all(), $signup->id);
 
             $code = 200;
 
             return $this->item($post);
         } else {
-            $post = $this->posts->update($signup, $request->all(), $transactionId);
+            $post = $this->posts->update($signup, $request->all());
 
             $code = 201;
 
