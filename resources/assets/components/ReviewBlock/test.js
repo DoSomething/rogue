@@ -1,38 +1,14 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
 import ReviewBlock from './index';
 
-test('it renders accepted, rejected, and delete buttons', () => {
+test('it renders accepted, rejected, disabled tags, and delete buttons', () => {
   const post = {
-    status: 'pending',
-  };
-
-  const deletePost = function () {
-    return true;
-  };
-
-  const onUpdate = function () {
-    return true;
-  };
-
-  const onTag = function () {
-    return true;
-  };
-
-  const component = shallow(
-    <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
-  );
-
-  expect(toJson(component)).toMatchSnapshot();
-});
-
-test('it renders the review block with tags', () => {
-  const post = {
-    status: 'accepted',
+    id: 1,
     tags: [],
-    id: 71,
+    status: 'pending',
   };
 
   const deletePost = function () {
@@ -65,23 +41,28 @@ test('it renders an active Accept button when clicked', () => {
     return true;
   };
 
-  const onUpdate = function () {
-    return true;
-  };
+  const onUpdate = jest.fn(() => Promise.resolve(true));
 
   const onTag = function () {
     return true;
   };
 
-  const component = shallow(
+  const component = mount(
     <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
   );
 
-  // Click the "Accept" button.
-  component.find('.accepted').first().simulate('click');
+  // Tags should be disabled.
+  expect(component.find('.tag').first().is('[disabled]')).toBe(true);
 
-  // It should now show the active "Accept" button.
-  expect(component.find('.accepted').first().hasClass('button -outlined-button -accepted is-selected'));
+  // Click the "Accept" button.
+  component.find('StatusButton').findWhere(n => n.prop('type') === 'accepted').simulate('click');
+  expect(onUpdate).toHaveBeenCalled();
+
+  // The "Accept" button should be "loading".
+  expect(component.find('StatusButton').findWhere(n => n.prop('type') === 'accepted').first().hasClass('button -accepted is-loading'));
+
+  // The "Reject" button should not be "loading".
+  expect(component.find('StatusButton').findWhere(n => n.prop('type') === 'rejected').first().hasClass('button -outlined-button -rejected'));
 });
 
 test('it renders an active Reject button when clicked', () => {
@@ -95,52 +76,26 @@ test('it renders an active Reject button when clicked', () => {
     return true;
   };
 
-  const onUpdate = function () {
-    return true;
-  };
+  const onUpdate = jest.fn(() => Promise.resolve(true));
 
   const onTag = function () {
     return true;
   };
 
-  const component = shallow(
+  const component = mount(
     <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
   );
+
+  // Tags should be disabled.
+  expect(component.find('.tag').first().is('[disabled]')).toBe(true);
 
   // Click the "Reject" button.
-  component.find('.rejected').first().simulate('click');
+  component.find('StatusButton').findWhere(n => n.prop('type') === 'rejected').simulate('click');
+  expect(onUpdate).toHaveBeenCalled();
 
-  // It should now show the active "Reject" button.
-  expect(component.find('.rejected').first().hasClass('button -outlined-button -rejected is-selected'));
+  // The "Reject" button should be "loading".
+  expect(component.find('StatusButton').findWhere(n => n.prop('type') === 'accepted').first().hasClass('button -rejected is-loading'));
+
+  // The "Accept" button should not be "loading".
+  expect(component.find('StatusButton').findWhere(n => n.prop('type') === 'rejected').first().hasClass('button -outlined-button -accepted'));
 });
-
-test('it renders an active tag button when clicked', () => {
-  const post = {
-    status: 'pending',
-    tags: [],
-    id: 71,
-  };
-
-  const deletePost = function () {
-    return true;
-  };
-
-  const onUpdate = function () {
-    return true;
-  };
-
-  const onTag = function () {
-    return true;
-  };
-
-  const component = shallow(
-    <ReviewBlock post={post} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
-  );
-
-  // Click a tag button.
-  component.find('.tag').first().simulate('click');
-
-  // It should now show the active "Reject" button.
-  expect(component.find('.tag').first().hasClass('is-active'));
-});
-

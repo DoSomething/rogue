@@ -1,5 +1,9 @@
 @import '~@dosomething/forge/scss/toolkit';
 
+h4.disabled {
+  color: $light-gray;
+}
+
 .tag {
   list-style-type: none;
   clear: both;
@@ -18,6 +22,21 @@
   &:active, &.is-active, &is-loading {
     background: $blue;
     color: $white;
+  }
+
+  &:enabled {
+    border-color: $med-gray;
+    color: $med-gray;
+
+    &:hover {
+      background: $blue;
+      color: $white;
+    }
+
+    &.is-active {
+      background: $blue;
+      color: $white;
+    }
   }
 
   &:focus {

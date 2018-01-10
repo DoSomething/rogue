@@ -116,6 +116,107 @@ exports[`it renders correctly 1`] = `
             </button>
           </li>
         </ul>
+        <div>
+          <h4
+            className="disabled"
+          >
+            Tags
+          </h4>
+          <ul
+            className="aligned-actions"
+          >
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Good Photo
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Good Quote
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Hide In Gallery 👻
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Good For Sponsor
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Good For Storytelling
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Irrelevant
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Inappropriate
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Unrealistic Quantity
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Test
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Incomplete Action
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div
@@ -132,6 +233,7 @@ exports[`it renders correctly 1`] = `
         <span>
           Post ID
           : 
+          123
           <br />
         </span>
         <span>

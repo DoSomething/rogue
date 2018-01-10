@@ -5,8 +5,10 @@ import Post from './index';
 
 test('it renders correctly', () => {
   const post = {
+    id: 123,
     caption: 'Here is my awesome caption!',
     status: 'pending',
+    tags: [],
   };
 
   const signup = {
