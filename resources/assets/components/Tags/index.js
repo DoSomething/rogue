@@ -59,11 +59,11 @@ class Tags extends React.Component {
       'incomplete-action': 'Incomplete Action',
     };
 
-    const h2ClassName = this.props.disabled ? 'disabled' : 'enabled';
+    const showTags = this.props.disabled ? 'disabled' : 'enabled';
 
     return (
       <div>
-        <h4 className={h2ClassName}>Tags</h4>
+        <h4 className={showTags}>Tags</h4>
         <ul className="aligned-actions">
           {map(tags, (label, key) => (
             <li key={key}>
