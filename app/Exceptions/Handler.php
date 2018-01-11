@@ -62,4 +62,16 @@ class Handler extends ExceptionHandler
 
         return parent::render($request, $e);
     }
+
+    /**
+     * Get the default context variables for logging exceptions.
+     *
+     * @return array
+     */
+    protected function context()
+    {
+        // We handle adding context in AppServiceProvider, and specifically
+        // want to disable Laravel's default behavior of appending email here.
+        return [];
+    }
 }

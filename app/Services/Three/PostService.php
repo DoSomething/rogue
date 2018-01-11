@@ -31,10 +31,9 @@ class PostService
      *
      * @param array $data
      * @param int $signupId
-     * @param string $transactionId
      * @return \Rogue\Models\Post
      */
-    public function create($data, $signupId, $transactionId)
+    public function create($data, $signupId)
     {
         $post = $this->repository->create($data, $signupId);
 
@@ -47,9 +46,6 @@ class PostService
             SendPostToBlink::dispatch($post);
         }
 
-        // Add new transaction id to header.
-        request()->headers->set('X-Request-ID', $transactionId);
-
         // Log that a post was created.
         info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
 
@@ -61,26 +57,23 @@ class PostService
      *
      * @param \Rogue\Models\Signup $signup
      * @param array $data
-     * @param string $transactionId
      * @return \Rogue\Models\Post|\Rogue\Models\Signup
      */
-    public function update($signup, $data, $transactionId)
+    public function update($signup, $data)
     {
         $postOrSignup = $this->repository->update($signup, $data);
 
-        // Send to Blink unless 'dont_send_to_blink' is TRUE
-        $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
-
-        // Save the new post in Customer.io, via Blink.
-        if (config('features.blink') && $postOrSignup instanceof Post && $should_send_to_blink) {
-            SendPostToBlink::dispatch($postOrSignup);
+        if ($postOrSignup instanceof Post) {
+            // Save the new post in Customer.io, via Blink,
+            // unless 'dont_send_to_blink' is TRUE.
+            $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+            if (config('features.blink') && $should_send_to_blink) {
+                SendPostToBlink::dispatch($postOrSignup);
+            }
 
             // Log that a post was created.
             info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);
         }
-
-        // Add new transaction id to header.
-        request()->headers->set('X-Request-ID', $transactionId);
 
         return $postOrSignup;
     }

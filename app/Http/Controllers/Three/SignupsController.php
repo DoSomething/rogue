@@ -21,7 +21,7 @@ class SignupsController extends ApiController
     /**
      * The signup service instance.
      *
-     * @var \Rogue\Services\SignupService
+     * @var \Rogue\Services\Three\SignupService
      */
     protected $signups;
 
@@ -60,7 +60,6 @@ class SignupsController extends ApiController
             'why_participated' => 'string',
         ]);
 
-        $transactionId = incrementTransactionId($request);
         $northstarId = getNorthstarId($request);
 
         // Check to see if the signup exists before creating one.
@@ -69,7 +68,7 @@ class SignupsController extends ApiController
         $code = $signup ? 200 : 201;
 
         if (! $signup) {
-            $signup = $this->signups->create($request->all(), $transactionId, $northstarId);
+            $signup = $this->signups->create($request->all(), $northstarId);
         }
 
         return $this->item($signup, $code);
