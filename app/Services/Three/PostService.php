@@ -63,16 +63,17 @@ class PostService
     {
         $postOrSignup = $this->repository->update($signup, $data);
 
-        // Send to Blink unless 'dont_send_to_blink' is TRUE
-        $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+        if ($postOrSignup instanceof Post) {
+            // Save the new post in Customer.io, via Blink,
+            // unless 'dont_send_to_blink' is TRUE.
+            $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+            if (config('features.blink') && $should_send_to_blink) {
+                SendPostToBlink::dispatch($postOrSignup);
+            }
 
-        // Save the new post in Customer.io, via Blink.
-        if (config('features.blink') && $postOrSignup instanceof Post && $should_send_to_blink) {
-            SendPostToBlink::dispatch($postOrSignup);
+            // Log that a post was created.
+            info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);
         }
-
-        // Log that a post was created.
-        info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);
 
         return $postOrSignup;
     }
