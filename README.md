@@ -9,7 +9,7 @@ Rogue! :camera_flash:
 
 ### Contributing
 
-Fork and clone this repository, and [add it to your Homestead](https://github.com/DoSomething/communal-docs/blob/master/Homestead/readme.md).
+Clone this repository, and [add it to your Homestead](https://github.com/DoSomething/communal-docs/blob/master/Homestead/readme.md).
 
 ```sh
 # Install dependencies:
