@@ -60,9 +60,7 @@ class ImagesController extends Controller
             ],
         ]);
 
-        $streamedResponse = $server->getImageResponse($post->getMediaPath(), $request->all());
-        $streamedResponse->headers->set('fake-header', 'value8');
-        return  $streamedResponse;
+        return $server->getImageResponse($post->getMediaPath(), $request->all());
     }
 
     /**

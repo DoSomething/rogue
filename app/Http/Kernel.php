@@ -52,6 +52,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'add-cache-key' => \Rogue\Http\Middleware\AddCacheKey::class,
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guard' => \DoSomething\Gateway\Server\Middleware\SetGuard::class,
