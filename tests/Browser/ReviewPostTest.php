@@ -35,9 +35,11 @@ class ReviewPostTest extends DuskTestCase
                     ->assertPathIs('/campaigns/' . $signup->campaign_id . '/inbox')
                     ->on(new CampaignInboxPage($signup->campaign_id))
                     ->waitFor('@acceptButton')
+                    ->assertSeeIn('.disabled', 'Tags')
                     ->press('Accept')
                     ->waitFor('@activeAcceptButton')
                     ->assertSeeIn('@activeAcceptButton', 'Accept')
+                    ->assertSeeIn('.enabled', 'Tags')
                     ->press('Good Photo')
                     ->waitFor('@activeTagButton')
                     ->assertSeeIn('@activeTagButton', 'Good Photo');
@@ -45,12 +47,12 @@ class ReviewPostTest extends DuskTestCase
     }
 
     /**
-     * Test user flow of rejecting a pending Post.
+     * Test user flow of rejecting a pending Post and tagging it as a Test.
      *
      * @group ReviewPost
      * @return void
      */
-    public function testRejectingAPost()
+    public function testRejectingAndTaggingAPost()
     {
         // Create a signup and an associated post with a 'pending' status
         // so there will be a post in the campaign inbox.
@@ -67,10 +69,14 @@ class ReviewPostTest extends DuskTestCase
                     ->assertPathIs('/campaigns/' . $signup->campaign_id . '/inbox')
                     ->on(new CampaignInboxPage($signup->campaign_id))
                     ->waitFor('@rejectButton')
+                    ->assertSeeIn('.disabled', 'Tags')
                     ->press('Reject')
                     ->waitFor('@activeRejectButton')
                     ->assertSeeIn('@activeRejectButton', 'Reject')
-                    ->assertDontSee('@tagButton', 'Good Photo');
+                    ->assertSeeIn('.enabled', 'Tags')
+                    ->press('Test')
+                    ->waitFor('@activeTagButton')
+                    ->assertSeeIn('@activeTagButton', 'Test');
         });
     }
 
