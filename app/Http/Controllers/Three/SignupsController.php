@@ -21,7 +21,7 @@ class SignupsController extends ApiController
     /**
      * The signup service instance.
      *
-     * @var \Rogue\Services\SignupService
+     * @var \Rogue\Services\Three\SignupService
      */
     protected $signups;
 
