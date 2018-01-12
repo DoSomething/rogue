@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
         // Attach the user & request ID to context for all log messages.
         Log::getMonolog()->pushProcessor(function ($record) {
             $record['extra']['user_id'] = auth()->id();
+            $record['extra']['client_id'] = client_id();
             $record['extra']['request_id'] = request()->header('X-Request-Id');
 
             return $record;
