@@ -10,7 +10,7 @@
  */
 
 // Assets
-$router->get('images/{post}', 'ImagesController@show')->middleware('add-cache-key:image');
+$router->get('images/{post}', 'ImagesController@show');
 
 // Legacy API Routes
 $router->group(['prefix' => 'api/v1', 'middleware' => ['legacy-auth']], function () {
