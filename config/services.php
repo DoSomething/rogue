@@ -69,4 +69,10 @@ return [
     'slack' => [
         'url' => env('SLACK_WEBHOOK_INTEGRATION_URL'),
     ],
+
+    'fastly' => [
+        'url' => env('FASTLY_URL'),
+        'key' => env('FASTLY_API_TOKEN'),
+        'service_id' => env('FASTLY_SERVICE_ID'),
+    ],
 ];
