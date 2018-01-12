@@ -60,7 +60,10 @@ class ImagesController extends Controller
             ],
         ]);
 
-        return $server->getImageResponse($post->getMediaPath(), $request->all());
+        $response = $server->getImageResponse($post->getMediaPath(), $request->all());
+        $response->headers->set('Surrogate-Key', 'post-'.$post->id);
+
+        return $response;
     }
 
     /**
