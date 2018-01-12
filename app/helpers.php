@@ -102,15 +102,3 @@ function is_staff_user()
 
     return false;
 }
-
-/**
- * Get the name of the client executing the current request.
- *
- * @return string
- */
-function client_id()
-{
-    // If this is an API request, use embedded client ID from the JWT. For
-    // web requests, check what this instance of Rogue is configured to use!
-    return token()->exists() ? token()->client : config('services.northstar.authorization_code.client_id');
-}
