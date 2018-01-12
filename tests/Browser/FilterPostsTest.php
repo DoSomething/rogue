@@ -32,7 +32,7 @@ class FilterPostsTest extends DuskTestCase
                     ->select('select', 'pending')
                     ->assertSelected('select', 'pending')
                     ->press('Apply Filters')
-                    ->pause(3000)
+                    ->waitFor('@unactiveAcceptButton')
                     ->assertDontSee('@activeAcceptButton', 'Accept');
         });
     }
@@ -57,7 +57,7 @@ class FilterPostsTest extends DuskTestCase
                     ->select('select', 'rejected')
                     ->assertSelected('select', 'rejected')
                     ->press('Apply Filters')
-                    ->pause(3000)
+                    ->waitFor('@activeRejectButton')
                     ->assertDontSee('@activeAcceptButton', 'Accept')
                     ->assertSeeIn('@activeRejectButton', 'Reject');
         });
@@ -83,7 +83,7 @@ class FilterPostsTest extends DuskTestCase
                     ->select('select', 'accepted')
                     ->assertSelected('select', 'accepted')
                     ->press('Apply Filters')
-                    ->pause(3000)
+                    ->waitFor('@activeAcceptButton')
                     ->assertDontSee('@activeRejectButton', 'Reject')
                     ->assertSeeIn('@activeAcceptButton', 'Accept');
         });
@@ -111,7 +111,7 @@ class FilterPostsTest extends DuskTestCase
                     ->assertSelected('select', 'accepted')
                     ->press('Good Photo')
                     ->press('Apply Filters')
-                    ->pause(3000)
+                    ->waitFor('@activeTagButton')
                     ->assertDontSee('@activeTagButton', 'Good Quote')
                     ->assertSeeIn('@activeTagButton', 'Good Photo');
         });
@@ -138,7 +138,7 @@ class FilterPostsTest extends DuskTestCase
                     ->assertSelected('select', 'accepted')
                     ->press('Good For Storytelling')
                     ->press('Apply Filters')
-                    ->pause(3000)
+                    ->waitFor('.empty__text')
                     ->assertSee('There are no results!');
         });
     }
