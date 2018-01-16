@@ -104,7 +104,9 @@ class ImagesController extends Controller
         $originalImage = $this->aws->storeImageData($originalImage->__toString(), $originalFilename);
         $editedImage = $this->aws->storeImageData((string) $editedImage, 'edited_' . $post->id);
 
-        $this->fastly->purgeKey('post-'.$post->id);
+        // Purge image from cache.
+        $purgeResponse = $this->fastly->purgeKey('post-'.$post->id);
+        info('image_cache_purged', ['fastly_response' => $purgeResponse]);
 
         return response()->json([
             'url' => $editedImage,
