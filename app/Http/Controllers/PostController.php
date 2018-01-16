@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers;
 
+use Rogue\Services\Fastly;
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Transformers\PostTransformer;
@@ -10,6 +11,13 @@ use Rogue\Http\Controllers\Traits\PostRequests;
 class PostController extends Controller
 {
     use PostRequests;
+
+    /**
+     * The Fastly service instance
+     *
+     * @var Rogue\Services\Fastly
+     */
+    protected $fastly;
 
     /**
      * The post service instance.
@@ -36,11 +44,12 @@ class PostController extends Controller
      * @param  PostContract  $posts
      * @return void
      */
-    public function __construct(PostService $posts, SignupRepository $signups)
+    public function __construct(PostService $posts, SignupRepository $signups, Fastly $fastly)
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
 
+        $this->fastly = $fastly;
         $this->posts = $posts;
         $this->signups = $signups;
 
@@ -58,6 +67,8 @@ class PostController extends Controller
         $postDeleted = $this->posts->destroy($postId);
 
         if ($postDeleted) {
+            $this->fastly->purgeKey('post-'.$postId);
+
             return response()->json(['code' => 200, 'message' => 'Post deleted.']);
         } else {
             return response()->json(['code' => 500, 'message' => 'There was an error deleting the post']);

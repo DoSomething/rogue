@@ -5,6 +5,7 @@ namespace Tests\Http;
 use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\User;
+use Rogue\Services\Fastly;
 
 class PostTest extends TestCase
 {
@@ -16,6 +17,10 @@ class PostTest extends TestCase
     public function testDeletingAPost()
     {
         $post = factory(Post::class)->create();
+
+        // Mock the Fastly API calls.
+        $this->mock(Fastly::class)
+            ->shouldReceive('purgeKey');
 
         $response = $this->actingAsAdmin()->deleteJson('posts/' . $post->id);
 

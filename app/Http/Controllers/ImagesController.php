@@ -5,6 +5,7 @@ namespace Rogue\Http\Controllers;
 use Carbon\Carbon;
 use Rogue\Models\Post;
 use Rogue\Services\AWS;
+use Rogue\Services\Fastly;
 use Illuminate\Http\Request;
 use League\Glide\ServerFactory;
 use Intervention\Image\Facades\Image;
@@ -27,10 +28,11 @@ class ImagesController extends Controller
      *
      * @param Filesystem $filesystem
      */
-    public function __construct(Filesystem $filesystem, AWS $aws)
+    public function __construct(Filesystem $filesystem, AWS $aws, Fastly $fastly)
     {
         $this->filesystem = $filesystem;
         $this->aws = $aws;
+        $this->fastly = $fastly;
     }
 
     /**
@@ -102,10 +104,21 @@ class ImagesController extends Controller
         $originalImage = $this->aws->storeImageData($originalImage->__toString(), $originalFilename);
         $editedImage = $this->aws->storeImageData((string) $editedImage, 'edited_' . $post->id);
 
-        return response()->json([
-            'url' => $editedImage . '?time='. Carbon::now()->timestamp,
-            'original_image_url' => $originalImage . '?time='. Carbon::now()->timestamp,
-        ]);
+        if (config('features.glide')) {
+            // Purge image from cache.
+            $this->fastly->purgeKey('post-'.$post->id);
+
+            return response()->json([
+                'url' => $editedImage,
+                'original_image_url' => $originalImage,
+            ]);
+        // @TODO - If glide is off, we still need to return a cache-busting timestamp on the media URLs since they will be cached without a cache-key and are not purged via the API. Remove this when we switch to glide fulltime.
+        } else {
+            return response()->json([
+                'url' => $editedImage . '?time='. Carbon::now()->timestamp,
+                'original_image_url' => $editedImage . '?time='. Carbon::now()->timestamp,
+            ]);
+        }
     }
 
     /**
