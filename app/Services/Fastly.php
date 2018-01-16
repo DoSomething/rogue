@@ -17,9 +17,8 @@ class Fastly extends RestApiClient
             'headers' => [
                 'Fastly-Key' => config('services.fastly.key'),
                 'Accept'     => 'application/json',
-            ]
+            ],
         ];
-
 
         parent::__construct($url, $options);
     }
