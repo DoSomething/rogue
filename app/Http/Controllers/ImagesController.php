@@ -104,13 +104,20 @@ class ImagesController extends Controller
         $originalImage = $this->aws->storeImageData($originalImage->__toString(), $originalFilename);
         $editedImage = $this->aws->storeImageData((string) $editedImage, 'edited_' . $post->id);
 
-        // Purge image from cache.
-        $purgeResponse = $this->fastly->purgeKey('post-'.$post->id);
-        info('image_cache_purged', ['fastly_response' => $purgeResponse]);
+        if (config('features.glide')) {
+            // Purge image from cache.
+            $purgeResponse = $this->fastly->purgeKey('post-'.$post->id);
+            info('image_cache_purged', ['fastly_response' => $purgeResponse]);
+
+            return response()->json([
+                'url' => $editedImage,
+                'original_image_url' => $originalImage,
+            ]);
+        }
 
         return response()->json([
-            'url' => $editedImage,
-            'original_image_url' => $originalImage,
+            'url' => $editedImage . '?time='. Carbon::now()->timestamp,
+            'original_image_url' => $originalImage . '?time='. Carbon::now()->timestamp,
         ]);
     }
 
