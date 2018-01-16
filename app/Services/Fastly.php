@@ -33,7 +33,8 @@ class Fastly extends RestApiClient
         $fastlyConfigured = config('features.glide') &&
             ! is_null(config('services.fastly.url')) &&
             ! is_null(config('services.fastly.key')) &&
-            ! is_null(config('services.fastly.service_id'));
+            ! is_null(config('services.fastly.service_id')) &&
+            isset($cacheKey);
 
         if (! $fastlyConfigured) {
             info('image_cache_purge_failed', ['response' => 'Fastly not configured correctly on this environment.']);

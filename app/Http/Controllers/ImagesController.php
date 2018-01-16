@@ -104,7 +104,7 @@ class ImagesController extends Controller
         $originalImage = $this->aws->storeImageData($originalImage->__toString(), $originalFilename);
         $editedImage = $this->aws->storeImageData((string) $editedImage, 'edited_' . $post->id);
 
-        if (config('features.glide') {
+        if (config('features.glide')) {
             // Purge image from cache.
             $this->fastly->purgeKey('post-'.$post->id);
 
