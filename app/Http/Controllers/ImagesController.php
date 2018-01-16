@@ -104,21 +104,21 @@ class ImagesController extends Controller
         $originalImage = $this->aws->storeImageData($originalImage->__toString(), $originalFilename);
         $editedImage = $this->aws->storeImageData((string) $editedImage, 'edited_' . $post->id);
 
-        if (config('features.glide') && ! empty(config('services.fastly'))) {
+        if (config('features.glide') {
             // Purge image from cache.
-            $purgeResponse = $this->fastly->purgeKey('post-'.$post->id);
-            info('image_cache_purged', ['fastly_response' => $purgeResponse]);
+            $this->fastly->purgeKey('post-'.$post->id);
 
             return response()->json([
                 'url' => $editedImage,
                 'original_image_url' => $originalImage,
             ]);
+        // @TODO - If glide is off, we still need to return a cache-busting timestamp on the media URLs since they will be cached without a cache-key and are not purged via the API. Remove this when we switch to glide fulltime.
+        } else {
+            return response()->json([
+                'url' => $editedImage . '?time='. Carbon::now()->timestamp,
+                'original_image_url' => $editedImage . '?time='. Carbon::now()->timestamp,
+            ]);
         }
-
-        return response()->json([
-            'url' => $editedImage . '?time='. Carbon::now()->timestamp,
-            'original_image_url' => $originalImage . '?time='. Carbon::now()->timestamp,
-        ]);
     }
 
     /**

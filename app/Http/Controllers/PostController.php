@@ -67,10 +67,7 @@ class PostController extends Controller
         $postDeleted = $this->posts->destroy($postId);
 
         if ($postDeleted) {
-            $purgeResponse = $this->fastly->purgeKey('post-'.$postId);
-
-            // Log the fastly response
-            info('image_cache_purged', ['fastly_response' => $purgeResponse]);
+            $this->fastly->purgeKey('post-'.$postId);
 
             return response()->json(['code' => 200, 'message' => 'Post deleted.']);
         } else {

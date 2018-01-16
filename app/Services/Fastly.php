@@ -30,8 +30,23 @@ class Fastly extends RestApiClient
      */
     public function purgeKey($cacheKey)
     {
+        $fastlyConfigured = config('features.glide') &&
+            ! is_null(config('services.fastly.url')) &&
+            ! is_null(config('services.fastly.key')) &&
+            ! is_null(config('services.fastly.service_id'));
+
+        if (! $fastlyConfigured) {
+            info('image_cache_purge_failed', ['response' => 'Fastly not configured correctly on this environment.']);
+
+            return null;
+        }
+
         $service = config('services.fastly.service_id');
 
-        return $this->post('service/'.$service.'/purge/'.$cacheKey);
+        $purgeResponse = $this->post('service/'.$service.'/purge/'.$cacheKey);
+
+        info('image_cache_purge_successful', ['response' => $purgeResponse]);
+
+        return $purgeResponse;
     }
 }
