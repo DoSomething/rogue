@@ -39,7 +39,7 @@ class PostTransformer extends TransformerAbstract
             // most recent version of the image.
             // @NOTE - Remove if we get rid of rotation.
             'media' => [
-                'url' => $post->getMediaUrl() . '?time='. Carbon::now()->timestamp,
+                'url' => $post->getMediaUrl(),
                 'original_image_url' => $post->url . '?time='. Carbon::now()->timestamp,
                 'caption' => $post->caption,
             ],
