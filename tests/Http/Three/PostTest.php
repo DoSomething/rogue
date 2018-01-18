@@ -198,6 +198,7 @@ class PostTest extends TestCase
         ]);
 
         // Create the second post.
+        // Note: when a post already exists, Gambit doesn't send why_participated again.
         $secondQuantity = $this->faker->numberBetween(10, 1000);
         $secondCaption = $this->faker->sentence;
 
