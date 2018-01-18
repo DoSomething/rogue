@@ -139,6 +139,112 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test that a POST request to /posts with an existing post creates an additional new photo post.
+     * This test ensures we are not breaking Gambit when it creates a post for a signup that already has posts.
+     *
+     * @return void
+     */
+    public function testCreatingMultiplePosts()
+    {
+        $signup = factory(Signup::class)->create();
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $caption = $this->faker->sentence;
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'quantity'         => $quantity,
+            'why_participated' => $this->faker->paragraph,
+            'caption'          => $caption,
+            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'signup_id',
+                'northstar_id',
+                'media' => [
+                    'url',
+                    'original_image_url',
+                    'caption',
+                ],
+                'quantity',
+                'tags' => [],
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'source',
+                'remote_addr',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'status' => 'pending',
+            'quantity' => $quantity,
+        ]);
+
+        // Create the second post.
+        $secondQuantity = $this->faker->numberBetween(10, 1000);
+        $secondCaption = $this->faker->sentence;
+
+        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'quantity'         => $secondQuantity,
+            'caption'          => $secondCaption,
+            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'signup_id',
+                'northstar_id',
+                'media' => [
+                    'url',
+                    'original_image_url',
+                    'caption',
+                ],
+                'quantity',
+                'tags' => [],
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'source',
+                'remote_addr',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'status' => 'pending',
+            'quantity' => $quantity,
+        ]);
+    }
+
+    /**
      * Test that non-authenticated user's/apps can't create a post.
      *
      * @return void
