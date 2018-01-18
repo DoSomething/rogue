@@ -29,7 +29,7 @@ class PostRequest extends Request
             'northstar_id' => 'nullable|objectid',
             'why_participated' => 'nullable|string',
             'caption' => 'required|nullable|string|max:140',
-            'quantity' => 'required|nullable|integer',
+            'quantity' => 'nullable|integer',
             'file' => 'image|dimensions:min_width=400,min_height=400',
             'status' => 'in:pending,accepted,rejected',
         ];

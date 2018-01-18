@@ -80,7 +80,7 @@ class PostRepository
             'signup_id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
-            'quantity' => $data['quantity'],
+            'quantity' => $data['quantity'] ? $data['quantity'] : null,
             'url' => $fileUrl,
             'caption' => $data['caption'],
             'status' => 'pending',
