@@ -126,6 +126,100 @@ class PostApiTest extends TestCase
     }
 
     /**
+     * Test that a POST request to /posts with an existing post creates an additional new photo post.
+     * This test ensures we are not breaking Gambit when it creates a post for a signup that already has posts.
+     *
+     * @return void
+     */
+    public function testCreatingMultiplePosts()
+    {
+        $signup = factory(Signup::class)->create();
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $caption = $this->faker->sentence;
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'quantity'         => $quantity,
+            'why_participated' => $this->faker->paragraph,
+            'num_participants' => null,
+            'caption'          => $caption,
+            'source'           => 'phpunit',
+            'remote_addr'      => $this->faker->ipv4,
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
+            'crop_x'           => 0,
+            'crop_y'           => 0,
+            'crop_width'       => 100,
+            'crop_height'      => 100,
+            'crop_rotate'      => 90,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'northstar_id' => $signup->northstar_id,
+                'status' => 'pending',
+                'quantity' => $signup->getQuantity(),
+                'media' => [
+                    'caption' => $caption,
+                ],
+            ],
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'status' => 'pending',
+        ]);
+
+        // Create a second post.
+        $secondQuantity = $this->faker->numberBetween(10, 1000);
+        $secondCaption = $this->faker->sentence;
+
+        $secondResponse = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'quantity'         => $secondQuantity,
+            'num_participants' => null,
+            'caption'          => $secondCaption,
+            'source'           => 'phpunit',
+            'remote_addr'      => $this->faker->ipv4,
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
+            'crop_x'           => 0,
+            'crop_y'           => 0,
+            'crop_width'       => 100,
+            'crop_height'      => 100,
+            'crop_rotate'      => 90,
+        ]);
+
+        $secondResponse->assertStatus(200);
+        $secondResponse->assertJson([
+            'data' => [
+                'northstar_id' => $signup->northstar_id,
+                'status' => 'pending',
+                'quantity' => $signup->getQuantity(),
+                'media' => [
+                    'caption' => $secondCaption,
+                ],
+            ],
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'status' => 'pending',
+        ]);
+    }
+
+    /**
      * Test that we can make POST requess to /posts creates a new photo post
      * when the campaign id and there is no campaign run id.
      * (Mimics requests from phoenix-next)
