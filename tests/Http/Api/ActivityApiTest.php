@@ -308,7 +308,6 @@ class ActivityApiTest extends TestCase
 
     /**
      * Test for retrieving a user's activity with northstar_id and campaign_run_id query params.
-     * This test is to ensure we are not breaking the Gambit flow when it checks to see if a signup exists.
      *
      * GET /activity?filter[]=
      * @return void

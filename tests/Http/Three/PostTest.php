@@ -140,7 +140,6 @@ class PostTest extends TestCase
 
     /**
      * Test that a POST request to /posts with an existing post creates an additional new photo post.
-     * This test ensures we are not breaking Gambit when it creates a post for a signup that already has posts.
      *
      * @return void
      */
@@ -197,8 +196,7 @@ class PostTest extends TestCase
             'quantity' => $quantity,
         ]);
 
-        // Create the second post.
-        // Note: when a post already exists, Gambit doesn't send why_participated again.
+        // Create a second post without why_participated.
         $secondQuantity = $this->faker->numberBetween(10, 1000);
         $secondCaption = $this->faker->sentence;
 
