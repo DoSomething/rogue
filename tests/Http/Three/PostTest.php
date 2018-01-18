@@ -244,11 +244,11 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test that a POST request to /posts without a quantity creates a new post.
+     * Test that a POST request to /posts with `null` as the quantity creates a new post.
      *
      * @return void
      */
-    public function testCreatingAPostWithoutQuantity()
+    public function testCreatingAPostWithNullAsQuantity()
     {
         $signup = factory(Signup::class)->create();
         $caption = $this->faker->sentence;
@@ -262,6 +262,62 @@ class PostTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => null,
+            'caption'          => $caption,
+            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'signup_id',
+                'northstar_id',
+                'media' => [
+                    'url',
+                    'original_image_url',
+                    'caption',
+                ],
+                'quantity',
+                'tags' => [],
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'source',
+                'remote_addr',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'status' => 'pending',
+            'quantity' => null,
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /posts without a quantity param creates a new post.
+     *
+     * @return void
+     */
+    public function testCreatingAPostWithoutQuantityParam()
+    {
+        $signup = factory(Signup::class)->create();
+        $caption = $this->faker->sentence;
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
             'caption'          => $caption,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
         ]);

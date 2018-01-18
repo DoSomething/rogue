@@ -72,7 +72,6 @@ class PostRepository
         } else {
             $fileUrl = null;
         }
-
         $signup = Signup::find($signupId);
 
         // Create a post.
@@ -80,7 +79,7 @@ class PostRepository
             'signup_id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
-            'quantity' => $data['quantity'] ? $data['quantity'] : null,
+            'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
             'url' => $fileUrl,
             'caption' => $data['caption'],
             'status' => 'pending',
