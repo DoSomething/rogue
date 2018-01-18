@@ -140,8 +140,8 @@ POST /api/v3/posts
     The Drupal/Contentful ID of the campaign that the user's post is associated with.
   - **campaign_run_id**: (int) optional.
     The drupal campaign run node id of the campaign that the user's post is associated with.
-  - **quantity**: (int).
-    The number of reportback nouns verbed. 
+  - **quantity**: (int|nullable).
+    The number of reportback nouns verbed. Can be `null`.
   - **why_participated**: (string).
     The reason why the user participated.
   - **caption**: (string).
