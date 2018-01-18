@@ -325,8 +325,8 @@ class ActivityApiTest extends TestCase
             'data' => [
                 [
                     'signup_id' => $signup->id,
-                    'northstar_id' => "17",
-                    'campaign_run_id' => "143",
+                    'northstar_id' => '17',
+                    'campaign_run_id' => '143',
                 ],
             ],
             'meta' => [
