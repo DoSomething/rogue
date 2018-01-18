@@ -29,7 +29,7 @@ class AddColumnsToCategorizePosts extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->dropColumn('type');
-            $table->dropColumn('bucket');
+            $table->dropColumn('action_bucket');
             $table->dropColumn('details');
         });
     }
