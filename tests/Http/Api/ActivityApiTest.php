@@ -305,4 +305,35 @@ class ActivityApiTest extends TestCase
             ],
         ]);
     }
+
+    /**
+     * Test for retrieving a user's activity with northstar_id and campaign_run_id query params.
+     *
+     * GET /activity?filter[]=
+     * @return void
+     */
+    public function testActivityIndexWithNorthstarIdAndCampaignRunIdFilters()
+    {
+        $signup = factory(Signup::class)->create(['northstar_id' => 17, 'campaign_run_id' => 143]);
+        factory(Signup::class, 5)->create();
+
+        $response = $this->getJson('api/v2/activity?filter[northstar_id]=17&filter[campaign_run_id]=143');
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                [
+                    'signup_id' => $signup->id,
+                    'northstar_id' => '17',
+                    'campaign_run_id' => '143',
+                ],
+            ],
+            'meta' => [
+                'pagination' => [
+                    'current_page' => 1,
+                    'count' => 1,
+                ],
+            ],
+        ]);
+    }
 }
