@@ -269,7 +269,7 @@ class SignupTest extends TestCase
     }
 
     /**
-     * TTest that a non-admin or user that doesn't own the signup can't update signup.
+     * Test that a non-admin or user that doesn't own the signup can't update signup.
      *
      * @return void
      */
