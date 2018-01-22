@@ -30,7 +30,6 @@ class ReactionController extends ApiController
         $this->transformer = new ReactionTransformer;
 
         $this->middleware('auth:api', ['only' => ['store']]);
-        $this->middleware('role:admin', ['only' => ['store']]); // @TODO: Allow anyone to use this.
     }
 
     /**
