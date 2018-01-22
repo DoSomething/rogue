@@ -6,6 +6,7 @@ use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Services\Three\SignupService;
 use Rogue\Http\Controllers\Api\ApiController;
+use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Transformers\Three\SignupTransformer;
 use Rogue\Http\Controllers\Traits\TransformsRequests;
 
@@ -117,11 +118,16 @@ class SignupsController extends ApiController
             'why_participated' => 'required',
         ]);
 
-        $signup->update(
-            $request->only('why_participated')
-        );
+        // Only allow an admin or the user who owns the signup to update.
+        if (token()->role() === 'admin' || auth()->id() === $signup->northstar_id) {
+            $signup->update(
+                $request->only('why_participated')
+            );
 
-        return $this->item($signup);
+            return $this->item($signup);
+        }
+
+        throw new AuthorizationException('You don\'t have the correct role to update this signup!');
     }
 
     /**

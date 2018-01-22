@@ -565,7 +565,7 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test that a non-staff member or non-admin can't update posts.
+     * Test that a non-admin or user that doesn't own the post can't update post.
      *
      * @return void
      */
