@@ -52,13 +52,11 @@ class PostQuantity extends Command
 
                 // If no posts, move on
                 if ($posts->isEmpty()) {
-                    info('rogue:postquantity: No posts for signup ' . $signup->id);
                     $bar->advance();
                     continue;
                 }
 
                 // Sum quant of posts
-                info('rogue:postquantity: Updating posts for signup ' . $signup->id);
                 $postQuantityTotal = $posts->sum('quantity');
 
                 // If >0, see if any posts have null quant
@@ -88,6 +86,7 @@ class PostQuantity extends Command
                 // Advance the progress bar
                 $bar->advance();
             }
+            info('rogue:postquantity: Updated posts for signup ' . $signup->id);
         });
         // We did it!
         $bar->finish();
@@ -105,7 +104,6 @@ class PostQuantity extends Command
             $mostRecentAcceptedPost = $acceptedPosts->first();
             $mostRecentAcceptedPost->quantity = $quantity;
             $mostRecentAcceptedPost->save();
-            info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentAcceptedPost->id);
             usleep($sleeptime);
         }
         // If no accepted posts, put quantity on most recent post (based on creation)
@@ -113,7 +111,6 @@ class PostQuantity extends Command
             $mostRecentPost = $posts->sortByDesc('created_at')->first();
             $mostRecentPost->quantity = $quantity;
             $mostRecentPost->save();
-            info('rogue:postquantity: Put quantity ' . $quantity . ' on post ' . $mostRecentPost->id);
             usleep($sleeptime);
         }
         // Put quantity of 0 on all other posts under this signup
@@ -121,7 +118,6 @@ class PostQuantity extends Command
             if (is_null($post->quantity)) {
                 $post->quantity = 0;
                 $post->save();
-                info('rogue:postquantity: Put quantity 0 on post ' . $post->id);
                 usleep($sleeptime);
             }
         }
