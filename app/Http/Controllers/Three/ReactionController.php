@@ -41,13 +41,10 @@ class ReactionController extends ApiController
      */
     public function store(Request $request, Post $post)
     {
-        $this->validate($request, [
-            'northstar_id' => 'required|string',
-        ]);
+        $northstarId = getNorthstarId($request);
 
-        $userId = $request['northstar_id'];
         // Check to see if the post has a reaction from this particular user with id of northstar_id. If not, create one.
-        $reaction = Reaction::withTrashed()->firstOrCreate(['northstar_id' => $userId, 'post_id' => $post->id]);
+        $reaction = Reaction::withTrashed()->firstOrCreate(['northstar_id' => $northstarId, 'post_id' => $post->id]);
 
         if ($reaction->wasRecentlyCreated || $reaction->trashed()) {
             // We're adding a new reaction in these cases.
