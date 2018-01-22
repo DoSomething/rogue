@@ -118,11 +118,16 @@ class SignupsController extends ApiController
             'why_participated' => 'required',
         ]);
 
-        $signup->update(
-            $request->only('why_participated')
-        );
+        // Only allow an admin or the user who owns the signup to update.
+        if (token()->role() === 'admin' || auth()->id() === $signup->northstar_id) {
+            $signup->update(
+                $request->only('why_participated')
+            );
 
-        return $this->item($signup);
+            return $this->item($signup);
+        }
+
+        throw new AuthorizationException('You don\'t have the correct role to update this post!');
     }
 
     /**
