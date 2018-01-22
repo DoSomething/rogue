@@ -4,6 +4,7 @@ namespace Tests\Http\Three;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
+use Rogue\Models\User;
 use Rogue\Models\Signup;
 use DoSomething\Gateway\Blink;
 
@@ -268,19 +269,24 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test that non-authenticated user's/apps can't update signups.
+     * TTest that a non-admin or user that doesn't own the signup can't update signup.
      *
      * @return void
      */
     public function testUnauthenticatedUserUpdatingASignup()
     {
+        $user = factory(User::class)->create();
         $signup = factory(Signup::class)->create();
 
-        $response = $this->patchJson('api/v3/signups/' . $signup->id, [
-            'why_participated'  => 'new why participated',
+        $response = $this->withAccessToken($user->id)->patchJson('api/v3/signups/' . $signup->id, [
+            'why_participated' => 'new why participated',
         ]);
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
+
+        $json = $response->json();
+
+        $this->assertEquals('You don\'t have the correct role to update this signup!', $json['message']);
     }
 
     /**
