@@ -41,9 +41,6 @@ POST /api/v3/post/:post_id/reactions
 Example Request
 ```
 curl http://rogue.dev:8000/api/v3/posts/:post_id/reactions
- -d '{
-  "northstar_id":5589c991a59dbfa93d8b45ae,
-  }'
   --header "Accept: application/json"
   --X-DS-Rogue-API-Key "API_KEY"
 ```
