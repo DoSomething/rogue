@@ -239,4 +239,17 @@ class Post extends Model
     {
         return Reaction::where('post_id', $postId)->count();
     }
+
+    /**
+     * Scope a query to only return posts if a user is an admin, staff, or is owner of post.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWhereVisible($query)
+    {
+        if (! is_staff_user()) {
+            return $query->where('status', 'accepted')
+                         ->orWhere('northstar_id', auth()->id());
+        }
+    }
 }
