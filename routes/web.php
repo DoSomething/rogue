@@ -48,3 +48,7 @@ $router->get('search', ['as' => 'users.search', 'uses' => 'UsersController@searc
 
 // FAQ
 $router->get('faq', 'PagesController@faq');
+
+// Imports
+$router->get('import', 'ImportController@show');
+$router->post('import', 'ImportController@store');
