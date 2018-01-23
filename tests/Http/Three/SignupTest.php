@@ -143,6 +143,43 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test for signup index with included post info.
+     *
+     * GET /api/v3/signups?include=posts
+     * @return void
+     */
+    public function testSignupIndexWithIncludedPosts()
+    {
+        $signup = factory(Signup::class)->create();
+        $posts = factory(Post::class, 5)->create();
+
+        foreach ($posts as $post) {
+            $post->signup()->associate($signup);
+            $post->status = 'accepted';
+            $post->save();
+        }
+
+        $response = $this->getJson('api/v3/signups' . '?include=posts');
+        // dd($response);
+
+        $response->assertStatus(200);
+
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'posts' => [
+                        'data' => [
+                            '*' => [
+                                'id',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    /**
      * Test for retrieving a specific signup.
      *
      * GET /api/v3/signups/:signup_id
