@@ -7,7 +7,7 @@
     <div class="container -padded">
         <div class="wrapper">
             <div class="container__block -narrow">
-                <form action={{url('/upload')}} method="post" enctype="multipart/form-data">
+                <form action={{url('/import')}} method="post" enctype="multipart/form-data">
                     {{ csrf_field()}}
                     <div class="form-item">
                         <label for="upload-file" class="field-label">Upload</label>
