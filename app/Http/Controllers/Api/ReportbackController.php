@@ -89,6 +89,7 @@ class ReportbackController extends ApiController
      */
     public function transform($data, $code = 200, $meta = [], $include = null, $endpoint = null)
     {
+        dd('hihello');
         $data->setMeta($meta);
 
         $manager = new Manager;

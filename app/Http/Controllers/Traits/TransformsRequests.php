@@ -137,7 +137,6 @@ trait TransformsRequests
         } else {
             $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
         }
-
         $includes = $request->query('include');
 
         if (is_string($includes)) {

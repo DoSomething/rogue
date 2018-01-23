@@ -45,6 +45,11 @@ Example response:
 ```
 GET /api/v3/signups
 ```
+### Optional Query Parameters
+- **include** _(string)_
+  - Include additional related records in the response: `posts`
+  - e.g. `/v3/signups?include=posts`
+
 Example Response: 
 
 ```
