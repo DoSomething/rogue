@@ -200,6 +200,66 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test for retrieving a signup with included rejected post info. as admin and non-admin/non-owner.
+     *
+     * GET /api/v3/signups/186?include=posts
+     * @return void
+     */
+    public function testSignupWithIncludedPostsWithMultipleCredentials()
+    {
+        $signup = factory(Signup::class)->create();
+        $post = factory(Post::class)->create();
+        $post->signup()->associate($signup);
+        $post->status = 'rejected';
+        $post->save();
+
+        // Test with annoymous user that no posts are returned.
+        $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'posts' => [
+                    'data' => [
+                    ],
+                ],
+            ],
+        ]);
+
+        // Test that admin/staff can see rejected post.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'posts' => [
+                    'data' => [
+                        '*' => [
+                            'id' => $post->id,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        // Test that the signup's owner can see rejected posts.
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'posts' => [
+                    'data' => [
+                        '*' => [
+                            'id' => $post->id,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+    }
+
+    /**
      * Test that a signup gets deleted when hitting the DELETE endpoint.
      *
      * @return void
