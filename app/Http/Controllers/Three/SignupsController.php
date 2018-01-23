@@ -102,6 +102,12 @@ class SignupsController extends ApiController
      */
     public function show(Request $request, Signup $signup)
     {
+        if ($request->query('include') === 'posts') {
+            if (! is_staff_user() && auth()->id() != $signup->northstar_id) {
+                throw new AuthorizationException('You don\'t have the correct role to view this signup\'s post!');
+            }
+        }
+
         return $this->item($signup, 200, [], $this->transformer, $request->query('include'));
     }
 
