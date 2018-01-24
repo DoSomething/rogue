@@ -186,10 +186,8 @@ class SignupTest extends TestCase
      */
     public function testSignupIndexWithIncludedPostsWithMultipleCredentials()
     {
-        $signup = factory(Signup::class)->create();
         $post = factory(Post::class)->create();
-        $post->signup()->associate($signup);
-        $post->save();
+        $signup = $post->signup;
 
         // Test with annoymous user that no posts are returned.
         $response = $this->getJson('api/v3/signups' . '?include=posts');
@@ -278,10 +276,8 @@ class SignupTest extends TestCase
      */
     public function testSignupWithIncludedPosts()
     {
-        $signup = factory(Signup::class)->create();
         $post = factory(Post::class)->create();
-        $post->signup()->associate($signup);
-        $post->save();
+        $signup = $post->signup;
 
         $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
 
@@ -307,11 +303,8 @@ class SignupTest extends TestCase
      */
     public function testSignupWithIncludedPostsWithMultipleCredentials()
     {
-        $signup = factory(Signup::class)->create();
-        $post = factory(Post::class)->create();
-        $post->signup()->associate($signup);
-        $post->status = 'rejected';
-        $post->save();
+        $post = factory(Post::class, 'rejected')->create();
+        $signup = $post->signup;
 
         // Test with annoymous user that no posts are returned.
         $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
