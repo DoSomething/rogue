@@ -6,6 +6,7 @@ use Rogue\Models\Post;
 use Rogue\Models\Event;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
+use Rogue\Jobs\SendSignupToQuasar;
 use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider
