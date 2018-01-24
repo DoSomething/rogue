@@ -42,7 +42,7 @@ class PostQuantity extends Command
         $start = $this->argument('start');
 
         // Get all signups starting from $start in order of ID
-        Signup::where('id', '>=', $start)->orderBy('id')->with('posts')->chunk(1000, function ($signups) {
+        Signup::where('id', '>=', $start)->orderBy('id')->with('posts')->chunk(10000, function ($signups) {
             foreach ($signups as $signup) {
                 // Get the posts for the signup
                 $posts = $signup->posts;
