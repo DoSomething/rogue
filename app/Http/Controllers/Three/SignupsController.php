@@ -91,7 +91,7 @@ class SignupsController extends ApiController
 
         // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
         if ($request->query('include') === 'posts') {
-            $query = $query->whereVisible();
+            $query = $query->withVisiblePosts();
         }
 
         return $this->paginatedCollection($query, $request);
@@ -109,7 +109,7 @@ class SignupsController extends ApiController
     {
         // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
         if ($request->query('include') === 'posts') {
-            $signup = Signup::whereVisible()->first();
+            $signup = Signup::withVisiblePosts()->first();
         }
 
         return $this->item($signup, 200, [], $this->transformer, $request->query('include'));

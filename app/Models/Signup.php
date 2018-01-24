@@ -162,7 +162,7 @@ class Signup extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWhereVisible($query)
+    public function scopeWithVisiblePosts($query)
     {
         if (! is_staff_user()) {
             return $query->with(['posts' => function ($query) {
