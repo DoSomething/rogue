@@ -12,7 +12,7 @@ class PostQuantity extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:postquantity {start=1} {sleeptime=0}';
+    protected $signature = 'rogue:postquantity {start=1} {sleeptime=0} {chunk=1000}';
 
     /**
      * The console command description.
@@ -40,9 +40,10 @@ class PostQuantity extends Command
     {
         // Signup that we should start with
         $start = $this->argument('start');
+        $chunk = $this->argument('chunk');
 
         // Get all signups starting from $start in order of ID
-        Signup::where('id', '>=', $start)->orderBy('id')->with('posts')->chunk(10000, function ($signups) {
+        Signup::where('id', '>=', $start)->orderBy('id')->with('posts')->chunk($chunk, function ($signups) {
             foreach ($signups as $signup) {
                 // Get the posts for the signup
                 $posts = $signup->posts;
