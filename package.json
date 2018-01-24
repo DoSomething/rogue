@@ -31,12 +31,12 @@
     "@dosomething/gateway": "^1.1.5",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
-    "dosomething-modal": "^0.3.3",
+    "dosomething-modal": "^0.3.4",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
-    "sinon": "^4.2.0"
+    "sinon": "^4.2.1"
   },
   "devDependencies": {
     "@dosomething/babel-config": "^2.0.1",
