@@ -7,17 +7,27 @@ use Rogue\Models\Post;
 use League\Csv\Reader;
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
+use Rogue\Services\Three\SignupService;
 
 class ImportController extends Controller
 {
+    /*
+     * SignupServices Instance
+     *
+     * @var Rogue\Services\Three\SignupService;
+     */
+    protected $signupService;
+
     /**
      * Instantiate a new ImportController instance.
      *
      * @param Rogue\Services\Registrar $registrar
      */
-    public function __construct()
+    public function __construct(SignupService $signupService)
     {
         $this->middleware('auth');
+
+        $this->signupService = $signupService;
     }
 
     /**
@@ -61,18 +71,19 @@ class ImportController extends Controller
                     // Check if a signup exists already.
                     $signup = Signup::where([
                         'northstar_id' => $referralCodeValues['northstar_id'],
-                        'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id
-                        'campaign_run_id' => 2222 ,// @TODO - hardcode grab the mic campaign run id
+                        'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id or grab it from referral code
+                        'campaign_run_id' => 2222 ,// @TODO - hardcode grab the mic campaign run id or grab it from referral code
                     ])->first();
 
                     // If the signup doesn't exist, create one.
                     if (! $signup) {
-                        $signup = Signup::create([
-                            'northstar_id' => $referralCodeValues['northstar_id'],
-                            'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id
-                            'campaign_run_id' => 2222, // @TODO - hardcode grab the mic campaign run id
+                        $signupData = [
+                            'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id or grab it from referral code
+                            'campaign_run_id' => 2222, // @TODO - hardcode grab the mic campaign run id or grab it from referral code
                             'source' => "turbovote-import",
-                        ]);
+                        ];
+
+                       $signup = $this->signupService->create($signupData, $referralCodeValues['northstar_id']);
 
                         info('signup_created', ['id' => $signup->id, 'northstar_id' => $signup->northstar_id]);
                     }
@@ -86,7 +97,8 @@ class ImportController extends Controller
                     ])->first();
 
                     if (! $post) {
-                        $tvCreatedAtMonth = strtolower(Carbon::parse($record['created-at'])->format('F'));
+                        $tvCreatedAtMonth = strtolower(Carbon::parse($record['created-at'])->format('F-Y'));
+
                         $post = Post::create([
                             'signup_id' => $signup->id,
                             'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id
@@ -116,6 +128,7 @@ class ImportController extends Controller
 
     /**
      * Parse the referral code field to grab individual values.
+     * @TODO - update this to pull campaign and campaign run ID.
      *
      * @param  array $refferalCode
      */
