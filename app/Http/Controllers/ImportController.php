@@ -21,62 +21,46 @@ class ImportController extends Controller
     }
 
     /**
-     *
+     * Show the upload form.
      */
     public function show()
     {
         return view('pages.upload');
     }
 
+    /**
+     * Import the uploaded file.
+     *
+     * @param  Request $request
+     */
     public function store(Request $request)
     {
+        $request->validate([
+            'upload-file' => 'required',
+            // 'type' => 'required',
+        ]);
+
         //@TODO - check type of csv import and store in variable we can use to fork off functionality
         // get file
         $upload = $request->file('upload-file');
         $filePath = $upload->getRealPath();
         $csv = Reader::createFromPath($filePath);
         $csv->setHeaderOffset(0);
-        $header = $csv->getHeader();
         $records = $csv->getRecords();
 
 
         foreach ($records as $record) {
-            // Clear referral code vars before processing new record.
-            unset($northstarId);
-            unset($campaignRunId);
-            unset($source);
+            info('Importing record ' . $record['id'], ['record' => $record]);
 
             $referralCode = $record['referral-code'];
 
-            info('Importing record '.$record['id'], ['record' => $record]);
-
             if ($referralCode) {
-                $referralCode = explode(',', $referralCode);
+                $referralCodeValues = $this->parseReferralCode(explode(',', $referralCode));
 
-                foreach ($referralCode as $value) {
-                    $value = explode(':', $value);
-
-                    // Grab northstar id
-                    if (strtolower($value[0]) === 'user') {
-                        $northstarId = $value[1];
-                    }
-
-                    // Grab the Campaign and Campaign Run Id.
-                    if (strtolower($value[0]) === 'campaign') {
-                        $campaignRunId = $value[1];
-                    }
-
-                    // Grab the source
-                    if (strtolower($value[0]) === 'source') {
-                        $source = $value[1];
-                    }
-
-                }
-
-                if (isset($northstarId) && isset($campaignRunId)) {
+                if (isset($referralCodeValues['northstar_id']) && isset($referralCodeValues['campaign_run_id'])) {
                     // Check if a signup exists already.
                     $signup = Signup::where([
-                        'northstar_id' => $northstarId,
+                        'northstar_id' => $referralCodeValues['northstar_id'],
                         'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id
                         'campaign_run_id' => 2222 ,// @TODO - hardcode grab the mic campaign run id
                     ])->first();
@@ -84,7 +68,7 @@ class ImportController extends Controller
                     // If the signup doesn't exist, create one.
                     if (! $signup) {
                         $signup = Signup::create([
-                            'northstar_id' => $northstarId,
+                            'northstar_id' => $referralCodeValues['northstar_id'],
                             'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id
                             'campaign_run_id' => 2222, // @TODO - hardcode grab the mic campaign run id
                             'source' => "turbovote-import",
@@ -96,7 +80,7 @@ class ImportController extends Controller
                     // Check if a post already exists.
                     $post = Post::where([
                         'signup_id' => $signup->id,
-                        'northstar_id' => $northstarId,
+                        'northstar_id' => $referralCodeValues['northstar_id'],
                         'campaign_id' => 1111,
                         'type' => 'voter-reg',
                     ])->first();
@@ -106,7 +90,7 @@ class ImportController extends Controller
                         $post = Post::create([
                             'signup_id' => $signup->id,
                             'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id
-                            'northstar_id' => $northstarId,
+                            'northstar_id' => $referralCodeValues['northstar_id'],
                             'type' => 'voter-reg',
                             'action_bucket' => $tvCreatedAtMonth.'-turbovote',
                             'status' => $record['voter-registration-status'],
@@ -128,5 +112,36 @@ class ImportController extends Controller
                 info('Skipped record '.$record['id'].' because no referral code is available.');
             }
         }
+    }
+
+    /**
+     * Parse the referral code field to grab individual values.
+     *
+     * @param  array $refferalCode
+     */
+    private function parseReferralCode($referralCode)
+    {
+        $values = [];
+
+        foreach ($referralCode as $value) {
+            $value = explode(':', $value);
+
+            // Grab northstar id
+            if (strtolower($value[0]) === 'user') {
+                $values['northstar_id'] = $value[1];
+            }
+
+            // Grab the Campaign Run Id.
+            if (strtolower($value[0]) === 'campaign') {
+                $values['campaign_run_id'] = $value[1];
+            }
+
+            // Grab the source
+            if (strtolower($value[0]) === 'source') {
+                $values['source'] = $value[1];
+            }
+        }
+
+        return $values;
     }
 }
