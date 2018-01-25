@@ -31,6 +31,7 @@ class SignupTransformer extends TransformerAbstract
             'campaign_id' => $signup->campaign_id,
             'campaign_run_id' => $signup->campaign_run_id,
             'quantity' => $signup->getQuantity(),
+            'total_quantity' => $signup->posts->sum('quantity'),
             'why_participated' => $signup->why_participated,
             'source' => $signup->source,
             'details' => $signup->details,
