@@ -48,7 +48,7 @@ class ImportController extends Controller
 
             $referralCode = $record['referral-code'];
 
-            info('On record '.$record['id']);
+            info('Importing record '.$record['id'], ['record' => $record]);
 
             if ($referralCode) {
                 $referralCode = explode(',', $referralCode);
@@ -83,15 +83,14 @@ class ImportController extends Controller
 
                     // If the signup doesn't exist, create one.
                     if (! $signup) {
-                        info('No signup so we need to create one');
                         $signup = Signup::create([
                             'northstar_id' => $northstarId,
                             'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id
                             'campaign_run_id' => 2222, // @TODO - hardcode grab the mic campaign run id
                             'source' => "turbovote-import",
                         ]);
-                    } else {
-                        info('Signup exists already: '.$signup->id);
+
+                        info('signup_created', ['id' => $signup->id, 'northstar_id' => $signup->northstar_id]);
                     }
 
                     // Check if a post already exists.
@@ -100,13 +99,11 @@ class ImportController extends Controller
                         'northstar_id' => $northstarId,
                         'campaign_id' => 1111,
                         'type' => 'voter-reg',
-                        // 'status' => $record['voter-registration-status'],
                     ])->first();
 
                     if (! $post) {
-                        info('No post so we need to create one');
                         $tvCreatedAtMonth = strtolower(Carbon::parse($record['created-at'])->format('F'));
-                        Post::create([
+                        $post = Post::create([
                             'signup_id' => $signup->id,
                             'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id
                             'northstar_id' => $northstarId,
@@ -114,21 +111,21 @@ class ImportController extends Controller
                             'action_bucket' => $tvCreatedAtMonth.'-turbovote',
                             'status' => $record['voter-registration-status'],
                         ]);
-                    } else {
-                        info('Post exists already: '.$post->id);
 
-                        // Check if status is the same on the CSV record and the existing post, if not update the post with the new status.
+                        info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
+                    } else {
+                        // If a post already exists, check if status is the same on the CSV record and the existing post,
+                        // if not update the post with the new status.
                         if ($record['voter-registration-status'] !== $post->status) {
                             $post->status = $record['voter-registration-status'];
                             $post->save();
                         }
                     }
                 } else {
-                    info('Skipped record ' . $record['id'] . ' because no northstar id or campaign id');
+                    info('Skipped record ' . $record['id'] . ' because no northstar id or campaign is available.');
                 }
-
-            } else { // @TODO - remove.
-                info('Skipped record '.$record['id'].' because no referral code');
+            } else {
+                info('Skipped record '.$record['id'].' because no referral code is available.');
             }
         }
     }
