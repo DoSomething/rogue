@@ -66,4 +66,7 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
     // reactions
     $this->post('post/{post}/reactions', 'Three\ReactionController@store');
     $this->get('post/{post}/reactions', 'Three\ReactionController@index');
+
+    // reviews
+    $this->post('reviews', 'Three\ReviewsController@reviews');
 });
