@@ -143,6 +143,104 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test for signup index with included post info.
+     *
+     * GET /api/v3/signups?include=posts
+     * @return void
+     */
+    public function testSignupIndexWithIncludedPosts()
+    {
+        $signup = factory(Signup::class)->create();
+        $posts = factory(Post::class, 5)->create();
+
+        foreach ($posts as $post) {
+            $post->signup()->associate($signup);
+            $post->status = 'accepted';
+            $post->save();
+        }
+
+        $response = $this->getJson('api/v3/signups' . '?include=posts');
+
+        $response->assertStatus(200);
+
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'posts' => [
+                        'data' => [
+                            '*' => [
+                                'id',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Test for signup index with included rejected post info. as admin and non-admin/non-owner.
+     *
+     * GET /api/v3/signups?include=posts
+     * @return void
+     */
+    public function testSignupIndexWithIncludedPostsWithMultipleCredentials()
+    {
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
+
+        // Test with annoymous user that no posts are returned.
+        $response = $this->getJson('api/v3/signups' . '?include=posts');
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'posts' => [
+                        'data' => [
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        // Test that admin/staff can see pending posts.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups' .'?include=posts');
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'posts' => [
+                        'data' => [
+                            '*' => [
+                                'id' => $post->id,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        // Test that the signup's owner can see pending posts.
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups' . '?include=posts');
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'posts' => [
+                        'data' => [
+                            '*' => [
+                                'id' => $post->id,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    /**
      * Test for retrieving a specific signup.
      *
      * GET /api/v3/signups/:signup_id
@@ -178,10 +276,8 @@ class SignupTest extends TestCase
      */
     public function testSignupWithIncludedPosts()
     {
-        $signup = factory(Signup::class)->create();
         $post = factory(Post::class)->create();
-        $post->signup()->associate($signup);
-        $post->save();
+        $signup = $post->signup;
 
         $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
 
@@ -192,6 +288,62 @@ class SignupTest extends TestCase
                     'data' => [
                         '*' => [
                             'id',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Test for retrieving a signup with included rejected post info. as admin and non-admin/non-owner.
+     *
+     * GET /api/v3/signups/186?include=posts
+     * @return void
+     */
+    public function testSignupWithIncludedPostsWithMultipleCredentials()
+    {
+        $post = factory(Post::class, 'rejected')->create();
+        $signup = $post->signup;
+
+        // Test with annoymous user that no posts are returned.
+        $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'posts' => [
+                    'data' => [
+                    ],
+                ],
+            ],
+        ]);
+
+        // Test that admin/staff can see rejected post.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'posts' => [
+                    'data' => [
+                        '*' => [
+                            'id' => $post->id,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        // Test that the signup's owner can see rejected posts.
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'posts' => [
+                    'data' => [
+                        '*' => [
+                            'id' => $post->id,
                         ],
                     ],
                 ],

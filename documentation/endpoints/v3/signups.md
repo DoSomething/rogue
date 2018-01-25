@@ -45,6 +45,12 @@ Example response:
 ```
 GET /api/v3/signups
 ```
+When using `?include=posts`, anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
+### Optional Query Parameters
+- **include** _(string)_
+  - Include additional related records in the response: `posts`
+  - e.g. `/v3/signups?include=posts`
+
 Example Response: 
 
 ```
@@ -95,6 +101,7 @@ Example Response:
 ```
 GET /api/v3/signups/:signup_id
 ```
+When using `?include=posts`, anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 ### Optional Query Parameters
 - **include** _(string)_
   - Include additional related records in the response: `posts`

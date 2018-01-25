@@ -100,6 +100,7 @@ Example Response:
 ```
 GET /api/v3/posts/:post_id
 ```
+Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 
 Example Response: 
 

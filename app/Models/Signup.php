@@ -156,4 +156,19 @@ class Signup extends Model
         // If we are supporting quantity on posts then we can just return the summed quantity across all posts under the signup.
         return $this->posts->sum('quantity');
     }
+
+    /**
+     * Scope a query to only return signups if a user is an admin, staff, or is owner of signup.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithVisiblePosts($query)
+    {
+        if (! is_staff_user()) {
+            return $query->with(['posts' => function ($query) {
+                $query->where('status', 'accepted')
+                ->orWhere('northstar_id', auth()->id());
+            }]);
+        }
+    }
 }
