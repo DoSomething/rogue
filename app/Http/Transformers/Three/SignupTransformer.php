@@ -31,12 +31,12 @@ class SignupTransformer extends TransformerAbstract
             'campaign_id' => $signup->campaign_id,
             'campaign_run_id' => $signup->campaign_run_id,
             'quantity' => $signup->getQuantity(),
+            'total_quantity' => $signup->posts->sum('quantity'),
             'why_participated' => $signup->why_participated,
             'source' => $signup->source,
             'details' => $signup->details,
             'created_at' => $signup->created_at->toIso8601String(),
             'updated_at' => $signup->updated_at->toIso8601String(),
-            'total_quantity' => $signup->posts->sum('quantity'),
         ];
     }
 
