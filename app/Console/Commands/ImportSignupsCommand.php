@@ -14,7 +14,7 @@ class ImportSignupsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:signupimport {path}';
+    protected $signature = 'rogue:signupimport {path} {--logfreq=1}';
 
     /**
      * The console command description.
@@ -40,6 +40,8 @@ class ImportSignupsCommand extends Command
      */
     public function handle()
     {
+        $logfreq = $this->option('logfreq');
+
         // Make a local copy of the CSV
         $path = $this->argument('path');
         info('rogue:signupimport: Loading in csv from ' . $path);
@@ -52,11 +54,8 @@ class ImportSignupsCommand extends Command
         $signups_csv->setHeaderOffset(0);
         $missing_signups = $signups_csv->getRecords();
 
-        // Progress Bar
-        $bar = $this->output->createProgressBar(count($signups_csv));
-
         // Create each missing signup
-        $this->line('Working on creating all the signups...');
+        info('rogue:signupimport: Working on creating all the signups...');
         foreach ($missing_signups as $missing_signup) {
             // See if the signup exists
             $existing_signup = Signup::where([
@@ -75,20 +74,17 @@ class ImportSignupsCommand extends Command
                     'created_at' => $missing_signup['signup_created_at_timestamp'],
                 ]);
 
-                info('rogue:signupimport: Created signup ' . $signup->id);
+                if ($signup->id % $logfreq == 0) {
+                    info('rogue:signupimport: Created signup ' . $signup->id);
+                }
             } else {
-                info('rogue:signupimport: Signup ' . $existing_signup->id . ' already exists! Moving on.');
+                if ($existing_signup->id % $logfreq == 0) {
+                    info('rogue:signupimport: Signup ' . $existing_signup->id . ' already exists! Moving on.');
+                }
             }
-
-            // Move the progress bar forward
-            $bar->advance();
         }
-
-        // Finish the progress bar
-        $bar->finish();
 
         // Tell everyone we're done!
         info('rogue:signupimport: ALL DONE!');
-        $this->line('ALL DONE!');
     }
 }
