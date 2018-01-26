@@ -13,9 +13,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class ReviewsController extends ApiController
 {
     /**
-     * The post service instance.
+     * The post repository instance.
      *
-     * @var Rogue\Repositories\ThreePostRepository
+     * @var Rogue\Repositories\Three\PostRepository
      */
     protected $post;
 
