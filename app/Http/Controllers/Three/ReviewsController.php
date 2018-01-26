@@ -5,11 +5,10 @@ namespace Rogue\Http\Controllers\Three;
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Repositories\Three\PostRepository;
-// use Rogue\Http\Requests\ReviewsApiRequest;
 use Rogue\Http\Controllers\Api\ApiController;
+use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Transformers\Three\PostTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Auth\Access\AuthorizationException;
 
 class ReviewsController extends ApiController
 {
