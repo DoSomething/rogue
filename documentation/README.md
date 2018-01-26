@@ -88,3 +88,8 @@ Endpoint                                       | Functionality
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
 `POST /api/v3/reviews`                         | [Create or update a Review](endpoints/v3/reviews.md#create-or-update-a-reaction-v3)
+
+#### Tags
+Endpoint                                       | Functionality                                           
+---------------------------------------------- | --------------------------------------------------------
+`POST /api/v3/post/:post_id/tag`               | [Tag a Post](endpoints/v3/tags.md#tag-a-post)

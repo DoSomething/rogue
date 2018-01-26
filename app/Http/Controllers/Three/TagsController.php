@@ -38,7 +38,33 @@ class TagsController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     * @param  Post $post
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, Post $post)
+    {
+        $request->validate([
+            'tag_name' => 'required|string',
+        ]);
+
+        // Only allow an admin to review the post.
+        if (token()->role() === 'admin') {
+            $post = $this->post->find($post->id);
+
+            $taggedPost = $this->post->tag($post, $request->tag_name);
+
+            return $this->item($taggedPost);
+        }
+
+        throw new AuthorizationException('You don\'t have the correct role to tag this post!');
+    }
+
+    /**
+     * Remove a tag from a post.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  Post $post
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Post $post)
