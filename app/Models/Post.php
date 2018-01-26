@@ -187,12 +187,15 @@ class Post extends Model
     {
         $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
 
-        $this->tags()->attach($tag);
+        // If this post already has this tag, no need to do anything
+        if (! $this->tagNames()->contains($tagName)) {
+            $this->tags()->attach($tag);
 
-        // Update timestamps on the Post when adding a tag
-        $this->touch();
+            // Update timestamps on the Post when adding a tag
+            $this->touch();
 
-        event(new PostTagged($this, $tag));
+            event(new PostTagged($this, $tag));
+        }
 
         return $this;
     }
