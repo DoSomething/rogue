@@ -97,6 +97,7 @@ class ImportTurboVotePosts implements ShouldQueue
 
                     if (! $post) {
                         $tvCreatedAtMonth = strtolower(Carbon::parse($record['created-at'])->format('F-Y'));
+                        $postDetails = $this->extractDetails($record);
 
                         $postData = [
                             'campaign_id' => $referralCodeValues['campaign_id'],
@@ -105,6 +106,7 @@ class ImportTurboVotePosts implements ShouldQueue
                             'action_bucket' => $tvCreatedAtMonth . '-turbovote',
                             'status' => $record['voter-registration-status'],
                             'source' => $referralCodeValues['source'],
+                            'details' => $postDetails,
                         ];
 
                         $post = $postService->create($postData, $signup->id, $this->authenticatedUserRole);
@@ -126,8 +128,36 @@ class ImportTurboVotePosts implements ShouldQueue
     }
 
     /**
+     *
+     * @param  array $record
+     */
+    private function extractDetails($record)
+    {
+        $details = [];
+
+        $importantKeys = [
+            'hostname',
+            'referral-code',
+            'partner-comms-opt-in',
+            'created-at',
+            'updated-at',
+            'voter-registration-status',
+            'voter-registration-source',
+            'voter-registration-method',
+            'voting-method-preference',
+            'email subscribed',
+            'sms subscribed',
+        ];
+
+        foreach ($importantKeys as $key) {
+            $details[$key] = $record[$key];
+        }
+
+        return json_encode($details);
+    }
+
+    /**
      * Parse the referral code field to grab individual values.
-     * @TODO - update this to pull campaign and campaign run ID.
      *
      * @param  array $refferalCode
      */
