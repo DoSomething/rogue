@@ -2,6 +2,7 @@
 
 namespace Rogue\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -129,6 +130,64 @@ class Signup extends Model
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
+    }
+
+    /**
+     * Transform the signup model for Quasar.
+     *
+     * @return array
+     */
+    public function toQuasarPayload()
+    {
+        $body = [
+            'signup_id' => $this->id,
+            'northstar_id' => $this->northstar_id,
+            'campaign_id' => $this->campaign_id,
+            'campaign_run_id' => $this->campaign_run_id,
+            'quantity' => $this->getQuantity(),
+            'why_participated' => $this->why_participated,
+            'signup_source' => $this->source,
+            'details' => $this->details,
+            'created_at' => $this->created_at->toIso8601String(),
+            'updated_at' => $this->updated_at->toIso8601String(),
+            'meta' => [
+                'message_source' => 'rogue',
+            ],
+            'posts' => [],
+        ];
+
+        $this->posts->transform(function ($post) {
+            return [
+                'id' => $post->id,
+                'signup_id' => $post->signup_id,
+                'northstar_id' => $post->northstar_id,
+                'quantity' => $post->quantity,
+                // Add cache-busting query string to urls to make sure we get the
+                // most recent version of the image.
+                // @NOTE - Remove if we get rid of rotation.
+                'media' => [
+                    'url' => $post->getMediaUrl(),
+                    'original_image_url' => $post->url . '?time='. Carbon::now()->timestamp,
+                    'caption' => $post->caption,
+                ],
+                'tags' => $post->tagSlugs(),
+                'reactions' => [
+                    'total' => isset($post->reactions_count) ? $post->reactions_count : null,
+                ],
+                'status' => $post->status,
+                'source' => $post->source,
+                'remote_addr' => $post->remote_addr,
+                'created_at' => $post->created_at->toIso8601String(),
+                'updated_at' => $post->updated_at->toIso8601String(),
+            ];
+
+        });
+
+        //then append to $body
+
+        dd($body);
+
+        return $body;
     }
 
     /**

@@ -33,6 +33,10 @@ class ModelServiceProvider extends ServiceProvider
 
         // When Posts are saved create an event for them.
         Post::saved(function ($post) {
+            if (config('features.pushToQuasar')) {
+                info('sending post to quasar');
+                SendSignupToQuasar::dispatch($post->signup);
+            }
             $post->events()->create([
                 // @TODO: this should include the tags with the post
                 'content' => $post->toJson(),
