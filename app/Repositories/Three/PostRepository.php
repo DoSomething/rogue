@@ -60,9 +60,11 @@ class PostRepository
      *
      * @param  array $data
      * @param  int $signupId
+     * @param  string $authenticatedUserRole
+     *
      * @return \Rogue\Models\Post|null
      */
-    public function create(array $data, $signupId)
+    public function create(array $data, $signupId, $authenticatedUserRole = null)
     {
         if (isset($data['file'])) {
             // Auto-orient the photo by default based on exif data.
@@ -72,6 +74,7 @@ class PostRepository
         } else {
             $fileUrl = null;
         }
+
         $signup = Signup::find($signupId);
 
         // Create a post.
@@ -89,15 +92,16 @@ class PostRepository
             'remote_addr' => request()->ip(),
         ]);
 
-        $isAdmin = auth()->user()->role === 'admin';
+        // If we are explicitly passed an authenticated user, use their role, otherwise grab it from the session.
+        $authenticatedUserRole = ! $authenticatedUserRole ? auth()->user()->role : $authenticatedUserRole;
 
         // Admin users may provide a status when uploading a post.
-        if (isset($data['status']) && $isAdmin) {
+        if (isset($data['status']) && $authenticatedUserRole === 'admin') {
             $post->status = $data['status'];
         }
 
         // Admin users may provide a source when uploading a post.
-        if (isset($data['source']) && $isAdmin) {
+        if (isset($data['source']) && $authenticatedUserRole === 'admin') {
             $post->source = $data['source'];
         }
 

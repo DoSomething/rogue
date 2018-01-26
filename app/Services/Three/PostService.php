@@ -31,11 +31,13 @@ class PostService
      *
      * @param array $data
      * @param int $signupId
+     * @param string $authenticatedUserRole
+     *
      * @return \Rogue\Models\Post
      */
-    public function create($data, $signupId)
+    public function create($data, $signupId, $authenticatedUserRole = null)
     {
-        $post = $this->repository->create($data, $signupId);
+        $post = $this->repository->create($data, $signupId, $authenticatedUserRole);
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
         $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);

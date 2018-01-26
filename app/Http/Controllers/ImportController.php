@@ -2,41 +2,22 @@
 
 namespace Rogue\Http\Controllers;
 
-use Carbon\Carbon;
-use Rogue\Models\Post;
 use League\Csv\Reader;
-use Rogue\Models\Signup;
 use Illuminate\Http\Request;
-use Rogue\Services\Three\PostService;
-use Rogue\Services\Three\SignupService;
+use Rogue\Jobs\ImportTurboVotePosts;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ImportController extends Controller
 {
-    /*
-     * SignupService Instance
-     *
-     * @var Rogue\Services\Three\SignupService;
-     */
-    protected $signupService;
-
-    /*
-     * PostService Instance
-     *
-     * @var Rogue\Services\Three\postService;
-     */
-    protected $postService;
-
     /**
      * Instantiate a new ImportController instance.
      *
      * @param Rogue\Services\Registrar $registrar
      */
-    public function __construct(SignupService $signupService, PostService $postService)
+    public function __construct()
     {
         $this->middleware('auth');
-
-        $this->postService = $postService;
-        $this->signupService = $signupService;
     }
 
     /**
@@ -60,108 +41,17 @@ class ImportController extends Controller
         ]);
 
         //@TODO - check type of csv import and store in variable we can use to fork off functionality
-        // get file
+
+        // Push file to S3.
         $upload = $request->file('upload-file');
-        $filePath = $upload->getRealPath();
-        $csv = Reader::createFromPath($filePath);
-        $csv->setHeaderOffset(0);
-        $records = $csv->getRecords();
+        $path = 'uploads/files/turbovote.csv';
+        $csv = Reader::createFromPath($upload->getRealPath());
+        $success = Storage::put($path, $csv);
 
-
-        foreach ($records as $record) {
-            info('Importing record ' . $record['id'], ['record' => $record]);
-
-            $referralCode = $record['referral-code'];
-
-            if ($referralCode) {
-                $referralCodeValues = $this->parseReferralCode(explode(',', $referralCode));
-
-                if (isset($referralCodeValues['northstar_id']) && isset($referralCodeValues['campaign_run_id'])) {
-                    // Check if a signup exists already.
-                    $signup = Signup::where([
-                        'northstar_id' => $referralCodeValues['northstar_id'],
-                        'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id or grab it from referral code
-                        'campaign_run_id' => 2222 ,// @TODO - hardcode grab the mic campaign run id or grab it from referral code
-                    ])->first();
-
-                    // If the signup doesn't exist, create one.
-                    if (! $signup) {
-                        $signupData = [
-                            'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id or grab it from referral code
-                            'campaign_run_id' => 2222, // @TODO - hardcode grab the mic campaign run id or grab it from referral code
-                            'source' => "turbovote-import",
-                        ];
-
-                       $signup = $this->signupService->create($signupData, $referralCodeValues['northstar_id']);
-                    }
-
-                    // Check if a post already exists.
-                    $post = Post::where([
-                        'signup_id' => $signup->id,
-                        'northstar_id' => $referralCodeValues['northstar_id'],
-                        'campaign_id' => 1111,
-                        'type' => 'voter-reg',
-                    ])->first();
-
-                    if (! $post) {
-                        $tvCreatedAtMonth = strtolower(Carbon::parse($record['created-at'])->format('F-Y'));
-
-                        $postData = [
-                            'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id
-                            'northstar_id' => $referralCodeValues['northstar_id'],
-                            'type' => 'voter-reg',
-                            'action_bucket' => $tvCreatedAtMonth . '-turbovote',
-                            'status' => $record['voter-registration-status'],
-                            'source' => $referralCodeValues['source'],
-                        ];
-
-                        $post = $this->postService->create($postData, $signup->id);
-                    } else {
-                        // If a post already exists, check if status is the same on the CSV record and the existing post,
-                        // if not update the post with the new status.
-                        if ($record['voter-registration-status'] !== $post->status) {
-                            $post->status = $record['voter-registration-status'];
-                            $post->save();
-                        }
-                    }
-                } else {
-                    info('Skipped record ' . $record['id'] . ' because no northstar id or campaign is available.');
-                }
-            } else {
-                info('Skipped record '.$record['id'].' because no referral code is available.');
-            }
-        }
-    }
-
-    /**
-     * Parse the referral code field to grab individual values.
-     * @TODO - update this to pull campaign and campaign run ID.
-     *
-     * @param  array $refferalCode
-     */
-    private function parseReferralCode($referralCode)
-    {
-        $values = [];
-
-        foreach ($referralCode as $value) {
-            $value = explode(':', $value);
-
-            // Grab northstar id
-            if (strtolower($value[0]) === 'user') {
-                $values['northstar_id'] = $value[1];
-            }
-
-            // Grab the Campaign Run Id.
-            if (strtolower($value[0]) === 'campaign') {
-                $values['campaign_run_id'] = $value[1];
-            }
-
-            // Grab the source
-            if (strtolower($value[0]) === 'source') {
-                $values['source'] = $value[1];
-            }
+        if (!$success) {
+            throw new HttpException(500, 'Unable to save image to S3.');
         }
 
-        return $values;
+        ImportTurboVotePosts::dispatch($path, auth()->user()->role);
     }
 }
