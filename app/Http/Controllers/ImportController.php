@@ -36,7 +36,7 @@ class ImportController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'upload-file' => 'required',
+            'upload-file' => 'required|mimes:csv',
             // 'type' => 'required',
         ]);
 
