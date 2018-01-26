@@ -55,4 +55,32 @@ class ReviewsTest extends TestCase
 
         $response->assertStatus(401);
     }
+
+    /**
+     * Test that a post and signup's updated_at updates when a review is made.
+     *
+     * @return void
+     */
+    public function testUpdatedPostAndSignupWithReview()
+    {
+        // Create a signup and a post, and associate them to each other.
+        $post = factory(Post::class)->create();
+
+        // And then later on, we'll make a review...
+        $this->mockTime('8/3/2017 16:55:00');
+
+        // Review the post.
+        $northstarId = $this->faker->northstar_id;
+        $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/reviews', [
+            'post_id' => $post->id,
+            'status' => 'accepted',
+        ]);
+
+        // Make sure the signup and post's updated_at are both updated.
+        $this->assertEquals('2017-08-03 16:55:00', (string) $post->fresh()->updated_at);
+
+        // @TODO: Laravel doesn't touch timestamps recursively - only direct relationships.
+        // $this->assertEquals('2017-08-03 16:55:00', (string) $signup->fresh()->updated_at);
+        $this->markTestIncomplete();
+    }
 }
