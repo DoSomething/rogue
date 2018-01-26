@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Three;
 
+use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Repositories\Three\PostRepository;
 use Rogue\Http\Transformers\Three\PostTransformer;
@@ -40,16 +41,15 @@ class TagsController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Post $post)
     {
         $request->validate([
-            'post_id' => 'required',
             'tag_name' => 'required|string',
         ]);
 
         // Only allow an admin to review the post.
         if (token()->role() === 'admin') {
-            $post = $this->post->find($request->post_id);
+            $post = $this->post->find($post->id);
 
             $taggedPost = $this->post->tag($post, $request->tag_name);
 
