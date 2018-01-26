@@ -25,6 +25,7 @@ class ReviewsTest extends TestCase
         $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/reviews', [
             'post_id' => $post->id,
             'status' => 'accepted',
+            'comment' => 'testing',
         ]);
 
         $response->assertStatus(201);
@@ -34,6 +35,7 @@ class ReviewsTest extends TestCase
         $this->assertDatabaseHas('reviews', [
             'admin_northstar_id' => $northstarId,
             'post_id' => $post->id,
+            'comment' => 'testing',
         ]);
     }
 
