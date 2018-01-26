@@ -13,6 +13,15 @@
                         <label for="upload-file" class="field-label">Upload</label>
                         <input type="file" name="upload-file" class="form-control">
                     </div>
+
+                    <label class="field-label">Type of Import</label>
+                    <div class="form-item">
+                        <label class="option -checkbox">
+                            <input checked type="checkbox" id="importType" value="turbovote" name="importType">
+                            <span class="option__indicator"></span>
+                            <span>Turbovote Import</span>
+                        </label>
+                    </div>
                     <div class="form-actions -padded">
                         <input type="submit" class="button" value="Submit CSV">
                     </div>
