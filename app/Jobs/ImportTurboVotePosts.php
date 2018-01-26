@@ -69,30 +69,29 @@ class ImportTurboVotePosts implements ShouldQueue
             if ($referralCode) {
                 $referralCodeValues = $this->parseReferralCode(explode(',', $referralCode));
 
-                if (isset($referralCodeValues['northstar_id']) && isset($referralCodeValues['campaign_run_id'])) {
+                if (isset($referralCodeValues['northstar_id']) && isset($referralCodeValues['campaign_id']) && isset($referralCodeValues['campaign_run_id'])) {
                     // Check if a signup exists already.
                     $signup = Signup::where([
                         'northstar_id' => $referralCodeValues['northstar_id'],
-                        'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id or grab it from referral code
-                        'campaign_run_id' => 2222 ,// @TODO - hardcode grab the mic campaign run id or grab it from referral code
+                        'campaign_id' => $referralCodeValues['campaign_id'],
+                        'campaign_run_id' => $referralCodeValues['campaign_run_id'],
                     ])->first();
 
                     // If the signup doesn't exist, create one.
                     if (! $signup) {
                         $signupData = [
-                            'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id or grab it from referral code
-                            'campaign_run_id' => 2222, // @TODO - hardcode grab the mic campaign run id or grab it from referral code
+                            'campaign_id' => $referralCodeValues['campaign_id'],
+                            'campaign_run_id' => $referralCodeValues['campaign_run_id'],
                             'source' => "turbovote-import",
                         ];
 
                         $signup = $signupService->create($signupData, $referralCodeValues['northstar_id']);
                     }
-
                     // Check if a post already exists.
                     $post = Post::where([
                         'signup_id' => $signup->id,
                         'northstar_id' => $referralCodeValues['northstar_id'],
-                        'campaign_id' => 1111,
+                        'campaign_id' => $referralCodeValues['campaign_id'],
                         'type' => 'voter-reg',
                     ])->first();
 
@@ -100,7 +99,7 @@ class ImportTurboVotePosts implements ShouldQueue
                         $tvCreatedAtMonth = strtolower(Carbon::parse($record['created-at'])->format('F-Y'));
 
                         $postData = [
-                            'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id
+                            'campaign_id' => $referralCodeValues['campaign_id'],
                             'northstar_id' => $referralCodeValues['northstar_id'],
                             'type' => 'voter-reg',
                             'action_bucket' => $tvCreatedAtMonth . '-turbovote',
@@ -144,8 +143,13 @@ class ImportTurboVotePosts implements ShouldQueue
                 $values['northstar_id'] = $value[1];
             }
 
+            // Grab the Campaign Id.
+            if (strtolower($value[0]) === 'campaignid') {
+                $values['campaign_id'] = $value[1];
+            }
+
             // Grab the Campaign Run Id.
-            if (strtolower($value[0]) === 'campaign') {
+            if (strtolower($value[0]) === 'campaignrunid') {
                 $values['campaign_run_id'] = $value[1];
             }
 
