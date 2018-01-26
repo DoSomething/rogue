@@ -20,7 +20,7 @@ class CreateKudosTable extends Migration
             $table->integer('taxonomy_id')->index()->comment('The taxonomy_term.tid that this kudos belongs to.');
             $table->timestamps();
 
-            $table->unique(['file_id', 'drupal_id', 'northstar_id', 'taxonomy_id']);
+            $table->unique(['file_id', 'drupal_id', 'northstar_id', 'taxonomy_id'], 'file_drupal_ns_taxonomy_unique');
         });
     }
 
