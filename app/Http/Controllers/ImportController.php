@@ -49,9 +49,13 @@ class ImportController extends Controller
         $success = Storage::put($path, $csv);
 
         if (!$success) {
-            throw new HttpException(500, 'Unable to save image to S3.');
+            throw new HttpException(500, 'Unable read and store file to S3.');
         }
 
+        // We need to pass the file path and authenticated user role to
+        // the queue job because it does not have access to these things otherwise.
         ImportTurboVotePosts::dispatch($path, auth()->user()->role);
+
+        return redirect()->route('import.show')->with('status', 'Importing CSV!');
     }
 }

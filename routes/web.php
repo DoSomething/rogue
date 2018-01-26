@@ -50,5 +50,5 @@ $router->get('search', ['as' => 'users.search', 'uses' => 'UsersController@searc
 $router->get('faq', 'PagesController@faq');
 
 // Imports
-$router->get('import', 'ImportController@show');
-$router->post('import', 'ImportController@store');
+$router->get('import', 'ImportController@show')->name('import.show');
+$router->post('import', 'ImportController@store')->name('import.store');
