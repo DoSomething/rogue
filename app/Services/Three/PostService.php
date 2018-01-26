@@ -42,7 +42,6 @@ class PostService
 
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $should_send_to_blink) {
-            // @TODO: now, the below will send quantity in the payload. Do we need to notify Blink of this?
             SendPostToBlink::dispatch($post);
         }
 

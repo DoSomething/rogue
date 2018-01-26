@@ -80,16 +80,25 @@ class PostRepository
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
+            'type' => isset($data['type']) ? $data['type'] : 'photo',
+            'action_bucket' => isset($data['action_bucket']) ? $data['action_bucket'] : null,
             'url' => $fileUrl,
-            'caption' => $data['caption'],
+            'caption' => isset($data['caption']) ? $data['caption'] : null,
             'status' => 'pending',
             'source' => token()->client(),
             'remote_addr' => request()->ip(),
         ]);
 
-        // Admin users may provide a review status when uploading a post.
-        if (isset($data['status']) && token()->role === 'admin') {
+        $isAdmin = auth()->user()->role === 'admin';
+
+        // Admin users may provide a status when uploading a post.
+        if (isset($data['status']) && $isAdmin) {
             $post->status = $data['status'];
+        }
+
+        // Admin users may provide a source when uploading a post.
+        if (isset($data['source']) && $isAdmin) {
+            $post->source = $data['source'];
         }
 
         $post->save();

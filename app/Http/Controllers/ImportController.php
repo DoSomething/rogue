@@ -7,26 +7,35 @@ use Rogue\Models\Post;
 use League\Csv\Reader;
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
+use Rogue\Services\Three\PostService;
 use Rogue\Services\Three\SignupService;
 
 class ImportController extends Controller
 {
     /*
-     * SignupServices Instance
+     * SignupService Instance
      *
      * @var Rogue\Services\Three\SignupService;
      */
     protected $signupService;
+
+    /*
+     * PostService Instance
+     *
+     * @var Rogue\Services\Three\postService;
+     */
+    protected $postService;
 
     /**
      * Instantiate a new ImportController instance.
      *
      * @param Rogue\Services\Registrar $registrar
      */
-    public function __construct(SignupService $signupService)
+    public function __construct(SignupService $signupService, PostService $postService)
     {
         $this->middleware('auth');
 
+        $this->postService = $postService;
         $this->signupService = $signupService;
     }
 
@@ -84,8 +93,6 @@ class ImportController extends Controller
                         ];
 
                        $signup = $this->signupService->create($signupData, $referralCodeValues['northstar_id']);
-
-                        info('signup_created', ['id' => $signup->id, 'northstar_id' => $signup->northstar_id]);
                     }
 
                     // Check if a post already exists.
@@ -99,16 +106,16 @@ class ImportController extends Controller
                     if (! $post) {
                         $tvCreatedAtMonth = strtolower(Carbon::parse($record['created-at'])->format('F-Y'));
 
-                        $post = Post::create([
-                            'signup_id' => $signup->id,
+                        $postData = [
                             'campaign_id' => 1111, // @TODO - hardcode grab the mic campaign id
                             'northstar_id' => $referralCodeValues['northstar_id'],
                             'type' => 'voter-reg',
-                            'action_bucket' => $tvCreatedAtMonth.'-turbovote',
+                            'action_bucket' => $tvCreatedAtMonth . '-turbovote',
                             'status' => $record['voter-registration-status'],
-                        ]);
+                            'source' => $referralCodeValues['source'],
+                        ];
 
-                        info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
+                        $post = $this->postService->create($postData, $signup->id);
                     } else {
                         // If a post already exists, check if status is the same on the CSV record and the existing post,
                         // if not update the post with the new status.
