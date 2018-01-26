@@ -14,7 +14,7 @@ class ImportSignupsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:signupimport {path} {logfreq=1000}';
+    protected $signature = 'rogue:signupimport {path} {--logfreq=1}';
 
     /**
      * The console command description.
@@ -40,7 +40,7 @@ class ImportSignupsCommand extends Command
      */
     public function handle()
     {
-        $logfreq = $this->argument('logfreq');
+        $logfreq = $this->option('logfreq');
 
         // Make a local copy of the CSV
         $path = $this->argument('path');
