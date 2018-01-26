@@ -48,27 +48,28 @@ class ReviewsController extends ApiController
      */
     public function reviews(Request $request)
     {
-        $validatedRequest = $request->validate([
+        $request->validate([
             'post_id' => 'required',
             'status' => 'in:pending,accepted,rejected',
         ]);
 
         // Only allow an admin to review the post.
         if (token()->role() === 'admin') {
-            $post = Post::where('id', $validatedRequest['post_id'])->first();
-            $validatedRequest['signup_id'] = $post->signup_id;
-            $validatedRequest['northstar_id'] = $post->northstar_id;
-            $validatedRequest['old_status'] = $post->status;
+            $review = $request->all();
+            $post = Post::where('id', $review['post_id'])->first();
+            $review['signup_id'] = $post->signup_id;
+            $review['northstar_id'] = $post->northstar_id;
+            $review['old_status'] = $post->status;
 
             // Append admin's ID to the request for the "reviews" service.
-            $validatedRequest['admin_northstar_id'] = auth()->id();
-            $reviewedPost = $this->post->reviews($validatedRequest);
+            $review['admin_northstar_id'] = auth()->id();
+            $reviewedPost = $this->post->reviews($review);
             $reviewedPostCode = $this->code($reviewedPost);
 
             if (isset($reviewedPost)) {
                 info('post_reviewed', [
                     'id' => $reviewedPost->id,
-                    'admin_northstar_id' => $validatedRequest['admin_northstar_id'],
+                    'admin_northstar_id' => $review['admin_northstar_id'],
                     'status' => $reviewedPost->status,
                 ]);
 
