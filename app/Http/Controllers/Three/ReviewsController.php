@@ -54,10 +54,7 @@ class ReviewsController extends ApiController
 
         $review = $request->all();
         $post = Post::findOrFail($request['post_id']);
-
-        // Append admin's ID to the request for the "reviews" service.
-        $reviewedPost = $this->post->reviews($post, $request['status'], isset($request['comment']) ? $request['comment'] : null);
-
+        $reviewedPost = $this->post->reviews($post, $request['status'], $request['comment']);
         $reviewedPostCode = $this->code($reviewedPost);
 
         info('post_reviewed', [
