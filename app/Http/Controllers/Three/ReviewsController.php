@@ -35,6 +35,7 @@ class ReviewsController extends ApiController
         $this->transformer = new PostTransformer;
 
         $this->middleware('auth:api');
+        $this->middleware('role:admin');
     }
 
     /**
@@ -51,26 +52,21 @@ class ReviewsController extends ApiController
             'status' => 'in:pending,accepted,rejected',
         ]);
 
-        // Only allow an admin to review the post.
-        if (token()->role() === 'admin') {
-            $review = $request->all();
-            $post = Post::where('id', $request['post_id'])->first();
+        $review = $request->all();
+        $post = Post::where('id', $request['post_id'])->first();
 
-            // Append admin's ID to the request for the "reviews" service.
-            $reviewedPost = $this->post->reviews($post, $request['status'], isset($request['comment']) ? $request['comment'] : null);
+        // Append admin's ID to the request for the "reviews" service.
+        $reviewedPost = $this->post->reviews($post, $request['status'], isset($request['comment']) ? $request['comment'] : null);
 
-            $reviewedPostCode = $this->code($reviewedPost);
+        $reviewedPostCode = $this->code($reviewedPost);
 
-            info('post_reviewed', [
-                'id' => $reviewedPost->id,
-                'admin_northstar_id' => $reviewedPost->admin_northstar_id,
-                'status' => $reviewedPost->status,
-            ]);
+        info('post_reviewed', [
+            'id' => $reviewedPost->id,
+            'admin_northstar_id' => $reviewedPost->admin_northstar_id,
+            'status' => $reviewedPost->status,
+        ]);
 
-            return $this->item($reviewedPost, $reviewedPostCode);
-        }
-
-        throw new AuthorizationException('You don\'t have the correct role to review this post!');
+        return $this->item($reviewedPost, $reviewedPostCode);
     }
 
     /**
