@@ -181,6 +181,40 @@ class Post extends Model
     }
 
     /**
+     * Transform the post model for Quasar.
+     *
+     * @return array
+     */
+    public function toQuasarPayload()
+    {
+        return [
+            'id' => $this->id,
+            'signup_id' => $this->signup_id,
+            'northstar_id' => $this->northstar_id,
+            'quantity' => $this->quantity,
+            // Add cache-busting query string to urls to make sure we get the
+            // most recent version of the image.
+            // @NOTE - Remove if we get rid of rotation.
+            'media' => [
+                'url' => $this->getMediaUrl(),
+                'original_image_url' => $this->url . '?time='. Carbon::now()->timestamp,
+                'caption' => $this->caption,
+            ],
+            'tags' => $this->tagSlugs(),
+            'reactions' => [
+                'total' => isset($this->reactions_count) ? $this->reactions_count : null,
+            ],
+            'status' => $this->status,
+            'source' => $this->source,
+            'remote_addr' => $this->remote_addr,
+            'created_at' => $this->created_at->toIso8601String(),
+            'updated_at' => $this->updated_at->toIso8601String(),
+            'meta' => [
+                'message_source' => 'rogue',
+        ];
+    }
+
+    /**
      * Apply the given tag to this post.
      */
     public function tag($tagName)

@@ -6,7 +6,6 @@ use Rogue\Models\Post;
 use Rogue\Models\Event;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
-use Rogue\Jobs\SendSignupToQuasar;
 use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider
@@ -33,10 +32,6 @@ class ModelServiceProvider extends ServiceProvider
 
         // When Posts are saved create an event for them.
         Post::saved(function ($post) {
-            if (config('features.pushToQuasar')) {
-                info('sending post to quasar');
-                SendSignupToQuasar::dispatch($post->signup);
-            }
             $post->events()->create([
                 // @TODO: this should include the tags with the post
                 'content' => $post->toJson(),
