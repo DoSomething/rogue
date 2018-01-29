@@ -8,7 +8,6 @@ use Rogue\Repositories\Three\PostRepository;
 use Rogue\Http\Controllers\Api\ApiController;
 use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Transformers\Three\PostTransformer;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ReviewsController extends ApiController
 {
@@ -48,34 +47,27 @@ class ReviewsController extends ApiController
     public function reviews(Request $request)
     {
         $request->validate([
-            'post_id' => 'required|exists:posts',
+            'post_id' => 'required',
             'status' => 'in:pending,accepted,rejected',
         ]);
 
         // Only allow an admin to review the post.
         if (token()->role() === 'admin') {
             $review = $request->all();
-            $post = Post::where('id', $review['post_id'])->first();
-            $review['signup_id'] = $post->signup_id;
-            $review['northstar_id'] = $post->northstar_id;
-            $review['old_status'] = $post->status;
+            $post = Post::where('id', $request['post_id'])->first();
 
             // Append admin's ID to the request for the "reviews" service.
-            $review['admin_northstar_id'] = auth()->id();
-            $reviewedPost = $this->post->reviews($review);
+            $reviewedPost = $this->post->reviews($post, $request['status'], isset($request['comment']) ? $request['comment'] : null);
+
             $reviewedPostCode = $this->code($reviewedPost);
 
-            if (isset($reviewedPost)) {
-                info('post_reviewed', [
-                    'id' => $reviewedPost->id,
-                    'admin_northstar_id' => $review['admin_northstar_id'],
-                    'status' => $reviewedPost->status,
-                ]);
+            info('post_reviewed', [
+                'id' => $reviewedPost->id,
+                'admin_northstar_id' => $reviewedPost->admin_northstar_id,
+                'status' => $reviewedPost->status,
+            ]);
 
-                return $this->item($reviewedPost, $reviewedPostCode);
-            } else {
-                throw (new ModelNotFoundException)->setModel('Post');
-            }
+            return $this->item($reviewedPost, $reviewedPostCode);
         }
 
         throw new AuthorizationException('You don\'t have the correct role to review this post!');
