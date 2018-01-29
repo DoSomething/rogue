@@ -6,7 +6,6 @@ use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Repositories\Three\PostRepository;
 use Rogue\Http\Controllers\Api\ApiController;
-use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Transformers\Three\PostTransformer;
 
 class ReviewsController extends ApiController
