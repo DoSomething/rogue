@@ -55,14 +55,13 @@ class ReviewsController extends ApiController
         $review = $request->all();
         $post = Post::findOrFail($request['post_id']);
         $reviewedPost = $this->post->reviews($post, $request['status'], $request['comment']);
-        $reviewedPostCode = $this->code($reviewedPost);
 
         info('post_reviewed', [
             'id' => $reviewedPost->id,
-            'admin_northstar_id' => $reviewedPost->admin_northstar_id,
+            'admin_northstar_id' => auth()->id(),
             'status' => $reviewedPost->status,
         ]);
 
-        return $this->item($reviewedPost, $reviewedPostCode);
+        return $this->item($reviewedPost, 201);
     }
 }

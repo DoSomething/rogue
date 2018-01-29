@@ -15,8 +15,6 @@ class ReviewsTest extends TestCase
      */
     public function testPostingASingleReview()
     {
-        $this->mockTime('8/3/2017 17:02:00');
-
         // Create a post.
         $northstarId = $this->faker->northstar_id;
         $post = factory(Post::class)->create();
@@ -82,5 +80,22 @@ class ReviewsTest extends TestCase
         // @TODO: Laravel doesn't touch timestamps recursively - only direct relationships.
         // $this->assertEquals('2017-08-03 16:55:00', (string) $signup->fresh()->updated_at);
         $this->markTestIncomplete();
+    }
+
+    /**
+     * Test that you get a 404 if the post doesn't exist.
+     *
+     * @return void
+     */
+    public function test404IfPostDoesntExist()
+    {
+        // Review a post that doesn't exist.
+        $northstarId = $this->faker->northstar_id;
+        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/reviews', [
+            'post_id' => 88,
+            'status' => 'accepted',
+        ]);
+
+        $response->assertStatus(404);
     }
 }
