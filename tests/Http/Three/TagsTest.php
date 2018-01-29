@@ -12,7 +12,7 @@ class TagsTest extends TestCase
      * Test that a POST request to /tags updates the post's tags and
      * creates a new event and tagged entry.
      *
-     * POST /tags
+     * POST /v3/posts/:post_id/tag
      * @return void
      */
     public function testTaggingAPost()
@@ -30,38 +30,54 @@ class TagsTest extends TestCase
         // Make sure that the post's tags are updated.
         $this->assertContains('Good Photo', $post->tagNames());
 
-        // @TODO: Make sure we created a event for the tag.
+        // @TODO: Make sure we created a event for the tag once events are refactored.
     }
 
     /**
-     * Test that a POST request to /tags soft-deletes an existing tag
-     * on a post, creates a new event, and tagged entry.
+     * Test that a non-admin cannot tag a post.
      *
-     * POST /tags
+     * POST /v3/posts/:post_id/tag
      * @return void
      */
-    // public function testDeleteTagOnAPost()
-    // {
-    //     $this->actingAsAdmin();
+    public function testUnauthenticatedUserCannotTagAPost()
+    {
+        // Create the models that we will be using
+        $post = factory(Post::class)->create();
 
-    //     // Create a post with a tag.
-    //     $post = factory(Post::class)->create();
-    //     $post->tag('Good Photo');
+        // Apply the tag to the post
+        $response = $this->postJson('api/v3/posts/' . $post->id . '/tag', [
+            'tag_name' => 'Good Photo',
+        ]);
 
-    //     $response = $this->postJson('tags', [
-    //         'post_id' => $post->id,
-    //         'tag_name' => 'Good Photo',
-    //     ]);
+        $response->assertStatus(401);
+    }
 
-    //     // Make sure that the tag is deleted.
-    //     $response->assertStatus(200);
-    //     $this->assertEmpty($post->tagNames());
+    /**
+     * Test that a DELETE request to /tags deletes an existing tag
+     * on a post, creates a new event, and tagged entry.
+     *
+     * DELETE /v3/posts/:post_id/tag
+     * @return void
+     */
+    public function testDeleteTagOnAPost()
+    {
+        $this->actingAsAdmin();
+        // Create a post with a tag.
+        $post = factory(Post::class)->create();
+        $post->tag('Good Photo');
 
-    //     // Make sure we created an event for the tag.
-    //     $this->assertDatabaseHas('events', [
-    //         'eventable_type' => 'Rogue\Models\Post',
-    //     ]);
-    // }
+        $this->assertContains('Good Photo', $post->tagNames());
+
+        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tag', [
+            'tag_name' => 'Good Photo',
+        ]);
+
+        // Make sure that the tag is deleted.
+        $response->assertStatus(200);
+        $this->assertEmpty($post->tagNames());
+
+        // @TODO: Make sure we created a event for the tag once events are refactored.
+    }
 
     // /**
     //  * Test deleting one tag on a post only deletes that tag

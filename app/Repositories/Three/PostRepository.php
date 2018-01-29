@@ -195,7 +195,7 @@ class PostRepository
     }
 
     /**
-     * Updates a post's tags when added or deleted.
+     * Updates a post's tags when added.
      *
      * @param object $post
      * @param string $tag
@@ -204,12 +204,26 @@ class PostRepository
      */
     public function tag(Post $post, $tag)
     {
-        // If the post already has the tag, soft delete. Otherwise, add the tag to the post.
-        // if ($post->tagNames()->contains($tag)) {
-        //     $post->untag($tag);
-        // } else {
-            $post->tag($tag);
-        // }
+        $post->tag($tag);
+
+        // Return the post object including the tags that are related to it.
+        return Post::with('signup', 'tags')->findOrFail($post->id);
+    }
+
+    /**
+     * Updates a post's tags when deleted.
+     *
+     * @param object $post
+     * @param string $tag
+     *
+     * @return
+     */
+    public function untag(Post $post, $tag)
+    {
+        // If the post already has the tag, delete. Otherwise, don't do anything.
+        if ($post->tagNames()->contains($tag)) {
+            $post->untag($tag);
+        }
 
         // Return the post object including the tags that are related to it.
         return Post::with('signup', 'tags')->findOrFail($post->id);
