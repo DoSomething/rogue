@@ -92,4 +92,5 @@ Endpoint                                       | Functionality
 #### Tags
 Endpoint                                       | Functionality                                           
 ---------------------------------------------- | --------------------------------------------------------
-`POST /api/v3/post/:post_id/tag`               | [Tag a Post](endpoints/v3/tags.md#tag-a-post)
+`POST /api/v3/posts/:post_id/tag`              | [Tag a Post](endpoints/v3/tags.md#tag-a-post)
+`DELETE /api/v3/posts/:post_id/tag`            | [Delete a Tag from a Post](endpoints/v3/tags.md#delete-a-tag-from-a-post)

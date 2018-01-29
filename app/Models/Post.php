@@ -207,10 +207,15 @@ class Post extends Model
     {
         $tag = Tag::where('tag_name', $tagName)->first();
 
-        $this->tags()->detach($tag);
+        // Check to see if the tag exists on this post.
+        if ($this->tagNames()->contains($tagName)) {
+            $this->tags()->detach($tag);
 
-        // Update timestamps on the Post when removing a tag
-        $this->touch();
+            // Update timestamps on the Post when removing a tag
+            $this->touch();
+
+            // @TODO: create an event here when we refactor events system.
+        }
 
         return $this;
     }
