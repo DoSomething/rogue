@@ -65,20 +65,4 @@ class ReviewsController extends ApiController
 
         return $this->item($reviewedPost, $reviewedPostCode);
     }
-
-    /**
-     * Determine status code.
-     *
-     * @param array $reviewed
-     *
-     * @return int $code
-     */
-    public function code($reviewed)
-    {
-        if (empty($reviewed)) {
-            return 404;
-        } else {
-            return 201;
-        }
-    }
 }
