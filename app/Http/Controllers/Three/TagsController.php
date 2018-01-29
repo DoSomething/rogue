@@ -33,6 +33,9 @@ class TagsController extends ApiController
     {
         $this->post = $post;
         $this->transformer = new PostTransformer;
+
+        $this->middleware('auth:api');
+        $this->middleware('role:admin');
     }
 
     /**
@@ -48,16 +51,10 @@ class TagsController extends ApiController
             'tag_name' => 'required|string',
         ]);
 
-        // Only allow an admin to review the post.
-        if (token()->role() === 'admin') {
-            $post = $this->post->find($post->id);
+        $post = $this->post->find($post->id);
+        $taggedPost = $this->post->tag($post, $request->tag_name);
 
-            $taggedPost = $this->post->tag($post, $request->tag_name);
-
-            return $this->item($taggedPost);
-        }
-
-        throw new AuthorizationException('You don\'t have the correct role to tag this post!');
+        return $this->item($taggedPost);
     }
 
     /**
@@ -67,21 +64,21 @@ class TagsController extends ApiController
      * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Post $post)
-    {
-        $request->validate([
-            'tag_name' => 'required|string',
-        ]);
+    // public function store(Request $request, Post $post)
+    // {
+    //     $request->validate([
+    //         'tag_name' => 'required|string',
+    //     ]);
 
-        // Only allow an admin to review the post.
-        if (token()->role() === 'admin') {
-            $post = $this->post->find($post->id);
+    //     // Only allow an admin to review the post.
+    //     if (token()->role() === 'admin') {
+    //         $post = $this->post->find($post->id);
 
-            $taggedPost = $this->post->tag($post, $request->tag_name);
+    //         $taggedPost = $this->post->tag($post, $request->tag_name);
 
-            return $this->item($taggedPost);
-        }
+    //         return $this->item($taggedPost);
+    //     }
 
-        throw new AuthorizationException('You don\'t have the correct role to tag this post!');
-    }
+    //     throw new AuthorizationException('You don\'t have the correct role to tag this post!');
+    // }
 }
