@@ -4,7 +4,6 @@ namespace Tests\Http\Three;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
-use Rogue\Models\User;
 
 class TagsTest extends TestCase
 {
