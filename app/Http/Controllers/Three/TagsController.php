@@ -52,13 +52,9 @@ class TagsController extends ApiController
 
         $post = $this->post->find($post->id);
 
-        // Check to see if the post already has this tag.
-        // If so, no need to add again.
-        if (! $post->tagNames()->contains($request->tag_name)) {
-            $post = $this->post->tag($post, $request->tag_name);
-        }
+        $taggedPost = $this->post->tag($post, $request->tag_name);
 
-        return $this->item($post);
+        return $this->item($taggedPost);
     }
 
     /**
@@ -76,12 +72,8 @@ class TagsController extends ApiController
 
         $post = $this->post->find($post->id);
 
-        // Check to see if the post already has this tag.
-        // If so, delete the tag.
-        if ($post->tagNames()->contains($request->tag_name)) {
-            $post = $this->post->untag($post, $request->tag_name);
-        }
+        $untaggedPost = $this->post->untag($post, $request->tag_name);
 
-        return $this->item($post);
+        return $this->item($untaggedPost);
     }
 }

@@ -204,7 +204,11 @@ class PostRepository
      */
     public function tag(Post $post, $tag)
     {
-        $post->tag($tag);
+        // Check to see if the post already has this tag.
+        // If so, no need to add again.
+        if (! $post->tagNames()->contains($tag)) {
+            $post->tag($tag);
+        }
 
         // Return the post object including the tags that are related to it.
         return Post::with('signup', 'tags')->findOrFail($post->id);
