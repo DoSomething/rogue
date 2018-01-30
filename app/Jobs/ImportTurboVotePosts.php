@@ -103,7 +103,7 @@ class ImportTurboVotePosts implements ShouldQueue
                             'campaign_id' => $referralCodeValues['campaign_id'],
                             'northstar_id' => $referralCodeValues['northstar_id'],
                             'type' => 'voter-reg',
-                            'action_bucket' => $tvCreatedAtMonth . '-turbovote',
+                            'action' => $tvCreatedAtMonth . '-turbovote',
                             'status' => $record['voter-registration-status'],
                             'source' => $referralCodeValues['source'],
                             'details' => $postDetails,
