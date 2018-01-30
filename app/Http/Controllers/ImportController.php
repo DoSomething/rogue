@@ -26,7 +26,7 @@ class ImportController extends Controller
      */
     public function show()
     {
-        return view('pages.upload');
+        return view('pages.import');
     }
 
     /**
