@@ -191,6 +191,8 @@ class Post extends Model
             'id' => $this->id,
             'signup_id' => $this->signup_id,
             'northstar_id' => $this->northstar_id,
+            'type' => $this->type,
+            'action' => $this->action,
             'quantity' => $this->quantity,
             // Add cache-busting query string to urls to make sure we get the
             // most recent version of the image.
@@ -207,6 +209,7 @@ class Post extends Model
             'status' => $this->status,
             'source' => $this->source,
             'remote_addr' => $this->remote_addr,
+            'details' => $this->details,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
             'meta' => [

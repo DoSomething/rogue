@@ -81,11 +81,9 @@ class PostService
             info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);
         }
 
-        info('post updated');
         // Dispatch job to send signup to Quasar
         // is this ever a signup?
         if (config('features.pushToQuasar') && $postOrSignup instanceof Post) {
-            info('sending post to quasar');
             SendPostToQuasar::dispatch($postOrSignup);
         }
 

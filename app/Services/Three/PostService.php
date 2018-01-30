@@ -4,6 +4,7 @@ namespace Rogue\Services\Three;
 
 use Rogue\Models\Post;
 use Rogue\Jobs\SendPostToBlink;
+use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Repositories\Three\PostRepository;
 
 class PostService
@@ -47,6 +48,10 @@ class PostService
             SendPostToBlink::dispatch($post);
         }
 
+        if (config('features.pushToQuasar')) {
+            SendPostToQuasar::dispatch($postOrSignup);
+        }
+
         // Log that a post was created.
         info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
 
@@ -69,6 +74,10 @@ class PostService
         $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
         if (config('features.blink') && $should_send_to_blink) {
             SendPostToBlink::dispatch($post);
+        }
+
+        if (config('features.pushToQuasar')) {
+            SendPostToQuasar::dispatch($postOrSignup);
         }
 
         // Log that a post was created.

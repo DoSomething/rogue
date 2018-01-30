@@ -50,7 +50,6 @@ class SignupsController extends ApiController
      */
     public function store(SignupRequest $request)
     {
-        info('request for a signup');
         // Check to see if the signup exists before creating one.
         $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
 

@@ -44,10 +44,8 @@ class SignupService
             SendSignupToBlink::dispatch($signup);
         }
 
-        info('about to dispatch signup job');
         // Dispatch job to send signup to Quasar
         if (config('features.pushToQuasar')) {
-            info('calling job to send signup to quasar');
             SendSignupToQuasar::dispatch($signup);
         }
 
