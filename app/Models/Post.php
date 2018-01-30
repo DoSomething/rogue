@@ -211,6 +211,7 @@ class Post extends Model
             'updated_at' => $this->updated_at->toIso8601String(),
             'meta' => [
                 'message_source' => 'rogue',
+            ],
         ];
     }
 
