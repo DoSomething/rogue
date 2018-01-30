@@ -47,7 +47,7 @@ class ImportController extends Controller
         $csv = Reader::createFromPath($upload->getRealPath());
         $success = Storage::put($path, $csv);
 
-        if (!$success) {
+        if (! $success) {
             throw new HttpException(500, 'Unable read and store file to S3.');
         }
 

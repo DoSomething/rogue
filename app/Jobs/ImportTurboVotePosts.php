@@ -3,18 +3,16 @@
 namespace Rogue\Jobs;
 
 use Carbon\Carbon;
-use Rogue\Models\Post;
 use League\Csv\Reader;
+use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Illuminate\Bus\Queueable;
 use Rogue\Services\Three\PostService;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 use Rogue\Services\Three\SignupService;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-
-use Illuminate\Support\Facades\Storage;
 
 class ImportTurboVotePosts implements ShouldQueue
 {
@@ -35,10 +33,10 @@ class ImportTurboVotePosts implements ShouldQueue
     protected $authenticatedUserRole;
 
     /**
-      * Create a new job instance.
-      *
-      * @return void
-      */
+     * Create a new job instance.
+     *
+     * @return void
+     */
     public function __construct($filepath, $authenticatedUserRole)
     {
         $this->filepath = $filepath;
@@ -82,7 +80,7 @@ class ImportTurboVotePosts implements ShouldQueue
                         $signupData = [
                             'campaign_id' => $referralCodeValues['campaign_id'],
                             'campaign_run_id' => $referralCodeValues['campaign_run_id'],
-                            'source' => "turbovote-import",
+                            'source' => 'turbovote-import',
                         ];
 
                         $signup = $signupService->create($signupData, $referralCodeValues['northstar_id']);
@@ -128,6 +126,7 @@ class ImportTurboVotePosts implements ShouldQueue
     }
 
     /**
+     * Parse the record for extra details and return them as a JSON object.
      *
      * @param  array $record
      */
