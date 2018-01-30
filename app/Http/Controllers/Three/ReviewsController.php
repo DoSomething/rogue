@@ -51,7 +51,6 @@ class ReviewsController extends ApiController
             'status' => 'in:pending,accepted,rejected',
         ]);
 
-        $review = $request->all();
         $post = Post::findOrFail($request['post_id']);
         $reviewedPost = $this->post->reviews($post, $request['status'], $request['comment']);
 
