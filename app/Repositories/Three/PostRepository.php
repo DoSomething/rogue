@@ -154,27 +154,27 @@ class PostRepository
     /**
      * Updates a post's status after being reviewed.
      *
-     * @param array $data
+     * @param array Post $post
+     * @param string $status
+     * @param string $comment (optional)
      *
      * @return Post
      */
-    public function reviews($data)
+    public function reviews(Post $post, $status, $comment = null)
     {
-        $post = Post::where(['id' => $data['post_id']])->first();
-
         // Create the Review.
         $review = Review::create([
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
-            'admin_northstar_id' => $data['admin_northstar_id'],
-            'status' => $data['status'],
+            'admin_northstar_id' => auth()->id(),
+            'status' => $status,
             'old_status' => $post->status,
-            'comment' => isset($data['comment']) ? $data['comment'] : null,
+            'comment' => $comment,
             'post_id' => $post->id,
         ]);
 
         // Update the status on the Post.
-        $post->status = $data['status'];
+        $post->status = $status;
         $post->save();
 
         return $post;
