@@ -47,7 +47,7 @@ class ReviewsController extends ApiController
     public function reviews(Request $request)
     {
         $request->validate([
-            'post_id' => 'required:exists:posts',
+            'post_id' => 'required',
             'status' => 'in:pending,accepted,rejected',
         ]);
 
