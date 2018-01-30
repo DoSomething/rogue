@@ -187,15 +187,12 @@ class Post extends Model
     {
         $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
 
-        // If this post already has this tag, no need to do anything
-        if (! $this->tagNames()->contains($tagName)) {
-            $this->tags()->attach($tag);
+        $this->tags()->attach($tag);
 
-            // Update timestamps on the Post when adding a tag
-            $this->touch();
+        // Update timestamps on the Post when adding a tag
+        $this->touch();
 
-            event(new PostTagged($this, $tag));
-        }
+        event(new PostTagged($this, $tag));
 
         return $this;
     }
@@ -207,15 +204,12 @@ class Post extends Model
     {
         $tag = Tag::where('tag_name', $tagName)->first();
 
-        // Check to see if the tag exists on this post.
-        if ($this->tagNames()->contains($tagName)) {
-            $this->tags()->detach($tag);
+        $this->tags()->detach($tag);
 
-            // Update timestamps on the Post when removing a tag
-            $this->touch();
+        // Update timestamps on the Post when removing a tag
+        $this->touch();
 
-            // @TODO: create an event here when we refactor events system.
-        }
+        // @TODO: create an event here when we refactor events system.
 
         return $this;
     }

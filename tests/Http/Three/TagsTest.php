@@ -62,115 +62,108 @@ class TagsTest extends TestCase
     public function testDeleteTagOnAPost()
     {
         // Create a post with a tag.
-        // $post = factory(Post::class)->create();
-        // $post->tag('Good Photo');
+        $post = factory(Post::class)->create();
+        $post->tag('Good Photo');
 
-        // $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertContains('Good Photo', $post->tagNames());
 
-        // $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tag', [
-        //     'tag_name' => 'Good Photo',
-        // ]);
+        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tag', [
+            'tag_name' => 'Good Photo',
+        ]);
 
-        // // Make sure that the tag is deleted.
-        // $response->assertStatus(200);
-        // $this->assertEmpty($post->tagNames());
+        // Make sure that the tag is deleted.
+        $response->assertStatus(200);
+        $this->assertEmpty($post->tagNames());
 
         // @TODO: Make sure we created a event for the tag once events are refactored.
     }
 
-    // /**
-    //  * Test deleting one tag on a post only deletes that tag
-    //  *
-    //  * POST /tags
-    //  * @return void
-    //  */
-    // public function testAddMultipleTagsAndDeleteOne()
-    // {
-    //     $this->actingAsAdmin();
+    /**
+     * Test that a non-admin cannot untag a post.
+     *
+     * DELETE /v3/posts/:post_id/tag
+     * @return void
+     */
+    public function testUnauthenticatedUserCannotUnTagAPost()
+    {
+        // Create the models that we will be using
+        $post = factory(Post::class)->create();
 
-    //     // Create a post with a tag.
-    //     $post = factory(Post::class)->create();
-    //     $post->tag('Good Photo');
-    //     $post->tag('Tag To Delete');
+        // Apply the tag to the post
+        $response = $this->deleteJson('api/v3/posts/' . $post->id . '/tag', [
+            'tag_name' => 'Good Photo',
+        ]);
 
-    //     // Make sure both tags actually exist
-    //     $this->assertContains('Good Photo', $post->tagNames());
-    //     $this->assertContains('Tag To Delete', $post->tagNames());
+        $response->assertStatus(401);
+    }
 
-    //     // Send request to remove "Tag To Delete" tag
-    //     $response = $this->postJson('tags', [
-    //         'post_id' => $post->id,
-    //         'tag_name' => 'Tag To Delete',
-    //     ]);
+    /**
+     * Test deleting one tag on a post only deletes that tag
+     *
+     * POST /posts/:post_id/tag
+     * @return void
+     */
+    public function testAddMultipleTagsAndDeleteOne()
+    {
+        // Create a post with a tag.
+        $post = factory(Post::class)->create();
+        $post->tag('Good Photo');
+        $post->tag('Tag To Delete');
 
-    //     // Make sure that the tag is deleted, but the other tag is still there
-    //     $response->assertStatus(200);
-    //     $this->assertContains('Good Photo', $post->tagNames());
-    //     $this->assertNotContains('Tag To Delete', $post->fresh()->tagNames());
+        // Make sure both tags actually exist
+        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertContains('Tag To Delete', $post->tagNames());
 
-    //     // Make sure we created an event for the tag.
-    //     $this->assertDatabaseHas('events', [
-    //         'eventable_type' => 'Rogue\Models\Post',
-    //     ]);
-    // }
+        // Send request to remove "Tag To Delete" tag
+        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tag', [
+            'tag_name' => 'Tag To Delete',
+        ]);
 
-    // /**
-    //  * Test that non-admin cannot tag or un-tag posts.
-    //  *
-    //  * @return void
-    //  */
-    // public function testUnauthenticatedUserCantTag()
-    // {
-    //     $user = factory(User::class)->create();
-    //     $post = factory(Post::class)->create();
+        // Make sure that the tag is deleted, but the other tag is still there
+        $response->assertStatus(200);
+        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertNotContains('Tag To Delete', $post->fresh()->tagNames());
 
-    //     $response = $this->actingAs($user)->postJson('tags', [
-    //         'post_id' => $post->id,
-    //         'tag_name' => 'Good Photo',
-    //     ]);
+        // @TODO: When we refactor events, make sure we created an event for the tag that was deleted.
+    }
 
-    //     $response->assertStatus(403);
-    // }
+    /**
+     * Test post updated_at is updated when a new tag is applied to it
+     *
+     * @return void
+     */
+    public function testPostTimestampUpdatedWhenTagAdded()
+    {
+        // Create the models that we will be using
+        $post = factory(Post::class)->create();
 
-    // /**
-    //  * Test post updated_at is updated when a new tag is applied to it
-    //  *
-    //  * @return void
-    //  */
-    // public function testPostTimestampUpdatedWhenTagAdded()
-    // {
-    //     // Create the models that we will be using
-    //     $post = factory(Post::class)->create();
+        // Later, apply the tag to the post
+        $this->mockTime('10/21/2017 13:05:00');
 
-    //     // Later, apply the tag to the post
-    //     $this->mockTime('10/21/2017 13:05:00');
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tag', [
+            'tag_name' => 'Good Photo',
+        ]);
 
-    //     $this->actingAsAdmin()->postJson('tags', [
-    //         'post_id' => $post->id,
-    //         'tag_name' => 'Good Photo',
-    //     ]);
+        $this->assertEquals('2017-10-21 13:05:00', $post->fresh()->updated_at);
+    }
 
-    //     $this->assertEquals('2017-10-21 13:05:00', $post->fresh()->updated_at);
-    // }
+    /**
+     * Test withoutTag scope
+     *
+     * @return void
+     */
+    public function testWithoutTagScope()
+    {
+        // Create the models that we will be using
+        $posts = factory(Post::class, 20)->create();
 
-    // /**
-    //  * Test post updated_at is updated when a new tag is applied to it
-    //  *
-    //  * @return void
-    //  */
-    // public function testWithoutTagScope()
-    // {
-    //     // Create the models that we will be using
-    //     $posts = factory(Post::class, 20)->create();
+        // Later, apply the tag to the post
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $posts->first()->id . '/tag', [
+            'tag_name' => 'get-outta-here',
+        ]);
 
-    //     // Later, apply the tag to the post
-    //     $this->actingAsAdmin()->postJson('tags', [
-    //         'post_id' => $posts->first()->id,
-    //         'tag_name' => 'get-outta-here',
-    //     ]);
+        $postsQuery = Post::withoutTag('get-outta-here')->get();
 
-    //     $postsQuery = Post::withoutTag('get-outta-here')->get();
-
-    //     $this->assertEquals(19, $postsQuery->count());
-    // }
+        $this->assertEquals(19, $postsQuery->count());
+    }
 }

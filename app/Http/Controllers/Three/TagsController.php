@@ -52,9 +52,14 @@ class TagsController extends ApiController
         ]);
 
         $post = $this->post->find($post->id);
-        $taggedPost = $this->post->tag($post, $request->tag_name);
 
-        return $this->item($taggedPost);
+        // Check to see if the post already has this tag.
+        // If so, no need to add again.
+        if (! $post->tagNames()->contains($request->tag_name)) {
+            $post = $this->post->tag($post, $request->tag_name);
+        }
+
+        return $this->item($post);
     }
 
     /**
@@ -71,8 +76,13 @@ class TagsController extends ApiController
         ]);
 
         $post = $this->post->find($post->id);
-        $untaggedPost = $this->post->untag($post, $request->tag_name);
 
-        return $this->item($untaggedPost);
+        // Check to see if the post already has this tag.
+        // If so, delete the tag.
+        if ($post->tagNames()->contains($request->tag_name)) {
+            $post = $this->post->untag($post, $request->tag_name);
+        }
+
+        return $this->item($post);
     }
 }
