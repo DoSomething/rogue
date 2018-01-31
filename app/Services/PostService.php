@@ -46,7 +46,6 @@ class PostService
             SendPostToBlink::dispatch($post);
         }
 
-        info('post created');
         // Dispatch job to send signup to Quasar
         if (config('features.pushToQuasar')) {
             info('sending post to quasar');

@@ -199,7 +199,6 @@ class Post extends Model
             // @NOTE - Remove if we get rid of rotation.
             'media' => [
                 'url' => $this->getMediaUrl(),
-                'original_image_url' => $this->url . '?time='. Carbon::now()->timestamp,
                 'caption' => $this->caption,
             ],
             'tags' => $this->tagSlugs(),
