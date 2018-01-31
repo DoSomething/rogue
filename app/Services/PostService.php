@@ -85,7 +85,7 @@ class PostService
         if (config('features.pushToQuasar')) {
             if ($postOrSignup instanceof Post) {
                 SendPostToQuasar::dispatch($postOrSignup);
-            } else if ($postOrSignup instanceof Signup) {
+            } elseif ($postOrSignup instanceof Signup) {
                 SendSignupToQuasar::dispatch($postOrSignup);
             }
         }
