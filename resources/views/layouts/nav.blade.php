@@ -14,6 +14,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/import">
+                        <strong class="navigation__title">Import CSV</strong>
+                    </a>
+                </li>
+                <li>
                     <a href="/faq">
                         <strong class="navigation__title">FAQ</strong>
                     </a>
