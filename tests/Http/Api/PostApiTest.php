@@ -18,6 +18,9 @@ class PostApiTest extends TestCase
      */
     public function testCreatingAPostAndSignup()
     {
+        // Turn off feature flag that supports quantity splitting.
+        config(['features.v3QuantitySupport' => false]);
+
         $northstar_id = $this->faker->uuid;
         $campaign_id = $this->faker->randomNumber(4);
         $campaign_run_id = $this->faker->randomNumber(4);
@@ -79,6 +82,9 @@ class PostApiTest extends TestCase
      */
     public function testCreatingAPost()
     {
+        // Turn off feature flag that supports quantity splitting.
+        config(['features.v3QuantitySupport' => false]);
+
         $signup = factory(Signup::class)->create();
         $quantity = $this->faker->numberBetween(10, 1000);
         $caption = $this->faker->sentence;
@@ -132,6 +138,9 @@ class PostApiTest extends TestCase
      */
     public function testCreatingMultiplePosts()
     {
+        // Turn off feature flag that supports quantity splitting.
+        config(['features.v3QuantitySupport' => false]);
+
         $signup = factory(Signup::class)->create();
         $quantity = $this->faker->numberBetween(10, 1000);
         $caption = $this->faker->sentence;
@@ -227,6 +236,9 @@ class PostApiTest extends TestCase
      */
     public function testCreatingAPostFromContentful()
     {
+        // Turn off feature flag that supports quantity splitting.
+        config(['features.v3QuantitySupport' => false]);
+
         $signup = factory(Signup::class)->states('contentful')->create();
         $quantity = $this->faker->numberBetween(10, 1000);
         $caption = $this->faker->sentence;
