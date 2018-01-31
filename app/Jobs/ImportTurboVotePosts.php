@@ -95,7 +95,8 @@ class ImportTurboVotePosts implements ShouldQueue
 
                     if (! $post) {
                         $tvCreatedAtMonth = strtolower(Carbon::parse($record['created-at'])->format('F-Y'));
-                        $postDetails = $this->extractDetails($record);
+                        $sourceDetails = isset($referralCodeValues['source_details']) ? $referralCodeValues['source_details'] : null;
+                        $postDetails = $this->extractDetails($record, ['source-details' => $sourceDetails]);
 
                         $postData = [
                             'campaign_id' => $referralCodeValues['campaign_id'],
@@ -129,8 +130,9 @@ class ImportTurboVotePosts implements ShouldQueue
      * Parse the record for extra details and return them as a JSON object.
      *
      * @param  array $record
+     * @param  array $extraData
      */
-    private function extractDetails($record)
+    private function extractDetails($record, $extraData = null)
     {
         $details = [];
 
@@ -150,6 +152,10 @@ class ImportTurboVotePosts implements ShouldQueue
 
         foreach ($importantKeys as $key) {
             $details[$key] = $record[$key];
+        }
+
+        if ($extraData) {
+            $details = array_merge($details, $extraData);
         }
 
         return json_encode($details);
@@ -185,6 +191,11 @@ class ImportTurboVotePosts implements ShouldQueue
             // Grab the source
             if (strtolower($value[0]) === 'source') {
                 $values['source'] = $value[1];
+            }
+
+            // Grab any source details
+            if (strtolower($value[0]) === 'source_details') {
+                $values['source_details'] = $value[1];
             }
         }
 
