@@ -82,7 +82,7 @@ class PostService
         }
 
         // Dispatch job to send Post to Quasar
-        if (config('features.pushToQuasar') && ) {
+        if (config('features.pushToQuasar')) {
             if ($postOrSignup instanceof Post) {
                 SendPostToQuasar::dispatch($postOrSignup);
             }
