@@ -7,7 +7,6 @@ use Rogue\Services\Blink;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Rogue\Http\Resources\SignupResource;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
@@ -47,6 +46,5 @@ class SendSignupToQuasar implements ShouldQueue
 
         // Log
         info('Signup ' . $this->signup->id . ' sent to Quasar');
-
     }
 }

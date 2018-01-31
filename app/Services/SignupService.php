@@ -2,8 +2,8 @@
 
 namespace Rogue\Services;
 
-use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Jobs\SendSignupToBlink;
+use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Repositories\SignupRepository;
 
 class SignupService
