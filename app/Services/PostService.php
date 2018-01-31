@@ -5,6 +5,7 @@ namespace Rogue\Services;
 use Rogue\Models\Post;
 use Rogue\Jobs\SendPostToBlink;
 use Rogue\Jobs\SendPostToQuasar;
+use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Repositories\PostRepository;
 
 class PostService
@@ -80,10 +81,14 @@ class PostService
             info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);
         }
 
-        // Dispatch job to send signup to Quasar
-        // is this ever a signup?
-        if (config('features.pushToQuasar') && $postOrSignup instanceof Post) {
-            SendPostToQuasar::dispatch($postOrSignup);
+        // Dispatch job to send Post to Quasar
+        if (config('features.pushToQuasar') && ) {
+            if ($postOrSignup instanceof Post) {
+                SendPostToQuasar::dispatch($postOrSignup);
+            }
+            else if ($postOrSignup instanceof Signup) {
+                SendSignupToQuasar::dispatch($postOrSignup);
+            }
         }
 
         return $postOrSignup;
