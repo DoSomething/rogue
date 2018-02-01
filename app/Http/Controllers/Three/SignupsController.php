@@ -112,9 +112,7 @@ class SignupsController extends ApiController
     {
         // Only allow an admin, staff, or the user who owns the signup to see the signup.
         $signup = Signup::whereVisible()->first();
-        // if ($request->query('include') === 'posts') {
-        //     $signup = Signup::withVisiblePosts()->first();
-        // }
+
         if ($signup) {
             return $this->item($signup, 200, [], $this->transformer, $request->query('include'));
         }
