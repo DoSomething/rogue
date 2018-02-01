@@ -47,9 +47,8 @@ class PostService
             SendPostToBlink::dispatch($post);
         }
 
-        // Dispatch job to send signup to Quasar
+        // Dispatch job to send post to Quasar
         if (config('features.pushToQuasar')) {
-            info('sending post to quasar');
             SendPostToQuasar::dispatch($post);
         }
 
@@ -105,6 +104,13 @@ class PostService
             'id' => $postId,
         ]);
 
-        return $this->repository->destroy($postId);
+        $trashed = $this->repository->destroy($postId);
+
+        // Dispatch job to send post to Quasar
+        if (config('features.pushToQuasar')) {
+            SendPostToQuasar::dispatch(Post::withTrashed()->find($postId));
+        }
+
+        return $trashed;
     }
 }
