@@ -252,7 +252,7 @@ class Post extends Model
     {
         if (! is_staff_user()) {
             return $query->where('status', 'accepted')
-                         ->orWhere('northstar_id', auth()->id());
+                   ->orWhere('northstar_id', auth()->id());
         }
     }
 }
