@@ -104,42 +104,58 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test for retrieving all signups.
+     * Test admin/staff should be able to receive all signups.
      *
      * GET /api/v3/signups
      * @return void
      */
-    public function testSignupsIndex()
+    public function testSignupsIndexWithAdmin()
     {
         factory(Signup::class, 10)->create();
 
-        $response = $this->getJson('api/v3/signups');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups');
+        $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'id',
-                    'northstar_id',
-                    'campaign_id',
-                    'campaign_run_id',
-                    'quantity',
-                    'why_participated',
-                    'source',
-                    'details',
-                    'created_at',
-                    'updated_at',
-                ],
-            ],
-            'meta' => [
-                'cursor' => [
-                    'current',
-                    'prev',
-                    'next',
-                    'count',
-                ],
-            ],
-        ]);
+        $this->assertEquals(10, $decodedResponse['meta']['cursor']['count']);
+    }
+
+    /**
+     * Test that a user can only see signups that are theirs.
+     *
+     * GET /api/v3/signups
+     * @return void
+     */
+    public function testSignupsIndexWithUserWhoHasASignup()
+    {
+        factory(Signup::class, 7)->create();
+        // Create a specific signup for a user
+        $userSignup = factory(Signup::class)->create();
+
+        $response = $this->withAccessToken($userSignup->northstar_id)->getJson('api/v3/signups');
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+        $this->assertEquals(1, $decodedResponse['meta']['cursor']['count']);
+    }
+
+    /**
+     * Test a user cannot see signup index when they don't have any signups.
+     *
+     * GET /api/v3/signups
+     * @return void
+     */
+    public function testSignupsIndexWithUserWhoHasNoSignups()
+    {
+        factory(Signup::class, 7)->create();
+        // Create a specific signup for a user
+        $userSignup = factory(Signup::class)->create();
+
+        $response = $this->getJson('api/v3/signups');
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+        $this->assertEquals(0, $decodedResponse['meta']['cursor']['count']);
     }
 
     /**
@@ -193,6 +209,7 @@ class SignupTest extends TestCase
         $response = $this->getJson('api/v3/signups' . '?include=posts');
 
         $response->assertStatus(200);
+
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
