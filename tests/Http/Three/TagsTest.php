@@ -3,8 +3,8 @@
 namespace Tests\Http\Three;
 
 use Tests\TestCase;
-use Rogue\Models\Post;
 use Rogue\Models\Tag;
+use Rogue\Models\Post;
 
 class TagsTest extends TestCase
 {

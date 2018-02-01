@@ -44,7 +44,6 @@ $factory->defineAs(Post::class, 'rejected', function () use ($factory) {
     return array_merge($factory->raw(Post::class), ['status' => 'rejected']);
 });
 
-
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
     $faker->addProvider(new FakerNorthstarId($faker));
