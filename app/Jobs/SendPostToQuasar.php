@@ -3,7 +3,6 @@
 namespace Rogue\Jobs;
 
 use Rogue\Models\Post;
-use Rogue\Services\Blink;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -36,13 +35,13 @@ class SendPostToQuasar implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Blink $blink)
+    public function handle()
     {
         // Format the payload
-        $body = $this->post->toQuasarPayload();
+        $payload = $this->post->toQuasarPayload();
 
         // Send to Quasar
-        $blink->sendToQuasar($body);
+        gateway('blink')->post('events/quasar-relay', $payload);
 
         // Log
         info('Post ' . $this->post->id . ' sent to Quasar');

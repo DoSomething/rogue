@@ -49,7 +49,7 @@ class PostService
         }
 
         if (config('features.pushToQuasar')) {
-            SendPostToQuasar::dispatch($postOrSignup);
+            SendPostToQuasar::dispatch($post);
         }
 
         // Log that a post was created.

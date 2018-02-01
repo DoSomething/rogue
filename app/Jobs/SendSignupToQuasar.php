@@ -3,7 +3,6 @@
 namespace Rogue\Jobs;
 
 use Rogue\Models\Signup;
-use Rogue\Services\Blink;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -36,13 +35,13 @@ class SendSignupToQuasar implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Blink $blink)
+    public function handle()
     {
         // Format payload
-        $body = $this->signup->toQuasarPayload();
+        $payload = $this->signup->toQuasarPayload();
 
         // Send to Quasar
-        $blink->sendToQuasar($body);
+        gateway('blink')->post('events/quasar-relay', $payload);
 
         // Log
         info('Signup ' . $this->signup->id . ' sent to Quasar');
