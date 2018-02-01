@@ -5,7 +5,6 @@ use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Services\AWS;
 use Rogue\Models\Signup;
-use Rogue\Models\Tag;
 use Rogue\Models\Reaction;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -96,12 +95,4 @@ $factory->define(User::class, function (Generator $faker) {
 
 $factory->defineAs(User::class, 'admin', function () use ($factory) {
     return array_merge($factory->raw(User::class), ['role' => 'admin']);
-});
-
-// Tag Factory
-$factory->define(Tag::class, function (Generator $faker) {
-    return [
-        'tag_name' => 'Good Photo',
-        'tag_slug' => 'good-photo',
-    ];
 });
