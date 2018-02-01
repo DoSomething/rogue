@@ -325,6 +325,9 @@ class SignupTest extends TestCase
      */
     public function testQuantityOnSignupIndex()
     {
+        // Turn on feature flag that supports quantity splitting.
+        config(['features.v3QuantitySupport' => true]);
+
         // Create a signup with a quantity.
         $firstSignup = factory(Signup::class)->create();
         $firstSignup->quantity = 8;
@@ -339,7 +342,7 @@ class SignupTest extends TestCase
         $secondSignup->quantity = $secondSignup->getQuantity();
         $secondSignup->save();
 
-        $response = $this->getJson('api/v3/signups');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups');
 
         $response->assertStatus(200);
         $response->assertJson([
