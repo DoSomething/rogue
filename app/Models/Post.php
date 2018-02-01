@@ -202,9 +202,6 @@ class Post extends Model
                 'caption' => $this->caption,
             ],
             'tags' => $this->tagSlugs(),
-            'reactions' => [
-                'total' => isset($this->reactions_count) ? $this->reactions_count : null,
-            ],
             'status' => $this->status,
             'source' => $this->source,
             'remote_addr' => $this->remote_addr,
