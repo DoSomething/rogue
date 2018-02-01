@@ -3,7 +3,7 @@
 ## Tag a Post
 
 ```
-POST /api/v3/posts/:post_id/tag
+POST /api/v3/posts/:post_id/tags
 ```
   - **tag_name**: (int|string) required.
     The label you want to tag a post with. 
@@ -40,7 +40,7 @@ Example Response:
 
 ##Delete a Tag From a Post
 ```
-DELETE /api/v3/posts/:post_id/tag
+DELETE /api/v3/posts/:post_id/tags
 ```
   - **tag_name**: (int|string) required.
     The tag you want to delete from the post

@@ -4,6 +4,7 @@ namespace Tests\Http\Three;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
+use Rogue\Models\Tag;
 
 class TagsTest extends TestCase
 {
@@ -20,7 +21,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tag', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -44,7 +45,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $response = $this->postJson('api/v3/posts/' . $post->id . '/tag', [
+        $response = $this->postJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -60,19 +61,26 @@ class TagsTest extends TestCase
      */
     public function testDeleteTagOnAPost()
     {
-        // Create a post with a tag.
+        // @TODO: Gateway keeps the "Token" from this PHPUnit call for later,
+        // and so we always think requests are anonymous. That's no good!
+        // We can swap this back once that's fixed in Gateway.
+        // $post = factory(Post::class)->create()->tag('Good Photo');
+
         $post = factory(Post::class)->create();
-        $post->tag('Good Photo');
+
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+             'tag_name' => 'Good Photo',
+         ]);
 
         $this->assertContains('Good Photo', $post->tagNames());
 
-        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tag', [
+        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
         // Make sure that the tag is deleted.
         $response->assertStatus(200);
-        $this->assertEmpty($post->tagNames());
+        $this->assertEmpty($post->fresh()->tagNames());
 
         // @TODO: Make sure we created a event for the tag once events are refactored.
     }
@@ -89,7 +97,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $response = $this->deleteJson('api/v3/posts/' . $post->id . '/tag', [
+        $response = $this->deleteJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -104,17 +112,30 @@ class TagsTest extends TestCase
      */
     public function testAddMultipleTagsAndDeleteOne()
     {
-        // Create a post with a tag.
+        // Create a post with tags.
+        // @TODO: Gateway keeps the "Token" from this PHPUnit call for later,
+        // and so we always think requests are anonymous. That's no good!
+        // We can swap this back once that's fixed in Gateway.
+        // $post = factory(Post::class)->create();
+        // $post->tag('Good Photo');
+        // $post->tag('Tag To Delete');
+
         $post = factory(Post::class)->create();
-        $post->tag('Good Photo');
-        $post->tag('Tag To Delete');
+
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+             'tag_name' => 'Good Photo',
+         ]);
+
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+             'tag_name' => 'Tag To Delete',
+         ]);
 
         // Make sure both tags actually exist
         $this->assertContains('Good Photo', $post->tagNames());
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
-        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tag', [
+        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Tag To Delete',
         ]);
 
@@ -139,7 +160,7 @@ class TagsTest extends TestCase
         // Later, apply the tag to the post
         $this->mockTime('10/21/2017 13:05:00');
 
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tag', [
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -157,7 +178,7 @@ class TagsTest extends TestCase
         $posts = factory(Post::class, 20)->create();
 
         // Later, apply the tag to the post
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $posts->first()->id . '/tag', [
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $posts->first()->id . '/tags', [
             'tag_name' => 'get-outta-here',
         ]);
 

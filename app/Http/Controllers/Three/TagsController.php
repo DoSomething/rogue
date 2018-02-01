@@ -34,7 +34,7 @@ class TagsController extends ApiController
         $this->transformer = new PostTransformer;
 
         $this->middleware('auth:api');
-        $this->middleware('role:admin');
+        //$this->middleware('role:admin');
     }
 
     /**

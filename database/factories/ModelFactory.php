@@ -5,6 +5,7 @@ use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Services\AWS;
 use Rogue\Models\Signup;
+use Rogue\Models\Tag;
 use Rogue\Models\Reaction;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -43,6 +44,7 @@ $factory->defineAs(Post::class, 'accepted', function () use ($factory) {
 $factory->defineAs(Post::class, 'rejected', function () use ($factory) {
     return array_merge($factory->raw(Post::class), ['status' => 'rejected']);
 });
+
 
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
@@ -94,4 +96,12 @@ $factory->define(User::class, function (Generator $faker) {
 
 $factory->defineAs(User::class, 'admin', function () use ($factory) {
     return array_merge($factory->raw(User::class), ['role' => 'admin']);
+});
+
+// Tag Factory
+$factory->define(Tag::class, function (Generator $faker) {
+    return [
+        'tag_name' => 'Good Photo',
+        'tag_slug' => 'good-photo',
+    ];
 });
