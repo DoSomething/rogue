@@ -21,7 +21,7 @@ class PostApiTest extends TestCase
         $northstar_id = $this->faker->uuid;
         $campaign_id = $this->faker->randomNumber(4);
         $campaign_run_id = $this->faker->randomNumber(4);
-        $quantity = $this->faker->numberBetween(10, 1000);
+        $quantity = 10;
         $caption = $this->faker->sentence;
 
         // Mock the Blink API calls.
@@ -80,7 +80,7 @@ class PostApiTest extends TestCase
     public function testCreatingAPost()
     {
         $signup = factory(Signup::class)->create();
-        $quantity = $this->faker->numberBetween(10, 1000);
+        $quantity = 10;
         $caption = $this->faker->sentence;
 
         // Mock the Blink API call.
@@ -110,7 +110,9 @@ class PostApiTest extends TestCase
             'data' => [
                 'northstar_id' => $signup->northstar_id,
                 'status' => 'pending',
-                'quantity' => $signup->getQuantity(),
+                // If we are supporting quantity on the post, this value will be the submitted quantity,
+                // otherwise, we don't put anything on the post and it will be null.
+                'quantity' => config('features.v3QuantitySupport') ? $quantity : null,
                 'media' => [
                     'caption' => $caption,
                 ],
@@ -133,7 +135,7 @@ class PostApiTest extends TestCase
     public function testCreatingMultiplePosts()
     {
         $signup = factory(Signup::class)->create();
-        $quantity = $this->faker->numberBetween(10, 1000);
+        $quantity = 30;
         $caption = $this->faker->sentence;
 
         // Mock the Blink API call.
@@ -163,7 +165,9 @@ class PostApiTest extends TestCase
             'data' => [
                 'northstar_id' => $signup->northstar_id,
                 'status' => 'pending',
-                'quantity' => $signup->getQuantity(),
+                // If we are supporting quantity on the post, this value will be the submitted quantity,
+                // otherwise, we don't put anything on the post and it will be null.
+                'quantity' => config('features.v3QuantitySupport') ? $quantity : null,
                 'media' => [
                     'caption' => $caption,
                 ],
@@ -178,7 +182,7 @@ class PostApiTest extends TestCase
         ]);
 
         // Create a second post without why_participated.
-        $secondQuantity = $this->faker->numberBetween(10, 1000);
+        $secondQuantity = 40;
         $secondCaption = $this->faker->sentence;
 
         $secondResponse = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
@@ -199,11 +203,15 @@ class PostApiTest extends TestCase
         ]);
 
         $secondResponse->assertStatus(200);
+
         $secondResponse->assertJson([
             'data' => [
                 'northstar_id' => $signup->northstar_id,
                 'status' => 'pending',
-                'quantity' => $signup->getQuantity(),
+                // If we are supporting quantity on the post,
+                // this value should be the the new, posted quantity minus
+                // the previous total, otherwise it is null.
+                'quantity' => config('features.v3QuantitySupport') ? 10 : null,
                 'media' => [
                     'caption' => $secondCaption,
                 ],
@@ -228,7 +236,7 @@ class PostApiTest extends TestCase
     public function testCreatingAPostFromContentful()
     {
         $signup = factory(Signup::class)->states('contentful')->create();
-        $quantity = $this->faker->numberBetween(10, 1000);
+        $quantity = 10;
         $caption = $this->faker->sentence;
 
         // Mock the Blink API call.
@@ -257,7 +265,9 @@ class PostApiTest extends TestCase
             'data' => [
                 'northstar_id' => $signup->northstar_id,
                 'status' => 'pending',
-                'quantity' => $signup->getQuantity(),
+                // If we are supporting quantity on the post, this value will be the submitted quantity,
+                // otherwise, we don't put anything on the post and it will be null.
+                'quantity' => config('features.v3QuantitySupport') ? $quantity : null,
                 'media' => [
                     'caption' => $caption,
                 ],

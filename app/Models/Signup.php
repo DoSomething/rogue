@@ -145,7 +145,7 @@ class Signup extends Model
         // logic to store everything in the quanity column and not use the quanity_pending
         // column at all. We only want to return what is in the quanity_pending column
         // if is the only place quanity is stored.
-        if (! config('features.v3QuantitySupport') || $this->posts->isEmpty() || is_null($this->posts->first()->quantity)) {
+        if (! config('features.v3QuantitySupport') || $this->posts->isEmpty()) {
             if (! is_null($this->quantity_pending) && is_null($this->quantity)) {
                 return $this->quantity_pending;
             }
