@@ -25,7 +25,7 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/signups', [
+        $response = $this->withAccessToken($northstarId)->postJson('api/v3/signups', [
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
             'details' => 'affiliate-messaging',
@@ -67,7 +67,7 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/signups', [
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/signups', [
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'source' => 'the-fox-den',
@@ -198,7 +198,7 @@ class SignupTest extends TestCase
             $signup->save();
         }
 
-        $response = $this->withAccessToken($signup->northstar_id, 'admin')->getJson('api/v3/signups');
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -280,7 +280,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with admin that posts are returned.
-        $response = $this->withAccessToken($signup->northstar_id, 'admin')->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups' . '?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -351,7 +351,7 @@ class SignupTest extends TestCase
     public function testSignupShowAsOwner()
     {
         $signup = factory(Signup::class)->create();
-        $response = $this->withAccessToken($signup->northstar_id, 'admin')->getJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
