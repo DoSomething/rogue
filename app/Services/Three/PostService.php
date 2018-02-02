@@ -98,6 +98,13 @@ class PostService
             'id' => $postId,
         ]);
 
-        return $this->repository->destroy($postId);
+        $trashed = $this->repository->destroy($postId);
+
+        // Dispatch job to send post to Quasar
+        if (config('features.pushToQuasar')) {
+            SendPostToQuasar::dispatch(Post::withTrashed()->find($postId));
+        }
+
+        return $trashed;
     }
 }
