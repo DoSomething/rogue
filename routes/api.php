@@ -69,4 +69,8 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
 
     // reviews
     $this->post('reviews', 'Three\ReviewsController@reviews');
+
+    // tag
+    $this->post('posts/{post}/tags', 'Three\TagsController@store');
+    $this->delete('posts/{post}/tags', 'Three\TagsController@destroy');
 });
