@@ -37,6 +37,7 @@ class PostService
      */
     public function create($data, $signupId, $authenticatedUserRole = null)
     {
+        info('create - postservice v3');
         $post = $this->repository->create($data, $signupId, $authenticatedUserRole);
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
@@ -62,6 +63,7 @@ class PostService
      */
     public function update($signup, $data)
     {
+        info('update - postservice v3');
         $postOrSignup = $this->repository->update($signup, $data);
 
         if ($postOrSignup instanceof Post) {
@@ -87,6 +89,7 @@ class PostService
      */
     public function destroy($postId)
     {
+        info('destroy - postservice');
         info('post_deleted', [
             'id' => $postId,
         ]);

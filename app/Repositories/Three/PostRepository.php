@@ -150,6 +150,7 @@ class PostRepository
      */
     public function destroy($postId)
     {
+        info('destroy - PostRepository');
         $post = Post::findOrFail($postId);
 
         // Delete the image file from AWS.

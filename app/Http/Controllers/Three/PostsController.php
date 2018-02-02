@@ -151,6 +151,7 @@ class PostsController extends ApiController
      */
     public function update(Request $request, Post $post)
     {
+        info('update - postscontroller');
         $validatedRequest = $request->validate([
             'status' => 'in:pending,accepted,rejected',
             'caption' => 'nullable|string|max:140',
@@ -159,7 +160,8 @@ class PostsController extends ApiController
 
         // Only allow an admin or the user who owns the post to update.
         if (token()->role() === 'admin' || auth()->id() === $post->northstar_id) {
-            $post->update($validatedRequest);
+            info('we updating');
+            $this->posts->update($validatedRequest);
 
             return $this->item($post);
         }
@@ -176,7 +178,8 @@ class PostsController extends ApiController
      */
     public function destroy(Post $post)
     {
-        $post->delete();
+        info('destroy - postscontroller');
+        $this->posts->destroy($post->id);
 
         return $this->respond('Post deleted.', 200);
     }
