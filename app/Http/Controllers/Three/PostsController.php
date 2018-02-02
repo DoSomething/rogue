@@ -116,6 +116,7 @@ class PostsController extends ApiController
         }
 
         $code = $updating ? 200 : 201;
+
         return $this->item($post, $code, [], null, 'signup');
     }
 
