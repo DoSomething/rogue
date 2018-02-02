@@ -111,13 +111,13 @@ class SignupsController extends ApiController
     public function show(Request $request, Signup $signup)
     {
         // Only allow an admin, staff, or the user who owns the signup to see the signup.
-        $signup = Signup::whereVisible()->first();
-
         if ($signup) {
-            return $this->item($signup, 200, [], $this->transformer, $request->query('include'));
-        }
+            if (is_staff_user() || auth()->id() === $signup->northstar_id) {
+                return $this->item($signup, 200, [], $this->transformer, $request->query('include'));
+            }
 
-        throw new AuthorizationException('You don\'t have the correct role to see this signup!');
+            throw new AuthorizationException('You don\'t have the correct role to see this signup!');
+        }
     }
 
     /**
