@@ -158,7 +158,6 @@ class PostsController extends ApiController
 
         // Only allow an admin or the user who owns the post to update.
         if (token()->role() === 'admin' || auth()->id() === $post->northstar_id) {
-            info('we updating');
             $this->posts->update($post, $validatedRequest);
 
             return $this->item($post);
@@ -176,7 +175,6 @@ class PostsController extends ApiController
      */
     public function destroy(Post $post)
     {
-        info('destroy - postscontroller');
         $this->posts->destroy($post->id);
 
         return $this->respond('Post deleted.', 200);
