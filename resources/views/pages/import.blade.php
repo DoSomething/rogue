@@ -14,7 +14,7 @@
                     <div class="figure__body">
                         <strong>Attention:</strong>
                         <br>
-                        <p class="footnote">For the time being, This feature should only be used by Jen Ng. If you have any questions please reach out to Jen directly or post a message in the #rogue channel in slack</p>
+                        <p class="footnote">For the time being, this feature should only be used by Jen Ng. If you have any questions please reach out to Jen directly or post a message in the #rogue channel in slack.</p>
                     </div>
                 </article>
             </div>
