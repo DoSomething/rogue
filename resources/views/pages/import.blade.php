@@ -7,7 +7,16 @@
     <div class="container -padded">
         <div class="wrapper">
             <div class="container__block -narrow">
-                <p>For the time being, This feature should only be used by Jen Ng. If you have any questions please reach out to Jen directly or post a message in the #rogue channel in slack</p>
+                <article class="figure margin-bottom-none -left -small">
+                    <div class="figure__media rounded-figure">
+                        <img src={{asset('images/Jen.png')}}>
+                    </div>
+                    <div class="figure__body">
+                        <strong>Attention:</strong>
+                        <br>
+                        <p class="footnote">For the time being, This feature should only be used by Jen Ng. If you have any questions please reach out to Jen directly or post a message in the #rogue channel in slack</p>
+                    </div>
+                </article>
             </div>
             <div class="container__block -narrow">
                 <form action={{url('/import')}} method="post" enctype="multipart/form-data">
