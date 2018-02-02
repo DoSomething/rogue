@@ -276,7 +276,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with admin that posts are returned.
-        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups' . '?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
