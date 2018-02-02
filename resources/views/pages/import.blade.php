@@ -7,6 +7,9 @@
     <div class="container -padded">
         <div class="wrapper">
             <div class="container__block -narrow">
+                <p>For the time being, This feature should only be used by Jen Ng. If you have any questions please reach out to Jen directly or post a message in the #rogue channel in slack</p>
+            </div>
+            <div class="container__block -narrow">
                 <form action={{url('/import')}} method="post" enctype="multipart/form-data">
                     {{ csrf_field()}}
                     <div class="form-item">
