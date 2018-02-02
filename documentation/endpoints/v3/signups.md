@@ -31,11 +31,11 @@ Example response:
         "campaign_id": "362",
         "campaign_run_id": null,
         "quantity": null,
-        "why_participated": "to test",
-        "source": null,
         "details": null,
         "created_at": "2017-12-01T19:48:16+00:00",
         "updated_at": "2017-12-01T19:48:16+00:00"
+        "why_participated": "to test",
+        "source": null,
     }
 }
 ```
@@ -46,7 +46,7 @@ Example response:
 GET /api/v3/signups
 ```
 
-Only admins and signup owners will have `why_participated` returned in the response.
+Only admins and signup owners will have `why_participated` and `source` returned in the response.
 
 When using `?include=posts`, anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 ### Optional Query Parameters
@@ -66,7 +66,6 @@ Example Response:
       "campaign_run_id": 6519,
       "quantity": null,
       "why_participated": "Eos architecto et quibusdam quasi.",
-      "source": "phoenix-web",
       "details": null,
       "created_at": "2017-08-14T21:20:51+00:00",
       "updated_at": "2017-08-15T16:03:25+00:00"
@@ -77,11 +76,12 @@ Example Response:
       "campaign_id": 1631,
       "campaign_run_id": 1626,
       "quantity": null,
-      "why_participated": "Non nobis ab asperiores fuga.",
       "source": "phoenix-web",
       "details": null,
       "created_at": "2017-08-14T21:20:51+00:00",
       "updated_at": "2017-08-30T19:08:25+00:00"
+      "why_participated": "Non nobis ab asperiores fuga.",
+      "source": "phoenix-web",
     },
   ],
   "meta": {
@@ -105,7 +105,7 @@ Example Response:
 GET /api/v3/signups/:signup_id
 ```
 
-Only admins and signup owners will have `why_participated` returned in the response.
+Only admins and signup owners will have `why_participated` and `source` returned in the response.
 
 When using `?include=posts`, anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 ### Optional Query Parameters
@@ -123,11 +123,11 @@ Example Response:
     "campaign_id": 1173,
     "campaign_run_id": 6519,
     "quantity": null,
-    "why_participated": "Eos architecto et quibusdam quasi.",
-    "source": "phoenix-web",
     "details": null,
     "created_at": "2017-08-14T21:20:51+00:00",
     "updated_at": "2017-08-15T16:03:25+00:00",
+    "why_participated": "Eos architecto et quibusdam quasi.",
+    "source": "phoenix-web",
     "posts": {
       "data": []
     }
@@ -153,11 +153,11 @@ Example response:
         "campaign_id": "362",
         "campaign_run_id": null,
         "quantity": null,
-        "why_participated": "to test update",
-        "source": null,
         "details": null,
         "created_at": "2017-12-01T16:39:03+00:00",
         "updated_at": "2017-12-01T19:24:22+00:00"
+        "source": null,
+        "why_participated": "to test update",
     }
 }
 ```
