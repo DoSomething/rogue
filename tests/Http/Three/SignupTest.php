@@ -105,7 +105,7 @@ class SignupTest extends TestCase
 
     /**
      * Test for retrieving all signups as non-admin and non-owner.
-     * Non-admins/non-owners should not see why_participated or source in response.
+     * Non-admins/non-owners should not see why_participated, source, or details in response.
      *
      * GET /api/v3/signups
      * @return void
@@ -125,7 +125,6 @@ class SignupTest extends TestCase
                     'campaign_id',
                     'campaign_run_id',
                     'quantity',
-                    'details',
                     'created_at',
                     'updated_at',
                 ],
@@ -143,7 +142,7 @@ class SignupTest extends TestCase
 
     /**
      * Test for retrieving all signups as admin.
-     * Admins should see why_participated and source in response.
+     * Admins should see why_participated, source, and details in response.
      *
      * GET /api/v3/signups
      * @return void
@@ -163,11 +162,11 @@ class SignupTest extends TestCase
                     'campaign_id',
                     'campaign_run_id',
                     'quantity',
-                    'details',
                     'created_at',
                     'updated_at',
                     'why_participated',
                     'source',
+                    'details',
                 ],
             ],
             'meta' => [
@@ -183,7 +182,7 @@ class SignupTest extends TestCase
 
     /**
      * Test for retrieving all signups as owner.
-     * Signup owner should see why_participated and source in response.
+     * Signup owner should see why_participated, source, and details in response.
      *
      * GET /api/v3/signups
      * @return void
@@ -205,11 +204,11 @@ class SignupTest extends TestCase
                     'campaign_id',
                     'campaign_run_id',
                     'quantity',
-                    'details',
                     'created_at',
                     'updated_at',
                     'why_participated',
                     'source',
+                    'details',
                 ],
             ],
             'meta' => [
@@ -328,11 +327,11 @@ class SignupTest extends TestCase
                 'campaign_id',
                 'campaign_run_id',
                 'quantity',
-                'details',
                 'created_at',
                 'updated_at',
                 'why_participated',
                 'source',
+                'details',
             ],
         ]);
     }
@@ -356,11 +355,11 @@ class SignupTest extends TestCase
                 'campaign_id',
                 'campaign_run_id',
                 'quantity',
-                'details',
                 'created_at',
                 'updated_at',
                 'why_participated',
                 'source',
+                'details',
             ],
         ]);
     }
