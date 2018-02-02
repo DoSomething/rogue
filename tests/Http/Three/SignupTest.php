@@ -301,7 +301,6 @@ class SignupTest extends TestCase
                 'campaign_id',
                 'campaign_run_id',
                 'quantity',
-                'details',
                 'created_at',
                 'updated_at',
             ],
