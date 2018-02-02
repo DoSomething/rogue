@@ -31,7 +31,7 @@ class PostTransformer extends TransformerAbstract
             $reacted = $post->reactions->isNotEmpty();
         }
 
-        return [
+        $response = [
             'id' => $post->id,
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
@@ -44,17 +44,22 @@ class PostTransformer extends TransformerAbstract
                 'caption' => $post->caption,
             ],
             'quantity' => $post->quantity,
-            'tags' => $post->tagSlugs(),
             'reactions' => [
                 'reacted' => $reacted,
                 'total' => isset($post->reactions_count) ? $post->reactions_count : null,
             ],
             'status' => $post->status,
-            'source' => $post->source,
-            'remote_addr' => $post->remote_addr,
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
+
+        if (is_staff_user() || auth()->id() === $post->northstar_id) {
+            $response['tags'] = $post->tagSlugs();
+            $response['source'] = $post->source;
+            $response['remote_addr'] = $post->remote_addr;
+        }
+
+        return $response;
     }
 
     /**

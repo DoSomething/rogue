@@ -25,7 +25,7 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/signups', [
+        $response = $this->withAccessToken($northstarId)->postJson('api/v3/signups', [
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
             'details' => 'affiliate-messaging',
@@ -67,7 +67,7 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/signups', [
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/signups', [
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'source' => 'the-fox-den',
@@ -104,12 +104,13 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test for retrieving all signups.
+     * Test for retrieving all signups as non-admin and non-owner.
+     * Non-admins/non-owners should not see why_participated or source in response.
      *
      * GET /api/v3/signups
      * @return void
      */
-    public function testSignupsIndex()
+    public function testSignupsIndexAsNonAdminNonOwner()
     {
         factory(Signup::class, 10)->create();
 
@@ -124,8 +125,6 @@ class SignupTest extends TestCase
                     'campaign_id',
                     'campaign_run_id',
                     'quantity',
-                    'why_participated',
-                    'source',
                     'details',
                     'created_at',
                     'updated_at',
@@ -143,110 +142,154 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test for signup index with included post info.
+     * Test for retrieving all signups as admin.
+     * Admins should see why_participated and source in response.
      *
-     * GET /api/v3/signups?include=posts
+     * GET /api/v3/signups
      * @return void
      */
-    public function testSignupIndexWithIncludedPosts()
+    public function testSignupsIndexAsAdmin()
     {
-        $signup = factory(Signup::class)->create();
-        $posts = factory(Post::class, 5)->create();
+        factory(Signup::class, 10)->create();
 
-        foreach ($posts as $post) {
-            $post->signup()->associate($signup);
-            $post->status = 'accepted';
-            $post->save();
-        }
-
-        $response = $this->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups');
 
         $response->assertStatus(200);
-
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
-                    'posts' => [
-                        'data' => [
-                            '*' => [
-                                'id',
-                            ],
-                        ],
-                    ],
+                    'id',
+                    'northstar_id',
+                    'campaign_id',
+                    'campaign_run_id',
+                    'quantity',
+                    'details',
+                    'created_at',
+                    'updated_at',
+                    'why_participated',
+                    'source',
+                ],
+            ],
+            'meta' => [
+                'cursor' => [
+                    'current',
+                    'prev',
+                    'next',
+                    'count',
                 ],
             ],
         ]);
     }
 
     /**
-     * Test for signup index with included rejected post info. as admin and non-admin/non-owner.
+     * Test for retrieving all signups as owner.
+     * Signup owner should see why_participated and source in response.
+     *
+     * GET /api/v3/signups
+     * @return void
+     */
+    public function testSignupsIndexAsOwner()
+    {
+        $northstarId = $this->faker->northstar_id;
+        $signups = factory(Signup::class, 10)->create([
+           'northstar_id' => $northstarId,
+        ]);
+
+        $response = $this->withAccessToken($northstarId)->getJson('api/v3/signups');
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'northstar_id',
+                    'campaign_id',
+                    'campaign_run_id',
+                    'quantity',
+                    'details',
+                    'created_at',
+                    'updated_at',
+                    'why_participated',
+                    'source',
+                ],
+            ],
+            'meta' => [
+                'cursor' => [
+                    'current',
+                    'prev',
+                    'next',
+                    'count',
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Test for signup index with included pending post info. as non-admin/non-owner.
+     * Only admins/owners should be able to see pending/rejected posts.
      *
      * GET /api/v3/signups?include=posts
      * @return void
      */
-    public function testSignupIndexWithIncludedPostsWithMultipleCredentials()
+    public function testSignupIndexWithIncludedPostsAsNonAdminNonOwner()
     {
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
         // Test with annoymous user that no posts are returned.
         $response = $this->getJson('api/v3/signups' . '?include=posts');
-
         $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'posts' => [
-                        'data' => [
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        $decodedResponse = $response->decodeResponseJson();
 
-        // Test that admin/staff can see pending posts.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups' .'?include=posts');
-
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'posts' => [
-                        'data' => [
-                            '*' => [
-                                'id' => $post->id,
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-
-        // Test that the signup's owner can see pending posts.
-        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups' . '?include=posts');
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'posts' => [
-                        'data' => [
-                            '*' => [
-                                'id' => $post->id,
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        $this->assertEquals(true, empty($decodedResponse['data'][0]['posts']['data']));
     }
 
     /**
-     * Test for retrieving a specific signup.
+     * Test for signup index with included pending post info. as admin
+     * Only admins/owners should be able to see pending/rejected posts.
+     *
+     * GET /api/v3/signups?include=posts
+     * @return void
+     */
+    public function testSignupIndexWithIncludedPostsAsAdmin()
+    {
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
+
+        // Test with admin that posts are returned.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups' . '?include=posts');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $this->assertEquals(false, empty($decodedResponse['data'][0]['posts']['data']));
+    }
+
+    /**
+     * Test for signup index with included pending post info. as owner
+     * Only admins/owners should be able to see pending/rejected posts.
+     *
+     * GET /api/v3/signups?include=posts
+     * @return void
+     */
+    public function testSignupIndexWithIncludedPostsAsOwner()
+    {
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
+
+        // Test with admin that posts are returned.
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups' . '?include=posts');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $this->assertEquals(false, empty($decodedResponse['data'][0]['posts']['data']));
+    }
+
+    /**
+     * Test for retrieving a specific signup as non-admin and non-owner.
      *
      * GET /api/v3/signups/:signup_id
      * @return void
      */
-    public function testSignupShow()
+    public function testSignupShowAsNonAdminNonOwner()
     {
         $signup = factory(Signup::class)->create();
         $response = $this->getJson('api/v3/signups/' . $signup->id);
@@ -259,8 +302,6 @@ class SignupTest extends TestCase
                 'campaign_id',
                 'campaign_run_id',
                 'quantity',
-                'why_participated',
-                'source',
                 'details',
                 'created_at',
                 'updated_at',
@@ -269,84 +310,57 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test for retrieving a signup with included post info.
+     * Test for retrieving a specific signup as admin.
      *
-     * GET /api/v3/signups/186?include=posts
+     * GET /api/v3/signups/:signup_id
      * @return void
      */
-    public function testSignupWithIncludedPosts()
+    public function testSignupShowAsAdmin()
     {
-        $post = factory(Post::class)->create();
-        $signup = $post->signup;
-
-        $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+        $signup = factory(Signup::class)->create();
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
-                'posts' => [
-                    'data' => [
-                        '*' => [
-                            'id',
-                        ],
-                    ],
-                ],
+                'id',
+                'northstar_id',
+                'campaign_id',
+                'campaign_run_id',
+                'quantity',
+                'details',
+                'created_at',
+                'updated_at',
+                'why_participated',
+                'source',
             ],
         ]);
     }
 
     /**
-     * Test for retrieving a signup with included rejected post info. as admin and non-admin/non-owner.
+     * Test for retrieving a specific signup as owner.
      *
-     * GET /api/v3/signups/186?include=posts
+     * GET /api/v3/signups/:signup_id
      * @return void
      */
-    public function testSignupWithIncludedPostsWithMultipleCredentials()
+    public function testSignupShowAsOwner()
     {
-        $post = factory(Post::class, 'rejected')->create();
-        $signup = $post->signup;
-
-        // Test with annoymous user that no posts are returned.
-        $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+        $signup = factory(Signup::class)->create();
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
-                'posts' => [
-                    'data' => [
-                    ],
-                ],
-            ],
-        ]);
-
-        // Test that admin/staff can see rejected post.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id . '?include=posts');
-
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'posts' => [
-                    'data' => [
-                        '*' => [
-                            'id' => $post->id,
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-
-        // Test that the signup's owner can see rejected posts.
-        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups/' . $signup->id . '?include=posts');
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'posts' => [
-                    'data' => [
-                        '*' => [
-                            'id' => $post->id,
-                        ],
-                    ],
-                ],
+                'id',
+                'northstar_id',
+                'campaign_id',
+                'campaign_run_id',
+                'quantity',
+                'details',
+                'created_at',
+                'updated_at',
+                'why_participated',
+                'source',
             ],
         ]);
     }

@@ -6,7 +6,11 @@
 GET /api/v3/posts
 ```
 
-Posts are returned in reverse chronological order. Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
+Posts are returned in reverse chronological order. 
+
+Only admins and post owners will have `tags`, `source`, and `remote_addr` returned in the response.
+
+Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 
 ### Optional Query Parameters
 - **limit**
@@ -100,6 +104,9 @@ Example Response:
 ```
 GET /api/v3/posts/:post_id
 ```
+
+Only admins and post owners will have `tags`, `source`, and `remote_addr` returned in the response.
+
 Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 
 Example Response: 

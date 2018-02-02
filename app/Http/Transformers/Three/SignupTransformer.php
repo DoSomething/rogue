@@ -25,18 +25,23 @@ class SignupTransformer extends TransformerAbstract
      */
     public function transform(Signup $signup)
     {
-        return [
+        $response = [
             'id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'campaign_run_id' => $signup->campaign_run_id,
             'quantity' => $signup->getQuantity(),
-            'why_participated' => $signup->why_participated,
-            'source' => $signup->source,
             'details' => $signup->details,
             'created_at' => $signup->created_at->toIso8601String(),
             'updated_at' => $signup->updated_at->toIso8601String(),
         ];
+
+        if (is_staff_user() || auth()->id() === $signup->northstar_id) {
+            $response['why_participated'] = $signup->why_participated;
+            $response['source'] = $signup->source;
+        }
+
+        return $response;
     }
 
     /**

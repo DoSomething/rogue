@@ -31,7 +31,7 @@ class PostTest extends TestCase
             ->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($northstarId, 'admin')->json('POST', 'api/v3/posts', [
+        $response = $this->withAccessToken($northstarId)->json('POST', 'api/v3/posts', [
             'campaign_id'      => $campaignId,
             'campaign_run_id'  => $campaignRunId,
             'quantity'         => $quantity,
@@ -94,7 +94,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -153,7 +153,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -200,7 +200,7 @@ class PostTest extends TestCase
         $secondQuantity = $this->faker->numberBetween(10, 1000);
         $secondCaption = $this->faker->sentence;
 
-        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -257,7 +257,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -314,7 +314,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id, 'admin')->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -385,12 +385,13 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test for retrieving all posts.
+     * Test for retrieving all posts as non-admin and non-owner.
+     * Non-admins/non-owners should not see tags, source, and remote_addr.
      *
      * GET /api/v3/posts
      * @return void
      */
-    public function testPostsIndex()
+    public function testPostsIndexAsNonAdminNonOwner()
     {
         // Anonymous requests should only see accepted posts.
         factory(Post::class, 'accepted', 10)->create();
@@ -413,14 +414,11 @@ class PostTest extends TestCase
                         'caption',
                     ],
                     'quantity',
-                    'tags' => [],
                     'reactions' => [
                         'reacted',
                         'total',
                     ],
                     'status',
-                    'source',
-                    'remote_addr',
                     'created_at',
                     'updated_at',
                 ],
@@ -437,54 +435,144 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test for retrieving all posts as a user.
-     *
-     * GET /api/v3/posts
-     * @return void
-     */
-    public function testPostsIndexAsUser()
-    {
-        $userId = $this->faker->northstar_id;
-
-        // The user should only see accepted posts & their own.
-        factory(Post::class, 'accepted', 10)->create();
-        factory(Post::class, 3)->create(['northstar_id' => $userId]);
-        factory(Post::class, 'rejected', 5)->create();
-
-        $response = $this->withAccessToken($userId)->getJson('api/v3/posts');
-
-        $response->assertStatus(200);
-        $response->assertJsonCount(13, 'data');
-    }
-
-    /**
-     * Test for retrieving all posts as an admin.
+     * Test for retrieving all posts as admin
+     * Admins should see tags, source, and remote_addr.
      *
      * GET /api/v3/posts
      * @return void
      */
     public function testPostsIndexAsAdmin()
     {
-        $userId = $this->faker->northstar_id;
-
-        // The admin should be able to see all of these posts!
+        // Admins should see all posts.
         factory(Post::class, 'accepted', 10)->create();
-        factory(Post::class, 3)->create(['northstar_id' => $userId]);
         factory(Post::class, 'rejected', 5)->create();
 
-        $response = $this->withAccessToken($userId, 'admin')->getJson('api/v3/posts');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
 
         $response->assertStatus(200);
-        $response->assertJsonCount(18, 'data');
+        $response->assertJsonCount(15, 'data');
+
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'signup_id',
+                    'northstar_id',
+                    'media' => [
+                        'url',
+                        'original_image_url',
+                        'caption',
+                    ],
+                    'quantity',
+                    'reactions' => [
+                        'reacted',
+                        'total',
+                    ],
+                    'status',
+                    'created_at',
+                    'updated_at',
+                    'tags' => [],
+                    'source',
+                    'remote_addr',
+                ],
+            ],
+            'meta' => [
+                'cursor' => [
+                    'current',
+                    'prev',
+                    'next',
+                    'count',
+                ],
+            ],
+        ]);
     }
 
     /**
-     * Test for retrieving a specific post.
+     * Test for retrieving all posts as owner.
+     * Owners should see tags, source, and remote_addr.
+     *
+     * GET /api/v3/posts
+     * @return void
+     */
+    public function testPostsIndexAsOwner()
+    {
+        // Owners should only see accepted posts and their own pending/rejected posts.
+        $posts = factory(Post::class, 2)->create();
+        $rejectedPosts = factory(Post::class, 'rejected', 3)->create();
+
+        $northstarId = $this->faker->northstar_id;
+
+        foreach ($posts as $post) {
+            $post->northstar_id = $northstarId;
+            $post->save();
+        }
+
+        foreach ($rejectedPosts as $rejectedPost) {
+            $rejectedPost->northstar_id = $this->faker->northstar_id;
+            $rejectedPost->save();
+        }
+
+        $response = $this->withAccessToken($northstarId)->getJson('api/v3/posts');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(2, 'data');
+
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'signup_id',
+                    'northstar_id',
+                    'media' => [
+                        'url',
+                        'original_image_url',
+                        'caption',
+                    ],
+                    'quantity',
+                    'reactions' => [
+                        'reacted',
+                        'total',
+                    ],
+                    'status',
+                    'created_at',
+                    'updated_at',
+                    'tags' => [],
+                    'source',
+                    'remote_addr',
+                ],
+            ],
+            'meta' => [
+                'cursor' => [
+                    'current',
+                    'prev',
+                    'next',
+                    'count',
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Test for retrieving a specific post as non-admin and non-owner.
      *
      * GET /api/v3/post/:post_id
      * @return void
      */
-    public function testPostShow()
+    public function testPostShowAsNonAdminNonOwner()
+    {
+        $post = factory(Post::class)->create();
+        $response = $this->getJson('api/v3/posts/' . $post->id);
+
+        $response->assertStatus(403);
+    }
+
+    /**
+     * Test for retrieving a specific post as admin.
+     *
+     * GET /api/v3/post/:post_id
+     * @return void
+     */
+    public function testPostShowAsAdmin()
     {
         $post = factory(Post::class)->create();
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts/' . $post->id);
@@ -501,16 +589,56 @@ class PostTest extends TestCase
                     'caption',
                 ],
                 'quantity',
-                'tags' => [],
                 'reactions' => [
                     'reacted',
                     'total',
                 ],
                 'status',
-                'source',
-                'remote_addr',
                 'created_at',
                 'updated_at',
+                'tags' => [],
+                'source',
+                'remote_addr',
+            ],
+        ]);
+
+        $json = $response->json();
+        $this->assertEquals($post->id, $json['data']['id']);
+    }
+
+    /**
+     * Test for retrieving a specific post as owner.
+     *
+     * GET /api/v3/post/:post_id
+     * @return void
+     */
+    public function testPostShowAsOwner()
+    {
+        $post = factory(Post::class)->create();
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/posts/' . $post->id);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'signup_id',
+                'northstar_id',
+                'media' => [
+                    'url',
+                    'original_image_url',
+                    'caption',
+                ],
+                'quantity',
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'created_at',
+                'updated_at',
+                'tags' => [],
+                'source',
+                'remote_addr',
             ],
         ]);
 
