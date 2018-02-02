@@ -45,7 +45,7 @@ Example response:
 ```
 GET /api/v3/signups
 ```
-When using `?include=posts`, anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
+Anonymous requests will not return anything. Logged-in users can only see signups that belong to them. Staff can see anything!
 ### Optional Query Parameters
 - **include** _(string)_
   - Include additional related records in the response: `posts`
@@ -101,6 +101,7 @@ Example Response:
 ```
 GET /api/v3/signups/:signup_id
 ```
+Anonymous requests will return a 403 Authorization error. Logged-in users can only see signups that belong to them. Staff can see anything!
 When using `?include=posts`, anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 ### Optional Query Parameters
 - **include** _(string)_
@@ -130,6 +131,7 @@ Example Response:
 ```
 
 ## Update a Signup
+Only admins or users who own the signup can update a signup.
 
 ```
 PATCH /api/v3/signups/:signup_id
@@ -157,6 +159,7 @@ Example response:
 ```
 
 ## Delete a Signup
+Only admins or users who own the signup can delete a signup. 
 
 ```
 DELETE /api/v3/signups/:signup_id

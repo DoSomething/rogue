@@ -171,4 +171,16 @@ class Signup extends Model
             }]);
         }
     }
+
+    /**
+     * Scope a query to only return signups if a user is an admin, staff, or is owner of signup.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWhereVisible($query)
+    {
+        if (! is_staff_user()) {
+            return $query->where('northstar_id', auth()->id());
+        }
+    }
 }

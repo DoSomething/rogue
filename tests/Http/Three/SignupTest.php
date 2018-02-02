@@ -104,251 +104,125 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test for retrieving all signups.
+     * Test admin/staff should be able to receive all signups.
      *
      * GET /api/v3/signups
      * @return void
      */
-    public function testSignupsIndex()
+    public function testSignupsIndexWithAdmin()
     {
         factory(Signup::class, 10)->create();
 
-        $response = $this->getJson('api/v3/signups');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups');
+        $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'id',
-                    'northstar_id',
-                    'campaign_id',
-                    'campaign_run_id',
-                    'quantity',
-                    'why_participated',
-                    'source',
-                    'details',
-                    'created_at',
-                    'updated_at',
-                ],
-            ],
-            'meta' => [
-                'cursor' => [
-                    'current',
-                    'prev',
-                    'next',
-                    'count',
-                ],
-            ],
-        ]);
+        $this->assertEquals(10, $decodedResponse['meta']['cursor']['count']);
     }
 
     /**
-     * Test for signup index with included post info.
+     * Test that a user can only see signups that are theirs.
      *
-     * GET /api/v3/signups?include=posts
+     * GET /api/v3/signups
      * @return void
      */
-    public function testSignupIndexWithIncludedPosts()
+    public function testSignupsIndexWithUserWhoHasASignup()
     {
-        $signup = factory(Signup::class)->create();
-        $posts = factory(Post::class, 5)->create();
+        factory(Signup::class, 7)->create();
+        // Create a specific signup for a user
+        $userSignup = factory(Signup::class)->create();
 
-        foreach ($posts as $post) {
-            $post->signup()->associate($signup);
-            $post->status = 'accepted';
-            $post->save();
-        }
-
-        $response = $this->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->withAccessToken($userSignup->northstar_id)->getJson('api/v3/signups');
+        $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
-
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'posts' => [
-                        'data' => [
-                            '*' => [
-                                'id',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        $this->assertEquals(1, $decodedResponse['meta']['cursor']['count']);
     }
 
     /**
-     * Test for signup index with included rejected post info. as admin and non-admin/non-owner.
+     * Test a user cannot see signup index when they don't have any signups.
+     *
+     * GET /api/v3/signups
+     * @return void
+     */
+    public function testSignupsIndexWithUserWhoHasNoSignups()
+    {
+        factory(Signup::class, 7)->create();
+        // Create a specific signup for a user
+        $userSignup = factory(Signup::class)->create();
+
+        $response = $this->getJson('api/v3/signups');
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+        $this->assertEquals(0, $decodedResponse['meta']['cursor']['count']);
+    }
+
+    /**
+     * Test for signup index with included post info. as admin
      *
      * GET /api/v3/signups?include=posts
      * @return void
      */
-    public function testSignupIndexWithIncludedPostsWithMultipleCredentials()
+    public function testSignupIndexWithIncludedPostsAsAdmin()
     {
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
-        // Test with annoymous user that no posts are returned.
-        $response = $this->getJson('api/v3/signups' . '?include=posts');
+        // Test that an admin can see pending posts with ?include=posts flag
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups' . '?include=posts');
+        $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'posts' => [
-                        'data' => [
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-
-        // Test that admin/staff can see pending posts.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups' .'?include=posts');
-
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'posts' => [
-                        'data' => [
-                            '*' => [
-                                'id' => $post->id,
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-
-        // Test that the signup's owner can see pending posts.
-        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups' . '?include=posts');
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'posts' => [
-                        'data' => [
-                            '*' => [
-                                'id' => $post->id,
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        $this->assertEquals(1, count($decodedResponse['data'][0]['posts']['data']));
     }
 
     /**
-     * Test for retrieving a specific signup.
+     * Test for retrieving a specific signup as an admin.
      *
      * GET /api/v3/signups/:signup_id
      * @return void
      */
-    public function testSignupShow()
+    public function testSignupShowAsAdmin()
     {
         $signup = factory(Signup::class)->create();
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+        $this->assertEquals($signup->id, $decodedResponse['data']['id']);
+    }
+
+    /**
+     * Test for retrieving a specific signup as user who owns the signup.
+     *
+     * GET /api/v3/signups/:signup_id
+     * @return void
+     */
+    public function testSignupShowAsUserWhoOwnsSignup()
+    {
+        $signup = factory(Signup::class)->create();
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups/' . $signup->id);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+        $this->assertEquals($signup->id, $decodedResponse['data']['id']);
+    }
+
+    /**
+     * Test for retrieving a specific signup as user who doesn't own the signup.
+     *
+     * GET /api/v3/signups/:signup_id
+     * @return void
+     */
+    public function testSignupShowAsUserWhoDoesntOwnSignup()
+    {
+        $signup = factory(Signup::class)->create();
+
         $response = $this->getJson('api/v3/signups/' . $signup->id);
+        $decodedResponse = $response->decodeResponseJson();
 
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'northstar_id',
-                'campaign_id',
-                'campaign_run_id',
-                'quantity',
-                'why_participated',
-                'source',
-                'details',
-                'created_at',
-                'updated_at',
-            ],
-        ]);
-    }
-
-    /**
-     * Test for retrieving a signup with included post info.
-     *
-     * GET /api/v3/signups/186?include=posts
-     * @return void
-     */
-    public function testSignupWithIncludedPosts()
-    {
-        $post = factory(Post::class)->create();
-        $signup = $post->signup;
-
-        $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
-
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'posts' => [
-                    'data' => [
-                        '*' => [
-                            'id',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-    }
-
-    /**
-     * Test for retrieving a signup with included rejected post info. as admin and non-admin/non-owner.
-     *
-     * GET /api/v3/signups/186?include=posts
-     * @return void
-     */
-    public function testSignupWithIncludedPostsWithMultipleCredentials()
-    {
-        $post = factory(Post::class, 'rejected')->create();
-        $signup = $post->signup;
-
-        // Test with annoymous user that no posts are returned.
-        $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
-
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'posts' => [
-                    'data' => [
-                    ],
-                ],
-            ],
-        ]);
-
-        // Test that admin/staff can see rejected post.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id . '?include=posts');
-
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'posts' => [
-                    'data' => [
-                        '*' => [
-                            'id' => $post->id,
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-
-        // Test that the signup's owner can see rejected posts.
-        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups/' . $signup->id . '?include=posts');
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'posts' => [
-                    'data' => [
-                        '*' => [
-                            'id' => $post->id,
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        $response->assertStatus(403);
     }
 
     /**
@@ -451,6 +325,9 @@ class SignupTest extends TestCase
      */
     public function testQuantityOnSignupIndex()
     {
+        // Turn on feature flag that supports quantity splitting.
+        config(['features.v3QuantitySupport' => true]);
+
         // Create a signup with a quantity.
         $firstSignup = factory(Signup::class)->create();
         $firstSignup->quantity = 8;
@@ -465,7 +342,7 @@ class SignupTest extends TestCase
         $secondSignup->quantity = $secondSignup->getQuantity();
         $secondSignup->save();
 
-        $response = $this->getJson('api/v3/signups');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups');
 
         $response->assertStatus(200);
         $response->assertJson([
