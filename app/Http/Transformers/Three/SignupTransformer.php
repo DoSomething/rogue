@@ -31,7 +31,6 @@ class SignupTransformer extends TransformerAbstract
             'campaign_id' => $signup->campaign_id,
             'campaign_run_id' => $signup->campaign_run_id,
             'quantity' => $signup->getQuantity(),
-            'details' => $signup->details,
             'created_at' => $signup->created_at->toIso8601String(),
             'updated_at' => $signup->updated_at->toIso8601String(),
         ];
@@ -39,6 +38,7 @@ class SignupTransformer extends TransformerAbstract
         if (is_staff_user() || auth()->id() === $signup->northstar_id) {
             $response['why_participated'] = $signup->why_participated;
             $response['source'] = $signup->source;
+            $response['details'] = $signup->details;
         }
 
         return $response;
