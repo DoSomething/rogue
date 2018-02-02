@@ -198,8 +198,6 @@ Example Response:
 PATCH /api/v3/posts/:post_id
 ```
 
-  - **status**: (string) 
-    The status of a post. Must be either pending, accepted, or rejected.
   - **caption**: (string) 
     The caption of the post.
   - **quantity**: (int)
@@ -208,7 +206,7 @@ PATCH /api/v3/posts/:post_id
 Example request body:
 ```
 [
-  "status" => "accepted"
+  "caption" => "Here is a brand new caption"
   "quantity" => "7"
 ]
 ```
@@ -223,7 +221,7 @@ Example response:
       "media": {
           "url": "http://localhost/storage/uploads/reportback-items/edited_332.jpeg?time=1509379493",
           "original_image_url": "http://localhost/storage/uploads/reportback-items/289-923df5957838355206574f72d5520f0f-1509115822.jpeg?time=1509379493",
-          "caption": "i love this cause"
+          "caption": "Here is a brand new caption"
       },
       "quantity": "7",
       "tags": [],
