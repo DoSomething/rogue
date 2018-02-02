@@ -151,9 +151,7 @@ class PostsController extends ApiController
      */
     public function update(Request $request, Post $post)
     {
-        info('update - postscontroller');
         $validatedRequest = $request->validate([
-            'status' => 'in:pending,accepted,rejected',
             'caption' => 'nullable|string|max:140',
             'quantity' => 'nullable|integer',
         ]);
@@ -161,7 +159,7 @@ class PostsController extends ApiController
         // Only allow an admin or the user who owns the post to update.
         if (token()->role() === 'admin' || auth()->id() === $post->northstar_id) {
             info('we updating');
-            $this->posts->update($validatedRequest);
+            $this->posts->update($post, $validatedRequest);
 
             return $this->item($post);
         }
