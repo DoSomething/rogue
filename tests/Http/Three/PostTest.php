@@ -31,8 +31,7 @@ class PostTest extends TestCase
             ->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($northstarId
-        )->json('POST', 'api/v3/posts', [
+        $response = $this->withAccessToken($northstarId)->json('POST', 'api/v3/posts', [
             'campaign_id'      => $campaignId,
             'campaign_run_id'  => $campaignRunId,
             'quantity'         => $quantity,

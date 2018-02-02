@@ -191,15 +191,12 @@ class SignupTest extends TestCase
      */
     public function testSignupsIndexAsOwner()
     {
-        $signups = factory(Signup::class, 10)->create();
+        $northstarId = $this->faker->northstar_id;
+        $signups = factory(Signup::class, 10)->create([
+           'northstar_id' => $northstarId,
+        ]);
 
-        foreach ($signups as $signup) {
-            $signup->northstar_id = $this->faker->northstar_id;
-            $signup->save();
-        }
-
-        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups');
-
+        $response = $this->withAccessToken($northstarId)->getJson('api/v3/signups');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
