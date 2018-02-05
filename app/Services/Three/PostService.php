@@ -60,23 +60,21 @@ class PostService
      * @param array $data
      * @return \Rogue\Models\Post|\Rogue\Models\Signup
      */
-    public function update($signup, $data)
+    public function update($post, $data)
     {
-        $postOrSignup = $this->repository->update($signup, $data);
+        $post = $this->repository->update($post, $data);
 
-        if ($postOrSignup instanceof Post) {
-            // Save the new post in Customer.io, via Blink,
-            // unless 'dont_send_to_blink' is TRUE.
-            $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
-            if (config('features.blink') && $should_send_to_blink) {
-                SendPostToBlink::dispatch($postOrSignup);
-            }
-
-            // Log that a post was created.
-            info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);
+        // Save the new post in Customer.io, via Blink,
+        // unless 'dont_send_to_blink' is TRUE.
+        $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+        if (config('features.blink') && $should_send_to_blink) {
+            SendPostToBlink::dispatch($post);
         }
 
-        return $postOrSignup;
+        // Log that a post was created.
+        info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
+
+        return $post;
     }
 
     /**

@@ -656,8 +656,9 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
         $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
-            'status' => 'accepted',
             'caption' => 'new caption',
             'quantity' => 8,
         ]);
@@ -665,7 +666,6 @@ class PostTest extends TestCase
         $response->assertStatus(200);
 
         // Make sure that the posts's new status and caption gets persisted in the database.
-        $this->assertEquals($post->fresh()->status, 'accepted');
         $this->assertEquals($post->fresh()->caption, 'new caption');
         $this->assertEquals($post->fresh()->quantity, 8);
     }
@@ -681,14 +681,14 @@ class PostTest extends TestCase
         $post = factory(Post::class)->create();
 
         $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
-            'status' => 'approved',
+            'quantity' => 'this is words not a number!',
             'caption' => 'This must be longer than 140 characters to break the validation rules so here I will create a caption that is longer than 140 characters to test.',
         ]);
 
         $response->assertStatus(422);
 
         $json = $response->json();
-        $this->assertEquals('The selected status is invalid.', $json['errors']['status'][0]);
+        $this->assertEquals('The quantity must be an integer.', $json['errors']['quantity'][0]);
         $this->assertEquals('The caption may not be greater than 140 characters.', $json['errors']['caption'][0]);
     }
 

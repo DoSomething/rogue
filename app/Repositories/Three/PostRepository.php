@@ -117,29 +117,18 @@ class PostRepository
     }
 
     /**
-     * Update an existing Post and Signup.
+     * Update an existing Post.
      *
-     * @param \Rogue\Models\Signup $signup
+     * @param \Rogue\Models\Post $post
      * @param array $data
      *
-     * @return Signup|Post
+     * @return Post
      */
-    public function update($signup, $data)
+    public function update($post, $data)
     {
-        // Should only update why_participated on the signup.
-        if (isset($data['why_participated'])) {
-            $signup->fill(array_only($data, $data['why_participated']));
+        $post->update($data);
 
-            // Triggers model event that logs the updated signup in the events table.
-            $signup->save();
-        }
-
-        // If there is a file, create a new post.
-        if (array_key_exists('file', $data)) {
-            return $this->create($data, $signup->id);
-        }
-
-        return $signup;
+        return $post;
     }
 
     /**

@@ -112,7 +112,7 @@ class PostsController extends ApiController
             $signup = $this->signups->create($request->all(), $northstarId);
             $post = $this->posts->create($request->all(), $signup->id);
         } else {
-            $post = $this->posts->update($signup, $request->all());
+            $post = $this->posts->create($request->all(), $signup->id);
         }
 
         $code = $updating ? 200 : 201;
@@ -152,14 +152,13 @@ class PostsController extends ApiController
     public function update(Request $request, Post $post)
     {
         $validatedRequest = $request->validate([
-            'status' => 'in:pending,accepted,rejected',
             'caption' => 'nullable|string|max:140',
             'quantity' => 'nullable|integer',
         ]);
 
         // Only allow an admin or the user who owns the post to update.
         if (token()->role() === 'admin' || auth()->id() === $post->northstar_id) {
-            $post->update($validatedRequest);
+            $this->posts->update($post, $validatedRequest);
 
             return $this->item($post);
         }
@@ -176,7 +175,7 @@ class PostsController extends ApiController
      */
     public function destroy(Post $post)
     {
-        $post->delete();
+        $this->posts->destroy($post->id);
 
         return $this->respond('Post deleted.', 200);
     }
