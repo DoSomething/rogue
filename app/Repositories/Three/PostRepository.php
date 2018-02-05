@@ -84,7 +84,7 @@ class PostRepository
             'campaign_id' => $signup->campaign_id,
             'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
             'type' => isset($data['type']) ? $data['type'] : 'photo',
-            'action_bucket' => isset($data['action_bucket']) ? $data['action_bucket'] : null,
+            'action' => isset($data['action']) ? $data['action'] : null,
             'url' => $fileUrl,
             'caption' => isset($data['caption']) ? $data['caption'] : null,
             'status' => 'pending',

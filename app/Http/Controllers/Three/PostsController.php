@@ -115,8 +115,8 @@ class PostsController extends ApiController
             $post = $this->posts->create($request->all(), $signup->id);
         }
 
-        // @TODO - We should probably only ever return a 201 here since all this does is
-        // create a resource.
+        // @TODO - We should probably only ever return a 201 here since all
+        // this does is create a resource.
         $code = $signupExists ? 200 : 201;
 
         return $this->item($post, $code, [], null, 'signup');
