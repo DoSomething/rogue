@@ -106,16 +106,18 @@ class PostsController extends ApiController
 
         $signup = $this->signups->get($northstarId, $request['campaign_id'], $request['campaign_run_id']);
 
-        $updating = ! is_null($signup);
+        $signupExists = ! is_null($signup);
 
-        if (! $updating) {
+        if (! $signupExists) {
             $signup = $this->signups->create($request->all(), $northstarId);
             $post = $this->posts->create($request->all(), $signup->id);
         } else {
             $post = $this->posts->create($request->all(), $signup->id);
         }
 
-        $code = $updating ? 200 : 201;
+        // @TODO - We should probably only ever return a 201 here since all this does is
+        // create a resource.
+        $code = $signupExists ? 200 : 201;
 
         return $this->item($post, $code, [], null, 'signup');
     }
