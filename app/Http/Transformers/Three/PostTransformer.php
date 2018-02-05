@@ -35,6 +35,8 @@ class PostTransformer extends TransformerAbstract
             'id' => $post->id,
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
+            'type' => $post->type,
+            'action' => $post->action,
             // Add cache-busting query string to urls to make sure we get the
             // most recent version of the image.
             // @NOTE - Remove if we get rid of rotation.
@@ -49,6 +51,7 @@ class PostTransformer extends TransformerAbstract
                 'total' => isset($post->reactions_count) ? $post->reactions_count : null,
             ],
             'status' => $post->status,
+            'details' => $post->details,
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
