@@ -68,7 +68,7 @@ class PostService
         // unless 'dont_send_to_blink' is TRUE.
         $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
         if (config('features.blink') && $should_send_to_blink) {
-            SendPostToBlink::dispatch($postOrSignup);
+            SendPostToBlink::dispatch($post);
         }
 
         // Log that a post was created.

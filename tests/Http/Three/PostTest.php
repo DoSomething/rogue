@@ -528,6 +528,8 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
         $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
             'caption' => 'new caption',
             'quantity' => 8,
