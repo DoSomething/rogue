@@ -136,19 +136,8 @@ class Signup extends Model
      *
      * @return array
      */
-    public function toQuasarPayload($deleted = false)
+    public function toQuasarPayload()
     {
-        if ($deleted) {
-            return [
-                'id' => $this->id,
-                'deleted_at' => Carbon::now(),
-                'meta' => [
-                    'message_source' => 'rogue',
-                    'type' => 'signup',
-                ],
-            ];
-        }
-
         return [
             'signup_id' => $this->id,
             'northstar_id' => $this->northstar_id,
