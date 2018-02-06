@@ -61,6 +61,7 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
 - **orderByQuantity** _(string)_
   - Determines order the results are returned, based on the signups's quantity.
   - e.g. `/activity?orderBy=desc`
+  - e.g. `/activity?orderBy=asc`
 Example Response: 
 
 ```

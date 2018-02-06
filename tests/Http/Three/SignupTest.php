@@ -363,6 +363,46 @@ class SignupTest extends TestCase
         $this->assertEquals(5, $decodedResponse['meta']['cursor']['count']);
     }
 
+   /**
+     * Test for retrieving all signups as admin filtering by quantity (in ascending or descending order).
+     *
+     * GET /api/v3/signups?orderByQuantity=desc
+     * GET /api/v3/signups?orderByQuantity=asc
+     *
+     * @return void
+     */
+    public function testSignupsIndexAsAdminWithOrderByQuantityFilter()
+    {
+        // Create 5 signups with different quantities
+        $signups = factory(Signup::class, 5)->create();
+        $quantity = 1;
+
+        foreach ($signups as $signup) {
+            $signup->quantity = $quantity++;
+            $signup->save();
+        }
+
+        // Order results by descending quantity
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderByQuantity=desc');
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+
+        // Assert results are returned in ascending order.
+        $this->assertEquals(5, $decodedResponse['data'][0]['quantity']);
+        $this->assertEquals(4, $decodedResponse['data'][1]['quantity']);
+
+        // Order results by ascending quantity
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderByQuantity=asc');
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+
+        // Assert results are returned in ascending order.
+        $this->assertEquals(1, $decodedResponse['data'][0]['quantity']);
+        $this->assertEquals(2, $decodedResponse['data'][1]['quantity']);
+    }
+
     /**
      * Test for retrieving a specific signup as non-admin and non-owner.
      *

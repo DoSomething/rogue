@@ -96,6 +96,8 @@ class SignupsController extends ApiController
 
         if ($request->query('orderByQuantity') === 'desc') {
             $query = $query->orderBy('quantity', 'desc');
+        } elseif ($request->query('orderByQuantity') === 'asc') {
+             $query = $query->orderBy('quantity', 'asc');
         }
 
         return $this->paginatedCollection($query, $request);
