@@ -132,6 +132,31 @@ class Signup extends Model
     }
 
     /**
+     * Transform the signup model for Quasar.
+     *
+     * @return array
+     */
+    public function toQuasarPayload()
+    {
+        return [
+            'signup_id' => $this->id,
+            'northstar_id' => $this->northstar_id,
+            'campaign_id' => $this->campaign_id,
+            'campaign_run_id' => $this->campaign_run_id,
+            'quantity' => $this->getQuantity(),
+            'why_participated' => $this->why_participated,
+            'signup_source' => $this->source,
+            'details' => $this->details,
+            'created_at' => $this->created_at->toIso8601String(),
+            'updated_at' => $this->updated_at->toIso8601String(),
+            'meta' => [
+                'message_source' => 'rogue',
+                'type' => 'signup',
+            ],
+        ];
+    }
+
+    /**
      * Get either the quantity or quantity_pending for a signup.
      * If the quantity lives on the signup's posts,
      * return quantity as a summed total of quantity across all posts under a signup.

@@ -4,7 +4,10 @@ namespace Rogue\Services;
 
 use Rogue\Models\Post;
 use Rogue\Jobs\SendPostToBlink;
+use Rogue\Jobs\SendPostToQuasar;
+use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Repositories\PostRepository;
+use Rogue\Jobs\SendDeletedPostToQuasar;
 
 class PostService
 {
@@ -45,6 +48,11 @@ class PostService
             SendPostToBlink::dispatch($post);
         }
 
+        // Dispatch job to send post to Quasar
+        if (config('features.pushToQuasar')) {
+            SendPostToQuasar::dispatch($post);
+        }
+
         // Log that a post was created.
         info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
 
@@ -73,6 +81,15 @@ class PostService
             info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);
         }
 
+        // Dispatch job to send Post to Quasar
+        if (config('features.pushToQuasar')) {
+            if ($postOrSignup instanceof Post) {
+                SendPostToQuasar::dispatch($postOrSignup);
+            } elseif ($postOrSignup instanceof Signup) {
+                SendSignupToQuasar::dispatch($postOrSignup);
+            }
+        }
+
         return $postOrSignup;
     }
 
@@ -88,6 +105,13 @@ class PostService
             'id' => $postId,
         ]);
 
-        return $this->repository->destroy($postId);
+        $trashed = $this->repository->destroy($postId);
+
+        // Dispatch job to send post to Quasar
+        if (config('features.pushToQuasar')) {
+            SendDeletedPostToQuasar::dispatch($postId);
+        }
+
+        return $trashed;
     }
 }
