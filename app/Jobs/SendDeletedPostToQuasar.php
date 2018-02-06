@@ -17,7 +17,7 @@ class SendDeletedPostToQuasar implements ShouldQueue
     /**
      * The post to send to Quasar via Blink.
      *
-     * @var Post
+     * @var int
      */
     protected $postId;
 
