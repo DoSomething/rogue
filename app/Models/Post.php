@@ -208,7 +208,6 @@ class Post extends Model
             'details' => $this->details,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
-            'deleted_at' => $this->updated_at->toIso8601String(),
             'meta' => [
                 'message_source' => 'rogue',
                 'type' => 'post',
