@@ -41,7 +41,7 @@ class SendPostToQuasar implements ShouldQueue
         $payload = $this->post->toQuasarPayload();
 
         // Send to Quasar
-        gateway('blink')->post('events/quasar-relay', $payload);
+        gateway('blink')->post('v1/events/quasar-relay', $payload);
 
         // Log
         info('Post ' . $this->post->id . ' sent to Quasar');
