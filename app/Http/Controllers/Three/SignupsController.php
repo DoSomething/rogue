@@ -94,6 +94,10 @@ class SignupsController extends ApiController
             $query = $query->withVisiblePosts();
         }
 
+        if ($request->query('orderByQuantity') === 'desc') {
+            $query = $query->orderBy('quantity', 'desc');
+        }
+
         return $this->paginatedCollection($query, $request);
     }
 
