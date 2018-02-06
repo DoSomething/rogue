@@ -185,8 +185,19 @@ class Post extends Model
      *
      * @return array
      */
-    public function toQuasarPayload()
+    public function toQuasarPayload($deleted = false)
     {
+        if ($deleted) {
+            return [
+                'id' => $this->id,
+                'deleted_at' => Carbon::now(),
+                'meta' => [
+                    'message_source' => 'rogue',
+                    'type' => 'post',
+                ],
+            ];
+        }
+
         return [
             'id' => $this->id,
             'signup_id' => $this->signup_id,
@@ -211,6 +222,7 @@ class Post extends Model
             'deleted_at' => $this->updated_at->toIso8601String(),
             'meta' => [
                 'message_source' => 'rogue',
+                'type' => 'post',
             ],
         ];
     }
