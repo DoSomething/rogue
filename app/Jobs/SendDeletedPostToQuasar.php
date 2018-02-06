@@ -2,6 +2,7 @@
 
 namespace Rogue\Jobs;
 
+use Carbon\Carbon;
 use Rogue\Models\Post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -9,25 +10,25 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class SendPostToQuasar implements ShouldQueue
+class SendDeletedPostToQuasar implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * The post to send to Quasar via Blink.
      *
-     * @var Post
+     * @var int
      */
-    protected $post;
+    protected $postId;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Post $post)
+    public function __construct($postId)
     {
-        $this->post = $post;
+        $this->postId = $postId;
     }
 
     /**
@@ -37,13 +38,19 @@ class SendPostToQuasar implements ShouldQueue
      */
     public function handle()
     {
-        // Format the payload
-        $payload = $this->post->toQuasarPayload();
+        $payload = [
+            'id' => $this->postId,
+            'deleted_at' => Carbon::now(),
+            'meta' => [
+                'message_source' => 'rogue',
+                'type' => 'post',
+            ],
+        ];
 
         // Send to Quasar
         gateway('blink')->post('v1/events/quasar-relay', $payload);
 
         // Log
-        info('Post ' . $this->post->id . ' sent to Quasar');
+        info('Deleted post ' . $this->postId . ' sent to Quasar');
     }
 }
