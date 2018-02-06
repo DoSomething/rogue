@@ -22,7 +22,7 @@ GET /api/v2/activity
 - **orderBy** _(string)_
   - Determines order the results are returned, based on the signups's created_at timestamp.
   - If 'desc' is not passed through, defaults to return results by signup's created_at by ascending order. 
-  - e.g. `/activity'?orderByPost=desc`
+  - e.g. `/activity?orderByPost=desc`
 - **filter[updated_at]** _(timestamp)_
   - Return records that have been updated after the given `updated_at` value. 
   - e.g. `/activity?filter[updated_at]=2017-05-25 20:14:48`
