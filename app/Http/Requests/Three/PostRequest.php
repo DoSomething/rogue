@@ -27,7 +27,7 @@ class PostRequest extends Request
             'campaign_id' => 'required',
             'campaign_run_id' => 'required_with:campaign_id|integer',
             'northstar_id' => 'nullable|objectid',
-            'type' => 'required|string',
+            'type' => 'required|string|in:photo,voter-reg',
             'action' => 'required|string',
             'why_participated' => 'nullable|string',
             'caption' => 'required|nullable|string|max:140',
