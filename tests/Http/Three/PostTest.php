@@ -118,7 +118,7 @@ class PostTest extends TestCase
             'details'          => json_encode($details),
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
                 'id',
@@ -187,7 +187,7 @@ class PostTest extends TestCase
             'details'          => json_encode($details),
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
                 'id',
@@ -243,7 +243,7 @@ class PostTest extends TestCase
             'details'          => json_encode($secondDetails),
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
                 'id',
@@ -310,7 +310,7 @@ class PostTest extends TestCase
             'details'          => json_encode($details),
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
                 'id',
@@ -374,7 +374,7 @@ class PostTest extends TestCase
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
                 'id',
