@@ -38,7 +38,7 @@ class SendPostToQuasar implements ShouldQueue
     public function handle()
     {
         // Format the payload
-        $payload = $this->post->toQuasarPayload($deleted);
+        $payload = $this->post->toQuasarPayload();
 
         // Send to Quasar
         gateway('blink')->post('events/quasar-relay', $payload);
