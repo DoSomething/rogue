@@ -7,6 +7,7 @@ use Rogue\Jobs\SendPostToBlink;
 use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Repositories\PostRepository;
+use Rogue\Jobs\SendDeletedPostToQuasar;
 
 class PostService
 {
@@ -108,7 +109,7 @@ class PostService
 
         // Dispatch job to send post to Quasar
         if (config('features.pushToQuasar')) {
-            SendPostToQuasar::dispatch(Post::withTrashed()->find($postId));
+            SendDeletedPostToQuasar::dispatch($postId);
         }
 
         return $trashed;
