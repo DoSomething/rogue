@@ -6,7 +6,7 @@
 GET /api/v3/posts
 ```
 
-Posts are returned in reverse chronological order. 
+Posts are returned in reverse chronological order.
 
 Only admins and post owners will have `tags`, `source`, and `remote_addr` returned in the response.
 
@@ -109,7 +109,7 @@ Only admins and post owners will have `tags`, `source`, and `remote_addr` return
 
 Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 
-Example Response: 
+Example Response:
 
 ```
 {
@@ -146,8 +146,12 @@ POST /api/v3/posts
 ```
   - **campaign_id**: (int|string) required.
     The Drupal/Contentful ID of the campaign that the user's post is associated with.
-  - **campaign_run_id**: (int) optional.
+  - **campaign_run_id**: (int) required with campaign_id.
     The drupal campaign run node id of the campaign that the user's post is associated with.
+  - **type**: (string) required.
+    The type of post submitted e.g. photo, call, voter-reg
+  - **action**: (string) required.
+    Describes the action that the post is tied to.
   - **quantity**: (int|nullable) optional.
     The number of reportback nouns verbed. Can be `null`.
   - **why_participated**: (string).
@@ -156,8 +160,10 @@ POST /api/v3/posts
     Corresponding caption for the post.
   - **status**: (string).
     Option to set status upon creation if admin uploads post for user.
-  - **file**: (file) required.
+  - **file**: (file) required for photo posts.
     File string to save of post image.
+  - **details** (json).
+    A JSON field to store extra details about a post.
   - **dont_send_to_blink** (boolean) optional.
     If included and true, the data for this Post will not be sent to Blink.
 
@@ -189,7 +195,7 @@ Example Response:
 ```
 DELETE /api/v3/posts/:post_id
 ```
-Example Response: 
+Example Response:
 
 ```
 {
@@ -205,11 +211,11 @@ Example Response:
 PATCH /api/v3/posts/:post_id
 ```
 
-  - **caption**: (string) 
+  - **caption**: (string)
     The caption of the post.
   - **quantity**: (int)
-    The quantity of items in the post. 
-  
+    The quantity of items in the post.
+
 Example request body:
 ```
 [

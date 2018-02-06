@@ -24,6 +24,7 @@ class PostTest extends TestCase
         $campaignRunId = $this->faker->randomNumber(4);
         $quantity = $this->faker->numberBetween(10, 1000);
         $caption = $this->faker->sentence;
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Mock the Blink API calls.
         $this->mock(Blink::class)
@@ -34,10 +35,13 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($northstarId)->json('POST', 'api/v3/posts', [
             'campaign_id'      => $campaignId,
             'campaign_run_id'  => $campaignRunId,
+            'type'             => 'photo',
+            'action'           => 'test-action',
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
             'caption'          => $caption,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'details'          => json_encode($details),
         ]);
 
         $response->assertStatus(201);
@@ -46,6 +50,8 @@ class PostTest extends TestCase
                 'id',
                 'signup_id',
                 'northstar_id',
+                'type',
+                'action',
                 'media' => [
                     'url',
                     'original_image_url',
@@ -58,6 +64,7 @@ class PostTest extends TestCase
                     'total',
                 ],
                 'status',
+                'details',
                 'source',
                 'remote_addr',
                 'created_at',
@@ -74,8 +81,11 @@ class PostTest extends TestCase
         $this->assertDatabaseHas('posts', [
             'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
+            'type' => 'photo',
+            'action' => 'test-action',
             'status' => 'pending',
             'quantity' => $quantity,
+            'details' => json_encode($details),
         ]);
     }
 
@@ -89,6 +99,7 @@ class PostTest extends TestCase
         $signup = factory(Signup::class)->create();
         $quantity = $this->faker->numberBetween(10, 1000);
         $caption = $this->faker->sentence;
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -98,18 +109,23 @@ class PostTest extends TestCase
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'photo',
+            'action'           => 'test-action',
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
             'caption'          => $caption,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'details'          => json_encode($details),
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
                 'id',
                 'signup_id',
                 'northstar_id',
+                'type',
+                'action',
                 'media' => [
                     'url',
                     'original_image_url',
@@ -122,6 +138,7 @@ class PostTest extends TestCase
                     'total',
                 ],
                 'status',
+                'details',
                 'source',
                 'remote_addr',
                 'created_at',
@@ -133,8 +150,11 @@ class PostTest extends TestCase
             'signup_id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
+            'type' => 'photo',
+            'action' => 'test-action',
             'status' => 'pending',
             'quantity' => $quantity,
+            'details' => json_encode($details),
         ]);
     }
 
@@ -148,6 +168,7 @@ class PostTest extends TestCase
         $signup = factory(Signup::class)->create();
         $quantity = $this->faker->numberBetween(10, 1000);
         $caption = $this->faker->sentence;
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -157,18 +178,23 @@ class PostTest extends TestCase
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'photo',
+            'action'           => 'test-action',
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
             'caption'          => $caption,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'details'          => json_encode($details),
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
                 'id',
                 'signup_id',
                 'northstar_id',
+                'type',
+                'action',
                 'media' => [
                     'url',
                     'original_image_url',
@@ -181,6 +207,7 @@ class PostTest extends TestCase
                     'total',
                 ],
                 'status',
+                'details',
                 'source',
                 'remote_addr',
                 'created_at',
@@ -192,29 +219,38 @@ class PostTest extends TestCase
             'signup_id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
+            'type' => 'photo',
+            'action' => 'test-action',
             'status' => 'pending',
             'quantity' => $quantity,
+            'details' => json_encode($details),
         ]);
 
         // Create a second post without why_participated.
         $secondQuantity = $this->faker->numberBetween(10, 1000);
         $secondCaption = $this->faker->sentence;
+        $secondDetails = ['source-detail' => 'broadcast-333', 'other' => 'other'];
 
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'photo',
+            'action'           => 'test-action',
             'quantity'         => $secondQuantity,
             'caption'          => $secondCaption,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'details'          => json_encode($secondDetails),
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
                 'id',
                 'signup_id',
                 'northstar_id',
+                'type',
+                'action',
                 'media' => [
                     'url',
                     'original_image_url',
@@ -227,6 +263,7 @@ class PostTest extends TestCase
                     'total',
                 ],
                 'status',
+                'details',
                 'source',
                 'remote_addr',
                 'created_at',
@@ -238,8 +275,11 @@ class PostTest extends TestCase
             'signup_id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
+            'type' => 'photo',
+            'action' => 'test-action',
             'status' => 'pending',
-            'quantity' => $quantity,
+            'quantity' => $secondQuantity,
+            'details' => json_encode($secondDetails),
         ]);
     }
 
@@ -252,6 +292,7 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
         $caption = $this->faker->sentence;
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -261,17 +302,22 @@ class PostTest extends TestCase
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'photo',
+            'action'           => 'test-action',
             'quantity'         => null,
             'caption'          => $caption,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'details'          => json_encode($details),
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
                 'id',
                 'signup_id',
                 'northstar_id',
+                'type',
+                'action',
                 'media' => [
                     'url',
                     'original_image_url',
@@ -284,6 +330,7 @@ class PostTest extends TestCase
                     'total',
                 ],
                 'status',
+                'details',
                 'source',
                 'remote_addr',
                 'created_at',
@@ -295,8 +342,11 @@ class PostTest extends TestCase
             'signup_id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
+            'type' => 'photo',
+            'action' => 'test-action',
             'status' => 'pending',
             'quantity' => null,
+            'details' => json_encode($details),
         ]);
     }
 
@@ -318,16 +368,20 @@ class PostTest extends TestCase
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'photo',
+            'action'           => 'test-action',
             'caption'          => $caption,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
                 'id',
                 'signup_id',
                 'northstar_id',
+                'type',
+                'action',
                 'media' => [
                     'url',
                     'original_image_url',
@@ -340,6 +394,7 @@ class PostTest extends TestCase
                     'total',
                 ],
                 'status',
+                'details',
                 'source',
                 'remote_addr',
                 'created_at',
@@ -351,8 +406,11 @@ class PostTest extends TestCase
             'signup_id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
+            'type' => 'photo',
+            'action' => 'test-action',
             'status' => 'pending',
             'quantity' => null,
+            'details' => null,
         ]);
     }
 
@@ -375,6 +433,8 @@ class PostTest extends TestCase
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'photo',
+            'action'           => 'test-action',
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
             'caption'          => $caption,
@@ -458,6 +518,8 @@ class PostTest extends TestCase
                     'id',
                     'signup_id',
                     'northstar_id',
+                    'type',
+                    'action',
                     'media' => [
                         'url',
                         'original_image_url',
@@ -473,6 +535,7 @@ class PostTest extends TestCase
                     'updated_at',
                     'tags' => [],
                     'source',
+                    'details',
                     'remote_addr',
                 ],
             ],
@@ -523,6 +586,8 @@ class PostTest extends TestCase
                     'id',
                     'signup_id',
                     'northstar_id',
+                    'type',
+                    'action',
                     'media' => [
                         'url',
                         'original_image_url',
@@ -538,6 +603,7 @@ class PostTest extends TestCase
                     'updated_at',
                     'tags' => [],
                     'source',
+                    'details',
                     'remote_addr',
                 ],
             ],
@@ -583,6 +649,8 @@ class PostTest extends TestCase
                 'id',
                 'signup_id',
                 'northstar_id',
+                'type',
+                'action',
                 'media' => [
                     'url',
                     'original_image_url',
@@ -598,6 +666,7 @@ class PostTest extends TestCase
                 'updated_at',
                 'tags' => [],
                 'source',
+                'details',
                 'remote_addr',
             ],
         ]);
@@ -623,6 +692,8 @@ class PostTest extends TestCase
                 'id',
                 'signup_id',
                 'northstar_id',
+                'type',
+                'action',
                 'media' => [
                     'url',
                     'original_image_url',
@@ -638,6 +709,7 @@ class PostTest extends TestCase
                 'updated_at',
                 'tags' => [],
                 'source',
+                'details',
                 'remote_addr',
             ],
         ]);

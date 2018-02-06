@@ -106,18 +106,13 @@ class PostsController extends ApiController
 
         $signup = $this->signups->get($northstarId, $request['campaign_id'], $request['campaign_run_id']);
 
-        $updating = ! is_null($signup);
-
-        if (! $updating) {
+        if (! $signup) {
             $signup = $this->signups->create($request->all(), $northstarId);
-            $post = $this->posts->create($request->all(), $signup->id);
-        } else {
-            $post = $this->posts->create($request->all(), $signup->id);
         }
 
-        $code = $updating ? 200 : 201;
+        $post = $this->posts->create($request->all(), $signup->id);
 
-        return $this->item($post, $code, [], null, 'signup');
+        return $this->item($post, 201, [], null, 'signup');
     }
 
     /**

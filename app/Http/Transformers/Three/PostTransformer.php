@@ -57,6 +57,9 @@ class PostTransformer extends TransformerAbstract
             $response['tags'] = $post->tagSlugs();
             $response['source'] = $post->source;
             $response['remote_addr'] = $post->remote_addr;
+            $response['type'] = $post->type;
+            $response['action'] = $post->action;
+            $response['details'] = $post->details;
         }
 
         return $response;
