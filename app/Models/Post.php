@@ -190,10 +190,13 @@ class Post extends Model
         return [
             'id' => $this->id,
             'signup_id' => $this->signup_id,
+            'campaign_id' => $this->campaign_id,
+            'campaign_run_id' => $this->signup->campaign_run_id,
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
             'action' => $this->action,
             'quantity' => $this->quantity,
+            'why_participated' => $this->signup->why_participated,
             // Add cache-busting query string to urls to make sure we get the
             // most recent version of the image.
             // @NOTE - Remove if we get rid of rotation.
@@ -204,10 +207,13 @@ class Post extends Model
             'tags' => $this->tagSlugs(),
             'status' => $this->status,
             'source' => $this->source,
+            'signup_source' => $this->signup->source,
             'remote_addr' => $this->remote_addr,
             'details' => $this->details,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
+            'signup_created_at' => $this->signup->created_at->toIso8601String(),
+            'signup_updated_at' => $this->signup->updated_at->toIso8601String(),
             'meta' => [
                 'message_source' => 'rogue',
                 'type' => 'post',
