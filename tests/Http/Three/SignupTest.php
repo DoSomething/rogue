@@ -363,7 +363,7 @@ class SignupTest extends TestCase
         $this->assertEquals(5, $decodedResponse['meta']['cursor']['count']);
     }
 
-   /**
+    /**
      * Test for retrieving all signups as admin filtering by quantity (in ascending or descending order).
      *
      * GET /api/v3/signups?orderByQuantity=desc
