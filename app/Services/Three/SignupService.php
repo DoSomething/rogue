@@ -56,6 +56,25 @@ class SignupService
         return $signup;
     }
 
+    /**
+     * Handles all business logic around updating signups.
+     *
+     * @param array $data
+     * @param string $northstarId
+     * @return Illuminate\Database\Eloquent\Model $model
+     */
+    public function update($signup, $data)
+    {
+        $signup = $this->signup->update($signup, $data);
+
+        // add business logic here
+
+        // Log that a signup was updated.
+        info('signup_updated', ['id' => $signup->id]);
+
+        return $signup;
+    }
+
     /*
      * Handles all business logic around retrieving a signup.
      *

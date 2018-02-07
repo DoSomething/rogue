@@ -30,6 +30,20 @@ class SignupRepository
     }
 
     /**
+     * Update a signup.
+     *
+     * @param array $data
+     * @param array $data
+     * @return \Rogue\Models\Signup
+     */
+    public function update($signup, $data)
+    {
+        $signup->update($data);
+
+        return $signup;
+    }
+
+    /**
      * Get a signup based on unique fields.
      *
      * @param  string $northstarId
