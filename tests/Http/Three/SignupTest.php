@@ -366,8 +366,8 @@ class SignupTest extends TestCase
     /**
      * Test for retrieving all signups as admin filtering by quantity (in ascending or descending order).
      *
-     * GET /api/v3/signups?orderByQuantity=desc
-     * GET /api/v3/signups?orderByQuantity=asc
+     * GET /api/v3/signups?orderBy=quantity,desc
+     * GET /api/v3/signups?orderBy=quantity,asc
      *
      * @return void
      */
@@ -383,7 +383,7 @@ class SignupTest extends TestCase
         }
 
         // Order results by descending quantity
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderByQuantity=desc');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,desc');
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
@@ -393,7 +393,7 @@ class SignupTest extends TestCase
         $this->assertEquals(4, $decodedResponse['data'][1]['quantity']);
 
         // Order results by ascending quantity
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderByQuantity=asc');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,asc');
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);

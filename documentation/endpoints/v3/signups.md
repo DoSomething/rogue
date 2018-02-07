@@ -58,10 +58,10 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
   - Filter results by the given column: `northstar_id`, `campaign_id`, `campaign_run_id`
   - You can filter by more than one column, e.g. `/signups?filter[id]=4&filter[campaign_id]=5`
   - You can filter by more than one value for a column, e.g. `/signups?filter[campaign_id]=121,122`
-- **orderByQuantity** _(string)_
-  - Determines order the results are returned, based on the signups's quantity.
-  - e.g. `/activity?orderBy=desc`
-  - e.g. `/activity?orderBy=asc`
+- **orderBy** _(string)_
+  - Determines order the results are returned, based on the signups's index and direction.
+  - e.g. `/signups?orderBy=quantity,desc`
+  - e.g. `/signups?orderBy=quantity,asc`
 Example Response: 
 
 ```
