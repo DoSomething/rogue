@@ -4,6 +4,7 @@ namespace Rogue\Services\Three;
 
 use Rogue\Jobs\SendSignupToBlink;
 use Rogue\Jobs\SendSignupToQuasar;
+use Rogue\Jobs\SendDeletedSignupToQuasar;
 use Rogue\Repositories\Three\SignupRepository;
 
 class SignupService
@@ -76,6 +77,28 @@ class SignupService
         info('signup_updated', ['id' => $signup->id]);
 
         return $signup;
+    }
+
+    /**
+     * Handle all business logic around deleting a signup.
+     *
+     * @param int $signupId
+     * @return bool
+     */
+    public function destroy($signupId)
+    {
+        info('signup_deleted', [
+            'id' => $signupId,
+        ]);
+
+        $trashed = $this->signup->destroy($signupId);
+
+        // Dispatch job to send post to Quasar
+        if (config('features.pushToQuasar')) {
+            SendDeletedSignupToQuasar::dispatch($signupId);
+        }
+
+        return $trashed;
     }
 
     /*

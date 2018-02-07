@@ -61,4 +61,21 @@ class SignupRepository
 
         return $signup;
     }
+
+    /**
+     * Delete a signup.
+     *
+     * @param int $signupId
+     * @return $post;
+     */
+    public function destroy($signupId)
+    {
+        $signup = Signup::findOrFail($signupId);
+
+        // Soft delete the post.
+        $signup->delete();
+
+        return $signup->trashed();
+    }
+
 }

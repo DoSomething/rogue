@@ -149,7 +149,7 @@ class SignupsController extends ApiController
      */
     public function destroy(Signup $signup)
     {
-        $signup->delete();
+        $this->signups->destroy($signup->id);
 
         return $this->respond('Signup deleted.', 200);
     }
