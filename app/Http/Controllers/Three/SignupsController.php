@@ -94,10 +94,14 @@ class SignupsController extends ApiController
             $query = $query->withVisiblePosts();
         }
 
-        if ($request->query('orderByQuantity') === 'desc') {
-            $query = $query->orderBy('quantity', 'desc');
-        } elseif ($request->query('orderByQuantity') === 'asc') {
-            $query = $query->orderBy('quantity', 'asc');
+        $orderBy = $request->query('order_by');
+
+        if ($orderBy) {
+            list($column, $direction) = explode(',', $orderBy, 2);
+
+            if (in_array($column, Signup::$indexes)) {
+                $query = $query->orderBy($column, $direction);
+            }
         }
 
         return $this->paginatedCollection($query, $request);
