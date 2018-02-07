@@ -67,7 +67,10 @@ class SignupService
     {
         $signup = $this->signup->update($signup, $data);
 
-        // add business logic here
+        // Dispatch job to send signup to Quasar
+        if (config('features.pushToQuasar')) {
+            SendSignupToQuasar::dispatch($signup);
+        }
 
         // Log that a signup was updated.
         info('signup_updated', ['id' => $signup->id]);
