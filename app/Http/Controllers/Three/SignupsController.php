@@ -149,8 +149,12 @@ class SignupsController extends ApiController
      */
     public function destroy(Signup $signup)
     {
-        $this->signups->destroy($signup->id);
+        $trashed = $this->signups->destroy($signup->id);
 
-        return $this->respond('Signup deleted.', 200);
+        if ($trashed) {
+            return $this->respond('Signup deleted.', 200);
+        }
+
+        return response()->json(['code' => 500, 'message' => 'There was an error deleting the post']);
     }
 }
