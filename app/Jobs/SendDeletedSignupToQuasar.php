@@ -39,7 +39,7 @@ class SendDeletedSignupToQuasar implements ShouldQueue
     {
         $payload = [
             'id' => $this->signupId,
-            'deleted_at' => Carbon::now(),
+            'deleted_at' => Carbon::now()->toIso8601String(),
             'meta' => [
                 'message_source' => 'rogue',
                 'type' => 'signup',

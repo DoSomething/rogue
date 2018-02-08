@@ -40,7 +40,7 @@ class SendDeletedPostToQuasar implements ShouldQueue
     {
         $payload = [
             'id' => $this->postId,
-            'deleted_at' => Carbon::now(),
+            'deleted_at' => Carbon::now()->toIso8601String(),
             'meta' => [
                 'message_source' => 'rogue',
                 'type' => 'post',
