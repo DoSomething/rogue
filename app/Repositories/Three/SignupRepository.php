@@ -72,7 +72,7 @@ class SignupRepository
     {
         $signup = Signup::findOrFail($signupId);
 
-        // Soft delete the post.
+        // Soft delete the signup.
         $signup->delete();
 
         return $signup->trashed();

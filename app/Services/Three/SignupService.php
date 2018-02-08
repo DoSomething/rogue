@@ -60,9 +60,9 @@ class SignupService
     /**
      * Handles all business logic around updating signups.
      *
+     * @param Rogue\Models\Signup $signup
      * @param array $data
-     * @param string $northstarId
-     * @return Illuminate\Database\Eloquent\Model $model
+     * @return Rogue\Models\Signup $model
      */
     public function update($signup, $data)
     {
