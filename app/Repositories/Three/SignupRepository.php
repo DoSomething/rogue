@@ -77,5 +77,4 @@ class SignupRepository
 
         return $signup->trashed();
     }
-
 }
