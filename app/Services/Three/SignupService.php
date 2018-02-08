@@ -87,15 +87,17 @@ class SignupService
      */
     public function destroy($signupId)
     {
-        info('signup_deleted', [
-            'id' => $signupId,
-        ]);
-
         $trashed = $this->signup->destroy($signupId);
 
-        // Dispatch job to send post to Quasar
-        if (config('features.pushToQuasar')) {
-            SendDeletedSignupToQuasar::dispatch($signupId);
+        if ($trashed) {
+            info('signup_deleted', [
+                'id' => $signupId,
+            ]);
+
+            // Dispatch job to send post to Quasar
+            if (config('features.pushToQuasar')) {
+                SendDeletedSignupToQuasar::dispatch($signupId);
+            }
         }
 
         return $trashed;
