@@ -47,7 +47,9 @@ class SendDeletedSignupToQuasar implements ShouldQueue
         ];
 
         // Send to Quasar
-        gateway('blink')->post('v1/events/quasar-relay', $payload);
+        if (config('features.pushToQuasar')) {
+            gateway('blink')->post('v1/events/quasar-relay', $payload);
+        }
 
         // Log
         info('Deleted signup ' . $this->signupId . ' sent to Quasar');

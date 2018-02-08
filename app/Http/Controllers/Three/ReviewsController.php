@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers\Three;
 
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
-use Rogue\Repositories\Three\PostRepository;
+use Rogue\Services\Three\PostService;
 use Rogue\Http\Controllers\Api\ApiController;
 use Rogue\Http\Transformers\Three\PostTransformer;
 
@@ -28,7 +28,7 @@ class ReviewsController extends ApiController
      * @param  PostContract $posts
      * @return void
      */
-    public function __construct(PostRepository $post)
+    public function __construct(PostService $post)
     {
         $this->post = $post;
         $this->transformer = new PostTransformer;
@@ -52,13 +52,7 @@ class ReviewsController extends ApiController
         ]);
 
         $post = Post::findOrFail($request['post_id']);
-        $reviewedPost = $this->post->reviews($post, $request['status'], $request['comment']);
-
-        info('post_reviewed', [
-            'id' => $reviewedPost->id,
-            'admin_northstar_id' => auth()->id(),
-            'status' => $reviewedPost->status,
-        ]);
+        $reviewedPost = $this->post->review($post, $request['status'], $request['comment']);
 
         return $this->item($reviewedPost, 201);
     }

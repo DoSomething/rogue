@@ -95,9 +95,7 @@ class SignupService
             ]);
 
             // Dispatch job to send post to Quasar
-            if (config('features.pushToQuasar')) {
-                SendDeletedSignupToQuasar::dispatch($signupId);
-            }
+            SendDeletedSignupToQuasar::dispatch($signupId);
         }
 
         return $trashed;
