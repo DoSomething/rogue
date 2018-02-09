@@ -81,8 +81,8 @@ class PostService
             SendPostToQuasar::dispatch($post);
         }
 
-        // Log that a post was created.
-        info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
+        // Log that a post was updated.
+        info('post_updated', ['id' => $post->id, 'signup_id' => $post->signup_id]);
 
         return $post;
     }
