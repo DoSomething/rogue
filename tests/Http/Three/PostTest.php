@@ -281,6 +281,9 @@ class PostTest extends TestCase
             'quantity' => $secondQuantity,
             'details' => json_encode($secondDetails),
         ]);
+
+        // Assert that signup quantity is sum of all posts' quantities.
+        $this->assertEquals($signup->fresh()->quantity, $quantity + $secondQuantity);
     }
 
     /**
@@ -727,6 +730,7 @@ class PostTest extends TestCase
     public function testUpdatingAPost()
     {
         $post = factory(Post::class)->create();
+        $signup = $post->signup;
 
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
@@ -740,6 +744,9 @@ class PostTest extends TestCase
         // Make sure that the posts's new status and caption gets persisted in the database.
         $this->assertEquals($post->fresh()->caption, 'new caption');
         $this->assertEquals($post->fresh()->quantity, 8);
+
+        // Make sure the signup's quantity gets updated.
+        $this->assertEquals($signup->fresh()->quantity, 8);
     }
 
     /**

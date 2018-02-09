@@ -94,6 +94,16 @@ class SignupsController extends ApiController
             $query = $query->withVisiblePosts();
         }
 
+        $orderBy = $request->query('orderBy');
+
+        if ($orderBy) {
+            list($column, $direction) = explode(',', $orderBy, 2);
+
+            if (in_array($column, Signup::$indexes)) {
+                $query = $query->orderBy($column, $direction);
+            }
+        }
+
         return $this->paginatedCollection($query, $request);
     }
 

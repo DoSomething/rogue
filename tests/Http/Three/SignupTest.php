@@ -283,6 +283,127 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test for retrieving all signups as admin with northstar_id, campaign_id, and campaign_run_id filters (and a combinations of all).
+     *
+     * GET /api/v3/signups?filter[northstar_id]=56d5baa7a59dbf106b8b45aa
+     * GET /api/v3/signups?filter[campaign_id]=1
+     * GET /api/v3/signups?filter[campaign_run_id]=32
+     * GET /api/v3/signups?filter[campaign_id]=1&filter[northstar_id]=56d5baa7a59dbf106b8b45aa
+     * GET /api/v3/signups?filter[campaign_id]=1,2
+     *
+     * @return void
+     */
+    public function testSignupsIndexAsAdminWithFilters()
+    {
+        $northstarId = $this->faker->northstar_id;
+        $campaignId = str_random(22);
+        $campaignRunId = $this->faker->randomNumber(4);
+
+        // Create two signups
+        factory(Signup::class, 2)->create([
+           'northstar_id' => $northstarId,
+           'campaign_id' => $campaignId,
+           'campaign_run_id' => $campaignRunId,
+        ]);
+
+        // Create three more signups with different northstar_id, campaign_id, and campaign_run_id
+        $secondNorthstarId = $this->faker->northstar_id;
+        $secondCampaignId = str_random(22);
+        $secondCampaignRunId = $this->faker->randomNumber(4);
+
+        factory(Signup::class, 3)->create([
+           'northstar_id' => $secondNorthstarId,
+           'campaign_id' => $secondCampaignId,
+           'campaign_run_id' => $secondCampaignRunId,
+        ]);
+
+        // Filter by northstar_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[northstar_id]=' . $northstarId);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+
+        // Assert only 2 signups are returned
+        $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
+
+        // Filter by campaign_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_id]=' . $secondCampaignId);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+
+        // Assert only 3 signups are returned
+        $this->assertEquals(3, $decodedResponse['meta']['cursor']['count']);
+
+        // Filter by campaign_run_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+
+        // Assert only 2 signups are returned
+        $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
+
+        // Filter by campaign_run_id and northstar_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId . '&filter[northstar_id]=' . $northstarId);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+
+        // Assert only 2 signups are returned
+        $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
+
+        // Filter by multiple campaign_run_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId . ',' . $secondCampaignRunId);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+
+        // Assert all signups are returned
+        $this->assertEquals(5, $decodedResponse['meta']['cursor']['count']);
+    }
+
+    /**
+     * Test for retrieving all signups as admin filtering by quantity (in ascending or descending order).
+     *
+     * GET /api/v3/signups?orderBy=quantity,desc
+     * GET /api/v3/signups?orderBy=quantity,asc
+     *
+     * @return void
+     */
+    public function testSignupsIndexAsAdminWithOrderByQuantityFilter()
+    {
+        // Create 5 signups with different quantities
+        $signups = factory(Signup::class, 5)->create();
+        $quantity = 1;
+
+        foreach ($signups as $signup) {
+            $signup->quantity = $quantity++;
+            $signup->save();
+        }
+
+        // Order results by descending quantity
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,desc');
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+
+        // Assert results are returned in descending order.
+        $this->assertEquals(5, $decodedResponse['data'][0]['quantity']);
+        $this->assertEquals(4, $decodedResponse['data'][1]['quantity']);
+
+        // Order results by ascending quantity
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,asc');
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+
+        // Assert results are returned in ascending order.
+        $this->assertEquals(1, $decodedResponse['data'][0]['quantity']);
+        $this->assertEquals(2, $decodedResponse['data'][1]['quantity']);
+    }
+
+    /**
      * Test for retrieving a specific signup as non-admin and non-owner.
      *
      * GET /api/v3/signups/:signup_id

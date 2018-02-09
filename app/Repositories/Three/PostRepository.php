@@ -113,6 +113,10 @@ class PostRepository
             $this->crop($data, $post->id);
         }
 
+        // Update the signup's total quantity.
+        $signup->quantity = $signup->posts->sum('quantity');
+        $signup->save();
+
         return $post;
     }
 
@@ -127,6 +131,13 @@ class PostRepository
     public function update($post, $data)
     {
         $post->update($data);
+
+        // If the quantity was updated, update the total quantity on the signup.
+        if ($data['quantity']) {
+            $signup = Signup::find($post->signup_id);
+            $signup->quantity = $signup->posts->sum('quantity');
+            $signup->save();
+        }
 
         return $post;
     }
