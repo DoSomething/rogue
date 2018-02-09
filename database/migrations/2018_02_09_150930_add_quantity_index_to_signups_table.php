@@ -26,7 +26,7 @@ class AddQuantityIndexToSignupsTable extends Migration
     public function down()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->dropIndex('quantity');
+            $table->dropIndex(['quantity']);
         });
     }
 }
