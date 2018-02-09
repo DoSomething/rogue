@@ -62,9 +62,9 @@ class PostService
     /**
      * Handles all business logic around updating posts.
      *
-     * @param \Rogue\Models\Signup $signup
+     * @param \Rogue\Models\Post $post
      * @param array $data
-     * @return \Rogue\Models\Post|\Rogue\Models\Signup
+     * @return \Rogue\Models\Post
      */
     public function update($post, $data)
     {
