@@ -3,7 +3,7 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Post;
-use Rogue\Repositories\PostRepository;
+use Rogue\Services\PostService;
 use Rogue\Http\Requests\ReviewsRequest;
 use Rogue\Http\Transformers\PostTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -28,7 +28,7 @@ class ReviewsController extends Controller
      * @param  PostContract $posts
      * @return void
      */
-    public function __construct(PostRepository $post)
+    public function __construct(PostService $post)
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
@@ -54,17 +54,11 @@ class ReviewsController extends Controller
 
         // Append admin's ID to the request for the "reviews" service.
         $review['admin_northstar_id'] = auth()->user()->northstar_id;
-        $reviewedPost = $this->post->reviews($review);
+        $reviewedPost = $this->post->review($review);
         $reviewedPostCode = $this->code($reviewedPost);
         $meta = [];
 
         if (isset($reviewedPost)) {
-            info('post_reviewed', [
-                'id' => $reviewedPost->id,
-                'admin_northstar_id' => $review['admin_northstar_id'],
-                'status' => $reviewedPost->status,
-            ]);
-
             return $this->item($reviewedPost, $reviewedPostCode);
         } else {
             throw (new ModelNotFoundException)->setModel('Post');

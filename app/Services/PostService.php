@@ -60,6 +60,31 @@ class PostService
     }
 
     /**
+     * Handles all business logic around reviewing posts.
+     *
+     * @param array $data
+     * @param int $signupId
+     * @return \Rogue\Models\Post
+     */
+    public function review($data)
+    {
+        $reviewedPost = $this->repository->reviews($data);
+
+        if (config('features.pushToQuasar')) {
+            SendPostToQuasar::dispatch($reviewedPost);
+        }
+
+        // Log that a post was reviewed.
+        info('post_reviewed', [
+            'id' => $reviewedPost->id,
+            'admin_northstar_id' => $data['admin_northstar_id'],
+            'status' => $reviewedPost->status,
+        ]);
+
+        return $reviewedPost;
+    }
+
+    /**
      * Handles all business logic around updating posts.
      *
      * @param \Rogue\Models\Signup $signup

@@ -125,15 +125,14 @@ class SignupsController extends ApiController
      */
     public function update(Request $request, Signup $signup)
     {
-        $this->validate($request, [
+        $validatedRequest = $this->validate($request, [
             'why_participated' => 'required',
         ]);
 
         // Only allow an admin or the user who owns the signup to update.
         if (token()->role() === 'admin' || auth()->id() === $signup->northstar_id) {
-            $signup->update(
-                $request->only('why_participated')
-            );
+            // why_participated is the only thing that can be changed
+            $this->signups->update($signup, $validatedRequest);
 
             return $this->item($signup);
         }
@@ -150,8 +149,12 @@ class SignupsController extends ApiController
      */
     public function destroy(Signup $signup)
     {
-        $signup->delete();
+        $trashed = $this->signups->destroy($signup->id);
 
-        return $this->respond('Signup deleted.', 200);
+        if ($trashed) {
+            return $this->respond('Signup deleted.', 200);
+        }
+
+        return response()->json(['code' => 500, 'message' => 'There was an error deleting the post']);
     }
 }
