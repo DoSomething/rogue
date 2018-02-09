@@ -284,7 +284,6 @@ class PostTest extends TestCase
 
         // Assert that signup quantity is sum of all posts' quantities.
         $this->assertEquals($signup->fresh()->quantity, $quantity + $secondQuantity);
-
     }
 
     /**
