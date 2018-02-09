@@ -113,8 +113,7 @@ class ImportTurboVotePosts implements ShouldQueue
                         // If a post already exists, check if status is the same on the CSV record and the existing post,
                         // if not update the post with the new status.
                         if ($record['voter-registration-status'] !== $post->status) {
-                            $post->status = $record['voter-registration-status'];
-                            $post->save();
+                            $postService->update($post, ['status' => $record['voter-registration-status']]);
                         }
                     }
                 } else {

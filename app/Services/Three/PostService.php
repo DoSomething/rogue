@@ -62,9 +62,9 @@ class PostService
     /**
      * Handles all business logic around updating posts.
      *
-     * @param \Rogue\Models\Signup $signup
+     * @param \Rogue\Models\Post $post
      * @param array $data
-     * @return \Rogue\Models\Post|\Rogue\Models\Signup
+     * @return \Rogue\Models\Post
      */
     public function update($post, $data)
     {
@@ -81,8 +81,8 @@ class PostService
             SendPostToQuasar::dispatch($post);
         }
 
-        // Log that a post was created.
-        info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
+        // Log that a post was updated.
+        info('post_updated', ['id' => $post->id, 'signup_id' => $post->signup_id]);
 
         return $post;
     }
