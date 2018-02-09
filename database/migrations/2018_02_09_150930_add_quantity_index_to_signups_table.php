@@ -14,7 +14,7 @@ class AddQuantityIndexToSignupsTable extends Migration
     public function up()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->unique('quantity');
+            $table->index('quantity');
         });
     }
 
@@ -26,7 +26,7 @@ class AddQuantityIndexToSignupsTable extends Migration
     public function down()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->dropUnique('quantity');
+            $table->dropIndex(['quantity']);
         });
     }
 }
