@@ -388,7 +388,7 @@ class SignupTest extends TestCase
 
         $response->assertStatus(200);
 
-        // Assert results are returned in ascending order.
+        // Assert results are returned in descending order.
         $this->assertEquals(5, $decodedResponse['data'][0]['quantity']);
         $this->assertEquals(4, $decodedResponse['data'][1]['quantity']);
 

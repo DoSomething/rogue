@@ -62,6 +62,13 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
   - Determines order the results are returned, based on the signups's index and direction.
   - e.g. `/signups?orderBy=quantity,desc`
   - e.g. `/signups?orderBy=quantity,asc`
+- **limit** _(default is 20)_
+  - Set the number of records to return in a single response.
+  - e.g. `/signups?limit=35`  
+- **page** _(integer)_
+  - For pagination, specify page of signups to return in the response.
+  - e.g. `/signups?page=2`
+
 Example Response: 
 
 ```
