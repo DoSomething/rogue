@@ -335,7 +335,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with annoymous user that no posts are returned.
-        $response = $this->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->getJson('api/v3/signups' . '?include=user');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
