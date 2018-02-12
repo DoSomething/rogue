@@ -5,7 +5,6 @@ namespace Rogue\Http\Transformers\Three;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use League\Fractal\TransformerAbstract;
-use Rogue\Http\Transformers\Three\PostTransformer;
 use Rogue\Http\Transformers\UserTransformer;
 
 class SignupTransformer extends TransformerAbstract

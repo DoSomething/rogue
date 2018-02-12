@@ -341,6 +341,7 @@ class SignupTest extends TestCase
 
         $this->assertEquals(true, empty($decodedResponse['data'][0]['user']));
     }
+
     /**
      * Test for retrieving all signups as admin with northstar_id, campaign_id, and campaign_run_id filters (and a combinations of all).
      *
