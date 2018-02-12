@@ -41,6 +41,7 @@ class Kernel extends HttpKernel
             'guard:api',
             'bindings',
             // 'throttle:60,1',
+            'cors' => \Rogue\Http\Middleware\Cors::class,
         ],
     ];
 
