@@ -96,7 +96,6 @@ class PostService
 
         SendPostToQuasar::dispatch($post);
 
-
         // Log that a post was reviewed.
         info('post_reviewed', [
             'id' => $post->id,
@@ -122,9 +121,7 @@ class PostService
         $trashed = $this->repository->destroy($postId);
 
         // Dispatch job to send post to Quasar
-        if (config('features.pushToQuasar')) {
-            SendDeletedPostToQuasar::dispatch($postId);
-        }
+        SendDeletedPostToQuasar::dispatch($postId);
 
         return $trashed;
     }

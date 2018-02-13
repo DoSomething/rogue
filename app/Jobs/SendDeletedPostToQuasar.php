@@ -48,9 +48,13 @@ class SendDeletedPostToQuasar implements ShouldQueue
         ];
 
         // Send to Quasar
-        gateway('blink')->post('v1/events/quasar-relay', $payload);
+        $shouldSendToQuasar = config('features.pushToQuasar');
+        if ($shouldSendToQuasar) {
+            gateway('blink')->post('v1/events/quasar-relay', $payload);
+        }
 
         // Log
-        info('Deleted post ' . $this->postId . ' sent to Quasar');
+        $verb = $shouldSendToQuasar ? 'sent' : 'would have been sent';
+        info('Deleted post ' . $this->postId . ' ' . $verb . ' sent to Quasar');
     }
 }
