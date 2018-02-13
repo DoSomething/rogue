@@ -45,9 +45,7 @@ class SignupService
         }
 
         // Dispatch job to send signup to Quasar
-        if (config('features.pushToQuasar')) {
-            SendSignupToQuasar::dispatch($signup);
-        }
+        SendSignupToQuasar::dispatch($signup);
 
         // Log that a signup was created.
         info('signup_created', ['id' => $signup->id, 'northstar_id' => $signup->northstar_id]);

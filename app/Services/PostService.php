@@ -49,9 +49,7 @@ class PostService
         }
 
         // Dispatch job to send post to Quasar
-        if (config('features.pushToQuasar')) {
-            SendPostToQuasar::dispatch($post);
-        }
+        SendPostToQuasar::dispatch($post);
 
         // Log that a post was created.
         info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
@@ -70,9 +68,7 @@ class PostService
     {
         $reviewedPost = $this->repository->reviews($data);
 
-        if (config('features.pushToQuasar')) {
-            SendPostToQuasar::dispatch($reviewedPost);
-        }
+        SendPostToQuasar::dispatch($reviewedPost);
 
         // Log that a post was reviewed.
         info('post_reviewed', [
