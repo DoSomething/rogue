@@ -195,7 +195,7 @@ class Post extends Model
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
             'action' => $this->action,
-            'quantity' => $this->quantity,
+            'quantity' => $this->quantity ? $this->quantity : $this->signup->quantity,
             'why_participated' => $this->signup->why_participated,
             // Add cache-busting query string to urls to make sure we get the
             // most recent version of the image.
