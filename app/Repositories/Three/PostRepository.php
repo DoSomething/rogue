@@ -134,7 +134,7 @@ class PostRepository
 
         // If the quantity was updated, update the total quantity on the signup.
         if (isset($data['quantity'])) {
-            $signup = Signup::find($post->signup_id);
+            $signup = $post->signup;
             $signup->quantity = $signup->posts->sum('quantity');
             $signup->save();
         }
