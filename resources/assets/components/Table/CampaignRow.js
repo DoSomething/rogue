@@ -16,10 +16,6 @@ class CampaignRow extends React.Component {
         title: campaign ? campaign.title : 'Campaign Not Found',
       },
       {
-        url: null,
-        title: campaign ? campaign.pending_count : 0,
-      },
-      {
         url: campaign ? `/campaigns/${campaign.id}/inbox` : '/campaigns',
         title: 'Review',
       },
