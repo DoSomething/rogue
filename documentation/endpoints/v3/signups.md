@@ -52,8 +52,9 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
 
 ### Optional Query Parameters
 - **include** _(string)_
-  - Include additional related records in the response: `posts`
-  - e.g. `/v3/signups?include=posts`
+  - Include additional related records in the response: `posts`, `user`
+  - If using multiple include params, they must be comma-separated
+  - e.g. `/api/v3/signups/1?include=user,posts`
 - **filter[column]** _(string)_
   - Filter results by the given column: `northstar_id`, `campaign_id`, `campaign_run_id`
   - You can filter by more than one column, e.g. `/signups?filter[id]=4&filter[campaign_id]=5`
@@ -125,8 +126,9 @@ Only admins and signup owners will have `why_participated`, `source`, and `detai
 When using `?include=posts`, anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 ### Optional Query Parameters
 - **include** _(string)_
-  - Include additional related records in the response: `posts`
-  - e.g. `/api/v3/signups/1?include=posts`
+  - Include additional related records in the response: `posts`, `user`
+  - If using multiple include params, they must be comma-separated
+  - e.g. `/api/v3/signups/1?include=user,posts`
   
 Example Response: 
 

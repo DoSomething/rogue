@@ -283,6 +283,66 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test for signup index with included user info. as admin.
+     * Only admins/owners should be able to see all user info.
+     *
+     * GET /api/v3/signups?include=user
+     * @return void
+     */
+    public function testSignupIndexWithIncludedUserAsAdmin()
+    {
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
+
+        // Test with admin that entire user is returned.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups' . '?include=user');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $this->assertEquals(false, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
+    }
+
+    /**
+     * Test for signup index with included user info. as owner.
+     * Only admins/owners should be able to see all user info.
+     *
+     * GET /api/v3/signups?include=user
+     * @return void
+     */
+    public function testSignupIndexWithIncludedUserAsOwner()
+    {
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
+
+        // Test with admin that entire user is returned.
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups' . '?include=user');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $this->assertEquals(false, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
+    }
+
+    /**
+     * Test for signup index with included user info. as non-admin/non-owner.
+     * Only admins/owners should be able to see all user info.
+     *
+     * GET /api/v3/signups?include=user
+     * @return void
+     */
+    public function testSignupIndexWithIncludedUserAsNonAdminNonOwner()
+    {
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
+
+        // Test with annoymous user that only a user's first name is returned.
+        $response = $this->getJson('api/v3/signups' . '?include=user');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $this->assertEquals(true, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
+    }
+
+    /**
      * Test for retrieving all signups as admin with northstar_id, campaign_id, and campaign_run_id filters (and a combinations of all).
      *
      * GET /api/v3/signups?filter[northstar_id]=56d5baa7a59dbf106b8b45aa

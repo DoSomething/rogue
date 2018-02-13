@@ -3,8 +3,8 @@
 namespace Rogue\Http\Transformers\Three;
 
 use Rogue\Models\Signup;
+use Rogue\Services\Registrar;
 use League\Fractal\TransformerAbstract;
-use Rogue\Http\Transformers\PostTransformer;
 
 class SignupTransformer extends TransformerAbstract
 {
@@ -14,7 +14,7 @@ class SignupTransformer extends TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        'posts',
+        'posts', 'user',
     ];
 
     /**
@@ -55,5 +55,19 @@ class SignupTransformer extends TransformerAbstract
         $post = $signup->posts;
 
         return $this->collection($post, new PostTransformer);
+    }
+
+    /**
+     * Include the user data (optionally)
+     *
+     * @param \Rogue\Models\Signup $signup
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includeUser(Signup $signup)
+    {
+        $registrar = app(Registrar::class);
+        $northstar_id = $signup->northstar_id;
+
+        return $this->item($registrar->find($northstar_id), new UserTransformer);
     }
 }

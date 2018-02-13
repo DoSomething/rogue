@@ -9,7 +9,7 @@ class UserTransformer extends TransformerAbstract
     /**
      * Transform resource data.
      *
-     * @param \Rogue\Models\Photo $user
+     * @param \Rogue\Models\User $user
      * @return array
      */
     public function transform($user)
