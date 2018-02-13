@@ -19,13 +19,13 @@ class UserTransformer extends TransformerAbstract
             $response = [
                 'first_name' => $user->first_name,
             ];
-        }
 
-        if (is_staff_user() || auth()->id() === $user->id) {
-            $response['last_name'] = $user->last_name;
-            $response['birthdate'] = $user->birthdate;
-            $response['email'] = $user->email;
-            $response['mobile'] = $user->mobile;
+            if (is_staff_user() || auth()->id() === $user->id) {
+                $response['last_name'] = $user->last_name;
+                $response['birthdate'] = $user->birthdate;
+                $response['email'] = $user->email;
+                $response['mobile'] = $user->mobile;
+            }
         }
 
         return isset($response) ? $response : [];
