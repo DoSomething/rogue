@@ -53,7 +53,8 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
 ### Optional Query Parameters
 - **include** _(string)_
   - Include additional related records in the response: `posts`, `user`
-  - e.g. `/v3/signups?include=posts`
+  - If using multiple include params, they must be comma-separated
+  - e.g. `/api/v3/signups/1?include=user,posts`
 - **filter[column]** _(string)_
   - Filter results by the given column: `northstar_id`, `campaign_id`, `campaign_run_id`
   - You can filter by more than one column, e.g. `/signups?filter[id]=4&filter[campaign_id]=5`
@@ -126,7 +127,8 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
 ### Optional Query Parameters
 - **include** _(string)_
   - Include additional related records in the response: `posts`, `user`
-  - e.g. `/api/v3/signups/1?include=posts`
+  - If using multiple include params, they must be comma-separated
+  - e.g. `/api/v3/signups/1?include=user,posts`
   
 Example Response: 
 

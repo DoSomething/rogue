@@ -18,7 +18,7 @@ GET /api/v2/activity
   - e.g. `/activity?page=2`
 - **include** _(string)_
   - Include additional related records in the response: `user`, `posts`
-  - e.g. `/activity?include=user`
+  - e.g. `/activity?include=user,posts`
 - **orderBy** _(string)_
   - Determines order the results are returned, based on the signups's created_at timestamp.
   - If 'desc' is not passed through, defaults to return results by signup's created_at by ascending order. 
