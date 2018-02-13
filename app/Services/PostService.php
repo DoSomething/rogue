@@ -103,12 +103,12 @@ class PostService
         }
 
         // Dispatch job to send Post to Quasar
-        if (config('features.pushToQuasar')) {
-            if ($postOrSignup instanceof Post) {
-                SendPostToQuasar::dispatch($postOrSignup);
-            } elseif ($postOrSignup instanceof Signup) {
-                SendSignupToQuasar::dispatch($postOrSignup);
-            }
+        if ($postOrSignup instanceof Post) {
+            SendPostToQuasar::dispatch($postOrSignup);
+
+            SendSignupToQuasar::dispatch($postOrSignup->signup);
+        } elseif ($postOrSignup instanceof Signup) {
+            SendSignupToQuasar::dispatch($postOrSignup);
         }
 
         return $postOrSignup;
