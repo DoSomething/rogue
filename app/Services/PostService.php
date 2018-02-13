@@ -48,8 +48,9 @@ class PostService
             SendPostToBlink::dispatch($post);
         }
 
-        // Dispatch job to send post to Quasar
+        // Dispatch jobs to send post and signup to Quasar
         SendPostToQuasar::dispatch($post);
+        SendSignupToQuasar::dispatch($post->signup);
 
         // Log that a post was created.
         info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
@@ -102,7 +103,7 @@ class PostService
             info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);
         }
 
-        // Dispatch job to send Post to Quasar
+        // Dispatch job to send Post (or Post and Signup) to Quasar
         if ($postOrSignup instanceof Post) {
             SendPostToQuasar::dispatch($postOrSignup);
 
