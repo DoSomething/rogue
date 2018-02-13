@@ -49,9 +49,7 @@ class PostService
             SendPostToBlink::dispatch($post);
         }
 
-        if (config('features.pushToQuasar')) {
-            SendPostToQuasar::dispatch($post);
-        }
+        SendPostToQuasar::dispatch($post);
 
         // Log that a post was created.
         info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
@@ -77,9 +75,7 @@ class PostService
             SendPostToBlink::dispatch($post);
         }
 
-        if (config('features.pushToQuasar')) {
-            SendPostToQuasar::dispatch($post);
-        }
+        SendPostToQuasar::dispatch($post);
 
         // Log that a post was updated.
         info('post_updated', ['id' => $post->id, 'signup_id' => $post->signup_id]);
@@ -98,9 +94,7 @@ class PostService
     {
         $post = $this->repository->reviews($post, $data, $comment);
 
-        if (config('features.pushToQuasar')) {
-            SendPostToQuasar::dispatch($post);
-        }
+        SendPostToQuasar::dispatch($post);
 
         // Log that a post was reviewed.
         info('post_reviewed', [
@@ -127,9 +121,7 @@ class PostService
         $trashed = $this->repository->destroy($postId);
 
         // Dispatch job to send post to Quasar
-        if (config('features.pushToQuasar')) {
-            SendDeletedPostToQuasar::dispatch($postId);
-        }
+        SendDeletedPostToQuasar::dispatch($postId);
 
         return $trashed;
     }

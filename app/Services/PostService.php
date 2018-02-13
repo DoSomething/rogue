@@ -48,10 +48,9 @@ class PostService
             SendPostToBlink::dispatch($post);
         }
 
-        // Dispatch job to send post to Quasar
-        if (config('features.pushToQuasar')) {
-            SendPostToQuasar::dispatch($post);
-        }
+        // Dispatch jobs to send post and signup to Quasar
+        SendPostToQuasar::dispatch($post);
+        SendSignupToQuasar::dispatch($post->signup);
 
         // Log that a post was created.
         info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
@@ -70,9 +69,7 @@ class PostService
     {
         $reviewedPost = $this->repository->reviews($data);
 
-        if (config('features.pushToQuasar')) {
-            SendPostToQuasar::dispatch($reviewedPost);
-        }
+        SendPostToQuasar::dispatch($reviewedPost);
 
         // Log that a post was reviewed.
         info('post_reviewed', [
@@ -106,13 +103,13 @@ class PostService
             info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);
         }
 
-        // Dispatch job to send Post to Quasar
-        if (config('features.pushToQuasar')) {
-            if ($postOrSignup instanceof Post) {
-                SendPostToQuasar::dispatch($postOrSignup);
-            } elseif ($postOrSignup instanceof Signup) {
-                SendSignupToQuasar::dispatch($postOrSignup);
-            }
+        // Dispatch job to send Post (or Post and Signup) to Quasar
+        if ($postOrSignup instanceof Post) {
+            SendPostToQuasar::dispatch($postOrSignup);
+
+            SendSignupToQuasar::dispatch($postOrSignup->signup);
+        } elseif ($postOrSignup instanceof Signup) {
+            SendSignupToQuasar::dispatch($postOrSignup);
         }
 
         return $postOrSignup;
@@ -133,9 +130,7 @@ class PostService
         $trashed = $this->repository->destroy($postId);
 
         // Dispatch job to send post to Quasar
-        if (config('features.pushToQuasar')) {
-            SendDeletedPostToQuasar::dispatch($postId);
-        }
+        SendDeletedPostToQuasar::dispatch($postId);
 
         return $trashed;
     }
