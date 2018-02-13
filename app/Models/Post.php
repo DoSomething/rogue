@@ -195,7 +195,7 @@ class Post extends Model
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
             'action' => $this->action,
-            'quantity' => $this->quantity ? $this->quantity : $this->signup->quantity,
+            'quantity' => $this->getQuantity(),
             'why_participated' => $this->signup->why_participated,
             // Add cache-busting query string to urls to make sure we get the
             // most recent version of the image.
@@ -219,6 +219,21 @@ class Post extends Model
                 'type' => 'post',
             ],
         ];
+    }
+
+    /**
+     * If we are storing quanity on the post, return that!
+     * If the quantity is not on the post, return the quantity from the signup.
+     *
+     * @return int
+     */
+    public function getQuantity()
+    {
+        if (! config('features.v3QuantitySupport')) {
+            return $this->signup->getQuantity();
+        }
+
+        return $this->quantity;
     }
 
     /**
