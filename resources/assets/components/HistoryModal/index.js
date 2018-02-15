@@ -46,10 +46,10 @@ class HistoryModal extends React.Component {
   }
 
   render() {
-    console.log('history');
     const signup = this.props.signup;
     const campaign = this.props.campaign;
     const parsedEvents = ! isEmpty(this.props.signupEvents) ? this.parseEventData(this.props.signupEvents) : null;
+    const post = this.props.post;
 
     return (
       <div className="modal">
@@ -58,7 +58,7 @@ class HistoryModal extends React.Component {
           <h3>Change Quantity</h3>
           <div className="container__block -half">
             <h4>Old Quantity</h4>
-            <p>{signup.quantity} {campaign.reportback_info.noun} {campaign.reportback_info.verb}</p>
+            <p>{post.quantity} {campaign.reportback_info.noun} {campaign.reportback_info.verb}</p>
           </div>
           <div className="container__block -half">
             <h4>New Quantity</h4>
@@ -79,7 +79,7 @@ class HistoryModal extends React.Component {
             }
           </div>
         </div>
-        <button className="button -history" disabled={! this.state.quantity} onClick={() => this.props.onUpdate(signup, this.state.quantity)}>Save</button>
+        <button className="button -history" disabled={! this.state.quantity} onClick={() => this.props.onUpdate(post, this.state.quantity)}>Save</button>
       </div>
     );
   }

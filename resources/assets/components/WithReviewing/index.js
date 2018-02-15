@@ -14,7 +14,9 @@ const reviewComponent = (Component, data) => {
         loading: true,
       };
 
-      this.api = new RogueClient();
+      this.api = new RogueClient(window.location.origin, {
+        headers: { 'Authorization' : `Bearer ${window.AUTH}`}
+      });
       this.updatePost = this.updatePost.bind(this);
       this.updateTag = this.updateTag.bind(this);
       this.updateQuantity = this.updateQuantity.bind(this);
@@ -149,29 +151,50 @@ const reviewComponent = (Component, data) => {
       });
     }
 
-    // Update a signups quanity.
-    updateQuantity(signup, newQuantity) {
-      // Fields to send to /posts
-      const fields = {
-        northstar_id: signup.northstar_id,
-        campaign_id: signup.campaign_id,
-        campaign_run_id: signup.campaign_run_id,
-        quantity: newQuantity,
-      };
+    // Update a post's or signup's quantity.
+    updateQuantity(postOrSignup, newQuantity) {
+      // If v3QuantitySupport is true, update individual post's quantity.
+        // Field to send to /api/v3/posts/:post_id
+        const field = {
+          quantity: parseInt(newQuantity),
+        };
 
-      // Make API request to Rogue to update the quantity on the backend
-      let request = this.api.post('posts', fields);
+        // Make API request to Rogue to update the quantity on the backend
+        let request = this.api.patch('api/v3/posts/'.concat(postOrSignup['id']), field);
 
-      request.then((result) => {
-        // Update the state
-        this.setState((previousState) => {
-          const newState = {...previousState};
+        request.then((result) => {
+          // Update the state
+          this.setState((previousState) => {
+            const newState = {...previousState};
+            newState.posts[postOrSignup['id']].quantity = result.data['quantity'];
 
-          newState.signups[signup.signup_id].quantity = result.quantity;
-
-          return newState;
+            return newState;
+          });
         });
-      });
+
+
+      // Otherwise, update the signup's quantity.
+      // Fields to send to /posts
+      // const fields = {
+      //   northstar_id: postOrSignup.northstar_id,
+      //   campaign_id: postOrSignup.campaign_id,
+      //   campaign_run_id: postOrSignup.campaign_run_id,
+      //   quantity: newQuantity,
+      // };
+
+      // // Make API request to Rogue to update the quantity on the backend
+      // let request = this.api.post('posts', fields);
+
+      // request.then((result) => {
+      //   // Update the state
+      //   this.setState((previousState) => {
+      //     const newState = {...previousState};
+
+      //     newState.signups[postOrSignup.signup_id].quantity = result.quantity;
+
+      //     return newState;
+      //   });
+      // });
 
       // Close the modal
       this.hideHistory();
