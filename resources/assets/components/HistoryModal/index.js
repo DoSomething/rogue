@@ -53,8 +53,10 @@ class HistoryModal extends React.Component {
 
     if (window.ENV['DS_ENABLE_V3_QUANTITY_SUPPORT']) {
       var quantity = post.quantity;
+      var postOrSignupToUpdate = post;
     } else {
       var quantity = signup.quantity;
+      var postOrSignupToUpdate = signup;
     }
 
     return (
@@ -72,8 +74,9 @@ class HistoryModal extends React.Component {
               <input type="text" onChange={this.onUpdate} className="text-field" placeholder="Enter # here" />
             </div>
           </div>
-
           <h3>📖 History 📖</h3>
+          <p> <em>We're making some edits to the events log - it'll be back soon!</em> </p>
+        {/*
           <div className="container">
             { ! isEmpty(parsedEvents) ?
               <div>
@@ -84,8 +87,9 @@ class HistoryModal extends React.Component {
               <Empty header="No History To Show!" copy="Sorry, but we don't have any history for this signup."/>
             }
           </div>
+        */}
         </div>
-        <button className="button -history" disabled={! this.state.quantity} onClick={() => this.props.onUpdate(post, this.state.quantity)}>Save</button>
+        <button className="button -history" disabled={! this.state.quantity} onClick={() => this.props.onUpdate(postOrSignupToUpdate, this.state.quantity)}>Save</button>
       </div>
     );
   }

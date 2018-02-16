@@ -154,6 +154,7 @@ const reviewComponent = (Component, data) => {
     // Update a post's or signup's quantity.
     updateQuantity(postOrSignup, newQuantity) {
       // If v3QuantitySupport is true, update individual post's quantity.
+      if (window.ENV['DS_ENABLE_V3_QUANTITY_SUPPORT']) {
         // Field to send to /api/v3/posts/:post_id
         const field = {
           quantity: parseInt(newQuantity),
@@ -171,30 +172,30 @@ const reviewComponent = (Component, data) => {
             return newState;
           });
         });
-
-
       // Otherwise, update the signup's quantity.
-      // Fields to send to /posts
-      // const fields = {
-      //   northstar_id: postOrSignup.northstar_id,
-      //   campaign_id: postOrSignup.campaign_id,
-      //   campaign_run_id: postOrSignup.campaign_run_id,
-      //   quantity: newQuantity,
-      // };
+      } else {
+        // Fields to send to /posts
+        const fields = {
+          northstar_id: postOrSignup.northstar_id,
+          campaign_id: postOrSignup.campaign_id,
+          campaign_run_id: postOrSignup.campaign_run_id,
+          quantity: newQuantity,
+        };
 
-      // // Make API request to Rogue to update the quantity on the backend
-      // let request = this.api.post('posts', fields);
+        // Make API request to Rogue to update the quantity on the backend
+        let request = this.api.post('posts', fields);
 
-      // request.then((result) => {
-      //   // Update the state
-      //   this.setState((previousState) => {
-      //     const newState = {...previousState};
+        request.then((result) => {
+          // Update the state
+          this.setState((previousState) => {
+            const newState = {...previousState};
 
-      //     newState.signups[postOrSignup.signup_id].quantity = result.quantity;
+            newState.signups[postOrSignup.signup_id].quantity = result.quantity;
 
-      //     return newState;
-      //   });
-      // });
+            return newState;
+          });
+        });
+      }
 
       // Close the modal
       this.hideHistory();
