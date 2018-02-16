@@ -9,7 +9,7 @@ import Post from '../Post';
 import Empty from '../Empty';
 import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
-import HistoryModal from '../HistoryModal';
+// import HistoryModal from '../HistoryModal';
 import UploaderModal from '../UploaderModal';
 import ModalContainer from '../ModalContainer';
 import MetaInformation from '../MetaInformation';
@@ -42,6 +42,8 @@ class PostGroup extends React.Component {
               onTag={this.props.onTag}
               deletePost={this.props.deletePost}
               showSiblings={false}
+              campaign={this.props.campaign}
+              showQuantity
             />))
             :
             <Empty header={`This user has no ${this.props.groupType} posts`} />
@@ -79,8 +81,8 @@ class Signup extends React.Component {
     this.updatePost = this.updatePost.bind(this);
     this.updateTag = this.updateTag.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
-    this.showHistory = this.showHistory.bind(this);
-    this.hideHistory = this.hideHistory.bind(this);
+    // this.showHistory = this.showHistory.bind(this);
+    // this.hideHistory = this.hideHistory.bind(this);
     this.deletePost = this.deletePost.bind(this);
     this.deleteSignup = this.deleteSignup.bind(this);
     this.showUploader = this.showUploader.bind(this);
@@ -111,37 +113,37 @@ class Signup extends React.Component {
   }
 
   // Open the history modal of the given post
-  showHistory(postId, event) {
-    event.preventDefault();
+  // showHistory(postId, event) {
+  //   event.preventDefault();
 
-    this.api.get('api/v2/events', {
-      filter: {
-        signup_id: this.props.signup_id,
-      },
-    }).then((result) => {
-      this.setState((previousState) => {
-        const newState = { ...previousState };
+  //   this.api.get('api/v2/events', {
+  //     filter: {
+  //       signup_id: this.props.signup_id,
+  //     },
+  //   }).then((result) => {
+  //     this.setState((previousState) => {
+  //       const newState = { ...previousState };
 
-        newState.displayHistoryModal = true;
-        newState.historyModalId = postId;
-        newState.signupEvents = Object.values(result.data);
+  //       newState.displayHistoryModal = true;
+  //       newState.historyModalId = postId;
+  //       newState.signupEvents = Object.values(result.data);
 
-        return newState;
-      });
-    });
-  }
+  //       return newState;
+  //     });
+  //   });
+  // }
 
   // Close the open history modal
-  hideHistory(event) {
-    if (event) {
-      event.preventDefault();
-    }
+  // hideHistory(event) {
+  //   if (event) {
+  //     event.preventDefault();
+  //   }
 
-    this.setState({
-      displayHistoryModal: false,
-      historyModalId: null,
-    });
-  }
+  //   this.setState({
+  //     displayHistoryModal: false,
+  //     historyModalId: null,
+  //   });
+  // }
 
   // Open the uploader modal to upload a new post
   showUploader(campaign, event) {
@@ -362,7 +364,7 @@ class Signup extends React.Component {
 
           <div className="container__block -half">
             <Quantity quantity={signup.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
-
+            {/*
             <div className="container__row">
 
               <a href="#" onClick={e => this.showHistory(signup.signup_id, e)}>Edit | Show History</a>
@@ -380,7 +382,7 @@ class Signup extends React.Component {
                   : null}
               </ModalContainer>
             </div>
-
+            */}
             <div className="container__row">
               <a href="#" onClick={e => this.showUploader(signup, e)}>Upload Photo</a>
 
@@ -414,7 +416,7 @@ class Signup extends React.Component {
           </div>
         </div>
         {
-          map(['pending', 'accepted', 'rejected'], (status, key) => <PostGroup key={key} groupType={status} posts={posts} signup={signup} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.deletePost} />)
+          map(['pending', 'accepted', 'rejected'], (status, key) => <PostGroup key={key} groupType={status} posts={posts} signup={signup} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.deletePost} campaign={campaign} />)
         }
       </div>
     );
