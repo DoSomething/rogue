@@ -80,16 +80,18 @@ class CampaignsController extends Controller
     {
         $campaign = $this->campaignService->find($id);
         $totals = $this->campaignService->getPostTotals($campaign);
+        $env = get_client_environment_vars();
 
-        return view('pages.campaign_single')
-            ->with('state', [
-                'campaign' => $campaign,
-                'initial_posts' => 'accepted',
-                'post_totals' => [
-                    'accepted_count' => $totals->accepted_count,
-                    'pending_count' => $totals->pending_count,
-                    'rejected_count' => $totals->rejected_count,
-                ],
-            ]);
+        return view('pages.campaign_single', [
+            'env' => $env,
+        ])->with('state', [
+            'campaign' => $campaign,
+            'initial_posts' => 'accepted',
+            'post_totals' => [
+                'accepted_count' => $totals->accepted_count,
+                'pending_count' => $totals->pending_count,
+                'rejected_count' => $totals->rejected_count,
+            ],
+        ]);
     }
 }

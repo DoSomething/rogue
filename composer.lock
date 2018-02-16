@@ -137,10 +137,14 @@
                 "sdk"
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2018-02-19T21:11:43+00:00"
 =======
             "time": "2018-02-15T20:17:27+00:00"
 >>>>>>> upgrades gateway version so we canuse PATCH method
+=======
+            "time": "2018-02-16T20:40:39+00:00"
+>>>>>>> gets campaign single page working with feature flag on and off
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -798,6 +802,7 @@
         {
             "name": "dosomething/gateway",
 <<<<<<< HEAD
+<<<<<<< HEAD
             "version": "v1.14.3",
             "source": {
                 "type": "git",
@@ -810,16 +815,24 @@
                 "reference": "0fc282e1369c834eb0f9cd7194c4ff6873266430",
 =======
             "version": "v1.14.2",
+=======
+            "version": "v1.14.3",
+>>>>>>> gets campaign single page working with feature flag on and off
             "source": {
                 "type": "git",
                 "url": "https://github.com/DoSomething/gateway.git",
-                "reference": "265ac056bf72f165cc8185a9110431875ff8578d"
+                "reference": "0fc282e1369c834eb0f9cd7194c4ff6873266430"
             },
             "dist": {
                 "type": "zip",
+<<<<<<< HEAD
                 "url": "https://api.github.com/repos/DoSomething/gateway/zipball/265ac056bf72f165cc8185a9110431875ff8578d",
                 "reference": "265ac056bf72f165cc8185a9110431875ff8578d",
 >>>>>>> upgrades gateway version so we canuse PATCH method
+=======
+                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/0fc282e1369c834eb0f9cd7194c4ff6873266430",
+                "reference": "0fc282e1369c834eb0f9cd7194c4ff6873266430",
+>>>>>>> gets campaign single page working with feature flag on and off
                 "shasum": ""
             },
             "require": {
@@ -868,10 +881,14 @@
             ],
             "description": "Standard PHP API client for DoSomething.org services.",
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2018-02-16T19:23:24+00:00"
 =======
             "time": "2018-01-29T22:15:22+00:00"
 >>>>>>> upgrades gateway version so we canuse PATCH method
+=======
+            "time": "2018-02-16T19:23:24+00:00"
+>>>>>>> gets campaign single page working with feature flag on and off
         },
         {
             "name": "egulias/email-validator",

@@ -134,8 +134,6 @@ class CampaignSingle extends React.Component {
       default: 'accepted',
     };
 
-    console.log('hi');
-
     return (
       <div className="container">
         <div className="container__block">
@@ -190,6 +188,7 @@ class CampaignSingle extends React.Component {
               campaign={campaign}
               signup={signups[posts[this.props.historyModalId].signup_id]}
               signupEvents={this.props.signupEvents}
+              post={posts[this.props.historyModalId]}
             />
             : null}
         </ModalContainer>
