@@ -60,11 +60,14 @@ class CampaignsController extends Controller
         // Get the campaign data
         $campaignData = $this->campaignService->find($campaignId);
 
-        return view('pages.campaign_inbox')
-            ->with('state', [
-                'campaign' => $campaignData,
-                'initial_posts' => 'pending',
-            ]);
+        $env = get_client_environment_vars();
+
+        return view('pages.campaign_inbox', [
+            'env' => $env,
+        ])->with('state', [
+            'campaign' => $campaignData,
+            'initial_posts' => 'pending',
+        ]);
     }
 
     /**

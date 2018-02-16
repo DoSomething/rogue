@@ -51,6 +51,12 @@ class HistoryModal extends React.Component {
     const parsedEvents = ! isEmpty(this.props.signupEvents) ? this.parseEventData(this.props.signupEvents) : null;
     const post = this.props.post;
 
+    if (window.ENV['DS_ENABLE_V3_QUANTITY_SUPPORT']) {
+      var quantity = post.quantity;
+    } else {
+      var quantity = signup.quantity;
+    }
+
     return (
       <div className="modal">
         <a href="#" onClick={this.props.onClose} className="modal-close-button">&times;</a>
@@ -58,7 +64,7 @@ class HistoryModal extends React.Component {
           <h3>Change Quantity</h3>
           <div className="container__block -half">
             <h4>Old Quantity</h4>
-            <p>{post.quantity} {campaign.reportback_info.noun} {campaign.reportback_info.verb}</p>
+            <p>{quantity} {campaign.reportback_info.noun} {campaign.reportback_info.verb}</p>
           </div>
           <div className="container__block -half">
             <h4>New Quantity</h4>

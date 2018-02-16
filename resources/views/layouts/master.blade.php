@@ -42,6 +42,8 @@
         </div>
 
         {{ isset($state) ? scriptify($state) : scriptify() }}
+        {{ isset($env) ? scriptify($env, 'ENV') : scriptify() }}
+
         <script src="{{ elixir('app.js', 'dist') }}"></script>
     </body>
 
