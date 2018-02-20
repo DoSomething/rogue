@@ -14,7 +14,7 @@ class AddSourceDetailsColumnToPosts extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('source_details')->after('source')->nullable()->comment('Extra details about the post source, like newsletter ID');
+            $table->string('source_details')->after('source')->index()->nullable()->comment('Extra details about the post source, like newsletter ID');
         });
     }
 
