@@ -56,6 +56,7 @@ class PostTransformer extends TransformerAbstract
         if (is_staff_user() || auth()->id() === $post->northstar_id) {
             $response['tags'] = $post->tagSlugs();
             $response['source'] = $post->source;
+            $response['source_details'] = $post->source_details;
             $response['remote_addr'] = $post->remote_addr;
             $response['type'] = $post->type;
             $response['action'] = $post->action;

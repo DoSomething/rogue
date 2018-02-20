@@ -103,7 +103,7 @@ class ImportTurboVotePosts implements ShouldQueue
                     if (! $post) {
                         $tvCreatedAtMonth = strtolower(Carbon::parse($record['created-at'])->format('F-Y'));
                         $sourceDetails = isset($referralCodeValues['source_details']) ? $referralCodeValues['source_details'] : null;
-                        $postDetails = $this->extractDetails($record, ['source-details' => $sourceDetails]);
+                        $postDetails = $this->extractDetails($record);
 
                         $postData = [
                             'campaign_id' => $referralCodeValues['campaign_id'],
@@ -112,6 +112,7 @@ class ImportTurboVotePosts implements ShouldQueue
                             'action' => $tvCreatedAtMonth . '-turbovote',
                             'status' => $record['voter-registration-status'],
                             'source' => $referralCodeValues['source'],
+                            'source_details' => $sourceDetails,
                             'details' => $postDetails,
                         ];
 
