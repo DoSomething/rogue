@@ -59,7 +59,6 @@ class CampaignsController extends Controller
     {
         // Get the campaign data
         $campaignData = $this->campaignService->find($campaignId);
-
         $env = get_client_environment_vars();
 
         return view('pages.campaign_inbox', [

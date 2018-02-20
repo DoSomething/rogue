@@ -48,13 +48,15 @@ class SignupsController extends Controller
         $signup = Signup::with('posts')->findOrFail($id);
         $campaign = $this->campaignService->find($signup->campaign_id);
         $user = $this->registrar->find($signup->northstar_id);
+        $env = get_client_environment_vars();
 
-        return view('signups.show', compact('campaign'))
-            ->with('state', [
-                'signup_id' => $signup->id,
-                // @TODO - We could probably grab campaign and user info from API as well.
-                'campaign' => $campaign,
-                'user' => $user->toArray(),
-            ]);
+        return view('signups.show', compact('campaign'), [
+            'env' => $env,
+        ])->with('state', [
+            'signup_id' => $signup->id,
+            // @TODO - We could probably grab campaign and user info from API as well.
+            'campaign' => $campaign,
+            'user' => $user->toArray(),
+        ]);
     }
 }
