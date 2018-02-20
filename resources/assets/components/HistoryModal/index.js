@@ -73,7 +73,7 @@ class HistoryModal extends React.Component {
           <div className="container__block -half">
             <h4>New Quantity</h4>
             <div className="form-item">
-              <input type="text" onChange={this.onUpdate} className="text-field" placeholder="Enter # here" />
+              <input type="text" onChange={this.onUpdate} className="text-field" placeholder="Enter # here" name="new-quantity"/>
             </div>
           </div>
           <h3>📖 History 📖</h3>
