@@ -51,6 +51,9 @@ class ImportTurboVotePosts implements ShouldQueue
      */
     public function handle(SignupService $signupService, PostService $postService)
     {
+        // A little hack to Make sure we can run through large files.
+        set_time_limit(120);
+
         // Get the file from storage based on path.
         $file = Storage::get($this->filepath);
 
