@@ -67,7 +67,12 @@ class ImportTurboVotePosts implements ShouldQueue
             if ($referralCode) {
                 $referralCodeValues = $this->parseReferralCode(explode(',', $referralCode));
 
-                if (isset($referralCodeValues['northstar_id']) && isset($referralCodeValues['campaign_id']) && isset($referralCodeValues['campaign_run_id'])) {
+                // Fall back to the Grab The Mic campaign (campaign_id: 8017, campaign_run_id: 8022)
+                // if these keys are not present.
+                $referralCodeValues['campaign_id'] = ! isset($referralCodeValues['campaign_id']) ? '8017' : $referralCodeValues['campaign_id'];
+                $referralCodeValues['campaign_run_id'] = ! isset($referralCodeValues['campaign_run_id']) ? '8022' : $referralCodeValues['campaign_run_id'];
+
+                if (isset($referralCodeValues['northstar_id'])) {
                     // Check if a signup exists already.
                     $signup = Signup::where([
                         'northstar_id' => $referralCodeValues['northstar_id'],
@@ -85,6 +90,7 @@ class ImportTurboVotePosts implements ShouldQueue
 
                         $signup = $signupService->create($signupData, $referralCodeValues['northstar_id']);
                     }
+
                     // Check if a post already exists.
                     $post = Post::where([
                         'signup_id' => $signup->id,
@@ -93,6 +99,7 @@ class ImportTurboVotePosts implements ShouldQueue
                         'type' => 'voter-reg',
                     ])->first();
 
+                    // If the post doesn't exist, create one.
                     if (! $post) {
                         $tvCreatedAtMonth = strtolower(Carbon::parse($record['created-at'])->format('F-Y'));
                         $sourceDetails = isset($referralCodeValues['source_details']) ? $referralCodeValues['source_details'] : null;
