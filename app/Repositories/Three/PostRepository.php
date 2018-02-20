@@ -89,6 +89,7 @@ class PostRepository
             'caption' => isset($data['caption']) ? $data['caption'] : null,
             'status' => 'pending',
             'source' => token()->client(),
+            'source_details' => isset($data['source_details']) ? $data['source_details'] : null,
             'details' => isset($data['details']) ? $data['details'] : null,
             'remote_addr' => request()->ip(),
         ]);
