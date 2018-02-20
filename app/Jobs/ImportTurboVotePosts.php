@@ -51,6 +51,9 @@ class ImportTurboVotePosts implements ShouldQueue
      */
     public function handle(SignupService $signupService, PostService $postService)
     {
+        // A little hack to Make sure we can run through large files.
+        set_time_limit(120);
+
         // Get the file from storage based on path.
         $file = Storage::get($this->filepath);
 
@@ -60,7 +63,7 @@ class ImportTurboVotePosts implements ShouldQueue
         $records = $csv->getRecords();
 
         foreach ($records as $record) {
-            info('Importing record ' . $record['id'], ['record' => $record]);
+            info('Importing record ' . $record['id']);
 
             $referralCode = $record['referral-code'];
 
