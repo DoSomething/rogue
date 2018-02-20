@@ -46,8 +46,11 @@ class CampaignsController extends Controller
 
         $causes = $campaigns ? $this->campaignService->groupByCause($campaigns) : null;
 
-        return view('pages.campaign_overview')
-            ->with('state', $causes);
+        $env = get_client_environment_vars();
+
+        return view('pages.campaign_overview', [
+            'env' => $env,
+        ])->with('state', $causes);
     }
 
     /**
