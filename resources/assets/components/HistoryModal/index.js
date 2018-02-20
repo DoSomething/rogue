@@ -15,6 +15,7 @@ class HistoryModal extends React.Component {
     };
 
     this.onUpdate = this.onUpdate.bind(this);
+    // @TODO: add this back in when we enable this function.
     // this.parseEventData = this.parseEventData.bind(this);
   }
 
@@ -22,6 +23,7 @@ class HistoryModal extends React.Component {
     this.setState({ quantity: event.target.value });
   }
 
+  // @TODO: add this back in once we've updated the events system.
   // parseEventData(events) {
   //   const eventsWithChange = [];
 
@@ -76,7 +78,7 @@ class HistoryModal extends React.Component {
           </div>
           <h3>📖 History 📖</h3>
           <p> <em>We're making some edits to the events log - it'll be back soon!</em> </p>
-        {/*
+        {/* @TODO: add this back in when we've updated the events system and are ready to show events log.
           <div className="container">
             { ! isEmpty(parsedEvents) ?
               <div>

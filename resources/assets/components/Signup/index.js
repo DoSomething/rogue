@@ -9,6 +9,7 @@ import Post from '../Post';
 import Empty from '../Empty';
 import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
+// @TODO: add this back in when we are ready to show history modal.
 // import HistoryModal from '../HistoryModal';
 import UploaderModal from '../UploaderModal';
 import ModalContainer from '../ModalContainer';
@@ -81,6 +82,7 @@ class Signup extends React.Component {
     this.updatePost = this.updatePost.bind(this);
     this.updateTag = this.updateTag.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
+    // @TODO: add this back in when we are ready to show history modal.
     // this.showHistory = this.showHistory.bind(this);
     // this.hideHistory = this.hideHistory.bind(this);
     this.deletePost = this.deletePost.bind(this);
@@ -112,6 +114,7 @@ class Signup extends React.Component {
     }));
   }
 
+  // @TODO: add this back in when we are ready to show history modal.
   // Open the history modal of the given post
   // showHistory(postId, event) {
   //   event.preventDefault();
@@ -364,7 +367,7 @@ class Signup extends React.Component {
 
           <div className="container__block -half">
             <Quantity quantity={signup.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
-            {/*
+            {/* @TODO: add this back in when we're ready to show history modal.
             <div className="container__row">
 
               <a href="#" onClick={e => this.showHistory(signup.signup_id, e)}>Edit | Show History</a>
