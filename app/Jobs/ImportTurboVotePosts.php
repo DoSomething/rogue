@@ -63,7 +63,7 @@ class ImportTurboVotePosts implements ShouldQueue
         $records = $csv->getRecords();
 
         foreach ($records as $record) {
-            info('Importing record ' . $record['id'], ['record' => $record]);
+            info('Importing record ' . $record['id']);
 
             $referralCode = $record['referral-code'];
 
