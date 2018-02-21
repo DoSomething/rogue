@@ -46,9 +46,11 @@ class CampaignsController extends Controller
 
         $causes = $campaigns ? $this->campaignService->groupByCause($campaigns) : null;
 
+        // @TODO: delete this once we support quantity on the post.
         $env = get_client_environment_vars();
 
         return view('pages.campaign_overview', [
+            // @TODO: delete this once we support quantity on the post.
             'env' => $env,
         ])->with('state', $causes);
     }
@@ -62,9 +64,12 @@ class CampaignsController extends Controller
     {
         // Get the campaign data
         $campaignData = $this->campaignService->find($campaignId);
+
+        // @TODO: delete this once we support quantity on the post.
         $env = get_client_environment_vars();
 
         return view('pages.campaign_inbox', [
+            // @TODO: delete this once we support quantity on the post.
             'env' => $env,
         ])->with('state', [
             'campaign' => $campaignData,
@@ -82,9 +87,12 @@ class CampaignsController extends Controller
     {
         $campaign = $this->campaignService->find($id);
         $totals = $this->campaignService->getPostTotals($campaign);
+
+        // @TODO: delete this once we support quantity on the post.
         $env = get_client_environment_vars();
 
         return view('pages.campaign_single', [
+            // @TODO: delete this once we support quantity on the post.
             'env' => $env,
         ])->with('state', [
             'campaign' => $campaign,

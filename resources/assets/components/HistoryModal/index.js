@@ -53,6 +53,7 @@ class HistoryModal extends React.Component {
     // const parsedEvents = ! isEmpty(this.props.signupEvents) ? this.parseEventData(this.props.signupEvents) : null;
     const post = this.props.post;
 
+    // @TODO: delete check this once we support quantity on the post.
     if (window.ENV['DS_ENABLE_V3_QUANTITY_SUPPORT']) {
       var quantity = post.quantity;
       var postOrSignupToUpdate = post;

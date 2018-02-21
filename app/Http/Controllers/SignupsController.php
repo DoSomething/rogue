@@ -48,9 +48,12 @@ class SignupsController extends Controller
         $signup = Signup::with('posts')->findOrFail($id);
         $campaign = $this->campaignService->find($signup->campaign_id);
         $user = $this->registrar->find($signup->northstar_id);
+
+        // @TODO: delete this once we support quantity on the post.
         $env = get_client_environment_vars();
 
         return view('signups.show', compact('campaign'), [
+            // @TODO: delete this once we support quantity on the post.
             'env' => $env,
         ])->with('state', [
             'signup_id' => $signup->id,

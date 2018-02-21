@@ -60,6 +60,7 @@ class Post extends React.Component {
     const signup = this.props.signup;
     const campaign = this.props.campaign;
 
+    // @TODO: delete this check once we support quantity on the post.
     if (window.ENV['DS_ENABLE_V3_QUANTITY_SUPPORT']) {
       var quantity = post.quantity;
     } else {

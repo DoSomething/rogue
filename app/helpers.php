@@ -103,6 +103,7 @@ function is_staff_user()
     return false;
 }
 
+// @TODO: delete this once we support quantity on the post.
 /**
  * Get the env vars which are safe for client usage.
  *

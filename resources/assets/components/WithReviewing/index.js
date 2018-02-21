@@ -153,6 +153,7 @@ const reviewComponent = (Component, data) => {
 
     // Update a post's or signup's quantity.
     updateQuantity(postOrSignup, newQuantity) {
+      // @TODO: delete this check once we support quantity on the post.
       // If v3QuantitySupport is true, update individual post's quantity.
       if (window.ENV['DS_ENABLE_V3_QUANTITY_SUPPORT']) {
         // Field to send to /api/v3/posts/:post_id
