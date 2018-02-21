@@ -793,8 +793,6 @@
         },
         {
             "name": "dosomething/gateway",
-<<<<<<< HEAD
-<<<<<<< HEAD
             "version": "v1.14.3",
             "source": {
                 "type": "git",
@@ -805,26 +803,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/DoSomething/gateway/zipball/0fc282e1369c834eb0f9cd7194c4ff6873266430",
                 "reference": "0fc282e1369c834eb0f9cd7194c4ff6873266430",
-=======
-            "version": "v1.14.2",
-=======
-            "version": "v1.14.3",
->>>>>>> gets campaign single page working with feature flag on and off
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DoSomething/gateway.git",
-                "reference": "0fc282e1369c834eb0f9cd7194c4ff6873266430"
-            },
-            "dist": {
-                "type": "zip",
-<<<<<<< HEAD
-                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/265ac056bf72f165cc8185a9110431875ff8578d",
-                "reference": "265ac056bf72f165cc8185a9110431875ff8578d",
->>>>>>> upgrades gateway version so we canuse PATCH method
-=======
-                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/0fc282e1369c834eb0f9cd7194c4ff6873266430",
-                "reference": "0fc282e1369c834eb0f9cd7194c4ff6873266430",
->>>>>>> gets campaign single page working with feature flag on and off
                 "shasum": ""
             },
             "require": {
@@ -872,15 +850,7 @@
                 }
             ],
             "description": "Standard PHP API client for DoSomething.org services.",
-<<<<<<< HEAD
-<<<<<<< HEAD
             "time": "2018-02-16T19:23:24+00:00"
-=======
-            "time": "2018-01-29T22:15:22+00:00"
->>>>>>> upgrades gateway version so we canuse PATCH method
-=======
-            "time": "2018-02-16T19:23:24+00:00"
->>>>>>> gets campaign single page working with feature flag on and off
         },
         {
             "name": "egulias/email-validator",
@@ -5139,7 +5109,6 @@
         },
         {
             "name": "phpspec/prophecy",
-<<<<<<< HEAD
             "version": "1.7.5",
             "source": {
                 "type": "git",
@@ -5150,18 +5119,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpspec/prophecy/zipball/dfd6be44111a7c41c2e884a336cc4f461b3b2401",
                 "reference": "dfd6be44111a7c41c2e884a336cc4f461b3b2401",
-=======
-            "version": "1.7.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "9f901e29c93dae4aa77c0bb161df4276f9c9a1be"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/9f901e29c93dae4aa77c0bb161df4276f9c9a1be",
-                "reference": "9f901e29c93dae4aa77c0bb161df4276f9c9a1be",
->>>>>>> upgrades gateway version so we canuse PATCH method
                 "shasum": ""
             },
             "require": {
@@ -5211,11 +5168,7 @@
                 "spy",
                 "stub"
             ],
-<<<<<<< HEAD
             "time": "2018-02-19T10:16:54+00:00"
-=======
-            "time": "2018-02-11T18:49:29+00:00"
->>>>>>> upgrades gateway version so we canuse PATCH method
         },
         {
             "name": "phpunit/php-code-coverage",
