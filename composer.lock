@@ -136,15 +136,7 @@
                 "s3",
                 "sdk"
             ],
-<<<<<<< HEAD
-<<<<<<< HEAD
             "time": "2018-02-19T21:11:43+00:00"
-=======
-            "time": "2018-02-15T20:17:27+00:00"
->>>>>>> upgrades gateway version so we canuse PATCH method
-=======
-            "time": "2018-02-16T20:40:39+00:00"
->>>>>>> gets campaign single page working with feature flag on and off
         },
         {
             "name": "aws/aws-sdk-php-laravel",

@@ -14,6 +14,7 @@ class HistoryModal extends React.Component {
       quantity: null,
     };
 
+
     this.onUpdate = this.onUpdate.bind(this);
     // @TODO: add this back in when we enable this function.
     // this.parseEventData = this.parseEventData.bind(this);

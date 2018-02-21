@@ -366,8 +366,8 @@ class Signup extends React.Component {
           </div>
 
           <div className="container__block -half">
-            <Quantity quantity={signup.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
             {/* @TODO: add this back in when we're ready to show history modal.
+            <Quantity quantity={signup.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
             <div className="container__row">
 
               <a href="#" onClick={e => this.showHistory(signup.signup_id, e)}>Edit | Show History</a>
