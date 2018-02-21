@@ -20,7 +20,9 @@ class HistoryModal extends React.Component {
   }
 
   onUpdate(event) {
-    this.setState({ quantity: event.target.value });
+    let value =  Number.isInteger(parseInt(event.target.value)) ? event.target.value : null;
+
+    this.setState({ quantity: value });
   }
 
   // @TODO: add this back in once we've updated the events system.
