@@ -4,6 +4,7 @@ namespace Rogue\Console\Commands;
 
 use Rogue\Models\Signup;
 use Illuminate\Console\Command;
+use Rogue\Jobs\SendPostToQuasar;
 
 class PostQuantity extends Command
 {
@@ -94,6 +95,7 @@ class PostQuantity extends Command
             $mostRecentAcceptedPost = $acceptedPosts->first();
             $mostRecentAcceptedPost->quantity = $quantity;
             $mostRecentAcceptedPost->save();
+            SendPostToQuasar::dispatch($mostRecentAcceptedPost);
             usleep($sleeptime);
         }
         // If no accepted posts, put quantity on most recent post (based on creation)
@@ -101,6 +103,7 @@ class PostQuantity extends Command
             $mostRecentPost = $posts->sortByDesc('created_at')->first();
             $mostRecentPost->quantity = $quantity;
             $mostRecentPost->save();
+            SendPostToQuasar::dispatch($mostRecentPost);
             usleep($sleeptime);
         }
         // Put quantity of 0 on all other posts under this signup
@@ -108,6 +111,7 @@ class PostQuantity extends Command
             if (is_null($post->quantity)) {
                 $post->quantity = 0;
                 $post->save();
+                SendPostToQuasar::dispatch($post);
                 usleep($sleeptime);
             }
         }
