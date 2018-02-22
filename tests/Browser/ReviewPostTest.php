@@ -37,11 +37,11 @@ class ReviewPostTest extends DuskTestCase
                     ->waitFor('@acceptButton')
                     ->assertSeeIn('.disabled', 'Tags')
                     ->press('Accept')
-                    ->waitFor('@activeAcceptButton')
+                    ->waitFor('@activeAcceptButton', 10)
                     ->assertSeeIn('@activeAcceptButton', 'Accept')
                     ->assertSeeIn('.enabled', 'Tags')
                     ->press('Good Photo')
-                    ->waitFor('@activeTagButton')
+                    ->waitFor('@activeTagButton', 10)
                     ->assertSeeIn('@activeTagButton', 'Good Photo');
         });
     }
@@ -71,11 +71,11 @@ class ReviewPostTest extends DuskTestCase
                     ->waitFor('@rejectButton')
                     ->assertSeeIn('.disabled', 'Tags')
                     ->press('Reject')
-                    ->waitFor('@activeRejectButton')
+                    ->waitFor('@activeRejectButton', 10)
                     ->assertSeeIn('@activeRejectButton', 'Reject')
                     ->assertSeeIn('.enabled', 'Tags')
                     ->press('Test')
-                    ->waitFor('@activeTagButton')
+                    ->waitFor('@activeTagButton', 10)
                     ->assertSeeIn('@activeTagButton', 'Test');
         });
     }
@@ -104,7 +104,7 @@ class ReviewPostTest extends DuskTestCase
                     ->on(new CampaignInboxPage($signup->campaign_id))
                     ->waitFor('@rejectButton')
                     ->press('Reject')
-                    ->waitFor('@activeRejectButton')
+                    ->waitFor('@activeRejectButton', 10)
                     ->assertSeeIn('@activeRejectButton', 'Reject')
                     ->assertDontSee('@tagButton', 'Good Photo')
                     ->press('Accept')
