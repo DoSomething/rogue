@@ -46,13 +46,8 @@ class CampaignsController extends Controller
 
         $causes = $campaigns ? $this->campaignService->groupByCause($campaigns) : null;
 
-        // @TODO: delete this once we support quantity on the post.
-        $env = get_client_environment_vars();
-
-        return view('pages.campaign_overview', [
-            // @TODO: delete this once we support quantity on the post.
-            'env' => $env,
-        ])->with('state', $causes);
+        return view('pages.campaign_overview')
+            ->with('state', $causes);
     }
 
     /**
@@ -65,16 +60,11 @@ class CampaignsController extends Controller
         // Get the campaign data
         $campaignData = $this->campaignService->find($campaignId);
 
-        // @TODO: delete this once we support quantity on the post.
-        $env = get_client_environment_vars();
-
-        return view('pages.campaign_inbox', [
-            // @TODO: delete this once we support quantity on the post.
-            'env' => $env,
-        ])->with('state', [
-            'campaign' => $campaignData,
-            'initial_posts' => 'pending',
-        ]);
+        return view('pages.campaign_inbox')
+            ->with('state', [
+                'campaign' => $campaignData,
+                'initial_posts' => 'pending',
+            ]);
     }
 
     /**
@@ -88,20 +78,15 @@ class CampaignsController extends Controller
         $campaign = $this->campaignService->find($id);
         $totals = $this->campaignService->getPostTotals($campaign);
 
-        // @TODO: delete this once we support quantity on the post.
-        $env = get_client_environment_vars();
-
-        return view('pages.campaign_single', [
-            // @TODO: delete this once we support quantity on the post.
-            'env' => $env,
-        ])->with('state', [
-            'campaign' => $campaign,
-            'initial_posts' => 'accepted',
-            'post_totals' => [
-                'accepted_count' => $totals->accepted_count,
-                'pending_count' => $totals->pending_count,
-                'rejected_count' => $totals->rejected_count,
-            ],
-        ]);
+        return view('pages.campaign_single')
+            ->with('state', [
+                'campaign' => $campaign,
+                'initial_posts' => 'accepted',
+                'post_totals' => [
+                    'accepted_count' => $totals->accepted_count,
+                    'pending_count' => $totals->pending_count,
+                    'rejected_count' => $totals->rejected_count,
+                ],
+            ]);
     }
 }

@@ -151,52 +151,25 @@ const reviewComponent = (Component, data) => {
       });
     }
 
-    // Update a post's or signup's quantity.
-    updateQuantity(postOrSignup, newQuantity) {
-      // @TODO: delete this check once we support quantity on the post.
-      // If v3QuantitySupport is true, update individual post's quantity.
-      if (window.ENV['DS_ENABLE_V3_QUANTITY_SUPPORT']) {
-        // Field to send to /api/v3/posts/:post_id
-        const field = {
-          quantity: parseInt(newQuantity),
-        };
+    // Update a post's quantity.
+    updateQuantity(post, newQuantity) {
+      // Field to send to /api/v3/posts/:post_id
+      const field = {
+        quantity: parseInt(newQuantity),
+      };
 
-        // Make API request to Rogue to update the quantity on the backend
-        let request = this.api.patch('api/v3/posts/'.concat(postOrSignup['id']), field);
+      // Make API request to Rogue to update the quantity on the backend
+      let request = this.api.patch('api/v3/posts/'.concat(post['id']), field);
 
-        request.then((result) => {
-          // Update the state
-          this.setState((previousState) => {
-            const newState = {...previousState};
-            newState.posts[postOrSignup['id']].quantity = result.data['quantity'];
+      request.then((result) => {
+        // Update the state
+        this.setState((previousState) => {
+          const newState = {...previousState};
+          newState.posts[post['id']].quantity = result.data['quantity'];
 
-            return newState;
-          });
+          return newState;
         });
-      // Otherwise, update the signup's quantity.
-      } else {
-        // Fields to send to /posts
-        const fields = {
-          northstar_id: postOrSignup.northstar_id,
-          campaign_id: postOrSignup.campaign_id,
-          campaign_run_id: postOrSignup.campaign_run_id,
-          quantity: newQuantity,
-        };
-
-        // Make API request to Rogue to update the quantity on the backend
-        let request = this.api.post('posts', fields);
-
-        request.then((result) => {
-          // Update the state
-          this.setState((previousState) => {
-            const newState = {...previousState};
-
-            newState.signups[postOrSignup.signup_id].quantity = result.quantity;
-
-            return newState;
-          });
-        });
-      }
+      });
 
       // Close the modal
       this.hideHistory();

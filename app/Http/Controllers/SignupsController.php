@@ -49,17 +49,12 @@ class SignupsController extends Controller
         $campaign = $this->campaignService->find($signup->campaign_id);
         $user = $this->registrar->find($signup->northstar_id);
 
-        // @TODO: delete this once we support quantity on the post.
-        $env = get_client_environment_vars();
-
-        return view('signups.show', compact('campaign'), [
-            // @TODO: delete this once we support quantity on the post.
-            'env' => $env,
-        ])->with('state', [
-            'signup_id' => $signup->id,
-            // @TODO - We could probably grab campaign and user info from API as well.
-            'campaign' => $campaign,
-            'user' => $user->toArray(),
-        ]);
+        return view('signups.show', compact('campaign'))
+            ->with('state', [
+                'signup_id' => $signup->id,
+                // @TODO - We could probably grab campaign and user info from API as well.
+                'campaign' => $campaign,
+                'user' => $user->toArray(),
+            ]);
     }
 }

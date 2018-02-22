@@ -48,8 +48,6 @@ class CampaignInboxPage extends Page
             '@activeRejectButton' => '.button.-outlined-button.-rejected.is-selected',
             '@activeTagButton' => '.tag.is-active',
             '@tagButton' => '.tag',
-            '@quantityBox' => '.quantity',
-            '@newQuantityForm' => 'new-quantity',
         ];
     }
 }

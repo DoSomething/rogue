@@ -60,13 +60,6 @@ class Post extends React.Component {
     const signup = this.props.signup;
     const campaign = this.props.campaign;
 
-    // @TODO: delete this check once we support quantity on the post.
-    if (window.ENV['DS_ENABLE_V3_QUANTITY_SUPPORT']) {
-      var quantity = post.quantity;
-    } else {
-      var quantity = signup.quantity;
-    }
-
     return (
       <div className="post container__row">
         {/* Post Images */}
@@ -102,8 +95,8 @@ class Post extends React.Component {
         {/* User and Post information */}
         <div className="container__block -third">
           <UserInformation user={user} linkSignup={signup.signup_id}>
-            {quantity && this.props.showQuantity ?
-              <Quantity quantity={quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
+            {post.quantity && this.props.showQuantity ?
+              <Quantity quantity={post.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
               : null}
 
             {this.props.allowHistory ?

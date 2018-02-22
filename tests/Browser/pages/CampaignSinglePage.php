@@ -46,8 +46,6 @@ class CampaignSinglePage extends Page
             '@unactiveAcceptButton' => 'button.-outlined-button.-accepted',
             '@activeRejectButton' => '.button.-outlined-button.-rejected.is-selected',
             '@activeTagButton' => '.tag.is-active',
-            '@quantityBox' => '.quantity',
-            '@newQuantityForm' => 'new-quantity',
         ];
     }
 }

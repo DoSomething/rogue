@@ -56,15 +56,6 @@ class HistoryModal extends React.Component {
     // const parsedEvents = ! isEmpty(this.props.signupEvents) ? this.parseEventData(this.props.signupEvents) : null;
     const post = this.props.post;
 
-    // @TODO: delete check this once we support quantity on the post.
-    if (window.ENV['DS_ENABLE_V3_QUANTITY_SUPPORT']) {
-      var quantity = post.quantity;
-      var postOrSignupToUpdate = post;
-    } else {
-      var quantity = signup.quantity;
-      var postOrSignupToUpdate = signup;
-    }
-
     return (
       <div className="modal">
         <a href="#" onClick={this.props.onClose} className="modal-close-button">&times;</a>
@@ -72,12 +63,12 @@ class HistoryModal extends React.Component {
           <h3>Change Quantity</h3>
           <div className="container__block -half">
             <h4>Old Quantity</h4>
-            <p>{quantity} {campaign.reportback_info.noun} {campaign.reportback_info.verb}</p>
+            <p>{post.quantity} {campaign.reportback_info.noun} {campaign.reportback_info.verb}</p>
           </div>
           <div className="container__block -half">
             <h4>New Quantity</h4>
             <div className="form-item">
-              <input type="text" onChange={this.onUpdate} className="text-field" placeholder="Enter # here" name="new-quantity"/>
+              <input type="text" onChange={this.onUpdate} className="text-field" placeholder="Enter # here"/>
             </div>
           </div>
           <h3>📖 History 📖</h3>
@@ -95,7 +86,7 @@ class HistoryModal extends React.Component {
           </div>
         */}
         </div>
-        <button className="button -history" disabled={! this.state.quantity} onClick={() => this.props.onUpdate(postOrSignupToUpdate, this.state.quantity)}>Save</button>
+        <button className="button -history" disabled={! this.state.quantity} onClick={() => this.props.onUpdate(post, this.state.quantity)}>Save</button>
       </div>
     );
   }

@@ -102,16 +102,3 @@ function is_staff_user()
 
     return false;
 }
-
-// @TODO: delete this once we support quantity on the post.
-/**
- * Get the env vars which are safe for client usage.
- *
- * @return array
- */
-function get_client_environment_vars()
-{
-    return [
-        'DS_ENABLE_V3_QUANTITY_SUPPORT' => config('features.v3QuantitySupport'),
-    ];
-}
