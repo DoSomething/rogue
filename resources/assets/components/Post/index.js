@@ -95,7 +95,7 @@ class Post extends React.Component {
         {/* User and Post information */}
         <div className="container__block -third">
           <UserInformation user={user} linkSignup={signup.signup_id}>
-            {post.quantity && this.props.showQuantity ?
+            {this.props.showQuantity ?
               <Quantity quantity={post.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
               : null}
 
