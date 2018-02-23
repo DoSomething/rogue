@@ -188,6 +188,7 @@ class CampaignSingle extends React.Component {
               campaign={campaign}
               signup={signups[posts[this.props.historyModalId].signup_id]}
               signupEvents={this.props.signupEvents}
+              post={posts[this.props.historyModalId]}
             />
             : null}
         </ModalContainer>

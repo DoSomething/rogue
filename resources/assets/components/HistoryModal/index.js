@@ -14,42 +14,47 @@ class HistoryModal extends React.Component {
       quantity: null,
     };
 
+
     this.onUpdate = this.onUpdate.bind(this);
-    this.parseEventData = this.parseEventData.bind(this);
+    // @TODO: add this back in when we enable this function.
+    // this.parseEventData = this.parseEventData.bind(this);
   }
 
   onUpdate(event) {
-    this.setState({ quantity: event.target.value });
+    let value =  Number.isInteger(parseInt(event.target.value)) ? event.target.value : null;
+
+    this.setState({ quantity: value });
   }
 
-  parseEventData(events) {
-    const eventsWithChange = [];
+  // @TODO: add this back in once we've updated the events system.
+  // parseEventData(events) {
+  //   const eventsWithChange = [];
 
-    for (let i = 0; i < events.length; i++) {
-      const current = events[i];
-      const next = events[i + 1];
+  //   for (let i = 0; i < events.length; i++) {
+  //     const current = events[i];
+  //     const next = events[i + 1];
 
-      if (next) {
-        if (current.content.quantity != next.content.quantity || current.content.why_participated != next.content.why_participated || current.content.quantity_pending != next.content.quantity_pending) {
-          // If there is a difference in the record, add to the log.
-          eventsWithChange.push(current);
-        }
-      }
-    }
+  //     if (next) {
+  //       if (current.content.quantity != next.content.quantity || current.content.why_participated != next.content.why_participated || current.content.quantity_pending != next.content.quantity_pending) {
+  //         // If there is a difference in the record, add to the log.
+  //         eventsWithChange.push(current);
+  //       }
+  //     }
+  //   }
 
-    // Always include the first event in the response
-    // so there is something in the table.
-    // @TODO: change this when we start paginating.
-    eventsWithChange.push(events[events.length - 1]);
+  //   // Always include the first event in the response
+  //   // so there is something in the table.
+  //   // @TODO: change this when we start paginating.
+  //   eventsWithChange.push(events[events.length - 1]);
 
-    return eventsWithChange;
-  }
+  //   return eventsWithChange;
+  // }
 
   render() {
-    console.log('history');
     const signup = this.props.signup;
     const campaign = this.props.campaign;
-    const parsedEvents = ! isEmpty(this.props.signupEvents) ? this.parseEventData(this.props.signupEvents) : null;
+    // const parsedEvents = ! isEmpty(this.props.signupEvents) ? this.parseEventData(this.props.signupEvents) : null;
+    const post = this.props.post;
 
     return (
       <div className="modal">
@@ -58,16 +63,17 @@ class HistoryModal extends React.Component {
           <h3>Change Quantity</h3>
           <div className="container__block -half">
             <h4>Old Quantity</h4>
-            <p>{signup.quantity} {campaign.reportback_info.noun} {campaign.reportback_info.verb}</p>
+            <p>{post.quantity} {campaign.reportback_info.noun} {campaign.reportback_info.verb}</p>
           </div>
           <div className="container__block -half">
             <h4>New Quantity</h4>
             <div className="form-item">
-              <input type="text" onChange={this.onUpdate} className="text-field" placeholder="Enter # here" />
+              <input type="text" onChange={this.onUpdate} className="text-field" placeholder="Enter # here"/>
             </div>
           </div>
-
           <h3>📖 History 📖</h3>
+          <p> <em>We're making some edits to the events log - it'll be back soon!</em> </p>
+        {/* @TODO: add this back in when we've updated the events system and are ready to show events log.
           <div className="container">
             { ! isEmpty(parsedEvents) ?
               <div>
@@ -78,8 +84,9 @@ class HistoryModal extends React.Component {
               <Empty header="No History To Show!" copy="Sorry, but we don't have any history for this signup."/>
             }
           </div>
+        */}
         </div>
-        <button className="button -history" disabled={! this.state.quantity} onClick={() => this.props.onUpdate(signup, this.state.quantity)}>Save</button>
+        <button className="button -history" disabled={! this.state.quantity} onClick={() => this.props.onUpdate(post, this.state.quantity)}>Save</button>
       </div>
     );
   }

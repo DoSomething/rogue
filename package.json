@@ -27,16 +27,16 @@
     }
   },
   "dependencies": {
-    "@dosomething/forge": "^6.8.0",
-    "@dosomething/gateway": "^1.1.5",
+    "@dosomething/forge": "^6.8.1",
+    "@dosomething/gateway": "^1.1.6",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
     "dosomething-modal": "^0.3.4",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.5",
     "prop-types": "^15.6.0",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
-    "sinon": "^4.2.1"
+    "sinon": "^4.3.0"
   },
   "devDependencies": {
     "@dosomething/babel-config": "^2.0.1",
@@ -50,6 +50,6 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.2",
     "react-test-renderer": "^15.6.1",
-    "webpack": "^3.10.0"
+    "webpack": "^3.11.0"
   }
 }

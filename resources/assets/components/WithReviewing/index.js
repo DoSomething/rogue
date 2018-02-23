@@ -14,7 +14,9 @@ const reviewComponent = (Component, data) => {
         loading: true,
       };
 
-      this.api = new RogueClient();
+      this.api = new RogueClient(window.location.origin, {
+        headers: { 'Authorization' : `Bearer ${window.AUTH}`}
+      });
       this.updatePost = this.updatePost.bind(this);
       this.updateTag = this.updateTag.bind(this);
       this.updateQuantity = this.updateQuantity.bind(this);
@@ -149,25 +151,21 @@ const reviewComponent = (Component, data) => {
       });
     }
 
-    // Update a signups quanity.
-    updateQuantity(signup, newQuantity) {
-      // Fields to send to /posts
-      const fields = {
-        northstar_id: signup.northstar_id,
-        campaign_id: signup.campaign_id,
-        campaign_run_id: signup.campaign_run_id,
-        quantity: newQuantity,
+    // Update a post's quantity.
+    updateQuantity(post, newQuantity) {
+      // Field to send to /api/v3/posts/:post_id
+      const field = {
+        quantity: parseInt(newQuantity),
       };
 
       // Make API request to Rogue to update the quantity on the backend
-      let request = this.api.post('posts', fields);
+      let request = this.api.patch(`api/v3/posts/${post['id']}`, field);
 
       request.then((result) => {
         // Update the state
         this.setState((previousState) => {
           const newState = {...previousState};
-
-          newState.signups[signup.signup_id].quantity = result.quantity;
+          newState.posts[post['id']].quantity = result.data['quantity'];
 
           return newState;
         });
