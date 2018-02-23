@@ -5,6 +5,7 @@ namespace Rogue\Services\Three;
 use Rogue\Models\Post;
 use Rogue\Jobs\SendPostToBlink;
 use Rogue\Jobs\SendPostToQuasar;
+use Rogue\Jobs\SendReviewedPostToCIO;
 use Rogue\Jobs\SendDeletedPostToQuasar;
 use Rogue\Repositories\Three\PostRepository;
 
@@ -95,6 +96,7 @@ class PostService
         $post = $this->repository->reviews($post, $data, $comment);
 
         SendPostToQuasar::dispatch($post);
+        SendReviewedPostToCIO::dispatch($post);
 
         // Log that a post was reviewed.
         info('post_reviewed', [
