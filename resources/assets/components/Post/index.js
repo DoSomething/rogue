@@ -59,7 +59,7 @@ class Post extends React.Component {
     const user = this.props.user ? this.props.user : null;
     const signup = this.props.signup;
     const campaign = this.props.campaign;
-    let quantity = post.quantity != null ? post.quantity : 0;
+    const quantity = post.quantity != null ? post.quantity : 0;
 
     return (
       <div className="post container__row">
