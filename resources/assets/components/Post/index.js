@@ -59,6 +59,7 @@ class Post extends React.Component {
     const user = this.props.user ? this.props.user : null;
     const signup = this.props.signup;
     const campaign = this.props.campaign;
+    let quantity = post.quantity != null ? post.quantity : 0;
 
     return (
       <div className="post container__row">
@@ -96,7 +97,7 @@ class Post extends React.Component {
         <div className="container__block -third">
           <UserInformation user={user} linkSignup={signup.signup_id}>
             {this.props.showQuantity ?
-              <Quantity quantity={post.quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
+              <Quantity quantity={quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
               : null}
 
             {this.props.allowHistory ?
