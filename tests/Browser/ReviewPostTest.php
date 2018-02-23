@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 namespace Tests\Browser;
 
@@ -126,3 +126,4 @@ class ReviewPostTest extends DuskTestCase
         return $post;
     }
 }
+ -->
