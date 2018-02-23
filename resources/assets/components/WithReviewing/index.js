@@ -159,7 +159,7 @@ const reviewComponent = (Component, data) => {
       };
 
       // Make API request to Rogue to update the quantity on the backend
-      let request = this.api.patch('api/v3/posts/'.concat(post['id']), field);
+      let request = this.api.patch(`api/v3/posts/${post['id']}`, field);
 
       request.then((result) => {
         // Update the state
