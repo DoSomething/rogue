@@ -4,6 +4,8 @@ namespace Tests\Http\Three;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
+use Illuminate\Support\Facades\Bus;
+use Rogue\Jobs\SendReviewedPostToCustomerIo;
 
 class ReviewsTest extends TestCase
 {
@@ -15,6 +17,8 @@ class ReviewsTest extends TestCase
      */
     public function testPostingASingleReview()
     {
+        Bus::fake();
+
         // Create a post.
         $northstarId = $this->faker->northstar_id;
         $post = factory(Post::class)->create();
@@ -26,6 +30,7 @@ class ReviewsTest extends TestCase
         ]);
 
         $response->assertStatus(201);
+        Bus::assertDispatched(SendReviewedPostToCustomerIo::class);
 
         // Make sure the post status is updated & a review is created.
         $this->assertEquals('accepted', $post->fresh()->status);

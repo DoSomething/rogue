@@ -8,6 +8,7 @@ use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Repositories\PostRepository;
 use Rogue\Jobs\SendDeletedPostToQuasar;
+use Rogue\Jobs\SendReviewedPostToCustomerIo;
 
 class PostService
 {
@@ -70,6 +71,7 @@ class PostService
         $reviewedPost = $this->repository->reviews($data);
 
         SendPostToQuasar::dispatch($reviewedPost);
+        SendReviewedPostToCustomerIo::dispatch($reviewedPost);
 
         // Log that a post was reviewed.
         info('post_reviewed', [
