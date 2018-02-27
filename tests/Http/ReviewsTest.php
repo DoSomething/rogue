@@ -5,6 +5,8 @@ namespace Tests\Http;
 use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\User;
+use Illuminate\Support\Facades\Bus;
+use Rogue\Jobs\SendReviewedPostToCIO;
 
 class ReviewsTest extends TestCase
 {
@@ -16,6 +18,8 @@ class ReviewsTest extends TestCase
      */
     public function testUpdatingASingleReview()
     {
+        Bus::fake();
+
         $this->mockTime('8/3/2017 17:02:00');
 
         // Create a post.
@@ -28,6 +32,7 @@ class ReviewsTest extends TestCase
         ]);
 
         $response->assertStatus(201);
+        Bus::assertDispatched(SendReviewedPostToCIO::class);
 
         // Make sure the post status is updated & a review is created.
         $this->assertEquals('accepted', $post->fresh()->status);
