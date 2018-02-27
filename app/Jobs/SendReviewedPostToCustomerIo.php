@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class SendReviewedPostToCIO implements ShouldQueue
+class SendReviewedPostToCustomerIo implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -42,6 +42,7 @@ class SendReviewedPostToCIO implements ShouldQueue
 
         // Send to Quasar
         $shouldSendToCIO = config('features.blink');
+
         if ($shouldSendToCIO) {
             gateway('blink')->post('v1/events/user-signup-post-review', $payload);
         }
