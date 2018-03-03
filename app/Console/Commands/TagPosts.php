@@ -2,8 +2,8 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Post;
 use Rogue\Models\Tag;
+use Rogue\Models\Post;
 use Illuminate\Console\Command;
 
 class TagPosts extends Command
@@ -44,8 +44,7 @@ class TagPosts extends Command
         $posts = Post::find($postIds);
         $tag = Tag::findOrFail($this->option('tag'));
 
-        foreach ($posts as $post)
-        {
+        foreach ($posts as $post) {
             $post->tag($tag->tag_name);
         }
     }

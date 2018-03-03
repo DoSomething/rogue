@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         Commands\PostCleanup::class,
         Commands\MakeDefaultURLsNull::class,
         Commands\MakeSourceSms::class,
+        Commands\TagPosts::class,
     ];
 
     /**
