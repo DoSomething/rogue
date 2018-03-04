@@ -13,7 +13,7 @@ class TagPosts extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:tagposts {post* : The ids of the posts to update, separate by spaces} {--tag=}';
+    protected $signature = 'rogue:tagposts {--tag=: The id of the tag to use.} {--posts=: Comma-separated list of the post_ids to update.}';
 
     /**
      * The console command description.
@@ -39,13 +39,16 @@ class TagPosts extends Command
      */
     public function handle()
     {
-        $postIds = $this->argument('post');
-
+        $postIds = explode(',', $this->option('posts'));
         $posts = Post::find($postIds);
+
         $tag = Tag::findOrFail($this->option('tag'));
 
-        foreach ($posts as $post) {
-            $post->tag($tag->tag_name);
+        if ($posts) {
+            foreach ($posts as $post) {
+                $this->info('Tagging post_id: '.$post->id.' as '.$tag->tag_slug);
+                $post->tag($tag->tag_name);
+            }
         }
     }
 }
