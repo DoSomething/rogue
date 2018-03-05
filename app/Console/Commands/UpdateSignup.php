@@ -83,13 +83,11 @@ class UpdateSignup extends Command
 
         if ($signups->isNotEmpty()) {
             foreach ($signups as $signup) {
-                $this->info('Updating '.$targetField.' for signup '.$signup->id);
-
                 $this->signups->update($signup, [$targetField => $targetValue]);
             }
         } else {
             $this->error('No signups found with that criteria.');
-            $return;
+            return;
         }
     }
 }
