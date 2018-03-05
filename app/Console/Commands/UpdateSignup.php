@@ -53,11 +53,13 @@ class UpdateSignup extends Command
 
         if (! $targetField) {
             $this->error('No target field specified.');
+
             return;
         }
 
         if (! $targetValue) {
             $this->error('No target value specified.');
+
             return;
         }
 
