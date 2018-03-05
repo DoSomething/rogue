@@ -87,6 +87,7 @@ class UpdateSignup extends Command
             }
         } else {
             $this->error('No signups found with that criteria.');
+
             return;
         }
     }
