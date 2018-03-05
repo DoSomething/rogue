@@ -56,7 +56,7 @@ class UpdateSignup extends Command
             return;
         }
 
-        if (!$targetValue) {
+        if (! $targetValue) {
             $this->error('No target value specified.');
             return;
         }
