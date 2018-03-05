@@ -23,13 +23,22 @@ class UpdateSignup extends Command
     protected $description = 'Update a target field on a set of signups contrained by the provided parameters';
 
     /**
+     * The signup service instance.
+     *
+     * @var Rogue\Services\Three\SignupService
+     */
+    protected $signups;
+
+    /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(SignupService $signups)
     {
         parent::__construct();
+
+        $this->signups = $signups;
     }
 
     /**
@@ -40,5 +49,6 @@ class UpdateSignup extends Command
     public function handle()
     {
         // dd($this->option('target'), $this->option('campaign'), $this->option('campaign_run'), $this->option('date'));
+        dd(get_class($this->signups));
     }
 }
