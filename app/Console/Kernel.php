@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel
         Commands\MakeDefaultURLsNull::class,
         Commands\MakeSourceSms::class,
         Commands\TagPosts::class,
+        Commands\UpdateSignup::class,
     ];
 
     /**
