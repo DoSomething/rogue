@@ -13,7 +13,7 @@ class UpdateSignup extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:updatesignups {--target= : The name of the field to update} {--campaign= : The campaign_id to search for signups under} {--campaign_run= : The campaign_run_id to search for signups under} {--date= : Will be used to search for signups greater than the provided value}';
+    protected $signature = 'rogue:updatesignups {--target= : The name of the field to update} {--targetValue= : The value to update the target with} {--campaign= : The campaign_id to search for signups under} {--campaign_run= : The campaign_run_id to search for signups under} {--date= : Will be used to search for signups greater than the provided value}';
 
     /**
      * The console command description.
@@ -48,7 +48,46 @@ class UpdateSignup extends Command
      */
     public function handle()
     {
-        // dd($this->option('target'), $this->option('campaign'), $this->option('campaign_run'), $this->option('date'));
-        dd(get_class($this->signups));
+        $targetField = $this->option('target') ?? null;
+        $targetValue = $this->option('targetValue') ?? null;
+
+        if (! $targetField) {
+            $this->error('No target field specified.');
+            return;
+        }
+
+        if (!$targetValue) {
+            $this->error('No target value specified.');
+            return;
+        }
+
+        $query = (new Signup)->newQuery();
+
+        if ($this->option('campaign')) {
+            $query = $query->where('campaign_id', $this->option('campaign'));
+        }
+
+        if ($this->option('campaign_run')) {
+            $query = $query->where('campaign_run_id', $this->option('campaign_run'));
+        }
+
+        // Only take in one date and we assume to be looking for things on or after that date.
+        // @TODO - Allow this to be more flexible (i.e accept two bounding dates for date ranges)
+        if ($this->option('date')) {
+            $query = $query->where('created_at', '>=', $this->option('date'));
+        }
+
+        $signups = $query->get();
+
+        if ($signups->isNotEmpty()) {
+            foreach ($signups as $signup) {
+                $this->info('Updating '.$targetField.' for signup '.$signup->id);
+
+                $this->signups->update($signup, [$targetField => $targetValue]);
+            }
+        } else {
+            $this->error('No signups found with that criteria.');
+            $return;
+        }
     }
 }
