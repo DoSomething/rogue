@@ -127,7 +127,7 @@ class PostRepository
             $signup->save();
         }
 
-        if (!config('features.glide')) {
+        if (! config('features.glide')) {
             // Edit the image if there is one
             if (isset($data['file'])) {
                 $this->crop($data, $post->id);
