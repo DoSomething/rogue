@@ -109,9 +109,11 @@ class PostRepository
 
         $post->save();
 
-        // Edit the image if there is one
-        if (isset($data['file'])) {
-            $this->crop($data, $post->id);
+        if (! config('features.glide')) {
+            // Edit the image if there is one
+            if (isset($data['file'])) {
+                $this->crop($data, $post->id);
+            }
         }
 
         // Update the signup's total quantity.
