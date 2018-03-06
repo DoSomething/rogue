@@ -237,6 +237,8 @@ class PostRepository
     /**
      * Crop an image
      *
+     * @TODO - remove when glide is permanent.
+     *
      * @param  int $signupId
      * @return url|null
      */
@@ -244,9 +246,20 @@ class PostRepository
     {
         $editedImage = Image::make($data['file']);
 
-        $editedImage = $editedImage->fit(400)
-            ->encode('jpg', 75);
+        // If glide is off and we have crop values, use those for editing.
+        $cropValues = array_only($data, $this->cropProperties);
 
-        return $this->aws->storeImageData((string) $editedImage, 'edited_' . $postId);
+        if (! config('features.glide') && count($cropValues) > 0) {
+            $editedImage = $editedImage
+                // Intervention Image rotates images counter-clockwise, but we get values assuming clockwise rotation, so we negate it to rotate clockwise.
+                ->rotate(-$cropValues['crop_rotate'])
+                ->crop($cropValues['crop_width'], $cropValues['crop_height'], $cropValues['crop_x'], $cropValues['crop_y'])
+                ->encode('jpg', 75);
+        // Otherwise, use default crop (400x400).
+        } else {
+            $editedImage = $editedImage->fit(400, 400)->encode('jpg', 75);
+        }
+
+        return $this->aws->storeImageData((string)$editedImage, 'edited_' . $postId);
     }
 }
