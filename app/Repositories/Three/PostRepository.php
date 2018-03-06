@@ -109,11 +109,9 @@ class PostRepository
 
         $post->save();
 
-        if (! config('features.glide')) {
-            // Edit the image if there is one
-            if (isset($data['file'])) {
-                $this->crop($data, $post->id);
-            }
+        // Edit the image if there is one
+        if (isset($data['file'])) {
+            $this->crop($data, $post->id);
         }
 
         // Update the signup's total quantity.
@@ -245,15 +243,6 @@ class PostRepository
     protected function crop($data, $postId)
     {
         $editedImage = Image::make($data['file']);
-
-        // If we have crop values, then use 'em.
-        $cropValues = array_only($data, $this->cropProperties);
-        if (count($cropValues) > 0) {
-            $editedImage = $editedImage
-                // Intervention Image rotates images counter-clockwise, but we get values assuming clockwise rotation, so we negate it to rotate clockwise.
-                ->rotate(-$cropValues['crop_rotate'])
-                ->crop($cropValues['crop_width'], $cropValues['crop_height'], $cropValues['crop_x'], $cropValues['crop_y']);
-        }
 
         $editedImage = $editedImage->fit(400)
             ->encode('jpg', 75);
