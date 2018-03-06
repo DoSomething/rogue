@@ -253,9 +253,6 @@ class PostRepository
                 // Intervention Image rotates images counter-clockwise, but we get values assuming clockwise rotation, so we negate it to rotate clockwise.
                 ->rotate(-$cropValues['crop_rotate'])
                 ->crop($cropValues['crop_width'], $cropValues['crop_height'], $cropValues['crop_x'], $cropValues['crop_y']);
-        } else {
-            // Otherwise, try to rotate automatically by EXIF metadata.
-            $editedImage = $editedImage->orientate();
         }
 
         $editedImage = $editedImage->fit(400)
