@@ -269,7 +269,6 @@ class PostRepository
         return Post::with('signup', 'tags')->findOrFail($post->id);
     }
 
-
     /**
      * Crop an image
      *
@@ -285,6 +284,6 @@ class PostRepository
         // use default crop (400x400)
         $editedImage = $editedImage->fit(400, 400)->encode('jpg', 75);
 
-        return $this->aws->storeImageData((string)$editedImage, 'edited_' . $postId);
+        return $this->aws->storeImageData((string) $editedImage, 'edited_' . $postId);
     }
 }
