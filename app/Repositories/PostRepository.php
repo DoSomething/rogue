@@ -65,9 +65,6 @@ class PostRepository
     public function create(array $data, $signupId)
     {
         if (isset($data['file'])) {
-            // Auto-orient the photo by default based on exif data.
-            $image = Image::make($data['file'])->orientate();
-
             $fileUrl = $this->aws->storeImage((string) $image->encode('data-url'), $signupId);
         } else {
             $fileUrl = null;
