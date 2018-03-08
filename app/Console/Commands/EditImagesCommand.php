@@ -49,7 +49,6 @@ class EditImagesCommand extends Command
 
                 try {
                     $editedImage = (string) Image::make($image)
-                        ->orientate()
                         ->fit(400)
                         ->encode('jpg', 75);
 

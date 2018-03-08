@@ -68,7 +68,7 @@ class PostRepository
     {
         if (isset($data['file'])) {
             // Auto-orient the photo by default based on exif data.
-            $image = Image::make($data['file'])->orientate();
+            $image = Image::make($data['file']);
 
             $fileUrl = $this->aws->storeImage((string) $image->encode('data-url'), $signupId);
         } else {
@@ -237,6 +237,8 @@ class PostRepository
     /**
      * Crop an image
      *
+     * @TODO - remove when glide is permanent.
+     *
      * @param  int $signupId
      * @return url|null
      */
@@ -244,20 +246,8 @@ class PostRepository
     {
         $editedImage = Image::make($data['file']);
 
-        // If we have crop values, then use 'em.
-        $cropValues = array_only($data, $this->cropProperties);
-        if (count($cropValues) > 0) {
-            $editedImage = $editedImage
-                // Intervention Image rotates images counter-clockwise, but we get values assuming clockwise rotation, so we negate it to rotate clockwise.
-                ->rotate(-$cropValues['crop_rotate'])
-                ->crop($cropValues['crop_width'], $cropValues['crop_height'], $cropValues['crop_x'], $cropValues['crop_y']);
-        } else {
-            // Otherwise, try to rotate automatically by EXIF metadata.
-            $editedImage = $editedImage->orientate();
-        }
-
-        $editedImage = $editedImage->fit(400)
-            ->encode('jpg', 75);
+        // use default crop (400x400)
+        $editedImage = $editedImage->fit(400, 400)->encode('jpg', 75);
 
         return $this->aws->storeImageData((string) $editedImage, 'edited_' . $postId);
     }
