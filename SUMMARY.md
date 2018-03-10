@@ -8,7 +8,7 @@
 - [Developer Onboarding](/docs/development/developer_onboarding.md)
 - [Architecture](/docs/development/architecture.md)
 - [Deployments](/docs/development/deployments.md)
-- [Contributing]()
+- [Contributing](/docs/development/contributing.md)
 - [Project Mangement]()
 
 ## API Reference
