@@ -12,9 +12,9 @@
 - [Testing](/docs/development/testing.md)
 
 ## API Reference
-- [Introduction](/docs/api/README.md)
+- [Introduction](/docs/endpoints/README.md)
 - [API v1](/docs/api/v1/README.md)
-- [API v2](/docs/api/v2/README.md)
-- [API v3](/docs/api/v3/README.md)
+- [API v2](/docs/api/v2/README.md) -->
+- [API v3](/docs/endpoints/v3/posts.md)
 
 ## Rogue Admin Instructions
