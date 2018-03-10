@@ -13,7 +13,7 @@ To gain access to an ID and SECRET, you will need to have the proper permissions
 
 
 ### .ENV (noun: /Dot EE EN VEE/)
-The `.env` file provides environment specific configurations that can be set differently depending on the environment (local, qa, production, etc). Here is what an [example .env](https://github.com/DoSomething/rogue/blob/master/.env.example) looks like from the repository.
+The `.env` file provides environment specific configurations that can be set differently depending on the environment (local, qa, production, etc). Here is what an [example.env](https://github.com/DoSomething/rogue/blob/master/.env.example) looks like from the repository.
 
 If running the Rogue setup from scratch, a copy of this `.env.example` file will be made and renamed to `.env`. Make sure to update the new file with the corresponding values you need for your local setup. If you have questions about which values to use, reach out to the developer team.
 
@@ -24,8 +24,8 @@ For local development of the Rogue API you will need an API tool like [Postman](
 There are many ways of using these tools and customizing them for efficient use. Reach out to the developer team for any tips or tricks of using one of thse tools.
 
 ### Access and Permissions
-There are a couple of other applications and sites that you will want access to for development:
+There are a couple of other applications and sites that you will want access to for development. Please reach out to the developer team if you are having issues with accessing these tools.
 
-- The [Dosomething Team](https://dashboard.heroku.com/teams/dosomething/overview) on [Heroku](https://www.heroku.com/) (To access Rogue Apps, and more). Please reach out to the developer team if you are having issues accessing Heroku.
+- The [Dosomething Team](https://dashboard.heroku.com/teams/dosomething/overview) on [Heroku](https://www.heroku.com/) (To access Rogue Apps, and more).
 
 - The [Dosomething Organization](https://app.wercker.com/dosomething) on [Wercker](https://app.wercker.com) (To access and re-trigger auto builds for _Pull Requests_).
