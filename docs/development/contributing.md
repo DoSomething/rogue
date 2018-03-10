@@ -24,3 +24,8 @@ When contributing to Rogue, follow these steps:
 6) Members of #Team-Bleed will then review your proposed changes in a timely manner. There might be questions, comments, or suggestions that need to be addressed before final approval is recieved.
 7) Once everything looks OK your PR will be officially approved and if all the CLI integrations have passed you will be free to merge your code.
 8) Click the green `Merge` button and your code will be merged into master. See the [Deployments](/deployments.md) for information about our deployment process.
+
+### Guidelines
+We follow [Laravel's code style](http://laravel.com/docs/5.5/contributions#coding-style) and automatically
+lint all pull requests with [StyleCI](https://styleci.io/repos/64166359). Be sure to configure
+[EditorConfig](http://editorconfig.org) to ensure you have proper indentation settings.

@@ -2,9 +2,8 @@
 
 This is **Rogue**, the DoSomething.org user activity service. Rogue is built using [Laravel 5.5](https://laravel.com/docs/5.5) and [React](http://reactjs.com).
 
-## Maintainers
-
-​[Jen](https://github.com/ngjo) (https://github.com/ngjo) - Product Manager
+#### Maintained by
+[Jen](https://github.com/ngjo) - Product Manager
 
 [Shae](https://github.com/sbsmith86) - Tech Lead
 
@@ -20,27 +19,9 @@ If you ever have any questions about working in Rogue, please reach out to the #
 
 ### Getting Started
 
-Check out the [API Documentation](https://github.com/DoSomething/rogue/blob/master/documentation/README.md) to start using
-Rogue! :camera_flash:
+To get started with development, follow the [installation](./docs/development/installation.md) and [contributing](./docs/development/installation.md) documentation.
 
-### Contributing
-
-Clone this repository, and [add it to your Homestead](https://github.com/DoSomething/communal-docs/blob/master/Homestead/readme.md).
-
-```sh
-# Install dependencies:
-$ composer install && npm install
-
-# Configure application & run migrations:
-$ php artisan rogue:setup
-
-# And finally, build the frontend assets:
-$ npm run build
-```
-
-We follow [Laravel's code style](http://laravel.com/docs/5.5/contributions#coding-style) and automatically
-lint all pull requests with [StyleCI](https://styleci.io/repos/64166359). Be sure to configure
-[EditorConfig](http://editorconfig.org) to ensure you have proper indentation settings.
+To get started using the API, see our [API Documentation]()
 
 ### Testing
 
