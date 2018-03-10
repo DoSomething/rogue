@@ -7,7 +7,7 @@
 - [Installation](/docs/development/installation.md)
 - [Developer Onboarding](/docs/development/developer_onboarding.md)
 - [Architecture](/docs/development/architecture.md)
-- [Deployments]()
+- [Deployments](/docs/development/deployments.md)
 - [Contributing]()
 - [Project Mangement]()
 
