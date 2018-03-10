@@ -16,16 +16,16 @@ We use GitHub for our code managment platform. All of our code at DoSomething.or
 
 When contributing to Rogue, follow these steps:
 
-1) Pull down the most recent code on the `master` branch.
-2) Create a branch off of your local master branch and give it a name.
-3) Commit all of your code changes to this new branch.
-4) Rebase your feature branch with `master` and push your branch up to the Rogue Repository on GitHub.
-5) Create a [Pull Request](https://help.github.com/articles/about-pull-requests/) that compares your branch to `master` and add `DoSomething/team-bleed` as a reviewer.
-6) Members of #Team-Bleed will then review your proposed changes in a timely manner. There might be questions, comments, or suggestions that need to be addressed before final approval is recieved.
-7) Once everything looks OK your PR will be officially approved and if all the CLI integrations have passed you will be free to merge your code.
-8) Click the green `Merge` button and your code will be merged into master. See the [Deployments](/deployments.md) for information about our deployment process.
+* Pull down the most recent code on the `master` branch.
+* Create a branch off of your local master branch and give it a name.
+* Commit all of your code changes to this new branch.
+* Rebase your feature branch with `master` and push your branch up to the Rogue Repository on GitHub.
+* Create a [Pull Request](https://help.github.com/articles/about-pull-requests/) that compares your branch to `master` and add `DoSomething/team-bleed` as a reviewer.
+* Members of #Team-Bleed will then review your proposed changes in a timely manner. There might be questions, comments, or suggestions that need to be addressed before final approval is recieved.
+* Once everything looks OK your PR will be officially approved and if all the CLI integrations have passed you will be free to merge your code.
+* Click the green `Merge` button and your code will be merged into master. See the [Deployments](/docs/development/deployments.md) for information about our deployment process.
 
-For local development instuctions [see here](/installation.md)
+For local development instuctions [see here](/docs/development/installation.md)
 
 ### Guidelines
 We follow [Laravel's code style](http://laravel.com/docs/5.5/contributions#coding-style) and automatically

@@ -6,7 +6,7 @@ The general rule of thumb is to do a qucik check with the developer team in the 
 
 # General deployment workflow
 
-When you submit a PR against the master branch in the [Rogue repository](https://github.com/DoSomething/rogue) a [Wercker](https://app.wercker.com/dosomething/rogue/runs) build will be triggered and deployed to a Review App on Heroku. You can use this Review app to share and test your specific changes. Once the PR is merged and closed, a deployment will be automatically triggered to the QA and staging environments. See the [Architecture](/architecture.md) section for more information on the differences between environments.
+When you submit a PR against the master branch in the [Rogue repository](https://github.com/DoSomething/rogue) a [Wercker](https://app.wercker.com/dosomething/rogue/runs) build will be triggered and deployed to a Review App on Heroku. You can use this Review app to share and test your specific changes. Once the PR is merged and closed, a deployment will be automatically triggered to the QA and staging environments. See the [Architecture](/docs/development/architecture.md) section for more information on the differences between environments.
 
 Once your code is tested on rogue-staging (a.k.a rogue-thor). You can trigger a deployment to Rogue production.
 
