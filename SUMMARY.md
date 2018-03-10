@@ -9,7 +9,6 @@
 - [Architecture](/docs/development/architecture.md)
 - [Deployments](/docs/development/deployments.md)
 - [Contributing](/docs/development/contributing.md)
-- [Project Mangement]()
 
 ## API Reference
 - [Introduction]()
