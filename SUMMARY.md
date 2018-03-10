@@ -5,7 +5,7 @@
 
 ## Development
 - [Installation](/docs/development/installation.md)
-- [Developer Onboarding]()
+- [Developer Onboarding](/docs/development/developer_onboarding.md)
 - [Architecture]()
 - [Deployments]()
 - [Contributing]()

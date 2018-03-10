@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Installation · GitBook</title>
+        <title>Developer Onboarding · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,8 @@
     <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="developer_onboarding.html" />
     
-    
-    <link rel="prev" href="../../" />
+    <link rel="prev" href="installation.html" />
     
 
     </head>
@@ -111,7 +109,7 @@
         
         
     
-        <li class="chapter active" data-level="2.1" data-path="installation.html">
+        <li class="chapter " data-level="2.1" data-path="installation.html">
             
                 <a href="installation.html">
             
@@ -124,7 +122,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.2" data-path="developer_onboarding.html">
+        <li class="chapter active" data-level="2.2" data-path="developer_onboarding.html">
             
                 <a href="developer_onboarding.html">
             
@@ -285,7 +283,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >Installation</a>
+        <a href="../.." >Developer Onboarding</a>
     </h1>
 </div>
 
@@ -300,17 +298,27 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="installation">Installation</h1>
-<p>Clone this repository, and <a href="https://github.com/DoSomething/communal-docs/blob/master/Homestead/readme.md" target="_blank">add it to your Homestead</a>. Homestead provides a pre-packaged development environment to help get you up and running quickly!</p>
-<pre><code class="lang-sh"><span class="hljs-comment"># Install dependencies</span>
-$ composer install &amp;&amp; npm install
-
-<span class="hljs-comment"># Configure application &amp; run migrations:</span>
-$ php artisan rogue:setup
-
-<span class="hljs-comment"># And finally, build the frontend assets:</span>
-$ npm run build
-</code></pre>
+                                <h1 id="developer-onboarding">Developer Onboarding</h1>
+<h2 id="install-and-set-up-rogue">Install and Set Up Rogue</h2>
+<p>You can follow the <a href="installation.html">instructions</a> to install and set up Rogue on your local development environment.</p>
+<p>However, before running <code>php artisan rogue:setup</code>, you are going to need a few permissions so that you can set the correct application keys and secrets for proper access.</p>
+<h3 id="northstar">Northstar</h3>
+<p>For the most part, you can use the QA Northstar URL for your development environment: <code>https://northstar-qa.dosomething.org</code></p>
+<p>To gain access to an ID and SECRET, you will need to have the proper permissions set on your DoSomething account. Let a developer on the team know if you are unable to access <a href="https://aurora-qa.dosomething.org/clients" target="_blank">Aurora (QA)</a>.</p>
+<h3 id="env-noun-dot-ee-en-vee">.ENV (noun: /Dot EE EN VEE/)</h3>
+<p>The <code>.env</code> file provides environment specific configurations that can be set differently depending on the environment (local, qa, production, etc). Here is what an <a href="https://github.com/DoSomething/rogue/blob/master/.env.example" target="_blank">example .env</a> looks like from the repository.</p>
+<p>If running the Rogue setup from scratch, a copy of this <code>.env.example</code> file will be made and renamed to <code>.env</code>. Make sure to update the new file with the corresponding values you need for your local setup. If you have questions about which values to use, reach out to the developer team.</p>
+<h3 id="api-development">API Development</h3>
+<p>For local development of the Rogue API you will need an API tool like <a href="https://www.getpostman.com/products" target="_blank">Postman</a> or <a href="https://paw.cloud/" target="_blank">Paw</a>. Tools like these will allow you to make API requests.</p>
+<p>There are many ways of using these tools and customizing them for efficient use. Reach out to the developer team for any tips or tricks of using one of thse tools.</p>
+<h3 id="access-and-permissions">Access and Permissions</h3>
+<p>There are a couple of other applications and sites that you will want access to for development:</p>
+<ul>
+<li><p>The <a href="https://dashboard.heroku.com/teams/dosomething/overview" target="_blank">Dosomething Team</a> on <a href="https://www.heroku.com/" target="_blank">Heroku</a> (To access Rogue Apps, and more). Please reach out to the developer team if you are having issues accessing Heroku.</p>
+</li>
+<li><p>The <a href="https://app.wercker.com/dosomething" target="_blank">Dosomething Organization</a> on <a href="https://app.wercker.com" target="_blank">Wercker</a> (To access and re-trigger auto builds for <em>Pull Requests</em>).</p>
+</li>
+</ul>
 
                                 
                                 </section>
@@ -338,14 +346,10 @@ $ npm run build
 
             
                 
-                <a href="../../" class="navigation navigation-prev " aria-label="Previous page: Introduction (edit)">
+                <a href="installation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Installation">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="developer_onboarding.html" class="navigation navigation-next " aria-label="Next page: Developer Onboarding">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -354,7 +358,7 @@ $ npm run build
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Installation","level":"2.1","depth":1,"next":{"title":"Developer Onboarding","level":"2.2","depth":1,"path":"docs/development/developer_onboarding.md","ref":"docs/development/developer_onboarding.md","articles":[]},"previous":{"title":"Introduction (edit)","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/development/installation.md","mtime":"2018-03-10T17:56:40.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-10T17:41:57.694Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Developer Onboarding","level":"2.2","depth":1,"next":{"title":"Architecture","level":"2.3","depth":1,"ref":"","articles":[]},"previous":{"title":"Installation","level":"2.1","depth":1,"path":"docs/development/installation.md","ref":"docs/development/installation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/development/developer_onboarding.md","mtime":"2018-03-10T18:12:07.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-10T17:41:57.694Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
