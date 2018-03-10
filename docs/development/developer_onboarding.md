@@ -17,6 +17,12 @@ The `.env` file provides environment specific configurations that can be set dif
 
 If running the Rogue setup from scratch, a copy of this `.env.example` file will be made and renamed to `.env`. Make sure to update the new file with the corresponding values you need for your local setup. If you have questions about which values to use, reach out to the developer team.
 
+### Database Seeding
+
+You can seed your local database with test data for local development:
+
+    $ php artisan db:seed
+
 ### API Development
 
 For local development of the Rogue API you will need an API tool like [Postman](https://www.getpostman.com/products) or [Paw](https://paw.cloud/). Tools like these will allow you to make API requests.

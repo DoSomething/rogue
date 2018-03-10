@@ -25,6 +25,8 @@ When contributing to Rogue, follow these steps:
 7) Once everything looks OK your PR will be officially approved and if all the CLI integrations have passed you will be free to merge your code.
 8) Click the green `Merge` button and your code will be merged into master. See the [Deployments](/deployments.md) for information about our deployment process.
 
+For local development instuctions [see here](/installation.md)
+
 ### Guidelines
 We follow [Laravel's code style](http://laravel.com/docs/5.5/contributions#coding-style) and automatically
 lint all pull requests with [StyleCI](https://styleci.io/repos/64166359). Be sure to configure

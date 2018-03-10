@@ -23,28 +23,6 @@ To get started with development, follow the [installation](./docs/development/in
 
 To get started using the API, see our [API Documentation]()
 
-### Testing
-
-Performance & debug information is available at [`/__clockwork`](http://rogue.test/__clockwork), or using the [Chrome Extension](https://chrome.google.com/webstore/detail/clockwork/dmggabnehkmmfmdffgajcflpdjlnoemp).
-
-You can seed the database with test data for local development:
-
-    $ php artisan db:seed
-
-You may run unit tests locally using [PHPUnit](https://laravel.com/docs/5.5/http-tests) & [Jest](https://facebook.github.io/jest/):
-
-    $ phpunit
-    $ npm test
-
-And our functional test suite can be run with [Laravel Dusk](https://laravel.com/docs/5.5/dusk):
-
-    $ cp .env.dusk.local.example .env.dusk.local # and add any missing values!
-    $ dusk
-
-Consider [writing a test case](http://laravel.com/docs/5.5/testing) when adding or changing a feature.
-Most steps you would take when manually testing your code can be automated, which makes it easier for
-yourself & others to review your code and ensures we don't accidentally break something later on!
-
 ### Security Vulnerabilities
 
 We take security very seriously. Any vulnerabilities in Rogue should be reported to [security@dosomething.org](mailto:security@dosomething.org),
