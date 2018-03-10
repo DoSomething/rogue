@@ -2,6 +2,22 @@
 
 This is **Rogue**, the DoSomething.org user activity service. Rogue is built using [Laravel 5.5](https://laravel.com/docs/5.5) and [React](http://reactjs.com).
 
+## Maintainers
+
+​[Jen](https://github.com/ngjo) (https://github.com/ngjo) - Product Manager
+
+[Shae](https://github.com/sbsmith86) - Tech Lead
+
+[Katie](https://github.com/katiecrane) - Engineer
+
+[Chloe](https://github.com/chloealee) - Engineer
+
+[Luke](https://github.com/lkpttn) - Product Designer
+
+[Dave](https://github.com/DFurnes) - Staff Engineer
+
+If you ever have any questions about working in Rogue, please reach out to the #team-bleed slack channel.
+
 ### Getting Started
 
 Check out the [API Documentation](https://github.com/DoSomething/rogue/blob/master/documentation/README.md) to start using
