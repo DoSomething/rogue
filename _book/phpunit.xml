@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="bootstrap/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+    <testsuites>
+      <testsuite name="Console">
+        <directory suffix="Test.php">./tests/Console</directory>
+      </testsuite>
+
+      <testsuite name="Http">
+        <directory suffix="Test.php">./tests/Http</directory>
+      </testsuite>
+
+      <testsuite name="Unit">
+        <directory suffix="Test.php">./tests/Unit</directory>
+      </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./app</directory>
+            <exclude>
+                <file>./app/Http/routes.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="STORAGE_DRIVER" value="public"/>
+        <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="DB_DATABASE" value="rogue_test"/>
+        <env name="DS_ENABLE_GLIDE" value="false"/>
+        <env name="DS_ENABLE_BLINK" value="true"/>
+    </php>
+</phpunit>

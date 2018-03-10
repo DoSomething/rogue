@@ -1,0 +1,15 @@
+/vendor
+/node_modules
+/public/storage
+/storage/debugbar
+Homestead.yaml
+Homestead.json
+.env
+.env.dusk.local
+
+.DS_Store
+
+public/assets/**
+public/dist
+
+npm-debug.log

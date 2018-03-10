@@ -1,0 +1,19 @@
+@import '~@dosomething/forge/scss/toolkit';
+
+.filter-bar {
+  &.container__block {
+    border-width: 1px;
+    border-color: $light-gray;
+    border-style: solid;
+  }
+
+  .button{
+    float: right;
+    background-color: $blue;
+    text-transform: capitalize;
+  }
+
+  .heading.-gamma{
+    padding: 2% 0 0 1%;
+  }
+}
