@@ -1,0 +1,69 @@
+{
+  "name": "dosomething/rogue",
+  "description": "The Laravel Framework.",
+  "license": "MIT",
+  "type": "project",
+  "require": {
+    "php": "~7.0.0",
+    "laravel/framework": "5.5.*",
+    "laravel/tinker": "^1.0",
+    "aws/aws-sdk-php-laravel": "^3.1",
+    "doctrine/dbal": "~2.5.13",
+    "dosomething/gateway": "^1.1.6",
+    "fideloper/proxy": "^3.3",
+    "guzzlehttp/guzzle": "^6.2",
+    "intervention/image": "^2.3",
+    "league/flysystem-aws-s3-v3": "~1.0",
+    "league/flysystem-memory": "^1.0",
+    "league/fractal": "^0.13.0",
+    "league/glide-laravel": "^1.0",
+    "predis/predis": "~1.0",
+    "spatie/laravel-backup": "^5.1.1",
+    "league/csv": "^9.0",
+    "dfurnes/environmentalist": "0.0.2",
+    "ext-gd" : "*",
+    "ext-exif":"*",
+    "barryvdh/laravel-cors": "^0.11.0"
+  },
+  "require-dev": {
+    "fzaninotto/faker": "^1.6",
+    "filp/whoops": "~2.0",
+    "mockery/mockery": "^0.9.5",
+    "phpunit/phpunit": "~6.0",
+    "symfony/css-selector": "3.1.*",
+    "symfony/dom-crawler": "3.1.*",
+    "laravel/dusk": "^2.0",
+    "itsgoingd/clockwork": "^2.0"
+  },
+  "autoload": {
+    "classmap": [
+      "database"
+    ],
+    "files": [
+      "app/helpers.php"
+    ],
+    "psr-4": {
+      "Rogue\\": "app/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover"
+    ],
+    "warmup": [
+      "@php artisan gateway:key",
+      "@php artisan route:cache",
+      "@php artisan config:cache"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist",
+    "optimize-autoloader": true
+  }
+}

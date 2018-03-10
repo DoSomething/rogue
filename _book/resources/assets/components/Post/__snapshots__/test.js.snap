@@ -1,0 +1,259 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders correctly 1`] = `
+<div
+  className="post container__row"
+>
+  <div
+    className="container__block -third images"
+  >
+    <div
+      className="post__image"
+    >
+      <img
+        src={null}
+      />
+    </div>
+    <div
+      className="admin-tools"
+    >
+      <div
+        className="admin-tools__links"
+      >
+        <a
+          href={null}
+          target="_blank"
+        >
+          Original Photo
+        </a>
+        <br />
+        <a
+          href={null}
+          target="_blank"
+        >
+          Edited Photo
+        </a>
+      </div>
+    </div>
+  </div>
+  <div
+    className="container__block -third"
+  >
+    <div>
+      <div
+        className="container -padded"
+      >
+        <div
+          className="container"
+        >
+          <h4
+            className="heading"
+          >
+            Photo Caption
+          </h4>
+          <p>
+            Here is my awesome caption!
+          </p>
+        </div>
+      </div>
+      <div
+        className="container"
+      >
+        <div
+          className="container"
+        >
+          <h4
+            className="heading"
+          >
+            Why Statement
+          </h4>
+          <p />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="container__block -third"
+  >
+    <div
+      className="container__row"
+    >
+      <div>
+        <ul
+          className="form-actions -inline"
+          style={
+            Object {
+              "marginTop": 0,
+            }
+          }
+        >
+          <li>
+            <button
+              className="button -outlined-button -accepted"
+              onClick={[Function]}
+            >
+              accept
+            </button>
+          </li>
+          <li>
+            <button
+              className="button -outlined-button -rejected"
+              onClick={[Function]}
+            >
+              reject
+            </button>
+          </li>
+        </ul>
+        <ul
+          className="form-actions -inline"
+        >
+          <li>
+            <button
+              className="button delete -tertiary"
+              onClick={[Function]}
+            >
+              Delete
+            </button>
+          </li>
+        </ul>
+        <div>
+          <h4
+            className="disabled"
+          >
+            Tags
+          </h4>
+          <ul
+            className="aligned-actions"
+          >
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Good Photo
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Good Quote
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Hide In Gallery 👻
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Good For Sponsor
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Good For Storytelling
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Irrelevant
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Inappropriate
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Unrealistic Quantity
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Test
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Incomplete Action
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      className="container__row"
+    >
+      <div
+        className="container"
+      >
+        <h4
+          className="heading"
+        >
+          Meta
+        </h4>
+        <span>
+          Post ID
+          : 
+          123
+          <br />
+        </span>
+        <span>
+          Source
+          : 
+          <br />
+        </span>
+        <span>
+          Submitted
+          : 
+          Invalid Date
+          <br />
+        </span>
+        <span>
+          Northstar Id
+          : 
+          <br />
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,48 @@
+@import '~@dosomething/forge/scss/toolkit';
+
+.media-uploader {
+  background-color: #eee;
+  color: $med-gray;
+
+  &:hover {
+    background-color: darken(#eee, 5%);
+  }
+
+  label {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+
+    &::before {
+      background: transparent url('../../images/plus_sign.svg');
+      background-size: cover;
+      content: '';
+      display: block;
+      height: 50px;
+      margin-bottom: 10px;
+      width: 50px;
+    }
+
+    img {
+      max-height: 100%;
+    }
+  }
+
+  &.has-image {
+    label {
+      &::before {
+        display: none;
+      }
+    }
+  }
+
+  input {
+    @include visually-hidden();
+  }
+}
