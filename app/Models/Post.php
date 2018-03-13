@@ -170,6 +170,7 @@ class Post extends Model
             'action' => $this->action,
             'url' => $this->getMediaUrl(),
             'caption' => $this->text,
+            'text' => $this->text,
             'status' => $this->status,
             'remote_addr' => $this->remote_addr,
             'source' => $this->source,
@@ -203,6 +204,7 @@ class Post extends Model
             'media' => [
                 'url' => $this->getMediaUrl(),
                 'caption' => $this->text,
+                'text' => $this->text,
             ],
             'tags' => $this->tagSlugs(),
             'status' => $this->status,
