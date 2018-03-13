@@ -28,7 +28,7 @@ $factory->define(Post::class, function (Generator $faker) {
             return factory(Signup::class)->create()->id;
         },
         'url' => $url,
-        'caption' => $faker->sentence(),
+        'text' => $faker->sentence(),
         'source' => $faker->randomElement(['phoenix-oauth', 'phoenix-next']),
         'remote_addr' => $faker->ipv4,
         'status' => 'pending',

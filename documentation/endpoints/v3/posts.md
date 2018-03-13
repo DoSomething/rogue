@@ -50,7 +50,7 @@ Example Response:
             "northstar_id": "5594429fa59dbfc9578b48f4",
             "media": {
                 "url": "https://s3.amazonaws.com/ds-rogue-qa/uploads/reportback-items/edited_2984.jpeg",
-                "caption": null
+                "text": null
             },
             "quantity": "12",
             "tags": [],
@@ -70,7 +70,7 @@ Example Response:
             "northstar_id": "5575e568a59dbf3b7a8b4572",
             "media": {
                 "url": "https://s3.amazonaws.com/ds-rogue-qa/uploads/reportback-items/edited_3655.jpeg",
-                "caption": "Perhaps you CAN be of some assistance, Bill"
+                "text": "Perhaps you CAN be of some assistance, Bill"
             },
             "quantity": "12",
             "tags": [],
@@ -120,7 +120,7 @@ Example Response:
     "media": {
       "url": "http://localhost/storage/uploads/reportback-items/edited_332.jpeg?time=1509129880",
       "original_image_url": "http://localhost/storage/uploads/reportback-items/289-923df5957838355206574f72d5520f0f-1509115822.jpeg?time=1509129880",
-      "caption": "fe"
+      "text": "fe"
     },
     "quantity": "12",
     "tags": [],
@@ -156,8 +156,8 @@ POST /api/v3/posts
     The number of reportback nouns verbed. Can be `null`.
   - **why_participated**: (string).
     The reason why the user participated.
-  - **caption**: (string).
-    Corresponding caption for the post.
+  - **text**: (string).
+    Corresponding text for the post (could be photo caption or other words).
   - **status**: (string).
     Option to set status upon creation if admin uploads post for user.
   - **file**: (file) required for photo posts.
@@ -178,7 +178,7 @@ Example Response:
     "media": {
       "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_214.jpeg",
       "original_image_url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/128-482cab927f6529c7f5e5c4bfd2594186-1501090354.jpeg",
-      "caption": "Captioning captions",
+      "text": "Captioning captions",
     },
     "quantity": "12",
     "status": "pending",
@@ -211,15 +211,15 @@ Example Response:
 PATCH /api/v3/posts/:post_id
 ```
 
-  - **caption**: (string)
-    The caption of the post.
+  - **text**: (string)
+    The text of the post.
   - **quantity**: (int)
     The quantity of items in the post.
 
 Example request body:
 ```
 [
-  "caption" => "Here is a brand new caption"
+  "text" => "Here is a brand new caption"
   "quantity" => "7"
 ]
 ```
@@ -234,7 +234,7 @@ Example response:
       "media": {
           "url": "http://localhost/storage/uploads/reportback-items/edited_332.jpeg?time=1509379493",
           "original_image_url": "http://localhost/storage/uploads/reportback-items/289-923df5957838355206574f72d5520f0f-1509115822.jpeg?time=1509379493",
-          "caption": "Here is a brand new caption"
+          "text": "Here is a brand new caption"
       },
       "quantity": "7",
       "tags": [],

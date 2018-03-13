@@ -30,7 +30,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'type', 'action', 'details', 'quantity', 'url', 'caption', 'status', 'source', 'source_details', 'remote_addr'];
+    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'type', 'action', 'details', 'quantity', 'url', 'text', 'status', 'source', 'source_details', 'remote_addr'];
 
     /**
      * Attributes that can be queried when filtering.
@@ -169,7 +169,8 @@ class Post extends Model
             'type' => $this->type,
             'action' => $this->action,
             'url' => $this->getMediaUrl(),
-            'caption' => $this->caption,
+            'caption' => $this->text,
+            'text' => $this->text,
             'status' => $this->status,
             'remote_addr' => $this->remote_addr,
             'source' => $this->source,
@@ -202,7 +203,8 @@ class Post extends Model
             // @NOTE - Remove if we get rid of rotation.
             'media' => [
                 'url' => $this->getMediaUrl(),
-                'caption' => $this->caption,
+                'caption' => $this->text,
+                'text' => $this->text,
             ],
             'tags' => $this->tagSlugs(),
             'status' => $this->status,

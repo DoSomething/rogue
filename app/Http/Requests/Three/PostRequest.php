@@ -30,7 +30,7 @@ class PostRequest extends Request
             'type' => 'required|string|in:photo,voter-reg',
             'action' => 'required|string',
             'why_participated' => 'nullable|string',
-            'caption' => 'required|nullable|string|max:140',
+            'text' => 'required|nullable|string|max:140',
             'quantity' => 'nullable|integer',
             'file' => 'image|dimensions:min_width=400,min_height=400',
             'status' => 'in:pending,accepted,rejected',

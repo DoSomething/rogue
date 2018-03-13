@@ -41,7 +41,7 @@ class PostTransformer extends TransformerAbstract
             'media' => [
                 'url' => $post->getMediaUrl(),
                 'original_image_url' => $post->url . '?time='. Carbon::now()->timestamp,
-                'caption' => $post->caption,
+                'text' => $post->text,
             ],
             'quantity' => $post->quantity,
             'reactions' => [

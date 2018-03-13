@@ -86,7 +86,7 @@ class PostRepository
             'type' => isset($data['type']) ? $data['type'] : 'photo',
             'action' => isset($data['action']) ? $data['action'] : null,
             'url' => $fileUrl,
-            'caption' => isset($data['caption']) ? $data['caption'] : null,
+            'text' => isset($data['text']) ? $data['text'] : null,
             'status' => 'pending',
             'source' => token()->client(),
             'source_details' => isset($data['source_details']) ? $data['source_details'] : null,

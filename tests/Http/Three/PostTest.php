@@ -23,7 +23,7 @@ class PostTest extends TestCase
         $campaignId = $this->faker->randomNumber(4);
         $campaignRunId = $this->faker->randomNumber(4);
         $quantity = $this->faker->numberBetween(10, 1000);
-        $caption = $this->faker->sentence;
+        $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Mock the Blink API calls.
@@ -39,7 +39,7 @@ class PostTest extends TestCase
             'action'           => 'test-action',
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
-            'caption'          => $caption,
+            'text'             => $text,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
         ]);
@@ -55,7 +55,7 @@ class PostTest extends TestCase
                 'media' => [
                     'url',
                     'original_image_url',
-                    'caption',
+                    'text',
                 ],
                 'quantity',
                 'tags' => [],
@@ -98,7 +98,7 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
         $quantity = $this->faker->numberBetween(10, 1000);
-        $caption = $this->faker->sentence;
+        $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Mock the Blink API call.
@@ -113,7 +113,7 @@ class PostTest extends TestCase
             'action'           => 'test-action',
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
-            'caption'          => $caption,
+            'text'             => $text,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
         ]);
@@ -129,7 +129,7 @@ class PostTest extends TestCase
                 'media' => [
                     'url',
                     'original_image_url',
-                    'caption',
+                    'text',
                 ],
                 'quantity',
                 'tags' => [],
@@ -167,7 +167,7 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
         $quantity = $this->faker->numberBetween(10, 1000);
-        $caption = $this->faker->sentence;
+        $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Mock the Blink API call.
@@ -182,7 +182,7 @@ class PostTest extends TestCase
             'action'           => 'test-action',
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
-            'caption'          => $caption,
+            'text'             => $text,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
         ]);
@@ -198,7 +198,7 @@ class PostTest extends TestCase
                 'media' => [
                     'url',
                     'original_image_url',
-                    'caption',
+                    'text',
                 ],
                 'quantity',
                 'tags' => [],
@@ -228,7 +228,7 @@ class PostTest extends TestCase
 
         // Create a second post without why_participated.
         $secondQuantity = $this->faker->numberBetween(10, 1000);
-        $secondCaption = $this->faker->sentence;
+        $secondText = $this->faker->sentence;
         $secondDetails = ['source-detail' => 'broadcast-333', 'other' => 'other'];
 
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
@@ -238,7 +238,7 @@ class PostTest extends TestCase
             'type'             => 'photo',
             'action'           => 'test-action',
             'quantity'         => $secondQuantity,
-            'caption'          => $secondCaption,
+            'text'             => $secondText,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($secondDetails),
         ]);
@@ -254,7 +254,7 @@ class PostTest extends TestCase
                 'media' => [
                     'url',
                     'original_image_url',
-                    'caption',
+                    'text',
                 ],
                 'quantity',
                 'tags' => [],
@@ -294,7 +294,7 @@ class PostTest extends TestCase
     public function testCreatingAPostWithNullAsQuantity()
     {
         $signup = factory(Signup::class)->create();
-        $caption = $this->faker->sentence;
+        $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Mock the Blink API call.
@@ -308,7 +308,7 @@ class PostTest extends TestCase
             'type'             => 'photo',
             'action'           => 'test-action',
             'quantity'         => null,
-            'caption'          => $caption,
+            'text'             => $text,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
         ]);
@@ -324,7 +324,7 @@ class PostTest extends TestCase
                 'media' => [
                     'url',
                     'original_image_url',
-                    'caption',
+                    'text',
                 ],
                 'quantity',
                 'tags' => [],
@@ -361,7 +361,7 @@ class PostTest extends TestCase
     public function testCreatingAPostWithoutQuantityParam()
     {
         $signup = factory(Signup::class)->create();
-        $caption = $this->faker->sentence;
+        $text = $this->faker->sentence;
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -373,7 +373,7 @@ class PostTest extends TestCase
             'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'photo',
             'action'           => 'test-action',
-            'caption'          => $caption,
+            'text'             => $text,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
         ]);
 
@@ -388,7 +388,7 @@ class PostTest extends TestCase
                 'media' => [
                     'url',
                     'original_image_url',
-                    'caption',
+                    'text',
                 ],
                 'quantity',
                 'tags' => [],
@@ -426,7 +426,7 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
         $quantity = $this->faker->numberBetween(10, 1000);
-        $caption = $this->faker->sentence;
+        $text = $this->faker->sentence;
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -440,7 +440,7 @@ class PostTest extends TestCase
             'action'           => 'test-action',
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
-            'caption'          => $caption,
+            'text'             => $text,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
         ]);
 
@@ -474,7 +474,7 @@ class PostTest extends TestCase
                     'media' => [
                         'url',
                         'original_image_url',
-                        'caption',
+                        'text',
                     ],
                     'quantity',
                     'reactions' => [
@@ -526,7 +526,7 @@ class PostTest extends TestCase
                     'media' => [
                         'url',
                         'original_image_url',
-                        'caption',
+                        'text',
                     ],
                     'quantity',
                     'reactions' => [
@@ -594,7 +594,7 @@ class PostTest extends TestCase
                     'media' => [
                         'url',
                         'original_image_url',
-                        'caption',
+                        'text',
                     ],
                     'quantity',
                     'reactions' => [
@@ -657,7 +657,7 @@ class PostTest extends TestCase
                 'media' => [
                     'url',
                     'original_image_url',
-                    'caption',
+                    'text',
                 ],
                 'quantity',
                 'reactions' => [
@@ -700,7 +700,7 @@ class PostTest extends TestCase
                 'media' => [
                     'url',
                     'original_image_url',
-                    'caption',
+                    'text',
                 ],
                 'quantity',
                 'reactions' => [
@@ -735,14 +735,14 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
-            'caption' => 'new caption',
+            'text' => 'new caption',
             'quantity' => 8,
         ]);
 
         $response->assertStatus(200);
 
-        // Make sure that the posts's new status and caption gets persisted in the database.
-        $this->assertEquals($post->fresh()->caption, 'new caption');
+        // Make sure that the posts's new status and text gets persisted in the database.
+        $this->assertEquals($post->fresh()->text, 'new caption');
         $this->assertEquals($post->fresh()->quantity, 8);
 
         // Make sure the signup's quantity gets updated.
@@ -761,14 +761,14 @@ class PostTest extends TestCase
 
         $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
             'quantity' => 'this is words not a number!',
-            'caption' => 'This must be longer than 140 characters to break the validation rules so here I will create a caption that is longer than 140 characters to test.',
+            'text' => 'This must be longer than 140 characters to break the validation rules so here I will create a caption that is longer than 140 characters to test.',
         ]);
 
         $response->assertStatus(422);
 
         $json = $response->json();
         $this->assertEquals('The quantity must be an integer.', $json['errors']['quantity'][0]);
-        $this->assertEquals('The caption may not be greater than 140 characters.', $json['errors']['caption'][0]);
+        $this->assertEquals('The text may not be greater than 140 characters.', $json['errors']['text'][0]);
     }
 
     /**
@@ -783,7 +783,7 @@ class PostTest extends TestCase
 
         $response = $this->withAccessToken($user->id)->patchJson('api/v3/posts/' . $post->id, [
             'status' => 'accepted',
-            'caption' => 'new caption',
+            'text' => 'new caption',
         ]);
 
         $response->assertStatus(403);

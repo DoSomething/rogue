@@ -20,7 +20,7 @@ class ReportbackTransformer extends TransformerAbstract
         $result = [
             'id' => (string) $post->id,
             'status' => $post->status,
-            'caption' => $post->caption,
+            'caption' => $post->text,
             'uri' => url(config('services.phoenix.uri') . '/api/v1/reportback-items/'.$post->id, ['absolute' => true]),
             'media' => [
                 'uri' => $post->getMediaUrl(),

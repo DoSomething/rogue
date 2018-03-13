@@ -147,7 +147,7 @@ class PostsController extends ApiController
     public function update(Request $request, Post $post)
     {
         $validatedRequest = $request->validate([
-            'caption' => 'nullable|string|max:140',
+            'text' => 'nullable|string|max:140',
             'quantity' => 'nullable|integer',
         ]);
 

@@ -81,7 +81,7 @@ class PostRepository
             'northstar_id' => $data['northstar_id'],
             'campaign_id' => $signup->campaign_id,
             'url' => $fileUrl,
-            'caption' => $data['caption'],
+            'text' => $data['caption'],
             'status' => isset($data['status']) ? $data['status'] : 'pending',
             'source' => isset($data['source']) ? $data['source'] : null,
             'remote_addr' => isset($data['remote_addr']) ? $data['remote_addr'] : null,
