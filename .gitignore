@@ -13,3 +13,5 @@ public/assets/**
 public/dist
 
 npm-debug.log
+
+/_book
