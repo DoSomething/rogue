@@ -6,7 +6,7 @@ This section will go over some general points about contributing to Rogue as a d
 We use [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2019429) as our project management tool for tracking all of our teams work sprint-by-sprint.
 
 Rogue maintenance and features are maintained primarily by Team Bleed. Please reach out to the product
-team if you are having issues accessing the Team Bleed pivotal board.
+team if you are having issues accessing the Team Bleed Pivotal board.
 
 ## GitHub
 
