@@ -33,6 +33,8 @@ class ImagesController extends Controller
         $this->filesystem = $filesystem;
         $this->aws = $aws;
         $this->fastly = $fastly;
+
+        $this->middleware('throttle:15');
     }
 
     /**
