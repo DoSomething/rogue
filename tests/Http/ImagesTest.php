@@ -15,24 +15,23 @@ class ImagesTest extends TestCase
     public function testImagesThrottle()
     {
         // Make a post to view
-        $post = factory(Post::class)->create();
+        $posts = factory(Post::class, 10)->create();
 
         // View the post 15 times (using 3 different versions)
         for ($i = 0; $i < 5; $i++) {
-            $response = $this->getJson('images/' . $post->id);
-            $response->assertStatus(200);
+            $response = $this->getJson('images/' . $posts->random()->id)->assertSuccessful(200);
         }
         for ($i = 5; $i < 10; $i++) {
-            $response = $this->getJson('images/' . $post->id . '?w=500&h=500&fit=crop');
+            $response = $this->getJson('images/' . $posts->random()->id . '?w=500&h=500&fit=crop');
             $response->assertStatus(200);
         }
         for ($i = 10; $i < 15; $i++) {
-            $response = $this->getJson('images/' . $post->id . '?w=250&h=400&fit=crop&filt=sepia');
+            $response = $this->getJson('images/' . $posts->random()->id . '?w=250&h=400&fit=crop&filt=sepia');
             $response->assertStatus(200);
         }
 
         // Get a "Too Many Attempts" response when viewing the post a 16th time
-        $response = $this->getJson('images/' . $post->id);
+        $response = $this->getJson('images/' . $posts->random()->id);
         $response->assertStatus(429);
     }
 }
