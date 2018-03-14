@@ -1,4 +1,4 @@
-## Posts (v3)
+## Posts
 
 ## Retrieve All Posts
 

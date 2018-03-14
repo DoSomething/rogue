@@ -65,12 +65,12 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
   - e.g. `/signups?orderBy=quantity,asc`
 - **limit** _(default is 20)_
   - Set the number of records to return in a single response.
-  - e.g. `/signups?limit=35`  
+  - e.g. `/signups?limit=35`
 - **page** _(integer)_
   - For pagination, specify page of signups to return in the response.
   - e.g. `/signups?page=2`
 
-Example Response: 
+Example Response:
 
 ```
 {
@@ -129,8 +129,8 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
   - Include additional related records in the response: `posts`, `user`
   - If using multiple include params, they must be comma-separated
   - e.g. `/api/v3/signups/1?include=user,posts`
-  
-Example Response: 
+
+Example Response:
 
 ```
 {
@@ -184,7 +184,7 @@ Example response:
 ```
 DELETE /api/v3/signups/:signup_id
 ```
-Example Response: 
+Example Response:
 
 ```
 {

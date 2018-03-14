@@ -1,7 +1,7 @@
 ## Reactions
 
 ```
-## Create or update a Reaction v3
+## Create or update a Reaction
 
 ```
 POST /api/v3/post/:post_id/reactions
@@ -36,7 +36,7 @@ Example Response
 ```
 GET /api/v3/post/:post_id/reactions
 ```
-Example Response: 
+Example Response:
 
 ```
 {

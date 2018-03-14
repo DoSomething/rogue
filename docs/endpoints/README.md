@@ -1,28 +1,12 @@
 # Rogue API
 This is the Rogue API, it is used to capture activity from members.
 
-Most recent stable release is (V3)[#v3]
+Most recent stable release is V3
 
-## Endpoints
+### Documentation
+[API v3](/docs/endpoints/v3/README.md)
 
-### Web
-
-#### Reviews
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`PUT /reviews` |    [Update a post's status when admin reviews the post](reviews.md)
-
-#### Tags
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /tags`                                 | [Add or delete a post's tag](endpoints/tags.md#tags)
-
-#### Posts
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /posts`                           | [Create a post](endpoints/posts.md#create-a-post-and/or-create/Update-a-signup)
-`GET /posts`                            | [Get posts](endpoints/posts.md#retrieve-all-posts)
-`DELETE /posts`                         | [Delete a post](endpoints/posts.md#delete-a-post)
+<!-- ## Endpoints
 
 ### v1
 #### Reportbacks
@@ -95,4 +79,4 @@ Endpoint                                       | Functionality
 Endpoint                                       | Functionality
 ---------------------------------------------- | --------------------------------------------------------
 `POST /api/v3/posts/:post_id/tags`             | [Tag a Post](endpoints/v3/tags.md#tag-a-post)
-`DELETE /api/v3/posts/:post_id/tags`           | [Delete a Tag from a Post](endpoints/v3/tags.md#delete-a-tag-from-a-post)
+`DELETE /api/v3/posts/:post_id/tags`           | [Delete a Tag from a Post](endpoints/v3/tags.md#delete-a-tag-from-a-post) -->
