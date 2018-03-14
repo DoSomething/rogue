@@ -36,7 +36,7 @@
         <env name="STORAGE_DRIVER" value="public"/>
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="DB_DATABASE" value="rogue_test"/>
-        <env name="DS_ENABLE_GLIDE" value="false"/>
+        <env name="DS_ENABLE_GLIDE" value="true"/>
         <env name="DS_ENABLE_BLINK" value="true"/>
     </php>
 </phpunit>
