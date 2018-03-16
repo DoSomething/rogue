@@ -175,7 +175,7 @@ class PostRepository
      *
      * @return Post
      */
-    public function reviews(Post $post, $status, $admin = null, $comment = null)
+    public function reviews(Post $post, $status, $comment = null, $admin = null)
     {
         // Create the Review.
         $review = Review::create([

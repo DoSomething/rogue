@@ -91,9 +91,9 @@ class PostService
      * @param array $data
      * @return \Rogue\Models\Post
      */
-    public function review($post, $data, $admin = null, $comment = null)
+    public function review($post, $data, $comment = null, $admin = null)
     {
-        $post = $this->repository->reviews($post, $data, $admin, $comment);
+        $post = $this->repository->reviews($post, $data, $comment, $admin);
 
         SendPostToQuasar::dispatch($post);
         SendReviewedPostToCustomerIo::dispatch($post);
