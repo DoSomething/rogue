@@ -96,6 +96,61 @@ class PostApiTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => $quantity,
+            'why_participated' => $this->faker->paragraph,
+            'num_participants' => null,
+            'caption'          => $caption,
+            'source'           => 'phpunit',
+            'remote_addr'      => $this->faker->ipv4,
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
+            'crop_x'           => 0,
+            'crop_y'           => 0,
+            'crop_width'       => 100,
+            'crop_height'      => 100,
+            'crop_rotate'      => 90,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'northstar_id' => $signup->northstar_id,
+                'status' => 'pending',
+                // If we are supporting quantity on the post, this value will be the submitted quantity,
+                // otherwise, we don't put anything on the post and it will be null.
+                'quantity' => config('features.v3QuantitySupport') ? $quantity : null,
+                'media' => [
+                    'caption' => $caption,
+                ],
+            ],
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'status' => 'pending',
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /posts with type and action creates a new photo post.
+     *
+     * @return void
+     */
+    public function testCreatingAPostWithTypeAndAction()
+    {
+        $signup = factory(Signup::class)->create();
+        $quantity = 10;
+        $caption = $this->faker->sentence;
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'quantity'         => $quantity,
             'type'             => 'photo',
             'action'           => 'default',
             'why_participated' => $this->faker->paragraph,
@@ -132,6 +187,8 @@ class PostApiTest extends TestCase
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'status' => 'pending',
+            'type' => 'photo',
+            'action' => 'default',
         ]);
     }
 
