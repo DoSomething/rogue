@@ -91,7 +91,7 @@ class PostService
      * @param array $data
      * @return \Rogue\Models\Post
      */
-    public function review($post, $data, $comment)
+    public function review($post, $data, $comment = null)
     {
         $post = $this->repository->reviews($post, $data, $comment);
 
@@ -101,7 +101,8 @@ class PostService
         // Log that a post was reviewed.
         info('post_reviewed', [
             'id' => $post->id,
-            'admin_northstar_id' => auth()->id(),
+            // @TODO - is there a standard ns id we can use here?
+            'admin_northstar_id' => auth()->id() ? auth()->id() : $post->northstar_id,
             'status' => $post->status,
         ]);
 
