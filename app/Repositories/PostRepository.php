@@ -86,7 +86,7 @@ class PostRepository
             'source' => isset($data['source']) ? $data['source'] : null,
             'remote_addr' => isset($data['remote_addr']) ? $data['remote_addr'] : null,
             'type' => isset($data['type']) ? $data['type'] : 'photo',
-            'action' => isset($data['action']) ? $data['action'] : null,
+            'action' => isset($data['action']) ? $data['action'] : 'default',
         ]);
 
         // If we are supporting quantity on posts and
