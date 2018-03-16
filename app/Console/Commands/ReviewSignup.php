@@ -13,7 +13,7 @@ class ReviewSignup extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:reviewsignup {signup} {status}';
+    protected $signature = 'rogue:reviewsignup {signup} {status} {--admin=}';
 
     /**
      * The console command description.
@@ -51,13 +51,14 @@ class ReviewSignup extends Command
         $signup = Signup::findOrFail($this->argument('signup'));
         $status = $this->argument('status');
         $posts = $signup->posts;
+        $admin = $this->option('admin');
 
         $this->info('Updating status of all posts under signup ID '.$signup->id);
         $this->info('There are ' .$posts->count(). ' posts to update.');
 
         if ($posts) {
             foreach($posts as $post) {
-                $this->posts->review($post, $status);
+                $this->posts->review($post, $status, $admin);
             }
 
             $this->info('All posts under signup ID ' . $signup->id . ' have been updated with a status of ' . $status);

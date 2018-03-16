@@ -175,14 +175,13 @@ class PostRepository
      *
      * @return Post
      */
-    public function reviews(Post $post, $status, $comment = null)
+    public function reviews(Post $post, $status, $admin = null, $comment = null)
     {
         // Create the Review.
         $review = Review::create([
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
-            // @TODO - What NS ID could we default to if we are reviewing by an artisan command?
-            'admin_northstar_id' => auth()->id() ? auth()->id() : $post->northstar_id,
+            'admin_northstar_id' => $admin ? $admin : auth()->id(),
             'status' => $status,
             'old_status' => $post->status,
             'comment' => $comment,
