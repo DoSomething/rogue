@@ -32,6 +32,7 @@ class ReviewsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
+        $this->middleware('scope:write');
 
         $this->post = $post;
         $this->transformer = new PostTransformer;

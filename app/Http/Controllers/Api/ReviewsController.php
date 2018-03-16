@@ -31,6 +31,8 @@ class ReviewsController extends ApiController
     public function __construct(PostRepository $post)
     {
         $this->middleware('api');
+        $this->middleware('scope:write');
+
 
         $this->post = $post;
         $this->transformer = new PostTransformer;

@@ -29,6 +29,8 @@ class TagsController extends ApiController
      */
     public function __construct(PostRepository $post)
     {
+        $this->middleware('scope:write', ['only' => ['create', 'update', 'destroy', 'reviews', 'tag']]);
+
         $this->post = $post;
         $this->transformer = new PostTransformer;
     }

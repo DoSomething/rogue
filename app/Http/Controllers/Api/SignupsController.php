@@ -36,6 +36,8 @@ class SignupsController extends ApiController
      */
     public function __construct(SignupService $signups, PostService $posts)
     {
+        $this->middleware('scope:write');
+
         $this->signups = $signups;
         $this->posts = $posts;
 

@@ -41,6 +41,8 @@ class PostsController extends ApiController
         $this->posts = $posts;
         $this->signups = $signups;
 
+        $this->middleware('scope:write', ['only' => ['create', 'review', 'update', 'destroy']]);
+
         $this->transformer = new PostTransformer;
     }
 }
