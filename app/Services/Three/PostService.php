@@ -91,9 +91,9 @@ class PostService
      * @param array $data
      * @return \Rogue\Models\Post
      */
-    public function review($post, $data, $comment)
+    public function review($post, $data, $comment = null, $admin = null)
     {
-        $post = $this->repository->reviews($post, $data, $comment);
+        $post = $this->repository->reviews($post, $data, $comment, $admin);
 
         SendPostToQuasar::dispatch($post);
         SendReviewedPostToCustomerIo::dispatch($post);
@@ -101,7 +101,7 @@ class PostService
         // Log that a post was reviewed.
         info('post_reviewed', [
             'id' => $post->id,
-            'admin_northstar_id' => auth()->id(),
+            'admin_northstar_id' => $admin ? $admin : auth()->id(),
             'status' => $post->status,
         ]);
 

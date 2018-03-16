@@ -22,6 +22,7 @@ class Kernel extends ConsoleKernel
         Commands\MakeSourceSms::class,
         Commands\TagPosts::class,
         Commands\UpdateSignup::class,
+        Commands\ReviewSignup::class,
     ];
 
     /**
