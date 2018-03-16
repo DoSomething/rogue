@@ -35,6 +35,8 @@ class PostApiTest extends TestCase
             'campaign_id'      => $campaign_id,
             'campaign_run_id'  => $campaign_run_id,
             'quantity'         => $quantity,
+            'type'             => 'photo',
+            'action'           => 'default',
             'why_participated' => $this->faker->paragraph,
             'num_participants' => null,
             'caption'          => $caption,
@@ -56,6 +58,8 @@ class PostApiTest extends TestCase
                 'media' => [
                     'caption' => $caption,
                 ],
+                'type' => 'photo',
+                'action' => 'default',
             ],
         ]);
 
@@ -92,6 +96,8 @@ class PostApiTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => $quantity,
+            'type'             => 'photo',
+            'action'           => 'default',
             'why_participated' => $this->faker->paragraph,
             'num_participants' => null,
             'caption'          => $caption,
@@ -116,6 +122,8 @@ class PostApiTest extends TestCase
                 'media' => [
                     'caption' => $caption,
                 ],
+                'type' => 'photo',
+                'action' => 'default',
             ],
         ]);
 
