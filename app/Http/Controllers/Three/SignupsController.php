@@ -102,6 +102,11 @@ class SignupsController extends ApiController
             if (in_array($column, Signup::$indexes)) {
                 $query = $query->orderBy($column, $direction);
             }
+
+            // if ($column === 'accepted_quantity') {
+
+            //     $query = $query->orderBy(DB::raw());
+            // }
         }
 
         return $this->paginatedCollection($query, $request);
