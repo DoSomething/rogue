@@ -174,6 +174,8 @@ Example Response:
   "data": {
     "id": 340,
     "signup_id": 784,
+    "type": photo,
+    "action": default,
     "northstar_id": "5571df46a59db12346dsb456d",
     "media": {
       "url": "https://s3.amazonaws.com/ds-rogue-prod/uploads/reportback-items/edited_214.jpeg",

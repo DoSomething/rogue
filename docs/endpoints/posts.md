@@ -139,6 +139,9 @@ POST /api/v2/posts
     `Y-m-d H:i:s` format. When the post was created.
   - **updated_at**: (string) optional.
     `Y-m-d H:i:s` format. When the post was last updated.
+  - **type**: (string).
+    The type of post submitted e.g. photo, voter-reg, text
+  - **action**: (string).
 
 Example Response:
 
