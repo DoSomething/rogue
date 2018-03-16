@@ -34,6 +34,8 @@ class PostTransformer extends TransformerAbstract
         $response = [
             'id' => $post->id,
             'signup_id' => $post->signup_id,
+            'type' => $post->type,
+            'action' => $post->action,
             'northstar_id' => $post->northstar_id,
             // Add cache-busting query string to urls to make sure we get the
             // most recent version of the image.
@@ -58,8 +60,6 @@ class PostTransformer extends TransformerAbstract
             $response['source'] = $post->source;
             $response['source_details'] = $post->source_details;
             $response['remote_addr'] = $post->remote_addr;
-            $response['type'] = $post->type;
-            $response['action'] = $post->action;
             $response['details'] = $post->details;
         }
 
