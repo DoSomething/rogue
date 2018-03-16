@@ -1,96 +1,30 @@
-# Rogue API
-This is the Rogue API, it is used to capture activity from members.
-All `POST` and `PUT` endpoints (except v3 endpoints) require an api key (`X-DS-Rogue-API-Key`) in the header to be submitted with the request.
+# Rogue [![wercker status](https://app.wercker.com/status/518aafc1808a35e38f658c849f93630a/s/master "wercker status")](https://app.wercker.com/project/byKey/518aafc1808a35e38f658c849f93630a) [![StyleCI](https://styleci.io/repos/64166359/shield?style=flat-rounded)](https://styleci.io/repos/64166359)
 
-## Endpoints
+This is **Rogue**, the DoSomething.org user activity service. Rogue is built using [Laravel 5.5](https://laravel.com/docs/5.5) and [React](http://reactjs.com).
 
-### Web
-#### Reviews
-Functionality
----------------------------------------------- | --------------------------------------------------------
-`PUT /reviews`                                 | [Update a post's status when admin reviews the post](endpoints/reviews.md#reviews)
+Maintained by [Team Bleed](https://github.com/orgs/DoSomething/teams/team-bleed)
+- [Jen](https://github.com/ngjo) - Product Manager
+- [Shae](https://github.com/sbsmith86) - Tech Lead
+- [Katie](https://github.com/katiecrane) - Engineer
+- [Chloe](https://github.com/chloealee) - Engineer
+- [Luke](https://github.com/lkpttn) - Product Designer
+- [Dave](https://github.com/DFurnes) - Staff Engineer
 
-#### Tags
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /tags`                                 | [Add or delete a post's tag](endpoints/tags.md#tags)
+If you ever have any questions about working in Rogue, please reach out to the #team-bleed slack channel.
 
-#### Posts
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /posts`                           | [Create a post](endpoints/posts.md#create-a-post-and/or-create/Update-a-signup)
-`GET /posts`                            | [Get posts](endpoints/posts.md#retrieve-all-posts)
-`DELETE /posts`                         | [Delete a post](endpoints/posts.md#delete-a-post)
+### Getting Started
 
-### v1
-#### Reportbacks
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`GET /api/v1/reportbacks`                      | [Get reportbacks](endpoints/reportbacks.md#reportbacks)
+To get started with development, follow the [installation](./docs/development/installation.md) and [contributing](./docs/development/contributing.md) documentation.
 
+To get started using the API, see our [API Documentation](./docs/endpoints)
 
-### v2
-#### Activity
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`GET /api/v2/activity`                         | [Get all user activity](endpoints/activity.md#activity)
+### Security Vulnerabilities
 
-#### Events
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`GET /api/v2/events`                         | [Get all events](endpoints/events.md#events)
+We take security very seriously. Any vulnerabilities in Rogue should be reported to [security@dosomething.org](mailto:security@dosomething.org),
+and will be promptly addressed. Thank you for taking the time to responsibly disclose any issues you find.
 
-#### Posts
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /api/v2/posts`                           | [Create a post](endpoints/posts.md#create-a-post-and/or-create/Update-a-signup)
-`GET /api/v2/posts`                            | [Get posts](endpoints/posts.md#retrieve-all-posts)
-`DELETE /api/v2/posts`                         | [Delete a post](endpoints/posts.md#delete-a-post)
+### License
 
-#### Reactions
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /api/v2/reactions`                       | [Create or update a reaction](endpoints/reactions.md#create-or-update-a-reaction-v2)
-
-#### Signups
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /api/v2/signups`                         | [Create a signup](endpoints/signups.md#create-a-signup)
-
-### v3
-Instead of requiring an api key (`X-DS-Rogue-API-Key`) in the header to be submitted with the request, v3 endpoints use OAuth 2 to authenticate.
-
-#### Signups
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /api/v3/signups`                         | [Create a signup](endpoints/v3/signups.md#create-a-signup)
-`GET /api/v3/signups`                          | [Get signups](endpoints/v3/signups.md#retrieve-all-signups)
-`GET /api/v3/signups/:signup_id`               | [Get a signup](endpoints/v3/signups.md#retrieve-a-specific-signup)
-`PATCH /api/v3/signups/:signup_id`             | [Update a signup](endpoints/v3/signups.md#update-a-signup)
-`DELETE /api/v3/signups/:signup_id`            | [Delete a signup](endpoints/v3/signups.md#delete-a-signup)
-
-#### Posts
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /api/v3/posts`                           | [Create a post](endpoints/v3/posts.md#create-a-post-and/or-create/Update-a-signup)
-`GET /api/v3/posts`                            | [Get posts](endpoints/v3/posts.md#retrieve-all-posts)
-`GET /api/v3/posts/:post_id`                   | [Get a post](endpoints/v3/posts.md#retrieve-a-specific-post)
-`DELETE /api/v3/posts/:post_id`                | [Delete a post](endpoints/v3/posts.md#delete-a-post)
-`PATCH /api/v3/posts/:post_id`                 | [Update a post](endpoints/v3/posts.md#update-a-post)
-
-#### Reactions
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /api/v3/post/:post_id/reactions`         | [Create or update a Reaction](endpoints/v3/reactions.md#create-or-update-a-reaction-v3)
-`GET /api/v3/post/:post_id/reactions`          | [Get all reactions of a post](endpoints/v3/reactions.md#Retrieve-all-reactions-of-a-post)
-
-#### Reviews
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /api/v3/reviews`                         | [Create or update a Review](endpoints/v3/reviews.md#create-or-update-a-reaction-v3)
-
-#### Tags
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /api/v3/posts/:post_id/tags`             | [Tag a Post](endpoints/v3/tags.md#tag-a-post)
-`DELETE /api/v3/posts/:post_id/tags`           | [Delete a Tag from a Post](endpoints/v3/tags.md#delete-a-tag-from-a-post)
+&copy;2017 DoSomething.org. Rogue is free software, and may be redistributed under the terms specified
+in the [LICENSE](https://github.com/DoSomething/rogue/blob/master/LICENSE) file. The name and logo for
+DoSomething.org are trademarks of Do Something, Inc and may not be used without permission.
