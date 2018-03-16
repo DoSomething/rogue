@@ -57,7 +57,7 @@ class ReviewSignup extends Command
         $this->info('There are ' .$posts->count(). ' posts to update.');
 
         if ($posts) {
-            foreach($posts as $post) {
+            foreach ($posts as $post) {
                 $this->posts->review($post, $status, $admin);
             }
 
