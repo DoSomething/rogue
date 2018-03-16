@@ -65,6 +65,5 @@ class ReviewSignup extends Command
         } else {
             $this->error('There are no posts under signup ID ' . $signup->id);
         }
-
     }
 }
