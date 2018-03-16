@@ -151,7 +151,7 @@ POST /api/v3/posts
   - **type**: (string) required.
     The type of post submitted e.g. photo, voter-reg, text
   - **action**: (string) required.
-    Describes the action that the post is tied to.
+    Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
   - **quantity**: (int|nullable) optional.
     The number of reportback nouns verbed. Can be `null`.
   - **why_participated**: (string).

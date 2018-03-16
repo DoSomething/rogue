@@ -142,6 +142,7 @@ POST /api/v2/posts
   - **type**: (string).
     The type of post submitted e.g. photo, voter-reg, text
   - **action**: (string).
+    Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
 
 Example Response:
 
