@@ -31,6 +31,8 @@ class PostRequest extends Request
             'source' => 'nullable|string',
             'remote_addr' => 'nullable|string',
             // 'file' => 'string', // @TODO - should do some better validation around files.
+            'type' => 'string|in:photo,voter-reg,text',
+            'action' => 'string',
         ];
     }
 }

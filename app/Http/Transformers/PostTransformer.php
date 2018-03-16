@@ -36,6 +36,8 @@ class PostTransformer extends TransformerAbstract
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
             'quantity' => $post->quantity,
+            'type' => $post->type,
+            'action' => $post->action,
             // Add cache-busting query string to urls to make sure we get the
             // most recent version of the image.
             // @NOTE - Remove if we get rid of rotation.
