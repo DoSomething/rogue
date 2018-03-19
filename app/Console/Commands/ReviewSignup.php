@@ -58,7 +58,7 @@ class ReviewSignup extends Command
 
         if ($posts) {
             foreach ($posts as $post) {
-                $this->posts->review($post, $status, $admin);
+                $this->posts->review($post, $status, null, $admin);
             }
 
             $this->info('All posts under signup ID ' . $signup->id . ' have been updated with a status of ' . $status);
