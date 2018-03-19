@@ -23,7 +23,7 @@ class ReviewsTest extends TestCase
         $northstarId = $this->faker->northstar_id;
         $post = factory(Post::class)->create();
 
-        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/reviews', [
+        $response = $this->withAccessToken($northstarId, 'admin', ['activity', 'write'])->postJson('api/v3/reviews', [
             'post_id' => $post->id,
             'status' => 'accepted',
             'comment' => 'testing',
@@ -74,7 +74,7 @@ class ReviewsTest extends TestCase
 
         // Review the post.
         $northstarId = $this->faker->northstar_id;
-        $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/reviews', [
+        $this->withAccessToken($northstarId, 'admin', ['activity', 'write'])->postJson('api/v3/reviews', [
             'post_id' => $post->id,
             'status' => 'accepted',
         ]);
@@ -96,7 +96,7 @@ class ReviewsTest extends TestCase
     {
         // Review a post that doesn't exist.
         $northstarId = $this->faker->northstar_id;
-        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/reviews', [
+        $response = $this->withAccessToken($northstarId, 'admin', ['activity', 'write'])->postJson('api/v3/reviews', [
             'post_id' => 88,
             'status' => 'accepted',
         ]);

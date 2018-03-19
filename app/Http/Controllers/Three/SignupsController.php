@@ -46,7 +46,6 @@ class SignupsController extends ApiController
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
         $this->middleware('role:admin', ['only' => ['destroy']]);
         $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
-
     }
 
     /**

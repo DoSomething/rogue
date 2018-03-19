@@ -25,7 +25,7 @@ class ReactionTest extends TestCase
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
-        $response = $this->withAdminAccessToken()->postJson('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
@@ -39,7 +39,7 @@ class ReactionTest extends TestCase
         ]);
 
         // React (unlike) again to the same post with the same user.
-        $response = $this->withAdminAccessToken()->postJson('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
@@ -66,7 +66,7 @@ class ReactionTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $response = $this->withAdminAccessToken()->postJson('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -79,7 +79,7 @@ class ReactionTest extends TestCase
         ]);
 
         // A second user reacts to the same post..
-        $response = $this->withAdminAccessToken()->postJson('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -146,7 +146,7 @@ class ReactionTest extends TestCase
             factory(Reaction::class, 10)->make()
         );
 
-        $response = $this->withAdminAccessToken()->getJson('api/v3/post/' . $post->id . '/reactions');
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->getJson('api/v3/post/' . $post->id . '/reactions');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
