@@ -1,4 +1,5 @@
 ## Signups
+All `v3 /signups` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
 
 ## Create a Signup
 
