@@ -55,6 +55,42 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test that a POST request to /signups doesn't create a new signup without activity and write scopes.
+     *
+     * POST /api/v3/signups
+     * @return void
+     */
+    public function testCreatingASignupWithoutRequiredScopes()
+    {
+        $northstarId = $this->faker->northstar_id;
+        $campaignId = str_random(22);
+        $campaignRunId = $this->faker->randomNumber(4);
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignup');
+
+        $response = $this->postJson('api/v3/signups', [
+            'campaign_id' => $campaignId,
+            'campaign_run_id' => $campaignRunId,
+            'details' => 'affiliate-messaging',
+        ]);
+
+        // Make sure we get the 401 Unauthenticated response
+        $response->assertStatus(401);
+        $this->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
+
+        $response = $this->withAccessToken($northstarId, 'user', ['activity'])->postJson('api/v3/signups', [
+            'campaign_id' => $campaignId,
+            'campaign_run_id' => $campaignRunId,
+            'details' => 'affiliate-messaging',
+        ]);
+
+        // Make sure we get the 403 Forbidden response
+        $response->assertStatus(403);
+        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: write');
+    }
+
+    /**
      * Test that a POST request to /signups doesn't create duplicate signups.
      *
      * POST /api/v3/signups
@@ -138,6 +174,22 @@ class SignupTest extends TestCase
                 ],
             ],
         ]);
+    }
+
+    /**
+     * Test that user is not visible without activity scope.
+     *
+     * GET /api/v3/signups
+     * @return void
+     */
+    public function testSignupsIndexWithoutRequiredScopes()
+    {
+        factory(Signup::class, 10)->create();
+
+        $response = $this->getJson('api/v3/signups');
+
+        $response->assertStatus(403);
+        $response->assertEquals($response->decodeResponseJson(), 'Requires a token with the following scopes: activity');
     }
 
     /**
@@ -497,6 +549,20 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test for retrieving a specific signup without activity scope.
+     *
+     * GET /api/v3/signups/:signup_id
+     * @return void
+     */
+    public function testSignupShowWithoutRequiredScopes()
+    {
+        $signup = factory(Signup::class)->create();
+        $response = $this->getJson('api/v3/signups/' . $signup->id);
+
+        $response->assertStatus(403);
+    }
+
+    /**
      * Test for retrieving a specific signup as admin.
      *
      * GET /api/v3/signups/:signup_id
@@ -573,6 +639,26 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test that a signup cannot be deleted without required scopes
+     *
+     * @return void
+     */
+    public function testDeletingASignupWithoutRequiredScopes()
+    {
+        // $signup = factory(Signup::class)->create();
+
+        // $response = $this->deleteJson('api/v3/signups/' . $signup->id);
+
+        // $response->assertStatus(401);
+        // // $response->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
+
+        // $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->deleteJson('api/v3/signups/' . $signup->id);
+
+        // dd($response->decodeResponseJson());
+        $this->markTestIncomplete();
+    }
+
+    /**
      * Test that non-authenticated user's/apps can't delete signups.
      *
      * @return void
@@ -604,6 +690,29 @@ class SignupTest extends TestCase
 
         // Make sure that the signup's new why_participated gets persisted in the database.
         $this->assertEquals($signup->fresh()->why_participated, 'new why participated');
+    }
+
+    /**
+     * Test that a signup cannot be updated without the required scopes.
+     *
+     * PATCH /api/v3/signups/186
+     * @return void
+     */
+    public function testUpdatingASignupWithoutRequiredScopes()
+    {
+        $signup = factory(Signup::class)->create();
+
+        $response = $this->patchJson('api/v3/signups/' . $signup->id, [
+            'why_participated'  => 'new why participated',
+        ]);
+
+        $response->assertStatus(401);
+        // $response->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
+
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->patchJson('api/v3/signups/' . $signup->id, [
+            'why_participated'  => 'new why participated',
+        ]);
+        $response->assertStatus(200);
     }
 
     /**

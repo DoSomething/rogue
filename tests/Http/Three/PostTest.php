@@ -159,6 +159,54 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test a post cannot be created without the required scopes.
+     *
+     * @return void
+     */
+    public function testCreatingAPostWithoutRequiredScopes()
+    {
+        $signup = factory(Signup::class)->create();
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $text = $this->faker->sentence;
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Try to create the post.
+        $response = $this->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'photo',
+            'action'           => 'test-action',
+            'quantity'         => $quantity,
+            'why_participated' => $this->faker->paragraph,
+            'text'             => $text,
+            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+        ]);
+
+        $response->assertStatus(401);
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
+
+        // Create the post!
+        $secondResponse = $this->withAccessToken($signup->northstar_id, 'user', ['activity'])->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'photo',
+            'action'           => 'test-action',
+            'quantity'         => $quantity,
+            'why_participated' => $this->faker->paragraph,
+            'text'             => $text,
+            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+        ]);
+
+        dd($secondResponse->decodeResponseJson());
+        $secondResponse->assertStatus(401);
+        $this->assertEquals('Requires a token with the following scopes: write', $secondResponse->decodeResponseJson()['message']);
+    }
+
+    /**
      * Test that a POST request to /posts with an existing post creates an additional new photo post.
      *
      * @return void

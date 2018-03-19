@@ -43,6 +43,7 @@ class ReactionController extends ApiController
     public function store(Request $request, Post $post)
     {
         $northstarId = getNorthstarId($request);
+
         // Check to see if the post has a reaction from this particular user with id of northstar_id. If not, create one.
         $reaction = Reaction::withTrashed()->firstOrCreate(['northstar_id' => $northstarId, 'post_id' => $post->id]);
 
