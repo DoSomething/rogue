@@ -66,13 +66,11 @@ class Post extends React.Component {
         {/* Post Images */}
         <div className="container__block -third images">
           <div className="post__image">
-            <img src={getImageUrlFromPost(post, 'edited')} />
+            <img src={getImageUrlFromPost(post, 'original')} />
           </div>
           <div className="admin-tools">
             <div className="admin-tools__links">
               <a href={getImageUrlFromPost(post, 'original')} target="_blank">Original Photo</a>
-              <br />
-              <a href={getImageUrlFromPost(post, 'edited')} target="_blank">Edited Photo</a>
             </div>
             {this.props.rotate ?
               <div className="admin-tools__rotate">
