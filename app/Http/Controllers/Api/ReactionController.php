@@ -19,8 +19,6 @@ class ReactionController extends ApiController
      */
     public function __construct()
     {
-        $this->middleware('scope:write', ['only' => ['store']]);
-
         $this->transformer = new ReactionTransformer;
     }
 

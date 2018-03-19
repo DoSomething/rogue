@@ -13,13 +13,13 @@
 $router->get('images/{post}', 'ImagesController@show');
 
 // Legacy API Routes
-$router->group(['prefix' => 'api/v1', 'middleware' => ['legacy-auth', 'scope:activity']], function () {
+$router->group(['prefix' => 'api/v1', 'middleware' => ['legacy-auth']], function () {
     // reportbacks
     $this->get('reportbacks', 'Api\ReportbackController@index');
 });
 
 // v2 routes
-$router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth', 'scope:activity']], function () {
+$router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function () {
 
     // activity
     $this->get('activity', 'Api\ActivityController@index');
