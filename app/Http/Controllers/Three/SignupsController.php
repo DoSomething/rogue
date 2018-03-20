@@ -100,7 +100,6 @@ class SignupsController extends ApiController
             list($column, $direction) = explode(',', $orderBy, 2);
 
             if (in_array($column, Signup::$indexes)) {
-                dd('got a column');
                 $query = $query->orderBy($column, $direction);
             }
 

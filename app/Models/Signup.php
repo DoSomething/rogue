@@ -44,8 +44,6 @@ class Signup extends Model
         'campaign_id', 'campaign_run_id', 'updated_at', 'northstar_id', 'id', 'quantity',
     ];
 
-    protected $appends = ['accepted_quantity'];
-
     /**
      * Each signup has events.
      *
