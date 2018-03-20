@@ -56,6 +56,50 @@ class ReactionTest extends TestCase
     }
 
     /**
+     * Test that the POST /reactions request without activity scope.
+     *
+     * POST /reactions
+     * @return void
+     */
+    public function testPostingReactionWithoutActivityScope()
+    {
+        // Create a post to react to.
+        $post = factory(Post::class)->create();
+
+        $northstarId = $this->faker->uuid;
+
+        // Create a reaction.
+        $response = $this->postJson('api/v3/post/' . $post->id . '/reactions', [
+            'northstar_id' => $northstarId,
+        ]);
+
+        $response->assertStatus(401);
+        $this->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
+    }
+
+    /**
+     * Test that the POST /reactions request without required scopes.
+     *
+     * POST /reactions
+     * @return void
+     */
+    public function testPostingReactionWithoutRequiredScopes()
+    {
+        // Create a post to react to.
+        $post = factory(Post::class)->create();
+
+        $northstarId = $this->faker->uuid;
+
+        // Create a reaction.
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->postJson('api/v3/post/' . $post->id . '/reactions', [
+            'northstar_id' => $northstarId,
+        ]);
+
+        $response->assertStatus(403);
+        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: write');
+    }
+
+    /**
      * Test that the aggregate of total reactions for a post is correct.
      *
      * POST /reactions
@@ -160,5 +204,24 @@ class ReactionTest extends TestCase
                 ],
             ],
         ]);
+    }
+
+    /**
+     * Test for retrieving all reactions of a post without activity scope.
+     *
+     * GET /api/v3/post/:post_id/reactions
+     * @return void
+     */
+    public function testReactionsIndexWithoutRequiredScopes()
+    {
+        $post = factory(Post::class)->create();
+        $post->reactions()->saveMany(
+            factory(Reaction::class, 10)->make()
+        );
+
+        $response = $this->getJson('api/v3/post/' . $post->id . '/reactions');
+
+        $response->assertStatus(403);
+        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: activity');
     }
 }

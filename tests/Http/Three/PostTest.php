@@ -964,7 +964,6 @@ class PostTest extends TestCase
         $response = $this->deleteJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(401);
-
         $this->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
     }
 
@@ -980,7 +979,6 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->deleteJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(403);
-
         $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: write');
     }
 
