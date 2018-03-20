@@ -184,32 +184,17 @@ class Signup extends Model
         return $this->posts->sum('quantity');
     }
 
-    // /**
-    //  * Get the quantity total associated with approved posts under this signup
-    //  *
-    //  * @return int
-    //  */
+    /**
+     * Get the quantity total associated with approved posts under this signup
+     *
+     * @return int
+     */
     public function getAcceptedQuantity()
     {
         $accepted_posts = $this->posts->where('status', 'accepted');
 
         return $accepted_posts->sum('quantity');
     }
-
-    // *
-    //  * Get the quantity total associated with approved posts under this signup
-    //  *
-    //  * @return int
-
-    // public function scopeWithAcceptedQuantity($query)
-    // {
-    //     dd('scopeWithAcceptedQuantity');
-    //     //->addSelect(\DB::raw('SUM(posts.quantity) as accepted_quantity'))
-    //     $query->with(['posts' => function ($query) {
-    //         $query->where('status', 'accepted');
-    //     }])->addSelect(\DB::raw('*'));
-    //     dd($query->get());
-    // }
 
     /**
      * Scope a query to only return signups if a user is an admin, staff, or is owner of signup.

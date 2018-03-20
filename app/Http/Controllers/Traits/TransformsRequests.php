@@ -77,18 +77,12 @@ trait TransformsRequests
 
         $response = $manager->createData($data)->toArray();
 
+        // attempting to sort this response by quantity
         if ($request->orderBy){
             list($column, $direction) = explode(',', $request->orderBy, 2);
 
             if ($column === 'accepted_quantity') {
-                if ($direction == 'desc') {
-                    $direction = SORT_DESC;
-                } else {
-                    $direction = SORT_ASC;
-                }
-
-                dd($response['data']);
-
+                // do the actual sorting here?
             }
         }
         return response()->json($response, $code, [], JSON_UNESCAPED_SLASHES);

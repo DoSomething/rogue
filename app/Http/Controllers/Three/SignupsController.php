@@ -105,15 +105,7 @@ class SignupsController extends ApiController
             }
 
             if ($column === 'accepted_quantity') {
-                // $query = $query->withAcceptedQuantity();
-                $query->with(['posts' => function ($query) {
-                    $query->where('status', 'accepted');
-                }]);
-                // $query->select('*', \DB::raw('SUM(posts.quantity) as accepted_quantity'));
-
-                // $query = $query->orderBy(\DB::raw('accepted_quantity'), $direction);
-
-                // $query->select('*', \DB::raw('SUM(quantity) as accepted_quantity'));
+                // maybe do some sorting stuff here
             }
         }
 
