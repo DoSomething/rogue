@@ -77,7 +77,7 @@ class SignupTest extends TestCase
 
         // Make sure we get the 401 Unauthenticated response
         $response->assertStatus(401);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -103,7 +103,7 @@ class SignupTest extends TestCase
 
         // Make sure we get the 403 Forbidden response
         $response->assertStatus(403);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: write');
+        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -205,7 +205,7 @@ class SignupTest extends TestCase
         $response = $this->getJson('api/v3/signups');
 
         $response->assertStatus(403);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: activity');
+        $this->assertEquals('Requires a token with the following scopes: activity', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -684,6 +684,7 @@ class SignupTest extends TestCase
         $response->assertStatus(403);
         $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: write');
     }
+
     /**
      * Test that non-authenticated user's/apps can't delete signups.
      *
@@ -733,7 +734,7 @@ class SignupTest extends TestCase
         ]);
 
         $response->assertStatus(401);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -751,7 +752,7 @@ class SignupTest extends TestCase
         ]);
 
         $response->assertStatus(403);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: write');
+        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
     }
 
     /**

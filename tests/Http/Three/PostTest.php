@@ -185,7 +185,7 @@ class PostTest extends TestCase
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
         ]);
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
         $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
     }
 
@@ -727,7 +727,7 @@ class PostTest extends TestCase
         $response = $this->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(403);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: activity');
+        $this->assertEquals('Requires a token with the following scopes: activity', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -863,7 +863,7 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(401);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -885,7 +885,7 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(403);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: write');
+        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -964,7 +964,7 @@ class PostTest extends TestCase
         $response = $this->deleteJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(401);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -979,7 +979,7 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->deleteJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(403);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: write');
+        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
     }
 
     /**
