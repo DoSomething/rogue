@@ -42,6 +42,54 @@ class ReviewsTest extends TestCase
     }
 
     /**
+     * Test that a POST request to /reviews without activity scope.
+     *
+     * POST /reviews
+     * @return void
+     */
+    public function testPostingASingleReviewWithoutActivityScope()
+    {
+        Bus::fake();
+
+        // Create a post.
+        $northstarId = $this->faker->northstar_id;
+        $post = factory(Post::class)->create();
+
+        $response = $this->postJson('api/v3/reviews', [
+            'post_id' => $post->id,
+            'status' => 'accepted',
+            'comment' => 'testing',
+        ]);
+
+        $response->assertStatus(401);
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
+    }
+
+    /**
+     * Test that a POST request to /reviews without required scopes.
+     *
+     * POST /reviews
+     * @return void
+     */
+    public function testPostingASingleReviewWithoutRequiredScopes()
+    {
+        Bus::fake();
+
+        // Create a post.
+        $northstarId = $this->faker->northstar_id;
+        $post = factory(Post::class)->create();
+
+        $response = $this->withAccessToken($northstarId, 'admin', ['activity'])->postJson('api/v3/reviews', [
+            'post_id' => $post->id,
+            'status' => 'accepted',
+            'comment' => 'testing',
+        ]);
+
+        $response->assertStatus(403);
+        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
+    }
+
+    /**
      * Test that non-admin cannot review posts.
      *
      * @return void
