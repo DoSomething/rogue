@@ -44,8 +44,8 @@ class PostGroup extends React.Component {
               deletePost={this.props.deletePost}
               showSiblings={false}
               campaign={this.props.campaign}
-              showQuantity
               rotate={this.props.rotate}
+              showQuantity
             />))
             :
             <Empty header={`This user has no ${this.props.groupType} posts`} />
@@ -431,6 +431,7 @@ Signup.propTypes = {
   signup_id: PropTypes.number.isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  rotate: PropTypes.func.isRequired,
 };
 
 export default Signup;
