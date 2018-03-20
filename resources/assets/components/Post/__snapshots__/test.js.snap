@@ -26,13 +26,6 @@ exports[`it renders correctly 1`] = `
         >
           Original Photo
         </a>
-        <br />
-        <a
-          href={null}
-          target="_blank"
-        >
-          Edited Photo
-        </a>
       </div>
     </div>
   </div>
