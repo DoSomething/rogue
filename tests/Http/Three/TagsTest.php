@@ -34,6 +34,46 @@ class TagsTest extends TestCase
     }
 
     /**
+     * Test a POST request to /tags without the activity scope.
+     *
+     * POST /v3/posts/:post_id/tag
+     * @return void
+     */
+    public function testTaggingAPostWithoutActivityScope()
+    {
+        // Create the models that we will be using
+        $post = factory(Post::class)->create();
+
+        // Apply the tag to the post
+        $response = $this->postJson('api/v3/posts/' . $post->id . '/tags', [
+            'tag_name' => 'Good Photo',
+        ]);
+
+        $response->assertStatus(401);
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
+    }
+
+    /**
+     * Test a POST request to /tags without the required scopes.
+     *
+     * POST /v3/posts/:post_id/tag
+     * @return void
+     */
+    public function testTaggingAPostWithoutRequiredScopes()
+    {
+        // Create the models that we will be using
+        $post = factory(Post::class)->create();
+
+        // Apply the tag to the post
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->postJson('api/v3/posts/' . $post->id . '/tags', [
+            'tag_name' => 'Good Photo',
+        ]);
+
+        $response->assertStatus(403);
+        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
+    }
+
+    /**
      * Test that a non-admin cannot tag a post.
      *
      * POST /v3/posts/:post_id/tag
@@ -83,6 +123,52 @@ class TagsTest extends TestCase
         $this->assertEmpty($post->fresh()->tagNames());
 
         // @TODO: Make sure we created a event for the tag once events are refactored.
+    }
+
+    /**
+     * Test  a DELETE request without activity scope.
+     *
+     * DELETE /v3/posts/:post_id/tag
+     * @return void
+     */
+    public function testDeleteTagOnAPostWithoutActivityScope()
+    {
+        // @TODO: Gateway keeps the "Token" from this PHPUnit call for later,
+        // and so we always think requests are anonymous. That's no good!
+        // We can swap this back once that's fixed in Gateway.
+        // $post = factory(Post::class)->create()->tag('Good Photo');
+
+        $post = factory(Post::class)->create();
+
+        $response = $this->deleteJson('api/v3/posts/' . $post->id . '/tags', [
+            'tag_name' => 'Good Photo',
+        ]);
+
+        $response->assertStatus(401);
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
+    }
+
+    /**
+     * Test  a DELETE request without required scopes.
+     *
+     * DELETE /v3/posts/:post_id/tag
+     * @return void
+     */
+    public function testDeleteTagOnAPostWithoutRequiredScopes()
+    {
+        // @TODO: Gateway keeps the "Token" from this PHPUnit call for later,
+        // and so we always think requests are anonymous. That's no good!
+        // We can swap this back once that's fixed in Gateway.
+        // $post = factory(Post::class)->create()->tag('Good Photo');
+
+        $post = factory(Post::class)->create();
+
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->deleteJson('api/v3/posts/' . $post->id . '/tags', [
+            'tag_name' => 'Good Photo',
+        ]);
+
+        $response->assertStatus(403);
+        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
     }
 
     /**
