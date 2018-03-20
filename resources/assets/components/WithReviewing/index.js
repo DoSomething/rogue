@@ -217,7 +217,7 @@ const reviewComponent = (Component, data) => {
           const newState = {...prevState};
           // Add a cache-busting string to the end of the image url
           // so that it changes and triggers a re-render.
-          newState.posts[postId].media.url = json.url + '?time=' + Date.now();
+          newState.posts[postId].media.original_image_url = json.original_image_url + '?time=' + Date.now();
 
           return newState;
         });

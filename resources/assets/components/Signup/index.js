@@ -45,6 +45,7 @@ class PostGroup extends React.Component {
               showSiblings={false}
               campaign={this.props.campaign}
               showQuantity
+              rotate={this.props.rotate}
             />))
             :
             <Empty header={`This user has no ${this.props.groupType} posts`} />
