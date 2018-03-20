@@ -100,13 +100,21 @@ class SignupsController extends ApiController
             list($column, $direction) = explode(',', $orderBy, 2);
 
             if (in_array($column, Signup::$indexes)) {
+                dd('got a column');
                 $query = $query->orderBy($column, $direction);
             }
 
-            // if ($column === 'accepted_quantity') {
+            if ($column === 'accepted_quantity') {
+                // $query = $query->withAcceptedQuantity();
+                $query->with(['posts' => function ($query) {
+                    $query->where('status', 'accepted');
+                }]);
+                // $query->select('*', \DB::raw('SUM(posts.quantity) as accepted_quantity'));
 
-            //     $query = $query->orderBy(DB::raw());
-            // }
+                // $query = $query->orderBy(\DB::raw('accepted_quantity'), $direction);
+
+                // $query->select('*', \DB::raw('SUM(quantity) as accepted_quantity'));
+            }
         }
 
         return $this->paginatedCollection($query, $request);

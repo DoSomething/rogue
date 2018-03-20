@@ -63,7 +63,7 @@ trait TransformsRequests
      * @param  null|string $include
      * @return \Illuminate\Http\JsonResponse
      */
-    public function transform($data, $code = 200, $meta = [], $include = null)
+    public function transform($data, $code = 200, $meta = [], $include = null, $request)
     {
         $data->setMeta($meta);
 
@@ -77,6 +77,20 @@ trait TransformsRequests
 
         $response = $manager->createData($data)->toArray();
 
+        if ($request->orderBy){
+            list($column, $direction) = explode(',', $request->orderBy, 2);
+
+            if ($column === 'accepted_quantity') {
+                if ($direction == 'desc') {
+                    $direction = SORT_DESC;
+                } else {
+                    $direction = SORT_ASC;
+                }
+
+                dd($response['data']);
+
+            }
+        }
         return response()->json($response, $code, [], JSON_UNESCAPED_SLASHES);
     }
 
@@ -144,7 +158,7 @@ trait TransformsRequests
             $includes = explode(',', $request->query('include'));
         }
 
-        return $this->transform($resource, $code, [], $includes);
+        return $this->transform($resource, $code, [], $includes, $request);
     }
 
     /**

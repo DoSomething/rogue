@@ -71,18 +71,14 @@ class SignupTransformer extends TransformerAbstract
         return $this->item($registrar->find($northstar_id), new UserTransformer);
     }
 
-    /**
-     * Include accepted quantity
-     *
-     * @param \Rogue\Models\Signup $signup
-     * @return \League\Fractal\Resource\Collection
-     */
-    public function includeAcceptedQuantity(Signup $signup)
-    {
-        $posts = $signup->posts->where('status', 'accepted');
-        $quantity = $posts->sum('quantity');
-
-        // RETURN THIS AS A League\\Fractal\\TransformerAbstract::includeAcceptedQuantity()
-        return $this->item()['accepted_quantity' => $quantity];
-    }
+    // /**
+    //  * Include accepted quantity
+    //  *
+    //  * @param \Rogue\Models\Signup $signup
+    //  * @return \League\Fractal\Resource\Collection
+    //  */
+    // public function includeAcceptedQuantity(Signup $signup)
+    // {
+    //     return $this->item($signup->getAcceptedQuantity(), new AcceptedQuantityTransformer);
+    // }
 }
