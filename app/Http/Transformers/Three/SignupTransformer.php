@@ -14,7 +14,7 @@ class SignupTransformer extends TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        'posts', 'user', 'accepted_quantity'
+        'posts', 'user', 'accepted_quantity',
     ];
 
     /**
