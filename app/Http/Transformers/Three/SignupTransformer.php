@@ -71,7 +71,6 @@ class SignupTransformer extends TransformerAbstract
         return $this->item($registrar->find($northstar_id), new UserTransformer);
     }
 
-    // We could add this to the base Signup transformer if we want, but this is where I started out
     /**
      * Include accepted quantity
      *
