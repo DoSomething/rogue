@@ -104,7 +104,8 @@ class PostsController extends ApiController
      */
     public function store(PostRequest $request)
     {
-        return 'store';
+        dd('make sure requests are coming in');
+        // return 'store';
         // $northstarId = getNorthstarId($request);
 
         // $signup = $this->signups->get($northstarId, $request['campaign_id'], $request['campaign_run_id']);
