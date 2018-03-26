@@ -80,6 +80,7 @@ class Signup extends React.Component {
     this.api = new RestApiClient(window.location.origin, {
         headers: { 'Authorization' : `Bearer ${window.AUTH}`}
     });
+
     this.updatePost = this.updatePost.bind(this);
     this.updateTag = this.updateTag.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
