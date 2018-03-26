@@ -84,7 +84,7 @@ function getAgeFromBirthdate($birthdate)
  */
 function getNorthstarId($request)
 {
-    if (token()->role() === 'admin') {
+    if (token()->role() === 'admin' || in_array('admin', token()->scopes())) {
         return isset($request['northstar_id']) ? $request['northstar_id'] : auth()->id();
     }
 
