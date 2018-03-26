@@ -87,23 +87,20 @@ class PostRepository
             'action' => isset($data['action']) ? $data['action'] : null,
             'url' => $fileUrl,
             'text' => isset($data['text']) ? $data['text'] : null,
-            'status' => isset($data['status']) ? $data['status'] : null,
+            'status' => isset($data['status']) ? $data['status'] : 'pending',
             'source' => token()->client(),
             'source_details' => isset($data['source_details']) ? $data['source_details'] : null,
             'details' => isset($data['details']) ? $data['details'] : null,
             'remote_addr' => request()->ip(),
         ]);
 
-        // If we are explicitly passed an authenticated user, use their role, otherwise grab it from the session.
-        $authenticatedUserRole = ! $authenticatedUserRole ? auth()->user()->role : $authenticatedUserRole;
-
         // Admin users may provide a status when uploading a post.
-        if (isset($data['status']) && $authenticatedUserRole === 'admin') {
+        if (isset($data['status']) && isset(auth()->user()->role) && auth()->user()->role === 'admin') {
             $post->status = $data['status'];
         }
 
         // Admin users may provide a source when uploading a post.
-        if (isset($data['source']) && $authenticatedUserRole === 'admin') {
+        if (isset($data['source']) && isset(auth()->user()->role) && auth()->user()->role === 'admin') {
             $post->source = $data['source'];
         }
 
