@@ -105,7 +105,7 @@ class Post extends React.Component {
               : null}
 
             <div className="container -padded">
-              <TextBlock title="Photo Caption" content={displayCaption(post)} />
+              <TextBlock title="Text" content={displayCaption(post)} />
             </div>
 
             <div className="container">
