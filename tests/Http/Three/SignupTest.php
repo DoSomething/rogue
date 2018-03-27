@@ -25,7 +25,7 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withAccessToken($northstarId, 'user', ['activity', 'write'])->postJson('api/v3/signups', [
+        $response = $this->withAccessToken($northstarId, 'user')->postJson('api/v3/signups', [
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
             'details' => 'affiliate-messaging',
@@ -81,32 +81,6 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test that a POST request to /signups doesn't create a new signup without activity and write scopes.
-     *
-     * POST /api/v3/signups
-     * @return void
-     */
-    public function testCreatingASignupWithoutRequiredScopes()
-    {
-        $northstarId = $this->faker->northstar_id;
-        $campaignId = str_random(22);
-        $campaignRunId = $this->faker->randomNumber(4);
-
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignup');
-
-        $response = $this->withAccessToken($northstarId, 'user', ['activity'])->postJson('api/v3/signups', [
-            'campaign_id' => $campaignId,
-            'campaign_run_id' => $campaignRunId,
-            'details' => 'affiliate-messaging',
-        ]);
-
-        // Make sure we get the 403 Forbidden response
-        $response->assertStatus(403);
-        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
-    }
-
-    /**
      * Test that a POST request to /signups doesn't create duplicate signups.
      *
      * POST /api/v3/signups
@@ -119,7 +93,7 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withAccessToken($signup->northstar_id, 'user', ['activity', 'write'])->postJson('api/v3/signups', [
+        $response = $this->withAccessToken($signup->northstar_id, 'user')->postJson('api/v3/signups', [
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'source' => 'the-fox-den',
@@ -262,7 +236,7 @@ class SignupTest extends TestCase
            'northstar_id' => $northstarId,
         ]);
 
-        $response = $this->withAccessToken($northstarId, 'user', ['activity', 'write'])->getJson('api/v3/signups');
+        $response = $this->withAccessToken($northstarId, 'user')->getJson('api/v3/signups');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
@@ -647,7 +621,7 @@ class SignupTest extends TestCase
         // Mock time of when the signup is soft deleted.
         $this->mockTime('8/3/2017 14:00:00');
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->deleteJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->deleteJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(200);
 
@@ -668,21 +642,6 @@ class SignupTest extends TestCase
 
         $response->assertStatus(401);
         $this->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
-    }
-
-    /**
-     * Test that a signup cannot be deleted without required scopes
-     *
-     * @return void
-     */
-    public function testDeletingASignupWithoutRequiredScopes()
-    {
-        $signup = factory(Signup::class)->create();
-
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->deleteJson('api/v3/signups/' . $signup->id);
-
-        $response->assertStatus(403);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: write');
     }
 
     /**
@@ -709,7 +668,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->patchJson('api/v3/signups/' . $signup->id, [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->patchJson('api/v3/signups/' . $signup->id, [
             'why_participated'  => 'new why participated',
         ]);
 
@@ -738,24 +697,6 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test that a signup cannot be updated without the required scopes.
-     *
-     * PATCH /api/v3/signups/186
-     * @return void
-     */
-    public function testUpdatingASignupWithoutRequiredScopes()
-    {
-        $signup = factory(Signup::class)->create();
-
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->patchJson('api/v3/signups/' . $signup->id, [
-            'why_participated'  => 'new why participated',
-        ]);
-
-        $response->assertStatus(403);
-        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
-    }
-
-    /**
      * Test valudation for updating a signup.
      *
      * PATCH /api/v3/signups/186
@@ -765,7 +706,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->patchJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->patchJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(422);
     }
@@ -780,7 +721,7 @@ class SignupTest extends TestCase
         $user = factory(User::class)->create();
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withAccessToken($user->id, 'user', ['activity', 'write'])->patchJson('api/v3/signups/' . $signup->id, [
+        $response = $this->withAccessToken($user->id, 'user')->patchJson('api/v3/signups/' . $signup->id, [
             'why_participated' => 'new why participated',
         ]);
 

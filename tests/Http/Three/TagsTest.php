@@ -21,7 +21,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -51,26 +51,6 @@ class TagsTest extends TestCase
 
         $response->assertStatus(401);
         $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
-    }
-
-    /**
-     * Test a POST request to /tags without the required scopes.
-     *
-     * POST /v3/posts/:post_id/tag
-     * @return void
-     */
-    public function testTaggingAPostWithoutRequiredScopes()
-    {
-        // Create the models that we will be using
-        $post = factory(Post::class)->create();
-
-        // Apply the tag to the post
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Photo',
-        ]);
-
-        $response->assertStatus(403);
-        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -108,13 +88,13 @@ class TagsTest extends TestCase
 
         $post = factory(Post::class)->create();
 
-        $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
              'tag_name' => 'Good Photo',
          ]);
 
         $this->assertContains('Good Photo', $post->tagNames());
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->deleteJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->deleteJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -146,29 +126,6 @@ class TagsTest extends TestCase
 
         $response->assertStatus(401);
         $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
-    }
-
-    /**
-     * Test  a DELETE request without required scopes.
-     *
-     * DELETE /v3/posts/:post_id/tag
-     * @return void
-     */
-    public function testDeleteTagOnAPostWithoutRequiredScopes()
-    {
-        // @TODO: Gateway keeps the "Token" from this PHPUnit call for later,
-        // and so we always think requests are anonymous. That's no good!
-        // We can swap this back once that's fixed in Gateway.
-        // $post = factory(Post::class)->create()->tag('Good Photo');
-
-        $post = factory(Post::class)->create();
-
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->deleteJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Photo',
-        ]);
-
-        $response->assertStatus(403);
-        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -208,7 +165,7 @@ class TagsTest extends TestCase
 
         $post = factory(Post::class)->create();
 
-        $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
              'tag_name' => 'Good Photo',
          ]);
 
@@ -221,7 +178,7 @@ class TagsTest extends TestCase
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->deleteJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->deleteJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Tag To Delete',
         ]);
 
@@ -246,7 +203,7 @@ class TagsTest extends TestCase
         // Later, apply the tag to the post
         $this->mockTime('10/21/2017 13:05:00');
 
-        $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -264,7 +221,7 @@ class TagsTest extends TestCase
         $posts = factory(Post::class, 20)->create();
 
         // Later, apply the tag to the post
-        $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/posts/' . $posts->first()->id . '/tags', [
+        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $posts->first()->id . '/tags', [
             'tag_name' => 'get-outta-here',
         ]);
 

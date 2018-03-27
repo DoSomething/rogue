@@ -32,7 +32,7 @@ class PostTest extends TestCase
             ->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($northstarId, 'user', ['activity', 'write'])->json('POST', 'api/v3/posts', [
+        $response = $this->withAccessToken($northstarId, 'user')->json('POST', 'api/v3/posts', [
             'campaign_id'      => $campaignId,
             'campaign_run_id'  => $campaignRunId,
             'type'             => 'photo',
@@ -105,7 +105,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id, 'user', ['activity', 'write'])->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id, 'user')->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -159,37 +159,6 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test a post cannot be created without the activity scope.
-     *
-     * @return void
-     */
-    public function testCreatingAPostWithoutActivityScope()
-    {
-        $signup = factory(Signup::class)->create();
-        $quantity = $this->faker->numberBetween(10, 1000);
-        $text = $this->faker->sentence;
-
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
-
-        // Try to create the post.
-        $response = $this->withAccessToken($signup->northstar_id, 'user', ['activity'])->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
-            'type'             => 'photo',
-            'action'           => 'test-action',
-            'quantity'         => $quantity,
-            'why_participated' => $this->faker->paragraph,
-            'text'             => $text,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-        ]);
-
-        $response->assertStatus(403);
-        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
-    }
-
-    /**
      * Test a post cannot be created without the activity & write scope.
      *
      * @return void
@@ -236,7 +205,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id, 'user', ['activity', 'write'])->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id, 'user')->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -293,7 +262,7 @@ class PostTest extends TestCase
         $secondText = $this->faker->sentence;
         $secondDetails = ['source-detail' => 'broadcast-333', 'other' => 'other'];
 
-        $response = $this->withAccessToken($signup->northstar_id, 'user', ['activity', 'write'])->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id, 'user')->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -363,7 +332,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id, 'user', ['activity', 'write'])->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id, 'user')->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -429,7 +398,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id, 'user', ['activity', 'write'])->postJson('api/v3/posts', [
+        $response = $this->withAccessToken($signup->northstar_id, 'user')->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'campaign_run_id'  => $signup->campaign_run_id,
@@ -522,7 +491,7 @@ class PostTest extends TestCase
         factory(Post::class, 'accepted', 10)->create();
         factory(Post::class, 'rejected', 5)->create();
 
-        $response = $this->withAccessToken($this->randomUserId(), 'user', ['activity'])->getJson('api/v3/posts');
+        $response = $this->withAccessToken($this->randomUserId(), 'user')->getJson('api/v3/posts');
 
         $response->assertStatus(200);
         $response->assertJsonCount(10, 'data');
@@ -572,7 +541,7 @@ class PostTest extends TestCase
         factory(Post::class, 'accepted', 10)->create();
         factory(Post::class, 'rejected', 5)->create();
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->getJson('api/v3/posts');
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->getJson('api/v3/posts');
 
         $response->assertStatus(200);
         $response->assertJsonCount(15, 'data');
@@ -658,7 +627,7 @@ class PostTest extends TestCase
             $rejectedPost->save();
         }
 
-        $response = $this->withAccessToken($northstarId, 'user', ['activity', 'write'])->getJson('api/v3/posts');
+        $response = $this->withAccessToken($northstarId, 'user')->getJson('api/v3/posts');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2, 'data');
@@ -739,7 +708,7 @@ class PostTest extends TestCase
     public function testPostShowAsAdmin()
     {
         $post = factory(Post::class)->create();
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->getJson('api/v3/posts/' . $post->id);
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -782,7 +751,7 @@ class PostTest extends TestCase
     public function testPostShowAsOwner()
     {
         $post = factory(Post::class)->create();
-        $response = $this->withAccessToken($post->northstar_id, 'user', ['activity', 'write'])->getJson('api/v3/posts/' . $post->id);
+        $response = $this->withAccessToken($post->northstar_id, 'user')->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -829,7 +798,7 @@ class PostTest extends TestCase
 
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->patchJson('api/v3/posts/' . $post->id, [
             'text' => 'new caption',
             'quantity' => 8,
         ]);
@@ -867,28 +836,6 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test for updating a post without activity & write scopes.
-     *
-     * PATCH /api/v3/posts/186
-     * @return void
-     */
-    public function testUpdatingAPostWithoutRequiredScopes()
-    {
-        $post = factory(Post::class)->create();
-        $signup = $post->signup;
-
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
-
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->patchJson('api/v3/posts/' . $post->id, [
-            'text' => 'new caption',
-            'quantity' => 8,
-        ]);
-
-        $response->assertStatus(403);
-        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
-    }
-
-    /**
      * Test validation for updating a post.
      *
      * PATCH /api/v3/posts/195
@@ -898,7 +845,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->patchJson('api/v3/posts/' . $post->id, [
             'quantity' => 'this is words not a number!',
             'text' => 'This must be longer than 140 characters to break the validation rules so here I will create a caption that is longer than 140 characters to test.',
         ]);
@@ -920,7 +867,7 @@ class PostTest extends TestCase
         $user = factory(User::class)->create();
         $post = factory(Post::class)->create();
 
-        $response = $this->withAccessToken($user->id, 'user', ['activity', 'write'])->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAccessToken($user->id, 'user')->patchJson('api/v3/posts/' . $post->id, [
             'status' => 'accepted',
             'text' => 'new caption',
         ]);
@@ -944,7 +891,7 @@ class PostTest extends TestCase
         // Mock time of when the post is soft deleted.
         $this->mockTime('8/3/2017 14:00:00');
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->deleteJson('api/v3/posts/' . $post->id);
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->deleteJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
 
@@ -965,21 +912,6 @@ class PostTest extends TestCase
 
         $response->assertStatus(401);
         $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
-    }
-
-    /**
-     * Test deleteing a post without the activity & write scopes.
-     *
-     * @return void
-     */
-    public function testDeletingAPostWithoutRequiredScopes()
-    {
-        $post = factory(Post::class)->create();
-
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->deleteJson('api/v3/posts/' . $post->id);
-
-        $response->assertStatus(403);
-        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -1005,7 +937,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withAccessToken($post->northstar_id, 'user', ['activity', 'write'])->getJson('api/v3/posts/' . $post->id);
+        $response = $this->withAccessToken($post->northstar_id, 'user')->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
 
@@ -1041,7 +973,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->getJson('api/v3/posts/' . $post->id);
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
 

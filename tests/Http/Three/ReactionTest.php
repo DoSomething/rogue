@@ -25,7 +25,7 @@ class ReactionTest extends TestCase
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
@@ -39,7 +39,7 @@ class ReactionTest extends TestCase
         ]);
 
         // React (unlike) again to the same post with the same user.
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
@@ -78,28 +78,6 @@ class ReactionTest extends TestCase
     }
 
     /**
-     * Test that the POST /reactions request without required scopes.
-     *
-     * POST /reactions
-     * @return void
-     */
-    public function testPostingReactionWithoutRequiredScopes()
-    {
-        // Create a post to react to.
-        $post = factory(Post::class)->create();
-
-        $northstarId = $this->faker->uuid;
-
-        // Create a reaction.
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->postJson('api/v3/post/' . $post->id . '/reactions', [
-            'northstar_id' => $northstarId,
-        ]);
-
-        $response->assertStatus(403);
-        $this->assertEquals('Requires a token with the following scopes: write', $response->decodeResponseJson()['message']);
-    }
-
-    /**
      * Test that the aggregate of total reactions for a post is correct.
      *
      * POST /reactions
@@ -110,7 +88,7 @@ class ReactionTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -123,7 +101,7 @@ class ReactionTest extends TestCase
         ]);
 
         // A second user reacts to the same post..
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity', 'write'])->postJson('api/v3/post/' . $post->id . '/reactions', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/post/' . $post->id . '/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -190,7 +168,7 @@ class ReactionTest extends TestCase
             factory(Reaction::class, 10)->make()
         );
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->getJson('api/v3/post/' . $post->id . '/reactions');
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->getJson('api/v3/post/' . $post->id . '/reactions');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
