@@ -60,39 +60,42 @@ class Post extends React.Component {
     const signup = this.props.signup;
     const campaign = this.props.campaign;
     const quantity = post.quantity != null ? post.quantity : 0;
+    const containerSize = post.type === 'photo' ? '-third' : '-half';
 
     return (
       <div className="post container__row">
         {/* Post Images */}
-        <div className="container__block -third images">
-          <div className="post__image">
-            <img src={getImageUrlFromPost(post, 'original')} />
-          </div>
-          <div className="admin-tools">
-            <div className="admin-tools__links">
-              <a href={getImageUrlFromPost(post, 'original')} target="_blank">Original Photo</a>
+        {post.type === 'photo' ?
+          <div className="container__block -third">
+            <div className="post__image">
+              <img src={getImageUrlFromPost(post, 'original')} />
             </div>
-            {this.props.rotate ?
-              <div className="admin-tools__rotate">
-                {this.state.loading ?
-                  <div className="spinner" />
-                  :
-                  <a className="button -tertiary rotate" onClick={this.handleClick} />
-                }
+            <div className="admin-tools">
+              <div className="admin-tools__links">
+                <a href={getImageUrlFromPost(post, 'original')} target="_blank">Original Photo</a>
               </div>
+              {this.props.rotate ?
+                <div className="admin-tools__rotate">
+                  {this.state.loading ?
+                    <div className="spinner" />
+                    :
+                    <a className="button -tertiary rotate" onClick={this.handleClick} />
+                  }
+                </div>
+                : null}
+            </div>
+            {this.props.showSiblings ?
+              <ul className="gallery -duo">
+                {
+                  map(this.getOtherPosts(post), (post, key) => <PostTile key={key} details={post} />)
+                }
+              </ul>
               : null}
           </div>
-          {this.props.showSiblings ?
-            <ul className="gallery -duo">
-              {
-                map(this.getOtherPosts(post), (post, key) => <PostTile key={key} details={post} />)
-              }
-            </ul>
-            : null}
-        </div>
+          : null}
 
         {/* User and Post information */}
-        <div className="container__block -third">
+        <div className={"container__block " + containerSize}>
           <UserInformation user={user} linkSignup={signup.signup_id}>
             {this.props.showQuantity ?
               <Quantity quantity={quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
@@ -115,7 +118,7 @@ class Post extends React.Component {
         </div>
 
         {/* Review block and meta data */}
-        <div className="container__block -third">
+        <div className={"container__block " + containerSize}>
           <div className="container__row">
             <ReviewBlock post={post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
           </div>
