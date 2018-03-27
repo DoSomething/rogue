@@ -491,7 +491,7 @@ class PostTest extends TestCase
         factory(Post::class, 'accepted', 10)->create();
         factory(Post::class, 'rejected', 5)->create();
 
-        $response = $this->withAccessToken($this->randomUserId(), 'user')->getJson('api/v3/posts');
+        $response = $this->withStandardAccessToken()->getJson('api/v3/posts');
 
         $response->assertStatus(200);
         $response->assertJsonCount(10, 'data');
@@ -541,7 +541,7 @@ class PostTest extends TestCase
         factory(Post::class, 'accepted', 10)->create();
         factory(Post::class, 'rejected', 5)->create();
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin')->getJson('api/v3/posts');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
 
         $response->assertStatus(200);
         $response->assertJsonCount(15, 'data');
