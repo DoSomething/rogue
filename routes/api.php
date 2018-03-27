@@ -48,7 +48,7 @@ $router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function
 });
 
 // v3 routes
-$router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api', 'scopes:activity']], function () {
+$router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function () {
     // signups
     $this->post('signups', 'Three\SignupsController@store');
     $this->get('signups', 'Three\SignupsController@index');
