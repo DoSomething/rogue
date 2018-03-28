@@ -157,7 +157,7 @@ POST /api/v3/posts
   - **why_participated**: (string).
     The reason why the user participated.
   - **text**: (string).
-    Corresponding text for the post (could be photo caption or other words). 255 max characters.
+    Corresponding text for the post (could be photo caption or other words). 256 max characters.
   - **status**: (string).
     Option to set status upon creation if admin uploads post for user.
   - **file**: (file) required for photo posts.
