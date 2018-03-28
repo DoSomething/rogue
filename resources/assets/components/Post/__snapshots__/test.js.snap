@@ -5,7 +5,7 @@ exports[`it renders correctly 1`] = `
   className="post container__row"
 >
   <div
-    className="container__block -third images"
+    className="container__block -third"
   >
     <div
       className="post__image"
@@ -44,9 +44,7 @@ exports[`it renders correctly 1`] = `
           >
             Photo Caption
           </h4>
-          <p>
-            Here is my awesome caption!
-          </p>
+          <p />
         </div>
       </div>
       <div
