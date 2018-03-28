@@ -61,6 +61,7 @@ class Post extends React.Component {
     const campaign = this.props.campaign;
     const quantity = post.quantity != null ? post.quantity : 0;
     const containerSize = post.type === 'photo' ? '-third' : '-half';
+    const textOrCaption = post.type === 'photo' ? 'Photo Caption' : 'Text';
 
     return (
       <div className="post container__row">
@@ -95,7 +96,7 @@ class Post extends React.Component {
           : null}
 
         {/* User and Post information */}
-        <div className={"container__block " + containerSize}>
+        <div className={`container__block ${containerSize}`}>
           <UserInformation user={user} linkSignup={signup.signup_id}>
             {this.props.showQuantity ?
               <Quantity quantity={quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
@@ -108,7 +109,7 @@ class Post extends React.Component {
               : null}
 
             <div className="container -padded">
-              <TextBlock title="Text" content={displayCaption(post)} />
+              <TextBlock title={textOrCaption} content={displayCaption(post)} />
             </div>
 
             <div className="container">
@@ -118,7 +119,7 @@ class Post extends React.Component {
         </div>
 
         {/* Review block and meta data */}
-        <div className={"container__block " + containerSize}>
+        <div className={`container__block ${containerSize}`}>
           <div className="container__row">
             <ReviewBlock post={post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
           </div>
