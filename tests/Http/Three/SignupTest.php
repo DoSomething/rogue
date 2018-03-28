@@ -140,7 +140,7 @@ class SignupTest extends TestCase
     {
         factory(Signup::class, 10)->create();
 
-        $response = $this->withAccessToken($this->randomUserId(), 'user', ['activity'])->getJson('api/v3/signups');
+        $response = $this->getJson('api/v3/signups');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -164,22 +164,6 @@ class SignupTest extends TestCase
                 ],
             ],
         ]);
-    }
-
-    /**
-     * Test that user is not visible without activity scope.
-     *
-     * GET /api/v3/signups
-     * @return void
-     */
-    public function testSignupsIndexWithoutRequiredScopes()
-    {
-        factory(Signup::class, 10)->create();
-
-        $response = $this->getJson('api/v3/signups');
-
-        $response->assertStatus(403);
-        $this->assertEquals('Requires a token with the following scopes: activity', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -277,7 +261,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with annoymous user that no posts are returned.
-        $response = $this->withAccessToken($this->randomUserId(), 'user', ['activity'])->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->getJson('api/v3/signups' . '?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -522,7 +506,7 @@ class SignupTest extends TestCase
     public function testSignupShowAsNonAdminNonOwner()
     {
         $signup = factory(Signup::class)->create();
-        $response = $this->withAccessToken($this->randomUserId(), 'user', ['activity'])->getJson('api/v3/signups/' . $signup->id);
+        $response = $this->getJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -536,21 +520,6 @@ class SignupTest extends TestCase
                 'updated_at',
             ],
         ]);
-    }
-
-    /**
-     * Test for retrieving a specific signup without activity scope.
-     *
-     * GET /api/v3/signups/:signup_id
-     * @return void
-     */
-    public function testSignupShowWithoutRequiredScopes()
-    {
-        $signup = factory(Signup::class)->create();
-        $response = $this->getJson('api/v3/signups/' . $signup->id);
-
-        $response->assertStatus(403);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: activity');
     }
 
     /**

@@ -168,7 +168,7 @@ class ReactionTest extends TestCase
             factory(Reaction::class, 10)->make()
         );
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin')->getJson('api/v3/post/' . $post->id . '/reactions');
+        $response = $this->getJson('api/v3/post/' . $post->id . '/reactions');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -182,24 +182,5 @@ class ReactionTest extends TestCase
                 ],
             ],
         ]);
-    }
-
-    /**
-     * Test for retrieving all reactions of a post without activity scope.
-     *
-     * GET /api/v3/post/:post_id/reactions
-     * @return void
-     */
-    public function testReactionsIndexWithoutRequiredScopes()
-    {
-        $post = factory(Post::class)->create();
-        $post->reactions()->saveMany(
-            factory(Reaction::class, 10)->make()
-        );
-
-        $response = $this->getJson('api/v3/post/' . $post->id . '/reactions');
-
-        $response->assertStatus(403);
-        $this->assertEquals('Requires a token with the following scopes: activity', $response->decodeResponseJson()['message']);
     }
 }

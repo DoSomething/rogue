@@ -491,7 +491,7 @@ class PostTest extends TestCase
         factory(Post::class, 'accepted', 10)->create();
         factory(Post::class, 'rejected', 5)->create();
 
-        $response = $this->withStandardAccessToken()->getJson('api/v3/posts');
+        $response = $this->getJson('api/v3/posts');
 
         $response->assertStatus(200);
         $response->assertJsonCount(10, 'data');
@@ -585,24 +585,6 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test for retrieving all posts without the required scope.
-     *
-     * GET /api/v3/posts
-     * @return void
-     */
-    public function testPostsIndexWithoutRequiredScope()
-    {
-        // Admins should see all posts.
-        factory(Post::class, 'accepted', 10)->create();
-        factory(Post::class, 'rejected', 5)->create();
-
-        $response = $this->getJson('api/v3/posts');
-
-        $response->assertStatus(403);
-        $this->assertEquals($response->decodeResponseJson()['message'], 'Requires a token with the following scopes: activity');
-    }
-
-    /**
      * Test for retrieving all posts as owner.
      * Owners should see tags, source, and remote_addr.
      *
@@ -678,25 +660,45 @@ class PostTest extends TestCase
      */
     public function testPostShowAsNonAdminNonOwner()
     {
+        // Anon user should not be able to see a pending post if it doesn't belong to them and if they're not an admin.
         $post = factory(Post::class)->create();
         $response = $this->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(403);
-    }
 
-    /**
-     * Test for retrieving a specific post without the activity scope.
-     *
-     * GET /api/v3/post/:post_id
-     * @return void
-     */
-    public function testPostShowWithoutActivityScope()
-    {
-        $post = factory(Post::class)->create();
+        // Anon user should not be able to see a rejected post if it doesn't belong to them and if they're not an admin.
+        $post = factory(Post::class, 'rejected')->create();
         $response = $this->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(403);
-        $this->assertEquals('Requires a token with the following scopes: activity', $response->decodeResponseJson()['message']);
+
+        // Anon user is able to see an accepted post even if it doesn't belong to them and if they're not an admin.
+        $post = factory(Post::class, 'accepted')->create();
+        $response = $this->getJson('api/v3/posts/' . $post->id);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'signup_id',
+                'northstar_id',
+                'type',
+                'action',
+                'media' => [
+                    'url',
+                    'original_image_url',
+                    'text',
+                ],
+                'quantity',
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
     }
 
     /**
@@ -961,7 +963,7 @@ class PostTest extends TestCase
 
         $json = $response->json();
 
-        $this->assertEquals('Requires a token with the following scopes: activity', $json['message']);
+        $this->assertEquals('You don\'t have the correct role to view this post!', $json['message']);
     }
 
     /**
