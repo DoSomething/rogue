@@ -2,6 +2,7 @@
 
 namespace Rogue\Console\Commands;
 
+use Carbon\Carbon;
 use League\Csv\Reader;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
@@ -71,7 +72,7 @@ class ImportSignupsCommand extends Command
                     'campaign_id' => $missing_signup['campaign_node_id'],
                     'campaign_run_id' => $missing_signup['campaign_run_id'],
                     'source' => 'sms',
-                    'created_at' => $missing_signup['signup_created_at_timestamp'],
+                    'created_at' => $missing_signup['signup_created_at_timestamp'] ? $missing_signup['signup_created_at_timestamp']: Carbon::now(),
                 ]);
 
                 if ($signup->id % $logfreq == 0) {
