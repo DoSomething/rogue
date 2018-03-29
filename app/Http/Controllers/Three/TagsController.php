@@ -35,6 +35,8 @@ class TagsController extends ApiController
 
         $this->middleware('auth:api');
         $this->middleware('role:admin');
+        $this->middleware('scopes:write');
+        $this->middleware('scopes:activity');
     }
 
     /**

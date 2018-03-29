@@ -43,8 +43,10 @@ class SignupsController extends ApiController
         $this->signups = $signups;
         $this->transformer = new SignupTransformer;
 
+        $this->middleware('scopes:activity');
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
         $this->middleware('role:admin', ['only' => ['destroy']]);
+        $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
     }
 
     /**

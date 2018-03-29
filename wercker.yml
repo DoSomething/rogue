@@ -31,6 +31,7 @@ build:
             cp .env.dusk.ci .env # switch to our dusk config
             chmod +x vendor/laravel/dusk/bin/chromedriver-linux
             ./vendor/laravel/dusk/bin/chromedriver-linux 2>&1 &
+            php artisan gateway:key
             php artisan serve 2>&1 &
             sleep 5 # wait for artisan server to start up
             php artisan dusk

@@ -1,4 +1,5 @@
 ## Reactions
+All `v3 /post/{post}/reactions` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
 
 ```
 ## Create or update a Reaction

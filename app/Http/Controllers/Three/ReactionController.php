@@ -29,7 +29,9 @@ class ReactionController extends ApiController
     {
         $this->transformer = new ReactionTransformer;
 
+        $this->middleware('scopes:activity');
         $this->middleware('auth:api', ['only' => ['store']]);
+        $this->middleware('scopes:write', ['only' => ['store']]);
     }
 
     /**

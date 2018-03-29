@@ -1,4 +1,5 @@
 ## Tags
+All `v3 /posts/{post}/tags` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
 
 ## Tag a Post
 

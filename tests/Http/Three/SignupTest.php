@@ -25,7 +25,7 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withAccessToken($northstarId)->postJson('api/v3/signups', [
+        $response = $this->withAccessToken($northstarId, 'user')->postJson('api/v3/signups', [
             'campaign_id' => $campaignId,
             'campaign_run_id' => $campaignRunId,
             'details' => 'affiliate-messaging',
@@ -55,6 +55,32 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test that a POST request to /signups doesn't create a new signup without activity scope.
+     *
+     * POST /api/v3/signups
+     * @return void
+     */
+    public function testCreatingASignupWithoutActivityScope()
+    {
+        $northstarId = $this->faker->northstar_id;
+        $campaignId = str_random(22);
+        $campaignRunId = $this->faker->randomNumber(4);
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignup');
+
+        $response = $this->postJson('api/v3/signups', [
+            'campaign_id' => $campaignId,
+            'campaign_run_id' => $campaignRunId,
+            'details' => 'affiliate-messaging',
+        ]);
+
+        // Make sure we get the 401 Unauthenticated response
+        $response->assertStatus(401);
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
+    }
+
+    /**
      * Test that a POST request to /signups doesn't create duplicate signups.
      *
      * POST /api/v3/signups
@@ -67,7 +93,7 @@ class SignupTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/signups', [
+        $response = $this->withAccessToken($signup->northstar_id, 'user')->postJson('api/v3/signups', [
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'source' => 'the-fox-den',
@@ -151,7 +177,7 @@ class SignupTest extends TestCase
     {
         factory(Signup::class, 10)->create();
 
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups');
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->getJson('api/v3/signups');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -194,7 +220,7 @@ class SignupTest extends TestCase
            'northstar_id' => $northstarId,
         ]);
 
-        $response = $this->withAccessToken($northstarId)->getJson('api/v3/signups');
+        $response = $this->withAccessToken($northstarId, 'user')->getJson('api/v3/signups');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
@@ -255,7 +281,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with admin that posts are returned.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->getJson('api/v3/signups' . '?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -275,7 +301,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with admin that posts are returned.
-        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->withAccessToken($post->northstar_id, 'user', ['activity'])->getJson('api/v3/signups' . '?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -451,7 +477,7 @@ class SignupTest extends TestCase
         }
 
         // Order results by descending quantity
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,desc');
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->getJson('api/v3/signups?orderBy=quantity,desc');
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
@@ -461,7 +487,7 @@ class SignupTest extends TestCase
         $this->assertEquals(4, $decodedResponse['data'][1]['quantity']);
 
         // Order results by ascending quantity
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,asc');
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->getJson('api/v3/signups?orderBy=quantity,asc');
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
@@ -505,7 +531,7 @@ class SignupTest extends TestCase
     public function testSignupShowAsAdmin()
     {
         $signup = factory(Signup::class)->create();
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAccessToken($this->randomUserId(), 'admin', ['activity'])->getJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -533,7 +559,7 @@ class SignupTest extends TestCase
     public function testSignupShowAsOwner()
     {
         $signup = factory(Signup::class)->create();
-        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAccessToken($signup->northstar_id, 'user', ['activity'])->getJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -564,12 +590,27 @@ class SignupTest extends TestCase
         // Mock time of when the signup is soft deleted.
         $this->mockTime('8/3/2017 14:00:00');
 
-        $response = $this->withAdminAccessToken()->deleteJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->deleteJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(200);
 
         // Make sure that the signup's deleted_at gets persisted in the database.
         $this->assertEquals($signup->fresh()->deleted_at->toTimeString(), '14:00:00');
+    }
+
+    /**
+     * Test that a signup cannot be deleted without activity scope
+     *
+     * @return void
+     */
+    public function testDeletingASignupWithoutActivityScope()
+    {
+        $signup = factory(Signup::class)->create();
+
+        $response = $this->deleteJson('api/v3/signups/' . $signup->id);
+
+        $response->assertStatus(401);
+        $this->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
     }
 
     /**
@@ -596,7 +637,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/signups/' . $signup->id, [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->patchJson('api/v3/signups/' . $signup->id, [
             'why_participated'  => 'new why participated',
         ]);
 
@@ -604,6 +645,24 @@ class SignupTest extends TestCase
 
         // Make sure that the signup's new why_participated gets persisted in the database.
         $this->assertEquals($signup->fresh()->why_participated, 'new why participated');
+    }
+
+    /**
+     * Test that a signup cannot be updated without the activity scope.
+     *
+     * PATCH /api/v3/signups/186
+     * @return void
+     */
+    public function testUpdatingASignupWithoutActivityScope()
+    {
+        $signup = factory(Signup::class)->create();
+
+        $response = $this->patchJson('api/v3/signups/' . $signup->id, [
+            'why_participated'  => 'new why participated',
+        ]);
+
+        $response->assertStatus(401);
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -616,7 +675,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->patchJson('api/v3/signups/' . $signup->id);
 
         $response->assertStatus(422);
     }
@@ -631,7 +690,7 @@ class SignupTest extends TestCase
         $user = factory(User::class)->create();
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withAccessToken($user->id)->patchJson('api/v3/signups/' . $signup->id, [
+        $response = $this->withAccessToken($user->id, 'user')->patchJson('api/v3/signups/' . $signup->id, [
             'why_participated' => 'new why participated',
         ]);
 
@@ -666,7 +725,7 @@ class SignupTest extends TestCase
         $secondSignup->quantity = $secondSignup->getQuantity();
         $secondSignup->save();
 
-        $response = $this->getJson('api/v3/signups');
+        $response = $this->withAccessToken($this->randomUserId(), 'user', ['activity'])->getJson('api/v3/signups');
 
         $response->assertStatus(200);
         $response->assertJson([

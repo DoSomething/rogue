@@ -21,7 +21,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -31,6 +31,26 @@ class TagsTest extends TestCase
         $this->assertContains('Good Photo', $post->tagNames());
 
         // @TODO: Make sure we created a event for the tag once events are refactored.
+    }
+
+    /**
+     * Test a POST request to /tags without the activity scope.
+     *
+     * POST /v3/posts/:post_id/tag
+     * @return void
+     */
+    public function testTaggingAPostWithoutActivityScope()
+    {
+        // Create the models that we will be using
+        $post = factory(Post::class)->create();
+
+        // Apply the tag to the post
+        $response = $this->postJson('api/v3/posts/' . $post->id . '/tags', [
+            'tag_name' => 'Good Photo',
+        ]);
+
+        $response->assertStatus(401);
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -68,13 +88,13 @@ class TagsTest extends TestCase
 
         $post = factory(Post::class)->create();
 
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
              'tag_name' => 'Good Photo',
          ]);
 
         $this->assertContains('Good Photo', $post->tagNames());
 
-        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->deleteJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -83,6 +103,29 @@ class TagsTest extends TestCase
         $this->assertEmpty($post->fresh()->tagNames());
 
         // @TODO: Make sure we created a event for the tag once events are refactored.
+    }
+
+    /**
+     * Test  a DELETE request without activity scope.
+     *
+     * DELETE /v3/posts/:post_id/tag
+     * @return void
+     */
+    public function testDeleteTagOnAPostWithoutActivityScope()
+    {
+        // @TODO: Gateway keeps the "Token" from this PHPUnit call for later,
+        // and so we always think requests are anonymous. That's no good!
+        // We can swap this back once that's fixed in Gateway.
+        // $post = factory(Post::class)->create()->tag('Good Photo');
+
+        $post = factory(Post::class)->create();
+
+        $response = $this->deleteJson('api/v3/posts/' . $post->id . '/tags', [
+            'tag_name' => 'Good Photo',
+        ]);
+
+        $response->assertStatus(401);
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -122,7 +165,7 @@ class TagsTest extends TestCase
 
         $post = factory(Post::class)->create();
 
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
              'tag_name' => 'Good Photo',
          ]);
 
@@ -135,7 +178,7 @@ class TagsTest extends TestCase
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
-        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAccessToken($this->randomUserId(), 'admin')->deleteJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Tag To Delete',
         ]);
 
@@ -160,7 +203,7 @@ class TagsTest extends TestCase
         // Later, apply the tag to the post
         $this->mockTime('10/21/2017 13:05:00');
 
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -178,7 +221,7 @@ class TagsTest extends TestCase
         $posts = factory(Post::class, 20)->create();
 
         // Later, apply the tag to the post
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $posts->first()->id . '/tags', [
+        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $posts->first()->id . '/tags', [
             'tag_name' => 'get-outta-here',
         ]);
 
