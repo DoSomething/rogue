@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers\Three;
 use Rogue\Models\Post;
 use Rogue\Models\Reaction;
 use Illuminate\Http\Request;
-use Rogue\Http\Controllers\Api\ApiController;
+use Rogue\Http\Controllers\Legacy\Api\ApiController;
 use Rogue\Http\Transformers\Three\ReactionTransformer;
 
 class ReactionController extends ApiController

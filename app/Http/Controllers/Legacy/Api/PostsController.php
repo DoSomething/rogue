@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Api;
+namespace Rogue\Http\Controllers\Legacy\Api;
 
 use Rogue\Services\PostService;
 use Rogue\Repositories\SignupRepository;

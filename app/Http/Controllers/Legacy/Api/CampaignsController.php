@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Api;
+namespace Rogue\Http\Controllers\Legacy\Api;
 
 use Illuminate\Http\Request;
 use Rogue\Services\CampaignService;

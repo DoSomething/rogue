@@ -15,36 +15,36 @@ $router->get('images/{post}', 'ImagesController@show');
 // Legacy API Routes
 $router->group(['prefix' => 'api/v1', 'middleware' => ['legacy-auth']], function () {
     // reportbacks
-    $this->get('reportbacks', 'Api\ReportbackController@index');
+    $this->get('reportbacks', 'Legacy\Api\ReportbackController@index');
 });
 
 // v2 routes
 $router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function () {
 
     // activity
-    $this->get('activity', 'Api\ActivityController@index');
+    $this->get('activity', 'Legacy\Api\ActivityController@index');
 
     // events
-    $this->get('events', 'Api\EventController@index');
+    $this->get('events', 'Legacy\Api\EventController@index');
 
     // posts
-    $this->post('posts', 'Api\PostsController@store');
-    $this->get('posts', 'Api\PostsController@index');
+    $this->post('posts', 'Legacy\Api\PostsController@store');
+    $this->get('posts', 'Legacy\Api\PostsController@index');
 
     // reactions
-    $this->post('reactions', 'Api\ReactionController@store');
+    $this->post('reactions', 'Legacy\Api\ReactionController@store');
 
     // reviews
-    $this->post('reviews', 'Api\ReviewsController@reviews');
+    $this->post('reviews', 'Legacy\Api\ReviewsController@reviews');
 
     // signups
-    $this->post('signups', 'Api\SignupsController@store');
+    $this->post('signups', 'Legacy\Api\SignupsController@store');
 
     // tags
-    $this->post('tags', 'Api\TagsController@store');
+    $this->post('tags', 'Legacy\Api\TagsController@store');
 
     // Campaigns
-    $this->get('campaigns', 'Api\CampaignsController@index');
+    $this->get('campaigns', 'Legacy\Api\CampaignsController@index');
 });
 
 // v3 routes

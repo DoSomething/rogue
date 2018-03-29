@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Api;
+namespace Rogue\Http\Controllers\Legacy\Api;
 
 use Rogue\Models\Post;
 use Rogue\Repositories\PostRepository;

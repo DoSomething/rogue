@@ -6,7 +6,7 @@ use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Services\Three\PostService;
 use Rogue\Http\Requests\Three\PostRequest;
-use Rogue\Http\Controllers\Api\ApiController;
+use Rogue\Http\Controllers\Legacy\Api\ApiController;
 use Rogue\Repositories\Three\SignupRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
