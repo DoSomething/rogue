@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers\Three;
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Repositories\Three\PostRepository;
-use Rogue\Http\Controllers\Legacy\Api\ApiController;
+use Rogue\Http\Controllers\Legacy\Two\ApiController;
 use Rogue\Http\Transformers\Three\PostTransformer;
 
 class TagsController extends ApiController
