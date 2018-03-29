@@ -3,7 +3,7 @@
 namespace Rogue\Services;
 
 use Rogue\Models\Post;
-use Rogue\Jobs\SendPostToBlink;
+use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Repositories\PostRepository;
@@ -46,7 +46,7 @@ class PostService
 
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $should_send_to_blink) {
-            SendPostToBlink::dispatch($post);
+            SendPostToCustomerIo::dispatch($post);
         }
 
         // Dispatch jobs to send post and signup to Quasar
@@ -99,7 +99,7 @@ class PostService
 
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $postOrSignup instanceof Post && $should_send_to_blink) {
-            SendPostToBlink::dispatch($postOrSignup);
+            SendPostToCustomerIo::dispatch($postOrSignup);
 
             // Log that a post was created.
             info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);

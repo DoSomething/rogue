@@ -3,7 +3,7 @@
 namespace Rogue\Services\Three;
 
 use Rogue\Models\Post;
-use Rogue\Jobs\SendPostToBlink;
+use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendDeletedPostToQuasar;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
@@ -47,7 +47,7 @@ class PostService
 
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $should_send_to_blink) {
-            SendPostToBlink::dispatch($post);
+            SendPostToCustomerIo::dispatch($post);
         }
 
         SendPostToQuasar::dispatch($post);
@@ -73,7 +73,7 @@ class PostService
         // unless 'dont_send_to_blink' is TRUE.
         $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
         if (config('features.blink') && $should_send_to_blink) {
-            SendPostToBlink::dispatch($post);
+            SendPostToCustomerIo::dispatch($post);
         }
 
         SendPostToQuasar::dispatch($post);

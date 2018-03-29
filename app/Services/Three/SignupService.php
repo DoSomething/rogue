@@ -2,7 +2,7 @@
 
 namespace Rogue\Services\Three;
 
-use Rogue\Jobs\SendSignupToBlink;
+use Rogue\Jobs\SendSignupToCustomerIo;
 use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Jobs\SendDeletedSignupToQuasar;
 use Rogue\Repositories\Three\SignupRepository;
@@ -43,7 +43,7 @@ class SignupService
 
         // Save the new signup in Customer.io, via Blink.
         if (config('features.blink') && $should_send_to_blink) {
-            SendSignupToBlink::dispatch($signup);
+            SendSignupToCustomerIo::dispatch($signup);
         }
 
         // Dispatch job to send signup to Quasar
