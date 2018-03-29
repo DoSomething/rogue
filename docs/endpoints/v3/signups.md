@@ -53,7 +53,7 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
 
 ### Optional Query Parameters
 - **include** _(string)_
-  - Include additional related records in the response: `posts`, `user`
+  - Include additional related records in the response: `posts`, `user`, `accepted_quantity`
   - If using multiple include params, they must be comma-separated
   - e.g. `/api/v3/signups/1?include=user,posts`
 - **filter[column]** _(string)_

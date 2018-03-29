@@ -14,7 +14,7 @@ class SignupTransformer extends TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        'posts', 'user',
+        'posts', 'user', 'accepted_quantity',
     ];
 
     /**
@@ -69,5 +69,16 @@ class SignupTransformer extends TransformerAbstract
         $northstar_id = $signup->northstar_id;
 
         return $this->item($registrar->find($northstar_id), new UserTransformer);
+    }
+
+    /**
+     * Include accepted quantity
+     *
+     * @param \Rogue\Models\Signup $signup
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeAcceptedQuantity(Signup $signup)
+    {
+        return $this->item($signup->getAcceptedQuantity(), new AcceptedQuantityTransformer);
     }
 }

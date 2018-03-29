@@ -183,6 +183,18 @@ class Signup extends Model
     }
 
     /**
+     * Get the quantity total associated with approved posts under this signup
+     *
+     * @return int
+     */
+    public function getAcceptedQuantity()
+    {
+        $accepted_posts = $this->posts->where('status', 'accepted');
+
+        return $accepted_posts->sum('quantity');
+    }
+
+    /**
      * Scope a query to only return signups if a user is an admin, staff, or is owner of signup.
      *
      * @return \Illuminate\Database\Eloquent\Builder
