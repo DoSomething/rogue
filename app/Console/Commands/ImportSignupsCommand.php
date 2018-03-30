@@ -78,6 +78,10 @@ class ImportSignupsCommand extends Command
                 if ($signup->id % $logfreq == 0) {
                     info('rogue:signupimport: Created signup ' . $signup->id);
                 }
+
+                // Business Logic
+                SendSignupToQuasar::dispatch($signup);
+                SendSignupToBlink::dispatch($signup);
             } else {
                 if ($existing_signup->id % $logfreq == 0) {
                     info('rogue:signupimport: Signup ' . $existing_signup->id . ' already exists! Moving on.');
