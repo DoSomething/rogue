@@ -17,38 +17,38 @@ $router->get('login', 'Auth\AuthController@getLogin');
 $router->get('logout', 'Auth\AuthController@getLogout');
 
 // Campaigns
-$router->get('campaigns', 'CampaignsController@index');
-$router->get('campaigns/{id}/inbox', 'CampaignsController@showInbox');
-$router->get('campaigns/{id}', 'CampaignsController@showCampaign')->name('campaigns.show');
+$router->get('campaigns', 'Web\CampaignsController@index');
+$router->get('campaigns/{id}/inbox', 'Web\CampaignsController@showInbox');
+$router->get('campaigns/{id}', 'Web\CampaignsController@showCampaign')->name('campaigns.show');
 
 // Exports
-$router->get('exports/{id}', 'ExportController@show');
+$router->get('exports/{id}', 'Web\ExportController@show');
 
 // Posts
-$router->post('posts', 'PostController@store');
-$router->get('posts', 'PostController@index');
-$router->delete('posts/{id}', 'PostController@destroy');
+$router->post('posts', 'Web\PostController@store');
+$router->get('posts', 'Web\PostController@index');
+$router->delete('posts/{id}', 'Web\PostController@destroy');
 
 // Reviews
-$router->put('reviews', 'ReviewsController@reviews');
+$router->put('reviews', 'Web\ReviewsController@reviews');
 
 // Signups
-$router->get('signups/{id}', 'SignupsController@show')->name('signups.show');
+$router->get('signups/{id}', 'Web\SignupsController@show')->name('signups.show');
 
 // Tags
-$router->post('tags', 'TagsController@store');
+$router->post('tags', 'Web\TagsController@store');
 
 // Images
-$router->post('images/{postId}', 'ImagesController@update');
+$router->post('images/{postId}', 'Web\ImagesController@update');
 
 // Users
-$router->get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
-$router->get('users/{id}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
-$router->get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
+$router->get('users', ['as' => 'users.index', 'uses' => 'Web\UsersController@index']);
+$router->get('users/{id}', ['as' => 'users.show', 'uses' => 'Web\UsersController@show']);
+$router->get('search', ['as' => 'users.search', 'uses' => 'Web\UsersController@search']);
 
 // FAQ
-$router->get('faq', 'PagesController@faq');
+$router->get('faq', 'Web\PagesController@faq');
 
 // Imports
-$router->get('import', 'ImportController@show')->name('import.show');
-$router->post('import', 'ImportController@store')->name('import.store');
+$router->get('import', 'Web\ImportController@show')->name('import.show');
+$router->post('import', 'Web\ImportController@store')->name('import.store');

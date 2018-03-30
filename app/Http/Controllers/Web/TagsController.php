@@ -1,10 +1,11 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Repositories\PostRepository;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Traits\TagsRequests;
+use Rogue\Http\Controllers\Controller;
 
 class TagsController extends Controller
 {

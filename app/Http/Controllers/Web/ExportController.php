@@ -1,11 +1,12 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Models\Signup;
 use Rogue\Jobs\ExportSignups;
 use Rogue\Services\Registrar;
 use Rogue\Services\CampaignService;
+use Rogue\Http\Controllers\Controller;
 
 class ExportController extends Controller
 {

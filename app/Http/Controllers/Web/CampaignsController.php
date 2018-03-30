@@ -1,9 +1,10 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Services\Registrar;
 use Rogue\Services\CampaignService;
+use Rogue\Http\Controllers\Controller;
 
 class CampaignsController extends Controller
 {

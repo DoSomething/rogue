@@ -1,10 +1,11 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Models\User;
 use Illuminate\Http\Request;
 use Rogue\Services\Registrar as Registrar;
+use Rogue\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {

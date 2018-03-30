@@ -1,6 +1,9 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace Rogue\Http\Controllers\Web;
+
+use Rogue\Http\Controllers\Controller;
+
 
 class PagesController extends Controller
 {

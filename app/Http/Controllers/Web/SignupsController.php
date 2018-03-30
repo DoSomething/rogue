@@ -1,10 +1,11 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Rogue\Services\CampaignService;
+use Rogue\Http\Controllers\Controller;
 
 class SignupsController extends Controller
 {

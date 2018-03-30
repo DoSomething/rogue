@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace Rogue\Http\Controllers\Web;
 
 use Carbon\Carbon;
 use League\Csv\Reader;
@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Rogue\Jobs\ImportTurboVotePosts;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Rogue\Http\Controllers\Controller;
 
 class ImportController extends Controller
 {

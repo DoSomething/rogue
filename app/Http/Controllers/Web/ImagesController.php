@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace Rogue\Http\Controllers\Web;
 
 use Carbon\Carbon;
 use Rogue\Models\Post;
@@ -13,6 +13,7 @@ use League\Flysystem\Memory\MemoryAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use League\Glide\Responses\LaravelResponseFactory;
+use Rogue\Http\Controllers\Controller;
 
 class ImagesController extends Controller
 {
