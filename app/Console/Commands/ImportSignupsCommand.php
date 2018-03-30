@@ -7,7 +7,7 @@ use League\Csv\Reader;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Illuminate\Console\Command;
-use Rogue\Jobs\SendSignupToBlink;
+use Rogue\Jobs\SendSignupToCustomerIo;
 use Rogue\Jobs\SendSignupToQuasar;
 
 class ImportSignupsCommand extends Command
@@ -83,7 +83,7 @@ class ImportSignupsCommand extends Command
 
                 // Business Logic
                 SendSignupToQuasar::dispatch($signup);
-                SendSignupToBlink::dispatch($signup);
+                SendSignupToCustomerIo::dispatch($signup);
             } else {
                 if ($existing_signup->id % $logfreq == 0) {
                     info('rogue:signupimport: Signup ' . $existing_signup->id . ' already exists! Moving on.');

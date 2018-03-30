@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\Three;
+namespace Tests\Http;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
