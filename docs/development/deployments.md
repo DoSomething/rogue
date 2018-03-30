@@ -10,6 +10,10 @@ When you submit a PR against the master branch in the [Rogue repository](https:/
 
 Once your code is tested on rogue-staging (a.k.a rogue-thor), you can trigger a deployment to Rogue production.
 
+After your deployment is successful on Heroku, run our Ghost Inspecter test that goes through the RB flow to make sure everything is :thumbsup:
+
+Link to :ghost: test: https://app.ghostinspector.com/tests/56d8a9691a6744a446a04bf4
+
 # How to deploy to production
 
 You can deploy manually on Heroku itself, by going to our [Rogue pipline](https://dashboard.heroku.com/pipelines/289a727e-1b35-401e-8c80-4b0bf6dd4a77) and clicking the "Promote Changes" button on the staging environment. This will deploy the same build onto production. If that build is successfully deployed, you can test your changes on Rogue production and consider your work done. If you see "No changes to promote" instead, then that environmnet has no new changes from the envrionment next in the pipline.
