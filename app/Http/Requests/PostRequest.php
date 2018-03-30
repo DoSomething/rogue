@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Requests\Three;
+namespace Rogue\Http\Requests;
 
 use Rogue\Http\Requests\Request;
 

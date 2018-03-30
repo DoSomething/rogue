@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Web;
+namespace Rogue\Http\Controllers\Legacy\Web;
 
 use Rogue\Models\User;
 use Illuminate\Http\Request;

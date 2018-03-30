@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Web;
+namespace Rogue\Http\Controllers\Legacy\Web;
 
 use Rogue\Models\Post;
 use Rogue\Services\Legacy\Two\PostService;

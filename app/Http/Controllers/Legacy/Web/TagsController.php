@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Web;
+namespace Rogue\Http\Controllers\Legacy\Web;
 
 use Rogue\Repositories\Legacy\Two\PostRepository;
 use Rogue\Http\Transformers\Legacy\Two\PostTransformer;

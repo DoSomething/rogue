@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers;
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Services\PostService;
-use Rogue\Http\Requests\Three\PostRequest;
+use Rogue\Http\Requests\PostRequest;
 use Rogue\Http\Controllers\Legacy\Two\ApiController;
 use Rogue\Repositories\SignupRepository;
 use Illuminate\Auth\Access\AuthorizationException;
