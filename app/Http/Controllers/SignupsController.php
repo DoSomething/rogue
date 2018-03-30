@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Three;
+namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;

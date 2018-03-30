@@ -50,27 +50,27 @@ $router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function
 // v3 routes
 $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function () {
     // signups
-    $this->post('signups', 'Three\SignupsController@store');
-    $this->get('signups', 'Three\SignupsController@index');
-    $this->get('signups/{signup}', 'Three\SignupsController@show');
-    $this->patch('signups/{signup}', 'Three\SignupsController@update');
-    $this->delete('signups/{signup}', 'Three\SignupsController@destroy');
+    $this->post('signups', 'SignupsController@store');
+    $this->get('signups', 'SignupsController@index');
+    $this->get('signups/{signup}', 'SignupsController@show');
+    $this->patch('signups/{signup}', 'SignupsController@update');
+    $this->delete('signups/{signup}', 'SignupsController@destroy');
 
     // posts
-    $this->post('posts', 'Three\PostsController@store');
-    $this->get('posts', 'Three\PostsController@index');
-    $this->get('posts/{post}', 'Three\PostsController@show');
-    $this->patch('posts/{post}', 'Three\PostsController@update');
-    $this->delete('posts/{post}', 'Three\PostsController@destroy');
+    $this->post('posts', 'PostsController@store');
+    $this->get('posts', 'PostsController@index');
+    $this->get('posts/{post}', 'PostsController@show');
+    $this->patch('posts/{post}', 'PostsController@update');
+    $this->delete('posts/{post}', 'PostsController@destroy');
 
     // reactions
-    $this->post('post/{post}/reactions', 'Three\ReactionController@store');
-    $this->get('post/{post}/reactions', 'Three\ReactionController@index');
+    $this->post('post/{post}/reactions', 'ReactionController@store');
+    $this->get('post/{post}/reactions', 'ReactionController@index');
 
     // reviews
-    $this->post('reviews', 'Three\ReviewsController@reviews');
+    $this->post('reviews', 'ReviewsController@reviews');
 
     // tag
-    $this->post('posts/{post}/tags', 'Three\TagsController@store');
-    $this->delete('posts/{post}/tags', 'Three\TagsController@destroy');
+    $this->post('posts/{post}/tags', 'TagsController@store');
+    $this->delete('posts/{post}/tags', 'TagsController@destroy');
 });
