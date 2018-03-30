@@ -87,21 +87,20 @@ class PostRepository
             'action' => isset($data['action']) ? $data['action'] : null,
             'url' => $fileUrl,
             'text' => isset($data['text']) ? $data['text'] : null,
-            'status' => isset($data['status']) ? $data['status'] : 'pending',
+            'status' => 'pending',
             'source' => token()->client(),
             'source_details' => isset($data['source_details']) ? $data['source_details'] : null,
             'details' => isset($data['details']) ? $data['details'] : null,
             'remote_addr' => request()->ip(),
         ]);
 
-        // Admin users may provide a status when uploading a post.
-        if (isset($data['status']) && isset(auth()->user()->role) && auth()->user()->role === 'admin') {
-            $post->status = $data['status'];
-        }
+        $isAdmin = isset($data['status']) && isset(auth()->user()->role) && auth()->user()->role === 'admin';
+        $hasAdminScope = in_array('admin', token()->scopes());
 
-        // Admin users may provide a source when uploading a post.
-        if (isset($data['source']) && isset(auth()->user()->role) && auth()->user()->role === 'admin') {
-            $post->source = $data['source'];
+        // Admin users may provide a status when uploading a post.
+        if ($isAdmin || $hasAdminScope) {
+            $post->status = isset($data['status']) ? $data['status'] : 'pending';
+            $post->source = isset($data['source']) ? $data['source'] : token()->client();
         }
 
         $post->save();
