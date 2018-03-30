@@ -73,7 +73,7 @@ class ImportSignupsCommand extends Command
                     'northstar_id' => $missing_signup['northstar_id'],
                     'campaign_id' => $missing_signup['campaign_node_id'],
                     'campaign_run_id' => $missing_signup['campaign_run_id'],
-                    'source' => 'sms',
+                    'source' => 'phoenix-next',
                     'created_at' => $missing_signup['signup_created_at_timestamp'] ? $missing_signup['signup_created_at_timestamp'] : Carbon::now(),
                 ]);
 
