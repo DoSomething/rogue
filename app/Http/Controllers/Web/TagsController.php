@@ -3,7 +3,7 @@
 namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Repositories\PostRepository;
-use Rogue\Http\Transformers\PostTransformer;
+use Rogue\Http\Transformers\Legacy\Two\PostTransformer;
 use Rogue\Http\Controllers\Traits\TagsRequests;
 use Rogue\Http\Controllers\Controller;
 
@@ -18,7 +18,7 @@ class TagsController extends Controller
     protected $post;
 
     /**
-     * @var \Rogue\Http\Transformers\PostTransformer
+     * @var \Rogue\Http\Transformers\Legacy\Two\PostTransformer
      */
     protected $transformer;
 

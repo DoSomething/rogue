@@ -5,8 +5,8 @@ namespace Rogue\Http\Controllers\Legacy\Two;
 use Rogue\Models\Post;
 use League\Fractal\Manager;
 use Illuminate\Http\Request;
-use Rogue\Http\Transformers\ReportbackTransformer;
-use Rogue\Http\Transformers\PaginatorForPhoenixAshesGallery;
+use Rogue\Http\Transformers\Legacy\Two\ReportbackTransformer;
+use Rogue\Http\Transformers\Legacy\Two\PaginatorForPhoenixAshesGallery;
 
 class ReportbackController extends ApiController
 {

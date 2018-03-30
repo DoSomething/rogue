@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers\Legacy\Two;
 
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
-use Rogue\Http\Transformers\SignupTransformer;
+use Rogue\Http\Transformers\Legacy\Two\SignupTransformer;
 
 class ActivityController extends ApiController
 {

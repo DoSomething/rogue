@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers\Web;
 use Rogue\Models\Post;
 use Rogue\Services\PostService;
 use Rogue\Http\Requests\ReviewsRequest;
-use Rogue\Http\Transformers\PostTransformer;
+use Rogue\Http\Transformers\Legacy\Two\PostTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Rogue\Http\Controllers\Controller;
 
@@ -19,7 +19,7 @@ class ReviewsController extends Controller
     protected $post;
 
     /**
-     * @var \Rogue\Http\Transformers\PostTransformer
+     * @var \Rogue\Http\Transformers\Legacy\Two\PostTransformer
      */
     protected $transformer;
 

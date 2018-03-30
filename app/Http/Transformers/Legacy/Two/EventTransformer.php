@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace Rogue\Http\Transformers\Legacy\Two;
 
 use Rogue\Models\Event;
 use League\Fractal\TransformerAbstract;

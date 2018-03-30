@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers\Legacy\Two;
 use Rogue\Services\PostService;
 use Rogue\Services\SignupService;
 use Rogue\Http\Requests\SignupRequest;
-use Rogue\Http\Transformers\SignupTransformer;
+use Rogue\Http\Transformers\Legacy\Two\SignupTransformer;
 
 class SignupsController extends ApiController
 {

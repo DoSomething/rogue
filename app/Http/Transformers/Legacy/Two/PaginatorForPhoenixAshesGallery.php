@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace Rogue\Http\Transformers\Legacy\Two;
 
 use League\Fractal\Serializer\ArraySerializer;
 use League\Fractal\Pagination\PaginatorInterface;

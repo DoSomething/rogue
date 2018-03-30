@@ -3,7 +3,7 @@
 namespace Rogue\Http\Controllers\Legacy\Two;
 
 use Rogue\Repositories\PostRepository;
-use Rogue\Http\Transformers\PostTransformer;
+use Rogue\Http\Transformers\Legacy\Two\PostTransformer;
 use Rogue\Http\Controllers\Traits\TagsRequests;
 
 class TagsController extends ApiController
@@ -17,7 +17,7 @@ class TagsController extends ApiController
     protected $post;
 
     /**
-     * @var \League\Fractal\TransformerAbstract;
+     * @var Rogue\Http\Transformers\Legacy\Two\PostTransformer;
      */
     protected $transformer;
 
