@@ -7,6 +7,8 @@ use League\Csv\Reader;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Illuminate\Console\Command;
+use Rogue\Jobs\SendSignupToBlink;
+use Rogue\Jobs\SendSignupToQuasar;
 
 class ImportSignupsCommand extends Command
 {
