@@ -3,7 +3,7 @@
 namespace Rogue\Http\Controllers\Legacy\Two;
 
 use Rogue\Models\Post;
-use Rogue\Repositories\PostRepository;
+use Rogue\Repositories\Legacy\Two\PostRepository;
 use Rogue\Http\Requests\ReviewsApiRequest;
 use Rogue\Http\Transformers\Legacy\Two\PostTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -13,7 +13,7 @@ class ReviewsController extends ApiController
     /**
      * The post service instance.
      *
-     * @var Rogue\Repositories\PostRepository
+     * @var Rogue\Repositories\Legacy\Two\PostRepository
      */
     protected $post;
 

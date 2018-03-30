@@ -6,7 +6,7 @@ use Rogue\Models\Post;
 use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendSignupToQuasar;
-use Rogue\Repositories\PostRepository;
+use Rogue\Repositories\Legacy\Two\PostRepository;
 use Rogue\Jobs\SendDeletedPostToQuasar;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
 
@@ -15,7 +15,7 @@ class PostService
     /*
      * PostRepository Instance
      *
-     * @var Rogue\Repositories\PostRepository;
+     * @var Rogue\Repositories\Legacy\Two\PostRepository;
      */
     protected $repository;
 

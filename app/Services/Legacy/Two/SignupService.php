@@ -4,14 +4,14 @@ namespace Rogue\Services\Legacy\Two;
 
 use Rogue\Jobs\SendSignupToCustomerIo;
 use Rogue\Jobs\SendSignupToQuasar;
-use Rogue\Repositories\SignupRepository;
+use Rogue\Repositories\Legacy\Two\SignupRepository;
 
 class SignupService
 {
     /*
      * SignupRepository Instance
      *
-     * @var Rogue\Repositories\SignupRepository;
+     * @var Rogue\Repositories\Legacy\Two\SignupRepository;
      */
     protected $signup;
 

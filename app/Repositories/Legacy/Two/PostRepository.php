@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Repositories;
+namespace Rogue\Repositories\Legacy\Two;
 
 use Rogue\Models\Post;
 use Rogue\Services\AWS;

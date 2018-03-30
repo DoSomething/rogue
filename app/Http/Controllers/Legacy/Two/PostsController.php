@@ -3,7 +3,7 @@
 namespace Rogue\Http\Controllers\Legacy\Two;
 
 use Rogue\Services\Legacy\Two\PostService;
-use Rogue\Repositories\SignupRepository;
+use Rogue\Repositories\Legacy\Two\SignupRepository;
 use Rogue\Http\Transformers\Legacy\Two\PostTransformer;
 use Rogue\Http\Controllers\Traits\PostRequests;
 
@@ -21,7 +21,7 @@ class PostsController extends ApiController
     /**
      * The signup repository instance.
      *
-     * @var \Rogue\Repositories\SignupRepository
+     * @var \Rogue\Repositories\Legacy\Two\SignupRepository
      */
     protected $signups;
 
