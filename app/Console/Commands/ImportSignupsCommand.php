@@ -2,10 +2,13 @@
 
 namespace Rogue\Console\Commands;
 
+use Carbon\Carbon;
 use League\Csv\Reader;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Illuminate\Console\Command;
+use Rogue\Jobs\SendSignupToBlink;
+use Rogue\Jobs\SendSignupToQuasar;
 
 class ImportSignupsCommand extends Command
 {
@@ -70,13 +73,17 @@ class ImportSignupsCommand extends Command
                     'northstar_id' => $missing_signup['northstar_id'],
                     'campaign_id' => $missing_signup['campaign_node_id'],
                     'campaign_run_id' => $missing_signup['campaign_run_id'],
-                    'source' => 'sms',
-                    'created_at' => $missing_signup['signup_created_at_timestamp'],
+                    'source' => 'phoenix-next',
+                    'created_at' => $missing_signup['signup_created_at_timestamp'] ? $missing_signup['signup_created_at_timestamp'] : Carbon::now(),
                 ]);
 
                 if ($signup->id % $logfreq == 0) {
                     info('rogue:signupimport: Created signup ' . $signup->id);
                 }
+
+                // Business Logic
+                SendSignupToQuasar::dispatch($signup);
+                SendSignupToBlink::dispatch($signup);
             } else {
                 if ($existing_signup->id % $logfreq == 0) {
                     info('rogue:signupimport: Signup ' . $existing_signup->id . ' already exists! Moving on.');

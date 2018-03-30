@@ -21,7 +21,7 @@ class ImportSignupsCommandTest extends TestCase
             'northstar_id' => '56e83a07469c64d8578b5ed4',
             'campaign_id' => '362',
             'campaign_run_id' => '2341',
-            'source' => 'sms',
+            'source' => 'phoenix-next',
             'created_at' => '2014-03-13 21:39:01',
         ]);
 
@@ -29,7 +29,7 @@ class ImportSignupsCommandTest extends TestCase
             'northstar_id' => '5589c9bb469c6475138b81f0',
             'campaign_id' => '1144',
             'campaign_run_id' => '5066',
-            'source' => 'sms',
+            'source' => 'phoenix-next',
             'created_at' => '2013-11-06 23:32:03',
         ]);
 

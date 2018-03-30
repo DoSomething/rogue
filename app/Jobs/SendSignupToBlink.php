@@ -40,7 +40,15 @@ class SendSignupToBlink implements ShouldQueue
     {
         $payload = $this->signup->toBlinkPayload();
 
-        $blink->userSignup($payload);
-        logger()->info('Signup ' . $payload['id'] . ' sent to Blink');
+        // @TODO: update other places we call this to not check for config('features.blink')
+        $shouldSend = config('features.blink');
+        if ($shouldSend) {
+            $blink->userSignup($payload);
+            logger()->info('Signup ' . $payload['id'] . ' sent to Blink');
+        }
+
+        // Log
+        $verb = $shouldSend ? 'sent' : 'would have been sent';
+        info('Signup ' . $payload['id'] . ' ' . $verb . ' to Customer.io');
     }
 }
