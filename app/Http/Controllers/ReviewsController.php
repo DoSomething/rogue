@@ -11,9 +11,9 @@ use Rogue\Http\Transformers\PostTransformer;
 class ReviewsController extends ApiController
 {
     /**
-     * The post repository instance.
+     * The post service instance.
      *
-     * @var Rogue\Repositories\Three\PostRepository
+     * @var Rogue\Services\PostService
      */
     protected $post;
 

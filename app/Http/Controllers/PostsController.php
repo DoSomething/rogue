@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Http\Requests\Three\PostRequest;
 use Rogue\Http\Controllers\Legacy\Two\ApiController;
-use Rogue\Repositories\Three\SignupRepository;
+use Rogue\Repositories\SignupRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
 use Rogue\Http\Transformers\PostTransformer;
@@ -26,7 +26,7 @@ class PostsController extends ApiController
     /**
      * The signup repository instance.
      *
-     * @var \Rogue\Repositories\Three\SignupRepository
+     * @var \Rogue\Repositories\SignupRepository
      */
     protected $signups;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Repositories\Three;
+namespace Rogue\Repositories;
 
 use Rogue\Models\Post;
 use Rogue\Services\AWS;

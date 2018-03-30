@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
-use Rogue\Repositories\Three\PostRepository;
+use Rogue\Repositories\PostRepository;
 use Rogue\Http\Controllers\Legacy\Two\ApiController;
 use Rogue\Http\Transformers\PostTransformer;
 
@@ -13,7 +13,7 @@ class TagsController extends ApiController
     /**
      * The post service instance.
      *
-     * @var Rogue\Repositories\Three\PostRepository
+     * @var Rogue\Repositories\PostRepository
      */
     protected $post;
 

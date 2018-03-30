@@ -5,7 +5,7 @@ namespace Rogue\Services;
 use Rogue\Jobs\SendSignupToCustomerIo;
 use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Jobs\SendDeletedSignupToQuasar;
-use Rogue\Repositories\Three\SignupRepository;
+use Rogue\Repositories\SignupRepository;
 
 class SignupService
 {
