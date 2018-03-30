@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Controllers\Legacy\Two;
 
-use Rogue\Services\PostService;
-use Rogue\Services\SignupService;
+use Rogue\Services\Legacy\Two\PostService;
+use Rogue\Services\Legacy\Two\SignupService;
 use Rogue\Http\Requests\SignupRequest;
 use Rogue\Http\Transformers\Legacy\Two\SignupTransformer;
 
@@ -17,14 +17,14 @@ class SignupsController extends ApiController
     /**
      * The signup service instance.
      *
-     * @var Rogue\Services\SignupService
+     * @var Rogue\Services\Legacy\Two\SignupService
      */
     protected $signups;
 
     /**
      * The photo repository instance.
      *
-     * @var Rogue\Services\PostService
+     * @var Rogue\Services\Legacy\Two\PostService
      */
     protected $posts;
 

@@ -3,7 +3,7 @@
 namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Services\Fastly;
-use Rogue\Services\PostService;
+use Rogue\Services\Legacy\Two\PostService;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Transformers\Legacy\Two\PostTransformer;
 use Rogue\Http\Controllers\Traits\PostRequests;
@@ -23,7 +23,7 @@ class PostController extends Controller
     /**
      * The post service instance.
      *
-     * @var Rogue\Services\PostService
+     * @var Rogue\Services\Legacy\Two\PostService
      */
     protected $posts;
 
