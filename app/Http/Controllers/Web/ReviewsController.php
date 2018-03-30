@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Models\Post;
 use Rogue\Services\Legacy\Two\PostService;
-use Rogue\Http\Requests\ReviewsRequest;
+use Rogue\Http\Requests\Legacy\Web\ReviewsRequest;
 use Rogue\Http\Transformers\Legacy\Two\PostTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Rogue\Http\Controllers\Controller;

@@ -1,6 +1,8 @@
 <?php
 
-namespace Rogue\Http\Requests;
+namespace Rogue\Http\Requests\Legacy\Two;
+
+use Rogue\Http\Requests\Request;
 
 class TagsRequest extends Request
 {

@@ -2,7 +2,7 @@
 
 namespace Rogue\Http\Controllers\Traits;
 
-use Rogue\Http\Requests\TagsRequest;
+use Rogue\Http\Requests\Legacy\Two\TagsRequest;
 
 trait TagsRequests
 {

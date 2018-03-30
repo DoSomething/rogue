@@ -1,8 +1,10 @@
 <?php
 
-namespace Rogue\Http\Requests;
+namespace Rogue\Http\Requests\Legacy\Web;
 
-class SignupRequest extends Request
+use Rogue\Http\Requests\Request;
+
+class ReviewsRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +24,8 @@ class SignupRequest extends Request
     public function rules()
     {
         return [
-            'northstar_id' => 'required|string',
-            'campaign_id' => 'required',
-            'campaign_run_id' => 'int',
-            'quantity' => 'int',
-            'why_participated' => 'string',
-            'source' => 'string|nullable',
+            'post_id' => 'required',
+            'status' => 'in:pending,accepted,rejected',
         ];
     }
 }
