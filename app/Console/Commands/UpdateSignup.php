@@ -4,7 +4,7 @@ namespace Rogue\Console\Commands;
 
 use Rogue\Models\Signup;
 use Illuminate\Console\Command;
-use Rogue\Services\Three\SignupService;
+use Rogue\Services\SignupService;
 
 class UpdateSignup extends Command
 {
@@ -25,7 +25,7 @@ class UpdateSignup extends Command
     /**
      * The signup service instance.
      *
-     * @var Rogue\Services\Three\SignupService
+     * @var Rogue\Services\SignupService
      */
     protected $signups;
 

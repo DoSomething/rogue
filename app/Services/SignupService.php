@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Services\Three;
+namespace Rogue\Services;
 
 use Rogue\Jobs\SendSignupToCustomerIo;
 use Rogue\Jobs\SendSignupToQuasar;

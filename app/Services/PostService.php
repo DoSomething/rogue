@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Services\Three;
+namespace Rogue\Services;
 
 use Rogue\Models\Post;
 use Rogue\Jobs\SendPostToCustomerIo;
