@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\Api\Two;
+namespace Tests\Http\Legacy\Two;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
