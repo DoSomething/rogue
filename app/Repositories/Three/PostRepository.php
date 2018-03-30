@@ -94,17 +94,13 @@ class PostRepository
             'remote_addr' => request()->ip(),
         ]);
 
-        // If we are explicitly passed an authenticated user, use their role, otherwise grab it from the session.
-        $authenticatedUserRole = ! $authenticatedUserRole ? auth()->user()->role : $authenticatedUserRole;
+        $isAdmin = isset($data['status']) && isset(auth()->user()->role) && auth()->user()->role === 'admin';
+        $hasAdminScope = in_array('admin', token()->scopes());
 
-        // Admin users may provide a status when uploading a post.
-        if (isset($data['status']) && $authenticatedUserRole === 'admin') {
-            $post->status = $data['status'];
-        }
-
-        // Admin users may provide a source when uploading a post.
-        if (isset($data['source']) && $authenticatedUserRole === 'admin') {
-            $post->source = $data['source'];
+        // Admin users may provide a source and status when uploading a post.
+        if ($isAdmin || $hasAdminScope) {
+            $post->status = isset($data['status']) ? $data['status'] : 'pending';
+            $post->source = isset($data['source']) ? $data['source'] : token()->client();
         }
 
         $post->save();
