@@ -2,10 +2,10 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
+use Rogue\Http\Controllers\Controller;
+use Rogue\Http\Controllers\Traits\TagsRequests;
 use Rogue\Repositories\Legacy\Two\PostRepository;
 use Rogue\Http\Transformers\Legacy\Two\PostTransformer;
-use Rogue\Http\Controllers\Traits\TagsRequests;
-use Rogue\Http\Controllers\Controller;
 
 class TagsController extends Controller
 {

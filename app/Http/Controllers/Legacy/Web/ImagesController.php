@@ -9,11 +9,11 @@ use Rogue\Services\Fastly;
 use Illuminate\Http\Request;
 use League\Glide\ServerFactory;
 use Intervention\Image\Facades\Image;
+use Rogue\Http\Controllers\Controller;
 use League\Flysystem\Memory\MemoryAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use League\Glide\Responses\LaravelResponseFactory;
-use Rogue\Http\Controllers\Controller;
 
 class ImagesController extends Controller
 {

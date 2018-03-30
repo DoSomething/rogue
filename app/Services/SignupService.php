@@ -2,10 +2,10 @@
 
 namespace Rogue\Services;
 
-use Rogue\Jobs\SendSignupToCustomerIo;
 use Rogue\Jobs\SendSignupToQuasar;
-use Rogue\Jobs\SendDeletedSignupToQuasar;
+use Rogue\Jobs\SendSignupToCustomerIo;
 use Rogue\Repositories\SignupRepository;
+use Rogue\Jobs\SendDeletedSignupToQuasar;
 
 class SignupService
 {

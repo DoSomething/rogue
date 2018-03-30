@@ -3,12 +3,12 @@
 namespace Rogue\Services\Legacy\Two;
 
 use Rogue\Models\Post;
-use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendSignupToQuasar;
-use Rogue\Repositories\Legacy\Two\PostRepository;
+use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Jobs\SendDeletedPostToQuasar;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
+use Rogue\Repositories\Legacy\Two\PostRepository;
 
 class PostService
 {

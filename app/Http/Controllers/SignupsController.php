@@ -5,9 +5,9 @@ namespace Rogue\Http\Controllers;
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Services\SignupService;
-use Rogue\Http\Controllers\Legacy\Two\ApiController;
-use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Transformers\SignupTransformer;
+use Illuminate\Auth\Access\AuthorizationException;
+use Rogue\Http\Controllers\Legacy\Two\ApiController;
 use Rogue\Http\Controllers\Traits\TransformsRequests;
 
 class SignupsController extends ApiController

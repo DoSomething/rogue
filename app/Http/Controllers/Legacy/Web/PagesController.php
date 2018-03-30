@@ -4,7 +4,6 @@ namespace Rogue\Http\Controllers\Legacy\Web;
 
 use Rogue\Http\Controllers\Controller;
 
-
 class PagesController extends Controller
 {
     /**

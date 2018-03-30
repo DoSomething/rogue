@@ -2,8 +2,6 @@
 
 namespace Rogue\Http\Requests;
 
-use Rogue\Http\Requests\Request;
-
 class PostRequest extends Request
 {
     /**

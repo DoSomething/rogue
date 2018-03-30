@@ -3,11 +3,11 @@
 namespace Rogue\Services;
 
 use Rogue\Models\Post;
-use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Jobs\SendPostToQuasar;
+use Rogue\Jobs\SendPostToCustomerIo;
+use Rogue\Repositories\PostRepository;
 use Rogue\Jobs\SendDeletedPostToQuasar;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
-use Rogue\Repositories\PostRepository;
 
 class PostService
 {

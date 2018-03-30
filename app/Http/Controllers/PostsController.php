@@ -6,11 +6,11 @@ use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Services\PostService;
 use Rogue\Http\Requests\PostRequest;
-use Rogue\Http\Controllers\Legacy\Two\ApiController;
 use Rogue\Repositories\SignupRepository;
+use Rogue\Http\Transformers\PostTransformer;
 use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
-use Rogue\Http\Transformers\PostTransformer;
+use Rogue\Http\Controllers\Legacy\Two\ApiController;
 
 class PostsController extends ApiController
 {

@@ -4,8 +4,8 @@ namespace Rogue\Http\Controllers\Legacy\Web;
 
 use Rogue\Models\User;
 use Illuminate\Http\Request;
-use Rogue\Services\Registrar as Registrar;
 use Rogue\Http\Controllers\Controller;
+use Rogue\Services\Registrar as Registrar;
 
 class UsersController extends Controller
 {
