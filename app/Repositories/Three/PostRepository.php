@@ -97,7 +97,7 @@ class PostRepository
         $isAdmin = isset($data['status']) && isset(auth()->user()->role) && auth()->user()->role === 'admin';
         $hasAdminScope = in_array('admin', token()->scopes());
 
-        // Admin users may provide a status when uploading a post.
+        // Admin users may provide a source and status when uploading a post.
         if ($isAdmin || $hasAdminScope) {
             $post->status = isset($data['status']) ? $data['status'] : 'pending';
             $post->source = isset($data['source']) ? $data['source'] : token()->client();
