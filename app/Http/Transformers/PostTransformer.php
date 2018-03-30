@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Transformers\Three;
+namespace Rogue\Http\Transformers;
 
 use Carbon\Carbon;
 use Rogue\Models\Post;

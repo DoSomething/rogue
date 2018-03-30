@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Rogue\Services\Three\SignupService;
 use Rogue\Http\Controllers\Legacy\Two\ApiController;
 use Illuminate\Auth\Access\AuthorizationException;
-use Rogue\Http\Transformers\Three\SignupTransformer;
+use Rogue\Http\Transformers\SignupTransformer;
 use Rogue\Http\Controllers\Traits\TransformsRequests;
 
 class SignupsController extends ApiController
@@ -15,7 +15,7 @@ class SignupsController extends ApiController
     use TransformsRequests;
 
     /**
-     * @var \League\Fractal\TransformerAbstract;
+     * @var Rogue\Http\Transformers\SignupTransformer;
      */
     protected $transformer;
 

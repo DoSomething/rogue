@@ -6,7 +6,7 @@ use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Services\Three\PostService;
 use Rogue\Http\Controllers\Legacy\Two\ApiController;
-use Rogue\Http\Transformers\Three\PostTransformer;
+use Rogue\Http\Transformers\PostTransformer;
 
 class ReviewsController extends ApiController
 {
@@ -18,7 +18,7 @@ class ReviewsController extends ApiController
     protected $post;
 
     /**
-     * @var \Rogue\Http\Transformers\Three\PostTransformer
+     * @var \Rogue\Http\Transformers\PostTransformer
      */
     protected $transformer;
 

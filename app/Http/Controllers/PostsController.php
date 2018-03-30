@@ -10,7 +10,7 @@ use Rogue\Http\Controllers\Legacy\Two\ApiController;
 use Rogue\Repositories\Three\SignupRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
-use Rogue\Http\Transformers\Three\PostTransformer;
+use Rogue\Http\Transformers\PostTransformer;
 
 class PostsController extends ApiController
 {

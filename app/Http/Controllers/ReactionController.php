@@ -6,12 +6,12 @@ use Rogue\Models\Post;
 use Rogue\Models\Reaction;
 use Illuminate\Http\Request;
 use Rogue\Http\Controllers\Legacy\Two\ApiController;
-use Rogue\Http\Transformers\Three\ReactionTransformer;
+use Rogue\Http\Transformers\ReactionTransformer;
 
 class ReactionController extends ApiController
 {
     /**
-     * @var \League\Fractal\TransformerAbstract;
+     * @var Rogue\Http\Transformers\ReactionTransformer;
      */
     protected $transformer;
 
