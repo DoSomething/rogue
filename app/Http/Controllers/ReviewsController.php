@@ -4,16 +4,16 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
-use Rogue\Services\PostService;
+use Rogue\Managers\PostManager;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Legacy\Two\ApiController;
 
 class ReviewsController extends ApiController
 {
     /**
-     * The post service instance.
+     * The post manager instance.
      *
-     * @var Rogue\Services\PostService
+     * @var Rogue\Managers\PostManager
      */
     protected $post;
 
@@ -28,7 +28,7 @@ class ReviewsController extends ApiController
      * @param  PostContract $posts
      * @return void
      */
-    public function __construct(PostService $post)
+    public function __construct(PostManager $post)
     {
         $this->post = $post;
         $this->transformer = new PostTransformer;

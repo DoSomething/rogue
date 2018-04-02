@@ -7,8 +7,8 @@ use League\Csv\Reader;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Illuminate\Bus\Queueable;
-use Rogue\Services\PostService;
-use Rogue\Services\SignupService;
+use Rogue\Managers\PostManager;
+use Rogue\Managers\SignupManager;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -49,7 +49,7 @@ class ImportTurboVotePosts implements ShouldQueue
      *
      * @return void
      */
-    public function handle(SignupService $signupService, PostService $postService)
+    public function handle(SignupManager $signupManager, PostManager $postManager)
     {
         // A little hack to Make sure we can run through large files.
         set_time_limit(120);
@@ -91,7 +91,7 @@ class ImportTurboVotePosts implements ShouldQueue
                             'source' => 'turbovote-import',
                         ];
 
-                        $signup = $signupService->create($signupData, $referralCodeValues['northstar_id']);
+                        $signup = $signupManager->create($signupData, $referralCodeValues['northstar_id']);
                     }
 
                     // Check if a post already exists.
@@ -119,12 +119,12 @@ class ImportTurboVotePosts implements ShouldQueue
                             'details' => $postDetails,
                         ];
 
-                        $post = $postService->create($postData, $signup->id, $this->authenticatedUserRole);
+                        $post = $postManager->create($postData, $signup->id, $this->authenticatedUserRole);
                     } else {
                         // If a post already exists, check if status is the same on the CSV record and the existing post,
                         // if not update the post with the new status.
                         if ($record['voter-registration-status'] !== $post->status) {
-                            $postService->update($post, ['status' => $record['voter-registration-status']]);
+                            $postManager->update($post, ['status' => $record['voter-registration-status']]);
                         }
                     }
                 } else {

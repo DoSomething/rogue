@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers\Legacy\Web;
 
 use Rogue\Services\Fastly;
 use Rogue\Http\Controllers\Controller;
-use Rogue\Services\Legacy\Two\PostService;
+use Rogue\Managers\Legacy\Two\PostManager;
 use Rogue\Http\Controllers\Traits\PostRequests;
 use Rogue\Repositories\Legacy\Two\SignupRepository;
 use Rogue\Http\Transformers\Legacy\Two\PostTransformer;
@@ -21,9 +21,9 @@ class PostController extends Controller
     protected $fastly;
 
     /**
-     * The post service instance.
+     * The post manager instance.
      *
-     * @var Rogue\Services\Legacy\Two\PostService
+     * @var Rogue\Managers\Legacy\Two\PostManager
      */
     protected $posts;
 
@@ -45,7 +45,7 @@ class PostController extends Controller
      * @param  PostContract  $posts
      * @return void
      */
-    public function __construct(PostService $posts, SignupRepository $signups, Fastly $fastly)
+    public function __construct(PostManager $posts, SignupRepository $signups, Fastly $fastly)
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');

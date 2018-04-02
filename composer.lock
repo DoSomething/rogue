@@ -60,16 +60,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.52.36",
+            "version": "3.53.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "f1d453c2c090ef7a8d4887c7d121bdd0cb7b7613"
+                "reference": "225593974bb6f6b1c13ddf946d3736d3e39119e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/f1d453c2c090ef7a8d4887c7d121bdd0cb7b7613",
-                "reference": "f1d453c2c090ef7a8d4887c7d121bdd0cb7b7613",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/225593974bb6f6b1c13ddf946d3736d3e39119e5",
+                "reference": "225593974bb6f6b1c13ddf946d3736d3e39119e5",
                 "shasum": ""
             },
             "require": {
@@ -136,7 +136,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2018-03-29T22:20:51+00:00"
+            "time": "2018-03-30T20:22:38+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -2964,16 +2964,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.8.17",
+            "version": "v0.8.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "5069b70e8c4ea492c2b5939b6eddc78bfe41cfec"
+                "reference": "5357b1cffc8fb375d6a9e3c86d5c82dd38a40834"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/5069b70e8c4ea492c2b5939b6eddc78bfe41cfec",
-                "reference": "5069b70e8c4ea492c2b5939b6eddc78bfe41cfec",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/5357b1cffc8fb375d6a9e3c86d5c82dd38a40834",
+                "reference": "5357b1cffc8fb375d6a9e3c86d5c82dd38a40834",
                 "shasum": ""
             },
             "require": {
@@ -3032,7 +3032,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2017-12-28T16:14:16+00:00"
+            "time": "2018-04-02T05:41:44+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -4630,16 +4630,16 @@
         },
         {
             "name": "itsgoingd/clockwork",
-            "version": "v2.2.3",
+            "version": "v2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itsgoingd/clockwork.git",
-                "reference": "c34857dade4218ec43428219072202629c769e9c"
+                "reference": "93127290541d9ea22f858033fe3954cb117bd63d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itsgoingd/clockwork/zipball/c34857dade4218ec43428219072202629c769e9c",
-                "reference": "c34857dade4218ec43428219072202629c769e9c",
+                "url": "https://api.github.com/repos/itsgoingd/clockwork/zipball/93127290541d9ea22f858033fe3954cb117bd63d",
+                "reference": "93127290541d9ea22f858033fe3954cb117bd63d",
                 "shasum": ""
             },
             "require": {
@@ -4684,7 +4684,7 @@
                 "profiling",
                 "slim"
             ],
-            "time": "2018-03-14T16:51:36+00:00"
+            "time": "2018-03-31T15:42:01+00:00"
         },
         {
             "name": "laravel/dusk",

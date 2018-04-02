@@ -4,7 +4,7 @@ namespace Rogue\Console\Commands;
 
 use Rogue\Models\Signup;
 use Illuminate\Console\Command;
-use Rogue\Services\SignupService;
+use Rogue\Managers\SignupManager;
 
 class UpdateSignup extends Command
 {
@@ -23,9 +23,9 @@ class UpdateSignup extends Command
     protected $description = 'Update a target field on a set of signups contrained by the provided parameters';
 
     /**
-     * The signup service instance.
+     * The signup manager instance.
      *
-     * @var Rogue\Services\SignupService
+     * @var Rogue\Managers\SignupManager
      */
     protected $signups;
 
@@ -34,7 +34,7 @@ class UpdateSignup extends Command
      *
      * @return void
      */
-    public function __construct(SignupService $signups)
+    public function __construct(SignupManager $signups)
     {
         parent::__construct();
 

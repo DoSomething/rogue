@@ -4,7 +4,7 @@ namespace Rogue\Console\Commands;
 
 use Rogue\Models\Signup;
 use Illuminate\Console\Command;
-use Rogue\Services\PostService;
+use Rogue\Managers\PostManager;
 
 class ReviewSignup extends Command
 {
@@ -23,9 +23,9 @@ class ReviewSignup extends Command
     protected $description = 'Review all posts under the given signup ID with the given status';
 
     /**
-     * The Post service instance.
+     * The Post manager instance.
      *
-     * @var Rogue\Services\PostService
+     * @var Rogue\Managers\PostManager
      */
     protected $posts;
 
@@ -34,7 +34,7 @@ class ReviewSignup extends Command
      *
      * @return void
      */
-    public function __construct(PostService $posts)
+    public function __construct(PostManager $posts)
     {
         parent::__construct();
 

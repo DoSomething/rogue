@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Services\Legacy\Two;
+namespace Rogue\Managers\Legacy\Two;
 
 use Rogue\Models\Post;
 use Rogue\Jobs\SendPostToQuasar;
@@ -10,7 +10,7 @@ use Rogue\Jobs\SendDeletedPostToQuasar;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
 use Rogue\Repositories\Legacy\Two\PostRepository;
 
-class PostService
+class PostManager
 {
     /*
      * PostRepository Instance
