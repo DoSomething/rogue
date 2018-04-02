@@ -22,17 +22,17 @@ class PostRequest extends Request
     public function rules()
     {
         return [
-            'northstar_id' => 'required|string',
             'campaign_id' => 'required',
-            'campaign_run_id' => 'int',
-            'quantity' => 'nullable|int',
-            'caption' => 'nullable|string',
+            'campaign_run_id' => 'integer',
+            'northstar_id' => 'nullable|objectid',
+            'type' => 'required|string|in:photo,voter-reg,text',
+            'action' => 'required|string',
+            'why_participated' => 'nullable|string',
+            'text' => 'required|nullable|string|max:256',
+            'quantity' => 'nullable|integer',
+            'file' => 'image|dimensions:min_width=400,min_height=400',
             'status' => 'in:pending,accepted,rejected',
-            'source' => 'nullable|string',
-            'remote_addr' => 'nullable|string',
-            // 'file' => 'string', // @TODO - should do some better validation around files.
-            'type' => 'string|in:photo,voter-reg,text',
-            'action' => 'string',
+            'details'=> 'json',
         ];
     }
 }

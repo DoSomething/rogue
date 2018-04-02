@@ -31,32 +31,39 @@ class PostTransformer extends TransformerAbstract
             $reacted = $post->reactions->isNotEmpty();
         }
 
-        return [
+        $response = [
             'id' => $post->id,
             'signup_id' => $post->signup_id,
-            'northstar_id' => $post->northstar_id,
-            'quantity' => $post->quantity,
             'type' => $post->type,
             'action' => $post->action,
+            'northstar_id' => $post->northstar_id,
             // Add cache-busting query string to urls to make sure we get the
             // most recent version of the image.
             // @NOTE - Remove if we get rid of rotation.
             'media' => [
                 'url' => $post->getMediaUrl(),
                 'original_image_url' => $post->url . '?time='. Carbon::now()->timestamp,
-                'caption' => $post->text,
+                'text' => $post->text,
             ],
-            'tags' => $post->tagSlugs(),
+            'quantity' => $post->quantity,
             'reactions' => [
                 'reacted' => $reacted,
                 'total' => isset($post->reactions_count) ? $post->reactions_count : null,
             ],
             'status' => $post->status,
-            'source' => $post->source,
-            'remote_addr' => $post->remote_addr,
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
+
+        if (is_staff_user() || auth()->id() === $post->northstar_id) {
+            $response['tags'] = $post->tagSlugs();
+            $response['source'] = $post->source;
+            $response['source_details'] = $post->source_details;
+            $response['remote_addr'] = $post->remote_addr;
+            $response['details'] = $post->details;
+        }
+
+        return $response;
     }
 
     /**
@@ -67,10 +74,7 @@ class PostTransformer extends TransformerAbstract
      */
     public function includeSignup(Post $post)
     {
-        // Don't include posts but include the user.
-        $transformer = (new SignupTransformer)->setDefaultIncludes(['user']);
-
-        return $this->item($post->signup, $transformer);
+        return $this->item($post->signup, new SignupTransformer);
     }
 
     /**

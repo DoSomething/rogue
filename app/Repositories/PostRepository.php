@@ -60,9 +60,11 @@ class PostRepository
      *
      * @param  array $data
      * @param  int $signupId
+     * @param  string $authenticatedUserRole
+     *
      * @return \Rogue\Models\Post|null
      */
-    public function create(array $data, $signupId)
+    public function create(array $data, $signupId, $authenticatedUserRole = null)
     {
         if (isset($data['file'])) {
             // Auto-orient the photo by default based on exif data.
@@ -73,126 +75,68 @@ class PostRepository
             $fileUrl = null;
         }
 
-        $signup = Signup::withCount('posts')->find($signupId);
+        $signup = Signup::find($signupId);
 
         // Create a post.
         $post = new Post([
             'signup_id' => $signup->id,
-            'northstar_id' => $data['northstar_id'],
+            'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
-            'url' => $fileUrl,
-            'text' => $data['caption'],
-            'status' => isset($data['status']) ? $data['status'] : 'pending',
-            'source' => isset($data['source']) ? $data['source'] : null,
-            'remote_addr' => isset($data['remote_addr']) ? $data['remote_addr'] : null,
+            'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
             'type' => isset($data['type']) ? $data['type'] : 'photo',
-            'action' => isset($data['action']) ? $data['action'] : 'default',
+            'action' => isset($data['action']) ? $data['action'] : null,
+            'url' => $fileUrl,
+            'text' => isset($data['text']) ? $data['text'] : null,
+            'status' => 'pending',
+            'source' => token()->client(),
+            'source_details' => isset($data['source_details']) ? $data['source_details'] : null,
+            'details' => isset($data['details']) ? $data['details'] : null,
+            'remote_addr' => request()->ip(),
         ]);
 
-        // If we are supporting quantity on posts and
-        // we recieved a quantity in the request.
-        // Then, store correct quantity on the Post.
-        if (config('features.v3QuantitySupport') && isset($data['quantity'])) {
-            $quantityDiff = $data['quantity'] - $signup->quantity;
+        $isAdmin = isset($data['status']) && isset(auth()->user()->role) && auth()->user()->role === 'admin';
+        $hasAdminScope = in_array('admin', token()->scopes());
 
-            // If the quantity difference is negative than we recieved an incremental submission
-            // and should just add that to the post.
-            if ($quantityDiff < 0) {
-                $quantityDiff = $data['quantity'];
-            } elseif ($quantityDiff === 0 && $signup->posts_count > 0) {
-                // If the quantity difference equals zero, and this is not the first post,
-                // then we can assume there is no difference in quantity and store it as 0 on the post.
-                $quantityDiff = 0;
-            }
-
-            $post->quantity = $quantityDiff;
+        // Admin users may provide a source and status when uploading a post.
+        if ($isAdmin || $hasAdminScope) {
+            $post->status = isset($data['status']) ? $data['status'] : 'pending';
+            $post->source = isset($data['source']) ? $data['source'] : token()->client();
         }
 
-        // @TODO: This can be removed after the migration
-        // Let Laravel take care of the timestamps unless they are specified in the request
-        if (isset($data['created_at'])) {
-            $post->created_at = $data['created_at'];
-            $post->updated_at = isset($data['updated_at']) ? $data['updated_at'] : $data['created_at'];
-            $post->save(['timestamps' => false]);
-
-            $post->events->first()->created_at = $data['created_at'];
-            $post->events->first()->updated_at = $data['created_at'];
-            $post->events->first()->save(['timestamps' => false]);
-        } else {
-            $post->save();
-        }
-
-        if (config('features.v3QuantitySupport') && isset($data['quantity'])) {
-            // Update signup quantity. If supporting quantity on the post, we will get a summation of posts across the signup. Otherwise, we will just get the current signup quantity.
-            $signup->quantity = $signup->getQuantity();
-            $signup->save();
-        }
+        $post->save();
 
         // Edit the image if there is one
         if (isset($data['file'])) {
             $this->crop($data, $post->id);
         }
 
+        // Update the signup's total quantity.
+        $signup->quantity = $signup->posts->sum('quantity');
+        $signup->save();
+
         return $post;
     }
 
     /**
-     * Update an existing Post and Signup.
+     * Update an existing Post.
      *
-     * @param \Rogue\Models\Signup $signup
+     * @param \Rogue\Models\Post $post
      * @param array $data
      *
-     * @return Signup|Post
+     * @return Post
      */
-    public function update($signup, $data)
+    public function update($post, $data)
     {
-        if (array_key_exists('updated_at', $data)) {
-            // Should only update why_participated, and timestamps on the signup
-            $signupFields = [
-                'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
-                'updated_at' => $data['updated_at'],
-                'created_at' => array_key_exists('created_at', $data) ? $data['created_at'] : null,
-            ];
+        $post->update($data);
 
-            // Only update if the key is set (is not null).
-            $nonNullArrayKeys = array_filter($signupFields);
-            $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
-
-            $signup->fill(array_only($data, $arrayKeysToUpdate));
-            $signup->save(['timestamps' => false]);
-
-            $event = $signup->events->last();
-            $event->created_at = $data['updated_at'];
-            $event->updated_at = $data['updated_at'];
-            $event->save(['timestamps' => false]);
-        } else {
-            // Should only update why_participated on the signup
-            $signupFields = [
-                'why_participated' => isset($data['why_participated']) ? $data['why_participated'] : null,
-            ];
-
-            // Only update if the key is set (is not null).
-            $nonNullArrayKeys = array_filter($signupFields);
-            $arrayKeysToUpdate = array_keys($nonNullArrayKeys);
-
-            $signup->fill(array_only($data, $arrayKeysToUpdate));
-
-            // Triggers model event that logs the updated signup in the events table.
+        // If the quantity was updated, update the total quantity on the signup.
+        if (isset($data['quantity'])) {
+            $signup = $post->signup;
+            $signup->quantity = $signup->posts->sum('quantity');
             $signup->save();
         }
 
-        // If we are not storing quantity on the post then we still need to put it on the signup.
-        if (! config('features.v3QuantitySupport') && isset($data['quantity'])) {
-            $signup->quantity = $data['quantity'];
-            $signup->save();
-        }
-
-        // If there is a file, create a new post.
-        if (array_key_exists('file', $data)) {
-            return $this->create($data, $signup->id);
-        }
-
-        return $signup;
+        return $post;
     }
 
     /**
@@ -221,34 +165,34 @@ class PostRepository
     /**
      * Updates a post's status after being reviewed.
      *
-     * @param array $data
+     * @param array Post $post
+     * @param string $status
+     * @param string $comment (optional)
      *
      * @return Post
      */
-    public function reviews($data)
+    public function reviews(Post $post, $status, $comment = null, $admin = null)
     {
-        $post = Post::where(['id' => $data['post_id']])->first();
-
         // Create the Review.
         $review = Review::create([
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
-            'admin_northstar_id' => $data['admin_northstar_id'],
-            'status' => $data['status'],
+            'admin_northstar_id' => $admin ? $admin : auth()->id(),
+            'status' => $status,
             'old_status' => $post->status,
-            'comment' => isset($data['comment']) ? $data['comment'] : null,
+            'comment' => $comment,
             'post_id' => $post->id,
         ]);
 
         // Update the status on the Post.
-        $post->status = $data['status'];
+        $post->status = $status;
         $post->save();
 
         return $post;
     }
 
     /**
-     * Updates a post's tags when added or deleted.
+     * Updates a post's tags when added.
      *
      * @param object $post
      * @param string $tag
@@ -257,11 +201,29 @@ class PostRepository
      */
     public function tag(Post $post, $tag)
     {
-        // If the post already has the tag, soft delete. Otherwise, add the tag to the post.
+        // Check to see if the post already has this tag.
+        // If so, no need to add again.
+        if (! $post->tagNames()->contains($tag)) {
+            $post->tag($tag);
+        }
+
+        // Return the post object including the tags that are related to it.
+        return Post::with('signup', 'tags')->findOrFail($post->id);
+    }
+
+    /**
+     * Updates a post's tags when deleted.
+     *
+     * @param object $post
+     * @param string $tag
+     *
+     * @return
+     */
+    public function untag(Post $post, $tag)
+    {
+        // If the post already has the tag, delete. Otherwise, don't do anything.
         if ($post->tagNames()->contains($tag)) {
             $post->untag($tag);
-        } else {
-            $post->tag($tag);
         }
 
         // Return the post object including the tags that are related to it.

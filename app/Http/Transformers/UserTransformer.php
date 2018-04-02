@@ -10,20 +10,24 @@ class UserTransformer extends TransformerAbstract
      * Transform resource data.
      *
      * @param \Rogue\Models\User $user
+     *
      * @return array
      */
     public function transform($user)
     {
         if ($user) {
-            return [
+            $response = [
                 'first_name' => $user->first_name,
-                'last_name' => $user->last_name,
-                'birthdate' => $user->birthdate,
-                'email' => $user->email,
-                'mobile' => $user->mobile,
             ];
+
+            if (is_staff_user() || auth()->id() === $user->id) {
+                $response['last_name'] = $user->last_name;
+                $response['birthdate'] = $user->birthdate;
+                $response['email'] = $user->email;
+                $response['mobile'] = $user->mobile;
+            }
         }
 
-        return [];
+        return isset($response) ? $response : [];
     }
 }

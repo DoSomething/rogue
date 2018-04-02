@@ -9,21 +9,12 @@ use League\Fractal\TransformerAbstract;
 class SignupTransformer extends TransformerAbstract
 {
     /**
-     * List of resources to automatically include
-     *
-     * @var array
-     */
-    protected $defaultIncludes = [
-        'posts',
-    ];
-
-    /**
      * List of resources possible to include
      *
      * @var array
      */
     protected $availableIncludes = [
-        'user',
+        'posts', 'user', 'accepted_quantity',
     ];
 
     /**
@@ -34,22 +25,27 @@ class SignupTransformer extends TransformerAbstract
      */
     public function transform(Signup $signup)
     {
-        return [
-            'signup_id' => $signup->id,
+        $response = [
+            'id' => $signup->id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'campaign_run_id' => $signup->campaign_run_id,
             'quantity' => $signup->getQuantity(),
-            'why_participated' => $signup->why_participated,
-            'signup_source' => $signup->source,
-            'details' => $signup->details,
             'created_at' => $signup->created_at->toIso8601String(),
             'updated_at' => $signup->updated_at->toIso8601String(),
         ];
+
+        if (is_staff_user() || auth()->id() === $signup->northstar_id) {
+            $response['why_participated'] = $signup->why_participated;
+            $response['source'] = $signup->source;
+            $response['details'] = $signup->details;
+        }
+
+        return $response;
     }
 
     /**
-     * Include the post
+     * Include posts
      *
      * @param \Rogue\Models\Signup $signup
      * @return \League\Fractal\Resource\Collection
@@ -73,5 +69,16 @@ class SignupTransformer extends TransformerAbstract
         $northstar_id = $signup->northstar_id;
 
         return $this->item($registrar->find($northstar_id), new UserTransformer);
+    }
+
+    /**
+     * Include accepted quantity
+     *
+     * @param \Rogue\Models\Signup $signup
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeAcceptedQuantity(Signup $signup)
+    {
+        return $this->item($signup->getAcceptedQuantity(), new AcceptedQuantityTransformer);
     }
 }

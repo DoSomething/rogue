@@ -2,9 +2,10 @@
 
 namespace Rogue\Services;
 
-use Rogue\Jobs\SendSignupToBlink;
 use Rogue\Jobs\SendSignupToQuasar;
+use Rogue\Jobs\SendSignupToCustomerIo;
 use Rogue\Repositories\SignupRepository;
+use Rogue\Jobs\SendDeletedSignupToQuasar;
 
 class SignupService
 {
@@ -26,31 +27,74 @@ class SignupService
         $this->signup = $signup;
     }
 
-    /*
+    /**
      * Handles all business logic around creating signups.
      *
      * @param array $data
+     * @param string $northstarId
      * @return Illuminate\Database\Eloquent\Model $model
      */
-    public function create($data)
+    public function create($data, $northstarId)
     {
-        $signup = $this->signup->create($data);
+        $signup = $this->signup->create($data, $northstarId);
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
         $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
 
         // Save the new signup in Customer.io, via Blink.
         if (config('features.blink') && $should_send_to_blink) {
-            SendSignupToBlink::dispatch($signup);
+            SendSignupToCustomerIo::dispatch($signup);
         }
 
         // Dispatch job to send signup to Quasar
         SendSignupToQuasar::dispatch($signup);
 
         // Log that a signup was created.
-        info('signup_created', ['id' => $signup->id, 'northstar_id' => $signup->northstar_id]);
+        info('signup_created', ['id' => $signup->id]);
 
         return $signup;
+    }
+
+    /**
+     * Handles all business logic around updating signups.
+     *
+     * @param Rogue\Models\Signup $signup
+     * @param array $data
+     * @return Rogue\Models\Signup $model
+     */
+    public function update($signup, $data)
+    {
+        $signup = $this->signup->update($signup, $data);
+
+        // Dispatch job to send signup to Quasar
+        SendSignupToQuasar::dispatch($signup);
+
+        // Log that a signup was updated.
+        info('signup_updated', ['id' => $signup->id]);
+
+        return $signup;
+    }
+
+    /**
+     * Handle all business logic around deleting a signup.
+     *
+     * @param int $signupId
+     * @return bool
+     */
+    public function destroy($signupId)
+    {
+        $trashed = $this->signup->destroy($signupId);
+
+        if ($trashed) {
+            info('signup_deleted', [
+                'id' => $signupId,
+            ]);
+
+            // Dispatch job to send post to Quasar
+            SendDeletedSignupToQuasar::dispatch($signupId);
+        }
+
+        return $trashed;
     }
 
     /*

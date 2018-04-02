@@ -3,17 +3,17 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Post;
+use Illuminate\Http\Request;
 use Rogue\Services\PostService;
-use Rogue\Http\Requests\ReviewsRequest;
 use Rogue\Http\Transformers\PostTransformer;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Rogue\Http\Controllers\Legacy\Two\ApiController;
 
-class ReviewsController extends Controller
+class ReviewsController extends ApiController
 {
     /**
      * The post service instance.
      *
-     * @var Rogue\Repositories\PostRepository
+     * @var Rogue\Services\PostService
      */
     protected $post;
 
@@ -30,54 +30,32 @@ class ReviewsController extends Controller
      */
     public function __construct(PostService $post)
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin,staff');
-
         $this->post = $post;
         $this->transformer = new PostTransformer;
+
+        $this->middleware('auth:api');
+        $this->middleware('role:admin');
+        $this->middleware('scopes:write');
+        $this->middleware('scopes:activity');
     }
 
     /**
      * Update a post(s)'s status when reviewed.
      *
-     * @param Rogue\Http\Requests\ReviewsRequest $request
+     * @param Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function reviews(ReviewsRequest $request)
+    public function reviews(Request $request)
     {
-        $review = $request->all();
-        $post = Post::where('id', $review['post_id'])->first();
-        $review['signup_id'] = $post->signup_id;
-        $review['northstar_id'] = $post->northstar_id;
-        $review['old_status'] = $post->status;
+        $request->validate([
+            'post_id' => 'required',
+            'status' => 'in:pending,accepted,rejected',
+        ]);
 
-        // Append admin's ID to the request for the "reviews" service.
-        $review['admin_northstar_id'] = auth()->user()->northstar_id;
-        $reviewedPost = $this->post->review($review);
-        $reviewedPostCode = $this->code($reviewedPost);
-        $meta = [];
+        $post = Post::findOrFail($request['post_id']);
+        $reviewedPost = $this->post->review($post, $request['status'], $request['comment']);
 
-        if (isset($reviewedPost)) {
-            return $this->item($reviewedPost, $reviewedPostCode);
-        } else {
-            throw (new ModelNotFoundException)->setModel('Post');
-        }
-    }
-
-    /**
-     * Determine status code.
-     *
-     * @param array $reviewed
-     *
-     * @return int $code
-     */
-    public function code($reviewed)
-    {
-        if (empty($reviewed)) {
-            return 404;
-        } else {
-            return 201;
-        }
+        return $this->item($reviewedPost, 201);
     }
 }

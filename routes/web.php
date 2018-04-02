@@ -10,45 +10,45 @@
  */
 
 // Homepage
-$router->get('/', 'PagesController@home')->name('login');
+$router->get('/', 'Legacy\Web\PagesController@home')->name('login');
 
 // Authentication
 $router->get('login', 'Auth\AuthController@getLogin');
 $router->get('logout', 'Auth\AuthController@getLogout');
 
 // Campaigns
-$router->get('campaigns', 'CampaignsController@index');
-$router->get('campaigns/{id}/inbox', 'CampaignsController@showInbox');
-$router->get('campaigns/{id}', 'CampaignsController@showCampaign')->name('campaigns.show');
+$router->get('campaigns', 'Legacy\Web\CampaignsController@index');
+$router->get('campaigns/{id}/inbox', 'Legacy\Web\CampaignsController@showInbox');
+$router->get('campaigns/{id}', 'Legacy\Web\CampaignsController@showCampaign')->name('campaigns.show');
 
 // Exports
-$router->get('exports/{id}', 'ExportController@show');
+$router->get('exports/{id}', 'Web\ExportController@show');
 
 // Posts
-$router->post('posts', 'PostController@store');
-$router->get('posts', 'PostController@index');
-$router->delete('posts/{id}', 'PostController@destroy');
+$router->post('posts', 'Legacy\Web\PostController@store');
+$router->get('posts', 'Legacy\Web\PostController@index');
+$router->delete('posts/{id}', 'Legacy\Web\PostController@destroy');
 
 // Reviews
-$router->put('reviews', 'ReviewsController@reviews');
+$router->put('reviews', 'Legacy\Web\ReviewsController@reviews');
 
 // Signups
-$router->get('signups/{id}', 'SignupsController@show')->name('signups.show');
+$router->get('signups/{id}', 'Legacy\Web\SignupsController@show')->name('signups.show');
 
 // Tags
-$router->post('tags', 'TagsController@store');
+$router->post('tags', 'Legacy\Web\TagsController@store');
 
 // Images
-$router->post('images/{postId}', 'ImagesController@update');
+$router->post('images/{postId}', 'Legacy\Web\ImagesController@update');
 
 // Users
-$router->get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
-$router->get('users/{id}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
-$router->get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
+$router->get('users', ['as' => 'users.index', 'uses' => 'Legacy\Web\UsersController@index']);
+$router->get('users/{id}', ['as' => 'users.show', 'uses' => 'Legacy\Web\UsersController@show']);
+$router->get('search', ['as' => 'users.search', 'uses' => 'Legacy\Web\UsersController@search']);
 
 // FAQ
-$router->get('faq', 'PagesController@faq');
+$router->get('faq', 'Legacy\Web\PagesController@faq');
 
 // Imports
-$router->get('import', 'ImportController@show')->name('import.show');
-$router->post('import', 'ImportController@store')->name('import.store');
+$router->get('import', 'Legacy\Web\ImportController@show')->name('import.show');
+$router->post('import', 'Legacy\Web\ImportController@store')->name('import.store');

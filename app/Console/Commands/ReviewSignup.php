@@ -4,7 +4,7 @@ namespace Rogue\Console\Commands;
 
 use Rogue\Models\Signup;
 use Illuminate\Console\Command;
-use Rogue\Services\Three\PostService;
+use Rogue\Services\PostService;
 
 class ReviewSignup extends Command
 {
@@ -25,7 +25,7 @@ class ReviewSignup extends Command
     /**
      * The Post service instance.
      *
-     * @var Rogue\Services\Three\PostService
+     * @var Rogue\Services\PostService
      */
     protected $posts;
 

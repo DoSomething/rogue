@@ -4,31 +4,29 @@ namespace Tests\Http;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
-use Rogue\Models\User;
 use Illuminate\Support\Facades\Bus;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
 
 class ReviewsTest extends TestCase
 {
     /**
-     * Test that a PUT request to /reviews updates the post's status and creates a new event and review.
+     * Test that a POST request to /reviews updates the post's status.
      *
-     * PUT /reviews
+     * POST /reviews
      * @return void
      */
-    public function testUpdatingASingleReview()
+    public function testPostingASingleReview()
     {
         Bus::fake();
 
-        $this->mockTime('8/3/2017 17:02:00');
-
         // Create a post.
-        $user = factory(User::class, 'admin')->create();
+        $northstarId = $this->faker->northstar_id;
         $post = factory(Post::class)->create();
 
-        $response = $this->actingAs($user)->putJson('reviews', [
+        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/reviews', [
             'post_id' => $post->id,
             'status' => 'accepted',
+            'comment' => 'testing',
         ]);
 
         $response->assertStatus(201);
@@ -37,15 +35,34 @@ class ReviewsTest extends TestCase
         // Make sure the post status is updated & a review is created.
         $this->assertEquals('accepted', $post->fresh()->status);
         $this->assertDatabaseHas('reviews', [
-            'admin_northstar_id' => $user->northstar_id,
+            'admin_northstar_id' => $northstarId,
             'post_id' => $post->id,
+            'comment' => 'testing',
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /reviews without activity scope.
+     *
+     * POST /reviews
+     * @return void
+     */
+    public function testPostingASingleReviewWithoutActivityScope()
+    {
+        Bus::fake();
+
+        // Create a post.
+        $northstarId = $this->faker->northstar_id;
+        $post = factory(Post::class)->create();
+
+        $response = $this->postJson('api/v3/reviews', [
+            'post_id' => $post->id,
+            'status' => 'accepted',
+            'comment' => 'testing',
         ]);
 
-        // Make sure we created an event for the review.
-        $this->assertDatabaseHas('events', [
-            'eventable_type' => 'Rogue\Models\Review',
-            'created_at' => '2017-08-03 17:02:00',
-        ]);
+        $response->assertStatus(401);
+        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -55,15 +72,15 @@ class ReviewsTest extends TestCase
      */
     public function testUnauthenticatedUserCantReviewPosts()
     {
-        $user = factory(User::class)->create();
+        // $northstarId = $this->faker->northstar_id;
         $post = factory(Post::class)->create();
 
-        $response = $this->actingAs($user)->putJson('reviews', [
+        $response = $this->postJson('api/v3/reviews', [
             'post_id' => $post->id,
             'status' => 'accepted',
         ]);
 
-        $response->assertStatus(403);
+        $response->assertStatus(401);
     }
 
     /**
@@ -80,7 +97,8 @@ class ReviewsTest extends TestCase
         $this->mockTime('8/3/2017 16:55:00');
 
         // Review the post.
-        $this->actingAsAdmin()->putJson('reviews', [
+        $northstarId = $this->faker->northstar_id;
+        $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/reviews', [
             'post_id' => $post->id,
             'status' => 'accepted',
         ]);
@@ -91,5 +109,22 @@ class ReviewsTest extends TestCase
         // @TODO: Laravel doesn't touch timestamps recursively - only direct relationships.
         // $this->assertEquals('2017-08-03 16:55:00', (string) $signup->fresh()->updated_at);
         $this->markTestIncomplete();
+    }
+
+    /**
+     * Test that you get a 404 if the post doesn't exist.
+     *
+     * @return void
+     */
+    public function test404IfPostDoesntExist()
+    {
+        // Review a post that doesn't exist.
+        $northstarId = $this->faker->northstar_id;
+        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/reviews', [
+            'post_id' => 88,
+            'status' => 'accepted',
+        ]);
+
+        $response->assertStatus(404);
     }
 }

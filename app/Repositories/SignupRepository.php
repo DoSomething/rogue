@@ -10,41 +10,41 @@ class SignupRepository
      * Create a signup.
      *
      * @param  array $data
+     * @param  string $northstarId
      * @return \Rogue\Models\Signup|null
      */
-    public function create($data)
+    public function create($data, $northstarId)
     {
         // Create the signup
         $signup = new Signup;
 
-        $signup->northstar_id = $data['northstar_id'];
+        $signup->northstar_id = $northstarId;
         $signup->campaign_id = $data['campaign_id'];
         $signup->campaign_run_id = isset($data['campaign_run_id']) ? $data['campaign_run_id'] : null;
-        $signup->quantity = isset($data['quantity']) ? $data['quantity'] : null;
         $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : null;
-        $signup->source = isset($data['source']) ? $data['source'] : null;
+        $signup->source = isset($data['source']) ? $data['source'] : token()->client();
         $signup->details = isset($data['details']) ? $data['details'] : null;
-
-        if (isset($data['created_at'])) {
-            // Manually set created and updated times for the signup
-            $signup->created_at = $data['created_at'];
-            $signup->updated_at = isset($data['updated_at']) ? $data['updated_at'] : $data['created_at'];
-            $signup->save(['timestamps' => false]);
-
-            // Manually update the signup event timestamp.
-            $event = $signup->events->first();
-            $event->created_at = $data['created_at'];
-            $event->updated_at = isset($data['updated_at']) ? $data['updated_at'] : $data['created_at'];
-            $event->save(['timestamps' => false]);
-        } else {
-            $signup->save();
-        }
+        $signup->save();
 
         return $signup;
     }
 
     /**
-     * Get a signup
+     * Update a signup.
+     *
+     * @param array $data
+     * @param array $data
+     * @return \Rogue\Models\Signup
+     */
+    public function update($signup, $data)
+    {
+        $signup->update($data);
+
+        return $signup;
+    }
+
+    /**
+     * Get a signup based on unique fields.
      *
      * @param  string $northstarId
      * @param  int $campaignId
@@ -60,5 +60,21 @@ class SignupRepository
         ])->first();
 
         return $signup;
+    }
+
+    /**
+     * Delete a signup.
+     *
+     * @param int $signupId
+     * @return $post;
+     */
+    public function destroy($signupId)
+    {
+        $signup = Signup::findOrFail($signupId);
+
+        // Soft delete the signup.
+        $signup->delete();
+
+        return $signup->trashed();
     }
 }

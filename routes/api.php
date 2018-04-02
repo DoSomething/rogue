@@ -10,67 +10,67 @@
  */
 
 // Assets
-$router->get('images/{post}', 'ImagesController@show');
+$router->get('images/{post}', 'Legacy\Web\ImagesController@show');
 
 // Legacy API Routes
 $router->group(['prefix' => 'api/v1', 'middleware' => ['legacy-auth']], function () {
     // reportbacks
-    $this->get('reportbacks', 'Api\ReportbackController@index');
+    $this->get('reportbacks', 'Legacy\Two\ReportbackController@index');
 });
 
 // v2 routes
 $router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function () {
 
     // activity
-    $this->get('activity', 'Api\ActivityController@index');
+    $this->get('activity', 'Legacy\Two\ActivityController@index');
 
     // events
-    $this->get('events', 'Api\EventController@index');
+    $this->get('events', 'Legacy\Two\EventController@index');
 
     // posts
-    $this->post('posts', 'Api\PostsController@store');
-    $this->get('posts', 'Api\PostsController@index');
+    $this->post('posts', 'Legacy\Two\PostsController@store');
+    $this->get('posts', 'Legacy\Two\PostsController@index');
 
     // reactions
-    $this->post('reactions', 'Api\ReactionController@store');
+    $this->post('reactions', 'Legacy\Two\ReactionController@store');
 
     // reviews
-    $this->post('reviews', 'Api\ReviewsController@reviews');
+    $this->post('reviews', 'Legacy\Two\ReviewsController@reviews');
 
     // signups
-    $this->post('signups', 'Api\SignupsController@store');
+    $this->post('signups', 'Legacy\Two\SignupsController@store');
 
     // tags
-    $this->post('tags', 'Api\TagsController@store');
+    $this->post('tags', 'Legacy\Two\TagsController@store');
 
     // Campaigns
-    $this->get('campaigns', 'Api\CampaignsController@index');
+    $this->get('campaigns', 'Legacy\Two\CampaignsController@index');
 });
 
 // v3 routes
 $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function () {
     // signups
-    $this->post('signups', 'Three\SignupsController@store');
-    $this->get('signups', 'Three\SignupsController@index');
-    $this->get('signups/{signup}', 'Three\SignupsController@show');
-    $this->patch('signups/{signup}', 'Three\SignupsController@update');
-    $this->delete('signups/{signup}', 'Three\SignupsController@destroy');
+    $this->post('signups', 'SignupsController@store');
+    $this->get('signups', 'SignupsController@index');
+    $this->get('signups/{signup}', 'SignupsController@show');
+    $this->patch('signups/{signup}', 'SignupsController@update');
+    $this->delete('signups/{signup}', 'SignupsController@destroy');
 
     // posts
-    $this->post('posts', 'Three\PostsController@store');
-    $this->get('posts', 'Three\PostsController@index');
-    $this->get('posts/{post}', 'Three\PostsController@show');
-    $this->patch('posts/{post}', 'Three\PostsController@update');
-    $this->delete('posts/{post}', 'Three\PostsController@destroy');
+    $this->post('posts', 'PostsController@store');
+    $this->get('posts', 'PostsController@index');
+    $this->get('posts/{post}', 'PostsController@show');
+    $this->patch('posts/{post}', 'PostsController@update');
+    $this->delete('posts/{post}', 'PostsController@destroy');
 
     // reactions
-    $this->post('post/{post}/reactions', 'Three\ReactionController@store');
-    $this->get('post/{post}/reactions', 'Three\ReactionController@index');
+    $this->post('post/{post}/reactions', 'ReactionController@store');
+    $this->get('post/{post}/reactions', 'ReactionController@index');
 
     // reviews
-    $this->post('reviews', 'Three\ReviewsController@reviews');
+    $this->post('reviews', 'ReviewsController@reviews');
 
     // tag
-    $this->post('posts/{post}/tags', 'Three\TagsController@store');
-    $this->delete('posts/{post}/tags', 'Three\TagsController@destroy');
+    $this->post('posts/{post}/tags', 'TagsController@store');
+    $this->delete('posts/{post}/tags', 'TagsController@destroy');
 });

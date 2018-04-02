@@ -3,9 +3,8 @@
 namespace Rogue\Services;
 
 use Rogue\Models\Post;
-use Rogue\Jobs\SendPostToBlink;
 use Rogue\Jobs\SendPostToQuasar;
-use Rogue\Jobs\SendSignupToQuasar;
+use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Repositories\PostRepository;
 use Rogue\Jobs\SendDeletedPostToQuasar;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
@@ -35,23 +34,23 @@ class PostService
      *
      * @param array $data
      * @param int $signupId
+     * @param string $authenticatedUserRole
+     *
      * @return \Rogue\Models\Post
      */
-    public function create($data, $signupId)
+    public function create($data, $signupId, $authenticatedUserRole = null)
     {
-        $post = $this->repository->create($data, $signupId);
+        $post = $this->repository->create($data, $signupId, $authenticatedUserRole);
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
         $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
 
         // Save the new post in Customer.io, via Blink.
         if (config('features.blink') && $should_send_to_blink) {
-            SendPostToBlink::dispatch($post);
+            SendPostToCustomerIo::dispatch($post);
         }
 
-        // Dispatch jobs to send post and signup to Quasar
         SendPostToQuasar::dispatch($post);
-        SendSignupToQuasar::dispatch($post->signup);
 
         // Log that a post was created.
         info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
@@ -60,61 +59,53 @@ class PostService
     }
 
     /**
-     * Handles all business logic around reviewing posts.
+     * Handles all business logic around updating posts.
      *
+     * @param \Rogue\Models\Post $post
      * @param array $data
-     * @param int $signupId
      * @return \Rogue\Models\Post
      */
-    public function review($data)
+    public function update($post, $data)
     {
-        $reviewedPost = $this->repository->reviews($data);
+        $post = $this->repository->update($post, $data);
 
-        SendPostToQuasar::dispatch($reviewedPost);
-        SendReviewedPostToCustomerIo::dispatch($reviewedPost);
+        // Save the new post in Customer.io, via Blink,
+        // unless 'dont_send_to_blink' is TRUE.
+        $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+        if (config('features.blink') && $should_send_to_blink) {
+            SendPostToCustomerIo::dispatch($post);
+        }
 
-        // Log that a post was reviewed.
-        info('post_reviewed', [
-            'id' => $reviewedPost->id,
-            'admin_northstar_id' => $data['admin_northstar_id'],
-            'status' => $reviewedPost->status,
-        ]);
+        SendPostToQuasar::dispatch($post);
 
-        return $reviewedPost;
+        // Log that a post was updated.
+        info('post_updated', ['id' => $post->id, 'signup_id' => $post->signup_id]);
+
+        return $post;
     }
 
     /**
-     * Handles all business logic around updating posts.
+     * Handles all business logic around reviewing posts.
      *
-     * @param \Rogue\Models\Signup $signup
+     * @param \Rogue\Models\Post $post
      * @param array $data
-     * @return \Rogue\Models\Post|\Rogue\Models\Signup
+     * @return \Rogue\Models\Post
      */
-    public function update($signup, $data)
+    public function review($post, $data, $comment = null, $admin = null)
     {
-        $postOrSignup = $this->repository->update($signup, $data);
+        $post = $this->repository->reviews($post, $data, $comment, $admin);
 
-        // Send to Blink unless 'dont_send_to_blink' is TRUE
-        $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+        SendPostToQuasar::dispatch($post);
+        SendReviewedPostToCustomerIo::dispatch($post);
 
-        // Save the new post in Customer.io, via Blink.
-        if (config('features.blink') && $postOrSignup instanceof Post && $should_send_to_blink) {
-            SendPostToBlink::dispatch($postOrSignup);
+        // Log that a post was reviewed.
+        info('post_reviewed', [
+            'id' => $post->id,
+            'admin_northstar_id' => $admin ? $admin : auth()->id(),
+            'status' => $post->status,
+        ]);
 
-            // Log that a post was created.
-            info('post_created', ['id' => $postOrSignup->id, 'signup_id' => $postOrSignup->signup_id]);
-        }
-
-        // Dispatch job to send Post (or Post and Signup) to Quasar
-        if ($postOrSignup instanceof Post) {
-            SendPostToQuasar::dispatch($postOrSignup);
-
-            SendSignupToQuasar::dispatch($postOrSignup->signup);
-        } elseif ($postOrSignup instanceof Signup) {
-            SendSignupToQuasar::dispatch($postOrSignup);
-        }
-
-        return $postOrSignup;
+        return $post;
     }
 
     /**
