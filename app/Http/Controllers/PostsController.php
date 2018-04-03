@@ -71,19 +71,10 @@ class PostsController extends ApiController
     public function index(Request $request)
     {
         $query = $this->newQuery(Post::class)
-            ->withCount('reactions')
-            ->with('tags')
             ->orderBy('created_at', 'desc');
 
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Post::$indexes);
-
-        // If a user made the request, return whether or not they liked each post.
-        if (auth()->check()) {
-            $query = $query->with(['reactions' => function ($query) {
-                $query->where('northstar_id', '=', auth()->id());
-            }]);
-        }
 
         // Only allow admins or staff to see un-approved posts from other users.
         $query = $query->whereVisible();
