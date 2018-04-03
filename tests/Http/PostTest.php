@@ -599,6 +599,7 @@ class PostTest extends TestCase
         $rejectedPosts = factory(Post::class, 'rejected', 3)->create();
 
         $northstarId = $this->faker->northstar_id;
+        $secondNorthstarId = $this->faker->northstar_id;
 
         foreach ($posts as $post) {
             $post->northstar_id = $northstarId;
@@ -606,12 +607,11 @@ class PostTest extends TestCase
         }
 
         foreach ($rejectedPosts as $rejectedPost) {
-            $rejectedPost->northstar_id = $this->faker->northstar_id;
+            $rejectedPost->northstar_id = $secondNorthstarId;
             $rejectedPost->save();
         }
 
         $response = $this->withAccessToken($northstarId)->getJson('api/v3/posts');
-
         $response->assertStatus(200);
         $response->assertJsonCount(2, 'data');
 
