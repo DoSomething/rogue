@@ -96,7 +96,10 @@ function getNorthstarId($request)
  */
 function is_staff_user()
 {
-    if (token()->exists() && in_array(token()->role, ['admin', 'staff'])) {
+    $isStaffUser = token()->exists() && in_array(token()->role, ['admin', 'staff']);
+    $isStaffClient = token()->exists() && in_array('admin', token()->scopes());
+
+    if ($isStaffUser || $isStaffClient) {
         return true;
     }
 
