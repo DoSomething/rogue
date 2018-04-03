@@ -19,6 +19,12 @@ class Post extends Model
     protected $dates = ['deleted_at'];
 
     /**
+     * Always load a user's own reaction,
+     * if they're logged-in.
+     */
+    protected $with = ['reaction'];
+
+    /**
      * The relationship counts that should be eager loaded on every query.
      *
      * @var array
@@ -79,6 +85,16 @@ class Post extends Model
     public function reactions()
     {
         return $this->hasMany(Reaction::class);
+    }
+
+    /**
+     * Get the reactions associated with this post
+     * for the given user ID.
+     */
+    public function reaction()
+    {
+        return $this->hasOne(Reaction::class)
+            ->where('northstar_id', auth()->id());
     }
 
     /**
