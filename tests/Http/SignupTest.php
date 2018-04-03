@@ -317,17 +317,15 @@ class SignupTest extends TestCase
      */
     public function testSignupIndexWithIncludedUserAsAdmin()
     {
-        // @TODO: revisit with this card: https://www.pivotaltracker.com/n/projects/2019429/stories/155479565
-        $this->markTestIncomplete();
-        // $post = factory(Post::class)->create();
-        // $signup = $post->signup;
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
 
-        // // Test with admin that entire user is returned.
-        // $response = $this->withAdminAccessToken()->getJson('api/v3/signups' . '?include=user');
-        // $response->assertStatus(200);
-        // $decodedResponse = $response->decodeResponseJson();
+        // Test with admin that entire user is returned.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups' . '?include=user');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
 
-        // $this->assertEquals(false, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
+        $this->assertEquals(false, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
     }
 
     /**
@@ -339,17 +337,15 @@ class SignupTest extends TestCase
      */
     public function testSignupIndexWithIncludedUserAsOwner()
     {
-        // @TODO: revisit with this card: https://www.pivotaltracker.com/n/projects/2019429/stories/155479565
-        $this->markTestIncomplete();
-        // $post = factory(Post::class)->create();
-        // $signup = $post->signup;
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
 
-        // // Test with admin that entire user is returned.
-        // $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups' . '?include=user');
-        // $response->assertStatus(200);
-        // $decodedResponse = $response->decodeResponseJson();
+        // Test with admin that entire user is returned.
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups' . '?include=user');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
 
-        // $this->assertEquals(false, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
+        $this->assertEquals(false, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
     }
 
     /**
@@ -361,17 +357,15 @@ class SignupTest extends TestCase
      */
     public function testSignupIndexWithIncludedUserAsNonAdminNonOwner()
     {
-        // @TODO: revisit with this card: https://www.pivotaltracker.com/n/projects/2019429/stories/155479565
-        $this->markTestIncomplete();
-        // $post = factory(Post::class)->create();
-        // $signup = $post->signup;
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
 
-        // // Test with annoymous user that only a user's first name is returned.
-        // $response = $this->getJson('api/v3/signups' . '?include=user');
-        // $response->assertStatus(200);
-        // $decodedResponse = $response->decodeResponseJson();
+        // Test with annoymous user that only a user's first name is returned.
+        $response = $this->getJson('api/v3/signups' . '?include=user');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
 
-        // $this->assertEquals(true, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
+        $this->assertEquals(true, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
     }
 
     /**
@@ -387,74 +381,72 @@ class SignupTest extends TestCase
      */
     public function testSignupsIndexAsAdminWithFilters()
     {
-        // @TODO: revisit with this card: https://www.pivotaltracker.com/n/projects/2019429/stories/155479565
-        $this->markTestIncomplete();
-        // $northstarId = $this->faker->northstar_id;
-        // $campaignId = str_random(22);
-        // $campaignRunId = $this->faker->randomNumber(4);
+        $northstarId = $this->faker->northstar_id;
+        $campaignId = str_random(22);
+        $campaignRunId = $this->faker->randomNumber(4);
 
-        // // Create two signups
-        // factory(Signup::class, 2)->create([
-        //    'northstar_id' => $northstarId,
-        //    'campaign_id' => $campaignId,
-        //    'campaign_run_id' => $campaignRunId,
-        // ]);
+        // Create two signups
+        factory(Signup::class, 2)->create([
+           'northstar_id' => $northstarId,
+           'campaign_id' => $campaignId,
+           'campaign_run_id' => $campaignRunId,
+        ]);
 
-        // // Create three more signups with different northstar_id, campaign_id, and campaign_run_id
-        // $secondNorthstarId = $this->faker->northstar_id;
-        // $secondCampaignId = str_random(22);
-        // $secondCampaignRunId = $this->faker->randomNumber(4);
+        // Create three more signups with different northstar_id, campaign_id, and campaign_run_id
+        $secondNorthstarId = $this->faker->northstar_id;
+        $secondCampaignId = str_random(22);
+        $secondCampaignRunId = $this->faker->randomNumber(4);
 
-        // factory(Signup::class, 3)->create([
-        //    'northstar_id' => $secondNorthstarId,
-        //    'campaign_id' => $secondCampaignId,
-        //    'campaign_run_id' => $secondCampaignRunId,
-        // ]);
+        factory(Signup::class, 3)->create([
+           'northstar_id' => $secondNorthstarId,
+           'campaign_id' => $secondCampaignId,
+           'campaign_run_id' => $secondCampaignRunId,
+        ]);
 
-        // // Filter by northstar_id
-        // $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[northstar_id]=' . $northstarId);
-        // $decodedResponse = $response->decodeResponseJson();
+        // Filter by northstar_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[northstar_id]=' . $northstarId);
+        $decodedResponse = $response->decodeResponseJson();
 
-        // $response->assertStatus(200);
+        $response->assertStatus(200);
 
-        // // Assert only 2 signups are returned
-        // $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
+        // Assert only 2 signups are returned
+        $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
 
-        // // Filter by campaign_id
-        // $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_id]=' . $secondCampaignId);
-        // $decodedResponse = $response->decodeResponseJson();
+        // Filter by campaign_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_id]=' . $secondCampaignId);
+        $decodedResponse = $response->decodeResponseJson();
 
-        // $response->assertStatus(200);
+        $response->assertStatus(200);
 
-        // // Assert only 3 signups are returned
-        // $this->assertEquals(3, $decodedResponse['meta']['cursor']['count']);
+        // Assert only 3 signups are returned
+        $this->assertEquals(3, $decodedResponse['meta']['cursor']['count']);
 
-        // // Filter by campaign_run_id
-        // $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId);
-        // $decodedResponse = $response->decodeResponseJson();
+        // Filter by campaign_run_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId);
+        $decodedResponse = $response->decodeResponseJson();
 
-        // $response->assertStatus(200);
+        $response->assertStatus(200);
 
-        // // Assert only 2 signups are returned
-        // $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
+        // Assert only 2 signups are returned
+        $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
 
-        // // Filter by campaign_run_id and northstar_id
-        // $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId . '&filter[northstar_id]=' . $northstarId);
-        // $decodedResponse = $response->decodeResponseJson();
+        // Filter by campaign_run_id and northstar_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId . '&filter[northstar_id]=' . $northstarId);
+        $decodedResponse = $response->decodeResponseJson();
 
-        // $response->assertStatus(200);
+        $response->assertStatus(200);
 
-        // // Assert only 2 signups are returned
-        // $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
+        // Assert only 2 signups are returned
+        $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
 
-        // // Filter by multiple campaign_run_id
-        // $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId . ',' . $secondCampaignRunId);
-        // $decodedResponse = $response->decodeResponseJson();
+        // Filter by multiple campaign_run_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId . ',' . $secondCampaignRunId);
+        $decodedResponse = $response->decodeResponseJson();
 
-        // $response->assertStatus(200);
+        $response->assertStatus(200);
 
-        // // Assert all signups are returned
-        // $this->assertEquals(5, $decodedResponse['meta']['cursor']['count']);
+        // Assert all signups are returned
+        $this->assertEquals(5, $decodedResponse['meta']['cursor']['count']);
     }
 
     /**
