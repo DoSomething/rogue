@@ -281,7 +281,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with admin that posts are returned.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -301,7 +301,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with admin that posts are returned.
-        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -321,7 +321,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with admin that entire user is returned.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups' . '?include=user');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?include=user');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -341,7 +341,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with admin that entire user is returned.
-        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups' . '?include=user');
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups?include=user');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -361,7 +361,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with annoymous user that only a user's first name is returned.
-        $response = $this->getJson('api/v3/signups' . '?include=user');
+        $response = $this->getJson('api/v3/signups?include=user');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
