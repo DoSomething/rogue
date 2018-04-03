@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
-use Rogue\Services\SignupService;
+use Rogue\Managers\SignupManager;
 use Rogue\Http\Transformers\SignupTransformer;
 use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Controllers\Legacy\Two\ApiController;
@@ -20,9 +20,9 @@ class SignupsController extends ApiController
     protected $transformer;
 
     /**
-     * The signup service instance.
+     * The signup manager instance.
      *
-     * @var \Rogue\Services\SignupService
+     * @var \Rogue\Manager\SignupManager
      */
     protected $signups;
 
@@ -36,9 +36,9 @@ class SignupsController extends ApiController
     /**
      * Create a controller instance.
      *
-     * @param SignupService $signups
+     * @param SignupManager $signups
      */
-    public function __construct(SignupService $signups)
+    public function __construct(SignupManager $signups)
     {
         $this->signups = $signups;
         $this->transformer = new SignupTransformer;

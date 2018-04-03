@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers\Legacy\Web;
 
 use Rogue\Models\Post;
 use Rogue\Http\Controllers\Controller;
-use Rogue\Services\Legacy\Two\PostService;
+use Rogue\Managers\Legacy\Two\PostManager;
 use Rogue\Http\Requests\Legacy\Web\ReviewsRequest;
 use Rogue\Http\Transformers\Legacy\Two\PostTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class ReviewsController extends Controller
 {
     /**
-     * The post service instance.
+     * The post manager instance.
      *
-     * @var Rogue\Repositories\PostRepository
+     * @var Rogue\Managers\Legacy\Two\PostManager
      */
     protected $post;
 
@@ -29,7 +29,7 @@ class ReviewsController extends Controller
      * @param  PostContract $posts
      * @return void
      */
-    public function __construct(PostService $post)
+    public function __construct(PostManager $post)
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');

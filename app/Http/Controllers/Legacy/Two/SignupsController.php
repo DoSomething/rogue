@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Controllers\Legacy\Two;
 
-use Rogue\Services\Legacy\Two\PostService;
-use Rogue\Services\Legacy\Two\SignupService;
+use Rogue\Managers\Legacy\Two\PostManager;
+use Rogue\Managers\Legacy\Two\SignupManager;
 use Rogue\Http\Requests\Legacy\Two\SignupRequest;
 use Rogue\Http\Transformers\Legacy\Two\SignupTransformer;
 
@@ -15,16 +15,16 @@ class SignupsController extends ApiController
     protected $transformer;
 
     /**
-     * The signup service instance.
+     * The signup manager instance.
      *
-     * @var Rogue\Services\Legacy\Two\SignupService
+     * @var Rogue\Managers\Legacy\Two\SignupManager
      */
     protected $signups;
 
     /**
-     * The photo repository instance.
+     * The photo manager instance.
      *
-     * @var Rogue\Services\Legacy\Two\PostService
+     * @var Rogue\Managers\Legacy\Two\PostManager
      */
     protected $posts;
 
@@ -34,7 +34,7 @@ class SignupsController extends ApiController
      * @param  PostContract  $posts
      * @return void
      */
-    public function __construct(SignupService $signups, PostService $posts)
+    public function __construct(SignupManager $signups, PostManager $posts)
     {
         $this->signups = $signups;
         $this->posts = $posts;
