@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Signup;
+use Rogue\Models\Reaction;
 use DoSomething\Gateway\Blink;
 use Illuminate\Http\UploadedFile;
 
@@ -785,6 +786,35 @@ class PostTest extends TestCase
 
         $json = $response->json();
         $this->assertEquals($post->id, $json['data']['id']);
+    }
+
+    /**
+     * Test for retrieving a specific post with reactions.
+     *
+     * GET /api/v3/post/:post_id
+     * @return void
+     */
+    public function testPostShowWithReactions()
+    {
+        $viewer = $this->randomUserId();
+        $post = factory(Post::class, 'accepted')->create();
+
+        // Create two reactions for this post!
+        Reaction::withTrashed()->firstOrCreate(['northstar_id' => $viewer, 'post_id' => $post->id]);
+        Reaction::withTrashed()->firstOrCreate(['northstar_id' => 'someone_else_lol', 'post_id' => $post->id]);
+
+        $response = $this->withAccessToken($viewer, 'user')->getJson('api/v3/posts/' . $post->id);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'id' => $post->id,
+                'reactions' => [
+                    'reacted' => true,
+                    'total' => 2,
+                ],
+            ],
+        ]);
     }
 
     /**
