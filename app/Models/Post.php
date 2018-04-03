@@ -19,6 +19,13 @@ class Post extends Model
     protected $dates = ['deleted_at'];
 
     /**
+     * The relationship counts that should be eager loaded on every query.
+     *
+     * @var array
+     */
+    protected $withCount = ['reactions'];
+
+    /**
      * All of the relationships to be touched.
      *
      * @var array

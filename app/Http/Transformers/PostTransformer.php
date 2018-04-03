@@ -48,7 +48,7 @@ class PostTransformer extends TransformerAbstract
             'quantity' => $post->quantity,
             'reactions' => [
                 'reacted' => $reacted,
-                'total' => isset($post->reactions_count) ? $post->reactions_count : null,
+                'total' => $post->reactions_count,
             ],
             'status' => $post->status,
             'created_at' => $post->created_at->toIso8601String(),
