@@ -30,7 +30,7 @@ class PostRequest extends Request
             'why_participated' => 'nullable|string',
             'text' => 'required|nullable|string|max:256',
             'quantity' => 'nullable|integer',
-            'file' => 'image|dimensions:min_width=400,min_height=400',
+            // 'file' => 'image|dimensions:min_width=400,min_height=400',
             'status' => 'in:pending,accepted,rejected',
             'details'=> 'json',
         ];

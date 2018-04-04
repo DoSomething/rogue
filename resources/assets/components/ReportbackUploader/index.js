@@ -49,11 +49,11 @@ class ReportbackUploader extends React.Component {
 
     const reportback = {
       media: this.state.media,
-      caption: this.caption.value,
+      text: this.caption.value,
       campaignId: this.props.campaignId,
       campaignRunId: this.props.campaignRunId,
       northstarId: this.props.northstarId,
-      source: this.props.source,
+      source: 'rogue-admin',
       status: 'accepted',
     };
 
@@ -120,8 +120,8 @@ class ReportbackUploader extends React.Component {
 }
 
 ReportbackUploader.propTypes = {
-  campaignId: PropTypes.number.isRequired,
-  campaignRunId: PropTypes.number.isRequired,
+  campaignId: PropTypes.string.isRequired,
+  campaignRunId: PropTypes.number,
   northstarId: PropTypes.string.isRequired,
   signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   source: PropTypes.string.isRequired,

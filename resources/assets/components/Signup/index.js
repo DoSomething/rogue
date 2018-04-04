@@ -296,27 +296,29 @@ class Signup extends React.Component {
     }
   }
 
-  // Submit a new reportback on behalf of the user.
+  // @TODO: make this work for any type of post and rename to submitPost?
+  // Submit a new photo reportback on behalf of the user.
   submitReportback(reportback) {
-    // Fields to send to /posts
+    // Fields to send to /v3/posts
     const fields = {
       northstar_id: reportback.northstarId,
       campaign_id: reportback.campaignId,
       campaign_run_id: reportback.campaignRunId,
       quantity: reportback.impact,
       why_participated: reportback.whyParticipated,
-      caption: reportback.caption,
+      text: reportback.text,
       source: reportback.source,
       status: reportback.status,
       file: reportback.media.dataURL,
-      remote_addr: '',
+      type: 'photo',
+      // @TODO: add action to the form as an optional field?
+      action: 'default',
     };
-
     // Make API request to Rogue to upload post
-    const request = this.api.post('posts', fields);
+    const request = this.api.post('api/v3/posts', fields);
 
     request.then((result) => {
-      // Update the state
+       // Update the state
       this.setState((previousState) => {
         const newState = { ...previousState };
         const post = keyBy(result, 'id');
