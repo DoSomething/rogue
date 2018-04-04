@@ -599,7 +599,6 @@ class PostTest extends TestCase
         $rejectedPosts = factory(Post::class, 'rejected', 3)->create();
 
         $northstarId = $this->faker->northstar_id;
-        $secondNorthstarId = '59ea1c1ca0bfad5e90139dcz';
 
         foreach ($posts as $post) {
             $post->northstar_id = $northstarId;
@@ -607,7 +606,7 @@ class PostTest extends TestCase
         }
 
         foreach ($rejectedPosts as $rejectedPost) {
-            $rejectedPost->northstar_id = $secondNorthstarId;
+            $rejectedPost->northstar_id = '59ea1c1ca0bfad5e90139dcz';
             $rejectedPost->save();
         }
 

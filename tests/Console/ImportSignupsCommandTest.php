@@ -11,7 +11,7 @@ class ImportSignupsCommandTest extends TestCase
     public function testImportingSignupsWithNoDuplicates()
     {
         // Timestamp right before running the script
-        $start_time = Carbon::now();
+        $start_time = $this->mockTime(Carbon::now());
 
         // Run the signup import command
         $this->artisan('rogue:signupimport', ['path' => 'tests/Console/example-signups.csv']);
@@ -37,14 +37,9 @@ class ImportSignupsCommandTest extends TestCase
         $all_signups = Signup::all();
         $this->assertTrue($all_signups->count() == 2);
 
-        // The below is failing and we're not sure why!
-        // @TODO: come back and investigate!
-
-        $this->markTestIncomplete();
-
         // Make sure the 'updated_at' timestamps are not backdated
-        // foreach ($all_signups as $signup) {
-        //     $this->assertTrue($signup->updated_at->gte($start_time));
-        // }
+        foreach ($all_signups as $signup) {
+            $this->assertTrue($signup->updated_at->gte($start_time));
+        }
     }
 }
