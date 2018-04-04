@@ -21,7 +21,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $response = $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -88,13 +88,13 @@ class TagsTest extends TestCase
 
         $post = factory(Post::class)->create();
 
-        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
              'tag_name' => 'Good Photo',
          ]);
 
         $this->assertContains('Good Photo', $post->tagNames());
 
-        $response = $this->withAccessToken($this->randomUserId(), 'admin')->deleteJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -165,7 +165,7 @@ class TagsTest extends TestCase
 
         $post = factory(Post::class)->create();
 
-        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
              'tag_name' => 'Good Photo',
          ]);
 
@@ -178,7 +178,7 @@ class TagsTest extends TestCase
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
-        $response = $this->withAccessToken($this->randomUserId(), 'admin')->deleteJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Tag To Delete',
         ]);
 
@@ -203,7 +203,7 @@ class TagsTest extends TestCase
         // Later, apply the tag to the post
         $this->mockTime('10/21/2017 13:05:00');
 
-        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Good Photo',
         ]);
 
@@ -221,7 +221,7 @@ class TagsTest extends TestCase
         $posts = factory(Post::class, 20)->create();
 
         // Later, apply the tag to the post
-        $this->withAccessToken($this->randomUserId(), 'admin')->postJson('api/v3/posts/' . $posts->first()->id . '/tags', [
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $posts->first()->id . '/tags', [
             'tag_name' => 'get-outta-here',
         ]);
 
