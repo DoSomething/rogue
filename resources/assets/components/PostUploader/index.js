@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import MediaUploader from '../MediaUploader';
 import FormMessage from '../FormMessage';
-import './reportback-uploader.scss';
+import './post-uploader.scss';
 
 class PostUploader extends React.Component {
   constructor(props) {
@@ -47,7 +47,7 @@ class PostUploader extends React.Component {
   handleOnSubmitForm(event) {
     event.preventDefault();
 
-    const reportback = {
+    const post = {
       media: this.state.media,
       text: this.caption.value,
       campaignId: this.props.campaignId,
@@ -59,20 +59,20 @@ class PostUploader extends React.Component {
     const signup = this.props.signup;
 
     if (this.quantity.value) {
-      reportback.impact = this.quantity.value;
-      signup.quantity = reportback.impact;
+      post.impact = this.quantity.value;
+      signup.quantity = post.impact;
     }
 
     if (this.why_participated.value) {
-      reportback.whyParticipated = this.why_participated.value;
-      signup.why_participated = reportback.whyParticipated;
+      post.whyParticipated = this.why_participated.value;
+      signup.why_participated = post.whyParticipated;
     }
 
-    const fileType = reportback.media.file ? reportback.media.file.type : null;
+    const fileType = post.media.file ? post.media.file.type : null;
 
-    reportback.media.type = fileType ? fileType.substring(0, fileType.indexOf('/')) : null;
+    post.media.type = fileType ? fileType.substring(0, fileType.indexOf('/')) : null;
 
-    this.props.submitReportback(reportback);
+    this.props.submitPost(post);
 
     // @TODO: only reset form AFTER successful RB submission.
     this.form.reset();
@@ -87,13 +87,13 @@ class PostUploader extends React.Component {
     const submissions = this.props.submissions;
 
     return (
-      <div className="reportback-uploader">
+      <div className="post-uploader">
         <h2 className="heading">Upload photo</h2>
         <p><span className="warning">Warning:</span> after uploading a photo, it will automatically be approved. You will still need to add tags in Rogue. No email will trigger telling the user we received their photo.</p>
 
         { submissions.messaging ? <FormMessage messaging={submissions.messaging} /> : null }
 
-        <form className="reportback-form" onSubmit={this.handleOnSubmitForm} ref={form => (this.form = form)}>
+        <form className="post-form" onSubmit={this.handleOnSubmitForm} ref={form => (this.form = form)}>
           <MediaUploader label="Add photo here" media={this.state.media} onChange={this.handleOnFileUpload} />
 
           <div className="wrapper">
@@ -124,13 +124,13 @@ PostUploader.propTypes = {
   northstarId: PropTypes.string.isRequired,
   signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   source: PropTypes.string.isRequired,
-  submitReportback: PropTypes.func.isRequired,
+  submitPost: PropTypes.func.isRequired,
   submissions: PropTypes.shape({
     isFetching: PropTypes.bool,
     isStoring: PropTypes.bool,
     items: PropTypes.array,
     messaging: PropTypes.object,
-    reportback: PropTypes.object,
+    post: PropTypes.object,
   }).isRequired,
   updateSignup: PropTypes.func.isRequired,
 };

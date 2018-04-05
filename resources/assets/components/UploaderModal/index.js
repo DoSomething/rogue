@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReportbackUploader from '../PostUploader';
+import PostUploader from '../PostUploader';
 
 class UploaderModal extends React.Component {
   constructor() {
@@ -23,8 +23,8 @@ class UploaderModal extends React.Component {
         items: [],
         messaging: this.props.success,
       },
-      reportback: {},
-      submitReportback: this.props.submitReportback,
+      post: {},
+      submitPost: this.props.submitPost,
       uploads: {},
       updateSignup: this.props.updateSignup,
       signup,
@@ -34,7 +34,7 @@ class UploaderModal extends React.Component {
       <div className="modal">
         <a href="#" onClick={this.props.onClose} className="modal-close-button">&times;</a>
         <div className="modal__block">
-          <ReportbackUploader {...photoUploaderProps} />
+          <PostUploader {...photoUploaderProps} />
         </div>
       </div>
     );
@@ -51,7 +51,7 @@ UploaderModal.propTypes = {
     reportback_info: PropTypes.object,
   }).isRequired,
   success: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  submitReportback: PropTypes.func.isRequired,
+  submitPost: PropTypes.func.isRequired,
   updateSignup: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };

@@ -1,6 +1,6 @@
 @import '~@dosomething/forge/scss/toolkit';
 
-.reportback-uploader {
+.post-uploader {
   .heading {
     color: $off-black;
     font-size: $font-medium;
@@ -19,7 +19,7 @@
   }
 }
 
-.reportback-form {
+.post-form {
   .media-uploader {
     height: 300px;
     margin: $base-spacing auto;

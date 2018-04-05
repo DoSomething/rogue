@@ -91,7 +91,7 @@ class Signup extends React.Component {
     this.deleteSignup = this.deleteSignup.bind(this);
     this.showUploader = this.showUploader.bind(this);
     this.hideUploader = this.hideUploader.bind(this);
-    this.submitReportback = this.submitReportback.bind(this);
+    this.submitPost = this.submitPost.bind(this);
     this.updateSignup = this.updateSignup.bind(this);
   }
 
@@ -296,20 +296,20 @@ class Signup extends React.Component {
     }
   }
 
-  // @TODO: make this work for any type of post and rename to submitPost?
-  // Submit a new photo reportback on behalf of the user.
-  submitReportback(reportback) {
+  // @TODO: make this work for any type of post?
+  // Submit a new photo post on behalf of the user.
+  submitPost(post) {
     // Fields to send to /v3/posts
     const fields = {
-      northstar_id: reportback.northstarId,
-      campaign_id: reportback.campaignId,
-      campaign_run_id: reportback.campaignRunId,
-      quantity: reportback.impact,
-      why_participated: reportback.whyParticipated,
-      text: reportback.text,
-      source: reportback.source,
-      status: reportback.status,
-      file: reportback.media.dataURL,
+      northstar_id: post.northstarId,
+      campaign_id: post.campaignId,
+      campaign_run_id: post.campaignRunId,
+      quantity: post.impact,
+      why_participated: post.whyParticipated,
+      text: post.text,
+      source: post.source,
+      status: post.status,
+      file: post.media.dataURL,
       type: 'photo',
       // @TODO: add action to the form as an optional field?
       action: 'default',
@@ -399,7 +399,7 @@ class Signup extends React.Component {
                     onClose={e => this.hideUploader(e)}
                     signup={signup}
                     campaign={campaign}
-                    submitReportback={this.submitReportback}
+                    submitPost={this.submitPost}
                     updateSignup={this.updateSignup}
                     success={this.state.successfulSubmission}
                   />
