@@ -23,6 +23,7 @@ class Kernel extends ConsoleKernel
         Commands\TagPosts::class,
         Commands\UpdateSignup::class,
         Commands\ReviewSignup::class,
+        Commands\SendToQuasar::class,
     ];
 
     /**
