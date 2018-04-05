@@ -196,7 +196,7 @@ class Signup extends React.Component {
       tag_name: tag,
     };
 
-    const response = this.api.post('tags', fields);
+    const response = this.api.post(`api/v3/posts/${postId}/tags`, fields);
 
     return response.then((result) => {
       this.setState((previousState) => {
