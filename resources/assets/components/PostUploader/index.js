@@ -5,7 +5,7 @@ import MediaUploader from '../MediaUploader';
 import FormMessage from '../FormMessage';
 import './reportback-uploader.scss';
 
-class ReportbackUploader extends React.Component {
+class PostUploader extends React.Component {
   constructor(props) {
     super(props);
 
@@ -118,7 +118,7 @@ class ReportbackUploader extends React.Component {
   }
 }
 
-ReportbackUploader.propTypes = {
+PostUploader.propTypes = {
   campaignId: PropTypes.string.isRequired,
   campaignRunId: PropTypes.number,
   northstarId: PropTypes.string.isRequired,
@@ -135,4 +135,4 @@ ReportbackUploader.propTypes = {
   updateSignup: PropTypes.func.isRequired,
 };
 
-export default ReportbackUploader;
+export default PostUploader;

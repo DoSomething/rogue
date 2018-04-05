@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReportbackUploader from '../ReportbackUploader';
+import ReportbackUploader from '../PostUploader';
 
 class UploaderModal extends React.Component {
   constructor() {
