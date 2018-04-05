@@ -220,7 +220,7 @@ class Signup extends React.Component {
     };
 
     // Make API request to Rogue to update the quantity on the backend
-    const request = this.api.post('posts', fields);
+    const request = this.api.post('api/v3/posts', fields);
 
     request.then((result) => {
       // Update the state
@@ -255,7 +255,7 @@ class Signup extends React.Component {
 
     if (confirmed) {
       // Make API request to Rogue to update the quantity on the backend
-      const response = this.api.delete('posts/'.concat(postId));
+      const response = this.api.delete(`api/v3/posts/${postId}`);
 
       response.then((result) => {
         // Update the state
