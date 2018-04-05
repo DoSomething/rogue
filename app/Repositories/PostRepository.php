@@ -87,14 +87,14 @@ class PostRepository
             'action' => isset($data['action']) ? $data['action'] : null,
             'url' => $fileUrl,
             'text' => isset($data['text']) ? $data['text'] : null,
-            'status' => isset($data['status']) ? $data['status'] : 'pending',
-            'source' => isset($data['source']) ? $data['source'] : token()->client(),
+            'status' => 'pending',
+            'source' => token()->client(),
             'source_details' => isset($data['source_details']) ? $data['source_details'] : null,
             'details' => isset($data['details']) ? $data['details'] : null,
             'remote_addr' => request()->ip(),
         ]);
 
-        $isAdmin = isset($data['status']) && isset(auth()->user()->role) && auth()->user()->role === 'admin';
+        $isAdmin = auth()->user()->role && auth()->user()->role === 'admin';
         $hasAdminScope = in_array('admin', token()->scopes());
 
         // Admin users may provide a source and status when uploading a post.

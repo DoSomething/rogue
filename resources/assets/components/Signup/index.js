@@ -318,7 +318,7 @@ class Signup extends React.Component {
     const request = this.api.post('api/v3/posts', fields);
 
     request.then((result) => {
-       // Update the state
+      // Update the state
       this.setState((previousState) => {
         const newState = { ...previousState };
         const post = keyBy(result, 'id');

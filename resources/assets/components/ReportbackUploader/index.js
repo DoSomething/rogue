@@ -53,7 +53,6 @@ class ReportbackUploader extends React.Component {
       campaignId: this.props.campaignId,
       campaignRunId: this.props.campaignRunId,
       northstarId: this.props.northstarId,
-      source: 'rogue-admin',
       status: 'accepted',
     };
 
