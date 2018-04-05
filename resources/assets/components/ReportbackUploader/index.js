@@ -103,8 +103,8 @@ class ReportbackUploader extends React.Component {
               <input className="text-field" id="caption" name="caption" type="text" onChange={this.handleOnCaptionUpdate} placeholder="60 characters or less" ref={input => (this.caption = input)} />
             </div>
             <div className="form-item">
-              <label className="field-label" htmlFor="quantity">Update quantity:</label>
-              <input className="text-field" id="quantity" name="quantity" type="text" onChange={this.handleOnQuantityUpdate} placeholder="Optional if it already exists" ref={input => (this.quantity = input)} />
+              <label className="field-label" htmlFor="quantity">Add a quantity:</label>
+              <input className="text-field" id="quantity" name="quantity" type="text" onChange={this.handleOnQuantityUpdate} placeholder="A number, not a word! " ref={input => (this.quantity = input)} />
             </div>
             <div className="form-item">
               <label className="field-label" htmlFor="why_participated">Update why participated:</label>
