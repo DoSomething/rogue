@@ -56,7 +56,7 @@ class SendToQuasar extends Command
         }
 
         $signups->chunkById(1000, function ($signups) {
-            foreach($signups as $signup) {
+            foreach ($signups as $signup) {
                 SendSignupToQuasar::dispatch($signup);
             }
         });
@@ -69,7 +69,7 @@ class SendToQuasar extends Command
         }
 
         $posts->chunkById(1000, function ($posts) {
-            foreach($posts as $post) {
+            foreach ($posts as $post) {
                 SendPostToQuasar::dispatch($post);
             }
         });

@@ -56,7 +56,8 @@ class SendSignupToQuasar implements ShouldQueue
      *
      * @return int
      */
-    public function getSignupId() {
+    public function getSignupId()
+    {
         return $this->signup->id;
     }
 }

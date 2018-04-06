@@ -2,15 +2,12 @@
 
 namespace Tests\Console;
 
-use Carbon\Carbon;
 use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendSignupToQuasar;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Queue;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class SendToQuasarCommandTest extends TestCase
 {
@@ -28,13 +25,13 @@ class SendToQuasarCommandTest extends TestCase
 
         $this->artisan('rogue:quasar');
 
-        foreach(Signup::all() as $signup) {
+        foreach (Signup::all() as $signup) {
             Bus::assertDispatched(SendSignupToQuasar::class, function ($job) use ($signup) {
                 return $job->getSignupId() === $signup->id;
             });
         }
 
-        foreach(Post::all() as $post) {
+        foreach (Post::all() as $post) {
             Bus::assertDispatched(SendPostToQuasar::class, function ($job) use ($post) {
                 return $job->getPostId() === $post->id;
             });
@@ -58,26 +55,26 @@ class SendToQuasarCommandTest extends TestCase
         $this->artisan('rogue:quasar', ['start' => '2018-02-04']);
 
         // Make sure that posts and signups that should have been sent were
-        foreach($signupsToSend as $signup) {
+        foreach ($signupsToSend as $signup) {
             Bus::assertDispatched(SendSignupToQuasar::class, function ($job) use ($signup, $signupsNotSent) {
                 return $job->getSignupId() === $signup->id;
             });
         }
 
-        foreach($postsToSend as $post) {
+        foreach ($postsToSend as $post) {
             Bus::assertDispatched(SendPostToQuasar::class, function ($job) use ($post) {
                 return $job->getPostId() === $post->id;
             });
         }
 
         // Make sure that posts and signups that should NOT have been sent weren't
-        foreach($signupsNotSent as $signup) {
+        foreach ($signupsNotSent as $signup) {
             Bus::assertNotDispatched(SendSignupToQuasar::class, function ($job) use ($signup) {
                 return $job->getSignupId() === $signup->id;
             });
         }
 
-       foreach($postsNotSent as $post) {
+       foreach ($postsNotSent as $post) {
             Bus::assertNotDispatched(SendPostToQuasar::class, function ($job) use ($post) {
                 return $job->getPostId() === $post->id;
             });
@@ -98,7 +95,7 @@ class SendToQuasarCommandTest extends TestCase
         $oldPostsToSend = factory(Post::class, 2)->create();
 
         $this->mockTime('5/18/2018 09:00:00');
-        $newSignupsToSend= factory(Signup::class, 2)->create();
+        $newSignupsToSend = factory(Signup::class, 2)->create();
         $newPostsToSend = factory(Post::class, 2)->create();
 
         $signupsToSend = $oldSignupsToSend->merge($newSignupsToSend);
@@ -108,26 +105,26 @@ class SendToQuasarCommandTest extends TestCase
         $this->artisan('rogue:quasar', ['start' => '2018-02-04', 'end' => '2018-05-19']);
 
         // Make sure that posts and signups that should have been sent were
-        foreach($signupsToSend as $signup) {
+        foreach ($signupsToSend as $signup) {
             Bus::assertDispatched(SendSignupToQuasar::class, function ($job) use ($signup, $signupsNotSent) {
                 return $job->getSignupId() === $signup->id;
             });
         }
 
-        foreach($postsToSend as $post) {
+        foreach ($postsToSend as $post) {
             Bus::assertDispatched(SendPostToQuasar::class, function ($job) use ($post) {
                 return $job->getPostId() === $post->id;
             });
         }
 
         // Make sure that posts and signups that should NOT have been sent weren't
-        foreach($signupsNotSent as $signup) {
+        foreach ($signupsNotSent as $signup) {
             Bus::assertNotDispatched(SendSignupToQuasar::class, function ($job) use ($signup) {
                 return $job->getSignupId() === $signup->id;
             });
         }
 
-       foreach($postsNotSent as $post) {
+       foreach ($postsNotSent as $post) {
             Bus::assertNotDispatched(SendPostToQuasar::class, function ($job) use ($post) {
                 return $job->getPostId() === $post->id;
             });

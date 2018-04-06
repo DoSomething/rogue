@@ -56,7 +56,8 @@ class SendPostToQuasar implements ShouldQueue
      *
      * @return int
      */
-    public function getPostId() {
+    public function getPostId()
+    {
         return $this->post->id;
     }
 }
