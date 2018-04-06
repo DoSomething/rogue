@@ -91,7 +91,7 @@ SignupCard.propTypes = {
     posts: PropTypes.object,
     why_participated: PropTypes.string,
     signup_id: PropTypes.number,
-    campaign_id: PropTypes.number,
+    campaign_id: PropTypes.string,
     campaign_run_id: PropTypes.number,
     quantity: PropTypes.number,
   }).isRequired,

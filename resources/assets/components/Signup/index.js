@@ -1,7 +1,9 @@
+/* global FormData */
+
 // Utilities
 import React from 'react';
 import PropTypes from 'prop-types';
-import { map, startCase, keyBy, filter, isEmpty } from 'lodash';
+import { map, forEach, startCase, keyBy, filter, isEmpty } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
 // Components
@@ -78,7 +80,10 @@ class Signup extends React.Component {
     };
 
     this.api = new RestApiClient(window.location.origin, {
-        headers: { 'Authorization' : `Bearer ${window.AUTH}`}
+        headers: {
+          'Authorization' : `Bearer ${window.AUTH}`,
+          'Content-Type': 'multipart/form-data',
+        },
     });
 
     this.updatePost = this.updatePost.bind(this);
@@ -91,7 +96,7 @@ class Signup extends React.Component {
     this.deleteSignup = this.deleteSignup.bind(this);
     this.showUploader = this.showUploader.bind(this);
     this.hideUploader = this.hideUploader.bind(this);
-    this.submitReportback = this.submitReportback.bind(this);
+    this.submitPost = this.submitPost.bind(this);
     this.updateSignup = this.updateSignup.bind(this);
   }
 
@@ -176,7 +181,7 @@ class Signup extends React.Component {
   updatePost(postId, fields) {
     fields.post_id = postId;
 
-    const request = this.api.put('reviews', fields);
+    const request = this.api.post('api/v3/reviews', fields);
 
     request.then((result) => {
       this.setState((previousState) => {
@@ -196,7 +201,7 @@ class Signup extends React.Component {
       tag_name: tag,
     };
 
-    const response = this.api.post('tags', fields);
+    const response = this.api.post(`api/v3/posts/${postId}/tags`, fields);
 
     return response.then((result) => {
       this.setState((previousState) => {
@@ -220,7 +225,7 @@ class Signup extends React.Component {
     };
 
     // Make API request to Rogue to update the quantity on the backend
-    const request = this.api.post('posts', fields);
+    const request = this.api.post('api/v3/posts', fields);
 
     request.then((result) => {
       // Update the state
@@ -255,7 +260,7 @@ class Signup extends React.Component {
 
     if (confirmed) {
       // Make API request to Rogue to update the quantity on the backend
-      const response = this.api.delete('posts/'.concat(postId));
+      const response = this.api.delete(`api/v3/posts/${postId}`);
 
       response.then((result) => {
         // Update the state
@@ -296,24 +301,28 @@ class Signup extends React.Component {
     }
   }
 
-  // Submit a new reportback on behalf of the user.
-  submitReportback(reportback) {
-    // Fields to send to /posts
+  // @TODO: make this work for any type of post?
+  // Submit a new photo post on behalf of the user.
+  submitPost(post) {
+    // Fields to send to /v3/posts
     const fields = {
-      northstar_id: reportback.northstarId,
-      campaign_id: reportback.campaignId,
-      campaign_run_id: reportback.campaignRunId,
-      quantity: reportback.impact,
-      why_participated: reportback.whyParticipated,
-      caption: reportback.caption,
-      source: reportback.source,
-      status: reportback.status,
-      file: reportback.media.dataURL,
-      remote_addr: '',
+      northstar_id: post.northstarId,
+      campaign_id: post.campaignId,
+      campaign_run_id: post.campaignRunId,
+      quantity: post.quantity,
+      why_participated: post.whyParticipated,
+      text: post.text,
+      status: post.status,
+      file: post.media.file,
+      type: 'photo',
+      // @TODO: add action to the form as an optional field?
+      action: 'default',
     };
 
+    const payload = new FormData();
+    forEach(fields, (value, key) => payload.append(key, value));
     // Make API request to Rogue to upload post
-    const request = this.api.post('posts', fields);
+    const request = this.api.post('api/v3/posts', payload);
 
     request.then((result) => {
       // Update the state
@@ -397,7 +406,7 @@ class Signup extends React.Component {
                     onClose={e => this.hideUploader(e)}
                     signup={signup}
                     campaign={campaign}
-                    submitReportback={this.submitReportback}
+                    submitPost={this.submitPost}
                     updateSignup={this.updateSignup}
                     success={this.state.successfulSubmission}
                   />
