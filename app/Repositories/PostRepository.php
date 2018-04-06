@@ -94,7 +94,7 @@ class PostRepository
             'remote_addr' => request()->ip(),
         ]);
 
-        $isAdmin = auth()->user()->role && auth()->user()->role === 'admin';
+        $isAdmin = auth()->user() && auth()->user()->role === 'admin';
         $hasAdminScope = in_array('admin', token()->scopes());
 
         // Admin users may provide a source and status when uploading a post.
