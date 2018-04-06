@@ -23,7 +23,9 @@ class Tag extends React.Component {
 
     this.setState({ sending: true });
 
-    this.props.isClicked(this.props.post, label)
+    const requestMethod = this.props.isActive ? 'DELETE' : 'POST';
+
+    this.props.isClicked(this.props.post, label, requestMethod)
       .then(() => {
         this.setState({ sending: false });
       });

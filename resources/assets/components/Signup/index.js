@@ -82,7 +82,6 @@ class Signup extends React.Component {
     this.api = new RestApiClient(window.location.origin, {
         headers: {
           'Authorization' : `Bearer ${window.AUTH}`,
-          'Content-Type': 'multipart/form-data',
         },
     });
 
@@ -195,13 +194,14 @@ class Signup extends React.Component {
   }
 
   // Tag a post.
-  updateTag(postId, tag) {
+  updateTag(postId, tag, requestMethod) {
     const fields = {
       post_id: postId,
       tag_name: tag,
     };
 
-    const response = this.api.post(`api/v3/posts/${postId}/tags`, fields);
+    // Check to see if we are creating or deleting this tag.
+    const response = requestMethod === 'POST' ? this.api.post(`api/v3/posts/${postId}/tags`, fields) : this.api.delete(`api/v3/posts/${postId}/tags`, fields);
 
     return response.then((result) => {
       this.setState((previousState) => {
@@ -304,6 +304,14 @@ class Signup extends React.Component {
   // @TODO: make this work for any type of post?
   // Submit a new photo post on behalf of the user.
   submitPost(post) {
+    // To submit a post with a file, we need to change the Content-Type to muultipart/form-data.
+    const api = new RestApiClient(window.location.origin, {
+        headers: {
+          'Authorization' : `Bearer ${window.AUTH}`,
+          'Content-Type': 'multipart/form-data',
+        },
+    });
+
     // Fields to send to /v3/posts
     const fields = {
       northstar_id: post.northstarId,
@@ -322,7 +330,7 @@ class Signup extends React.Component {
     const payload = new FormData();
     forEach(fields, (value, key) => payload.append(key, value));
     // Make API request to Rogue to upload post
-    const request = this.api.post('api/v3/posts', payload);
+    const request = api.post('api/v3/posts', payload);
 
     request.then((result) => {
       // Update the state
