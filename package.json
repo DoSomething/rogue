@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@dosomething/forge": "^6.8.1",
-    "@dosomething/gateway": "^1.2.0",
+    "@dosomething/gateway": "^1.2.2",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
     "dosomething-modal": "^0.3.4",
