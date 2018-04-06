@@ -59,7 +59,7 @@ class PostUploader extends React.Component {
     const signup = this.props.signup;
 
     if (this.quantity.value) {
-      post.impact = this.quantity.value;
+      post.quantity = this.quantity.value;
       signup.quantity = post.impact;
     }
 

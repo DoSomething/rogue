@@ -304,13 +304,12 @@ class Signup extends React.Component {
   // @TODO: make this work for any type of post?
   // Submit a new photo post on behalf of the user.
   submitPost(post) {
-    console.log(post);
     // Fields to send to /v3/posts
     const fields = {
       northstar_id: post.northstarId,
       campaign_id: post.campaignId,
       campaign_run_id: post.campaignRunId,
-      quantity: post.impact,
+      quantity: post.quantity,
       why_participated: post.whyParticipated,
       text: post.text,
       status: post.status,
