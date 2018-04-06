@@ -39,7 +39,7 @@ Example Response:
 }
 ```
 
-##Delete a Tag From a Post
+## Delete a Tag From a Post
 ```
 DELETE /api/v3/posts/:post_id/tags
 ```
