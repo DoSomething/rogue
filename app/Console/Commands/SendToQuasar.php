@@ -15,7 +15,9 @@ class SendToQuasar extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:quasar {start=0000-00-00} {end?}';
+    protected $signature = 'rogue:quasar
+                            {start=0000-00-00 : Include all signups and posts updated on or after this day. Format: YYYY-MM-DD}
+                            {end? : Include signups and posts updated up to but not including this day. Format: YYYY-MM-DD}';
 
     /**
      * The console command description.
