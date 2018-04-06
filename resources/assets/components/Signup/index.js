@@ -1,7 +1,9 @@
+/* global FormData */
+
 // Utilities
 import React from 'react';
 import PropTypes from 'prop-types';
-import { map, startCase, keyBy, filter, isEmpty } from 'lodash';
+import { map, forEach, startCase, keyBy, filter, isEmpty } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
 // Components
@@ -78,7 +80,10 @@ class Signup extends React.Component {
     };
 
     this.api = new RestApiClient(window.location.origin, {
-        headers: { 'Authorization' : `Bearer ${window.AUTH}`}
+        headers: {
+          'Authorization' : `Bearer ${window.AUTH}`,
+          'Content-Type': 'multipart/form-data',
+        },
     });
 
     this.updatePost = this.updatePost.bind(this);
@@ -299,6 +304,7 @@ class Signup extends React.Component {
   // @TODO: make this work for any type of post?
   // Submit a new photo post on behalf of the user.
   submitPost(post) {
+    console.log(post);
     // Fields to send to /v3/posts
     const fields = {
       northstar_id: post.northstarId,
@@ -307,15 +313,17 @@ class Signup extends React.Component {
       quantity: post.impact,
       why_participated: post.whyParticipated,
       text: post.text,
-      source: post.source,
       status: post.status,
-      file: post.media.dataURL,
+      file: post.media.file,
       type: 'photo',
       // @TODO: add action to the form as an optional field?
       action: 'default',
     };
+
+    const payload = new FormData();
+    forEach(fields, (value, key) => payload.append(key, value));
     // Make API request to Rogue to upload post
-    const request = this.api.post('api/v3/posts', fields);
+    const request = this.api.post('api/v3/posts', payload);
 
     request.then((result) => {
       // Update the state

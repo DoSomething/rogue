@@ -30,18 +30,18 @@
   },
   "dependencies": {
     "@dosomething/forge": "^6.8.1",
-    "@dosomething/gateway": "^1.1.6",
+    "@dosomething/gateway": "^1.2.0",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
     "dosomething-modal": "^0.3.4",
     "lodash": "^4.17.5",
-    "prop-types": "^15.6.0",
+    "prop-types": "^15.6.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
-    "sinon": "^4.3.0"
+    "sinon": "^4.5.0"
   },
   "devDependencies": {
-    "@dosomething/babel-config": "^2.0.1",
+    "@dosomething/babel-config": "^2.1.0",
     "@dosomething/eslint-config": "^3.1.1",
     "@dosomething/webpack-config": "^3.0.0",
     "babel-eslint": "^7.2.2",
