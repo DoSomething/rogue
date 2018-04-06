@@ -124,7 +124,7 @@ class SendToQuasarCommandTest extends TestCase
             });
         }
 
-       foreach ($postsNotSent as $post) {
+        foreach ($postsNotSent as $post) {
             Bus::assertNotDispatched(SendPostToQuasar::class, function ($job) use ($post) {
                 return $job->getPostId() === $post->id;
             });
