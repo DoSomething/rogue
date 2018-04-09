@@ -38,7 +38,7 @@ const reviewComponent = (Component, data) => {
       }
     }
 
-    // Make API call to GET /posts to get posts by filtered status.
+    // Make API call to GET api/v3/posts to get posts by filtered status.
     getPostsByStatus(status, campaignId) {
       this.api.getPosts({
         filter: {
@@ -52,12 +52,12 @@ const reviewComponent = (Component, data) => {
         postIds: map(json.data, 'id'),
         signups: extractSignupsFromPosts(keyBy(json.data, 'id')),
         filter: status,
-        postTotals: json.meta.pagination.total,
+        // postTotals: json.meta.pagination.total,
         displayHistoryModal: null,
         historyModalId: null,
         loading: false,
-        nextPage: json.meta.pagination.links.next,
-        prevPage: json.meta.pagination.links.previous,
+        nextPage: json.meta.cursor.next,
+        prevPage: json.meta.cursor.prev,
       }));
     }
 
