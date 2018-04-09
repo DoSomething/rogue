@@ -68,12 +68,12 @@ const reviewComponent = (Component, data) => {
         posts: posts,
         postIds: map(apiResponse.data, 'id'),
         signups: extractSignupsFromPosts(posts),
-        postTotals: apiResponse.meta.pagination.total,
+        // postTotals: apiResponse.meta.pagination.total,
         displayHistoryModal: null,
         historyModalId: null,
         loading: false,
-        nextPage: apiResponse.meta.pagination.links.next,
-        prevPage: apiResponse.meta.pagination.links.previous,
+        nextPage: apiResponse.meta.cursor.next,
+        prevPage: apiResponse.meta.cursor.prev,
       });
     }
 
