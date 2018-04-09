@@ -16,16 +16,16 @@ class Tag extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(label) {
+  handleClick(post, label, isActive) {
     if (label === 'Hide In Gallery 👻') {
       label = 'Hide In Gallery';
     }
 
     this.setState({ sending: true });
 
-    const requestMethod = this.props.isActive ? 'DELETE' : 'POST';
+    const requestMethod = isActive ? 'DELETE' : 'POST';
 
-    this.props.isClicked(this.props.post, label, requestMethod)
+    this.props.isClicked(post, label, requestMethod)
       .then(() => {
         this.setState({ sending: false });
       });
@@ -34,7 +34,7 @@ class Tag extends React.Component {
   render() {
     return (<button disabled={this.props.disabled}
       className={classnames('tag', { 'is-active': this.props.isActive }, { 'is-loading': this.state.sending })}
-      onClick={() => this.handleClick(this.props.label)}
+      onClick={() => this.handleClick(this.props.post, this.props.label, this.props.isActive)}
     >{this.props.label}</button>);
   }
 }
