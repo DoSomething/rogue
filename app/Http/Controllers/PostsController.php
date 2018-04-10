@@ -144,7 +144,7 @@ class PostsController extends ApiController
             'quantity' => 'nullable|integer',
         ]);
 
-        // Only allow an admin or the user who owns the post to update.
+        // Only allow an admin/staff or the user who owns the post to update.
         if (in_array(token()->role, ['admin', 'staff']) || auth()->id() === $post->northstar_id) {
             $this->posts->update($post, $validatedRequest);
 
