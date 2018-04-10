@@ -98,7 +98,7 @@ use Tests\Browser\Pages\CampaignSinglePage;
 //         // so the filter will show results.
 //         $signup = factory(Signup::class)->create();
 //         $post = $this->createAssociatedPostWithStatus($signup, 'accepted');
-//         $post->tag('Good Photo');
+//         $post->tag('Good Submission');
 
 //         $this->browse(function (Browser $browser) use ($signup) {
 //             $browser->visit(new HomePage)
@@ -109,11 +109,11 @@ use Tests\Browser\Pages\CampaignSinglePage;
 //                     ->assertSee('Post Filters')
 //                     ->select('select', 'accepted')
 //                     ->assertSelected('select', 'accepted')
-//                     ->press('Good Photo')
+//                     ->press('Good Submission')
 //                     ->press('Apply Filters')
 //                     ->waitFor('@activeTagButton')
 //                     ->assertDontSee('@activeTagButton', 'Good Quote')
-//                     ->assertSeeIn('@activeTagButton', 'Good Photo');
+//                     ->assertSeeIn('@activeTagButton', 'Good Submission');
 //         });
 //     }
 
