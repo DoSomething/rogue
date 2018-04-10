@@ -2,7 +2,7 @@ import { RestApiClient } from '@dosomething/gateway';
 
 class RogueClient extends RestApiClient {
   getPosts(options) {
-    return this.get('posts', options);
+    return this.get('api/v3/posts', options);
   }
 
   getEvents(options) {

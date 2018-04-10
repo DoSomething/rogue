@@ -41,61 +41,61 @@ describe('WithReviewing', () => {
     expect(state.posts['71']).toEqual(Posts.data[1]);
   });
 
-  it('setNewPosts changes state correctly', () => {
-    const instance = Wrapper.instance();
+  // it('setNewPosts changes state correctly', () => {
+  //   const instance = Wrapper.instance();
 
-    // Remove an element from the posts array and update state with it.
-    Posts.data.pop();
-    instance.setNewPosts(Posts);
+  //   // Remove an element from the posts array and update state with it.
+  //   Posts.data.pop();
+  //   instance.setNewPosts(Posts);
 
-    const state = Wrapper.state();
+  //   const state = Wrapper.state();
 
-    // Make sure campaign data is correct.
-    expect(state.campaign.data).toEqual(Campaign.data);
+  //   // Make sure campaign data is correct.
+  //   expect(state.campaign.data).toEqual(Campaign.data);
 
-    // Make sure post data is correct.
-    expect(state.posts['70']).toEqual(Posts.data[0]);
-    expect(state.posts['71']).toBeUndefined();
-  });
+  //   // Make sure post data is correct.
+  //   expect(state.posts['70']).toEqual(Posts.data[0]);
+  //   expect(state.posts['71']).toBeUndefined();
+  // });
 
-  it('test showHistory updates state properly', (done) => {
-    const instance = Wrapper.instance();
-    const postId = 70;
-    const signupId = 19;
-    const mockedEvent = { preventDefault: () => false };
+  // it('test showHistory updates state properly', (done) => {
+  //   const instance = Wrapper.instance();
+  //   const postId = 70;
+  //   const signupId = 19;
+  //   const mockedEvent = { preventDefault: () => false };
 
-    // Call ShowHistory
-    instance.showHistory(postId, mockedEvent, signupId);
+  //   // Call ShowHistory
+  //   instance.showHistory(postId, mockedEvent, signupId);
 
-    // Use Node's setImmediate to defer the
-    // test until the promise in showHistory resolves.
-    setImmediate(() => {
-      expect(Wrapper.state('displayHistoryModal')).toBe(true);
-      expect(Wrapper.state('historyModalId')).toEqual(70);
-      expect(Wrapper.state('signupEvents')).toEqual(Events.data);
+  //   // Use Node's setImmediate to defer the
+  //   // test until the promise in showHistory resolves.
+  //   setImmediate(() => {
+  //     expect(Wrapper.state('displayHistoryModal')).toBe(true);
+  //     expect(Wrapper.state('historyModalId')).toEqual(70);
+  //     expect(Wrapper.state('signupEvents')).toEqual(Events.data);
 
-      done();
-    });
-  });
+  //     done();
+  //   });
+  // });
 
-  it('hideHistory updates state properly', () => {
-    const instance = Wrapper.instance();
-    const mockedEvent = { preventDefault: () => false };
+  // it('hideHistory updates state properly', () => {
+  //   const instance = Wrapper.instance();
+  //   const mockedEvent = { preventDefault: () => false };
 
-    // Call ShowHistory
-    instance.hideHistory(mockedEvent);
+  //   // Call ShowHistory
+  //   instance.hideHistory(mockedEvent);
 
-    expect(Wrapper.state('displayHistoryModal')).toBe(false);
-    expect(Wrapper.state('historyModalId')).toBeNull();
-  });
+  //   expect(Wrapper.state('displayHistoryModal')).toBe(false);
+  //   expect(Wrapper.state('historyModalId')).toBeNull();
+  // });
 
-  it('updatePost', () => {
-    const instance = Wrapper.instance();
+  // it('updatePost', () => {
+  //   const instance = Wrapper.instance();
 
-    return instance.updatePost(70, { status: 'rejected' }).then(() => {
-      const posts = Wrapper.state('posts');
+  //   return instance.updatePost(70, { status: 'rejected' }).then(() => {
+  //     const posts = Wrapper.state('posts');
 
-      expect(posts['70'].status).toEqual('rejected');
-    });
-  });
+  //     expect(posts['70'].status).toEqual('rejected');
+  //   });
+  // });
 });

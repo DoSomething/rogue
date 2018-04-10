@@ -69,7 +69,9 @@ class PostTransformer extends TransformerAbstract
      */
     public function includeSignup(Post $post)
     {
-        return $this->item($post->signup, new SignupTransformer);
+        $transformer = (new SignupTransformer)->setDefaultIncludes(['user']);
+
+        return $this->item($post->signup, $transformer);
     }
 
     /**

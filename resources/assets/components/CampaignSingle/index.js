@@ -47,7 +47,9 @@ class CampaignSingle extends React.Component {
       },
     };
 
-    this.api = new RestApiClient();
+    this.api = new RestApiClient(window.location.origin, {
+        headers: { 'Authorization' : `Bearer ${window.AUTH}`}
+    });
     this.filterPosts = this.filterPosts.bind(this);
     this.getPostsByFilter = this.getPostsByFilter.bind(this);
     this.getPostsByPaginatedLink = this.getPostsByPaginatedLink.bind(this);
@@ -93,18 +95,18 @@ class CampaignSingle extends React.Component {
     const path = splitEndpoint.slice(-1)[0];
     const queryString = (path.split('?'))[1];
 
-    this.api.get('posts', queryString)
+    this.api.get('api/v3/posts', queryString)
       .then((json) => {
         this.setState({ loadingNewPosts: false });
         this.props.setNewPosts(json);
       });
   }
 
-  // Make API call to GET /posts to get posts by filtered status and/or tag(s).
+  // Make API call to GET api/v3/posts to get posts by filtered status and/or tag(s).
   getPostsByFilter(filters) {
     this.setState({ loadingNewPosts: true });
 
-    this.api.get('/posts', {
+    this.api.get('api/v3/posts', {
       filter: filters,
       include: ['signup', 'siblings'],
     })

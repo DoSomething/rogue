@@ -32,7 +32,7 @@ export function extractPostsFromSignups(signups) {
 }
 
 export function extractSignupsFromPosts(posts) {
-  const signups = keyBy(flatMap(posts, post => post.signup.data), 'signup_id');
+  const signups = keyBy(flatMap(posts, post => post.signup.data), 'id');
 
   return signups;
 }
