@@ -16,6 +16,7 @@ class SendToQuasar extends Command
      * @var string
      */
     protected $signature = 'rogue:quasar
+                            {logFreq=1}
                             {start=0000-00-00 : Include all signups and posts updated on or after this day. Format: YYYY-MM-DD}
                             {end? : Include signups and posts updated up to but not including this day. Format: YYYY-MM-DD}';
 
@@ -45,6 +46,7 @@ class SendToQuasar extends Command
     {
         info('rogue:quasar - Starting to send to Quasar');
 
+        $logFreq = $this->argument('logFreq');
         $start = $this->argument('start');
         $end = $this->argument('end');
 
@@ -55,9 +57,14 @@ class SendToQuasar extends Command
             $signups = $signups->where('updated_at', '<=', $end);
         }
 
-        $signups->chunkById(1000, function ($signups) {
+        $signups->chunkById(1000, function ($signups) use ($logFreq) {
             foreach ($signups as $signup) {
-                SendSignupToQuasar::dispatch($signup);
+                if ($signup->id % $logFreq === 0) {
+                    $log = true;
+                } else {
+                    $log = false;
+                }
+                SendSignupToQuasar::dispatch($signup, $log);
             }
         });
 
@@ -68,9 +75,14 @@ class SendToQuasar extends Command
             $posts = $posts->where('updated_at', '<=', $end);
         }
 
-        $posts->chunkById(1000, function ($posts) {
+        $posts->chunkById(1000, function ($posts) use ($logFreq) {
             foreach ($posts as $post) {
-                SendPostToQuasar::dispatch($post);
+                if ($post->id % $logFreq === 0) {
+                    $log = true;
+                } else {
+                    $log = false;
+                }
+                SendPostToQuasar::dispatch($post, $log);
             }
         });
 
