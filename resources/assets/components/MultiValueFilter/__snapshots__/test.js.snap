@@ -7,13 +7,13 @@ exports[`it renders a list of tags 1`] = `
     Object {
       "type": "tags",
       "values": Object {
-        "good-photo": Object {
-          "active": false,
-          "label": "Good Photo",
-        },
         "good-quote": Object {
           "active": false,
           "label": "Good Quote",
+        },
+        "good-submission": Object {
+          "active": false,
+          "label": "Good Submission",
         },
       },
     }
@@ -32,13 +32,13 @@ exports[`it renders a list of tags 1`] = `
       className="aligned-actions"
     >
       <li
-        key="good-photo"
+        key="good-submission"
       >
         <button
           className="tag"
           onClick={[Function]}
         >
-          Good Photo
+          Good Submission
         </button>
       </li>
       <li
