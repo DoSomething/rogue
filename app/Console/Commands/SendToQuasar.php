@@ -59,12 +59,8 @@ class SendToQuasar extends Command
 
         $signups->chunkById(1000, function ($signups) use ($logFreq) {
             foreach ($signups as $signup) {
-                if ($signup->id % $logFreq === 0) {
-                    $log = true;
-                } else {
-                    $log = false;
-                }
-                SendSignupToQuasar::dispatch($signup, $log);
+                $shouldWriteToLog = ($signup->id % $logFreq === 0);
+                SendSignupToQuasar::dispatch($signup, $shouldWriteToLog);
             }
         });
 
@@ -77,12 +73,8 @@ class SendToQuasar extends Command
 
         $posts->chunkById(1000, function ($posts) use ($logFreq) {
             foreach ($posts as $post) {
-                if ($post->id % $logFreq === 0) {
-                    $log = true;
-                } else {
-                    $log = false;
-                }
-                SendPostToQuasar::dispatch($post, $log);
+                $shouldWriteToLog = ($post->id % $logFreq === 0);
+                SendPostToQuasar::dispatch($post, $shouldWriteToLog);
             }
         });
 
