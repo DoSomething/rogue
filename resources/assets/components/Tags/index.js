@@ -49,7 +49,7 @@ Tag.propTypes = {
 class Tags extends React.Component {
   render() {
     const tags = {
-      'good-photo': 'Good Photo',
+      'good-submission': 'Good Submission',
       'good-quote': 'Good Quote',
       'hide-in-gallery': 'Hide In Gallery 👻',
       'good-for-sponsor': 'Good For Sponsor',
