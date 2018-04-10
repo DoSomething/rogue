@@ -16,9 +16,9 @@ class SendToQuasar extends Command
      * @var string
      */
     protected $signature = 'rogue:quasar
-                            {logFreq=1}
                             {start=0000-00-00 : Include all signups and posts updated on or after this day. Format: YYYY-MM-DD}
-                            {end? : Include signups and posts updated up to but not including this day. Format: YYYY-MM-DD}';
+                            {end? : Include signups and posts updated up to but not including this day. Format: YYYY-MM-DD}
+                            {--logFreq=1 : How often we should log that a Post or Signup has been sent to Quasar. Logging happens every logFreq posts/signups.}';
 
     /**
      * The console command description.
@@ -46,9 +46,9 @@ class SendToQuasar extends Command
     {
         info('rogue:quasar - Starting to send to Quasar');
 
-        $logFreq = $this->argument('logFreq');
         $start = $this->argument('start');
         $end = $this->argument('end');
+        $logFreq = $this->option('logFreq');
 
         // Send Signups
         $signups = Signup::where('updated_at', '>=', $start);
