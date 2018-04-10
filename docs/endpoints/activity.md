@@ -58,7 +58,7 @@ Example Response:
               "caption": "Captioning captions",
             },
             "tagged": [
-              "good-photo",
+              "good-submission",
               "good-quote"
             ],
             "reactions": [
