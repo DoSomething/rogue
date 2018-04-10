@@ -23,7 +23,7 @@ class SendPostToQuasar implements ShouldQueue
     /**
      * Whether or not to log that this Post was sent to Quasar.
      *
-     * @var boolean
+     * @var bool
      */
     protected $log;
 

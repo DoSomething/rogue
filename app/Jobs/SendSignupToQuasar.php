@@ -23,7 +23,7 @@ class SendSignupToQuasar implements ShouldQueue
     /**
      * Whether or not to log that this Signup was sent to Quasar.
      *
-     * @var boolean
+     * @var bool
      */
     protected $log;
 
