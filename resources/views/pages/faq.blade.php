@@ -27,7 +27,7 @@
 
                 <h4>These are self-explanatory:</h4>
                 <ul class='list'>
-                    <li>Good Photo</li>
+                    <li>Good Submission</li>
                     <li>Good Quote</li>
                     <li>Good for Sponsor</li>
                 </ul>
