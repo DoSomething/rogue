@@ -21,13 +21,21 @@ class SendSignupToQuasar implements ShouldQueue
     protected $signup;
 
     /**
+     * Whether or not to log that this Signup was sent to Quasar.
+     *
+     * @var boolean
+     */
+    protected $log;
+
+    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Signup $signup)
+    public function __construct(Signup $signup, $log = true)
     {
         $this->signup = $signup;
+        $this->log = $log;
     }
 
     /**
@@ -47,8 +55,10 @@ class SendSignupToQuasar implements ShouldQueue
         }
 
         // Log
-        $verb = $shouldSendToQuasar ? 'sent' : 'would have been sent';
-        info('Signup ' . $this->signup->id . ' ' . $verb . ' to Quasar');
+        if ($this->log) {
+            $verb = $shouldSendToQuasar ? 'sent' : 'would have been sent';
+            info('Signup ' . $this->signup->id . ' ' . $verb . ' to Quasar');
+        }
     }
 
     /**
