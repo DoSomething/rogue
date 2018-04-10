@@ -50,4 +50,14 @@ class SendPostToQuasar implements ShouldQueue
         $verb = $shouldSendToQuasar ? 'sent' : 'would have been sent';
         info('Post ' . $this->post->id . ' ' . $verb . ' to Quasar');
     }
+
+    /**
+     * Get the id of the post we are sending to Quasar
+     *
+     * @return int
+     */
+    public function getPostId()
+    {
+        return $this->post->id;
+    }
 }

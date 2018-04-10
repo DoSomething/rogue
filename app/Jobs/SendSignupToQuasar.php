@@ -50,4 +50,14 @@ class SendSignupToQuasar implements ShouldQueue
         $verb = $shouldSendToQuasar ? 'sent' : 'would have been sent';
         info('Signup ' . $this->signup->id . ' ' . $verb . ' to Quasar');
     }
+
+    /**
+     * Get the id of the signup we are sending to Quasar
+     *
+     * @return int
+     */
+    public function getSignupId()
+    {
+        return $this->signup->id;
+    }
 }
