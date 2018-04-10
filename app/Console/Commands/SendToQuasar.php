@@ -17,7 +17,8 @@ class SendToQuasar extends Command
      */
     protected $signature = 'rogue:quasar
                             {start=0000-00-00 : Include all signups and posts updated on or after this day. Format: YYYY-MM-DD}
-                            {end? : Include signups and posts updated up to but not including this day. Format: YYYY-MM-DD}';
+                            {end? : Include signups and posts updated up to but not including this day. Format: YYYY-MM-DD}
+                            {--logFreq=1 : How often we should log that a Post or Signup has been sent to Quasar. Logging happens every logFreq posts/signups.}';
 
     /**
      * The console command description.
@@ -47,6 +48,7 @@ class SendToQuasar extends Command
 
         $start = $this->argument('start');
         $end = $this->argument('end');
+        $logFreq = $this->option('logFreq');
 
         // Send Signups
         $signups = Signup::where('updated_at', '>=', $start);
@@ -55,9 +57,10 @@ class SendToQuasar extends Command
             $signups = $signups->where('updated_at', '<=', $end);
         }
 
-        $signups->chunkById(1000, function ($signups) {
+        $signups->chunkById(1000, function ($signups) use ($logFreq) {
             foreach ($signups as $signup) {
-                SendSignupToQuasar::dispatch($signup);
+                $shouldWriteToLog = ($signup->id % $logFreq === 0);
+                SendSignupToQuasar::dispatch($signup, $shouldWriteToLog);
             }
         });
 
@@ -68,9 +71,10 @@ class SendToQuasar extends Command
             $posts = $posts->where('updated_at', '<=', $end);
         }
 
-        $posts->chunkById(1000, function ($posts) {
+        $posts->chunkById(1000, function ($posts) use ($logFreq) {
             foreach ($posts as $post) {
-                SendPostToQuasar::dispatch($post);
+                $shouldWriteToLog = ($post->id % $logFreq === 0);
+                SendPostToQuasar::dispatch($post, $shouldWriteToLog);
             }
         });
 
