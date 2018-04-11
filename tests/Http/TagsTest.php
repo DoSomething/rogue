@@ -22,13 +22,13 @@ class TagsTest extends TestCase
 
         // Apply the tag to the post
         $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Photo',
+            'tag_name' => 'Good Submission',
         ]);
 
         $response->assertStatus(200);
 
         // Make sure that the post's tags are updated.
-        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertContains('Good Submission', $post->tagNames());
 
         // @TODO: Make sure we created a event for the tag once events are refactored.
     }
@@ -46,7 +46,7 @@ class TagsTest extends TestCase
 
         // Apply the tag to the post
         $response = $this->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Photo',
+            'tag_name' => 'Good Submission',
         ]);
 
         $response->assertStatus(401);
@@ -66,7 +66,7 @@ class TagsTest extends TestCase
 
         // Apply the tag to the post
         $response = $this->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Photo',
+            'tag_name' => 'Good Submission',
         ]);
 
         $response->assertStatus(401);
@@ -84,18 +84,18 @@ class TagsTest extends TestCase
         // @TODO: Gateway keeps the "Token" from this PHPUnit call for later,
         // and so we always think requests are anonymous. That's no good!
         // We can swap this back once that's fixed in Gateway.
-        // $post = factory(Post::class)->create()->tag('Good Photo');
+        // $post = factory(Post::class)->create()->tag('Good Submission');
 
         $post = factory(Post::class)->create();
 
         $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-             'tag_name' => 'Good Photo',
+             'tag_name' => 'Good Submission',
          ]);
 
-        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertContains('Good Submission', $post->tagNames());
 
         $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Photo',
+            'tag_name' => 'Good Submission',
         ]);
 
         // Make sure that the tag is deleted.
@@ -116,12 +116,12 @@ class TagsTest extends TestCase
         // @TODO: Gateway keeps the "Token" from this PHPUnit call for later,
         // and so we always think requests are anonymous. That's no good!
         // We can swap this back once that's fixed in Gateway.
-        // $post = factory(Post::class)->create()->tag('Good Photo');
+        // $post = factory(Post::class)->create()->tag('Good Submission');
 
         $post = factory(Post::class)->create();
 
         $response = $this->deleteJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Photo',
+            'tag_name' => 'Good Submission',
         ]);
 
         $response->assertStatus(401);
@@ -141,7 +141,7 @@ class TagsTest extends TestCase
 
         // Apply the tag to the post
         $response = $this->deleteJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Photo',
+            'tag_name' => 'Good Submission',
         ]);
 
         $response->assertStatus(401);
@@ -160,13 +160,13 @@ class TagsTest extends TestCase
         // and so we always think requests are anonymous. That's no good!
         // We can swap this back once that's fixed in Gateway.
         // $post = factory(Post::class)->create();
-        // $post->tag('Good Photo');
+        // $post->tag('Good Submission');
         // $post->tag('Tag To Delete');
 
         $post = factory(Post::class)->create();
 
         $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-             'tag_name' => 'Good Photo',
+             'tag_name' => 'Good Submission',
          ]);
 
         $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
@@ -174,7 +174,7 @@ class TagsTest extends TestCase
          ]);
 
         // Make sure both tags actually exist
-        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertContains('Good Submission', $post->tagNames());
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
@@ -184,7 +184,7 @@ class TagsTest extends TestCase
 
         // Make sure that the tag is deleted, but the other tag is still there
         $response->assertStatus(200);
-        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertContains('Good Submission', $post->tagNames());
         $this->assertNotContains('Tag To Delete', $post->fresh()->tagNames());
 
         // @TODO: When we refactor events, make sure we created an event for the tag that was deleted.
@@ -204,7 +204,7 @@ class TagsTest extends TestCase
         $this->mockTime('10/21/2017 13:05:00');
 
         $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Photo',
+            'tag_name' => 'Good Submission',
         ]);
 
         $this->assertEquals('2017-10-21 13:05:00', $post->fresh()->updated_at);

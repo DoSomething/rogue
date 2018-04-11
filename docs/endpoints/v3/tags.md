@@ -24,7 +24,7 @@ Example Response:
         },
         "quantity": 48,
         "tags": [
-            "good-photo"
+            "good-submission"
         ],
         "reactions": {
             "reacted": false,

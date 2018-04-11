@@ -24,7 +24,7 @@ Example Response:
             "caption": "This one's for you, Bill!"
         },
         "tagged": [
-            "good-photo"
+            "good-submission"
         ],
         "reactions": [],
         "status": "pending",

@@ -9,8 +9,8 @@ import MultiValueFilter from './index';
 test('it renders a list of tags', () => {
   const filters = {
     values: {
-      'good-photo': {
-        label: 'Good Photo',
+      'good-submission': {
+        label: 'Good Submission',
         active: false,
       },
       'good-quote': {
@@ -35,8 +35,8 @@ test('it renders an active button when clicked', () => {
   const callback = sinon.spy();
   const filters = {
     values: {
-      'good-photo': {
-        label: 'Good Photo',
+      'good-submission': {
+        label: 'Good Submission',
         active: false,
       },
       'good-quote': {

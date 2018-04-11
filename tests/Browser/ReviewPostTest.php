@@ -13,7 +13,7 @@ use Tests\Browser\Pages\CampaignSinglePage;
 // class ReviewPostTest extends DuskTestCase
 // {
 //     /**
-//      * Test user flow of approving a pending Post and tagging it as a Good Photo.
+//      * Test user flow of approving a pending Post and tagging it as a Good Submission.
 //      *
 //      * @group ReviewPost
 //      * @return void
@@ -40,9 +40,9 @@ use Tests\Browser\Pages\CampaignSinglePage;
 //                     ->waitFor('@activeAcceptButton', 10)
 //                     ->assertSeeIn('@activeAcceptButton', 'Accept')
 //                     ->assertSeeIn('.enabled', 'Tags')
-//                     ->press('Good Photo')
+//                     ->press('Good Submission')
 //                     ->waitFor('@activeTagButton', 10)
-//                     ->assertSeeIn('@activeTagButton', 'Good Photo');
+//                     ->assertSeeIn('@activeTagButton', 'Good Submission');
 //         });
 //     }
 
@@ -106,7 +106,7 @@ use Tests\Browser\Pages\CampaignSinglePage;
 //                     ->press('Reject')
 //                     ->waitFor('@activeRejectButton', 10)
 //                     ->assertSeeIn('@activeRejectButton', 'Reject')
-//                     ->assertDontSee('@tagButton', 'Good Photo')
+//                     ->assertDontSee('@tagButton', 'Good Submission')
 //                     ->press('Accept')
 //                     ->waitFor('@activeAcceptButton')
 //                     ->assertSeeIn('@activeAcceptButton', 'Accept')

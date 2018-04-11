@@ -36,7 +36,7 @@ Posts are returned in reverse chronological order.
 - **tag** _(string)_
   - The tag(s) to filter the response by.
   - Tag is passed in as tag_slug.
-  - e.g. `/posts?filter[tag]=good-photo,good-for-sponsor`
+  - e.g. `/posts?filter[tag]=good-submission,good-for-sponsor`
 
 Example Response:
 

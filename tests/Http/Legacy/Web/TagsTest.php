@@ -23,13 +23,13 @@ class TagsTest extends TestCase
         // Apply the tag to the post
         $response = $this->actingAsAdmin()->postJson('tags', [
             'post_id' => $post->id,
-            'tag_name' => 'Good Photo',
+            'tag_name' => 'Good Submission',
         ]);
 
         $response->assertSuccessful();
 
         // Make sure that the post's tags are updated.
-        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertContains('Good Submission', $post->tagNames());
 
         // Make sure we created a event for the tag.
         $this->assertDatabaseHas('events', [
@@ -50,11 +50,11 @@ class TagsTest extends TestCase
 
         // Create a post with a tag.
         $post = factory(Post::class)->create();
-        $post->tag('Good Photo');
+        $post->tag('Good Submission');
 
         $response = $this->postJson('tags', [
             'post_id' => $post->id,
-            'tag_name' => 'Good Photo',
+            'tag_name' => 'Good Submission',
         ]);
 
         // Make sure that the tag is deleted.
@@ -79,11 +79,11 @@ class TagsTest extends TestCase
 
         // Create a post with a tag.
         $post = factory(Post::class)->create();
-        $post->tag('Good Photo');
+        $post->tag('Good Submission');
         $post->tag('Tag To Delete');
 
         // Make sure both tags actually exist
-        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertContains('Good Submission', $post->tagNames());
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
@@ -94,7 +94,7 @@ class TagsTest extends TestCase
 
         // Make sure that the tag is deleted, but the other tag is still there
         $response->assertStatus(200);
-        $this->assertContains('Good Photo', $post->tagNames());
+        $this->assertContains('Good Submission', $post->tagNames());
         $this->assertNotContains('Tag To Delete', $post->fresh()->tagNames());
 
         // Make sure we created an event for the tag.
@@ -115,7 +115,7 @@ class TagsTest extends TestCase
 
         $response = $this->actingAs($user)->postJson('tags', [
             'post_id' => $post->id,
-            'tag_name' => 'Good Photo',
+            'tag_name' => 'Good Submission',
         ]);
 
         $response->assertStatus(403);
@@ -136,7 +136,7 @@ class TagsTest extends TestCase
 
         $this->actingAsAdmin()->postJson('tags', [
             'post_id' => $post->id,
-            'tag_name' => 'Good Photo',
+            'tag_name' => 'Good Submission',
         ]);
 
         $this->assertEquals('2017-10-21 13:05:00', $post->fresh()->updated_at);

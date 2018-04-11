@@ -23,8 +23,8 @@ class CampaignSingle extends React.Component {
       filters: {
         status: 'accepted',
         tags: {
-          'good-photo': {
-            label: 'Good Photo',
+          'good-submission': {
+            label: 'Good Submission',
             active: false,
           },
           'good-quote': {

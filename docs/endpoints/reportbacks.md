@@ -126,7 +126,7 @@ Example Response:
                 "type": "image"
             },
             "tagged": [
-                "Good Photo",
+                "Good Submission",
                 "Good For Storytelling"
             ],
             "created_at": "1493410489",
