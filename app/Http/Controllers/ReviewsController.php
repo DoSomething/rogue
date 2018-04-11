@@ -35,6 +35,7 @@ class ReviewsController extends ApiController
 
         $this->middleware('auth:api');
         $this->middleware('role:admin');
+        $this->middleware('role:staff');
         $this->middleware('scopes:write');
         $this->middleware('scopes:activity');
     }
