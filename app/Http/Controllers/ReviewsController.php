@@ -34,8 +34,7 @@ class ReviewsController extends ApiController
         $this->transformer = new PostTransformer;
 
         $this->middleware('auth:api');
-        $this->middleware('role:admin');
-        $this->middleware('role:staff');
+        $this->middleware('role:admin, staff');
         $this->middleware('scopes:write');
         $this->middleware('scopes:activity');
     }
