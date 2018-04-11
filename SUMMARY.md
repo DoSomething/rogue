@@ -13,14 +13,13 @@
 
 ## API Reference
 - [Introduction](/docs/endpoints/README.md)
-- [Web API (depricated)](/docs/endpoints/web/README.md)
-- [API v1 (depricated)](/docs/api/v1/README.md)
-- [API v2 (depricated)](/docs/api/v2/README.md)
-- [API v3](/docs/endpoints/v3/README.md)
-  - [Signups](docs/endpoints/v3/signups.md)
-  - [Posts](docs/endpoints/v3/posts.md)
-  - [Reviews](docs/endpoints/v3/reviews.md)
-  - [Tags](docs/endpoints/v3/tags.md)
-
+- [Web API (depricated)](/docs/endpoints/Legacy/web/README.md)
+- [API v1 and v2 (depricated)](/docs/endpoints/Legacy/README.md)
+- [API v3](/docs/endpoints/README.md)
+  - [Signups](docs/endpoints/signups.md)
+  - [Posts](docs/endpoints/posts.md)
+  - [Reviews](docs/endpoints/reviews.md)
+  - [Tags](docs/endpoints/tags.md)
+  - [Reactions](docs/endpoints/reactions.md)
 
 ## Rogue Admin Instructions
