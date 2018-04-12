@@ -14,9 +14,9 @@ If you ever have any questions about working in Rogue, please reach out to the #
 
 ### Getting Started
 
-To get started with development, follow the [installation](./docs/development/installation.md) and [contributing](./docs/development/contributing.md) documentation.
+To get started with development, follow the [installation](./development/installation.md) and [contributing](./development/contributing.md) documentation.
 
-To get started using the API, see our [API Documentation](https://github.com/DoSomething/rogue/tree/master/docs/endpoints)
+To get started using the API, see our [API Documentation](./endpoints)
 
 ### Security Vulnerabilities
 
