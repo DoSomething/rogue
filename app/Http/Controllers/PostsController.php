@@ -145,7 +145,7 @@ class PostsController extends ApiController
         ]);
 
         // Only allow an admin/staff or the user who owns the post to update.
-        if (in_array(token()->role, ['admin', 'staff']) || auth()->id() === $post->northstar_id) {
+        if (is_staff_user() || auth()->id() === $post->northstar_id) {
             $this->posts->update($post, $validatedRequest);
 
             return $this->item($post);
