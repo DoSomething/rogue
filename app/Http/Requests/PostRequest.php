@@ -31,7 +31,7 @@ class PostRequest extends Request
             'text' => 'nullable|string|max:256',
             'quantity' => 'nullable|integer',
             'file' => 'image|dimensions:min_width=400,min_height=400',
-            'status' => 'in:pending,accepted,rejected',
+            'status' => 'in:pending,accepted,rejected,register-form,register-OVR,confirmed,ineligible,uncertain',
             'details'=> 'json',
         ];
     }
