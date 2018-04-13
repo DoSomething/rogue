@@ -53,7 +53,7 @@ class Post extends Model
      *
      * @var array
      */
-    public static $indexes = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'status'];
+    public static $indexes = ['id', 'signup_id', 'campaign_id', 'action', 'northstar_id', 'status'];
 
     /**
      * Each post has events.
