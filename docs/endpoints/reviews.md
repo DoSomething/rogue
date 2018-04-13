@@ -1,9 +1,9 @@
-## Reviews - WEB
+## Reviews
 
 Update a post's status when an admin reviews the post.
 
 ```
-PUT /reviews
+POST /api/v3/reviews
 ```
 
   - **post_id**: (string) required.
@@ -17,58 +17,26 @@ Example Response:
 
 ```
 {
-  "data": {
-    "id": 1,
-    "signup_id": 1,
-    "northstar_id": "1234",
-    "media": {
-      "url": "https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg",
-      "caption": "Est blanditiis ab quo sequi quis."
-    },
-    "status": "approved",
-    "source": "phoenix-web",
-    "remote_addr": "10.0.2.2",
-    "created_at": "2017-04-28T20:14:49+00:00",
-    "updated_at": "2017-04-28T20:22:23+00:00"
-  }
-}
-```
-
-## Reviews - API
-All `v3 /reviews` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
-
-Update a post's status when an admin reviews the post.
-
-```
-POST /reviews
-```
-
-  - **post_id**: (string) required.
-    The id of the post that has been reviewed.
-  - **status**: (string) required.
-    The status of the post.
-  - **admin_northstar_id**: (string) required.
-    Northstar ID of the admin who reviewed the post.
-  - **comment**: (string)
-    A comment that the reviewer has made.
-
-Example Response:
-
-```
-{
-  "data": {
-    "id": 1,
-    "signup_id": 1,
-    "northstar_id": "1234",
-    "media": {
-      "url": "https://s3.amazonaws.com/ds-rogue-test/uploads/reportback-items/12-1484929292.jpeg",
-      "caption": "Est blanditiis ab quo sequi quis."
-    },
-    "status": "approved",
-    "source": "phoenix-web",
-    "remote_addr": "10.0.2.2",
-    "created_at": "2017-04-28T20:14:49+00:00",
-    "updated_at": "2017-04-28T20:22:23+00:00"
-  }
+    "data": {
+        "id": 28,
+        "signup_id": 7,
+        "northstar_id": "55882c57a59dbfa93d8b4599",
+        "media": {
+            "url": "http://rogue.test/images/28",
+            "original_image_url": "http://rogue.test/storage/uploads/reportback-items/29624-6872c640fe5b2b151ebe62f2537a0cfb-1516983917.jpeg?time=1516992660",
+            "caption": "Laborum earum iure magni maiores cumque."
+        },
+        "quantity": 5,
+        "tags": [],
+        "reactions": {
+            "reacted": false,
+            "total": null
+        },
+        "status": "rejected",
+        "source": "phoenix-next",
+        "remote_addr": "201.45.182.147",
+        "created_at": "2018-01-26T16:25:17+00:00",
+        "updated_at": "2018-01-26T18:51:00+00:00"
+    }
 }
 ```
