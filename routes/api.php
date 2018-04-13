@@ -68,7 +68,7 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
     $this->get('posts/{post}/reactions', 'ReactionController@index');
 
     // reviews
-    $this->post('reviews', 'ReviewsController@reviews');
+    $this->post('posts/{post}/reviews', 'ReviewsController@reviews');
 
     // tag
     $this->post('posts/{post}/tags', 'TagsController@store');
