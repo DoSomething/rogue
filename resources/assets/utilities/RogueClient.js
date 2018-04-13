@@ -9,8 +9,8 @@ class RogueClient extends RestApiClient {
     return this.get('api/v2/events', options);
   }
 
-  postReview(fields) {
-    return this.post('api/v3/reviews', fields);
+  postReview(fields, post) {
+    return this.post(`api/v3/posts/${post}/reviews`, fields);
   }
 }
 

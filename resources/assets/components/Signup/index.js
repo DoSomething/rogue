@@ -3,6 +3,7 @@
 // Utilities
 import React from 'react';
 import PropTypes from 'prop-types';
+import RogueClient from '../../utilities/RogueClient';
 import { map, forEach, startCase, keyBy, filter, isEmpty } from 'lodash';
 import { RestApiClient } from '@dosomething/gateway';
 
@@ -79,7 +80,7 @@ class Signup extends React.Component {
       displayUploaderModal: false,
     };
 
-    this.api = new RestApiClient(window.location.origin, {
+    this.api = new RogueClient(window.location.origin, {
         headers: {
           'Authorization' : `Bearer ${window.AUTH}`,
         },
@@ -177,16 +178,16 @@ class Signup extends React.Component {
   }
 
   // Updates a post status.
-  updatePost(postId, fields) {
-    fields.post_id = postId;
+  updatePost(post, fields) {
+    fields.post_id = post.id;
 
-    const request = this.api.post('api/v3/reviews', fields);
+    let request = this.api.postReview(fields, post);
 
     request.then((result) => {
       this.setState((previousState) => {
         const newState = { ...previousState };
 
-        newState.posts[postId].status = fields.status;
+        newState.posts[post.id].status = fields.status;
 
         return newState;
       });
