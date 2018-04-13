@@ -13,8 +13,8 @@
 
 ## API Reference
 - [Introduction](/endpoints/README.md)
-- [Web API (depricated)](/endpoints/Legacy/web/README.md)
-- [API v1 and v2 (depricated)](/endpoints/Legacy/README.md)
+- [Web API (deprecated)](/endpoints/Legacy/web/README.md)
+- [API v1 and v2 (deprecated)](/endpoints/Legacy/README.md)
 - [API v3](/endpoints/README.md)
   - [Signups](/endpoints/signups.md)
   - [Posts](/endpoints/posts.md)
