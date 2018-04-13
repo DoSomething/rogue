@@ -22,8 +22,8 @@ Endpoint                                       | Functionality
 #### Reactions
 Endpoint                                       | Functionality
 ---------------------------------------------- | --------------------------------------------------------
-`POST /api/v3/post/:post_id/reactions`         | [Create or update a Reaction](reactions.md#create-or-update-a-reaction)
-`GET /api/v3/post/:post_id/reactions`          | [Get all reactions of a post](reactions.md#Retrieve-all-reactions-of-a-post)
+`POST /api/v3/posts/:post_id/reactions`         | [Create or update a Reaction](reactions.md#create-or-update-a-reaction)
+`GET /api/v3/posts/:post_id/reactions`          | [Get all reactions of a post](reactions.md#Retrieve-all-reactions-of-a-post)
 
 #### Reviews
 Endpoint                                       | Functionality

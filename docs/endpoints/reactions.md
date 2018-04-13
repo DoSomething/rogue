@@ -1,5 +1,5 @@
 ## Reactions
-All `v3 /post/{post}/reactions` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
+All `v3 /posts/{post}/reactions` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
 
 ```
 ## Create or update a Reaction
@@ -35,7 +35,7 @@ Example Response
 ## Retrieve all reactions of a post
 
 ```
-GET /api/v3/post/:post_id/reactions
+GET /api/v3/posts/:post_id/reactions
 ```
 Example Response:
 
