@@ -393,7 +393,7 @@ class SignupTest extends TestCase
         ]);
 
         // Create three more signups with different northstar_id, campaign_id, and campaign_run_id
-        $secondNorthstarId = $this->faker->northstar_id;
+        $secondNorthstarId = '5554eac1a59dbf117e8b456z';
         $secondCampaignId = str_random(22);
         $secondCampaignRunId = $this->faker->randomNumber(4);
 
