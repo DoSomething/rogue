@@ -64,8 +64,8 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
     $this->delete('posts/{post}', 'PostsController@destroy');
 
     // reactions
-    $this->post('post/{post}/reactions', 'ReactionController@store');
-    $this->get('post/{post}/reactions', 'ReactionController@index');
+    $this->post('posts/{post}/reactions', 'ReactionController@store');
+    $this->get('posts/{post}/reactions', 'ReactionController@index');
 
     // reviews
     $this->post('reviews', 'ReviewsController@reviews');
