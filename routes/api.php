@@ -66,6 +66,9 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
     // reactions
     $this->post('posts/{post}/reactions', 'ReactionController@store');
     $this->get('posts/{post}/reactions', 'ReactionController@index');
+    // @TODO: delete these endpoints once Pheonix Next swaps over to above
+    $this->post('post/{post}/reactions', 'ReactionController@store');
+    $this->get('post/{post}/reactions', 'ReactionController@index');
 
     // reviews
     $this->post('posts/{post}/reviews', 'ReviewsController@reviews');
