@@ -28,7 +28,7 @@ Endpoint                                       | Functionality
 #### Reviews
 Endpoint                                       | Functionality
 ---------------------------------------------- | --------------------------------------------------------
-`POST /api/v3/reviews`                         | [Create or update a Review](reviews.md#create-or-update-a-reaction)
+`POST /api/v3/posts/:post_id/reviews`          | [Create or update a Review](reviews.md#create-or-update-a-reaction)
 
 #### Tags
 Endpoint                                       | Functionality

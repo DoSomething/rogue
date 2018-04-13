@@ -3,11 +3,9 @@
 Update a post's status when an admin reviews the post.
 
 ```
-POST /api/v3/reviews
+POST /api/v3/posts/:post_id/reviews
 ```
 
-  - **post_id**: (string) required.
-    The id of the post that has been reviewed.
   - **status**: (string) required.
     The status of the post. 
   - **comment**: (string)
