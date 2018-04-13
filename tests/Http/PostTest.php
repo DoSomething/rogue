@@ -606,7 +606,7 @@ class PostTest extends TestCase
         }
 
         foreach ($rejectedPosts as $rejectedPost) {
-            $rejectedPost->northstar_id = '59ea1c1ca0bfad5e90139dcz';
+            $rejectedPost->northstar_id = $this->faker->unique()->northstar_id;
             $rejectedPost->save();
         }
 

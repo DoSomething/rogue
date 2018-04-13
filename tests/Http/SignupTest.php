@@ -119,8 +119,8 @@ class SignupTest extends TestCase
     public function testUnauthenticatedUserCreatingASignup()
     {
         $response = $this->postJson('api/v3/signups', [
-            'northstar_id'     => '54fa272b469c64d7068b456a',
-            'campaign_id'      => '6LQzMvDNQcYQYwso8qSkQ8',
+            'northstar_id'     => $this->faker->northstar_id,
+            'campaign_id'      => $this->faker->randomNumber(4),
             'campaign_run_id'  => $this->faker->randomNumber(4),
             'source'           => 'the-fox-den',
             'details'          => 'affiliate-messaging',
@@ -393,7 +393,7 @@ class SignupTest extends TestCase
         ]);
 
         // Create three more signups with different northstar_id, campaign_id, and campaign_run_id
-        $secondNorthstarId = '5554eac1a59dbf117e8b456z';
+        $secondNorthstarId = $this->faker->unique()->northstar_id;
         $secondCampaignId = str_random(22);
         $secondCampaignRunId = $this->faker->randomNumber(4);
 
