@@ -46,14 +46,12 @@ class ReviewsController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function reviews(Request $request)
+    public function reviews(Request $request, Post $post)
     {
         $request->validate([
-            'post_id' => 'required',
             'status' => 'in:pending,accepted,rejected',
         ]);
 
-        $post = Post::findOrFail($request['post_id']);
         $reviewedPost = $this->post->review($post, $request['status'], $request['comment']);
 
         return $this->item($reviewedPost, 201);
