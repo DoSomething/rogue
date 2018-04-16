@@ -97,7 +97,10 @@ class PostRepository
 
             // If the quantity difference is negative than we recieved an incremental submission
             // and should just add that to the post.
-            if ($quantityDiff < 0) {
+            // If the quantity difference equals zero and this is the first post,
+            // the post and signup were created at the same time -
+            // store this quantity on both the post and signup.
+            if ($quantityDiff < 0 || ($quantityDiff === 0 && $signup->posts_count === 0)) {
                 $quantityDiff = $data['quantity'];
             } elseif ($quantityDiff === 0 && $signup->posts_count > 0) {
                 // If the quantity difference equals zero, and this is not the first post,
