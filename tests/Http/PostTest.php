@@ -822,7 +822,7 @@ class PostTest extends TestCase
      * PATCH /api/v3/posts/186
      * @return void
      */
-    public function testUpdatingAPost()
+    public function testUpdatingAPhotoPost()
     {
         $post = factory(Post::class)->create();
         $signup = $post->signup;
@@ -832,6 +832,7 @@ class PostTest extends TestCase
         $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
             'text' => 'new caption',
             'quantity' => 8,
+            'status' => 'accepted',
         ]);
 
         $response->assertStatus(200);
@@ -842,6 +843,28 @@ class PostTest extends TestCase
 
         // Make sure the signup's quantity gets updated.
         $this->assertEquals($signup->fresh()->quantity, 8);
+    }
+
+    /**
+     * Test for updating a post successfully.
+     *
+     * PATCH /api/v3/posts/186
+     * @return void
+     */
+    public function testUpdatingAPhotoWithBadStatus()
+    {
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
+
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
+            'text' => 'new caption',
+            'quantity' => 8,
+            'status' => 'register-form',
+        ]);
+
+        $response->assertStatus(422);
     }
 
     /**
@@ -1011,5 +1034,81 @@ class PostTest extends TestCase
         $json = $response->json();
 
         $this->assertEquals('pending', $json['data']['status']);
+    }
+
+    /**
+     * Test creating voter-reg post
+     *
+     * @return void
+     */
+    public function testCreatingVoterRegistrationPost()
+    {
+        $signup = factory(Signup::class)->create();
+
+        $details = [
+            'hostname' => 'dosomething.turbovote.org',
+            'referral-code' => 'user:5570af2c469c6430068bc501,campaign:8022,source:web',
+            'partner-comms-opt-in' => '',
+            'created-at' => '2018-01-29T01:59:44Z',
+            'updated-at' => '2018-01-29T02:00:17Z',
+            'voter-registration-status' => 'initiated',
+            'voter-registration-source' => 'turbovote',
+            'voter-registration-method' => 'by-mail',
+            'voting-method-preference' => 'in-person',
+            'email subscribed' => 'FALSE',
+            'sms subscribed' => 'TRUE',
+        ];
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'campaign_run_id' => $signup->campaign_run_id,
+            'type' => 'voter-reg',
+            'action' => 'test-action',
+            'status' => 'register-form',
+            'details' => json_encode($details),
+        ]);
+
+        $response->assertStatus(201);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'signup_id',
+                'northstar_id',
+                'type',
+                'action',
+                'media' => [
+                    'url',
+                    'original_image_url',
+                    'text',
+                ],
+                'quantity',
+                'tags' => [],
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'details',
+                'source',
+                'remote_addr',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => 'voter-reg',
+            'action' => 'test-action',
+            'status' => 'register-form',
+            'details' => json_encode($details),
+        ]);
     }
 }
