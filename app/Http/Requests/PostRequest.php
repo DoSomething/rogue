@@ -21,6 +21,13 @@ class PostRequest extends Request
      */
     public function rules()
     {
+        if ($this->post->type === 'voter-reg')
+        {
+            $statusRules = 'in:register-form,register-OVR,confirmed,ineligible,uncertain';
+        } else {
+            $statusRules = 'in:pending,accepted,rejected';
+        }
+
         return [
             'campaign_id' => 'required',
             'campaign_run_id' => 'integer',
@@ -31,7 +38,7 @@ class PostRequest extends Request
             'text' => 'nullable|string|max:256',
             'quantity' => 'nullable|integer',
             'file' => 'image|dimensions:min_width=400,min_height=400',
-            'status' => 'in:pending,accepted,rejected,register-form,register-OVR,confirmed,ineligible,uncertain',
+            'status' => $statusRules,
             'details'=> 'json',
         ];
     }
