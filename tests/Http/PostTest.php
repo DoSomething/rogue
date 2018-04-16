@@ -832,7 +832,7 @@ class PostTest extends TestCase
         $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
             'text' => 'new caption',
             'quantity' => 8,
-            'status' => 'accepted'
+            'status' => 'accepted',
         ]);
 
         $response->assertStatus(200);
@@ -861,7 +861,7 @@ class PostTest extends TestCase
         $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
             'text' => 'new caption',
             'quantity' => 8,
-            'status' => 'register-form'
+            'status' => 'register-form',
         ]);
 
         $response->assertStatus(422);
@@ -1046,17 +1046,17 @@ class PostTest extends TestCase
         $signup = factory(Signup::class)->create();
 
         $details = [
-            "hostname" => "dosomething.turbovote.org",
-            "referral-code" => "user:5570af2c469c6430068bc501,campaign:8022,source:web",
-            "partner-comms-opt-in" => "",
-            "created-at" => "2018-01-29T01:59:44Z",
-            "updated-at" => "2018-01-29T02:00:17Z",
-            "voter-registration-status" => "initiated",
-            "voter-registration-source" => "turbovote",
-            "voter-registration-method" => "by-mail",
-            "voting-method-preference" => "in-person",
-            "email subscribed" => "FALSE",
-            "sms subscribed" => "TRUE"
+            'hostname' => 'dosomething.turbovote.org',
+            'referral-code' => 'user:5570af2c469c6430068bc501,campaign:8022,source:web',
+            'partner-comms-opt-in' => '',
+            'created-at' => '2018-01-29T01:59:44Z',
+            'updated-at' => '2018-01-29T02:00:17Z',
+            'voter-registration-status' => 'initiated',
+            'voter-registration-source' => 'turbovote',
+            'voter-registration-method' => 'by-mail',
+            'voting-method-preference' => 'in-person',
+            'email subscribed' => 'FALSE',
+            'sms subscribed' => 'TRUE'
         ];
 
         // Mock the Blink API call.

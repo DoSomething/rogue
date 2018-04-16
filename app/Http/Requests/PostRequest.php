@@ -21,8 +21,7 @@ class PostRequest extends Request
      */
     public function rules()
     {
-        if ($this->method() === 'PATCH')
-        {
+        if ($this->method() === 'PATCH') {
             return $this->patchRules();
         }
 
@@ -46,7 +45,8 @@ class PostRequest extends Request
      *
      * @return array
      */
-    private function patchRules() {
+    private function patchRules()
+    {
         return [
             'text' => 'nullable|string|max:140',
             'quantity' => 'nullable|integer',
@@ -60,7 +60,8 @@ class PostRequest extends Request
      * @param string $type
      * @return string
      */
-    private function getStatusRules($type) {
+    private function getStatusRules($type)
+    {
         switch($type)
         {
             case 'photo':
@@ -75,5 +76,4 @@ class PostRequest extends Request
 
         return $rule;
     }
-
 }
