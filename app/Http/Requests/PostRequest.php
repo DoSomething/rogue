@@ -62,7 +62,7 @@ class PostRequest extends Request
      */
     private function getStatusRules($type)
     {
-        switch($type) {
+        switch ($type) {
             case 'photo':
                 $rule = 'in:pending,accepted,rejected';
                 break;
