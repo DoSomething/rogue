@@ -1056,7 +1056,7 @@ class PostTest extends TestCase
             'voter-registration-method' => 'by-mail',
             'voting-method-preference' => 'in-person',
             'email subscribed' => 'FALSE',
-            'sms subscribed' => 'TRUE'
+            'sms subscribed' => 'TRUE',
         ];
 
         // Mock the Blink API call.
