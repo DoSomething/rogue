@@ -1,10 +1,8 @@
 ## Reviews - API
-All `v3 /reviews` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
-
 Update a post's status when an admin reviews the post.
 
 ```
-POST /reviews
+POST /v2/reviews
 ```
 
   - **post_id**: (string) required.
