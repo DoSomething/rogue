@@ -161,8 +161,8 @@ POST /api/v3/posts
     Corresponding text for the post (could be photo caption or other words). 256 max characters.
   - **status**: (string).
     Option to set status upon creation if admin uploads post for user.
-  - **file**: (file) required for photo posts.
-    File string to save of post image.
+  - **file**: (multipart/form-data) required for photo posts.
+    File to save of post image.
   - **details** (json).
     A JSON field to store extra details about a post.
   - **dont_send_to_blink** (boolean) optional.
