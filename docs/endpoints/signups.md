@@ -10,6 +10,8 @@ POST /api/v3/signups
     The drupal node id of the campaign the user is signing up for.
   - **campaign_run_id**: (int) optional.
     The drupal campaign run node id of the campaign run the user is signing up for.
+  - **northstar_id**: (int) optional.
+    The northstar_id of the user who is signing up. Can be sent through from a client.
   - **why_participated**: (string) optional.
     The reason why the user participated.
   - **source**: (string) optional (for migration purposes, there are signups on prod with no source).
