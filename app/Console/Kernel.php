@@ -24,6 +24,7 @@ class Kernel extends ConsoleKernel
         Commands\UpdateSignup::class,
         Commands\ReviewSignup::class,
         Commands\SendToQuasar::class,
+        Commands\ForceDeleteTestRecords::class,
     ];
 
     /**
