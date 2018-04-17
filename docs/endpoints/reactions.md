@@ -1,33 +1,83 @@
 ## Reactions
-
-## Create or update a Reaction v2
+All `v3 /posts/{post}/reactions` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
 
 ```
-POST /api/v2/reactions
+## Create or update a Reaction
+
 ```
-  - **northstar_id**: (int) required
-    The northstar id of the user who "liked" or "unliked" the reportback item. 
-  - **post_id**: (int) required 
-    The post that the reaction belongs to. 
-    
+POST /api/v3/post/:post_id/reactions
+```
+
 Example Request
 ```
-curl http://rogue.dev:8000/api/v2/reactions
- -d '{
-  "northstar_id":1234,
-  "post_id":1,
-  }'
+curl http://rogue.dev:8000/api/v3/posts/:post_id/reactions
   --header "Accept: application/json"
+  --X-DS-Rogue-API-Key "API_KEY"
 ```
 
-Example Response 
+Example Response
 ```
 {
-  "data": {
-    "northstar_id": "1234",
-    "post_id": "1",
-    "created_at": "2017-04-03T20:17:04+00:00",
-    "updated_at": "2017-04-03T20:17:04+00:00",
-    "deleted_at": null,
-  },
+    "data": {
+        "northstar_id": "5589c991a59dbfa93d8b45ae",
+        "post_id": "61",
+        "created_at": "2017-10-24T14:57:40+00:00",
+        "updated_at": "2017-11-03T17:00:51+00:00",
+        "deleted_at": null
+    },
+    "meta": {
+        "action": "liked",
+        "total_reactions": 1
+    }
 }
+````
+
+## Retrieve all reactions of a post
+
+```
+GET /api/v3/posts/:post_id/reactions
+```
+Example Response:
+
+```
+{
+    "data": [
+        {
+            "northstar_id": "5589c991a59dbfa93d8b45ae",
+            "post_id": "61",
+            "term": {
+                "name": "heart",
+                "id": 641,
+                "total": 1
+            },
+            "created_at": "2017-10-24T14:57:40+00:00",
+            "updated_at": "2017-11-03T17:00:51+00:00",
+            "deleted_at": null
+        },
+        {
+            "northstar_id": "5589c991a59dbfa93d8b45aea",
+            "post_id": "61",
+            "term": {
+                "name": "heart",
+                "id": 641,
+                "total": 1
+            },
+            "created_at": "2017-11-03T18:02:55+00:00",
+            "updated_at": "2017-11-03T18:02:55+00:00",
+            "deleted_at": null
+        },
+        {
+            "northstar_id": "5589c991a59dbfa93d8b45aeas",
+            "post_id": "61",
+            "term": {
+                "name": "heart",
+                "id": 641,
+                "total": 1
+            },
+            "created_at": "2017-11-03T18:03:01+00:00",
+            "updated_at": "2017-11-03T18:03:01+00:00",
+            "deleted_at": null
+        },
+    ]
+}
+```

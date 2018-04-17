@@ -41,6 +41,7 @@ describe('WithReviewing', () => {
     expect(state.posts['71']).toEqual(Posts.data[1]);
   });
 
+  // @TODO: update the below to make sure it is compatible with update /posts/{post}/reviews endpoint
   // it('setNewPosts changes state correctly', () => {
   //   const instance = Wrapper.instance();
 

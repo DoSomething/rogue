@@ -6,7 +6,7 @@ import StatusButton from '../StatusButton';
 
 class ReviewBlock extends React.Component {
   setStatus(status) {
-    return this.props.onUpdate(this.props.post.id, { status });
+    return this.props.onUpdate(this.props.post, { status });
   }
 
   render() {
