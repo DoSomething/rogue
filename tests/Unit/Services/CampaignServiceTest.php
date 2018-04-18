@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Rogue\Services\Ashes;
+use Rogue\Services\Phoenix;
 use Rogue\Services\CampaignService;
 use Rogue\Repositories\CacheRepository;
 
