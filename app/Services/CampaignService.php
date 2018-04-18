@@ -15,6 +15,13 @@ class CampaignService
     protected $ashes;
 
     /**
+     * Phoenix instance
+     *
+     * @var \Rogue\Services\Phoenix
+     */
+    protected $phoenix;
+
+    /**
      * The cache repository.
      *
      * @var CacheRepository
@@ -26,9 +33,10 @@ class CampaignService
      *
      * @param Ashes $ashes
      */
-    public function __construct(Ashes $ashes)
+    public function __construct(Ashes $ashes, Phoenix $phoenix)
     {
         $this->ashes = $ashes;
+        $this->phoenix = $phoenix;
         $this->cache = new CacheRepository('campaign');
     }
 
@@ -44,7 +52,7 @@ class CampaignService
         $campaign = $this->cache->retrieve($id);
 
         if (! $campaign) {
-            $campaign = $this->ashes->getCampaign($id);
+            $campaign = $this->phoenix->getCampaign($id);
 
             // Cache campaign for a day.
             $this->cache->store($campaign['data']['id'], $campaign['data'], 1440);
