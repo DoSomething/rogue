@@ -40,30 +40,18 @@ class ForceDeleteTestRecords extends Command
     public function handle()
     {
         // Force delete all signups created by Runscope, identified by source.
-        $runscopeSignups = Signup::where('source', 'runscope')->orWhere('source', 'runscope-oauth')->get();
-        foreach ($runscopeSignups as $runscopeSignup) {
-            $runscopeSignup->forceDelete();
-        }
+        Signup::where('source', 'runscope')->orWhere('source', 'runscope-oauth')->forceDelete();
 
         // Force delete all posts created by Runscope, identified by source.
-        $runscopePosts = Post::where('source', 'runscope')->orWhere('source', 'runscope-oauth')->get();
-        foreach ($runscopePosts as $runscopePost) {
-            $runscopePost->forceDelete();
-        }
+        Post::where('source', 'runscope')->orWhere('source', 'runscope-oauth')->forceDelete();
 
         $this->info('All Runscope signups and posts deleted.');
 
         // Force delete all signups created by Ghost Inspector tests, identified by 'why_participated.'
-        $ghostInspectorSignups = Signup::where('why_participated', 'Why! I love to test! Team Bleed for the win! Tongue Cat forever!')->get();
-        foreach ($ghostInspectorSignups as $ghostInspectorSignup) {
-            $ghostInspectorSignup->forceDelete();
-        }
+        Signup::where('why_participated', 'Why! I love to test! Team Bleed for the win! Tongue Cat forever!')->forceDelete();
 
         // Force delete all posts created by Ghost Inspector tests, identified by caption.
-        $ghostInspectorPosts = Post::where('text', 'Caption! I love to test! Team Bleed for the win! Tongue Cat forever!')->get();
-        foreach ($ghostInspectorPosts as $ghostInspectorPost) {
-            $ghostInspectorPost->forceDelete();
-        }
+        Post::where('text', 'Caption! I love to test! Team Bleed for the win! Tongue Cat forever!')->forceDelete();
 
         $this->info('All Ghost Inspector signups and posts deleted.');
     }
