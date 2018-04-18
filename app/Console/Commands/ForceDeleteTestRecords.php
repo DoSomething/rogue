@@ -51,7 +51,7 @@ class ForceDeleteTestRecords extends Command
             $runscopePost->forceDelete();
         }
 
-        $this->info('All Runscope and Ghost Inspector Signups deleted.');
+        $this->info('All Runscope signups and posts deleted.');
 
         // Force delete all signups created by Ghost Inspector tests, identified by 'why_participated.'
         $ghostInspectorSignups = Signup::where('why_participated', 'Why! I love to test! Team Bleed for the win! Tongue Cat forever!')->get();
@@ -59,12 +59,12 @@ class ForceDeleteTestRecords extends Command
             $ghostInspectorSignup->forceDelete();
         }
 
-        // Force delete all psots created by Ghost Inspector tests, identified by
+        // Force delete all posts created by Ghost Inspector tests, identified by caption.
         $ghostInspectorPosts = Post::where('text', 'Caption! I love to test! Team Bleed for the win! Tongue Cat forever!')->get();
         foreach ($ghostInspectorPosts as $ghostInspectorPost) {
             $ghostInspectorPost->forceDelete();
         }
 
-        $this->info('All Runscope and Ghost Inspector Posts deleted.');
+        $this->info('All Ghost Inspector signups and posts deleted.');
     }
 }
