@@ -68,16 +68,16 @@
     "NORTHSTAR_URL": {
       "required": true
     },
-    "PHOENIX_API_VERSION": {
+    "ASHES_API_VERSION": {
       "required": true
     },
-    "PHOENIX_PASSWORD": {
+    "ASHES_PASSWORD": {
       "required": true
     },
-    "PHOENIX_URI": {
+    "ASHES_URI": {
       "required": true
     },
-    "PHOENIX_USERNAME": {
+    "ASHES_USERNAME": {
       "required": true
     },
     "ROGUE_API_KEY": {

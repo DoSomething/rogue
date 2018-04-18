@@ -39,9 +39,9 @@ return [
         ],
     ],
 
-    'phoenix' => [
-        'uri' => env('PHOENIX_URI'),
-        'version' => env('PHOENIX_API_VERSION'),
+    'ashes' => [
+        'uri' => env('ASHES_URI'),
+        'version' => env('ASHES_API_VERSION'),
     ],
 
     'blink' => [

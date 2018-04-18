@@ -21,13 +21,13 @@ class ReportbackTransformer extends TransformerAbstract
             'id' => (string) $post->id,
             'status' => $post->status,
             'caption' => $post->text,
-            'uri' => url(config('services.phoenix.uri') . '/api/v1/reportback-items/'.$post->id, ['absolute' => true]),
+            'uri' => url(config('services.ashes.uri') . '/api/v1/reportback-items/'.$post->id, ['absolute' => true]),
             'media' => [
                 'uri' => $post->getMediaUrl(),
                 'type' => 'image',
             ],
             'tagged' => $post->tagNames(),
-            'created_at' => (string) $post->created_at->timestamp, // Phoenix quirk, this field is a string timestamp.
+            'created_at' => (string) $post->created_at->timestamp, // Ashes quirk, this field is a string timestamp.
             'reportback' => [
                 'id' => (string) $signup->id,
                 'created_at' => $signup->created_at->toIso8601String(),
