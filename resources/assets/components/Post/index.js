@@ -127,6 +127,7 @@ class Post extends React.Component {
             <MetaInformation
               title="Meta"
               details={{
+                'Signup ID': signup.id,
                 'Post ID': post.id,
                 Source: post.source,
                 Submitted: new Date(post.created_at).toDateString(),
