@@ -24,6 +24,7 @@ class Kernel extends ConsoleKernel
         Commands\UpdateSignup::class,
         Commands\ReviewSignup::class,
         Commands\SendToQuasar::class,
+        Commands\ForceDeleteTestRecords::class,
     ];
 
     /**
@@ -34,6 +35,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //
+        $schedule->command(ForceDeleteTestRecords::class, ['--force'])->hourly();
     }
 }
