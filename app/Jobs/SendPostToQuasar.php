@@ -47,20 +47,20 @@ class SendPostToQuasar implements ShouldQueue
     {
         // Check if the post still exists before sending (might have been deleted immediately if created in Runscope test).
         if ($this->post) {
-          // Format the payload
-          $payload = $this->post->toQuasarPayload();
+            // Format the payload
+            $payload = $this->post->toQuasarPayload();
 
-          // Send to Quasar
-          $shouldSendToQuasar = config('features.pushToQuasar');
-          if ($shouldSendToQuasar) {
-              gateway('blink')->post('v1/events/quasar-relay', $payload);
-          }
+            // Send to Quasar
+            $shouldSendToQuasar = config('features.pushToQuasar');
+            if ($shouldSendToQuasar) {
+                gateway('blink')->post('v1/events/quasar-relay', $payload);
+            }
 
-          // Log
-          if ($this->log) {
-              $verb = $shouldSendToQuasar ? 'sent' : 'would have been sent';
-              info('Post ' . $this->post->id . ' ' . $verb . ' to Quasar');
-          }
+            // Log
+            if ($this->log) {
+                $verb = $shouldSendToQuasar ? 'sent' : 'would have been sent';
+                info('Post ' . $this->post->id . ' ' . $verb . ' to Quasar');
+            }
         }
     }
 

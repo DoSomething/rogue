@@ -40,10 +40,10 @@ class SendPostToCustomerIo implements ShouldQueue
     {
         // Check if the post still exists before sending (might have been deleted immediately if created in Runscope test).
         if ($this->post) {
-          $payload = $this->post->toBlinkPayload();
+            $payload = $this->post->toBlinkPayload();
 
-          $blink->userSignupPost($payload);
-          logger()->info('Post ' . $payload['id'] . ' sent to Blink');
+            $blink->userSignupPost($payload);
+            logger()->info('Post ' . $payload['id'] . ' sent to Blink');
         }
     }
 }
