@@ -38,16 +38,19 @@ class SendSignupToCustomerIo implements ShouldQueue
      */
     public function handle(Blink $blink)
     {
-        $payload = $this->signup->toBlinkPayload();
+        // Check if the signup still exists before sending (might have been deleted immediately if created in Runscope test).
+        if ($this->signup) {
+          $payload = $this->signup->toBlinkPayload();
 
-        // @TODO: update other places we call this to not check for config('features.blink')
-        $shouldSend = config('features.blink');
-        if ($shouldSend) {
-            $blink->userSignup($payload);
+          // @TODO: update other places we call this to not check for config('features.blink')
+          $shouldSend = config('features.blink');
+          if ($shouldSend) {
+              $blink->userSignup($payload);
+          }
+
+          // Log
+          $verb = $shouldSend ? 'sent' : 'would have been sent';
+          info('Signup ' . $payload['id'] . ' ' . $verb . ' to Customer.io');
         }
-
-        // Log
-        $verb = $shouldSend ? 'sent' : 'would have been sent';
-        info('Signup ' . $payload['id'] . ' ' . $verb . ' to Customer.io');
     }
 }
