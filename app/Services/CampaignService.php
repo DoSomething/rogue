@@ -52,7 +52,8 @@ class CampaignService
         $campaign = $this->cache->retrieve($id);
 
         if (! $campaign) {
-            $campaign = $this->phoenix->getCampaign($id);
+            // @TODO: change this to grab from Phoenix when Phoenix returns all info. we need!
+            $campaign = $this->ashes->getCampaign($id);
 
             // Cache campaign for a day.
             $this->cache->store($campaign['data']['id'], $campaign['data'], 1440);
