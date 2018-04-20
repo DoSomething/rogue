@@ -25,8 +25,8 @@ class CampaignServiceTest extends TestCase
             'title' => 'Welcome Home',
         ];
 
-        // Mock the call to get the campaign from Phoenix.
-        $this->mock(Phoenix::class)
+        // Mock the call to get the campaign from Ashes.
+        $this->mock(Ashes::class)
             ->shouldReceive('getCampaign')
             ->once()
             ->with($testCampaign['id'])
