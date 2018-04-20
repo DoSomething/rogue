@@ -46,7 +46,7 @@ class SendPostToQuasar implements ShouldQueue
     public function handle()
     {
         // Check if the post still exists before sending (might have been deleted immediately if created in Runscope test).
-        if ($this->post) {
+        if ($this->post && $this->post->signup) {
             // Format the payload
             $payload = $this->post->toQuasarPayload();
 
