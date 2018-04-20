@@ -222,13 +222,23 @@ exports[`it renders correctly 1`] = `
           Meta
         </h4>
         <span>
+          Signup ID
+          : 
+          <br />
+        </span>
+        <span>
+          Signup Source
+          : 
+          <br />
+        </span>
+        <span>
           Post ID
           : 
           123
           <br />
         </span>
         <span>
-          Source
+          Post Source
           : 
           <br />
         </span>

@@ -127,8 +127,10 @@ class Post extends React.Component {
             <MetaInformation
               title="Meta"
               details={{
+                'Signup ID': signup.id,
+                'Signup Source': signup.source,
                 'Post ID': post.id,
-                Source: post.source,
+                'Post Source': post.source,
                 Submitted: new Date(post.created_at).toDateString(),
                 'Northstar Id': signup.northstar_id,
               }}
