@@ -5,6 +5,7 @@ namespace Tests\Unit\Services;
 use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
+use Rogue\Services\Ashes;
 use Rogue\Services\Phoenix;
 use Rogue\Services\CampaignService;
 use Rogue\Repositories\CacheRepository;
@@ -24,8 +25,8 @@ class CampaignServiceTest extends TestCase
             'title' => 'Welcome Home',
         ];
 
-        // Mock the call to get the campaign from phoenix.
-        $this->mock(Phoenix::class)
+        // Mock the call to get the campaign from Ashes.
+        $this->mock(Ashes::class)
             ->shouldReceive('getCampaign')
             ->once()
             ->with($testCampaign['id'])
@@ -71,8 +72,8 @@ class CampaignServiceTest extends TestCase
             ],
         ];
 
-        // Mock the call to get the campaign from phoenix.
-        $this->mock(Phoenix::class)
+        // Mock the call to get the campaign from Ashes.
+        $this->mock(Ashes::class)
             ->shouldReceive('getAllCampaigns')
             ->once()
             ->andReturn(['data' => $testCampaigns]);
@@ -84,14 +85,14 @@ class CampaignServiceTest extends TestCase
         $campaigns = $cache->retrieveMany($testIds);
         $this->assertNull($campaigns);
 
-        // If it's not in cache we should make the call to phoenix
+        // If it's not in cache we should make the call to Ashes
         // and make sure we get back the right campaign and store it in cache
         // for future requests.
         $campaigns = $campaignService->findAll($testIds);
         $cachedCampaigns = $cache->retrieveMany($testIds);
 
         foreach ($testCampaigns as $key => $test) {
-            // Make sure the campaign was returned from phoenix.
+            // Make sure the campaign was returned from Ashes.
             $this->assertEquals($test, $campaigns[$key]);
 
             // Make sure the campaigns got stored in cached.

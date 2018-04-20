@@ -4,16 +4,27 @@ namespace Rogue\Services;
 
 use DoSomething\Gateway\Common\RestApiClient;
 
-class Phoenix extends RestApiClient
+class Ashes extends RestApiClient
 {
     /**
      * Create a new Ashes API client.
      */
     public function __construct()
     {
-        $url = config('services.phoenix.uri') . '/api/' . config('services.phoenix.version') . '/';
+        $url = config('services.ashes.uri') . '/api/' . config('services.ashes.version') . '/';
 
         parent::__construct($url);
+    }
+
+    /**
+     * Send a GET request to return all campaigns matching a given query.
+     *
+     * @param  array $params
+     * @return array|null
+     */
+    public function getAllCampaigns($params = [])
+    {
+        return $this->get('campaigns', $params);
     }
 
     /**

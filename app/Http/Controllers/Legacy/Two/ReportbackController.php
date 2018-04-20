@@ -6,7 +6,7 @@ use Rogue\Models\Post;
 use League\Fractal\Manager;
 use Illuminate\Http\Request;
 use Rogue\Http\Transformers\Legacy\Two\ReportbackTransformer;
-use Rogue\Http\Transformers\Legacy\Two\PaginatorForPhoenixAshesGallery;
+use Rogue\Http\Transformers\Legacy\Two\PaginatorForAshesGallery;
 
 class ReportbackController extends ApiController
 {
@@ -26,7 +26,7 @@ class ReportbackController extends ApiController
     }
 
     /**
-     * Returns Post data for the Phoenix-ashes gallery
+     * Returns Post data for the Ashes gallery
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -93,7 +93,7 @@ class ReportbackController extends ApiController
 
         $manager = new Manager;
 
-        $manager->setSerializer(new PaginatorForPhoenixAshesGallery);
+        $manager->setSerializer(new PaginatorForAshesGallery);
 
         if (isset($include)) {
             $manager->parseIncludes($include);

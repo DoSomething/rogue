@@ -8,6 +8,13 @@ use Rogue\Repositories\CacheRepository;
 class CampaignService
 {
     /**
+     * Ashes instance
+     *
+     * @var \Rogue\Services\Ashes
+     */
+    protected $ashes;
+
+    /**
      * Phoenix instance
      *
      * @var \Rogue\Services\Phoenix
@@ -24,10 +31,11 @@ class CampaignService
     /**
      * Create new Registrar instance.
      *
-     * @param Phoenix $phoenix
+     * @param Ashes $ashes
      */
-    public function __construct(Phoenix $phoenix)
+    public function __construct(Ashes $ashes, Phoenix $phoenix)
     {
+        $this->ashes = $ashes;
         $this->phoenix = $phoenix;
         $this->cache = new CacheRepository('campaign');
     }
@@ -44,7 +52,8 @@ class CampaignService
         $campaign = $this->cache->retrieve($id);
 
         if (! $campaign) {
-            $campaign = $this->phoenix->getCampaign($id);
+            // @TODO: change this to grab from Phoenix when Phoenix returns all info. we need!
+            $campaign = $this->ashes->getCampaign($id);
 
             // Cache campaign for a day.
             $this->cache->store($campaign['data']['id'], $campaign['data'], 1440);
@@ -56,7 +65,7 @@ class CampaignService
     }
 
     /**
-     * Finds a group of campaigns in Rogue/Phoenix.
+     * Finds a group of campaigns in Rogue/Ashes.
      *
      * @param  array $ids
      * @return \Illuminate\Support\Collection
@@ -83,7 +92,7 @@ class CampaignService
             return collect($campaigns);
         }
 
-        return collect($this->phoenix->getAllCampaigns());
+        return collect($this->ashes->getAllCampaigns());
     }
 
     /**
@@ -105,7 +114,7 @@ class CampaignService
     }
 
     /**
-     * Get large number of campaigns from Phoenix.
+     * Get large number of campaigns from Ashes.
      *
      * @param  array  $ids
      * @param  int $size
@@ -123,7 +132,7 @@ class CampaignService
             $parameters['count'] = '5000';
             $parameters['ids'] = implode(',', $batch);
 
-            $campaigns = $this->phoenix->getAllCampaigns($parameters);
+            $campaigns = $this->ashes->getAllCampaigns($parameters);
 
             $data = array_merge($data, $campaigns['data']);
 
