@@ -61,7 +61,7 @@ class Post extends React.Component {
     const quantity = post.quantity != null ? post.quantity : 0;
     const containerSize = post.type === 'photo' ? '-third' : '-half';
     const textOrCaption = post.type === 'photo' ? 'Photo Caption' : 'Text';
-
+    console.log(post);
     return (
       <div className="post container__row">
         {/* Post Images */}
