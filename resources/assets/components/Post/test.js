@@ -7,9 +7,7 @@ test('it renders correctly', () => {
   const post = {
     id: 123,
     media: {
-      media: {
-        text: 'Here is my awesome caption!',
-      },
+      text: 'Here is my awesome caption!',
     },
     status: 'pending',
     tags: [],
