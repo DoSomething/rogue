@@ -73,23 +73,6 @@ export function displayCityState(city, state) {
   return `${city || ''}${city && state ? ', ' : ''}${state || ''}`;
 }
 
-
-/**
- * Returns a readable caption string.
- *
- * @param {Array} post
- * @return {String|null} caption string.
- */
-export function displayCaption(post) {
-  if (post.caption) {
-    return post.caption;
-  } else if (post.media) {
-    return post.media.caption;
-  }
-
-  return null;
-}
-
 /**
  * Process file (provided as an ArrayBuffer) depending
  * on its type.
