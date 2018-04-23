@@ -44,7 +44,9 @@ exports[`it renders correctly 1`] = `
           >
             Photo Caption
           </h4>
-          <p />
+          <p>
+            Here is my awesome caption!
+          </p>
         </div>
       </div>
       <div
