@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { remove, map, clone } from 'lodash';
-import { getImageUrlFromPost, getEditedImageUrl } from '../../helpers';
+import { getImageUrlFromPost, getEditedImageUrl, displayPostText } from '../../helpers';
 
 import './post.scss';
 
@@ -108,7 +108,7 @@ class Post extends React.Component {
               : null}
 
             <div className="container -padded">
-              <TextBlock title={textOrCaption} content={post.media.text} />
+              <TextBlock title={textOrCaption} content={displayPostText(post)} />
             </div>
 
             <div className="container">

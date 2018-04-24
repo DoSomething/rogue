@@ -6,9 +6,7 @@ import Post from './index';
 test('it renders correctly', () => {
   const post = {
     id: 123,
-    media: {
-      text: 'Here is my awesome caption!',
-    },
+    text: 'Here is my awesome caption!',
     status: 'pending',
     tags: [],
     type: 'photo',

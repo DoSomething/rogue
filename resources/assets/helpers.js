@@ -74,6 +74,22 @@ export function displayCityState(city, state) {
 }
 
 /**
+ * Returns a readable Post text string.
+ *
+ * @param {Array} post
+ * @return {String|null} text string.
+ */
+export function displayPostText(post) {
+  if (post.text) {
+    return post.text;
+  } else if (post.media) {
+    return post.media.text;
+  }
+
+  return null;
+}
+
+/**
  * Process file (provided as an ArrayBuffer) depending
  * on its type.
  *
