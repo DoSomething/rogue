@@ -11,7 +11,7 @@ exports[`it renders correctly 1`] = `
       className="post__image"
     >
       <img
-        src={undefined}
+        src={null}
       />
     </div>
     <div
@@ -21,7 +21,7 @@ exports[`it renders correctly 1`] = `
         className="admin-tools__links"
       >
         <a
-          href={undefined}
+          href={null}
           target="_blank"
         >
           Original Photo
