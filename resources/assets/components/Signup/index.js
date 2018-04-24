@@ -101,23 +101,20 @@ class Signup extends React.Component {
   }
 
   componentDidMount() {
-    this.getUserActivity(this.props.signup_id);
+    this.getSignupAndPosts(this.props.signup_id);
   }
 
   /**
-   * Gets the user activity for the specified user and update state.
+   * Gets the signup and posts and update state.
    *
    * @param {String} id
    * @return {Object}
    */
-  getUserActivity(id) {
-    this.api.get('api/v2/activity', {
-      filter: {
-        id,
-      },
-    }).then(json => this.setState({
-      signup: json.data[0],
-      posts: keyBy(json.data[0].posts.data, 'id'),
+  getSignupAndPosts(id) {
+    this.api.get(`api/v3/signups/${id}?include=posts`)
+      .then(json => this.setState({
+        signup: json.data,
+        posts: keyBy(json.data[0].posts.data, 'id'),
     }));
   }
 
@@ -371,7 +368,7 @@ class Signup extends React.Component {
     const signup = this.state.signup;
     const campaign = this.props.campaign;
     const posts = this.state.posts;
-
+    console.log(this.state);
     if (! this.state.signup) {
       return <Empty header={`This signup has been deleted`} />;
     }
@@ -431,7 +428,7 @@ class Signup extends React.Component {
               title="Meta"
               details={{
                 'Signup ID': signup.signup_id,
-                'Northstar ID': user.id,
+                // 'Northstar ID': user.id,
                 'Signup Source': signup.signup_source,
                 'Created At': new Date(signup.created_at).toDateString(),
               }}

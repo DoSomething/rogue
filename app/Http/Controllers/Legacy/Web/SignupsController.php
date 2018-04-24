@@ -55,7 +55,7 @@ class SignupsController extends Controller
                 'signup_id' => $signup->id,
                 // @TODO - We could probably grab campaign and user info from API as well.
                 'campaign' => $campaign,
-                'user' => $user->toArray(),
+                // 'user' => $user->toArray(),
             ]);
     }
 }
