@@ -101,23 +101,21 @@ class Signup extends React.Component {
   }
 
   componentDidMount() {
-    this.getUserActivity(this.props.signup_id);
+    this.getSignupAndPosts(this.props.signup_id);
   }
 
   /**
-   * Gets the user activity for the specified user and update state.
+   * Gets the signup and posts and update state.
    *
    * @param {String} id
    * @return {Object}
    */
-  getUserActivity(id) {
-    this.api.get('api/v2/activity', {
-      filter: {
-        id,
-      },
+  getSignupAndPosts(id) {
+    this.api.get(`api/v3/signups/${id}`, {
+      include: 'posts',
     }).then(json => this.setState({
-      signup: json.data[0],
-      posts: keyBy(json.data[0].posts.data, 'id'),
+      signup: json.data,
+      posts: keyBy(json.data.posts.data, 'id'),
     }));
   }
 
@@ -430,9 +428,9 @@ class Signup extends React.Component {
             <MetaInformation
               title="Meta"
               details={{
-                'Signup ID': signup.signup_id,
+                'Signup ID': signup.id,
                 'Northstar ID': user.id,
-                'Signup Source': signup.signup_source,
+                'Signup Source': signup.source,
                 'Created At': new Date(signup.created_at).toDateString(),
               }}
             />
