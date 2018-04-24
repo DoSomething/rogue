@@ -111,10 +111,11 @@ class Signup extends React.Component {
    * @return {Object}
    */
   getSignupAndPosts(id) {
-    this.api.get(`api/v3/signups/${id}?include=posts`)
-      .then(json => this.setState({
+    this.api.get(`api/v3/signups/${id}`, {
+        include: 'posts',
+    }).then(json => this.setState({
         signup: json.data,
-        posts: keyBy(json.data[0].posts.data, 'id'),
+        posts: keyBy(json.data.posts.data, 'id'),
     }));
   }
 
@@ -368,7 +369,7 @@ class Signup extends React.Component {
     const signup = this.state.signup;
     const campaign = this.props.campaign;
     const posts = this.state.posts;
-    console.log(this.state);
+
     if (! this.state.signup) {
       return <Empty header={`This signup has been deleted`} />;
     }
@@ -427,9 +428,9 @@ class Signup extends React.Component {
             <MetaInformation
               title="Meta"
               details={{
-                'Signup ID': signup.signup_id,
+                'Signup ID': signup.id,
                 // 'Northstar ID': user.id,
-                'Signup Source': signup.signup_source,
+                'Signup Source': signup.source,
                 'Created At': new Date(signup.created_at).toDateString(),
               }}
             />
