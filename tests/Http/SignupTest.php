@@ -309,6 +309,68 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test for signup show with included pending post info. as non-admin/non-owner.
+     * Only admins/owners should be able to see pending/rejected posts.
+     *
+     * GET /api/v3/signups/:signup_id?include=posts
+     * @return void
+     */
+    public function testSignupShowWithIncludedPostsAsNonAdminNonOwner()
+    {
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
+
+        // Test with annoymous user that no posts are returned.
+        $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $this->assertEquals(true, empty($decodedResponse['data']['posts']['data']));
+    }
+
+    /**
+     * Test for signup show with included pending post info. as admin
+     * Only admins/owners should be able to see pending/rejected posts.
+     *
+     * GET /api/v3/signups/:signup_id?include=posts
+     * @return void
+     */
+    public function testSignupShowWithIncludedPostsAsAdmin()
+    {
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
+
+        // Test with admin that posts are returned.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $this->assertEquals(false, empty($decodedResponse['data']['posts']['data']));
+        $this->assertEquals($signup->id, $decodedResponse['data']['posts']['data'][0]['signup_id']);
+    }
+
+    /**
+     * Test for signup show with included pending post info. as owner
+     * Only admins/owners should be able to see pending/rejected posts.
+     *
+     * GET /api/v3/signups/:signup_id?include=posts
+     * @return void
+     */
+    public function testSignupShowWithIncludedPostsAsOwner()
+    {
+        $post = factory(Post::class)->create();
+        $signup = $post->signup;
+
+        // Test with admin that posts are returned.
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $this->assertEquals(false, empty($decodedResponse['data']['posts']['data']));
+        $this->assertEquals($signup->id, $decodedResponse['data']['posts']['data'][0]['signup_id']);
+    }
+
+    /**
      * Test for signup index with included user info. as admin.
      * Only admins/owners should be able to see all user info.
      *
