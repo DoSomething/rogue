@@ -112,10 +112,10 @@ class Signup extends React.Component {
    */
   getSignupAndPosts(id) {
     this.api.get(`api/v3/signups/${id}`, {
-        include: 'posts',
+      include: 'posts',
     }).then(json => this.setState({
-        signup: json.data,
-        posts: keyBy(json.data.posts.data, 'id'),
+      signup: json.data,
+      posts: keyBy(json.data.posts.data, 'id'),
     }));
   }
 
@@ -429,7 +429,7 @@ class Signup extends React.Component {
               title="Meta"
               details={{
                 'Signup ID': signup.id,
-                // 'Northstar ID': user.id,
+                'Northstar ID': user.id,
                 'Signup Source': signup.source,
                 'Created At': new Date(signup.created_at).toDateString(),
               }}
