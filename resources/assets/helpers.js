@@ -74,12 +74,12 @@ export function displayCityState(city, state) {
 }
 
 /**
- * Returns a readable caption string.
+ * Returns a readable Post text string.
  *
  * @param {Array} post
- * @return {String|null} caption string.
+ * @return {String|null} text string.
  */
-export function displayCaption(post) {
+export function displayPostText(post) {
   if (post.text) {
     return post.text;
   } else if (post.media) {

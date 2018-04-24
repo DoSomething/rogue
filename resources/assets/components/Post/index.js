@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { remove, map, clone } from 'lodash';
-import { getImageUrlFromPost, getEditedImageUrl, displayCaption } from '../../helpers';
+import { getImageUrlFromPost, getEditedImageUrl, displayPostText } from '../../helpers';
 
 import './post.scss';
 
@@ -55,7 +55,6 @@ class Post extends React.Component {
 
   render() {
     const post = this.props.post;
-    const caption = displayCaption(post);
     const user = this.props.user ? this.props.user : null;
     const signup = this.props.signup;
     const campaign = this.props.campaign;
@@ -109,7 +108,7 @@ class Post extends React.Component {
               : null}
 
             <div className="container -padded">
-              <TextBlock title={textOrCaption} content={displayCaption(post)} />
+              <TextBlock title={textOrCaption} content={displayPostText(post)} />
             </div>
 
             <div className="container">
