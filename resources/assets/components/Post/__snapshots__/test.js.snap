@@ -11,7 +11,7 @@ exports[`it renders correctly 1`] = `
       className="post__image"
     >
       <img
-        src={null}
+        src={undefined}
       />
     </div>
     <div
@@ -21,7 +21,7 @@ exports[`it renders correctly 1`] = `
         className="admin-tools__links"
       >
         <a
-          href={null}
+          href={undefined}
           target="_blank"
         >
           Original Photo
@@ -44,7 +44,9 @@ exports[`it renders correctly 1`] = `
           >
             Photo Caption
           </h4>
-          <p />
+          <p>
+            Here is my awesome caption!
+          </p>
         </div>
       </div>
       <div
