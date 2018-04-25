@@ -121,8 +121,7 @@ class SignupsController extends ApiController
     {
         // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
         if ($request->query('include') === 'posts') {
-            $signups = Signup::withVisiblePosts()->get();
-            $signup = $signups->keyBy('id')[$signup->id];
+            $signup = Signup::with('posts')->find($signup->id);
         }
 
         return $this->item($signup, 200, [], $this->transformer, $request->query('include'));
