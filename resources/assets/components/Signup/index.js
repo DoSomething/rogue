@@ -422,7 +422,7 @@ class Signup extends React.Component {
             </div>
 
             <div className="container__row">
-              <button className="button delete -tertiary" onClick={e => this.deleteSignup(signup.signup_id, e)}>Delete Signup</button>
+              <button className="button delete -tertiary" onClick={e => this.deleteSignup(signup.id, e)}>Delete Signup</button>
             </div>
 
             <MetaInformation
