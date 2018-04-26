@@ -52,7 +52,8 @@ class SignupTransformer extends TransformerAbstract
      */
     public function includePosts(Signup $signup)
     {
-        $post = $signup->posts;
+        // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
+        $post = $signup->visiblePosts;
 
         return $this->collection($post, new PostTransformer);
     }
