@@ -61,6 +61,16 @@ class Signup extends Model
      */
     public function posts()
     {
+        return $this->hasMany(Post::class)->with('tags');
+    }
+
+    /**
+     * Get the visible posts associated with this signup.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function visiblePosts()
+    {
         if (! is_staff_user()) {
             return $this->hasMany(Post::class)->where('status', '=', 'accepted')
                                               ->orWhere('northstar_id', auth()->id())
