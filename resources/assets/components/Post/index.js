@@ -96,14 +96,14 @@ class Post extends React.Component {
 
         {/* User and Post information */}
         <div className={`container__block ${containerSize}`}>
-          <UserInformation user={user} linkSignup={signup.signup_id}>
+          <UserInformation user={user} linkSignup={signup.id}>
             {this.props.showQuantity ?
               <Quantity quantity={quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
               : null}
 
             {this.props.allowHistory ?
               <div className="container">
-                <a href="#" onClick={e => this.props.showHistory(post.id, e, signup.signup_id)}>Edit | Show History</a>
+                <a href="#" onClick={e => this.props.showHistory(post.id, e, signup.id)}>Edit | Show History</a>
               </div>
               : null}
 
