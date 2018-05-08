@@ -7,7 +7,7 @@ All `v3 /posts` endpoints require the `activity` scope. `Create`/`update`/`delet
 GET /api/v3/posts
 ```
 
-Posts are returned in reverse chronological order.
+Posts are returned in reverse chronological order. By default, posts that are tagged "Hide In Gallery" are not returned.
 
 Only admins and post owners will have `tags`, `source`, and `remote_addr` returned in the response.
 
