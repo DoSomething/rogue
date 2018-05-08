@@ -71,7 +71,9 @@ class PostsController extends ApiController
     public function index(Request $request)
     {
         $query = $this->newQuery(Post::class)
-            ->orderBy('created_at', 'desc');
+            ->orderBy('created_at', 'desc')
+            // by default, do not return posts hidden from the gallery
+            ->withoutTag('hide-in-gallery');
 
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Post::$indexes);
