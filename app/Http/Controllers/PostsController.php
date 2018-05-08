@@ -71,15 +71,16 @@ class PostsController extends ApiController
     public function index(Request $request)
     {
         $query = $this->newQuery(Post::class)
-            ->orderBy('created_at', 'desc')
-            // by default, do not return posts hidden from the gallery
-            ->withoutTag('hide-in-gallery');
+            ->orderBy('created_at', 'desc');
 
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Post::$indexes);
 
         // Only allow admins or staff to see un-approved posts from other users.
         $query = $query->whereVisible();
+
+        // Only return posts tagged "Hide In Gallery" if staff user or if is owner of the post.
+        $query = $query->withHiddenPosts();
 
         // If tag param is passed, only return posts that have that tag.
         if (array_has($filters, 'tag')) {
