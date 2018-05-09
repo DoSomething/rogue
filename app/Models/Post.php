@@ -338,4 +338,19 @@ class Post extends Model
                          ->orWhere('northstar_id', auth()->id());
         }
     }
+
+    /**
+     * Scope a query to only return posts tagged as "Hide In Gallery" if a user is an admin, staff, or is owner of post.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithHiddenPosts($query)
+    {
+        if ((! token()->exists()) || (! in_array(token()->role, ['admin', 'staff']))) {
+            return $query->whereDoesntHave('tags', function ($query) {
+                $query->where('tag_slug', 'hidden-in-gallery');
+            })
+                ->orWhere('northstar_id', auth()->id());
+        }
+    }
 }

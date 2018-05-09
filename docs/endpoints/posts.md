@@ -9,7 +9,7 @@ GET /api/v3/posts
 
 Posts are returned in reverse chronological order.
 
-Only admins and post owners will have `tags`, `source`, and `remote_addr` returned in the response.
+Only admins and post owners will have `tags`, `source`, `remote_addr`, and hidden posts (posts that are tagged 'Hide In Gallery') returned in the response.
 
 Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 
