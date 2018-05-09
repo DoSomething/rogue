@@ -541,7 +541,7 @@ class PostTest extends TestCase
         // Anonymous requests should only see posts that are not tagged with "Hide In Gallery."
         factory(Post::class, 'accepted', 10)->create();
 
-        $hiddenPost = factory(Post::class)->create();
+        $hiddenPost = factory(Post::class, 'accepted')->create();
         $hiddenPost->tag('Hide In Gallery');
         $hiddenPost->save();
 
@@ -728,7 +728,6 @@ class PostTest extends TestCase
         $secondHiddenPost->save();
 
         $response = $this->withAccessToken($northstarId)->getJson('api/v3/posts');
-        dd($response->decodeResponseJson());
         $response->assertStatus(200);
         $response->assertJsonCount(3, 'data');
     }
