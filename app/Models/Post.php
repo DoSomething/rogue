@@ -274,6 +274,7 @@ class Post extends Model
         $this->touch();
 
         event(new PostTagged($this, $tag));
+
         return $this;
     }
 
