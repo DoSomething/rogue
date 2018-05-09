@@ -346,9 +346,9 @@ class Post extends Model
      */
     public function scopeWithHiddenPosts($query)
     {
-        if ((! token()->exists()) || (! in_array(token()->role, ['admin', 'staff']))) {
+        if (! is_staff_user()) {
             return $query->whereDoesntHave('tags', function ($query) {
-                $query->where('tag_slug', 'hidden-in-gallery');
+                $query->where('tag_slug', 'hide-in-gallery');
             })
                 ->orWhere('northstar_id', auth()->id());
         }

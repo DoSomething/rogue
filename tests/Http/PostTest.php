@@ -530,6 +530,28 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test for retrieving all posts as non-admin and non-owner.
+     * Posts tagged as "Hide In Gallery" should not be returned to Non-admins/non-owners.
+     *
+     * GET /api/v3/posts
+     * @return void
+     */
+    public function testPostsIndexAsNonAdminNonOwnerHiddenPosts()
+    {
+        $this->markTestIncomplete();
+        // Anonymous requests should only see posts that are not tagged with "Hide In Gallery."
+        factory(Post::class, 'accepted', 10)->create();
+
+        $hiddenPost = factory(Post::class, 'accepted')->create();
+        $hiddenPost->tag('Hide In Gallery');
+
+        $response = $this->getJson('api/v3/posts');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(10, 'data');
+    }
+
+    /**
      * Test for retrieving all posts as admin
      * Admins should see tags, source, and remote_addr.
      *
@@ -546,7 +568,6 @@ class PostTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(15, 'data');
-
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
@@ -583,6 +604,28 @@ class PostTest extends TestCase
                 ],
             ],
         ]);
+    }
+
+    /**
+     * Test for retrieving all posts as admin
+     * Admins should see hidden posts.
+     *
+     * GET /api/v3/posts
+     * @return void
+     */
+    public function testPostsIndexAsAdminHiddenPosts()
+    {
+        $this->markTestIncomplete();
+        // Admins should see all posts.
+        factory(Post::class, 'accepted', 10)->create();
+
+        $hiddenPost = factory(Post::class, 'accepted')->create();
+        // $hiddenPost->tag('Hide In Gallery');
+
+        $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(11, 'data');
     }
 
     /**
@@ -650,6 +693,44 @@ class PostTest extends TestCase
                 ],
             ],
         ]);
+    }
+
+    /**
+     * Test for retrieving all posts as owner.
+     * Owners should see their own hidden posts.
+     *
+     * GET /api/v3/posts
+     * @return void
+     */
+    public function testPostsIndexAsOwnerHiddenPosts()
+    {
+        $this->markTestIncomplete();
+        // Owners should only see accepted posts and their own hidden posts.
+        $ownerId = $this->faker->northstar_id;
+
+        // Create posts and associate to this $ownerId.
+        $posts = factory(Post::class, 'accepted', 2)->create();
+
+        foreach ($posts as $post) {
+            $post->northstar_id = $ownerId;
+            $post->save();
+        }
+
+        // Create a hidden post from the same $ownerId.
+        $hiddenPost = factory(Post::class, 'accepted')->create();
+        $hiddenPost->tag('Hide In Gallery');
+        $hiddenPost->northstar_id = $ownerId;
+        $hiddenPost->save();
+
+        // Create anothter hidden post by different user.
+        $secondHiddenPost = factory(Post::class, 'accepted')->create();
+        $secondHiddenPost->tag('Hide In Gallery');
+        $secondHiddenPost->northstar_id = $this->faker->unique()->northstar_id;
+        $secondHiddenPost->save();
+
+        $response = $this->withAccessToken($ownerId)->getJson('api/v3/posts');
+        $response->assertStatus(200);
+        $response->assertJsonCount(3, 'data');
     }
 
     /**
