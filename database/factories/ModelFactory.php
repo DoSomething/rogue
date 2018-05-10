@@ -2,6 +2,7 @@
 
 use Faker\Generator;
 use Rogue\Models\Post;
+use Rogue\Models\Tag;
 use Rogue\Models\User;
 use Rogue\Services\AWS;
 use Rogue\Models\Signup;
@@ -94,4 +95,17 @@ $factory->define(User::class, function (Generator $faker) {
 
 $factory->defineAs(User::class, 'admin', function () use ($factory) {
     return array_merge($factory->raw(User::class), ['role' => 'admin']);
+});
+
+// Tag Factory
+$factory->define(Tag::class, function (Generator $faker) {
+    $tagName = str_random(10);
+    return [
+        'tag_name' => $tagName,
+        'tag_slug' => str_slug($tagName, '-')
+    ];
+});
+
+$factory->defineAs(Tag::class, 'Hide In Gallery', function () use ($factory) {
+    return array_merge($factory->raw(Tag::class), ['tag_name' => 'Hide In Gallery', 'tag_slug' => 'hide-in-gallery']);
 });

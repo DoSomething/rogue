@@ -4,6 +4,7 @@ namespace Tests\Http;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
+use Rogue\Models\Tag;
 use Rogue\Models\User;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
@@ -611,8 +612,9 @@ class PostTest extends TestCase
         // Anonymous requests should only see posts that are not tagged with "Hide In Gallery."
         factory(Post::class, 'accepted', 10)->create();
 
+        $tag = factory(Tag::class, 'Hide In Gallery')->create();
         $hiddenPost = factory(Post::class, 'accepted')->create();
-        $hiddenPost->tag('Hide In Gallery');
+        $hiddenPost->tags()->attach($tag);
 
         $response = $this->getJson('api/v3/posts');
 
@@ -684,18 +686,17 @@ class PostTest extends TestCase
      */
     public function testPostsIndexAsAdminHiddenPosts()
     {
-        // $this->markTestIncomplete();
         // Admins should see all posts.
         factory(Post::class, 'accepted', 10)->create();
 
+        $tag = factory(Tag::class, 'Hide In Gallery')->create();
         $hiddenPost = factory(Post::class, 'accepted')->create();
-        // $hiddenPost->tag('Hide In Gallery');
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $hiddenPost->id . '/tags', [
-            'tag_name' => 'Hide In Gallery',
-        ]);
+        $hiddenPost->tags()->attach($tag);
+        // $this->withAdminAccessToken()->postJson('api/v3/posts/' . $hiddenPost->id . '/tags', [
+        //     'tag_name' => 'Hide In Gallery',
+        // ]);
 
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
-
         $response->assertStatus(200);
         $response->assertJsonCount(11, 'data');
     }
@@ -789,14 +790,15 @@ class PostTest extends TestCase
         }
 
         // Create a hidden post from the same $ownerId.
+        $tag = factory(Tag::class, 'Hide In Gallery')->create();
         $hiddenPost = factory(Post::class, 'accepted')->create();
-        $hiddenPost->tag('Hide In Gallery');
+        $hiddenPost->tags()->attach($tag);
         $hiddenPost->northstar_id = $ownerId;
         $hiddenPost->save();
 
         // Create anothter hidden post by different user.
         $secondHiddenPost = factory(Post::class, 'accepted')->create();
-        $secondHiddenPost->tag('Hide In Gallery');
+        $secondHiddenPost->tags()->attach($tag);
         $secondHiddenPost->northstar_id = $this->faker->unique()->northstar_id;
         $secondHiddenPost->save();
 
