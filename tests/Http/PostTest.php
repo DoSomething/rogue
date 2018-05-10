@@ -684,12 +684,15 @@ class PostTest extends TestCase
      */
     public function testPostsIndexAsAdminHiddenPosts()
     {
-        $this->markTestIncomplete();
+        // $this->markTestIncomplete();
         // Admins should see all posts.
         factory(Post::class, 'accepted', 10)->create();
 
         $hiddenPost = factory(Post::class, 'accepted')->create();
         // $hiddenPost->tag('Hide In Gallery');
+        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $hiddenPost->id . '/tags', [
+            'tag_name' => 'Hide In Gallery',
+        ]);
 
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
 
