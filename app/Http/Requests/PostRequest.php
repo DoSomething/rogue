@@ -67,7 +67,7 @@ class PostRequest extends Request
                 $rule = 'in:pending,accepted,rejected';
                 break;
             case 'voter-reg':
-                $rule = 'in:register-form,register-OVR,confirmed,ineligible,uncertain';
+                $rule = 'in:pending,register-form,register-OVR,confirmed,ineligible,uncertain';
                 break;
             default:
                 $rule = 'in:pending,accepted,rejected';
