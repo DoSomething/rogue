@@ -127,7 +127,6 @@ const reviewComponent = (Component, data) => {
     // Tag a post.
     updateTag(postId, tag) {
       const field = {
-        // post_id: postId,
         tag_name: tag,
       };
 
