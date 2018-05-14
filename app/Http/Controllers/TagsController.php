@@ -63,24 +63,4 @@ class TagsController extends ApiController
 
         return $this->item($updatedPost);
     }
-
-    /**
-     * Remove a tag from a post.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Post $post
-     * @return \Illuminate\Http\Response
-     */
-    // public function destroy(Request $request, Post $post)
-    // {
-    //     $request->validate([
-    //         'tag_name' => 'required|string',
-    //     ]);
-
-    //     $post = $this->post->find($post->id);
-
-    //     $untaggedPost = $this->post->untag($post, $request->tag_name);
-
-    //     return $this->item($untaggedPost);
-    // }
 }
