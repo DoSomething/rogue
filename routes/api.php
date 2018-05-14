@@ -75,5 +75,5 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
 
     // tag
     $this->post('posts/{post}/tags', 'TagsController@store');
-    $this->delete('posts/{post}/tags', 'TagsController@destroy');
+    // $this->delete('posts/{post}/tags', 'TagsController@destroy');
 });
