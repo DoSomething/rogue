@@ -60,16 +60,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.55.10",
+            "version": "3.55.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "88247c9eedb1083781847e09508b7daf28c90149"
+                "reference": "5177cbe73c96d25ff759e406ac81b8e25557482c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/88247c9eedb1083781847e09508b7daf28c90149",
-                "reference": "88247c9eedb1083781847e09508b7daf28c90149",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5177cbe73c96d25ff759e406ac81b8e25557482c",
+                "reference": "5177cbe73c96d25ff759e406ac81b8e25557482c",
                 "shasum": ""
             },
             "require": {
@@ -136,7 +136,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2018-05-10T02:27:29+00:00"
+            "time": "2018-05-10T23:23:00+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -793,16 +793,16 @@
         },
         {
             "name": "dosomething/gateway",
-            "version": "v1.14.6",
+            "version": "v1.14.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DoSomething/gateway.git",
-                "reference": "58c68e3746fc4fb93f08bbd711f0cd97cd978b8f"
+                "reference": "75386ce29795188b3eb4b276f21f216290c1eff0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/58c68e3746fc4fb93f08bbd711f0cd97cd978b8f",
-                "reference": "58c68e3746fc4fb93f08bbd711f0cd97cd978b8f",
+                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/75386ce29795188b3eb4b276f21f216290c1eff0",
+                "reference": "75386ce29795188b3eb4b276f21f216290c1eff0",
                 "shasum": ""
             },
             "require": {
@@ -850,7 +850,7 @@
                 }
             ],
             "description": "Standard PHP API client for DoSomething.org services.",
-            "time": "2018-03-28T17:18:05+00:00"
+            "time": "2018-05-14T18:51:22+00:00"
         },
         {
             "name": "egulias/email-validator",
