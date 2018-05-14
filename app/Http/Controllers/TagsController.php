@@ -57,7 +57,7 @@ class TagsController extends ApiController
         // If the post already has the tag, remove it. Otherwise, add the tag to the post.
         if ($post->tagNames()->contains($request->tag_name)) {
             $updatedPost = $this->post->untag($post, $request->tag_name);
-         } else {
+        } else {
             $updatedPost = $this->post->tag($post, $request->tag_name);
         }
 
