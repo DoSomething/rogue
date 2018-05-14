@@ -193,14 +193,13 @@ class Signup extends React.Component {
   }
 
   // Tag a post.
-  updateTag(postId, tag, requestMethod) {
-    const fields = {
-      post_id: postId,
+  updateTag(postId, tag) {
+    const field = {
       tag_name: tag,
     };
 
     // Check to see if we are creating or deleting this tag.
-    const response = requestMethod === 'POST' ? this.api.post(`api/v3/posts/${postId}/tags`, fields) : this.api.delete(`api/v3/posts/${postId}/tags`, fields);
+    const response = this.api.post(`api/v3/posts/${postId}/tags`, field);
 
     return response.then((result) => {
       this.setState((previousState) => {

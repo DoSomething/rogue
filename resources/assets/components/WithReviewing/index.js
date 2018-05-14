@@ -126,12 +126,11 @@ const reviewComponent = (Component, data) => {
 
     // Tag a post.
     updateTag(postId, tag) {
-      const fields = {
-        post_id: postId,
+      const field = {
         tag_name: tag,
       };
 
-      let response = this.api.post('tags', fields);
+      let response = this.api.post(`api/v3/posts/${postId}/tags`, field);
 
       return response.then((result) => {
         this.setState((previousState) => {

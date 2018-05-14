@@ -15,7 +15,7 @@ class TagsTest extends TestCase
      * POST /v3/posts/:post_id/tag
      * @return void
      */
-    public function testTaggingAPost()
+    public function testTaggingAndUntaggingAPost()
     {
         // Create the models that we will be using
         $post = factory(Post::class)->create();
@@ -29,6 +29,16 @@ class TagsTest extends TestCase
 
         // Make sure that the post's tags are updated.
         $this->assertContains('Good Submission', $post->tagNames());
+
+        // Untag the post
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+            'tag_name' => 'Good Submission',
+        ]);
+
+        $response->assertStatus(200);
+
+        // Make sure that the post's tags are updated.
+        $this->assertEmpty($post->fresh()->tagNames());
 
         // @TODO: Make sure we created a event for the tag once events are refactored.
     }
@@ -73,81 +83,6 @@ class TagsTest extends TestCase
     }
 
     /**
-     * Test that a DELETE request to /tags deletes an existing tag
-     * on a post, creates a new event, and tagged entry.
-     *
-     * DELETE /v3/posts/:post_id/tag
-     * @return void
-     */
-    public function testDeleteTagOnAPost()
-    {
-        // @TODO: Gateway keeps the "Token" from this PHPUnit call for later,
-        // and so we always think requests are anonymous. That's no good!
-        // We can swap this back once that's fixed in Gateway.
-        // $post = factory(Post::class)->create()->tag('Good Submission');
-
-        $post = factory(Post::class)->create();
-
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-             'tag_name' => 'Good Submission',
-         ]);
-
-        $this->assertContains('Good Submission', $post->tagNames());
-
-        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Submission',
-        ]);
-
-        // Make sure that the tag is deleted.
-        $response->assertStatus(200);
-        $this->assertEmpty($post->fresh()->tagNames());
-
-        // @TODO: Make sure we created a event for the tag once events are refactored.
-    }
-
-    /**
-     * Test  a DELETE request without activity scope.
-     *
-     * DELETE /v3/posts/:post_id/tag
-     * @return void
-     */
-    public function testDeleteTagOnAPostWithoutActivityScope()
-    {
-        // @TODO: Gateway keeps the "Token" from this PHPUnit call for later,
-        // and so we always think requests are anonymous. That's no good!
-        // We can swap this back once that's fixed in Gateway.
-        // $post = factory(Post::class)->create()->tag('Good Submission');
-
-        $post = factory(Post::class)->create();
-
-        $response = $this->deleteJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Submission',
-        ]);
-
-        $response->assertStatus(401);
-        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
-    }
-
-    /**
-     * Test that a non-admin cannot untag a post.
-     *
-     * DELETE /v3/posts/:post_id/tag
-     * @return void
-     */
-    public function testUnauthenticatedUserCannotUnTagAPost()
-    {
-        // Create the models that we will be using
-        $post = factory(Post::class)->create();
-
-        // Apply the tag to the post
-        $response = $this->deleteJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Submission',
-        ]);
-
-        $response->assertStatus(401);
-    }
-
-    /**
      * Test deleting one tag on a post only deletes that tag
      *
      * POST /posts/:post_id/tag
@@ -178,7 +113,7 @@ class TagsTest extends TestCase
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
-        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
             'tag_name' => 'Tag To Delete',
         ]);
 
