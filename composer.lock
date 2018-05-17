@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff1a80bcdb14069bcfd0dbd863b086dc",
+    "content-hash": "98110a3560b41bbdeed4b02893ba39a4",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -60,16 +60,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.55.12",
+            "version": "3.56.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "5177cbe73c96d25ff759e406ac81b8e25557482c"
+                "reference": "933bc65b9f8e4d88e0bf4635d9476c2766eee743"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5177cbe73c96d25ff759e406ac81b8e25557482c",
-                "reference": "5177cbe73c96d25ff759e406ac81b8e25557482c",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/933bc65b9f8e4d88e0bf4635d9476c2766eee743",
+                "reference": "933bc65b9f8e4d88e0bf4635d9476c2766eee743",
                 "shasum": ""
             },
             "require": {
@@ -136,7 +136,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2018-05-10T23:23:00+00:00"
+            "time": "2018-05-15T18:32:36+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -793,16 +793,16 @@
         },
         {
             "name": "dosomething/gateway",
-            "version": "v1.14.7",
+            "version": "v1.14.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DoSomething/gateway.git",
-                "reference": "75386ce29795188b3eb4b276f21f216290c1eff0"
+                "reference": "724c1cd73540243367146f7f5b1079913d760e6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/75386ce29795188b3eb4b276f21f216290c1eff0",
-                "reference": "75386ce29795188b3eb4b276f21f216290c1eff0",
+                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/724c1cd73540243367146f7f5b1079913d760e6d",
+                "reference": "724c1cd73540243367146f7f5b1079913d760e6d",
                 "shasum": ""
             },
             "require": {
@@ -850,7 +850,7 @@
                 }
             ],
             "description": "Standard PHP API client for DoSomething.org services.",
-            "time": "2018-05-14T18:51:22+00:00"
+            "time": "2018-05-15T20:38:21+00:00"
         },
         {
             "name": "egulias/email-validator",

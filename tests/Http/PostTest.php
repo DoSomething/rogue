@@ -607,7 +607,6 @@ class PostTest extends TestCase
      */
     public function testPostsIndexAsNonAdminNonOwnerHiddenPosts()
     {
-        $this->markTestIncomplete();
         // Anonymous requests should only see posts that are not tagged with "Hide In Gallery."
         factory(Post::class, 'accepted', 10)->create();
 
@@ -684,15 +683,13 @@ class PostTest extends TestCase
      */
     public function testPostsIndexAsAdminHiddenPosts()
     {
-        $this->markTestIncomplete();
         // Admins should see all posts.
         factory(Post::class, 'accepted', 10)->create();
 
         $hiddenPost = factory(Post::class, 'accepted')->create();
-        // $hiddenPost->tag('Hide In Gallery');
+        $hiddenPost->tag('Hide In Gallery');
 
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
-
         $response->assertStatus(200);
         $response->assertJsonCount(11, 'data');
     }
@@ -773,7 +770,6 @@ class PostTest extends TestCase
      */
     public function testPostsIndexAsOwnerHiddenPosts()
     {
-        $this->markTestIncomplete();
         // Owners should only see accepted posts and their own hidden posts.
         $ownerId = $this->faker->northstar_id;
 

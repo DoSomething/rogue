@@ -4,6 +4,7 @@ namespace Rogue\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use DoSomething\Gateway\Server\Token;
 use Illuminate\Auth\Access\AuthorizationException;
 use DoSomething\Gateway\Server\Middleware\RequireRole;
 
@@ -20,9 +21,11 @@ class CheckRole extends RequireRole
      * Create a new filter instance.
      * @param Guard $auth
      */
-    public function __construct(Guard $auth)
+    public function __construct(Guard $auth, Token $token)
     {
         $this->auth = $auth;
+
+        parent::__construct($token);
     }
 
     /**

@@ -91,22 +91,9 @@ class TagsTest extends TestCase
     public function testAddMultipleTagsAndDeleteOne()
     {
         // Create a post with tags.
-        // @TODO: Gateway keeps the "Token" from this PHPUnit call for later,
-        // and so we always think requests are anonymous. That's no good!
-        // We can swap this back once that's fixed in Gateway.
-        // $post = factory(Post::class)->create();
-        // $post->tag('Good Submission');
-        // $post->tag('Tag To Delete');
-
         $post = factory(Post::class)->create();
-
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-             'tag_name' => 'Good Submission',
-         ]);
-
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-             'tag_name' => 'Tag To Delete',
-         ]);
+        $post->tag('Good Submission');
+        $post->tag('Tag To Delete');
 
         // Make sure both tags actually exist
         $this->assertContains('Good Submission', $post->tagNames());
