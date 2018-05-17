@@ -55,7 +55,7 @@ class CampaignService
             // @TODO: change this to grab from Phoenix when Phoenix returns all info. we need!
             $campaign = $this->ashes->getCampaign($id);
 
-            if (! empty($campaign['data']['id'])) {
+            if (empty($campaign['data']['id'])) {
                 info('missing_campaign_data', compact('id', 'campaign'));
             }
 
