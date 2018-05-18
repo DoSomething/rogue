@@ -55,14 +55,30 @@ class CampaignService
             // @TODO: change this to grab from Phoenix when Phoenix returns all info. we need!
             $campaign = $this->ashes->getCampaign($id);
 
+            // Handle cases where the ID was not found.
             if (empty($campaign['data']['id'])) {
-                info('missing_campaign_data', compact('id', 'campaign'));
+                $placeholder = [
+                    'id' => $id,
+                    'title' => 'Unknown Campaign (' . $id . ')',
+                    'staff_pick' => false,
+                    'causes' => [
+                        'primary' => [
+                            'name' => null,
+                        ],
+                    ],
+                    'uri' => null,
+                ];
+
+                $this->cache->store($id, $placeholder, 1440);
+
+                return $placeholder;
             }
 
             // Cache campaign for a day.
-            $this->cache->store($campaign['data']['id'], $campaign['data'], 1440);
+            $this->cache->store($id, $campaign['data'], 1440);
 
             $campaign = $campaign['data'];
+            // dd($campaign);
         }
 
         return $campaign;
