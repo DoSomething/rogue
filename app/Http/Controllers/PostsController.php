@@ -8,7 +8,6 @@ use Rogue\Managers\PostManager;
 use Rogue\Http\Requests\PostRequest;
 use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Transformers\PostTransformer;
-use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
 use Rogue\Http\Controllers\Legacy\Two\ApiController;
 
