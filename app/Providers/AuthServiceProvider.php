@@ -2,6 +2,8 @@
 
 namespace Rogue\Providers;
 
+use Rogue\Models\Post;
+use Rogue\Policies\PostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,6 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'Rogue\Model' => 'Rogue\Policies\ModelPolicy',
+        Post::class => PostPolicy::class,
     ];
 
     /**
