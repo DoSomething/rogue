@@ -78,7 +78,6 @@ class CampaignService
             $this->cache->store($id, $campaign['data'], 1440);
 
             $campaign = $campaign['data'];
-            // dd($campaign);
         }
 
         return $campaign;
