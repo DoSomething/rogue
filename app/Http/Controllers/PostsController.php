@@ -121,13 +121,7 @@ class PostsController extends ApiController
     public function show(Post $post)
     {
         // Only allow an admin or the user who owns the post to see their own unapproved posts.
-        if ($post->status != 'accepted') {
-            if (is_staff_user() || auth()->id() === $post->northstar_id) {
-                return $this->item($post);
-            } else {
-                throw new AuthorizationException('You don\'t have the correct role to view this post!');
-            }
-        }
+        $this->authorize('show', $post);
 
         return $this->item($post);
     }
@@ -144,13 +138,10 @@ class PostsController extends ApiController
     {
         // Only allow an admin/staff or the user who owns the post to update.
         $this->authorize('update', $post);
-        // if (is_staff_user() || auth()->id() === $post->northstar_id) {
-            $this->posts->update($post, $request->validated());
 
-            return $this->item($post);
-        // }
+        $this->posts->update($post, $request->validated());
 
-        // throw new AuthorizationException('You don\'t have the correct role to update this post!');
+        return $this->item($post);
     }
 
     /**
