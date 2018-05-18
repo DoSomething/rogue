@@ -143,13 +143,14 @@ class PostsController extends ApiController
     public function update(PostRequest $request, Post $post)
     {
         // Only allow an admin/staff or the user who owns the post to update.
-        if (is_staff_user() || auth()->id() === $post->northstar_id) {
+        $this->authorize('update', $post);
+        // if (is_staff_user() || auth()->id() === $post->northstar_id) {
             $this->posts->update($post, $request->validated());
 
             return $this->item($post);
-        }
+        // }
 
-        throw new AuthorizationException('You don\'t have the correct role to update this post!');
+        // throw new AuthorizationException('You don\'t have the correct role to update this post!');
     }
 
     /**
