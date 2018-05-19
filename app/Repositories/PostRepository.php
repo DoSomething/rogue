@@ -66,11 +66,14 @@ class PostRepository
      */
     public function create(array $data, $signupId, $authenticatedUserRole = null)
     {
+        info('PostRepository@create: Request Recieved', ['params' => func_get_args()]);
         if (isset($data['file'])) {
+            info('PostRepository@create: File found in request');
             // Auto-orient the photo by default based on exif data.
             $image = Image::make($data['file']);
-
+            info('PostRepository@create: Image made');
             $fileUrl = $this->aws->storeImage((string) $image->encode('data-url'), $signupId);
+            info('PostRepository@create: File stored', ['fileUrl' => $fileUrl]);
         } else {
             $fileUrl = null;
         }
@@ -93,12 +96,13 @@ class PostRepository
             'details' => isset($data['details']) ? $data['details'] : null,
             'remote_addr' => request()->ip(),
         ]);
-
+        info('PostRepository@create: post created', ['post' => $post]);
         $isAdmin = auth()->user() && auth()->user()->role === 'admin';
         $hasAdminScope = in_array('admin', token()->scopes());
 
         // Admin users may provide a source and status when uploading a post.
         if ($isAdmin || $hasAdminScope) {
+            info('PostRepository@create: admin user trying to set status or source');
             $post->status = isset($data['status']) ? $data['status'] : 'pending';
             $post->source = isset($data['source']) ? $data['source'] : token()->client();
         }
@@ -107,6 +111,7 @@ class PostRepository
 
         // Edit the image if there is one
         if (isset($data['file'])) {
+            info('PostRepository@create: Editing image file');
             $this->crop($data, $post->id);
         }
 

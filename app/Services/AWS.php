@@ -22,13 +22,17 @@ class AWS
      */
     public function storeImage($file, $filename)
     {
+        info('PostRepository@storeImage: Request Received ', ['params' => func_get_args()]);
         if (is_string($file)) {
+            info('PostRepository@storeImage: File is given as a string', ['is_string($file)' => is_string($file)]);
             $data = $this->base64StringToDataString($file);
         } else {
+            info('PostRepository@storeImage: File is not given as a string');
             $data = file_get_contents($file->getPathname());
         }
 
         $extension = $this->guessExtension($data);
+        info('PostRepository@storeImage: Got image extension', ['extension' => $extension]);
 
         // Make sure we're only uploading valid image types
         if (! in_array($extension, ['jpeg', 'png', 'gif'])) {
@@ -40,12 +44,13 @@ class AWS
         $path = 'uploads/reportback-items' . '/' . $filename . '-' . md5($data) . '-' . time() . '.' . $extension;
 
         // Push file to S3.
+        info('PostRepository@storeImage: Pushing file to s3');
         $success = Storage::put($path, $data);
-
+        info('PostRepository@storeImage: Image stored successfully', ['success' => $success]);
         if (! $success) {
             throw new HttpException(500, 'Unable to save image to S3.');
         }
-
+        info('PostRepository@storeImage: Image path to return', ['path' => Storage::url($path)]);
         return Storage::url($path);
     }
 

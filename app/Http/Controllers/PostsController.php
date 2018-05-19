@@ -98,6 +98,7 @@ class PostsController extends ApiController
      */
     public function store(PostRequest $request)
     {
+        info('PostController@store: Request Recieved', ['request' => $request->all()]);
         $northstarId = getNorthstarId($request);
 
         $signup = $this->signups->get($northstarId, $request['campaign_id'], $request['campaign_run_id']);
@@ -105,9 +106,9 @@ class PostsController extends ApiController
         if (! $signup) {
             $signup = $this->signups->create($request->all(), $northstarId);
         }
-
+        info('PostController@store: Getting signup for post', ['signup' => $signup]);
         $post = $this->posts->create($request->all(), $signup->id);
-
+        info('PostController@store: Post created', ['post' => $post]);
         return $this->item($post, 201, [], null, 'signup');
     }
 
