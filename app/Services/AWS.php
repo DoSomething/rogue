@@ -22,7 +22,7 @@ class AWS
      */
     public function storeImage($file, $filename)
     {
-        info('PostRepository@storeImage: Request Received ', ['params' => func_get_args()]);
+        info('PostRepository@storeImage: Request Received ');
         if (is_string($file)) {
             info('PostRepository@storeImage: File is given as a string', ['is_string($file)' => is_string($file)]);
             $data = $this->base64StringToDataString($file);
