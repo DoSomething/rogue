@@ -51,6 +51,7 @@ class AWS
             throw new HttpException(500, 'Unable to save image to S3.');
         }
         info('PostRepository@storeImage: Image path to return', ['path' => Storage::url($path)]);
+
         return Storage::url($path);
     }
 

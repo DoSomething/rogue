@@ -107,8 +107,11 @@ class PostsController extends ApiController
             $signup = $this->signups->create($request->all(), $northstarId);
         }
         info('PostController@store: Getting signup for post', ['signup' => $signup]);
+
         $post = $this->posts->create($request->all(), $signup->id);
+
         info('PostController@store: Post created', ['post' => $post]);
+
         return $this->item($post, 201, [], null, 'signup');
     }
 
