@@ -40,7 +40,6 @@ class PostManager
      */
     public function create($data, $signupId, $authenticatedUserRole = null)
     {
-        info('PostManager@create: Request Recieved', ['params' => func_get_args()]);
         $post = $this->repository->create($data, $signupId, $authenticatedUserRole);
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
