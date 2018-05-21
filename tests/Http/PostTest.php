@@ -822,6 +822,7 @@ class PostTest extends TestCase
         // Anon user is able to see an accepted post even if it doesn't belong to them and if they're not an admin.
         $post = factory(Post::class, 'accepted')->create();
         $response = $this->getJson('api/v3/posts/' . $post->id);
+        dd($response->decodeResponseJson());
 
         $response->assertStatus(200);
         $response->assertJsonStructure([

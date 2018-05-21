@@ -28,7 +28,9 @@ class PostPolicy
      */
     public function show(Authenticatable $user, Post $post)
     {
-        if ($post->status != 'accepted') {
+        // dd('show policy');
+
+        if ($post->status !== 'accepted') {
             return is_staff_user() || $user->northstar_id === $post->northstar_id;
         }
 
@@ -44,6 +46,7 @@ class PostPolicy
      */
     public function update(Authenticatable $user, Post $post)
     {
+        // dd('update policy');
         return is_staff_user() || $user->northstar_id === $post->northstar_id;
     }
 }
