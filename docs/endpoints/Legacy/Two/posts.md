@@ -120,7 +120,7 @@ POST /api/v2/posts
   - **source**: (string).
     Where the post was submitted from.
   - **remote_addr**: (string).
-    IP address of where the post is submitted from. Will be `000.000.00.00` for all posts in compliance with GDPR. 
+    Will be `000.000.00.00` for all posts in compliance with GDPR. 
   - **file**: (string) required.
     File string to save of post image.
   - **crop_x**: (int).
