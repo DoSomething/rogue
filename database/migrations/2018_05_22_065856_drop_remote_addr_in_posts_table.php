@@ -26,7 +26,7 @@ class DropRemoteAddrInPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('remote_addr');
+            $table->ipAddress('remote_addr')->nullable()->comment('The IP address of the user that submitted the file.')->after('source');
         });
     }
 }

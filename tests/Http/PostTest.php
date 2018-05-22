@@ -1190,7 +1190,6 @@ class PostTest extends TestCase
     public function testCreatingVoterRegistrationPost()
     {
         $signup = factory(Signup::class)->create();
-
         $details = [
             'hostname' => 'dosomething.turbovote.org',
             'referral-code' => 'user:5570af2c469c6430068bc501,campaign:8022,source:web',
