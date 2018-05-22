@@ -32,7 +32,7 @@ Example Response:
         },
         "status": "rejected",
         "source": "phoenix-next",
-        "remote_addr": "201.45.182.147",
+        "remote_addr": "000.000.00.00",
         "created_at": "2018-01-26T16:25:17+00:00",
         "updated_at": "2018-01-26T18:51:00+00:00"
     }

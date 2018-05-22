@@ -73,7 +73,7 @@ Example Response:
             ],
             "status": "pending",
             "source": "phoenix-web",
-            "remote_addr": "207.110.19.130",
+            "remote_addr": "000.000.00.00",
             "created_at": "2017-02-15T18:14:58+0000",
             "updated_at": "2017-02-15T18:14:58+0000"
           },
@@ -89,7 +89,7 @@ Example Response:
             "reactions": [],
             "status": "pending",
             "source": "phoenix-web",
-            "remote_addr": "207.110.19.130",
+            "remote_addr": "000.000.00.00",
             "created_at": "2017-02-11T18:14:58+0000",
             "updated_at": "2017-02-11T18:14:58+0000"
           },

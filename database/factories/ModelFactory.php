@@ -30,7 +30,7 @@ $factory->define(Post::class, function (Generator $faker) {
         'url' => $url,
         'text' => $faker->sentence(),
         'source' => $faker->randomElement(['phoenix-oauth', 'phoenix-next']),
-        'remote_addr' => $faker->ipv4,
+        'remote_addr' => '000.000.00.00',
         'status' => 'pending',
         'quantity' => $faker->randomNumber(2),
     ];

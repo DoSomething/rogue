@@ -9,7 +9,7 @@ GET /api/v3/posts
 
 Posts are returned in reverse chronological order.
 
-Only admins and post owners will have `tags`, `source`, `remote_addr`, and hidden posts (posts that are tagged 'Hide In Gallery') returned in the response.
+Only admins and post owners will have `tags`, `source`, `remote_addr` (which will be `000.000.00.00` for all posts in compliance with GDPR), and hidden posts (posts that are tagged 'Hide In Gallery') returned in the response.
 
 Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 
@@ -61,7 +61,7 @@ Example Response:
             },
             "status": "accepted",
             "source": null,
-            "remote_addr": "52.3.68.224, 52.3.68.224",
+            "remote_addr": "000.000.00.00",
             "created_at": "2016-11-30T21:21:24+00:00",
             "updated_at": "2017-08-02T14:11:26+00:00"
         },
@@ -81,7 +81,7 @@ Example Response:
             },
             "status": "accepted",
             "source": null,
-            "remote_addr": "207.110.19.130, 207.110.19.130",
+            "remote_addr": "000.000.00.00",
             "created_at": "2016-02-10T16:19:25+00:00",
             "updated_at": "2017-08-02T14:11:35+00:00"
         }
@@ -106,7 +106,7 @@ Example Response:
 GET /api/v3/posts/:post_id
 ```
 
-Only admins and post owners will have `tags`, `source`, and `remote_addr` returned in the response.
+Only admins and post owners will have `tags`, `source`, and `remote_addr` (which will be `000.000.00.00` for all posts in compliance with GDPR)returned in the response.
 
 Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 
@@ -131,7 +131,7 @@ Example Response:
     },
     "status": "accepted",
     "source": "rogue-admin",
-    "remote_addr": "",
+    "remote_addr": "000.000.00.00",
     "created_at": "2017-10-27T14:50:22+00:00",
     "updated_at": "2017-10-27T14:50:22+00:00"
   }
@@ -185,7 +185,7 @@ Example Response:
     },
     "quantity": "12",
     "status": "pending",
-    "remote_addr": "207.110.19.130",
+    "remote_addr": "000.000.00.00",
     "post_source": "runscope",
     "created_at": "2017-02-15T18:14:58+0000",
     "updated_at": "2017-02-15T18:14:58+0000"
@@ -247,7 +247,7 @@ Example response:
       },
       "status": "accepted",
       "source": "rogue-admin",
-      "remote_addr": "",
+      "remote_addr": "000.000.00.00",
       "created_at": "2017-10-27T14:50:22+00:00",
       "updated_at": "2017-10-30T16:04:53+00:00"
   }

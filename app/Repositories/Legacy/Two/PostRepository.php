@@ -84,7 +84,6 @@ class PostRepository
             'text' => $data['caption'],
             'status' => isset($data['status']) ? $data['status'] : 'pending',
             'source' => isset($data['source']) ? $data['source'] : null,
-            'remote_addr' => isset($data['remote_addr']) ? $data['remote_addr'] : null,
             'type' => isset($data['type']) ? $data['type'] : 'photo',
             'action' => isset($data['action']) ? $data['action'] : 'default',
         ]);
