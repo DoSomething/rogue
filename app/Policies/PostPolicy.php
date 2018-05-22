@@ -26,10 +26,12 @@ class PostPolicy
      * @param  Rogue\Models\Post $post
      * @return bool
      */
-    public function show(Authenticatable $user, Post $post)
+    public function show($user, Post $post)
     {
-        if ($post->status !== 'accepted') {
+        if ($post->status !== 'accepted' && $user !== null) {
             return is_staff_user() || $user->northstar_id === $post->northstar_id;
+        } elseif ($user === null && $post->status !== 'accepted') {
+            return false;
         }
 
         return true;
