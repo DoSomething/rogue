@@ -27,7 +27,7 @@ Example Response:
     },
     "status": "approved",
     "source": "phoenix-web",
-    "remote_addr": "000.000.00.00",
+    "remote_addr": "0.0.0.0",
     "created_at": "2017-04-28T20:14:49+00:00",
     "updated_at": "2017-04-28T20:22:23+00:00"
   }

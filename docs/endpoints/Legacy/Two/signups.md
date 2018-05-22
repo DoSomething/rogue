@@ -45,7 +45,7 @@ Example request body:
   "photo" => array:2 [
     0 => array:7 [
       "source" => "photo-source"
-      "remote_addr" => "000.000.00.00"
+      "remote_addr" => "0.0.0.0"
       "caption" => "LOOK AT THAT CAT"
       "event_type" => "post_photo"
       "northstar_id" => "5639066ba59dbfe6598b4567"
@@ -81,7 +81,7 @@ Example request body:
     ]
     1 => array:7 [
       "source" => "second-source"
-      "remote_addr" => "000.000.00.00"
+      "remote_addr" => "0.0.0.0"
       "caption" => "lil chickens"
       "event_type" => "post_photo"
       "northstar_id" => "5639066ba59dbfe6598b4567"
@@ -147,7 +147,7 @@ Example response:
             "caption": "Captioning captions",
           },
           "status": "pending",
-          "remote_addr": "000.000.00.00",
+          "remote_addr": "0.0.0.0",
           "post_source": "runscope",
           "created_at": "2017-02-15T18:14:58+0000",
           "updated_at": "2017-02-15T18:14:58+0000",

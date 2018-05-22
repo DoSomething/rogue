@@ -32,7 +32,7 @@ Example Response:
         },
         "status": "pending",
         "source": "phoenix-next",
-        "remote_addr": "000.000.00.00",
+        "remote_addr": "0.0.0.0",
         "created_at": "2018-01-26T16:25:16+00:00",
         "updated_at": "2018-01-26T21:17:39+00:00"
     }
