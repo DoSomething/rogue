@@ -43,7 +43,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'type', 'action', 'details', 'quantity', 'url', 'text', 'status', 'source', 'source_details', 'remote_addr'];
+    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'type', 'action', 'details', 'quantity', 'url', 'text', 'status', 'source', 'source_details'];
 
     /**
      * Attributes that can be queried when filtering.
@@ -195,7 +195,6 @@ class Post extends Model
             'caption' => $this->text,
             'text' => $this->text,
             'status' => $this->status,
-            'remote_addr' => '000.000.00.00',
             'source' => $this->source,
             'details' => $this->details,
             'created_at' => $this->created_at->toIso8601String(),
@@ -233,7 +232,6 @@ class Post extends Model
             'status' => $this->status,
             'source' => $this->source,
             'signup_source' => $this->signup->source,
-            'remote_addr' => '000.000.00.00',
             'details' => $this->details,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
