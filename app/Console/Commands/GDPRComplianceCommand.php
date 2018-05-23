@@ -67,7 +67,7 @@ class GDPRComplianceCommand extends Command
         $users = $users_csv->getRecords();
 
         // Anonymize user data.
-        $this->info('rogue:GDPRcompliance: Anonymizing data...');
+        $this->info('rogue:gdpr: Anonymizing data...');
         foreach ($users as $user) {
             // Find all the user's signups and anonymize all why_participated values.
             $signups = Signup::withTrashed()->where('northstar_id', $user['Users Northstar ID'])->get();
