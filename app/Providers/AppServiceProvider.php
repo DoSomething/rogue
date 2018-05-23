@@ -2,9 +2,11 @@
 
 namespace Rogue\Providers;
 
+use Rogue\Auth\CustomGate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->app->singleton(GateContract::class, function ($app) {
+            return new CustomGate($app, function () use ($app) {
+                return call_user_func($app['auth']->userResolver());
+            });
+        });
+
         // Add a custom validator for Mongo ObjectIDs.
         Validator::extend('objectid', function ($attribute, $value, $parameters, $validator) {
             return preg_match('/^[a-f\d]{24}$/i', $value);

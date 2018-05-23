@@ -27,6 +27,7 @@ $factory->define(Post::class, function (Generator $faker) {
         'signup_id' => function () {
             return factory(Signup::class)->create()->id;
         },
+        'northstar_id' => $this->faker->northstar_id,
         'url' => $url,
         'text' => $faker->sentence(),
         'source' => $faker->randomElement(['phoenix-oauth', 'phoenix-next']),
