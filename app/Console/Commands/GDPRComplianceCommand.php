@@ -4,13 +4,23 @@ namespace Rogue\Console\Commands;
 
 use League\Csv\Reader;
 use Rogue\Models\Post;
+use Rogue\Services\AWS;
 use Rogue\Models\Signup;
 use Illuminate\Console\Command;
+use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendSignupToQuasar;
+use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Jobs\SendSignupToCustomerIo;
 
 class GDPRComplianceCommand extends Command
 {
+    /**
+     * AWS service class instance.
+     *
+     * @var \Rogue\Services\AWS
+     */
+    protected $aws;
+
     /**
      * The name and signature of the console command.
      *
@@ -28,11 +38,13 @@ class GDPRComplianceCommand extends Command
     /**
      * Create a new command instance.
      *
+     * @param AWS $aws
      * @return void
      */
-    public function __construct()
+    public function __construct(AWS $aws)
     {
         parent::__construct();
+        $this->aws = $aws;
     }
 
     /**
@@ -44,7 +56,7 @@ class GDPRComplianceCommand extends Command
     {
         // Make a local copy of the CSV
         $path = $this->argument('path');
-        info('rogue:GDPRcompliance: Loading in csv from ' . $path);
+        $this->info('rogue:gdpr: Loading in csv from ' . $path);
 
         $temp = tempnam('temp', 'command_csv');
         file_put_contents($temp, fopen($this->argument('path'), 'r'));
@@ -55,9 +67,42 @@ class GDPRComplianceCommand extends Command
         $users = $users_csv->getRecords();
 
         // Anonymize user data.
-        info('rogue:GDPRcompliance: Anonymizing data...');
+        $this->info('rogue:GDPRcompliance: Anonymizing data...');
         foreach ($users as $user) {
-            dd($user);
+            // Find all the user's signups and anonymize all why_participated values.
+            $signups = Signup::withTrashed()->where('northstar_id', $user['Users Northstar ID'])->get();
+
+            foreach ($signups as $signup) {
+                $signup->why_participated = 'EU Member. Removed because of GDPR';
+                $signup->save();
+
+                // Business Logic
+                SendSignupToQuasar::dispatch($signup);
+                SendSignupToCustomerIo::dispatch($signup);
+            }
+
+            // Find all the user's posts.
+            $posts = Post::withTrashed()->where('northstar_id', $user['Users Northstar ID'])->get();
+
+            // Anonymize all caption values, delete image URLs from s3, and tag all posts as hide-in-gallery.
+            foreach ($posts as $post) {
+                $post->text = 'EU Member. Removed because of GDPR';
+                $this->aws->deleteImage($post->url);
+                $post->url = NULL;
+
+                if (! $post->tagNames()->contains('Hide In Gallery')) {
+                    $post->tag('Hide In Gallery');
+                }
+
+                $post->save();
+
+                // Business Logic
+                SendPostToQuasar::dispatch($post);
+                SendPostToCustomerIo::dispatch($post);
+            }
         }
+
+        // Tell everyone we're done!
+        $this->info('rogue:gdpr: ALL DONE!');
     }
 }
