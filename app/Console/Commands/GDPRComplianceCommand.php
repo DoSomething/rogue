@@ -88,7 +88,7 @@ class GDPRComplianceCommand extends Command
             foreach ($posts as $post) {
                 $post->text = 'EU Member. Removed because of GDPR';
                 $this->aws->deleteImage($post->url);
-                $post->url = NULL;
+                $post->url = null;
 
                 if (! $post->tagNames()->contains('Hide In Gallery')) {
                     $post->tag('Hide In Gallery');
