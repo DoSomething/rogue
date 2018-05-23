@@ -29,7 +29,7 @@ Example Response:
         "reactions": [],
         "status": "pending",
         "source": null,
-        "remote_addr": "74.65.196.233, 74.65.196.233",
+        "remote_addr": "0.0.0.0",
         "created_at": "2017-03-15T03:21:42+00:00",
         "updated_at": "2017-03-15T03:21:42+00:00"
     }

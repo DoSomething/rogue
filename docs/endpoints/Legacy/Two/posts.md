@@ -58,7 +58,7 @@ Example Response:
             },
             "status": "accepted",
             "source": null,
-            "remote_addr": "52.3.68.224, 52.3.68.224",
+            "remote_addr": "0.0.0.0",
             "created_at": "2016-11-30T21:21:24+00:00",
             "updated_at": "2017-08-02T14:11:26+00:00"
         },
@@ -77,7 +77,7 @@ Example Response:
             },
             "status": "accepted",
             "source": null,
-            "remote_addr": "207.110.19.130, 207.110.19.130",
+            "remote_addr": "0.0.0.0",
             "created_at": "2016-02-10T16:19:25+00:00",
             "updated_at": "2017-08-02T14:11:35+00:00"
         }
@@ -120,7 +120,7 @@ POST /api/v2/posts
   - **source**: (string).
     Where the post was submitted from.
   - **remote_addr**: (string).
-    IP address of where the post is submitted from. 
+    Will be `0.0.0.0` for all posts in compliance with GDPR. 
   - **file**: (string) required.
     File string to save of post image.
   - **crop_x**: (int).
@@ -159,7 +159,7 @@ Example Response:
       "caption": "Captioning captions",
     },
     "status": "pending",
-    "remote_addr": "207.110.19.130",
+    "remote_addr": "0.0.0.0",
     "post_source": "runscope",
     "created_at": "2017-02-15T18:14:58+0000",
     "updated_at": "2017-02-15T18:14:58+0000"

@@ -48,7 +48,7 @@ class RogueClient extends RestApiClient {
             },
             status: fields.status,
             source: 'phoenix-web',
-            remote_addr: '10.0.2.2',
+            remote_addr: '0.0.0.0',
             created_at: '2017-04-28T20:14:49+00:00',
             updated_at: '2017-04-28T20:22:23+00:00',
           },

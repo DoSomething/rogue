@@ -53,7 +53,7 @@ class PostTransformer extends TransformerAbstract
             ],
             'status' => $post->status,
             'source' => $post->source,
-            'remote_addr' => $post->remote_addr,
+            'remote_addr' => '0.0.0.0',
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
