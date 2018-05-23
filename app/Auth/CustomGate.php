@@ -8,6 +8,14 @@ use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
 class CustomGate extends Gate implements GateContract
 {
+    /**
+     * Get the raw result from the authorization callback. We've overridden this
+     * method to allow users to be `null` so policies can apply to anonymous users.
+     *
+     * @param  string  $ability
+     * @param  array|mixed  $arguments
+     * @return mixed
+     */
     protected function raw($ability, $arguments = [])
     {
         if (! $user = $this->resolveUser()) {
