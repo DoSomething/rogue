@@ -20,6 +20,22 @@ class PostPolicy
     }
 
     /**
+      * Determine if the full post should be displayed.
+      *
+      * @param  Illuminate\Contracts\Auth\Authenticatable $user
+      * @param  Rogue\Models\Post $post
+      * @return bool
+      */
+    public function viewAll($user, Post $post)
+    {
+        if ($user === null) {
+            return false;
+        }
+
+        return is_staff_user() || $user->northstar_id === $post->northstar_id;
+    }
+
+    /**
      * Determine if the given post can be seen by the user.
      *
      * @param  Illuminate\Contracts\Auth\Authenticatable $user

@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Transformers;
 
+use Gate;
 use Carbon\Carbon;
 use Rogue\Models\Post;
 use League\Fractal\TransformerAbstract;
@@ -50,7 +51,7 @@ class PostTransformer extends TransformerAbstract
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
 
-        if (is_staff_user() || auth()->id() === $post->northstar_id) {
+        if (Gate::allows('viewAll', $post)) {
             $response['tags'] = $post->tagSlugs();
             $response['source'] = $post->source;
             $response['source_details'] = $post->source_details;

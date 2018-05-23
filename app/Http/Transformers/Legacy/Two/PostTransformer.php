@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Transformers\Legacy\Two;
 
+use Gate;
 use Carbon\Carbon;
 use Rogue\Models\Post;
 use League\Fractal\TransformerAbstract;
@@ -31,7 +32,7 @@ class PostTransformer extends TransformerAbstract
             $reacted = $post->reactions->isNotEmpty();
         }
 
-        return [
+        $response = [
             'id' => $post->id,
             'signup_id' => $post->signup_id,
             'northstar_id' => $post->northstar_id,
@@ -46,17 +47,21 @@ class PostTransformer extends TransformerAbstract
                 'original_image_url' => $post->url . '?time='. Carbon::now()->timestamp,
                 'caption' => $post->text,
             ],
-            'tags' => $post->tagSlugs(),
             'reactions' => [
                 'reacted' => $reacted,
                 'total' => isset($post->reactions_count) ? $post->reactions_count : null,
             ],
             'status' => $post->status,
-            'source' => $post->source,
-            'remote_addr' => $post->remote_addr,
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
+
+        if (Gate::allows('viewAll', $post)) {
+            $response['tags'] = $post->tagSlugs();
+            $response['source'] = $post->source;
+        }
+
+        return $response;
     }
 
     /**
