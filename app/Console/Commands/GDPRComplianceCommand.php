@@ -16,7 +16,7 @@ class GDPRComplianceCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:GDPRcompliance {path}';
+    protected $signature = 'rogue:gdpr {path}';
 
     /**
      * The console command description.
@@ -33,5 +33,31 @@ class GDPRComplianceCommand extends Command
     public function __construct()
     {
         parent::__construct();
+    }
+
+    /**
+     * Executre the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        // Make a local copy of the CSV
+        $path = $this->argument('path');
+        info('rogue:GDPRcompliance: Loading in csv from ' . $path);
+
+        $temp = tempnam('temp', 'command_csv');
+        file_put_contents($temp, fopen($this->argument('path'), 'r'));
+
+        // Load users from the CSV
+        $users_csv = Reader::createFromPath($temp, 'r');
+        $users_csv->setHeaderOffset(0);
+        $users = $users_csv->getRecords();
+
+        // Anonymize user data.
+        info('rogue:GDPRcompliance: Anonymizing data...');
+        foreach ($users as $user) {
+            dd($user);
+        }
     }
 }

@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
         Commands\ReviewSignup::class,
         Commands\SendToQuasar::class,
         Commands\ForceDeleteTestRecords::class,
+        Commands\GDPRComplianceCommand::class,
     ];
 
     /**
