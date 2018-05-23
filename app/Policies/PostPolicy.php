@@ -20,12 +20,12 @@ class PostPolicy
     }
 
     /**
-      * Determine if the full post should be displayed.
-      *
-      * @param  Illuminate\Contracts\Auth\Authenticatable $user
-      * @param  Rogue\Models\Post $post
-      * @return bool
-      */
+     * Determine if the full post should be displayed.
+     *
+     * @param  Illuminate\Contracts\Auth\Authenticatable $user
+     * @param  Rogue\Models\Post $post
+     * @return bool
+     */
     public function viewAll($user, Post $post)
     {
         if ($user === null) {
