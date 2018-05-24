@@ -12,6 +12,13 @@ use Rogue\Jobs\SendReviewedPostToCustomerIo;
 
 class PostManager
 {
+    /**
+     * The Fastly service instance
+     *
+     * @var Rogue\Services\Fastly
+     */
+    protected $fastly;
+
     /*
      * PostRepository Instance
      *
@@ -25,9 +32,10 @@ class PostManager
      * @param PostRepository $posts
      * @param Blink $blink
      */
-    public function __construct(PostRepository $posts)
+    public function __construct(PostRepository $posts, Fastly $fastly)
     {
         $this->repository = $posts;
+        $this->fastly = $fastly;
     }
 
     /**
