@@ -3,6 +3,7 @@
 namespace Rogue\Managers;
 
 use Rogue\Models\Post;
+use Rogue\Services\Fastly;
 use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Repositories\PostRepository;
@@ -121,6 +122,10 @@ class PostManager
         ]);
 
         $trashed = $this->repository->destroy($postId);
+
+        if ($trashed) {
+            $this->fastly->purgeKey('post-'.$postId);
+        }
 
         // Dispatch job to send post to Quasar
         SendDeletedPostToQuasar::dispatch($postId);
