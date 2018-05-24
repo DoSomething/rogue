@@ -119,7 +119,7 @@ class AWS
         // any exception that is thrown while trying to delete and just returns true.
         // see: \Illuminate\Filesystem\FilesystemAdapter::delete().
         // So we check if the file exists first and then try to delete it.
-        dd('sending ' . $path . ' to storage');
+        dump('sending to exists ' . $path);
         if (Storage::exists($path)) {
             $success = Storage::delete($path);
         } else {
