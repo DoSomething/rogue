@@ -6,6 +6,7 @@ use League\Csv\Reader;
 use Rogue\Models\Post;
 use Rogue\Services\AWS;
 use Rogue\Models\Signup;
+use Rogue\Services\Fastly;
 use Illuminate\Console\Command;
 use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendSignupToQuasar;
@@ -14,6 +15,13 @@ use Rogue\Jobs\SendSignupToCustomerIo;
 
 class GDPRComplianceCommand extends Command
 {
+    /**
+     * The Fastly service instance
+     *
+     * @var Rogue\Services\Fastly
+     */
+    protected $fastly;
+
     /**
      * AWS service class instance.
      *
@@ -41,10 +49,11 @@ class GDPRComplianceCommand extends Command
      * @param AWS $aws
      * @return void
      */
-    public function __construct(AWS $aws)
+    public function __construct(AWS $aws, Fastly $fastly)
     {
         parent::__construct();
         $this->aws = $aws;
+        $this->fastly = $fastly;
     }
 
     /**
@@ -87,7 +96,10 @@ class GDPRComplianceCommand extends Command
             // Anonymize all caption values, delete image URLs from s3, and tag all posts as hide-in-gallery.
             foreach ($posts as $post) {
                 $post->text = 'EU Member. Removed because of GDPR';
+
                 $this->aws->deleteImage($post->url);
+                $this->fastly->purgeKey('post-'.$post->id);
+
                 $post->url = null;
 
                 if (! $post->tagNames()->contains('Hide In Gallery')) {

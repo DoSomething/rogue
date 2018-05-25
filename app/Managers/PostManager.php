@@ -3,6 +3,7 @@
 namespace Rogue\Managers;
 
 use Rogue\Models\Post;
+use Rogue\Services\Fastly;
 use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Repositories\PostRepository;
@@ -11,6 +12,13 @@ use Rogue\Jobs\SendReviewedPostToCustomerIo;
 
 class PostManager
 {
+    /**
+     * The Fastly service instance
+     *
+     * @var Rogue\Services\Fastly
+     */
+    protected $fastly;
+
     /*
      * PostRepository Instance
      *
@@ -24,9 +32,10 @@ class PostManager
      * @param PostRepository $posts
      * @param Blink $blink
      */
-    public function __construct(PostRepository $posts)
+    public function __construct(PostRepository $posts, Fastly $fastly)
     {
         $this->repository = $posts;
+        $this->fastly = $fastly;
     }
 
     /**
@@ -121,6 +130,10 @@ class PostManager
         ]);
 
         $trashed = $this->repository->destroy($postId);
+
+        if ($trashed) {
+            $this->fastly->purgeKey('post-'.$postId);
+        }
 
         // Dispatch job to send post to Quasar
         SendDeletedPostToQuasar::dispatch($postId);

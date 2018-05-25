@@ -114,6 +114,7 @@ class AWS
     {
         // We need to use the relative url for the request to s3.
         $path = basename($path);
+        $path = 'uploads/reportback-items' . '/' . $path;
 
         // The delete() method always returns true because it doesn't seem to do anything with
         // any exception that is thrown while trying to delete and just returns true.
