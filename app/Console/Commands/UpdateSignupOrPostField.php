@@ -5,6 +5,8 @@ namespace Rogue\Console\Commands;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Illuminate\Console\Command;
+use Rogue\Managers\PostManager;
+use Rogue\Managers\SignupManager;
 
 class UpdateSignupOrPostField extends Command
 {
@@ -13,7 +15,7 @@ class UpdateSignupOrPostField extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:updatefield {--target : The name of the field to update} {--targetOldValue= : The value to search the target with} {--targetNewValue= : The value to update the target with}';
+    protected $signature = 'rogue:updatefield {--target= : The name of the field to update} {--targetOldValue= : The value to search the target with} {--targetNewValue= : The value to update the target with}';
 
     /**
      * The console command description.
@@ -23,13 +25,23 @@ class UpdateSignupOrPostField extends Command
     protected $description = 'Change all target old values to target new value in the signups and posts tables';
 
     /**
+     * The signup manager instance.
+     *
+     * @var Rogue\Managers\SignupManager
+     */
+    protected $signups;
+
+    /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(SignupManager $signups, PostManager $posts)
     {
         parent::__construct();
+
+        $this->signups = $signups;
+        $this->posts = $posts;
     }
 
     /**
@@ -42,34 +54,35 @@ class UpdateSignupOrPostField extends Command
         // Start updating signups
         info('rogue:updatefield: Starting to update signups!');
 
-        $targetField = $this->option('target') ?? null;
-        $targetOldValue = $this->option('targetOldValue') ?? null;
-        $targetNewValue = $this->option('targetNewValue') ?? null;
-
-        if (! $targetField) {
+        if (! $this->option('target')) {
             $this->error('No target field specified.');
 
             return;
         }
 
-        if (! $targetOldValue) {
+        if (! $this->option('targetOldValue')) {
             $this->error('No target old value specified.');
 
             return;
         }
 
-        if (! $targetNewValue) {
+        if (! $this->option('targetNewValue')) {
             $this->error('No target new value specified.');
 
             return;
         }
 
+        $targetField = $this->option('target') ?? null;
+        $targetOldValue = $this->option('targetOldValue') && $this->option('targetOldValue') !== 'NULL' ? $this->option('targetOldValue') : null;
+
+        $targetNewValue = $this->option('targetNewValue') && $this->option('targetNewValue') !== 'NULL' ? $this->option('targetNewValue') : null;
+
+
         // Get all signups that have "targetOldValue" set as their target and update to "targetNewValue"
-        Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) {
+        Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue) {
             foreach ($signups as $signup) {
                 info('rogue:updatefield: changing target field to new value for signup ' . $signup->id);
-                $signup->source = 'sms';
-                $signup->save();
+                $this->signups->update($signup, [$targetField => $targetNewValue]);
             }
         });
 
@@ -80,11 +93,10 @@ class UpdateSignupOrPostField extends Command
         info('rogue:updatefield: Starting to update posts!');
 
         // Get all posts that have "sms-mobilecommons" set as their source and update to "sms"
-        Post::withTrashed()->where('source', 'sms-mobilecommons')->chunkById(100, function ($posts) {
+        Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue) {
             foreach ($posts as $post) {
-                info('rogue:updatefield: changing source to sms for post ' . $post->id);
-                $post->source = 'sms';
-                $post->save();
+                info('rogue:updatefield: changing target field to new value for post ' . $post->id);
+                $this->posts->update($post, [$targetField => $targetNewValue]);
             }
         });
 
