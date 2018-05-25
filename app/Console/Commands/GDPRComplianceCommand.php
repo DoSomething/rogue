@@ -96,9 +96,9 @@ class GDPRComplianceCommand extends Command
             // Anonymize all caption values, delete image URLs from s3, and tag all posts as hide-in-gallery.
             foreach ($posts as $post) {
                 $post->text = 'EU Member. Removed because of GDPR';
-                // dd($post->id);
+
                 $this->aws->deleteImage($post->url);
-                // $this->fastly->purgeKey('post-'.$post->id);
+                $this->fastly->purgeKey('post-'.$post->id);
 
                 $post->url = null;
 
