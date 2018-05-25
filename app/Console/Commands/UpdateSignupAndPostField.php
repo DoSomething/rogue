@@ -90,7 +90,7 @@ class UpdateSignupAndPostField extends Command
         // Start updating posts
         info('rogue:updatefield: Starting to update posts!');
 
-        // Get all posts that have "sms-mobilecommons" set as their source and update to "sms"
+        // Get all posts that have "targetOldValue" set as their target and update to "targetNewValue"
         Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue) {
             foreach ($posts as $post) {
                 info('rogue:updatefield: changing target field to new value for post ' . $post->id);
