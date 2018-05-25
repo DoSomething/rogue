@@ -7,6 +7,7 @@ use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
+use Rogue\Services\Fastly;
 use DoSomething\Gateway\Blink;
 use Illuminate\Http\UploadedFile;
 
@@ -1092,6 +1093,10 @@ class PostTest extends TestCase
 
         // Mock time of when the post is soft deleted.
         $this->mockTime('8/3/2017 14:00:00');
+
+        // Mock the Fastly API calls.
+        $this->mock(Fastly::class)
+            ->shouldReceive('purgeKey');
 
         $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id);
 
