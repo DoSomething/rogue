@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 use Rogue\Managers\PostManager;
 use Rogue\Managers\SignupManager;
 
-class UpdateSignupOrPostField extends Command
+class UpdateSignupAndPostField extends Command
 {
     /**
      * The name and signature of the console command.
@@ -74,9 +74,7 @@ class UpdateSignupOrPostField extends Command
 
         $targetField = $this->option('target') ?? null;
         $targetOldValue = $this->option('targetOldValue') && $this->option('targetOldValue') !== 'NULL' ? $this->option('targetOldValue') : null;
-
         $targetNewValue = $this->option('targetNewValue') && $this->option('targetNewValue') !== 'NULL' ? $this->option('targetNewValue') : null;
-
 
         // Get all signups that have "targetOldValue" set as their target and update to "targetNewValue"
         Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue) {
