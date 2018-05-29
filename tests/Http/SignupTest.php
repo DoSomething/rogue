@@ -386,6 +386,7 @@ class SignupTest extends TestCase
         $response = $this->withAdminAccessToken()->getJson('api/v3/signups?include=user');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
+
         $this->assertEquals(false, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
     }
 

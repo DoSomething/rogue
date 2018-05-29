@@ -5,7 +5,6 @@ namespace Rogue\Http\Controllers;
 use Rogue\Models\Signup;
 use Illuminate\Http\Request;
 use Rogue\Managers\SignupManager;
-use Rogue\Http\Controllers\ApiController;
 use Rogue\Http\Transformers\SignupTransformer;
 use Illuminate\Auth\Access\AuthorizationException;
 use Rogue\Http\Controllers\Traits\TransformsRequests;

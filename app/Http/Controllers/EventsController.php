@@ -4,7 +4,6 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Event;
 use Illuminate\Http\Request;
-use Rogue\Http\Controllers\ApiController;
 use Rogue\Http\Transformers\EventTransformer;
 
 class EventsController extends ApiController
