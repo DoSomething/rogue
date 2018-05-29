@@ -5,8 +5,8 @@ namespace Rogue\Http\Controllers;
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Managers\PostManager;
+use Rogue\Http\Controllers\ApiController;
 use Rogue\Http\Transformers\PostTransformer;
-use Rogue\Http\Controllers\Legacy\Two\ApiController;
 
 class ReviewsController extends ApiController
 {

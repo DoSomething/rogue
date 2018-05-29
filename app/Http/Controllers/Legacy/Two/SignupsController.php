@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Legacy\Two;
 
+use Rogue\Http\Controllers\ApiController;
 use Rogue\Managers\Legacy\Two\PostManager;
 use Rogue\Managers\Legacy\Two\SignupManager;
 use Rogue\Http\Requests\Legacy\Two\SignupRequest;

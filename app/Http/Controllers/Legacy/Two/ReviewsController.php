@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers\Legacy\Two;
 
 use Rogue\Models\Post;
+use Rogue\Http\Controllers\ApiController;
 use Rogue\Repositories\Legacy\Two\PostRepository;
 use Rogue\Http\Requests\Legacy\Two\ReviewsApiRequest;
 use Rogue\Http\Transformers\Legacy\Two\PostTransformer;

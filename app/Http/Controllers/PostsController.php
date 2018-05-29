@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Rogue\Managers\PostManager;
 use Rogue\Http\Requests\PostRequest;
 use Rogue\Repositories\SignupRepository;
+use Rogue\Http\Controllers\ApiController;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
-use Rogue\Http\Controllers\Legacy\Two\ApiController;
 
 class PostsController extends ApiController
 {
