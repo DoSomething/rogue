@@ -15,21 +15,28 @@ class UpdateSignupAndPostField extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:updatefield {--target= : The name of the field to update} {--targetOldValue= : The value to search the target with} {--targetNewValue= : The value to update the target with}';
+    protected $signature = 'rogue:updatefield {target} {targetOldValue} {targetNewValue}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Change all target old values to target new value in the signups and posts tables';
+    protected $description = 'Change all target old values to target new value in the signups and/or posts tables';
 
     /**
-     * The signup manager instance.
+     * The Signup Manager instance.
      *
      * @var Rogue\Managers\SignupManager
      */
     protected $signups;
+
+    /**
+     * The Post Manager instance.
+     *
+     * @var Rogue\Managers\PostManager
+     */
+    protected $posts;
 
     /**
      * Create a new command instance.
@@ -51,30 +58,12 @@ class UpdateSignupAndPostField extends Command
      */
     public function handle()
     {
+        $targetField = $this->argument('target');
+        $targetOldValue = $this->argument('targetOldValue') !== 'NULL' ? $this->argument('targetOldValue') : null;
+        $targetNewValue = $this->argument('targetNewValue') !== 'NULL' ? $this->argument('targetNewValue') : null;
+
         // Start updating signups
         info('rogue:updatefield: Starting to update signups!');
-
-        if (! $this->option('target')) {
-            $this->error('No target field specified.');
-
-            return;
-        }
-
-        if (! $this->option('targetOldValue')) {
-            $this->error('No target old value specified.');
-
-            return;
-        }
-
-        if (! $this->option('targetNewValue')) {
-            $this->error('No target new value specified.');
-
-            return;
-        }
-
-        $targetField = $this->option('target') ?? null;
-        $targetOldValue = $this->option('targetOldValue') && $this->option('targetOldValue') !== 'NULL' ? $this->option('targetOldValue') : null;
-        $targetNewValue = $this->option('targetNewValue') && $this->option('targetNewValue') !== 'NULL' ? $this->option('targetNewValue') : null;
 
         // Get all signups that have "targetOldValue" set as their target and update to "targetNewValue"
         Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue) {
