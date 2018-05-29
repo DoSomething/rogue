@@ -193,9 +193,9 @@ const reviewComponent = (Component, data) => {
 
       if (confirmed) {
         // Make API request to Rogue to update the quantity on the backend
-        let response = this.api.delete('posts/'.concat(postId));
+        let response = this.api.delete(`api/v3/posts/${postId}`);
 
-        response.then(result => {
+        response.then((result) => {
           // Update the state
           this.setState(previousState => {
             var newState = { ...previousState };
