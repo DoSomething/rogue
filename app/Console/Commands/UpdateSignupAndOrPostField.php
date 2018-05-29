@@ -58,7 +58,7 @@ class UpdateSignupAndOrPostField extends Command
      */
     public function handle()
     {
-        $this->info('rogue:updatefield: Starting script!');
+        info('rogue:updatefield: Starting script!');
 
         $targetField = $this->argument('target');
         $targetOldValue = $this->argument('targetOldValue') !== 'NULL' ? $this->argument('targetOldValue') : null;
@@ -68,36 +68,36 @@ class UpdateSignupAndOrPostField extends Command
 
         if ($signups) {
             // Start updating signups
-            $this->info('rogue:updatefield: Starting to update signups!');
+            info('rogue:updatefield: Starting to update signups!');
 
             // Get all signups that have "targetOldValue" set as their target and update to "targetNewValue"
             Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue) {
                 foreach ($signups as $signup) {
-                    info('rogue:updatefield: changing target field to new value for signup ' . $signup->id);
+                    info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for signup ' . $signup->id);
                     $this->signups->update($signup, [$targetField => $targetNewValue]);
                 }
             });
 
             // Log that updating signups are finished
-            $this->info('rogue:updatefield: Finished updating signups!');
+            info('rogue:updatefield: Finished updating signups!');
         }
 
         if ($posts) {
             // Start updating posts
-            $this->info('rogue:updatefield: Starting to update posts!');
+            info('rogue:updatefield: Starting to update posts!');
 
             // Get all posts that have "targetOldValue" set as their target and update to "targetNewValue"
             Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue) {
                 foreach ($posts as $post) {
-                    info('rogue:updatefield: changing target field to new value for post ' . $post->id);
+                    info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for post ' . $post->id);
                     $this->posts->update($post, [$targetField => $targetNewValue]);
                 }
             });
 
             // Log that updating posts are finished
-            $this->info('rogue:updatefield: Finished updating posts!');
+            info('rogue:updatefield: Finished updating posts!');
         }
 
-        $this->info('rogue:updatefield: ALL DONE!');
+        info('rogue:updatefield: ALL DONE!');
     }
 }
