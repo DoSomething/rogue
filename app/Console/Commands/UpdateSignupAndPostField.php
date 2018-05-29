@@ -15,7 +15,7 @@ class UpdateSignupAndPostField extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:updatefield {target} {targetOldValue} {targetNewValue}';
+    protected $signature = 'rogue:updatefield {target} {targetOldValue} {targetNewValue} {--signups} {--posts}';
 
     /**
      * The console command description.
@@ -58,36 +58,46 @@ class UpdateSignupAndPostField extends Command
      */
     public function handle()
     {
+        $this->info('rogue:updatefield: Starting script!');
+
         $targetField = $this->argument('target');
         $targetOldValue = $this->argument('targetOldValue') !== 'NULL' ? $this->argument('targetOldValue') : null;
         $targetNewValue = $this->argument('targetNewValue') !== 'NULL' ? $this->argument('targetNewValue') : null;
+        $signups = $this->option('signups');
+        $posts = $this->option('posts');
 
-        // Start updating signups
-        info('rogue:updatefield: Starting to update signups!');
+        if ($signups) {
+            // Start updating signups
+            $this->info('rogue:updatefield: Starting to update signups!');
 
-        // Get all signups that have "targetOldValue" set as their target and update to "targetNewValue"
-        Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue) {
-            foreach ($signups as $signup) {
-                info('rogue:updatefield: changing target field to new value for signup ' . $signup->id);
-                $this->signups->update($signup, [$targetField => $targetNewValue]);
-            }
-        });
+            // Get all signups that have "targetOldValue" set as their target and update to "targetNewValue"
+            Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue) {
+                foreach ($signups as $signup) {
+                    info('rogue:updatefield: changing target field to new value for signup ' . $signup->id);
+                    $this->signups->update($signup, [$targetField => $targetNewValue]);
+                }
+            });
 
-        // Log that updating signups are finished
-        info('rogue:updatefield: Finished updating signups!');
+            // Log that updating signups are finished
+            $this->info('rogue:updatefield: Finished updating signups!');
+        }
 
-        // Start updating posts
-        info('rogue:updatefield: Starting to update posts!');
+        if ($posts) {
+            // Start updating posts
+            $this->info('rogue:updatefield: Starting to update posts!');
 
-        // Get all posts that have "targetOldValue" set as their target and update to "targetNewValue"
-        Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue) {
-            foreach ($posts as $post) {
-                info('rogue:updatefield: changing target field to new value for post ' . $post->id);
-                $this->posts->update($post, [$targetField => $targetNewValue]);
-            }
-        });
+            // Get all posts that have "targetOldValue" set as their target and update to "targetNewValue"
+            Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue) {
+                foreach ($posts as $post) {
+                    info('rogue:updatefield: changing target field to new value for post ' . $post->id);
+                    $this->posts->update($post, [$targetField => $targetNewValue]);
+                }
+            });
 
-        // Lost that updating posts are finished
-        info('rogue:updatefield: Finished updating posts!');
+            // Log that updating posts are finished
+            $this->info('rogue:updatefield: Finished updating posts!');
+        }
+
+        $this->info('rogue:updatefield: ALL DONE!');
     }
 }
