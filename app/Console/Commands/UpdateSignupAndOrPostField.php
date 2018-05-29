@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 use Rogue\Managers\PostManager;
 use Rogue\Managers\SignupManager;
 
-class UpdateSignupAndPostField extends Command
+class UpdateSignupAndOrPostField extends Command
 {
     /**
      * The name and signature of the console command.
