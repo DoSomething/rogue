@@ -75,4 +75,7 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
 
     // tag
     $this->post('posts/{post}/tags', 'TagsController@store');
+
+    // events
+    $this->get('events', 'EventsController@index');
 });
