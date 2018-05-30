@@ -72,9 +72,10 @@ class PostManager
      *
      * @param \Rogue\Models\Post $post
      * @param array $data
+     * @param bool $log
      * @return \Rogue\Models\Post
      */
-    public function update($post, $data)
+    public function update($post, $data, $log = true)
     {
         $post = $this->repository->update($post, $data);
 
@@ -85,10 +86,12 @@ class PostManager
             SendPostToCustomerIo::dispatch($post);
         }
 
-        SendPostToQuasar::dispatch($post);
+        SendPostToQuasar::dispatch($post, $log);
 
-        // Log that a post was updated.
-        info('post_updated', ['id' => $post->id, 'signup_id' => $post->signup_id]);
+        if ($log) {
+            // Log that a post was updated.
+            info('post_updated', ['id' => $post->id, 'signup_id' => $post->signup_id]);
+        }
 
         return $post;
     }

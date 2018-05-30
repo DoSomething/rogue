@@ -60,17 +60,20 @@ class SignupManager
      *
      * @param Rogue\Models\Signup $signup
      * @param array $data
+     * @param bool $log
      * @return Rogue\Models\Signup $model
      */
-    public function update($signup, $data)
+    public function update($signup, $data, $log = true)
     {
         $signup = $this->signup->update($signup, $data);
 
         // Dispatch job to send signup to Quasar
-        SendSignupToQuasar::dispatch($signup);
+        SendSignupToQuasar::dispatch($signup, $log);
 
-        // Log that a signup was updated.
-        info('signup_updated', ['id' => $signup->id]);
+        if ($log) {
+            // Log that a signup was updated.
+            info('signup_updated', ['id' => $signup->id]);
+        }
 
         return $signup;
     }
