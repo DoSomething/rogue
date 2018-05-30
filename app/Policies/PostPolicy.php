@@ -3,7 +3,6 @@
 namespace Rogue\Policies;
 
 use Rogue\Models\Post;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PostPolicy
@@ -60,8 +59,12 @@ class PostPolicy
      * @param  Rogue\Models\Post $post
      * @return bool
      */
-    public function update(Authenticatable $user, Post $post)
+    public function update($user, Post $post)
     {
-        return is_staff_user() || $user->northstar_id === $post->northstar_id;
+        if (is_staff_user()) {
+            return true;
+        }
+
+        return $user && $user->northstar_id === $post->northstar_id;
     }
 }
