@@ -3,7 +3,6 @@
 namespace Rogue\Policies;
 
 use Rogue\Models\Post;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PostPolicy
