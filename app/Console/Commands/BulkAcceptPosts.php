@@ -67,10 +67,12 @@ class BulkAcceptPosts extends Command
         if ($posts->isNotEmpty()) {
             foreach ($posts as $post) {
                 if ($post->id % $logfreq == 0) {
-                    info('rogue:bulkacceptposts: accepting post: ' . $post->id);
+                    info('rogue:bulkacceptposts: accepting and tagging post: ' . $post->id);
                 }
 
                 $this->posts->update($post, ['status' => 'accepted'], $log);
+                $post->tag('Hide In Gallery');
+                $post->tag('Bulk');
             }
         } else {
             $this->error('No posts found with that criteria.');
