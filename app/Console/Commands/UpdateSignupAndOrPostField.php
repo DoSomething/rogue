@@ -15,7 +15,7 @@ class UpdateSignupAndOrPostField extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:updatefield {target} {targetOldValue} {targetNewValue} {--signups} {--posts} {--logfreq=10000}';
+    protected $signature = 'rogue:updatefield {target} {targetOldValue} {targetNewValue} {--signups} {--posts} {--logfreq=10000} {--log}';
 
     /**
      * The console command description.
@@ -66,21 +66,21 @@ class UpdateSignupAndOrPostField extends Command
         $signups = $this->option('signups');
         $posts = $this->option('posts');
         $logfreq = $this->option('logfreq');
+        $log = $this->option('log');
 
         if ($signups) {
             // Start updating signups
             info('rogue:updatefield: Starting to update signups!');
 
             // Get all signups that have "targetOldValue" set as their target and update to "targetNewValue"
-            Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue, $logfreq) {
+            Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue, $logfreq, $log) {
                 foreach ($signups as $signup) {
                     if ($signup->id % $logfreq == 0) {
                         info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for signup ' . $signup->id);
                     }
 
-                    // Update signup but don't log that it was sent to Quasar in interest of taking up too much space in Papertrail.
-                    // @TODO: when running updates for smaller amount of records, do we want to turn logs back on?
-                    $this->signups->update($signup, [$targetField => $targetNewValue], false);
+                    // Only log that signup was sent to Quasar if $log is TRUE in interest of space in Papertrail.
+                    $this->signups->update($signup, [$targetField => $targetNewValue], $log);
                 }
             });
 
@@ -93,15 +93,14 @@ class UpdateSignupAndOrPostField extends Command
             info('rogue:updatefield: Starting to update posts!');
 
             // Get all posts that have "targetOldValue" set as their target and update to "targetNewValue"
-            Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue, $logfreq) {
+            Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue, $logfreq, $log) {
                 foreach ($posts as $post) {
                     if ($post->id % $logfreq == 0) {
                         info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for post ' . $post->id);
                     }
 
-                    // Update post but don't log that it was sent to Quasar in interest of taking up too much space in Papertrail.
-                    // @TODO: when running updates for smaller amount of records, do we want to turn logs back on?
-                    $this->posts->update($post, [$targetField => $targetNewValue], false);
+                    // Only log that signup was sent to Quasar if $log is TRUE in interest of space in Papertrail.
+                    $this->posts->update($post, [$targetField => $targetNewValue], $log);
                 }
             });
 
