@@ -72,7 +72,7 @@ class UpdateSignupAndOrPostField extends Command
             info('rogue:updatefield: Starting to update signups!');
 
             // Get all signups that have "targetOldValue" set as their target and update to "targetNewValue"
-            Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue) {
+            Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue, $logfreq) {
                 foreach ($signups as $signup) {
                     if ($signup->id % $logfreq == 0) {
                         info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for signup ' . $signup->id);
@@ -91,7 +91,7 @@ class UpdateSignupAndOrPostField extends Command
             info('rogue:updatefield: Starting to update posts!');
 
             // Get all posts that have "targetOldValue" set as their target and update to "targetNewValue"
-            Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue) {
+            Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue, $logfreq) {
                 foreach ($posts as $post) {
                     if ($post->id % $logfreq == 0) {
                         info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for post ' . $post->id);
