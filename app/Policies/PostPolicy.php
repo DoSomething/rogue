@@ -21,7 +21,7 @@ class PostPolicy
     /**
      * Determine if the full post should be displayed.
      *
-     * @param  $user
+     * @param  Illuminate\Contracts\Auth\Authenticatable $user
      * @param  Rogue\Models\Post $post
      * @return bool
      */
@@ -37,7 +37,7 @@ class PostPolicy
     /**
      * Determine if the given post can be seen by the user.
      *
-     * @param  $user
+     * @param  Illuminate\Contracts\Auth\Authenticatable $user
      * @param  Rogue\Models\Post $post
      * @return bool
      */
@@ -55,12 +55,16 @@ class PostPolicy
     /**
      * Determine if the given post can be updated by the user.
      *
-     * @param  $user
+     * @param  Illuminate\Contracts\Auth\Authenticatable $user
      * @param  Rogue\Models\Post $post
      * @return bool
      */
     public function update($user, Post $post)
     {
-        return is_staff_user() || $user->northstar_id === $post->northstar_id;
+        if (is_staff_user()) {
+            return true;
+        }
+
+        return $user && $user->northstar_id === $post->northstar_id;
     }
 }
