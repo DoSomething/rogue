@@ -79,6 +79,7 @@ class UpdateSignupAndOrPostField extends Command
                     }
 
                     // Update signup but don't log that it was sent to Quasar in interest of taking up too much space in Papertrail.
+                    // @TODO: when running updates for smaller amount of records, do we want to turn logs back on?
                     $this->signups->update($signup, [$targetField => $targetNewValue], false);
                 }
             });
@@ -99,6 +100,7 @@ class UpdateSignupAndOrPostField extends Command
                     }
 
                     // Update post but don't log that it was sent to Quasar in interest of taking up too much space in Papertrail.
+                    // @TODO: when running updates for smaller amount of records, do we want to turn logs back on?
                     $this->posts->update($post, [$targetField => $targetNewValue], false);
                 }
             });
