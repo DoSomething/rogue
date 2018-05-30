@@ -15,7 +15,7 @@ class UpdateSignupAndOrPostField extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:updatefield {target} {targetOldValue} {targetNewValue} {--signups} {--posts}';
+    protected $signature = 'rogue:updatefield {target} {targetOldValue} {targetNewValue} {--signups} {--posts} {--logfreq=10000}';
 
     /**
      * The console command description.
@@ -65,6 +65,7 @@ class UpdateSignupAndOrPostField extends Command
         $targetNewValue = $this->argument('targetNewValue') !== 'NULL' ? $this->argument('targetNewValue') : null;
         $signups = $this->option('signups');
         $posts = $this->option('posts');
+        $logfreq = $this->option('logfreq');
 
         if ($signups) {
             // Start updating signups
@@ -73,7 +74,10 @@ class UpdateSignupAndOrPostField extends Command
             // Get all signups that have "targetOldValue" set as their target and update to "targetNewValue"
             Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue) {
                 foreach ($signups as $signup) {
-                    info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for signup ' . $signup->id);
+                    if ($signup->id % $logfreq == 0) {
+                        info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for signup ' . $signup->id);
+                    }
+
                     $this->signups->update($signup, [$targetField => $targetNewValue]);
                 }
             });
@@ -89,7 +93,10 @@ class UpdateSignupAndOrPostField extends Command
             // Get all posts that have "targetOldValue" set as their target and update to "targetNewValue"
             Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue) {
                 foreach ($posts as $post) {
-                    info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for post ' . $post->id);
+                    if ($post->id % $logfreq == 0) {
+                        info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for post ' . $post->id);
+                    }
+
                     $this->posts->update($post, [$targetField => $targetNewValue]);
                 }
             });
