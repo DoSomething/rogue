@@ -78,7 +78,8 @@ class UpdateSignupAndOrPostField extends Command
                         info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for signup ' . $signup->id);
                     }
 
-                    $this->signups->update($signup, [$targetField => $targetNewValue]);
+                    // Update signup but don't log that it was sent to Quasar in interest of taking up too much space in Papertrail.
+                    $this->signups->update($signup, [$targetField => $targetNewValue], false);
                 }
             });
 
@@ -97,7 +98,8 @@ class UpdateSignupAndOrPostField extends Command
                         info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for post ' . $post->id);
                     }
 
-                    $this->posts->update($post, [$targetField => $targetNewValue]);
+                    // Update post but don't log that it was sent to Quasar in interest of taking up too much space in Papertrail.
+                    $this->posts->update($post, [$targetField => $targetNewValue], false);
                 }
             });
 
