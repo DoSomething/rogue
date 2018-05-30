@@ -75,7 +75,7 @@ class PostManager
      * @param bool $log
      * @return \Rogue\Models\Post
      */
-    public function update($post, $data, $log)
+    public function update($post, $data, $log = true)
     {
         $post = $this->repository->update($post, $data);
 
