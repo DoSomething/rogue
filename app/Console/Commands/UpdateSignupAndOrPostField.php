@@ -15,7 +15,7 @@ class UpdateSignupAndOrPostField extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:updatefield {target} {targetOldValue} {targetNewValue} {--signups} {--posts} {--logfreq=1}';
+    protected $signature = 'rogue:updatefield {target} {targetOldValue} {targetNewValue} {--signups} {--posts} {--logfreq=10000}';
 
     /**
      * The console command description.
