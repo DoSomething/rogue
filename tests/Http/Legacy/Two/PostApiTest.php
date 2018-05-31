@@ -41,7 +41,7 @@ class PostApiTest extends TestCase
             'num_participants' => null,
             'caption'          => $caption,
             'source'           => 'phpunit',
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
             'crop_x'           => 0,
             'crop_y'           => 0,
             'crop_width'       => 100,
@@ -155,7 +155,7 @@ class PostApiTest extends TestCase
             'num_participants' => null,
             'caption'          => $caption,
             'source'           => 'phpunit',
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
             'crop_x'           => 0,
             'crop_y'           => 0,
             'crop_width'       => 100,
@@ -213,7 +213,7 @@ class PostApiTest extends TestCase
             'num_participants' => null,
             'caption'          => $caption,
             'source'           => 'phpunit',
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
             'crop_x'           => 0,
             'crop_y'           => 0,
             'crop_width'       => 100,
@@ -254,7 +254,7 @@ class PostApiTest extends TestCase
             'num_participants' => null,
             'caption'          => $secondCaption,
             'source'           => 'phpunit',
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
             'crop_x'           => 0,
             'crop_y'           => 0,
             'crop_width'       => 100,
@@ -311,7 +311,7 @@ class PostApiTest extends TestCase
             'num_participants' => null,
             'caption'          => $caption,
             'source'           => 'phpunit',
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
             'crop_x'           => 0,
             'crop_y'           => 0,
             'crop_width'       => 100,
@@ -372,7 +372,7 @@ class PostApiTest extends TestCase
             'quantity'         => 10,
             'caption'          => 'Fake caption',
             'source'           => 'testing',
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
         ])->decodeResponseJson();
 
         // Confirm quantity is persisted between signups and posts correctly.
@@ -394,7 +394,7 @@ class PostApiTest extends TestCase
             'quantity'         => 20,
             'caption'          => 'Fake caption',
             'source'           => 'testing',
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
         ])->decodeResponseJson();
 
         // Confirm quantity is persisted between signups and posts correctly.
@@ -421,7 +421,7 @@ class PostApiTest extends TestCase
             'quantity'         => 5,
             'caption'          => 'Fake caption',
             'source'           => 'testing',
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
         ])->decodeResponseJson();
 
         // Confirm quantity is persisted between signups and posts correctly.
@@ -453,7 +453,7 @@ class PostApiTest extends TestCase
             'quantity'         => 25,
             'caption'          => 'Fake caption',
             'source'           => 'testing',
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
         ])->decodeResponseJson();
 
         // Confirm quantity is persisted between signups and posts correctly.
@@ -514,7 +514,7 @@ class PostApiTest extends TestCase
             'quantity'         => 10,
             'caption'          => 'Fake caption',
             'source'           => 'testing',
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
         ])->decodeResponseJson();
 
         // Confirm quantity is persisted between signups and posts correctly.
@@ -536,7 +536,7 @@ class PostApiTest extends TestCase
             'quantity'         => 20,
             'caption'          => 'Fake caption',
             'source'           => 'testing',
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'file'             => UploadedFile::fake()->image('photo.jpg'),
         ])->decodeResponseJson();
 
         // Confirm quantity is persisted between signups and posts correctly.
