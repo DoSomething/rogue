@@ -6,21 +6,21 @@ use Rogue\Models\Post;
 use Illuminate\Console\Command;
 use Rogue\Managers\PostManager;
 
-class BulkAcceptPosts extends Command
+class BulkReviewPosts extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'rogue:bulkacceptposts {campaign} {--type= : Filter by the type of post} {--logfreq=1000} {--log}';
+    protected $signature = 'rogue:bulkreviewposts {campaign} {oldStatus} {newStatus} {--type= : Filter by the type of post} {--logfreq=1000} {--log} {--tag=* : Tag(s) slug to tag post by. e.g. hide-in-gallery}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Bulk approve and tag posts as Bulk & Hide In Gallery constrained by the provided parameters';
+    protected $description = 'Bulk review and tag posts constrained by the provided parameters';
 
     /**
      * The Post Manager instance.
@@ -48,15 +48,16 @@ class BulkAcceptPosts extends Command
      */
     public function handle()
     {
-        info('rogue:bulkacceptposts: Starting to bulk accept posts!');
+        info('rogue:bulkreviewposts: Starting to bulk accept posts!');
 
         $postType = $this->option('type') ?? null;
         $logfreq = $this->option('logfreq');
         $log = $this->option('log');
+        $tags = $this->option('tag') ?? null;
 
         $query = (new Post)->newQuery();
         $query = $query->where('campaign_id', $this->argument('campaign'));
-        $query = $query->where('status', 'pending');
+        $query = $query->where('status', $this->argument('oldStatus'));
 
         if ($postType !== null) {
             $query = $query->where('type', $postType);
@@ -67,12 +68,16 @@ class BulkAcceptPosts extends Command
         if ($posts->isNotEmpty()) {
             foreach ($posts as $post) {
                 if ($post->id % $logfreq == 0) {
-                    info('rogue:bulkacceptposts: accepting and tagging post: ' . $post->id);
+                    info('rogue:bulkreviewposts: accepting and tagging post: ' . $post->id);
                 }
 
-                $this->posts->update($post, ['status' => 'accepted'], $log);
-                $post->tag('Hide In Gallery');
-                $post->tag('Bulk');
+                $this->posts->update($post, ['status' => $this->argument('newStatus')], $log);
+
+                foreach ($tags as $tag) {
+                    $tagArray = explode('-', $tag);
+                    $tag = implode(' ', $tagArray);
+                    $post->tag(ucwords($tag));
+                }
             }
         } else {
             $this->error('No posts found with that criteria.');
@@ -80,6 +85,6 @@ class BulkAcceptPosts extends Command
             return;
         }
 
-        info('rogue:bulkacceptposts: ALL DONE!');
+        info('rogue:bulkreviewposts: ALL DONE!');
     }
 }
