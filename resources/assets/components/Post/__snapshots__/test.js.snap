@@ -208,6 +208,15 @@ exports[`it renders correctly 1`] = `
                 Incomplete Action
               </button>
             </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Bulk
+              </button>
+            </li>
           </ul>
         </div>
       </div>
