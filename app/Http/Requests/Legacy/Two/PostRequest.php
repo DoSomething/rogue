@@ -31,7 +31,7 @@ class PostRequest extends Request
             'caption' => 'nullable|string',
             'status' => 'in:pending,accepted,rejected',
             'source' => 'nullable|string',
-            'file' => 'image|dimensions:min_width=400,min_height=400,max_width=5000,max_height_4000',
+            'file' => 'dimensions:min_width=400,min_height=400,max_width=5000,max_height_4000',
             'type' => 'string|in:photo,voter-reg,text',
             'action' => 'string',
         ];
