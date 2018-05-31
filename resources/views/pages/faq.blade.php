@@ -61,6 +61,8 @@
 
                     <p><h4>Incomplete Action:</h4> Means someone didn’t complete the action</p>
 
+                    <p><h4>Bulk:</h4> This post was bulk approved.</p>
+
                 <h3>Why are tags important?</h3>
                 <p>They're important because they allow admins to search for posts that fit a certain criteria and they allow us to identify trends, i.e., a lot of people are putting in unrealistic quantities or aren't completing the action which could be a result of unclear website instructions.</p>
 
