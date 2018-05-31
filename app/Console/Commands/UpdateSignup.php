@@ -20,7 +20,7 @@ class UpdateSignup extends Command
      *
      * @var string
      */
-    protected $description = 'Update a target field on a set of signups contrained by the provided parameters';
+    protected $description = 'Update a target field on a set of signups constrained by the provided parameters';
 
     /**
      * The signup manager instance.

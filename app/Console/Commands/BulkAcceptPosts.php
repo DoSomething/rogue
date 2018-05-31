@@ -20,7 +20,7 @@ class BulkAcceptPosts extends Command
      *
      * @var string
      */
-    protected $description = 'Bulk approve and tag posts as Bulk & Hide In Gallery contrained by the provided parameters';
+    protected $description = 'Bulk approve and tag posts as Bulk & Hide In Gallery constrained by the provided parameters';
 
     /**
      * The Post Manager instance.
