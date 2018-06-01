@@ -266,9 +266,14 @@ class Post extends Model
      */
     public function tag($tag)
     {
-        $tagArray = explode('-', $tag);
-        $unformattedTag = implode(' ', $tagArray);
-        $tagName = ucwords($unformattedTag);
+        // If a tag slug is sent in, change to the tag name.
+        if (strpos($tag, '-')) {
+            $tagArray = explode('-', $tag);
+            $tag = implode(' ', $tagArray);
+        }
+
+        // Capitalize each word in the tag.
+        $tagName = ucwords($tag);
 
         $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
 

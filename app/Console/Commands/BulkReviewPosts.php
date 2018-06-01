@@ -80,8 +80,8 @@ class BulkReviewPosts extends Command
                 }
 
                 // If the $log flag is included when the command is run, logging will occur in the Post Manager for each post.
-                $this->posts->update($post, ['status' => $this->argument('newStatus')], $log);
-
+                $this->posts->update($post, ['status' => $this->argument('newStatus')], $log
+            );
                 foreach ($tags as $tag) {
                     $post->tag($tag);
                 }
