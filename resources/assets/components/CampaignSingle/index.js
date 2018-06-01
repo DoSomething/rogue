@@ -43,6 +43,10 @@ class CampaignSingle extends React.Component {
             label: 'Good For Storytelling',
             active: false,
           },
+          'bulk': {
+            label: 'Bulk',
+            active: false,
+          },
         },
       },
     };

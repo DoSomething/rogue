@@ -264,8 +264,17 @@ class Post extends Model
     /**
      * Apply the given tag to this post.
      */
-    public function tag($tagName)
+    public function tag($tag)
     {
+        // If a tag slug is sent in, change to the tag name.
+        if (strpos($tag, '-')) {
+            $tagArray = explode('-', $tag);
+            $tag = implode(' ', $tagArray);
+        }
+
+        // Capitalize each word in the tag.
+        $tagName = ucwords($tag);
+
         $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
 
         $this->tags()->attach($tag);
