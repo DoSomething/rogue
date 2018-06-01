@@ -18,8 +18,8 @@ class BulkReviewPosts extends Command
                             {oldStatus}
                             {newStatus}
                             {--type= : Filter by the type of post}
-                            {--logfreq=1000}
-                            {--log}
+                            {--logfreq=1000: Flag to decide how often this command will log when a post is being updated}
+                            {--log : Flag to allow logging in Post Manager}
                             {--tag=* : Tag(s) slug to tag post by. e.g. hide-in-gallery}';
 
     /**
@@ -76,9 +76,10 @@ class BulkReviewPosts extends Command
         if ($posts->isNotEmpty()) {
             foreach ($posts as $post) {
                 if ($post->id % $logfreq == 0) {
-                    info('rogue:bulkreviewposts: accepting and tagging post: ' . $post->id);
+                    info('rogue:bulkreviewposts: updating: ' . $post->id);
                 }
 
+                // If the $log flag is included when the command is run, logging will occur in the Post Manager for each post.
                 $this->posts->update($post, ['status' => $this->argument('newStatus')], $log);
 
                 foreach ($tags as $tag) {
