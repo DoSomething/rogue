@@ -68,10 +68,10 @@ class BulkReviewPosts extends Command
         ]);
 
         if ($postType !== null) {
-           $postQuery = $postQuery->where('type', $postType);
+            $postQuery = $postQuery->where('type', $postType);
         }
 
-        $posts  = $postQuery->get();
+        $posts = $postQuery->get();
 
         if ($posts->isNotEmpty()) {
             foreach ($posts as $post) {
