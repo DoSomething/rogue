@@ -264,8 +264,12 @@ class Post extends Model
     /**
      * Apply the given tag to this post.
      */
-    public function tag($tagName)
+    public function tag($tag)
     {
+        $tagArray = explode('-', $tag);
+        $unformattedTag = implode(' ', $tagArray);
+        $tagName = ucwords($unformattedTag);
+
         $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
 
         $this->tags()->attach($tag);

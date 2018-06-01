@@ -83,9 +83,7 @@ class BulkReviewPosts extends Command
                 $this->posts->update($post, ['status' => $this->argument('newStatus')], $log);
 
                 foreach ($tags as $tag) {
-                    $tagArray = explode('-', $tag);
-                    $tag = implode(' ', $tagArray);
-                    $post->tag(ucwords($tag));
+                    $post->tag($tag);
                 }
             }
         } else {
