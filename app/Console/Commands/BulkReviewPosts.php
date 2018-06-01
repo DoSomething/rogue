@@ -13,7 +13,14 @@ class BulkReviewPosts extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:bulkreviewposts {campaign} {oldStatus} {newStatus} {--type= : Filter by the type of post} {--logfreq=1000} {--log} {--tag=* : Tag(s) slug to tag post by. e.g. hide-in-gallery}';
+    protected $signature = 'rogue:bulkreviewposts
+                            {campaign}
+                            {oldStatus}
+                            {newStatus}
+                            {--type= : Filter by the type of post}
+                            {--logfreq=1000}
+                            {--log}
+                            {--tag=* : Tag(s) slug to tag post by. e.g. hide-in-gallery}';
 
     /**
      * The console command description.
