@@ -2,7 +2,6 @@
 
 namespace Rogue\Http\Controllers\Legacy\Two;
 
-use Rogue\Http\Controllers\ApiController;
 use Rogue\Http\Controllers\Traits\TagsRequests;
 use Rogue\Repositories\Legacy\Two\PostRepository;
 use Rogue\Http\Transformers\Legacy\Two\PostTransformer;

@@ -4,7 +4,6 @@ namespace Rogue\Http\Controllers\Legacy\Two;
 
 use Illuminate\Http\Request;
 use Rogue\Services\CampaignService;
-use Rogue\Http\Controllers\ApiController;
 
 class CampaignsController extends ApiController
 {

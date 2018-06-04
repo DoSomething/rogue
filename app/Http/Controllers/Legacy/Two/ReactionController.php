@@ -4,7 +4,6 @@ namespace Rogue\Http\Controllers\Legacy\Two;
 
 use Rogue\Models\Post;
 use Rogue\Models\Reaction;
-use Rogue\Http\Controllers\ApiController;
 use Rogue\Http\Requests\Legacy\Two\ReactionRequest;
 use Rogue\Http\Transformers\Legacy\Two\ReactionTransformer;
 
