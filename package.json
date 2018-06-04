@@ -10,6 +10,7 @@
     "heroku-postbuild": "npm run build",
     "lint": "eslint --fix --ext .js resources/assets",
     "docs:prepare": "gitbook install",
+    "precommit": "pretty-quick --staged",
     "docs:watch": "npm run docs:prepare && gitbook serve"
   },
   "format": "prettier --write \"{docs,resources}/**/*.{js,md,scss,graphql}\"",
@@ -59,6 +60,8 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.2",
     "react-test-renderer": "^15.6.1",
+    "husky": "^0.14.3",
+    "pretty-quick": "^1.4.1",
     "webpack": "^3.11.0"
   }
 }
