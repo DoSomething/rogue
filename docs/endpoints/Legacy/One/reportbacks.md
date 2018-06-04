@@ -7,6 +7,7 @@ GET /api/v1/reportbacks
 ```
 
 ### Optional Query Parameters
+
 - **limit**
   - Set the number of records to return in a single response.
   - e.g. `/reportbacks?limit=35`
@@ -23,7 +24,7 @@ GET /api/v1/reportbacks
   - The string to filter the response by.
   - e.g. `/reportbacks?filter[status]=accepted`
 - **exclude** _(integer)_
-  - The post id(s) to exclude in response. 
+  - The post id(s) to exclude in response.
   - e.g. `/reportbacks?filter[exclude]=2,3,4`
 - **as_user** _(string)_
   - The logged in user to display if they have reacted to the post or not.

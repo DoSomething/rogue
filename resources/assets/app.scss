@@ -1,7 +1,7 @@
-$forge-path: "~@dosomething/forge/assets/";
+$forge-path: '~@dosomething/forge/assets/';
 
 // Import Forge.
-@import "~@dosomething/forge/scss/forge";
+@import '~@dosomething/forge/scss/forge';
 
 .container__block.-third {
   @include media($tablet) {
@@ -17,7 +17,7 @@ button.delete {
 
 .quantity {
   border: 3px solid #4e2b63;
-  padding: 4px 12px;;
+  padding: 4px 12px;
   color: #4e2b63;
   font-weight: bold;
   margin-right: 5px;

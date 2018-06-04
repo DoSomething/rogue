@@ -14,14 +14,15 @@ class HistoryModal extends React.Component {
       quantity: null,
     };
 
-
     this.onUpdate = this.onUpdate.bind(this);
     // @TODO: add this back in when we enable this function.
     // this.parseEventData = this.parseEventData.bind(this);
   }
 
   onUpdate(event) {
-    let value =  Number.isInteger(parseInt(event.target.value)) ? event.target.value : null;
+    let value = Number.isInteger(parseInt(event.target.value))
+      ? event.target.value
+      : null;
 
     this.setState({ quantity: value });
   }
@@ -58,22 +59,37 @@ class HistoryModal extends React.Component {
 
     return (
       <div className="modal">
-        <a href="#" onClick={this.props.onClose} className="modal-close-button">&times;</a>
+        <a href="#" onClick={this.props.onClose} className="modal-close-button">
+          &times;
+        </a>
         <div className="modal__block">
           <h3>Change Quantity</h3>
           <div className="container__block -half">
             <h4>Old Quantity</h4>
-            <p>{post.quantity} {campaign.reportback_info.noun} {campaign.reportback_info.verb}</p>
+            <p>
+              {post.quantity} {campaign.reportback_info.noun}{' '}
+              {campaign.reportback_info.verb}
+            </p>
           </div>
           <div className="container__block -half">
             <h4>New Quantity</h4>
             <div className="form-item">
-              <input type="text" onChange={this.onUpdate} className="text-field" placeholder="Enter # here"/>
+              <input
+                type="text"
+                onChange={this.onUpdate}
+                className="text-field"
+                placeholder="Enter # here"
+              />
             </div>
           </div>
           <h3>📖 History 📖</h3>
-          <p> <em>We're making some edits to the events log - it'll be back soon!</em> </p>
-        {/* @TODO: add this back in when we've updated the events system and are ready to show events log.
+          <p>
+            {' '}
+            <em>
+              We're making some edits to the events log - it'll be back soon!
+            </em>{' '}
+          </p>
+          {/* @TODO: add this back in when we've updated the events system and are ready to show events log.
           <div className="container">
             { ! isEmpty(parsedEvents) ?
               <div>
@@ -86,7 +102,13 @@ class HistoryModal extends React.Component {
           </div>
         */}
         </div>
-        <button className="button -history" disabled={! this.state.quantity} onClick={() => this.props.onUpdate(post, this.state.quantity)}>Save</button>
+        <button
+          className="button -history"
+          disabled={!this.state.quantity}
+          onClick={() => this.props.onUpdate(post, this.state.quantity)}
+        >
+          Save
+        </button>
       </div>
     );
   }

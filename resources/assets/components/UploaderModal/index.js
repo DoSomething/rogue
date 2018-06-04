@@ -32,7 +32,9 @@ class UploaderModal extends React.Component {
 
     return (
       <div className="modal">
-        <a href="#" onClick={this.props.onClose} className="modal-close-button">&times;</a>
+        <a href="#" onClick={this.props.onClose} className="modal-close-button">
+          &times;
+        </a>
         <div className="modal__block">
           <PostUploader {...photoUploaderProps} />
         </div>
@@ -55,7 +57,6 @@ UploaderModal.propTypes = {
   updateSignup: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
-
 
 UploaderModal.defaultProps = {
   success: null,

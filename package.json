@@ -11,9 +11,9 @@
     "lint": "eslint --fix --ext .js resources/assets",
     "docs:prepare": "gitbook install",
     "precommit": "pretty-quick --staged",
+    "format": "prettier --write \"{docs,resources}/**/*.{js,md,scss,graphql}\"",
     "docs:watch": "npm run docs:prepare && gitbook serve"
   },
-  "format": "prettier --write \"{docs,resources}/**/*.{js,md,scss,graphql}\"",
   "engines": {
     "node": "8.x",
     "npm": "5.x"

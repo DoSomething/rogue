@@ -19,14 +19,14 @@ class CampaignInbox extends React.Component {
     const campaign = this.props.campaign;
     const signups = this.props.signups;
 
-    if (! isEmpty(posts)) {
+    if (!isEmpty(posts)) {
       return (
         <div className="container">
-          {
-            map(this.props.postIds, (key, value) => {
-              const post = find(posts, { id: key });
+          {map(this.props.postIds, (key, value) => {
+            const post = find(posts, { id: key });
 
-              return (<Post
+            return (
+              <Post
                 key={key}
                 post={post}
                 user={signups[post.signup_id].user.data}
@@ -40,12 +40,12 @@ class CampaignInbox extends React.Component {
                 showSiblings
                 showQuantity
                 allowHistory
-              />);
-            })
-          }
+              />
+            );
+          })}
 
           <ModalContainer>
-            {this.props.displayHistoryModal ?
+            {this.props.displayHistoryModal ? (
               <HistoryModal
                 id={this.props.historyModalId}
                 onUpdate={this.props.updateQuantity}
@@ -55,12 +55,17 @@ class CampaignInbox extends React.Component {
                 signupEvents={this.props.signupEvents}
                 post={posts[this.props.historyModalId]}
               />
-              : null}
+            ) : null}
           </ModalContainer>
         </div>
       );
     }
-    return <Empty header="There are no new posts!" copy="Great job, there are no new posts to review! You can check out all posts for this campaign here" />;
+    return (
+      <Empty
+        header="There are no new posts!"
+        copy="Great job, there are no new posts to review! You can check out all posts for this campaign here"
+      />
+    );
   }
 }
 

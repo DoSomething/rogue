@@ -7,6 +7,7 @@ GET /api/v2/campaigns
 ```
 
 Note: Only campaigns with a campaign type of `campaign` are returned (e.g. `sms_game` campaigns [are filtered](https://github.com/DoSomething/LetsDoThis-iOS/issues/813#issuecomment-189545768))
+
 ### Optional Query Parameters
 
 - **ids** _(string|csv)_

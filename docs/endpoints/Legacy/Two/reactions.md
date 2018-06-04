@@ -5,12 +5,14 @@
 ```
 POST /api/v2/reactions
 ```
-  - **northstar_id**: (int) required
-    The northstar id of the user who "liked" or "unliked" the reportback item. 
-  - **post_id**: (int) required 
-    The post that the reaction belongs to. 
-    
+
+- **northstar_id**: (int) required
+  The northstar id of the user who "liked" or "unliked" the reportback item.
+- **post_id**: (int) required
+  The post that the reaction belongs to.
+
 Example Request
+
 ```
 curl http://rogue.dev:8000/api/v2/reactions
  -d '{
@@ -20,7 +22,8 @@ curl http://rogue.dev:8000/api/v2/reactions
   --header "Accept: application/json"
 ```
 
-Example Response 
+Example Response
+
 ```
 {
   "data": {
@@ -31,3 +34,4 @@ Example Response
     "deleted_at": null,
   },
 }
+```

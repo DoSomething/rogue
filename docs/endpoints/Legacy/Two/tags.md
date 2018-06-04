@@ -6,10 +6,10 @@ Add or delete a post's tags.
 POST api/v2/tags
 ```
 
-  - **post_id**: (string) required.
-    The id of the post being tagged or untagged.
-  - **tag_name**: (string) required.
-    The tag that is being added or deleted from a post. Note that this is the tag name and not the tag slug.
+- **post_id**: (string) required.
+  The id of the post being tagged or untagged.
+- **tag_name**: (string) required.
+  The tag that is being added or deleted from a post. Note that this is the tag name and not the tag slug.
 
 Example Response:
 

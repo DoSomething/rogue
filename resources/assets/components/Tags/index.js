@@ -23,17 +23,31 @@ class Tag extends React.Component {
 
     this.setState({ sending: true });
 
-    this.props.isClicked(post, label)
-      .then(() => {
-        this.setState({ sending: false });
-      });
+    this.props.isClicked(post, label).then(() => {
+      this.setState({ sending: false });
+    });
   }
 
   render() {
-    return (<button disabled={this.props.disabled}
-      className={classnames('tag', { 'is-active': this.props.isActive }, { 'is-loading': this.state.sending })}
-      onClick={() => this.handleClick(this.props.post, this.props.label, this.props.isActive)}
-    >{this.props.label}</button>);
+    return (
+      <button
+        disabled={this.props.disabled}
+        className={classnames(
+          'tag',
+          { 'is-active': this.props.isActive },
+          { 'is-loading': this.state.sending },
+        )}
+        onClick={() =>
+          this.handleClick(
+            this.props.post,
+            this.props.label,
+            this.props.isActive,
+          )
+        }
+      >
+        {this.props.label}
+      </button>
+    );
   }
 }
 
@@ -52,12 +66,12 @@ class Tags extends React.Component {
       'hide-in-gallery': 'Hide In Gallery 👻',
       'good-for-sponsor': 'Good For Sponsor',
       'good-for-storytelling': 'Good For Storytelling',
-      'irrelevant': 'Irrelevant',
-      'inappropriate': 'Inappropriate',
+      irrelevant: 'Irrelevant',
+      inappropriate: 'Inappropriate',
       'unrealistic-quantity': 'Unrealistic Quantity',
-      'test': 'Test',
+      test: 'Test',
       'incomplete-action': 'Incomplete Action',
-      'bulk': 'Bulk',
+      bulk: 'Bulk',
     };
 
     const showTags = this.props.disabled ? 'disabled' : 'enabled';
@@ -68,7 +82,13 @@ class Tags extends React.Component {
         <ul className="aligned-actions">
           {map(tags, (label, key) => (
             <li key={key}>
-              <Tag isActive={this.props.tagged.includes(key)} isClicked={this.props.onTag} label={label} post={this.props.id} disabled={this.props.disabled} />
+              <Tag
+                isActive={this.props.tagged.includes(key)}
+                isClicked={this.props.onTag}
+                label={label}
+                post={this.props.id}
+                disabled={this.props.disabled}
+              />
             </li>
           ))}
         </ul>

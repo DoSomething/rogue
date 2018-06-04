@@ -32,10 +32,18 @@ class CampaignRow extends React.Component {
         {content.map((cell, index) => {
           {
             if (cell.url) {
-              return <td className="table__cell" key={index}><a href={cell.url}>{cell.title}</a></td>;
+              return (
+                <td className="table__cell" key={index}>
+                  <a href={cell.url}>{cell.title}</a>
+                </td>
+              );
             }
 
-            return <td className="table__cell" key={index}>{cell.title}</td>;
+            return (
+              <td className="table__cell" key={index}>
+                {cell.title}
+              </td>
+            );
           }
         })}
       </tr>

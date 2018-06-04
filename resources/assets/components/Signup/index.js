@@ -21,7 +21,10 @@ import UserInformation from '../Users/UserInformation';
 
 class PostGroup extends React.Component {
   getPostsByStatus(status) {
-    const posts = filter(this.props.posts, post => post.status === this.props.groupType);
+    const posts = filter(
+      this.props.posts,
+      post => post.status === this.props.groupType,
+    );
 
     return posts;
   }
@@ -32,12 +35,14 @@ class PostGroup extends React.Component {
     return (
       <div className="container__row">
         <div className="container__block">
-          <h2 className="heading -emphasized -padded"><span>{startCase(this.props.groupType)}</span></h2>
+          <h2 className="heading -emphasized -padded">
+            <span>{startCase(this.props.groupType)}</span>
+          </h2>
         </div>
 
-        {
-          ! isEmpty(posts) ?
-            map(posts, (post, key) => (<Post
+        {!isEmpty(posts) ? (
+          map(posts, (post, key) => (
+            <Post
               key={key}
               post={post}
               displayUser={false}
@@ -49,10 +54,11 @@ class PostGroup extends React.Component {
               campaign={this.props.campaign}
               rotate={this.props.rotate}
               showQuantity
-            />))
-            :
-            <Empty header={`This user has no ${this.props.groupType} posts`} />
-        }
+            />
+          ))
+        ) : (
+          <Empty header={`This user has no ${this.props.groupType} posts`} />
+        )}
       </div>
     );
   }
@@ -67,7 +73,6 @@ PostGroup.propTypes = {
   groupType: PropTypes.string.isRequired,
 };
 
-
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -81,9 +86,9 @@ class Signup extends React.Component {
     };
 
     this.api = new RogueClient(window.location.origin, {
-        headers: {
-          'Authorization' : `Bearer ${window.AUTH}`,
-        },
+      headers: {
+        Authorization: `Bearer ${window.AUTH}`,
+      },
     });
 
     this.updatePost = this.updatePost.bind(this);
@@ -111,12 +116,16 @@ class Signup extends React.Component {
    * @return {Object}
    */
   getSignupAndPosts(id) {
-    this.api.get(`api/v3/signups/${id}`, {
-      include: 'posts',
-    }).then(json => this.setState({
-      signup: json.data,
-      posts: keyBy(json.data.posts.data, 'id'),
-    }));
+    this.api
+      .get(`api/v3/signups/${id}`, {
+        include: 'posts',
+      })
+      .then(json =>
+        this.setState({
+          signup: json.data,
+          posts: keyBy(json.data.posts.data, 'id'),
+        }),
+      );
   }
 
   // @TODO: add this back in when we are ready to show history modal.
@@ -181,8 +190,8 @@ class Signup extends React.Component {
 
     let request = this.api.postReview(fields);
 
-    request.then((result) => {
-      this.setState((previousState) => {
+    request.then(result => {
+      this.setState(previousState => {
         const newState = { ...previousState };
 
         newState.posts[post.id].status = fields.status;
@@ -201,8 +210,8 @@ class Signup extends React.Component {
     // Check to see if we are creating or deleting this tag.
     const response = this.api.post(`api/v3/posts/${postId}/tags`, field);
 
-    return response.then((result) => {
-      this.setState((previousState) => {
+    return response.then(result => {
+      this.setState(previousState => {
         const newState = { ...previousState };
 
         newState.posts[postId] = result.data;
@@ -225,9 +234,9 @@ class Signup extends React.Component {
     // Make API request to Rogue to update the quantity on the backend
     const request = this.api.post('api/v3/posts', fields);
 
-    request.then((result) => {
+    request.then(result => {
       // Update the state
-      this.setState((previousState) => {
+      this.setState(previousState => {
         const newState = { ...previousState };
         newState.signup.quantity = result.quantity;
 
@@ -241,7 +250,7 @@ class Signup extends React.Component {
 
   // Set newstate with updated quantity and why_participated.
   updateSignup(signup) {
-    this.setState((previousState) => {
+    this.setState(previousState => {
       const newState = { ...previousState };
 
       newState.signup.quantity = signup.quantity;
@@ -254,19 +263,21 @@ class Signup extends React.Component {
   // Delete a post.
   deletePost(postId, event) {
     event.preventDefault();
-    const confirmed = confirm('🚨🔥🚨 Are you sure you want to delete this? 🚨🔥🚨');
+    const confirmed = confirm(
+      '🚨🔥🚨 Are you sure you want to delete this? 🚨🔥🚨',
+    );
 
     if (confirmed) {
       // Make API request to Rogue to update the quantity on the backend
       const response = this.api.delete(`api/v3/posts/${postId}`);
 
-      response.then((result) => {
+      response.then(result => {
         // Update the state
-        this.setState((previousState) => {
+        this.setState(previousState => {
           const newState = { ...previousState };
 
           // Remove the deleted post from the state
-          delete (newState.posts[postId]);
+          delete newState.posts[postId];
 
           // Return the new state
           return newState;
@@ -278,15 +289,17 @@ class Signup extends React.Component {
   // Delete a signup.
   deleteSignup(signupId, event) {
     event.preventDefault();
-    const confirmed = confirm('🚨🔥🚨 Are you sure you want to delete this? 🚨🔥🚨');
+    const confirmed = confirm(
+      '🚨🔥🚨 Are you sure you want to delete this? 🚨🔥🚨',
+    );
 
     if (confirmed) {
       // Make API request to Rogue to delete the signup on the backend.
       const response = this.api.delete(`api/v3/signups/${signupId}`);
 
-      response.then((result) => {
+      response.then(result => {
         // Update the state.
-        this.setState((previousState) => {
+        this.setState(previousState => {
           const newState = { ...previousState };
 
           // Set the deleted signup to undefined.
@@ -304,10 +317,10 @@ class Signup extends React.Component {
   submitPost(post) {
     // To submit a post with a file, we need to change the Content-Type to muultipart/form-data.
     const api = new RestApiClient(window.location.origin, {
-        headers: {
-          'Authorization' : `Bearer ${window.AUTH}`,
-          'Content-Type': 'multipart/form-data',
-        },
+      headers: {
+        Authorization: `Bearer ${window.AUTH}`,
+        'Content-Type': 'multipart/form-data',
+      },
     });
 
     // Fields to send to /v3/posts
@@ -330,26 +343,28 @@ class Signup extends React.Component {
     // Make API request to Rogue to upload post
     const request = api.post('api/v3/posts', payload);
 
-    request.then((result) => {
-      // Update the state
-      this.setState((previousState) => {
-        const newState = { ...previousState };
-        const post = keyBy(result, 'id');
-        const key = Number(Object.keys(post));
+    request
+      .then(result => {
+        // Update the state
+        this.setState(previousState => {
+          const newState = { ...previousState };
+          const post = keyBy(result, 'id');
+          const key = Number(Object.keys(post));
 
-        newState.successfulSubmission = {
-          success: {
-            message: 'Thanks for the photo! It has been automatically approved.',
-          },
-        };
+          newState.successfulSubmission = {
+            success: {
+              message:
+                'Thanks for the photo! It has been automatically approved.',
+            },
+          };
 
-        newState.posts[key] = post[key];
+          newState.posts[key] = post[key];
 
-        return newState;
-      });
-    })
+          return newState;
+        });
+      })
       .catch(error =>
-        this.setState((previousState) => {
+        this.setState(previousState => {
           const newState = { ...previousState };
 
           newState.successfulSubmission = {
@@ -369,7 +384,7 @@ class Signup extends React.Component {
     const campaign = this.props.campaign;
     const posts = this.state.posts;
 
-    if (! this.state.signup) {
+    if (!this.state.signup) {
       return <Empty header={`This signup has been deleted`} />;
     }
 
@@ -378,7 +393,10 @@ class Signup extends React.Component {
         <div className="container__row">
           <div className="container__block -half">
             <UserInformation user={user}>
-              <TextBlock title="Why Statement" content={signup.why_participated} />
+              <TextBlock
+                title="Why Statement"
+                content={signup.why_participated}
+              />
             </UserInformation>
           </div>
 
@@ -404,10 +422,12 @@ class Signup extends React.Component {
             </div>
             */}
             <div className="container__row">
-              <a href="#" onClick={e => this.showUploader(signup, e)}>Upload Photo</a>
+              <a href="#" onClick={e => this.showUploader(signup, e)}>
+                Upload Photo
+              </a>
 
               <ModalContainer>
-                {this.state.displayUploaderModal ?
+                {this.state.displayUploaderModal ? (
                   <UploaderModal
                     onClose={e => this.hideUploader(e)}
                     signup={signup}
@@ -416,12 +436,17 @@ class Signup extends React.Component {
                     updateSignup={this.updateSignup}
                     success={this.state.successfulSubmission}
                   />
-                  : null}
+                ) : null}
               </ModalContainer>
             </div>
 
             <div className="container__row">
-              <button className="button delete -tertiary" onClick={e => this.deleteSignup(signup.id, e)}>Delete Signup</button>
+              <button
+                className="button delete -tertiary"
+                onClick={e => this.deleteSignup(signup.id, e)}
+              >
+                Delete Signup
+              </button>
             </div>
 
             <MetaInformation
@@ -435,9 +460,18 @@ class Signup extends React.Component {
             />
           </div>
         </div>
-        {
-          map(['pending', 'accepted', 'rejected'], (status, key) => <PostGroup key={key} groupType={status} posts={posts} signup={signup} onUpdate={this.updatePost} onTag={this.updateTag} deletePost={this.deletePost} campaign={campaign} />)
-        }
+        {map(['pending', 'accepted', 'rejected'], (status, key) => (
+          <PostGroup
+            key={key}
+            groupType={status}
+            posts={posts}
+            signup={signup}
+            onUpdate={this.updatePost}
+            onTag={this.updateTag}
+            deletePost={this.deletePost}
+            campaign={campaign}
+          />
+        ))}
       </div>
     );
   }

@@ -34,7 +34,9 @@ class SignupCard extends React.Component {
 
     const extraPostCount = signup.posts.data.length - gallerySize;
 
-    const posts = signup.posts.data.slice(0, gallerySize).map((post, index) => <PostTile key={index} details={post} />);
+    const posts = signup.posts.data
+      .slice(0, gallerySize)
+      .map((post, index) => <PostTile key={index} details={post} />);
 
     const signupUrl = `/signups/${signup.signup_id}`;
 
@@ -43,12 +45,22 @@ class SignupCard extends React.Component {
         <a href={signupUrl}>
           <div className="container__block -half">
             <div className="container__row">
-              <h2 className="heading">{campaign ? campaign.title : signup.campaign_id}</h2>
+              <h2 className="heading">
+                {campaign ? campaign.title : signup.campaign_id}
+              </h2>
               <h4 className="heading">Campaign ID: {signup.campaign_id}</h4>
-              <h4 className="heading">Campaign Run ID: {signup.campaign_run_id}</h4>
-              {campaign ?
-                <h4 className="heading">Campaign Run Start Date: {this.getCampaignRunStartDate(campaign.campaign_runs.current, signup.campaign_run_id)}</h4>
-                : null }
+              <h4 className="heading">
+                Campaign Run ID: {signup.campaign_run_id}
+              </h4>
+              {campaign ? (
+                <h4 className="heading">
+                  Campaign Run Start Date:{' '}
+                  {this.getCampaignRunStartDate(
+                    campaign.campaign_runs.current,
+                    signup.campaign_run_id,
+                  )}
+                </h4>
+              ) : null}
             </div>
             <div className="container__row">
               <h4 className="heading">Why Statement</h4>
@@ -56,29 +68,35 @@ class SignupCard extends React.Component {
             </div>
           </div>
           <div className="container__block -half">
-            { signup.quantity ?
+            {signup.quantity ? (
               <div className="container__row figure -left -center">
                 <div className="figure__media">
                   <div className="quantity">{signup.quantity}</div>
                 </div>
                 <div className="figure__body">
-                  <h4 className="reportback-noun-verb">{campaign ? `${campaign.reportback_info.noun} ${campaign.reportback_info.verb}` : '' }</h4>
+                  <h4 className="reportback-noun-verb">
+                    {campaign
+                      ? `${campaign.reportback_info.noun} ${
+                          campaign.reportback_info.verb
+                        }`
+                      : ''}
+                  </h4>
                 </div>
               </div>
-              : null }
-            {posts.length ?
+            ) : null}
+            {posts.length ? (
               <div className="container__row">
                 <h4>Items</h4>
                 <ul className="gallery">
                   {posts}
-                  {extraPostCount > 0 ?
+                  {extraPostCount > 0 ? (
                     <li className="figure__media">
                       <div className="quantity">+{extraPostCount}</div>
                     </li>
-                    : null}
+                  ) : null}
                 </ul>
               </div>
-              : null }
+            ) : null}
           </div>
         </a>
       </article>
@@ -105,6 +123,5 @@ SignupCard.propTypes = {
 SignupCard.defaultProps = {
   campaign: null,
 };
-
 
 export default SignupCard;

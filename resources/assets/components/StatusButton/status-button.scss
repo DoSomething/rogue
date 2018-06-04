@@ -3,7 +3,7 @@
  */
 @import '~@dosomething/forge/scss/toolkit';
 
-$accepted-green: #80E85D;
+$accepted-green: #80e85d;
 
 .button {
   &.-outlined-button {
@@ -21,7 +21,9 @@ $accepted-green: #80E85D;
         border-color: $white;
       }
 
-      &.-accepted:active, &.-accepted:focus, &.is-selected{
+      &.-accepted:active,
+      &.-accepted:focus,
+      &.is-selected {
         background: darken($accepted-green, $color-tint);
         color: $white;
         border: none;
@@ -35,7 +37,9 @@ $accepted-green: #80E85D;
         border-color: $white;
       }
 
-      &.-rejected:active, &.-rejected:focus, &.is-selected {
+      &.-rejected:active,
+      &.-rejected:focus,
+      &.is-selected {
         background: darken($error-color, $color-tint);
         color: $white;
         border: none;

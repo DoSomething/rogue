@@ -31,10 +31,9 @@ class Post extends React.Component {
 
     this.setState({ loading: true });
 
-    this.props.rotate(this.props.post.id)
-      .then(() => {
-        this.setState({ loading: false });
-      });
+    this.props.rotate(this.props.post.id).then(() => {
+      this.setState({ loading: false });
+    });
   }
 
   getOtherPosts(post) {
@@ -47,7 +46,10 @@ class Post extends React.Component {
     const other_posts = clone(posts);
 
     // find index that has that post_id and remove
-    const big_post = remove(other_posts, current_post => current_post.id == post_id);
+    const big_post = remove(
+      other_posts,
+      current_post => current_post.id == post_id,
+    );
 
     // return the rest of the original array
     return other_posts;
@@ -65,54 +67,71 @@ class Post extends React.Component {
     return (
       <div className="post container__row">
         {/* Post Images */}
-        {post.type === 'photo' ?
+        {post.type === 'photo' ? (
           <div className="container__block -third">
             <div className="post__image">
               <img src={getImageUrlFromPost(post, 'original')} />
             </div>
             <div className="admin-tools">
               <div className="admin-tools__links">
-                <a href={getImageUrlFromPost(post, 'original')} target="_blank">Original Photo</a>
+                <a href={getImageUrlFromPost(post, 'original')} target="_blank">
+                  Original Photo
+                </a>
               </div>
-              {this.props.rotate ?
+              {this.props.rotate ? (
                 <div className="admin-tools__rotate">
-                  {this.state.loading ?
+                  {this.state.loading ? (
                     <div className="spinner" />
-                    :
-                    <a className="button -tertiary rotate" onClick={this.handleClick} />
-                  }
+                  ) : (
+                    <a
+                      className="button -tertiary rotate"
+                      onClick={this.handleClick}
+                    />
+                  )}
                 </div>
-                : null}
+              ) : null}
             </div>
-            {this.props.showSiblings ?
+            {this.props.showSiblings ? (
               <ul className="gallery -duo">
-                {
-                  map(this.getOtherPosts(post), (post, key) => <PostTile key={key} details={post} />)
-                }
+                {map(this.getOtherPosts(post), (post, key) => (
+                  <PostTile key={key} details={post} />
+                ))}
               </ul>
-              : null}
+            ) : null}
           </div>
-          : null}
+        ) : null}
 
         {/* User and Post information */}
         <div className={`container__block ${containerSize}`}>
           <UserInformation user={user} linkSignup={signup.id}>
-            {this.props.showQuantity ?
-              <Quantity quantity={quantity} noun={campaign.reportback_info.noun} verb={campaign.reportback_info.verb} />
-              : null}
+            {this.props.showQuantity ? (
+              <Quantity
+                quantity={quantity}
+                noun={campaign.reportback_info.noun}
+                verb={campaign.reportback_info.verb}
+              />
+            ) : null}
 
-            {this.props.allowHistory ?
+            {this.props.allowHistory ? (
               <div className="container">
-                <a href="#" onClick={e => this.props.showHistory(post.id, e, signup.id)}>Edit | Show History</a>
+                <a
+                  href="#"
+                  onClick={e => this.props.showHistory(post.id, e, signup.id)}
+                >
+                  Edit | Show History
+                </a>
               </div>
-              : null}
+            ) : null}
 
             <div className="container -padded">
               <TextBlock title={textOrCaption} content={post.media.text} />
             </div>
 
             <div className="container">
-              <TextBlock title="Why Statement" content={this.props.signup.why_participated} />
+              <TextBlock
+                title="Why Statement"
+                content={this.props.signup.why_participated}
+              />
             </div>
           </UserInformation>
         </div>
@@ -120,7 +139,12 @@ class Post extends React.Component {
         {/* Review block and meta data */}
         <div className={`container__block ${containerSize}`}>
           <div className="container__row">
-            <ReviewBlock post={post} onUpdate={this.props.onUpdate} onTag={this.props.onTag} deletePost={this.props.deletePost} />
+            <ReviewBlock
+              post={post}
+              onUpdate={this.props.onUpdate}
+              onTag={this.props.onTag}
+              deletePost={this.props.deletePost}
+            />
           </div>
           <div className="container__row">
             <MetaInformation
@@ -155,10 +179,7 @@ Post.propTypes = {
   signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   // @TODO: Sometimes comes in as an array, and sometimes as an object.
   // Figure out why, and update the validation.
-  user: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object,
-  ]), // eslint-disable-line react/forbid-prop-types
+  user: PropTypes.oneOfType([PropTypes.array, PropTypes.object]), // eslint-disable-line react/forbid-prop-types
 };
 
 Post.defaultProps = {
