@@ -10,7 +10,12 @@ const StatusCounter = props => (
         <span className="count">{props.postTotals.pending_count}</span>
         <span className="status">Pending</span>
         <div>
-          <a className="button -secondary" href={`/campaigns/${props.campaign.id}/inbox`}>Review</a>
+          <a
+            className="button -secondary"
+            href={`/campaigns/${props.campaign.id}/inbox`}
+          >
+            Review
+          </a>
         </div>
       </li>
       {/* @TODO - add back in when we deal with pagination on the single campaign view
@@ -26,7 +31,6 @@ const StatusCounter = props => (
     </ul>
   </div>
 );
-
 
 StatusCounter.propTypes = {
   postTotals: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

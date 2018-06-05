@@ -1,4 +1,5 @@
 ## Posts
+
 All `v3 /posts` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
 
 ## Retrieve All Posts
@@ -14,6 +15,7 @@ Only admins and post owners will have `tags`, `source`, `remote_addr` (which wil
 Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 
 ### Optional Query Parameters
+
 - **limit**
   - Set the number of records to return in a single response.
   - e.g. `/posts?limit=35`
@@ -100,6 +102,7 @@ Example Response:
     }
 }
 ```
+
 ## Retrieve A Specific Post
 
 ```
@@ -145,28 +148,29 @@ This will automatically create or update the corresponding signup.
 ```
 POST /api/v3/posts
 ```
-  - **campaign_id**: (int|string) required.
-    The Drupal/Contentful ID of the campaign that the user's post is associated with.
-  - **campaign_run_id**: (int)
-    The drupal campaign run node id of the campaign that the user's post is associated with.
-  - **type**: (string) required.
-    The type of post submitted e.g. photo, voter-reg, text
-  - **action**: (string) required.
-    Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
-  - **quantity**: (int|nullable) optional.
-    The number of reportback nouns verbed. Can be `null`.
-  - **why_participated**: (string).
-    The reason why the user participated.
-  - **text**: (string).
-    Corresponding text for the post (could be photo caption or other words). 256 max characters.
-  - **status**: (string).
-    Option to set status upon creation if admin uploads post for user.
-  - **file**: (multipart/form-data) required for photo posts.
-    File to save of post image.
-  - **details** (json).
-    A JSON field to store extra details about a post.
-  - **dont_send_to_blink** (boolean) optional.
-    If included and true, the data for this Post will not be sent to Blink.
+
+- **campaign_id**: (int|string) required.
+  The Drupal/Contentful ID of the campaign that the user's post is associated with.
+- **campaign_run_id**: (int)
+  The drupal campaign run node id of the campaign that the user's post is associated with.
+- **type**: (string) required.
+  The type of post submitted e.g. photo, voter-reg, text
+- **action**: (string) required.
+  Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
+- **quantity**: (int|nullable) optional.
+  The number of reportback nouns verbed. Can be `null`.
+- **why_participated**: (string).
+  The reason why the user participated.
+- **text**: (string).
+  Corresponding text for the post (could be photo caption or other words). 256 max characters.
+- **status**: (string).
+  Option to set status upon creation if admin uploads post for user.
+- **file**: (multipart/form-data) required for photo posts.
+  File to save of post image.
+- **details** (json).
+  A JSON field to store extra details about a post.
+- **dont_send_to_blink** (boolean) optional.
+  If included and true, the data for this Post will not be sent to Blink.
 
 Example Response:
 
@@ -198,6 +202,7 @@ Example Response:
 ```
 DELETE /api/v3/posts/:post_id
 ```
+
 Example Response:
 
 ```
@@ -205,7 +210,6 @@ Example Response:
     "code": 200,
     "message": "Post deleted."
 }
-
 ```
 
 ## Update a Post
@@ -214,12 +218,13 @@ Example Response:
 PATCH /api/v3/posts/:post_id
 ```
 
-  - **text**: (string)
-    The text of the post.
-  - **quantity**: (int)
-    The quantity of items in the post.
+- **text**: (string)
+  The text of the post.
+- **quantity**: (int)
+  The quantity of items in the post.
 
 Example request body:
+
 ```
 [
   "text" => "Here is a brand new caption"
@@ -228,6 +233,7 @@ Example request body:
 ```
 
 Example response:
+
 ```
 {
   "data": {

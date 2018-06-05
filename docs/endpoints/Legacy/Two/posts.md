@@ -9,6 +9,7 @@ GET /api/v2/posts
 Posts are returned in reverse chronological order.
 
 ### Optional Query Parameters
+
 - **limit**
   - Set the number of records to return in a single response.
   - e.g. `/posts?limit=35`
@@ -103,46 +104,46 @@ Example Response:
 POST /api/v2/posts
 ```
 
-  - **northstar_id**: (string) required.
-    The northstar id of the user creating the post.
-  - **campaign_id**: (int|string) required.
-    The drupal node id of the campaign that the user's post is associated with. 
-  - **campaign_run_id**: (int) optional.
-    The drupal campaign run node id of the campaign that the user's post is associated with.
-  - **quantity**: (int).
-    The number of reportback nouns verbed. 
-  - **why_participated**: (string).
-    The reason why the user participated.
-  - **caption**: (string).
-    Corresponding caption for the post.
-  - **status**: (string).
-    Option to set status upon creation if admin uploads post for user.
-  - **source**: (string).
-    Where the post was submitted from.
-  - **remote_addr**: (string).
-    Will be `0.0.0.0` for all posts in compliance with GDPR. 
-  - **file**: (string) required.
-    File string to save of post image.
-  - **crop_x**: (int).
-    The crop x coordinates of the post image if the user cropped the image.
-  - **crop_y**: (int).
-    The crop y coordinates of the post image if the user cropped the image.
-  - **crop_width** (int).
-    The copy width coordinates of the post image if the user cropped the image.
-  - **crop_height** (int).
-    The copy height coordinates of the post image if the user cropped the image.
-  - **crop_rotate** (int).
-    The copy rotate coordinates of the post image if the user cropped the image.
-  - **dont_send_to_blink** (boolean) optional.
-    If included and true, the data for this Post will not be sent to Blink.
-  - **created_at**: (string) optional.
-    `Y-m-d H:i:s` format. When the post was created.
-  - **updated_at**: (string) optional.
-    `Y-m-d H:i:s` format. When the post was last updated.
-  - **type**: (string).
-    The type of post submitted e.g. photo, voter-reg, text
-  - **action**: (string).
-    Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
+- **northstar_id**: (string) required.
+  The northstar id of the user creating the post.
+- **campaign_id**: (int|string) required.
+  The drupal node id of the campaign that the user's post is associated with.
+- **campaign_run_id**: (int) optional.
+  The drupal campaign run node id of the campaign that the user's post is associated with.
+- **quantity**: (int).
+  The number of reportback nouns verbed.
+- **why_participated**: (string).
+  The reason why the user participated.
+- **caption**: (string).
+  Corresponding caption for the post.
+- **status**: (string).
+  Option to set status upon creation if admin uploads post for user.
+- **source**: (string).
+  Where the post was submitted from.
+- **remote_addr**: (string).
+  Will be `0.0.0.0` for all posts in compliance with GDPR.
+- **file**: (string) required.
+  File string to save of post image.
+- **crop_x**: (int).
+  The crop x coordinates of the post image if the user cropped the image.
+- **crop_y**: (int).
+  The crop y coordinates of the post image if the user cropped the image.
+- **crop_width** (int).
+  The copy width coordinates of the post image if the user cropped the image.
+- **crop_height** (int).
+  The copy height coordinates of the post image if the user cropped the image.
+- **crop_rotate** (int).
+  The copy rotate coordinates of the post image if the user cropped the image.
+- **dont_send_to_blink** (boolean) optional.
+  If included and true, the data for this Post will not be sent to Blink.
+- **created_at**: (string) optional.
+  `Y-m-d H:i:s` format. When the post was created.
+- **updated_at**: (string) optional.
+  `Y-m-d H:i:s` format. When the post was last updated.
+- **type**: (string).
+  The type of post submitted e.g. photo, voter-reg, text
+- **action**: (string).
+  Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
 
 Example Response:
 

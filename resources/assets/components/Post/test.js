@@ -18,20 +18,28 @@ test('it renders correctly', () => {
     signup_id: 7,
   };
 
-  const deletePost = function () {
+  const deletePost = function() {
     return true;
   };
 
-  const onUpdate = function () {
+  const onUpdate = function() {
     return true;
   };
 
-  const onTag = function () {
+  const onTag = function() {
     return true;
   };
 
-  const tree = renderer.create(
-    <Post post={post} signup={signup} deletePost={deletePost} onUpdate={onUpdate} onTag={onTag} />,
-  ).toJSON();
+  const tree = renderer
+    .create(
+      <Post
+        post={post}
+        signup={signup}
+        deletePost={deletePost}
+        onUpdate={onUpdate}
+        onTag={onTag}
+      />,
+    )
+    .toJSON();
   expect(tree).toMatchSnapshot();
 });

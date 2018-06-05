@@ -8,7 +8,7 @@ const Empty = props => (
     <div className="empty__image" />
     <div className="empty__text">
       <h2 className="heading -gamma">{props.header}</h2>
-      <span className="copy">{props.copy ? props.copy : null }</span>
+      <span className="copy">{props.copy ? props.copy : null}</span>
     </div>
   </div>
 );

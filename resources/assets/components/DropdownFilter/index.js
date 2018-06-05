@@ -30,7 +30,9 @@ class DropdownFilter extends React.Component {
         <div className="select">
           <select onChange={event => this.change(event)}>
             {map(this.props.options.values, (option, key) => (
-              <option value={key} key={key} name='select'>{option}</option>
+              <option value={key} key={key} name="select">
+                {option}
+              </option>
             ))}
           </select>
         </div>

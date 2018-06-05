@@ -8,7 +8,11 @@ import './table.scss';
 
 class Table extends React.Component {
   render() {
-    const heading = this.props.headings.map((title, index) => <th key={index} className="table__cell"><h3 className="heading -delta">{title}</h3></th>);
+    const heading = this.props.headings.map((title, index) => (
+      <th key={index} className="table__cell">
+        <h3 className="heading -delta">{title}</h3>
+      </th>
+    ));
 
     // @TODO - Rethink this. Why are CampaignRow and EventRow different?
     const rows = this.props.data.map((content, index) => {
@@ -22,13 +26,9 @@ class Table extends React.Component {
     return (
       <table className="table">
         <thead>
-          <tr className="table__header">
-            {heading}
-          </tr>
+          <tr className="table__header">{heading}</tr>
         </thead>
-        <tbody>
-          {rows}
-        </tbody>
+        <tbody>{rows}</tbody>
       </table>
     );
   }

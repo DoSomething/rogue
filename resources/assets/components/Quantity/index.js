@@ -7,9 +7,11 @@ const Quantity = props => (
       <div className="quantity">{props.quantity}</div>
     </div>
     <div className="figure__body">
-      {props.noun && props.verb ?
-        <h4 className="reportback-noun-verb">{props.noun} {props.verb}</h4>
-        : null}
+      {props.noun && props.verb ? (
+        <h4 className="reportback-noun-verb">
+          {props.noun} {props.verb}
+        </h4>
+      ) : null}
     </div>
   </div>
 );
@@ -17,10 +19,7 @@ const Quantity = props => (
 Quantity.propTypes = {
   noun: PropTypes.string,
   // @TODO - figure out why this comes in two different ways.
-  quantity: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   verb: PropTypes.string,
 };
 

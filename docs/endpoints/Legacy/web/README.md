@@ -6,10 +6,9 @@ Web endpoints are used by the Rogue Admin Interface built in React.
 
 #### Endpoints
 
-Resource                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`reviews` |    [Update a post's status](#reviews)
-
+| Resource  | Functionality                      |
+| --------- | ---------------------------------- |
+| `reviews` | [Update a post's status](#reviews) |
 
 ## Reviews - WEB
 
@@ -19,12 +18,12 @@ Update a post's status when an admin reviews the post.
 PUT /reviews
 ```
 
-  - **post_id**: (string) required.
-    The id of the post that has been reviewed.
-  - **status**: (string) required.
-    The status of the post.
-  - **comment**: (string)
-    A comment that the reviewer has made.
+- **post_id**: (string) required.
+  The id of the post that has been reviewed.
+- **status**: (string) required.
+  The status of the post.
+- **comment**: (string)
+  A comment that the reviewer has made.
 
 Example Response:
 

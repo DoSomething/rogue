@@ -19,17 +19,19 @@ function mountContainer(components) {
       // If this is a component where reviewing happens,
       // wrap the container component in the HoC for reviewing.
       if (reviewing) {
-        const ComponentWithReviewing = reviewComponent(components[container], window.STATE);
+        const ComponentWithReviewing = reviewComponent(
+          components[container],
+          window.STATE,
+        );
 
         ReactDOM.render(<ComponentWithReviewing />, reactElement);
 
-      // If there is no reviewing, just render the component on the page.
+        // If there is no reviewing, just render the component on the page.
       } else {
         ReactDOM.render(
-          React.createElement(
-            components[container],
-            { ...window.STATE },
-          ), reactElement);
+          React.createElement(components[container], { ...window.STATE }),
+          reactElement,
+        );
       }
     }
   }

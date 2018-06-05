@@ -10,7 +10,9 @@ class EventRow extends React.Component {
   }
 
   createEventRow(event) {
-    const newQuantity = event.content.quantity ? event.content.quantity : event.content.quantity_pending;
+    const newQuantity = event.content.quantity
+      ? event.content.quantity
+      : event.content.quantity_pending;
 
     const row = [
       {
@@ -35,7 +37,11 @@ class EventRow extends React.Component {
 
     return (
       <tr className="table__row">
-        {content.map((cell, index) => <td className="table__cell" key={index}>{cell.title}</td>)}
+        {content.map((cell, index) => (
+          <td className="table__cell" key={index}>
+            {cell.title}
+          </td>
+        ))}
       </tr>
     );
   }

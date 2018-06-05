@@ -18,15 +18,23 @@ class StatusButton extends React.Component {
   handleClick() {
     this.setState({ sending: true });
 
-    this.props.setStatus(this.props.type)
-      .then(() => {
-        this.setState({ sending: false });
-      });
+    this.props.setStatus(this.props.type).then(() => {
+      this.setState({ sending: false });
+    });
   }
 
   render() {
     return (
-      <button className={classnames('button', { '-outlined-button': ! this.state.sending }, `-${this.props.type}`, { 'is-selected': this.props.status == this.props.type }, { 'is-loading': this.state.sending })} onClick={() => this.handleClick()}>
+      <button
+        className={classnames(
+          'button',
+          { '-outlined-button': !this.state.sending },
+          `-${this.props.type}`,
+          { 'is-selected': this.props.status == this.props.type },
+          { 'is-loading': this.state.sending },
+        )}
+        onClick={() => this.handleClick()}
+      >
         {this.props.label}
       </button>
     );

@@ -6,32 +6,33 @@
 POST /api/v2/signups
 ```
 
-  - **northstar_id**: (string) required.
-    The northstar id of the user signing up.
-  - **campaign_id**: (int|string) required.
-    The drupal node id of the campaign the user is signing up for.
-  - **campaign_run_id**: (int) optional.
-    The drupal campaign run node id of the campaign run the user is signing up for.
-  - **quantity**: (int) optional.
-    The approved number of reportback nouns verbed.
-  - **quantity_pending**: (int) optional.
-    The pending number of reportback nouns verbed. 
-  - **why_participated**: (string) optional.
-    The reason why the user participated.
-  - **source**: (string) optional (for migration purposes, there are signups on prod with no source).
-    The source of the signup.
-  - **details**: (string) optional
-    Details to be added to the "details" column on the signup, such as signed up to receive affiliate messaging.
-  - **dont_send_to_blink** (boolean) optional.
-    If included and true, the data for this Signup will not be sent to Blink.
-  - **created_at**: (string) optional.
-    `Y-m-d H:i:s` format. When the signup was created.
-  - **updated_at**: (string) optional.
-    `Y-m-d H:i:s` format. When the signup was last updated.
+- **northstar_id**: (string) required.
+  The northstar id of the user signing up.
+- **campaign_id**: (int|string) required.
+  The drupal node id of the campaign the user is signing up for.
+- **campaign_run_id**: (int) optional.
+  The drupal campaign run node id of the campaign run the user is signing up for.
+- **quantity**: (int) optional.
+  The approved number of reportback nouns verbed.
+- **quantity_pending**: (int) optional.
+  The pending number of reportback nouns verbed.
+- **why_participated**: (string) optional.
+  The reason why the user participated.
+- **source**: (string) optional (for migration purposes, there are signups on prod with no source).
+  The source of the signup.
+- **details**: (string) optional
+  Details to be added to the "details" column on the signup, such as signed up to receive affiliate messaging.
+- **dont_send_to_blink** (boolean) optional.
+  If included and true, the data for this Signup will not be sent to Blink.
+- **created_at**: (string) optional.
+  `Y-m-d H:i:s` format. When the signup was created.
+- **updated_at**: (string) optional.
+  `Y-m-d H:i:s` format. When the signup was last updated.
 
-    You may optionally include reportback photo(s)
+  You may optionally include reportback photo(s)
 
 Example request body:
+
 ```
 [
   "northstar_id" => "5639066ba59dbfe6598b4567"
@@ -122,6 +123,7 @@ Example request body:
 Response: The signup and associated events and posts.
 
 Example response:
+
 ```
 {
   "data": {

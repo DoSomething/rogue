@@ -3,7 +3,10 @@
 import React from 'react';
 import { keyBy, map } from 'lodash';
 import RogueClient from '../../utilities/RogueClient';
-import { extractPostsFromSignups, extractSignupsFromPosts } from '../../helpers';
+import {
+  extractPostsFromSignups,
+  extractSignupsFromPosts,
+} from '../../helpers';
 
 const reviewComponent = (Component, data) => {
   return class extends React.Component {
@@ -15,7 +18,7 @@ const reviewComponent = (Component, data) => {
       };
 
       this.api = new RogueClient(window.location.origin, {
-        headers: { 'Authorization' : `Bearer ${window.AUTH}`}
+        headers: { Authorization: `Bearer ${window.AUTH}` },
       });
       this.updatePost = this.updatePost.bind(this);
       this.updateTag = this.updateTag.bind(this);
@@ -34,30 +37,36 @@ const reviewComponent = (Component, data) => {
         this.getPostsByStatus(data.initial_posts, data.campaign.id);
       } else {
         // @TODO - handle error better.
-        console.log("Error: need to know the initial posts to load and the campaign.");
+        console.log(
+          'Error: need to know the initial posts to load and the campaign.',
+        );
       }
     }
 
     // Make API call to GET api/v3/posts to get posts by filtered status.
     getPostsByStatus(status, campaignId) {
-      this.api.getPosts({
-        filter: {
-          status: status,
-          campaign_id: campaignId,
-        },
-        include: ['signup','siblings'],
-      }).then(json => this.setState({
-        campaign: data.campaign,
-        posts: keyBy(json.data, 'id'),
-        postIds: map(json.data, 'id'),
-        signups: extractSignupsFromPosts(keyBy(json.data, 'id')),
-        filter: status,
-        displayHistoryModal: null,
-        historyModalId: null,
-        loading: false,
-        nextPage: json.meta.cursor.next,
-        prevPage: json.meta.cursor.prev,
-      }));
+      this.api
+        .getPosts({
+          filter: {
+            status: status,
+            campaign_id: campaignId,
+          },
+          include: ['signup', 'siblings'],
+        })
+        .then(json =>
+          this.setState({
+            campaign: data.campaign,
+            posts: keyBy(json.data, 'id'),
+            postIds: map(json.data, 'id'),
+            signups: extractSignupsFromPosts(keyBy(json.data, 'id')),
+            filter: status,
+            displayHistoryModal: null,
+            historyModalId: null,
+            loading: false,
+            nextPage: json.meta.cursor.next,
+            prevPage: json.meta.cursor.prev,
+          }),
+        );
     }
 
     setNewPosts(apiResponse) {
@@ -79,20 +88,22 @@ const reviewComponent = (Component, data) => {
     showHistory(postId, event, signupId) {
       event.preventDefault();
 
-      this.api.getEvents({
-        filter: {
-          signup_id: signupId,
-        }
-      }).then((result) => {
-        this.setState((previousState) => {
-          const newState = {...previousState};
+      this.api
+        .getEvents({
+          filter: {
+            signup_id: signupId,
+          },
+        })
+        .then(result => {
+          this.setState(previousState => {
+            const newState = { ...previousState };
 
-          newState.displayHistoryModal = true;
-          newState.historyModalId = postId;
-          newState.signupEvents = Object.values(result.data);
-          return newState;
+            newState.displayHistoryModal = true;
+            newState.historyModalId = postId;
+            newState.signupEvents = Object.values(result.data);
+            return newState;
+          });
         });
-      });
     }
 
     // Close the open history modal
@@ -113,9 +124,9 @@ const reviewComponent = (Component, data) => {
 
       let request = this.api.postReview(fields);
 
-      return request.then((result) => {
-        this.setState((previousState) => {
-          const newState = {...previousState};
+      return request.then(result => {
+        this.setState(previousState => {
+          const newState = { ...previousState };
 
           newState.posts[post.id].status = fields.status;
 
@@ -132,16 +143,16 @@ const reviewComponent = (Component, data) => {
 
       let response = this.api.post(`api/v3/posts/${postId}/tags`, field);
 
-      return response.then((result) => {
-        this.setState((previousState) => {
-          const newState = {...previousState};
+      return response.then(result => {
+        this.setState(previousState => {
+          const newState = { ...previousState };
           const user = newState.posts[postId].user;
           const signup = newState.posts[postId].signup.data;
 
           // Merge existing post with the newly updated values from API.
           newState.posts[postId] = {
             ...newState.posts[postId],
-            ...result['data']
+            ...result['data'],
           };
 
           return newState;
@@ -159,10 +170,10 @@ const reviewComponent = (Component, data) => {
       // Make API request to Rogue to update the quantity on the backend
       let request = this.api.patch(`api/v3/posts/${post['id']}`, field);
 
-      request.then((result) => {
+      request.then(result => {
         // Update the state
-        this.setState((previousState) => {
-          const newState = {...previousState};
+        this.setState(previousState => {
+          const newState = { ...previousState };
           newState.posts[post['id']].quantity = result.data['quantity'];
 
           return newState;
@@ -176,19 +187,21 @@ const reviewComponent = (Component, data) => {
     // Delete a post.
     deletePost(postId, event) {
       event.preventDefault();
-      const confirmed = confirm('🚨🔥🚨Are you sure you want to delete this?🚨🔥🚨');
+      const confirmed = confirm(
+        '🚨🔥🚨Are you sure you want to delete this?🚨🔥🚨',
+      );
 
       if (confirmed) {
         // Make API request to Rogue to update the quantity on the backend
         let response = this.api.delete('posts/'.concat(postId));
 
-        response.then((result) => {
+        response.then(result => {
           // Update the state
-          this.setState((previousState) => {
-            var newState = {...previousState};
+          this.setState(previousState => {
+            var newState = { ...previousState };
 
             // Remove the deleted post from the state
-            delete(newState.posts[postId]);
+            delete newState.posts[postId];
 
             // Remove the postId from the state.
             const postIdIndex = newState.postIds.indexOf(postId);
@@ -210,18 +223,18 @@ const reviewComponent = (Component, data) => {
 
       let response = this.api.post(`images/${postId}?rotate=90`);
 
-      return response.then((json) => {
-        this.setState((prevState) => {
-          const newState = {...prevState};
+      return response.then(json => {
+        this.setState(prevState => {
+          const newState = { ...prevState };
           // Add a cache-busting string to the end of the image url
           // so that it changes and triggers a re-render.
-          newState.posts[postId].media.original_image_url = json.original_image_url + '?time=' + Date.now();
+          newState.posts[postId].media.original_image_url =
+            json.original_image_url + '?time=' + Date.now();
 
           return newState;
         });
       });
     }
-
 
     render() {
       const methods = {
@@ -240,8 +253,7 @@ const reviewComponent = (Component, data) => {
       // Also pass in original data pass to the HoC in case other components still need it down the line.
       return <Component {...this.state} {...methods} {...data} />;
     }
-  }
-}
+  };
+};
 
 export default reviewComponent;
-

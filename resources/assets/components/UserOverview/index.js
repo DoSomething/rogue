@@ -12,13 +12,12 @@ class UserOverview extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    (this.state = {
       loading: false,
       signups: [],
       campaigns: [],
-    },
-
-    this.api = new RestApiClient();
+    }),
+      (this.api = new RestApiClient());
   }
 
   componentDidMount() {
@@ -28,7 +27,7 @@ class UserOverview extends React.Component {
 
     // Get user activity.
     this.getUserActivity(this.props.user.id)
-    // Then get the campaign data tied to that activity.
+      // Then get the campaign data tied to that activity.
       .then(() => {
         const ids = map(this.state.signups, 'campaign_id');
         this.getCampaigns(ids);
@@ -54,7 +53,7 @@ class UserOverview extends React.Component {
       limit: 80,
     });
 
-    return request.then((result) => {
+    return request.then(result => {
       this.setState({
         signups: result.data,
       });
@@ -68,11 +67,15 @@ class UserOverview extends React.Component {
    * @return {Object}
    */
   getCampaigns(ids) {
-    this.api.get('api/v2/campaigns', {
-      ids: ids.join(),
-    }).then(json => this.setState({
-      campaigns: keyBy(json, 'id'),
-    }));
+    this.api
+      .get('api/v2/campaigns', {
+        ids: ids.join(),
+      })
+      .then(json =>
+        this.setState({
+          campaigns: keyBy(json, 'id'),
+        }),
+      );
   }
 
   render() {
@@ -81,7 +84,9 @@ class UserOverview extends React.Component {
     return (
       <div>
         <div className="container__block">
-          <h2 className="heading -emphasized -padded"><span>User Info</span></h2>
+          <h2 className="heading -emphasized -padded">
+            <span>User Info</span>
+          </h2>
         </div>
 
         <div className="container__block">
@@ -97,20 +102,30 @@ class UserOverview extends React.Component {
         </div>
 
         <div className="container__block">
-          <h2 className="heading -emphasized -padded"><span>Campaigns</span></h2>
+          <h2 className="heading -emphasized -padded">
+            <span>Campaigns</span>
+          </h2>
         </div>
 
         <div className="container__block">
-          {this.state.loading ?
+          {this.state.loading ? (
             <div className="spinner" />
-            :
-            this.state.signups.length === 0 ?
-              <Empty header="This user has no campaign signups." />
-              :
-              map(this.state.signups, (signup, index) => <SignupCard key={index} signup={signup} campaign={this.state.campaigns ? this.state.campaigns[signup.campaign_id] : null} />)
-          }
+          ) : this.state.signups.length === 0 ? (
+            <Empty header="This user has no campaign signups." />
+          ) : (
+            map(this.state.signups, (signup, index) => (
+              <SignupCard
+                key={index}
+                signup={signup}
+                campaign={
+                  this.state.campaigns
+                    ? this.state.campaigns[signup.campaign_id]
+                    : null
+                }
+              />
+            ))
+          )}
         </div>
-
       </div>
     );
   }

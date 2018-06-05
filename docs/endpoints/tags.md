@@ -1,4 +1,5 @@
 ## Tags
+
 All `v3 /posts/{post}/tags` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
 
 ## Tag or untag a Post
@@ -6,8 +7,9 @@ All `v3 /posts/{post}/tags` endpoints require the `activity` scope. `Create`/`up
 ```
 POST /api/v3/posts/:post_id/tags
 ```
-  - **tag_name**: (int|string) required.
-    The label you want to tag a post with. 
+
+- **tag_name**: (int|string) required.
+  The label you want to tag a post with.
 
 Example Response:
 

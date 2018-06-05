@@ -17,9 +17,9 @@ export function calculateAge(date) {
   let formattedAge = null;
 
   if (date) {
-  	const birthdate = new Date(date);
-  	const today = Date.now();
-  	formattedAge = Math.floor((today - birthdate) / 31536000000);
+    const birthdate = new Date(date);
+    const today = Date.now();
+    formattedAge = Math.floor((today - birthdate) / 31536000000);
   }
 
   return formattedAge;
@@ -66,7 +66,7 @@ export function displayUserInfo(firstName, lastName, birthDate) {
  * @return {String|null} City and State string.
  */
 export function displayCityState(city, state) {
-  if (! city && ! state) {
+  if (!city && !state) {
     return null;
   }
 
@@ -125,13 +125,13 @@ export function makeHash(string) {
 
   let hash = 0;
 
-  if (! string.length) {
+  if (!string.length) {
     return hash;
   }
 
   string.split('').forEach((char, index) => {
     const charCode = string.charCodeAt(index);
-    hash = ((hash << 5) - hash) + charCode; // eslint-disable-line no-bitwise
+    hash = (hash << 5) - hash + charCode; // eslint-disable-line no-bitwise
     hash = hash & hash; // eslint-disable-line no-bitwise, operator-assignment
   });
 
@@ -145,11 +145,13 @@ export function makeHash(string) {
 export function modifiers(...names) {
   let classes = names;
 
-  if (! Array.isArray(classes)) {
+  if (!Array.isArray(classes)) {
     classes = [classes];
   }
 
-  return classes.filter(className => className).map(className => `-${className}`);
+  return classes
+    .filter(className => className)
+    .map(className => `-${className}`);
 }
 
 /**
@@ -165,12 +167,16 @@ function getFileType(file) {
   const byte2 = dv.getUint8(1, true);
   const hex = byte1.toString(16) + byte2.toString(16);
 
-  return get({
-    '8950': 'image/png', // eslint-disable-line quote-props
-    '4749': 'image/gif', // eslint-disable-line quote-props
-    '424d': 'image/bmp', // eslint-disable-line quote-props
-    'ffd8': 'image/jpeg', // eslint-disable-line quote-props
-  }, hex, null);
+  return get(
+    {
+      '8950': 'image/png', // eslint-disable-line quote-props
+      '4749': 'image/gif', // eslint-disable-line quote-props
+      '424d': 'image/bmp', // eslint-disable-line quote-props
+      ffd8: 'image/jpeg', // eslint-disable-line quote-props
+    },
+    hex,
+    null,
+  );
 }
 
 /**
@@ -183,7 +189,7 @@ function getFileType(file) {
 function stripExifData(image, dv = null) {
   let dataView = dv;
 
-  if (! dataView) {
+  if (!dataView) {
     dataView = new DataView(image);
   }
 
@@ -222,7 +228,7 @@ function stripExifData(image, dv = null) {
   if (pieces.length > 0) {
     const newPieces = [];
 
-    pieces.forEach((piece) => {
+    pieces.forEach(piece => {
       newPieces.push(image.slice(piece.recess, piece.offset));
     }, this);
 
@@ -248,7 +254,6 @@ export function getImageUrlFromProp(photoProp) {
   } else if ('media' in photoProp) {
     photo_url = photoProp.media.original_image_url;
   }
-
 
   if (photo_url == 'default' || photo_url == null) {
     return 'https://www.dosomething.org/sites/default/files/JenBugError.png';
@@ -286,10 +291,11 @@ export function getEditedImageUrl(photoProp) {
  */
 export function getImageUrlFromPost(post, type) {
   let url = null;
-  const defaultPhotoUrl = 'https://www.dosomething.org/sites/default/files/JenBugError.png';
+  const defaultPhotoUrl =
+    'https://www.dosomething.org/sites/default/files/JenBugError.png';
 
   // Make sure media property is included in the Post.
-  if (! ('media' in post)) {
+  if (!('media' in post)) {
     return url;
   }
 

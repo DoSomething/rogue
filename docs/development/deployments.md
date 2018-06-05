@@ -27,11 +27,12 @@ Heroku is a platform that lets developers focus on building applications instead
 ## Heroku Resources
 
 Pages useful for understanding and debugging Heroku.
-* [12 Factor](https://12factor.net/)
-* [Heroku Dev Center](https://devcenter.heroku.com/)
-* [Heroku Laravel Buildpack](https://devcenter.heroku.com/articles/getting-started-with-laravel)
-* [Heroku Javascript Buildpack](https://devcenter.heroku.com/articles/deploying-nodejs)
-* [Heroku Review Apps Documentation](https://devcenter.heroku.com/articles/deploying-nodejs)
+
+- [12 Factor](https://12factor.net/)
+- [Heroku Dev Center](https://devcenter.heroku.com/)
+- [Heroku Laravel Buildpack](https://devcenter.heroku.com/articles/getting-started-with-laravel)
+- [Heroku Javascript Buildpack](https://devcenter.heroku.com/articles/deploying-nodejs)
+- [Heroku Review Apps Documentation](https://devcenter.heroku.com/articles/deploying-nodejs)
 
 ## Laravel + Heroku notes
 

@@ -43,7 +43,7 @@ class CampaignSingle extends React.Component {
             label: 'Good For Storytelling',
             active: false,
           },
-          'bulk': {
+          bulk: {
             label: 'Bulk',
             active: false,
           },
@@ -52,7 +52,7 @@ class CampaignSingle extends React.Component {
     };
 
     this.api = new RestApiClient(window.location.origin, {
-        headers: { 'Authorization' : `Bearer ${window.AUTH}`}
+      headers: { Authorization: `Bearer ${window.AUTH}` },
     });
     this.filterPosts = this.filterPosts.bind(this);
     this.getPostsByFilter = this.getPostsByFilter.bind(this);
@@ -74,7 +74,7 @@ class CampaignSingle extends React.Component {
     if (filters.tags) {
       const activeTags = [];
 
-      Object.keys(filters.tags).forEach((key) => {
+      Object.keys(filters.tags).forEach(key => {
         if (filters.tags[key].active === true) {
           activeTags.push(key);
         }
@@ -97,24 +97,24 @@ class CampaignSingle extends React.Component {
     // Strip the url to get query parameters.
     const splitEndpoint = url.split('/');
     const path = splitEndpoint.slice(-1)[0];
-    const queryString = (path.split('?'))[1];
+    const queryString = path.split('?')[1];
 
-    this.api.get('api/v3/posts', queryString)
-      .then((json) => {
-        this.setState({ loadingNewPosts: false });
-        this.props.setNewPosts(json);
-      });
+    this.api.get('api/v3/posts', queryString).then(json => {
+      this.setState({ loadingNewPosts: false });
+      this.props.setNewPosts(json);
+    });
   }
 
   // Make API call to GET api/v3/posts to get posts by filtered status and/or tag(s).
   getPostsByFilter(filters) {
     this.setState({ loadingNewPosts: true });
 
-    this.api.get('api/v3/posts', {
-      filter: filters,
-      include: ['signup', 'siblings'],
-    })
-      .then((json) => {
+    this.api
+      .get('api/v3/posts', {
+        filter: filters,
+        include: ['signup', 'siblings'],
+      })
+      .then(json => {
         this.setState({ loadingNewPosts: false });
         this.props.setNewPosts(json);
       });
@@ -145,7 +145,10 @@ class CampaignSingle extends React.Component {
         <div className="container__block">
           <div className="container__row">
             <div className="container__block -half">
-              <StatusCounter postTotals={this.props.post_totals} campaign={campaign} />
+              <StatusCounter
+                postTotals={this.props.post_totals}
+                campaign={campaign}
+              />
             </div>
             <div className="container__block -half">
               <UserExport campaign={campaign} />
@@ -158,14 +161,14 @@ class CampaignSingle extends React.Component {
         </FilterBar>
 
         <h2 className="heading -emphasized">Posts</h2>
-        {this.props.loading || this.state.loadingNewPosts ?
+        {this.props.loading || this.state.loadingNewPosts ? (
           <div className="spinner" />
-          :
-          this.props.postIds.length !== 0 ?
-            map(this.props.postIds, (key, value) => {
-              const post = find(posts, { id: key });
+        ) : this.props.postIds.length !== 0 ? (
+          map(this.props.postIds, (key, value) => {
+            const post = find(posts, { id: key });
 
-              return (<Post
+            return (
+              <Post
                 key={key}
                 post={post}
                 user={signups[post.signup_id].user.data}
@@ -179,14 +182,18 @@ class CampaignSingle extends React.Component {
                 showSiblings
                 showQuantity
                 allowHistory
-              />);
-            })
-            :
-            <Empty header="There are no results!" copy="Sorry, there are no posts that match your filters. Change or remove some tags and try again." />
-        }
+              />
+            );
+          })
+        ) : (
+          <Empty
+            header="There are no results!"
+            copy="Sorry, there are no posts that match your filters. Change or remove some tags and try again."
+          />
+        )}
 
         <ModalContainer>
-          {this.props.displayHistoryModal ?
+          {this.props.displayHistoryModal ? (
             <HistoryModal
               id={this.props.historyModalId}
               onUpdate={this.props.updateQuantity}
@@ -196,10 +203,14 @@ class CampaignSingle extends React.Component {
               signupEvents={this.props.signupEvents}
               post={posts[this.props.historyModalId]}
             />
-            : null}
+          ) : null}
         </ModalContainer>
 
-        <PagingButtons onPaginate={this.getPostsByPaginatedLink} prev={this.props.prevPage} next={this.props.nextPage} />
+        <PagingButtons
+          onPaginate={this.getPostsByPaginatedLink}
+          prev={this.props.prevPage}
+          next={this.props.nextPage}
+        />
       </div>
     );
   }

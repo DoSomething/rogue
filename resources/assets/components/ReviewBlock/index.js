@@ -11,18 +11,46 @@ class ReviewBlock extends React.Component {
 
   render() {
     const post = this.props.post;
-    const disableTags = ! (post.status === 'accepted' || post.status === 'rejected');
+    const disableTags = !(
+      post.status === 'accepted' || post.status === 'rejected'
+    );
 
     return (
       <div>
         <ul className="form-actions -inline" style={{ marginTop: 0 }}>
-          <li><StatusButton type="accepted" label="accept" status={post.status} setStatus={this.setStatus.bind(this)} /></li>
-          <li><StatusButton type="rejected" label="reject" status={post.status} setStatus={this.setStatus.bind(this)} /></li>
+          <li>
+            <StatusButton
+              type="accepted"
+              label="accept"
+              status={post.status}
+              setStatus={this.setStatus.bind(this)}
+            />
+          </li>
+          <li>
+            <StatusButton
+              type="rejected"
+              label="reject"
+              status={post.status}
+              setStatus={this.setStatus.bind(this)}
+            />
+          </li>
         </ul>
         <ul className="form-actions -inline">
-          <li><button className="button delete -tertiary" onClick={e => this.props.deletePost(post.id, e)}>Delete</button></li>
+          <li>
+            <button
+              className="button delete -tertiary"
+              onClick={e => this.props.deletePost(post.id, e)}
+            >
+              Delete
+            </button>
+          </li>
         </ul>
-        <Tags id={post.id} tagged={post.tags} onTag={this.props.onTag} disabled={disableTags}/>
+        <Tags
+          id={post.id}
+          tagged={post.tags}
+          onTag={this.props.onTag}
+          disabled={disableTags}
+        />
       </div>
     );
   }

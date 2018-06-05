@@ -1,11 +1,13 @@
 ## Activity
 
-Retrieve all user activity data. 
+Retrieve all user activity data.
 
 ```
 GET /api/v2/activity
 ```
+
 ### Optional Query Parameters
+
 - **filter[column]** _(integer)_
   - Filter results by the given column: `id`, `campaign_id`, `campaign_run_id`, `northstar_id`
   - You can filter by more than one column, e.g. `/activity?filter[id]=4&filter[campaign_id]=5`
@@ -21,10 +23,10 @@ GET /api/v2/activity
   - e.g. `/activity?include=user,posts`
 - **orderBy** _(string)_
   - Determines order the results are returned, based on the signups's created_at timestamp.
-  - If 'desc' is not passed through, defaults to return results by signup's created_at by ascending order. 
+  - If 'desc' is not passed through, defaults to return results by signup's created_at by ascending order.
   - e.g. `/activity?orderBy=desc`
 - **filter[updated_at]** _(timestamp)_
-  - Return records that have been updated after the given `updated_at` value. 
+  - Return records that have been updated after the given `updated_at` value.
   - e.g. `/activity?filter[updated_at]=2017-05-25 20:14:48`
 - **pagination** _(string)_
   - If set to 'cursor' we use Laravel's `simplePaginate` to paginate the results which will return less meta data on each request, if it is not passed it will use regular pagination.
