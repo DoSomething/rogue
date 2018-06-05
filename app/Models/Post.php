@@ -277,12 +277,16 @@ class Post extends Model
 
         $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
 
-        $this->tags()->attach($tag);
+        // Only tag if the tag doesn't exist on the post yet.
+        // Otherwise, a Integrity constraint violation / duplicate entry error will be thrown.
+        if (! in_array($tagName, $this->tagNames()->toArray())) {
+            $this->tags()->attach($tag);
 
-        // Update timestamps on the Post when adding a tag
-        $this->touch();
+            // Update timestamps on the Post when adding a tag
+            $this->touch();
 
-        event(new PostTagged($this, $tag));
+            event(new PostTagged($this, $tag));
+        }
 
         return $this;
     }
