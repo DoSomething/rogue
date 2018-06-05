@@ -55,7 +55,7 @@ class BulkReviewPosts extends Command
      */
     public function handle()
     {
-        info('rogue:bulkreviewposts: Starting to bulk accept posts!');
+        info('rogue:bulkreviewposts: Starting to bulk review posts!');
 
         $postType = $this->option('type') ?? null;
         $logfreq = $this->option('logfreq');
