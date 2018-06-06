@@ -94,6 +94,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
         $post->tag('Good Submission');
         $post->tag('Tag To Delete');
+        $post = $post->fresh();
 
         // Make sure both tags actually exist
         $this->assertContains('Good Submission', $post->tagNames());
@@ -105,9 +106,10 @@ class TagsTest extends TestCase
         ]);
 
         // Make sure that the tag is deleted, but the other tag is still there
+        $post = $post->fresh();
         $response->assertStatus(200);
         $this->assertContains('Good Submission', $post->tagNames());
-        $this->assertNotContains('Tag To Delete', $post->fresh()->tagNames());
+        $this->assertNotContains('Tag To Delete', $post->tagNames());
 
         // @TODO: When we refactor events, make sure we created an event for the tag that was deleted.
     }
