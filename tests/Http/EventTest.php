@@ -132,4 +132,82 @@ class EventTest extends TestCase
             'created_at' => '2017-08-04 18:02:00',
         ]);
     }
+
+    /**
+     * Test v3 events index is accessible by admin user.
+     *
+     * GET /api/v3/events
+     * @return void
+     */
+    public function testv3EventsIndexWithAdminUser()
+    {
+        // Create a signup
+        $signup = factory(Signup::class)->create();
+
+        // And then later on, we'll update this signup...
+        $this->mockTime('8/4/2017 18:02:00');
+        $signup->why_participated = 'new why';
+        $signup->save();
+
+        // Hit events index and make sure there are 2 events returned.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/events');
+
+        $response->assertStatus(200);
+
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals(2, $decodedResponse['meta']['pagination']['total']);
+    }
+
+    /**
+     * Test v3 events index is accessible not accessible by non-admin user.
+     *
+     * GET /api/v3/events
+     * @return void
+     */
+    public function testv3EventsIndexWithNonAdminUser()
+    {
+        // Create a signup
+        $signup = factory(Signup::class)->create();
+
+        // And then later on, we'll update this signup...
+        $this->mockTime('8/4/2017 18:02:00');
+        $signup->why_participated = 'new why';
+        $signup->save();
+
+        // Hit events index and make sure there are 2 events returned.
+        $response = $this->getJson('api/v3/events');
+
+        $response->assertStatus(403);
+
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals('Requires one of the following roles: admin', $decodedResponse['message']);
+    }
+
+    /**
+     * Test v3 events index with signup filter.
+     *
+     * GET /api/v3/events?filter[signup_id]=$signup->id
+     * @return void
+     */
+    public function testv3EventsIndexWithSignupFilter()
+    {
+        // Create a signup
+        $signup = factory(Signup::class)->create();
+
+        // And then later on, we'll update this signup...
+        $this->mockTime('8/4/2017 18:02:00');
+        $signup->why_participated = 'new why';
+        $signup->save();
+
+        // Create a second signup
+        $secondSignup = factory(Signup::class)->create();
+
+        // Hit events index with signup filter and make sure there are 2 events returned.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/events?filter[signup_id]=' . $signup->id);
+
+        $response->assertStatus(200);
+
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals(2, $decodedResponse['meta']['pagination']['total']);
+    }
 }

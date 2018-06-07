@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Rogue\Managers\SignupManager;
 use Rogue\Http\Transformers\SignupTransformer;
 use Illuminate\Auth\Access\AuthorizationException;
-use Rogue\Http\Controllers\Legacy\Two\ApiController;
 use Rogue\Http\Controllers\Traits\TransformsRequests;
 
 class SignupsController extends ApiController

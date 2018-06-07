@@ -6,7 +6,6 @@ use Rogue\Models\Post;
 use Rogue\Models\Reaction;
 use Illuminate\Http\Request;
 use Rogue\Http\Transformers\ReactionTransformer;
-use Rogue\Http\Controllers\Legacy\Two\ApiController;
 
 class ReactionController extends ApiController
 {
