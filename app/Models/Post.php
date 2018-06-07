@@ -275,14 +275,18 @@ class Post extends Model
         // Capitalize each word in the tag.
         $tagName = ucwords($tag);
 
-        $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
+        // Only tag if the tag doesn't exist on the post yet.
+        // Otherwise, an integrity constraint violation / duplicate entry error will be thrown.
+        if (! $this->tagNames()->contains($tagName)) {
+            $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
 
-        $this->tags()->attach($tag);
+            $this->tags()->attach($tag);
 
-        // Update timestamps on the Post when adding a tag
-        $this->touch();
+            // Update timestamps on the Post when adding a tag
+            $this->touch();
 
-        event(new PostTagged($this, $tag));
+            event(new PostTagged($this, $tag));
+        }
 
         return $this;
     }
