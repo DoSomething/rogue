@@ -30,7 +30,7 @@ class PostTagged
      *
      * @var bool
      */
-    protected $log;
+    public $log;
 
     /**
      * Create a new event instance.
