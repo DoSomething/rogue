@@ -83,7 +83,7 @@ class BulkReviewPosts extends Command
                 $this->posts->update($post, ['status' => $this->argument('newStatus')], $log
             );
                 foreach ($tags as $tag) {
-                    $post->tag($tag);
+                    $post->tag($tag, $log);
                 }
             }
         } else {
