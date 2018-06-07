@@ -17,7 +17,7 @@ class BulkReviewPosts extends Command
                             {campaign}
                             {oldStatus}
                             {newStatus}
-                            {--type= : Filter by the type of post}
+                            {type}
                             {--logfreq=1000: Flag to decide how often this command will log when a post is being updated}
                             {--log : Flag to allow logging in Post Manager}
                             {--tag=* : Tag(s) slug to tag post by. e.g. hide-in-gallery}';
@@ -57,7 +57,6 @@ class BulkReviewPosts extends Command
     {
         info('rogue:bulkreviewposts: Starting to bulk review posts!');
 
-        $postType = $this->option('type') ?? null;
         $logfreq = $this->option('logfreq');
         $log = $this->option('log');
         $tags = $this->option('tag') ?? null;
@@ -65,11 +64,8 @@ class BulkReviewPosts extends Command
         $postQuery = Post::where([
             ['campaign_id', $this->argument('campaign')],
             ['status', $this->argument('oldStatus')],
+            ['type', $this->argument('type')],
         ]);
-
-        if ($postType !== null) {
-            $postQuery = $postQuery->where('type', $postType);
-        }
 
         $posts = $postQuery->get();
 
