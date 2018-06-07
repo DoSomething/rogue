@@ -61,13 +61,11 @@ class BulkReviewPosts extends Command
         $log = $this->option('log');
         $tags = $this->option('tag') ?? null;
 
-        $postQuery = Post::where([
+        $posts = Post::where([
             ['campaign_id', $this->argument('campaign')],
             ['status', $this->argument('oldStatus')],
             ['type', $this->argument('type')],
-        ]);
-
-        $posts = $postQuery->get();
+        ])->get();
 
         if ($posts->isNotEmpty()) {
             foreach ($posts as $post) {
