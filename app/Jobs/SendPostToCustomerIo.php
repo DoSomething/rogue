@@ -15,20 +15,28 @@ class SendPostToCustomerIo implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The post to send to Blink.
+     * The post to send to Customer.io.
      *
      * @var Post
      */
     protected $post;
 
     /**
+     * Whether or not to log that this Post was sent to Customer.io, via Blink.
+     *
+     * @var bool
+     */
+    protected $log;
+
+    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Post $post)
+    public function __construct(Post $post, $log = true)
     {
         $this->post = $post;
+        $this->log = $log;
     }
 
     /**
@@ -42,7 +50,10 @@ class SendPostToCustomerIo implements ShouldQueue
         if ($this->post && $this->post->signup) {
             $payload = $this->post->toBlinkPayload();
             $blink->userSignupPost($payload);
-            logger()->info('Post ' . $payload['id'] . ' sent to Blink');
+
+            if ($this->log) {
+                logger()->info('Post ' . $payload['id'] . ' sent to Customer.io');
+            }
         }
     }
 }
