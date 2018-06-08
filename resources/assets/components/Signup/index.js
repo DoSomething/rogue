@@ -470,6 +470,7 @@ class Signup extends React.Component {
             onTag={this.updateTag}
             deletePost={this.deletePost}
             campaign={campaign}
+            rotate={this.props.rotate}
           />
         ))}
       </div>
