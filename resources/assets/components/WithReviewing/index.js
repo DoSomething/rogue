@@ -219,8 +219,6 @@ const reviewComponent = (Component, data) => {
 
     // Rotate a Post Image.
     rotate(postId) {
-      const post = this.state.posts[postId];
-
       let response = this.api.post(`images/${postId}?rotate=90`);
 
       return response.then(json => {
