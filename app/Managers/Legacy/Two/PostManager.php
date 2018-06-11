@@ -54,7 +54,7 @@ class PostManager
         SendSignupToQuasar::dispatch($post->signup);
 
         // Log that a post was created.
-        info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id]);
+        info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id, 'source' => $post->source]);
 
         return $post;
     }
