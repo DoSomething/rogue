@@ -10,7 +10,7 @@
     "heroku-postbuild": "npm run build",
     "lint": "eslint --fix --ext .js resources/assets",
     "precommit": "pretty-quick --staged",
-    "format": "prettier --write \"{docs,resources}/**/*.{js,md,scss,graphql}\"",
+    "format": "prettier --write \"{docs,resources}/**/*.{js,md,scss,graphql}\""
   },
   "engines": {
     "node": "8.x",
