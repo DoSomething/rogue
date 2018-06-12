@@ -108,8 +108,10 @@ class ImagesController extends Controller
         $editedImage = $this->aws->storeImageData((string) $editedImage, 'edited_' . $post->id);
 
         if (config('features.glide')) {
-            // Purge image from cache.
-            $this->fastly->purgeKey('post-'.$post->id);
+            // Purge image from cache if Fastly is configured.
+            if (! is_null(config('services.fastly.url')) && ! is_null(config('services.fastly.key')) && ! is_null(config('services.fastly.service_id'))) {
+                $this->fastly->purgeKey('post-'.$post->id);
+            }
 
             return response()->json([
                 'url' => $editedImage,

@@ -221,7 +221,6 @@ class Signup extends React.Component {
 
   // Tag a post.
   updateTag(postId, tag) {
-    console.log('hi');
     const field = {
       tag_name: tag,
     };
