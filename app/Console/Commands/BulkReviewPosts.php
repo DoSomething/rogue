@@ -65,9 +65,10 @@ class BulkReviewPosts extends Command
             ->where('campaign_id', $this->argument('campaign'))
             ->where('status', $this->argument('oldStatus'))
             ->where('type', $this->argument('type'))
+            ->limit(10)
             ->get();
 
-        info('rogue:bulkreviewposts: Posts result from query: ' . $posts);
+        info('rogue:bulkreviewposts: First post result from query: ' . $posts->first());
 
         if ($posts->isNotEmpty()) {
             foreach ($posts as $post) {
