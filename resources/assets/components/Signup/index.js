@@ -103,6 +103,7 @@ class Signup extends React.Component {
     this.hideUploader = this.hideUploader.bind(this);
     this.submitPost = this.submitPost.bind(this);
     this.updateSignup = this.updateSignup.bind(this);
+    this.rotate = this.rotate.bind(this);
   }
 
   componentDidMount() {
@@ -195,6 +196,23 @@ class Signup extends React.Component {
         const newState = { ...previousState };
 
         newState.posts[post.id].status = fields.status;
+
+        return newState;
+      });
+    });
+  }
+
+  // Rotate a Post Image.
+  rotate(postId) {
+    let response = this.api.post(`images/${postId}?rotate=90`);
+
+    return response.then(json => {
+      this.setState(prevState => {
+        const newState = { ...prevState };
+        // Add a cache-busting string to the end of the image url
+        // so that it changes and triggers a re-render.
+        newState.posts[postId].media.original_image_url =
+          json.original_image_url + '?time=' + Date.now();
 
         return newState;
       });
@@ -470,7 +488,7 @@ class Signup extends React.Component {
             onTag={this.updateTag}
             deletePost={this.deletePost}
             campaign={campaign}
-            rotate={this.props.rotate}
+            rotate={this.rotate}
           />
         ))}
       </div>
