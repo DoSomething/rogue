@@ -61,30 +61,35 @@ class BulkReviewPosts extends Command
         $log = $this->option('log');
         $tags = $this->option('tag') ?? null;
 
-        Post::where([
-            ['campaign_id', $this->argument('campaign')],
-            ['status', $this->argument('oldStatus')],
-            ['type', $this->argument('type')],
-        ])->chunk(100, function ($posts) {
-            if ($posts->isNotEmpty()) {
-                foreach ($posts as $post) {
-                    if ($post->id % $logfreq == 0) {
-                        info('rogue:bulkreviewposts: updating: ' . $post->id);
-                    }
+        info('rogue:bulkreviewposts: Beginning to query');
 
-                    // If the $log flag is included when the command is run, logging will occur in the Post Manager for each post.
-                    $this->posts->update($post, ['status' => $this->argument('newStatus')], $log
-                );
-                    foreach ($tags as $tag) {
-                        $post->tag($tag, $log);
-                    }
+        $posts = Post::setEagerLoads([])
+            ->where('campaign_id', $this->argument('campaign'))
+            ->where('status', $this->argument('oldStatus'))
+            ->where('type', $this->argument('type'))
+            ->limit(10)
+            ->get();
+
+        info('rogue:bulkreviewposts: First post result from query: ' . $posts->first());
+
+        if ($posts->isNotEmpty()) {
+            foreach ($posts as $post) {
+                if ($post->id % $logfreq == 0) {
+                    info('rogue:bulkreviewposts: updating: ' . $post->id);
                 }
-            } else {
-                $this->error('No posts found with that criteria.');
 
-                return;
+                // If the $log flag is included when the command is run, logging will occur in the Post Manager for each post.
+                $this->posts->update($post, ['status' => $this->argument('newStatus')], $log
+            );
+                foreach ($tags as $tag) {
+                    $post->tag($tag, $log);
+                }
             }
-        });
+        } else {
+            $this->error('No posts found with that criteria.');
+
+            return;
+        }
 
         info('rogue:bulkreviewposts: ALL DONE!');
     }
