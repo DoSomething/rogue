@@ -60,13 +60,14 @@ class BulkReviewPosts extends Command
         $logfreq = $this->option('logfreq');
         $log = $this->option('log');
         $tags = $this->option('tag') ?? null;
+        $newStatus = $this->argument('newStatus');
 
-        $posts = Post::setEagerLoads([])
+        Post::setEagerLoads([])
             ->where('campaign_id', $this->argument('campaign'))
             ->where('status', $this->argument('oldStatus'))
             ->where('type', $this->argument('type'))
             ->limit(10)
-            ->chunk(100, function ($posts) {
+            ->chunk(100, function ($posts) use ($logfreq, $log, $newStatus, $tags) {
                 if ($posts->isNotEmpty()) {
                     foreach ($posts as $post) {
                         if ($post->id % $logfreq == 0) {
@@ -74,7 +75,7 @@ class BulkReviewPosts extends Command
                         }
 
                         // If the $log flag is included when the command is run, logging will occur in the Post Manager for each post.
-                        $this->posts->update($post, ['status' => $this->argument('newStatus')], $log
+                        $this->posts->update($post, ['status' => $newStatus], $log
                     );
                         foreach ($tags as $tag) {
                             $post->tag($tag, $log);
