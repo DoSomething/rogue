@@ -60,12 +60,14 @@ class BulkReviewPosts extends Command
         $logfreq = $this->option('logfreq');
         $log = $this->option('log');
         $tags = $this->option('tag') ?? null;
-
+        info('rogue:bulkreviewposts: Beginning to query');
         $posts = Post::setEagerLoads([])
             ->where('campaign_id', $this->argument('campaign'))
             ->where('status', $this->argument('oldStatus'))
             ->where('type', $this->argument('type'))
             ->get();
+
+        info('rogue:bulkreviewposts: Posts result from query: ' . $posts);
 
         if ($posts->isNotEmpty()) {
             foreach ($posts as $post) {
