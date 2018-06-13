@@ -64,7 +64,7 @@ class BulkReviewPosts extends Command
         Post::where([
             ['campaign_id', $this->argument('campaign')],
             ['status', $this->argument('oldStatus')],
-            ['type', $this->argument('type')]
+            ['type', $this->argument('type')],
         ])->chunk(100, function ($posts) {
             if ($posts->isNotEmpty()) {
                 foreach ($posts as $post) {
