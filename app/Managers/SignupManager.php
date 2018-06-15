@@ -50,7 +50,7 @@ class SignupManager
         SendSignupToQuasar::dispatch($signup);
 
         // Log that a signup was created.
-        info('signup_created', ['id' => $signup->id, 'source' => $signup->source]);
+        info('signup_created', ['id' => $signup->id, 'signup_created_source' => $signup->source]);
 
         return $signup;
     }
