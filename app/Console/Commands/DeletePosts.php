@@ -56,6 +56,5 @@ class DeletePosts extends Command
         } else {
             $this->info('No Posts found');
         }
-
     }
 }
