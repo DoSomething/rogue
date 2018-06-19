@@ -2,8 +2,9 @@
 
 namespace Rogue\Console\Commands;
 
-use Illuminate\Console\Command;
 use Rogue\Models\Post;
+use Illuminate\Console\Command;
+use Rogue\Managers\PostManager;
 
 class DeletePosts extends Command
 {
@@ -13,8 +14,7 @@ class DeletePosts extends Command
      * @var string
      */
     protected $signature = 'rogue:deleteposts
-                            {ids* : A space-separated list of post ids to delete}
-                            {--force : Whether or not to force delete these posts instead of soft delete (default)}';
+                            {ids* : A space-separated list of post ids to delete}';
 
     /**
      * The console command description.
@@ -28,8 +28,11 @@ class DeletePosts extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PostManager $postManager)
     {
+        // Post Manager Instance.
+        $this->postManager = $postManager;
+
         parent::__construct();
     }
 
@@ -42,13 +45,11 @@ class DeletePosts extends Command
     {
         $ids = $this->argument('ids');
 
-        $posts = Post::whereIn('id', $ids);
+        $posts = Post::whereIn('id', $ids)->get();
 
-        if ($this->option('force')) {
-            $posts->forceDelete();
-        } else {
-            $posts->delete();
-        }
+        $posts->map(function($post, $key) {
+            $this->postManager->destroy($post->id);
+        });
 
         $this->info('Posts Deleted!');
     }
