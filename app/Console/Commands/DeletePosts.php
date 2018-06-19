@@ -48,7 +48,7 @@ class DeletePosts extends Command
         $posts = Post::whereIn('id', $ids)->get();
 
         if ($posts->isNotEmpty()) {
-            $posts->map(function($post, $key) {
+            $posts->map(function ($post, $key) {
                 $this->postManager->destroy($post->id);
             });
 
