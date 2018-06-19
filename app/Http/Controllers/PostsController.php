@@ -5,8 +5,8 @@ namespace Rogue\Http\Controllers;
 use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Managers\PostManager;
+use Rogue\Managers\SignupManager;
 use Rogue\Http\Requests\PostRequest;
-use Rogue\Repositories\SignupRepository;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
 
@@ -22,9 +22,9 @@ class PostsController extends ApiController
     protected $posts;
 
     /**
-     * The signup repository instance.
+     * The SignupManager instance.
      *
-     * @var \Rogue\Repositories\SignupRepository
+     * @var \Rogue\Managers\SignupManager
      */
     protected $signups;
 
@@ -44,10 +44,10 @@ class PostsController extends ApiController
      * Create a controller instance.
      *
      * @param PostManager $posts
-     * @param SignupRepository $signups
+     * @param SignupManager $signups
      * @param PostTransformer $transformer
      */
-    public function __construct(PostManager $posts, SignupRepository $signups, PostTransformer $transformer)
+    public function __construct(PostManager $posts, SignupManager $signups, PostTransformer $transformer)
     {
         $this->posts = $posts;
         $this->signups = $signups;
