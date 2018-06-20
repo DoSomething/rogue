@@ -380,7 +380,8 @@ class Post extends Model
             if (in_array($tagslug, ['good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote'])) {
                 return true;
             }
-        } 
+        }
+
         return false;
     }
 }
