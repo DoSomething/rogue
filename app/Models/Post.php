@@ -368,4 +368,19 @@ class Post extends Model
                 ->orWhere('northstar_id', auth()->id());
         }
     }
+
+    /**
+    * Return whether or not a post already has a "good" tag.
+    *
+    * @return bool
+    */
+    public function hasGoodTag()
+    {
+        foreach($post->tags() as $tag) {
+            if (in_array($tag->tag_slug, array('good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote'))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
