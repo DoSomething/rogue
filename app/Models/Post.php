@@ -376,8 +376,8 @@ class Post extends Model
     */
     public function hasGoodTag()
     {
-        foreach($post->tags() as $tag) {
-            if (in_array($tag->tag_slug, array('good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote'))) {
+        foreach($this->tagSlugs() as $tagslug) {
+            if (in_array($tagslug, array('good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote'))) {
                 return true;
             }
         }
