@@ -370,14 +370,14 @@ class Post extends Model
     }
 
     /**
-    * Return whether or not a post already has a "good" tag.
-    *
-    * @return bool
-    */
+     * Return whether or not a post already has a "good" tag.
+     *
+     * @return bool
+     */
     public function hasGoodTag()
     {
-        foreach($this->tagSlugs() as $tagslug) {
-            if (in_array($tagslug, array('good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote'))) {
+        foreach ($this->tagSlugs() as $tagslug) {
+            if (in_array($tagslug, ['good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote'])) {
                 return true;
             }
         }
