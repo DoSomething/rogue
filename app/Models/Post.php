@@ -381,6 +381,7 @@ class Post extends Model
                 return true;
             }
         }
+        
         return false;
     }
 }
