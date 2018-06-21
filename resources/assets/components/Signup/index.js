@@ -12,8 +12,7 @@ import Post from '../Post';
 import Empty from '../Empty';
 import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
-// @TODO: add this back in when we are ready to show history modal.
-// import HistoryModal from '../HistoryModal';
+import HistoryModal from '../HistoryModal';
 import UploaderModal from '../UploaderModal';
 import ModalContainer from '../ModalContainer';
 import MetaInformation from '../MetaInformation';
@@ -41,24 +40,43 @@ class PostGroup extends React.Component {
         </div>
 
         {!isEmpty(posts) ? (
-          map(posts, (post, key) => (
-            <Post
-              key={key}
-              post={post}
-              displayUser={false}
-              signup={this.props.signup}
-              onUpdate={this.props.onUpdate}
-              onTag={this.props.onTag}
-              deletePost={this.props.deletePost}
-              showSiblings={false}
-              campaign={this.props.campaign}
-              rotate={this.props.rotate}
-              showQuantity
-            />
-          ))
+          map(posts, (post, key) => {
+            return (
+              <Post
+                key={key}
+                post={post}
+                displayUser={false}
+                signup={this.props.signup}
+                onUpdate={this.props.onUpdate}
+                onTag={this.props.onTag}
+                deletePost={this.props.deletePost}
+                showSiblings={false}
+                campaign={this.props.campaign}
+                rotate={this.props.rotate}
+                showQuantity
+                showHistory={this.props.showHistory}
+                allowHistory
+              />
+            );
+          })
         ) : (
           <Empty header={`This user has no ${this.props.groupType} posts`} />
         )}
+
+        <ModalContainer>
+          {this.props.displayHistoryModal ?
+            <HistoryModal
+              id={this.props.historyModalId}
+              onUpdate={this.props.updateQuantity}
+              onClose={e => this.props.hideHistory(e)}
+              signup={this.props.signup}
+              campaign={this.props.campaign}
+              post={this.props.posts[this.props.historyModalId]}
+              signupEvents={this.props.signupEvents}
+            />
+            : null}
+        </ModalContainer>
+
       </div>
     );
   }
@@ -94,9 +112,8 @@ class Signup extends React.Component {
     this.updatePost = this.updatePost.bind(this);
     this.updateTag = this.updateTag.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
-    // @TODO: add this back in when we are ready to show history modal.
-    // this.showHistory = this.showHistory.bind(this);
-    // this.hideHistory = this.hideHistory.bind(this);
+    this.showHistory = this.showHistory.bind(this);
+    this.hideHistory = this.hideHistory.bind(this);
     this.deletePost = this.deletePost.bind(this);
     this.deleteSignup = this.deleteSignup.bind(this);
     this.showUploader = this.showUploader.bind(this);
@@ -129,39 +146,40 @@ class Signup extends React.Component {
       );
   }
 
-  // @TODO: add this back in when we are ready to show history modal.
   // Open the history modal of the given post
-  // showHistory(postId, event) {
-  //   event.preventDefault();
+  showHistory(postId, event, signupId) {
+    event.preventDefault();
 
-  //   this.api.get('api/v2/events', {
-  //     filter: {
-  //       signup_id: this.props.signup_id,
-  //     },
-  //   }).then((result) => {
-  //     this.setState((previousState) => {
-  //       const newState = { ...previousState };
+    this.api
+      .getEvents({
+        filter: {
+          signup_id: signupId,
+        },
+    })
+    .then((result) => {
+      this.setState((prevState) => {
+        const newState = { ...prevState };
 
-  //       newState.displayHistoryModal = true;
-  //       newState.historyModalId = postId;
-  //       newState.signupEvents = Object.values(result.data);
+        newState.displayHistoryModal = true;
+        newState.historyModalId = postId;
+        newState.signupEvents = Object.values(result.data);
 
-  //       return newState;
-  //     });
-  //   });
-  // }
+        return newState;
+      });
+    });
+  }
 
   // Close the open history modal
-  // hideHistory(event) {
-  //   if (event) {
-  //     event.preventDefault();
-  //   }
+  hideHistory(event) {
+    if (event) {
+      event.preventDefault();
+    }
 
-  //   this.setState({
-  //     displayHistoryModal: false,
-  //     historyModalId: null,
-  //   });
-  // }
+    this.setState({
+      displayHistoryModal: false,
+      historyModalId: null,
+    });
+  }
 
   // Open the uploader modal to upload a new post
   showUploader(campaign, event) {
@@ -239,24 +257,21 @@ class Signup extends React.Component {
     });
   }
 
-  // Update a signups quantity.
-  updateQuantity(signup, newQuantity) {
-    // Fields to send to /posts
-    const fields = {
-      northstar_id: signup.northstar_id,
-      campaign_id: signup.campaign_id,
-      campaign_run_id: signup.campaign_run_id,
-      quantity: newQuantity,
+  // Update a post's quantity.
+  updateQuantity(post, newQuantity) {
+    // Field to send to /api/v3/posts/:post_id
+    const field = {
+      quantity: parseInt(newQuantity),
     };
 
     // Make API request to Rogue to update the quantity on the backend
-    const request = this.api.post('api/v3/posts', fields);
+    const request = this.api.patch(`api/v3/posts/${post['id']}`, field);
 
     request.then(result => {
       // Update the state
       this.setState(previousState => {
         const newState = { ...previousState };
-        newState.signup.quantity = result.quantity;
+        newState.posts[post['id']].quantity = result.data['quantity'];
 
         return newState;
       });
@@ -489,6 +504,12 @@ class Signup extends React.Component {
             deletePost={this.deletePost}
             campaign={campaign}
             rotate={this.rotate}
+            showHistory={this.showHistory}
+            displayHistoryModal={this.state.displayHistoryModal}
+            historyModalId={this.state.historyModalId}
+            signupEvents={this.state.signupEvents}
+            hideHistory={this.hideHistory}
+            updateQuantity={this.updateQuantity}
           />
         ))}
       </div>
