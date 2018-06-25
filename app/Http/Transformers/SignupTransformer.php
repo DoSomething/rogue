@@ -38,6 +38,7 @@ class SignupTransformer extends TransformerAbstract
         if (is_staff_user() || auth()->id() === $signup->northstar_id) {
             $response['why_participated'] = $signup->why_participated;
             $response['source'] = $signup->source;
+            $response['source_details'] = $signup->source_details;
             $response['details'] = $signup->details;
         }
 

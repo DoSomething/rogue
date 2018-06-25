@@ -42,6 +42,7 @@ class SignupTransformer extends TransformerAbstract
             'quantity' => $signup->getQuantity(),
             'why_participated' => $signup->why_participated,
             'signup_source' => $signup->source,
+            'source_details' => $signup->source_details,
             'details' => $signup->details,
             'created_at' => $signup->created_at->toIso8601String(),
             'updated_at' => $signup->updated_at->toIso8601String(),
