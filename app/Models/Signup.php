@@ -141,8 +141,8 @@ class Signup extends Model
             'campaign_run_id' => (string) $this->campaign_run_id,
             'quantity' => $quantity,
             'why_participated' => $this->why_participated,
-            'source_details' => $this->source_details,
             'source' => $this->source,
+            'source_details' => $this->source_details,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
@@ -163,8 +163,8 @@ class Signup extends Model
             'quantity' => $this->getQuantity(),
             'why_participated' => $this->why_participated,
             'signup_source' => $this->source,
-            'source_details' => $this->source_details,
             'details' => $this->details,
+            'source_details' => $this->source_details,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
             'meta' => [
