@@ -23,6 +23,7 @@ class SignupRepository
         $signup->quantity = isset($data['quantity']) ? $data['quantity'] : null;
         $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : null;
         $signup->source = isset($data['source']) ? $data['source'] : null;
+        $signup->source_details = isset($data['source_details']) ? $data['source_details'] : null;
         $signup->details = isset($data['details']) ? $data['details'] : null;
 
         if (isset($data['created_at'])) {
