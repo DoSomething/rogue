@@ -30,7 +30,7 @@ class Signup extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'campaign_id', 'campaign_run_id', 'quantity', 'quantity_pending', 'why_participated', 'source', 'details', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'northstar_id', 'campaign_id', 'campaign_run_id', 'quantity', 'quantity_pending', 'why_participated', 'source', 'source_details', 'details', 'created_at', 'updated_at'];
 
     /**
      * Attributes that can be queried when filtering.
