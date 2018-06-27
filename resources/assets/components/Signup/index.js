@@ -486,7 +486,7 @@ class Signup extends React.Component {
               title="Meta"
               details={{
                 'Signup ID': signup.id,
-                'Northstar ID': user.id,
+                // 'Northstar ID': user.id,
                 'Signup Source': signup.source,
                 'Created At': new Date(signup.created_at).toDateString(),
               }}

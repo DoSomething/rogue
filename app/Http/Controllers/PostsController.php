@@ -80,6 +80,9 @@ class PostsController extends ApiController
         // Only return posts tagged "Hide In Gallery" if staff user or if is owner of the post.
         $query = $query->withHiddenPosts();
 
+        // Do not return any voter-reg posts.
+        $query = $query->where('type', '!=', 'voter-reg');
+
         // If tag param is passed, only return posts that have that tag.
         if (array_has($filters, 'tag')) {
             $query = $query->withTag($filters['tag']);
