@@ -48,7 +48,7 @@ class PostApiTest extends TestCase
             'crop_height'      => 100,
             'crop_rotate'      => 90,
         ]);
-        // dd($response->decodeResponseJson());
+
         $response->assertStatus(200);
         $response->assertJson([
             'data' => [
