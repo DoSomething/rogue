@@ -3,6 +3,7 @@
 namespace Rogue\Http\Transformers;
 
 use Rogue\Models\Signup;
+use League\Fractal\ParamBag;
 use Rogue\Services\Registrar;
 use League\Fractal\TransformerAbstract;
 
@@ -16,6 +17,13 @@ class SignupTransformer extends TransformerAbstract
     protected $availableIncludes = [
         'posts', 'user', 'accepted_quantity',
     ];
+
+    /**
+     * List of params possible to include
+     *
+     * @var array
+     */
+    protected $validParams = ['type'];
 
     /**
      * Transform resource data.
@@ -49,12 +57,33 @@ class SignupTransformer extends TransformerAbstract
      * Include posts
      *
      * @param \Rogue\Models\Signup $signup
+     * @param \League\Fractal\ParamBag|null
      * @return \League\Fractal\Resource\Collection
      */
-    public function includePosts(Signup $signup)
+    public function includePosts(Signup $signup, ParamBag $params = null)
     {
-        // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
-        $post = $signup->visiblePosts;
+        if ($params === null) {
+            // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
+            $post = $signup->visiblePosts($params['type'][0]);
+
+            return $this->collection($post, new PostTransformer);
+        }
+
+        // Optional params validation
+        $usedParams = array_keys(iterator_to_array($params));
+
+        if ($invalidParams = array_diff($usedParams, $this->validParams)) {
+            throw new \Exception(sprintf(
+                'Invalid param(s): "%s". Valid param(s): "%s"',
+                implode(',', $usedParams),
+                implode(',', $this->validParams)
+            ));
+        }
+
+        $type = $params->get('type')[0];
+
+        // Only allow an admin or the user who owns the signup to see the signup's unapproved posts by type.
+        $post = $signup->visiblePosts($type);
 
         return $this->collection($post, new PostTransformer);
     }

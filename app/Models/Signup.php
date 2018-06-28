@@ -65,20 +65,34 @@ class Signup extends Model
     }
 
     /**
-     * Get the visible posts associated with this signup.
+     * Get the visible posts associated with this signup, optionally by type.
      *
+     * @param string Optional param to specify post type.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function visiblePosts()
+    public function visiblePosts($type = null)
     {
         if (! is_staff_user()) {
-            return $this->hasMany(Post::class)->where('status', '=', 'accepted')
-                                              ->orWhere('northstar_id', auth()->id())
-                                              ->with('tags');
+            if ($type === null) {
+                return $this->hasMany(Post::class)->where('status', '=', 'accepted')
+                                                  ->orWhere('northstar_id', auth()->id())
+                                                  ->with('tags');
+            } else {
+                return $this->hasMany(Post::class)->where('status', '=', 'accepted')
+                                                  ->orWhere('northstar_id', auth()->id())
+                                                  ->where('type', '=', $type)
+                                                  ->with('tags');
+            }
         }
 
-        return $this->hasMany(Post::class)->with('tags');
+        if ($type === null) {
+            return $this->hasMany(Post::class)->with('tags');
+        }
+        dd('hi');
+        return $this->hasMany(Post::class)->where('type', '=', $type)
+                                          ->with('tags');
     }
+
 
     /**
      * Get the 'pending' posts associated with this signup.
