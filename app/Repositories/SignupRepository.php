@@ -23,6 +23,7 @@ class SignupRepository
         $signup->campaign_run_id = isset($data['campaign_run_id']) ? $data['campaign_run_id'] : null;
         $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : null;
         $signup->source = isset($data['source']) ? $data['source'] : token()->client();
+        $signup->source_details = isset($data['source_details']) ? $data['source_details'] : null;
         $signup->details = isset($data['details']) ? $data['details'] : null;
         $signup->save();
 
