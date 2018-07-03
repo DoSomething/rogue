@@ -5,7 +5,7 @@ use Faker\Provider\Base;
 class FakerNorthstarId extends Base
 {
     /**
-     * A selection of users from Northstar QA.
+     * A selection of users from Northstar Dev.
      *
      * @var array
      */

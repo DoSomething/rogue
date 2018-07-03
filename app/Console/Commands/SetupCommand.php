@@ -34,9 +34,9 @@ class SetupCommand extends Command
 
         $this->section('Set Northstar environment variables', function () {
             $environments = [
-                'http://northstar.dev' => 'http://aurora.dev',
-                'https://northstar-qa.dosomething.org' => 'https://aurora-qa.dosomething.org',
-                'https://northstar-thor.dosomething.org' => 'https://aurora-thor.dosomething.org',
+                'http://northstar.test' => 'http://aurora.test',
+                'https://identity-dev.dosomething.org' => 'https://admin-dev.dosomething.org',
+                'https://identity-qa.dosomething.org' => 'https://admin-qa.dosomething.org',
             ];
 
             $this->chooseEnvironmentVariable('NORTHSTAR_URL', 'Choose a Northstar environment', array_keys($environments));
@@ -44,8 +44,11 @@ class SetupCommand extends Command
             $this->instruction('You can get these environment variables from Aurora\'s "Clients" page:');
             $this->instruction($environments[env('NORTHSTAR_URL')] . '/clients');
 
-            $this->setEnvironmentVariable('NORTHSTAR_AUTH_ID', 'Enter the OAuth Client ID');
-            $this->setEnvironmentVariable('NORTHSTAR_AUTH_SECRET', 'Enter the OAuth Client Secret');
+            $this->setEnvironmentVariable('NORTHSTAR_AUTH_ID', 'Enter the OAuth Client ID for web sessions');
+            $this->setEnvironmentVariable('NORTHSTAR_AUTH_SECRET', 'Enter the OAuth Client Secret for web sessions');
+
+            $this->setEnvironmentVariable('NORTHSTAR_CLIENT_ID', 'Enter the OAuth Client ID for machine requests');
+            $this->setEnvironmentVariable('NORTHSTAR_CLIENT_SECRET', 'Enter the OAuth Client Secret for machine requests');
         });
 
         $this->runCommand('key:generate', 'Creating application key');
