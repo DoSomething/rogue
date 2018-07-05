@@ -64,7 +64,7 @@ class SignupTransformer extends TransformerAbstract
     {
         if ($params === null) {
             // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
-            $post = $signup->visiblePosts($params['type'][0]);
+            $post = $signup->visiblePosts;
 
             return $this->collection($post, new PostTransformer);
         }
@@ -80,10 +80,8 @@ class SignupTransformer extends TransformerAbstract
             ));
         }
 
-        $type = $params->get('type')[0];
-
         // Only allow an admin or the user who owns the signup to see the signup's unapproved posts by type.
-        $post = $signup->visiblePosts($type);
+        $post = $signup->visiblePosts($params->get('type'));
 
         return $this->collection($post, new PostTransformer);
     }

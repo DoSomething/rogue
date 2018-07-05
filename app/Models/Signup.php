@@ -88,9 +88,15 @@ class Signup extends Model
         if ($type === null) {
             return $this->hasMany(Post::class)->with('tags');
         }
-        dd('hi');
-        return $this->hasMany(Post::class)->where('type', '=', $type)
+
+
+        if (count($type) > 1) {
+            return $this->hasMany(Post::class)->whereIn('type', ['photo', 'text'])
                                           ->with('tags');
+        } else {
+            return $this->hasMany(Post::class)->where('type', '=', $type[0])
+                                          ->with('tags');
+        }
     }
 
 
