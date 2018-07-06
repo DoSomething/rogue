@@ -80,19 +80,20 @@ class Signup extends Model
             }
 
             if (count($type) > 1) {
-                return $this->hasMany(Post::class)->where('status', '=', 'accepted')
+                return $this->hasMany(Post::class)->whereIn('type', array_values($type))
+                                                  ->where('status', '=', 'accepted')
                                                   ->orWhere('northstar_id', auth()->id())
-                                                  ->whereIn('type', array_values($type))
-                                                  ->with('tags');
+                                                  ->with('tags')
+                                                  ->get();
             } else {
-                return $this->hasMany(Post::class)->where('status', '=', 'accepted')
+                return $this->hasMany(Post::class)->where([
+                                                    ['status', '=', 'accepted'],
+                                                    ['type', '=', $type[0]],
+                                                  ])
                                                   ->orWhere('northstar_id', auth()->id())
-                                                  ->where('type', '=', $type[0])
-                                                  ->with('tags');
+                                                  ->with('tags')
+                                                  ->get();
             }
-
-
-
         }
 
         if ($type === null) {
