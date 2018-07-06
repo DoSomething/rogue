@@ -136,7 +136,7 @@ class Signup extends React.Component {
   getSignupAndPosts(id) {
     this.api
       .get(`api/v3/signups/${id}`, {
-        include: 'posts:type(voter-reg)',
+        include: 'posts:type(text|photo)',
       })
       .then(json =>
         this.setState({

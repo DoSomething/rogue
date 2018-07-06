@@ -85,6 +85,14 @@ class Signup extends Model
                                                   ->orWhere('northstar_id', auth()->id())
                                                   ->with('tags')
                                                   ->get();
+                // return $this->hasMany(Post::class)->where(function ($q) use ($type) {
+                //     $q->whereIn('type', array_values($type))
+                //       ->where('status', '=', 'accepted')
+                //       ->orWhere('northstar_id', auth()->id())
+                //       ->with('tags')
+                //       ->get();
+                // });
+
             } else {
                 return $this->hasMany(Post::class)->where([
                                                     ['status', '=', 'accepted'],

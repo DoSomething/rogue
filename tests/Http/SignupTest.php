@@ -300,12 +300,124 @@ class SignupTest extends TestCase
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
-        // Test with admin that posts are returned.
+        // Test with owner that posts are returned.
         $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
         $this->assertEquals(false, empty($decodedResponse['data'][0]['posts']['data']));
+    }
+
+    /**
+     * Test for signup index with included post info. and include params as non-admin/non-owner.
+     * Only admins/owners should be able to see pending/rejected posts.
+     *
+     * GET /api/v3/signups?include=posts:type(text|photo)
+     * @return void
+     */
+    public function testSignupIndexWithIncludedPostsAndParamsAsNonAdminNonOwner()
+    {
+        $signup = factory(Signup::class)->create();
+
+        // Create a voter-reg post that is accepted.
+        $post = factory(Post::class)->create();
+        $post->type = 'voter-reg';
+        $post->status = 'accepted';
+        $post->signup()->associate($signup);
+        $post->save();
+
+        // Create a second photo post that is pending.
+        $pendingPost = factory(Post::class)->create();
+        $pendingPost->signup()->associate($signup);
+
+        // Test with annoymous user that no posts are returned when using the include params.
+        $response = $this->getJson('api/v3/signups' . '?include=posts:type(text|photo)');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals(true, empty($decodedResponse['data'][0]['posts']['data']));
+
+        // Test with annoymous user that the voter reg post is returned since it is accepted.
+        $response = $this->getJson('api/v3/signups' . '?include=posts');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals(false, empty($decodedResponse['data'][0]['posts']['data']));
+    }
+
+    /**
+     * Test for signup index with included pending post info. and include params as admin
+     * Only admins/owners should be able to see pending/rejected posts.
+     *
+     * GET /api/v3/signups?include=posts:type(text|photo)
+     * @return void
+     */
+    public function testSignupIndexWithIncludedPostsAndParamsAsAdmin()
+    {
+        $signup = factory(Signup::class)->create();
+
+        // Create a voter reg post
+        $post = factory(Post::class)->create();
+        $post->type = 'voter-reg';
+        $post->signup()->associate($signup);
+        $post->save();
+
+        // Create a text post
+        $textPost = factory(Post::class)->create();
+        $textPost->type = 'text';
+        $textPost->signup()->associate($signup);
+        $textPost->save();
+
+        // Create a photo post
+        $photoPost = factory(Post::class)->create();
+        $photoPost->type = 'photo';
+        $photoPost->signup()->associate($signup);
+        $photoPost->save();
+
+        // Test with admin that only photo and text posts are returned.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?include=posts:type(text|photo)');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals(2, count($decodedResponse['data'][0]['posts']['data']));
+        $this->assertEquals('text', $decodedResponse['data'][0]['posts']['data'][0]['type']);
+        $this->assertEquals('photo', $decodedResponse['data'][0]['posts']['data'][1]['type']);
+
+        // Test with admin that only voter-reg posts are returned.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?include=posts:type(voter-reg)');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals(1, count($decodedResponse['data'][0]['posts']['data']));
+        $this->assertEquals('voter-reg', $decodedResponse['data'][0]['posts']['data'][0]['type']);
+    }
+
+    /**
+     * Test for signup index with included pending post info. and include params as owner
+     * Only admins/owners should be able to see pending/rejected posts.
+     *
+     * GET /api/v3/signups?include=posts:type(text|photo)
+     * @return void
+     */
+    public function testSignupIndexWithIncludedPostsAndParamsAsOwner()
+    {
+        $signup = factory(Signup::class)->create();
+
+        // Create a voter reg post
+        $post = factory(Post::class)->create();
+        $post->type = 'voter-reg';
+        $post->signup()->associate($signup);
+        $post->save();
+
+        // Test with owner that voter reg post is returned.
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups?include=posts:type(voter-reg)');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $this->assertEquals(false, empty($decodedResponse['data'][0]['posts']['data']));
+
+        // Test with owner that no posts are returned (because it does not match include params).
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups?include=posts:type(text|photo)');
+        $response->assertStatus(200);
+        $decodedResponse = $response->decodeResponseJson();
+        dd($decodedResponse['data'][0]['posts']['data']);
+        $this->assertEquals(true, empty($decodedResponse['data'][0]['posts']['data']));
     }
 
     /**
