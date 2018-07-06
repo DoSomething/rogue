@@ -77,12 +77,22 @@ class Signup extends Model
                 return $this->hasMany(Post::class)->where('status', '=', 'accepted')
                                                   ->orWhere('northstar_id', auth()->id())
                                                   ->with('tags');
+            }
+
+            if (count($type) > 1) {
+                return $this->hasMany(Post::class)->where('status', '=', 'accepted')
+                                                  ->orWhere('northstar_id', auth()->id())
+                                                  ->whereIn('type', array_values($type))
+                                                  ->with('tags');
             } else {
                 return $this->hasMany(Post::class)->where('status', '=', 'accepted')
                                                   ->orWhere('northstar_id', auth()->id())
-                                                  ->where('type', '=', $type)
+                                                  ->where('type', '=', $type[0])
                                                   ->with('tags');
             }
+
+
+
         }
 
         if ($type === null) {
@@ -92,10 +102,12 @@ class Signup extends Model
 
         if (count($type) > 1) {
             return $this->hasMany(Post::class)->whereIn('type', array_values($type))
-                                          ->with('tags');
+                                          ->with('tags')
+                                          ->get();
         } else {
             return $this->hasMany(Post::class)->where('type', '=', $type[0])
-                                          ->with('tags');
+                                          ->with('tags')
+                                          ->get();
         }
     }
 
