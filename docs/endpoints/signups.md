@@ -62,6 +62,8 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
   - Include additional related records in the response: `posts`, `user`, `accepted_quantity`
   - If using multiple include params, they must be comma-separated
   - e.g. `/api/v3/signups/1?include=user,posts`
+  - You can also use include parameters to only return posts by type. 
+  - e.g. To only return text and photo posts: `api/v3/signups?include=posts:type(text|photo)`
 - **filter[column]** _(string)_
   - Filter results by the given column: `northstar_id`, `campaign_id`, `campaign_run_id`
   - You can filter by more than one column, e.g. `/signups?filter[id]=4&filter[campaign_id]=5`
