@@ -97,7 +97,6 @@ class Signup extends Model
                                       ->get();
     }
 
-
     /**
      * Get the 'pending' posts associated with this signup.
      */

@@ -333,19 +333,6 @@ class Post extends Model
     }
 
     /**
-     * Returns posts by specific type(s).
-     */
-    public function scopeByType($query, $type)
-    {
-        // return $query->whereHas('tags', function ($query) use ($tagSlug) {
-        //     multipleValueQuery($query, $tagSlug, 'tag_slug');
-        // });
-        return $query->where('type', function ($query) use ($type) {
-            multipleValueQuery($query, $type, 'type');
-        });
-    }
-
-    /**
      * Get the number of reactions a post has.
      *
      * @param int $postId
