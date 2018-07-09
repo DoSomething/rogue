@@ -416,7 +416,7 @@ class SignupTest extends TestCase
         $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups?include=posts:type(text|photo)');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
-        dd($decodedResponse['data'][0]['posts']['data']);
+
         $this->assertEquals(true, empty($decodedResponse['data'][0]['posts']['data']));
     }
 
