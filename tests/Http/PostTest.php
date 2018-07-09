@@ -78,7 +78,7 @@ class PostTest extends TestCase
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
         ]);
-        $response->dump();
+
         $response->assertStatus(201);
         $this->assertPostStructure($response);
 
