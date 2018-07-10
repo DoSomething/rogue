@@ -154,7 +154,7 @@ POST /api/v3/posts
 - **campaign_run_id**: (int)
   The drupal campaign run node id of the campaign that the user's post is associated with.
 - **type**: (string) required.
-  The type of post submitted e.g. photo, voter-reg, text
+  The type of post submitted. Must be one of the following types: photo, voter-reg, text, share-social. 
 - **action**: (string) required.
   Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
 - **quantity**: (int|nullable) optional.

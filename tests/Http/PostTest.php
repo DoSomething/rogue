@@ -14,6 +14,39 @@ use Illuminate\Http\UploadedFile;
 class PostTest extends TestCase
 {
     /**
+     * Helper function to assert post structure
+     *
+     */
+    public function assertPostStructure($response)
+    {
+        return $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'signup_id',
+                'northstar_id',
+                'type',
+                'action',
+                'media' => [
+                    'url',
+                    'original_image_url',
+                    'text',
+                ],
+                'quantity',
+                'tags' => [],
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'details',
+                'source',
+                'remote_addr',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+    }
+    /**
      * Test that a POST request to /posts creates a new
      * post and signup, if it doesn't already exist.
      *
@@ -47,32 +80,7 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(201);
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'signup_id',
-                'northstar_id',
-                'type',
-                'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
-                'quantity',
-                'tags' => [],
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
-                'status',
-                'details',
-                'source',
-                'remote_addr',
-                'created_at',
-                'updated_at',
-            ],
-        ]);
+        $this->assertPostStructure($response);
 
         // Make sure the signup & post are persisted to the database.
         $this->assertDatabaseHas('signups', [
@@ -121,32 +129,7 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(201);
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'signup_id',
-                'northstar_id',
-                'type',
-                'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
-                'quantity',
-                'tags' => [],
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
-                'status',
-                'details',
-                'source',
-                'remote_addr',
-                'created_at',
-                'updated_at',
-            ],
-        ]);
+        $this->assertPostStructure($response);
 
         $this->assertDatabaseHas('posts', [
             'signup_id' => $signup->id,
@@ -189,33 +172,7 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(201);
-
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'signup_id',
-                'northstar_id',
-                'type',
-                'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
-                'quantity',
-                'tags' => [],
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
-                'status',
-                'details',
-                'source',
-                'remote_addr',
-                'created_at',
-                'updated_at',
-            ],
-        ]);
+        $this->assertPostStructure($response);
 
         $this->assertDatabaseHas('posts', [
             'signup_id' => $signup->id,
@@ -227,6 +184,117 @@ class PostTest extends TestCase
             'quantity' => $quantity,
             'details' => json_encode($details),
         ]);
+    }
+
+    /**
+     * Test that a POST request to /posts creates a new voter-reg post.
+     *
+     * @return void
+     */
+    public function testCreatingAVoterRegPost()
+    {
+        $signup = factory(Signup::class)->create();
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'voter-reg',
+            'action'           => 'test-action',
+            'quantity'         => null,
+            'text'             => null,
+            'details'          => json_encode($details),
+        ]);
+
+        $response->assertStatus(201);
+        $this->assertPostStructure($response);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => 'voter-reg',
+            'action' => 'test-action',
+            'status' => 'pending',
+            'details' => json_encode($details),
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /posts creates a new share-social post.
+     *
+     * @return void
+     */
+    public function testCreatingAShareSocialPost()
+    {
+        $signup = factory(Signup::class)->create();
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $text = $this->faker->sentence;
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'share-social',
+            'action'           => 'test-action',
+            'quantity'         => $quantity,
+            'text'             => $text,
+            'details'          => json_encode($details),
+        ]);
+
+        $response->assertStatus(201);
+        $this->assertPostStructure($response);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => 'share-social',
+            'action' => 'test-action',
+            'status' => 'pending',
+            'details' => json_encode($details),
+        ]);
+    }
+
+    /**
+     * Test a post cannot be created that is not one of the following types: text, photo, voter-reg, share-social.
+     *
+     * @return void
+     */
+    public function testCreatingAPostWithoutValidTypeScopes()
+    {
+        $signup = factory(Signup::class)->create();
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $text = $this->faker->sentence;
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post with an invalid type (not in text, photo, voter-reg, share-social).
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'social-share',
+            'action'           => 'test-action',
+            'quantity'         => $quantity,
+            'text'             => $text,
+            'details'          => json_encode($details),
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertEquals('The selected type is invalid.', $response->decodeResponseJson()['errors']['type'][0]);
     }
 
     /**
@@ -290,32 +358,7 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(201);
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'signup_id',
-                'northstar_id',
-                'type',
-                'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
-                'quantity',
-                'tags' => [],
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
-                'status',
-                'details',
-                'source',
-                'remote_addr',
-                'created_at',
-                'updated_at',
-            ],
-        ]);
+        $this->assertPostStructure($response);
 
         $this->assertDatabaseHas('posts', [
             'signup_id' => $signup->id,
@@ -346,32 +389,7 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(201);
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'signup_id',
-                'northstar_id',
-                'type',
-                'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
-                'quantity',
-                'tags' => [],
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
-                'status',
-                'details',
-                'source',
-                'remote_addr',
-                'created_at',
-                'updated_at',
-            ],
-        ]);
+        $this->assertPostStructure($response);
 
         $this->assertDatabaseHas('posts', [
             'signup_id' => $signup->id,
@@ -416,32 +434,7 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(201);
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'signup_id',
-                'northstar_id',
-                'type',
-                'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
-                'quantity',
-                'tags' => [],
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
-                'status',
-                'details',
-                'source',
-                'remote_addr',
-                'created_at',
-                'updated_at',
-            ],
-        ]);
+        $this->assertPostStructure($response);
 
         $this->assertDatabaseHas('posts', [
             'signup_id' => $signup->id,
@@ -480,32 +473,7 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(201);
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'signup_id',
-                'northstar_id',
-                'type',
-                'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
-                'quantity',
-                'tags' => [],
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
-                'status',
-                'details',
-                'source',
-                'remote_addr',
-                'created_at',
-                'updated_at',
-            ],
-        ]);
+        $this->assertPostStructure($response);
 
         $this->assertDatabaseHas('posts', [
             'signup_id' => $signup->id,
@@ -862,32 +830,7 @@ class PostTest extends TestCase
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'signup_id',
-                'northstar_id',
-                'type',
-                'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
-                'quantity',
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
-                'status',
-                'created_at',
-                'updated_at',
-                'tags' => [],
-                'source',
-                'details',
-                'remote_addr',
-            ],
-        ]);
+        $this->assertPostStructure($response);
 
         $json = $response->json();
         $this->assertEquals($post->id, $json['data']['id']);
@@ -905,6 +848,8 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
+        // $this->assertPostStructure($response);
+
         $response->assertJsonStructure([
             'data' => [
                 'id',
@@ -925,10 +870,6 @@ class PostTest extends TestCase
                 'status',
                 'created_at',
                 'updated_at',
-                'tags' => [],
-                'source',
-                'details',
-                'remote_addr',
             ],
         ]);
 
@@ -1173,32 +1114,7 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(201);
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'signup_id',
-                'northstar_id',
-                'type',
-                'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
-                'quantity',
-                'tags' => [],
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
-                'status',
-                'details',
-                'source',
-                'remote_addr',
-                'created_at',
-                'updated_at',
-            ],
-        ]);
+        $this->assertPostStructure($response);
 
         $this->assertDatabaseHas('posts', [
             'signup_id' => $signup->id,
