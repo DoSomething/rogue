@@ -230,6 +230,169 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test that a POST request to /posts creates a new voter-reg post.
+     *
+     * @return void
+     */
+    public function testCreatingAVoterRegPost()
+    {
+        $signup = factory(Signup::class)->create();
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'voter-reg',
+            'action'           => 'test-action',
+            'quantity'         => null,
+            'text'             => null,
+            'details'          => json_encode($details),
+        ]);
+
+        $response->assertStatus(201);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'signup_id',
+                'northstar_id',
+                'type',
+                'action',
+                'media' => [
+                    'url',
+                    'original_image_url',
+                    'text',
+                ],
+                'quantity',
+                'tags' => [],
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'details',
+                'source',
+                'remote_addr',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => 'voter-reg',
+            'action' => 'test-action',
+            'status' => 'pending',
+            'details' => json_encode($details),
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /posts creates a new share-social post.
+     *
+     * @return void
+     */
+    public function testCreatingAShareSocialPost()
+    {
+        $signup = factory(Signup::class)->create();
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $text = $this->faker->sentence;
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'share-social',
+            'action'           => 'test-action',
+            'quantity'         => $quantity,
+            'text'             => $text,
+            'details'          => json_encode($details),
+        ]);
+
+        $response->assertStatus(201);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'signup_id',
+                'northstar_id',
+                'type',
+                'action',
+                'media' => [
+                    'url',
+                    'original_image_url',
+                    'text',
+                ],
+                'quantity',
+                'tags' => [],
+                'reactions' => [
+                    'reacted',
+                    'total',
+                ],
+                'status',
+                'details',
+                'source',
+                'remote_addr',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => 'share-social',
+            'action' => 'test-action',
+            'status' => 'pending',
+            'details' => json_encode($details),
+        ]);
+    }
+
+    /**
+     * Test a post cannot be created that is not one of the following types: text, photo, voter-reg, share-social.
+     *
+     * @return void
+     */
+    public function testCreatingAPostWithoutValidTypeScopes()
+    {
+        $signup = factory(Signup::class)->create();
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $text = $this->faker->sentence;
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post with an invalid type (not in text, photo, voter-reg, share-social).
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'social-share',
+            'action'           => 'test-action',
+            'quantity'         => $quantity,
+            'text'             => $text,
+            'details'          => json_encode($details),
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertEquals('The selected type is invalid.', $response->decodeResponseJson()['errors']['type'][0]);
+    }
+
+    /**
      * Test a post cannot be created without the activity & write scope.
      *
      * @return void
