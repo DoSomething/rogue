@@ -141,7 +141,7 @@ POST /api/v2/posts
 - **updated_at**: (string) optional.
   `Y-m-d H:i:s` format. When the post was last updated.
 - **type**: (string).
-  The type of post submitted e.g. photo, voter-reg, text
+  The type of post submitted. Must be one of the following types: photo, voter-reg, text, share-social. 
 - **action**: (string).
   Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
 
