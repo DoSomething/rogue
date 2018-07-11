@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Signup;
+use Rogue\Services\Registrar;
 use DoSomething\Gateway\Blink;
 
 class SignupTest extends TestCase
@@ -382,6 +383,10 @@ class SignupTest extends TestCase
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
+        // Mock the Northstar API calls.
+            $this->mock(Registrar::class)
+                ->shouldReceive('find');
+
         // Test with admin that entire user is returned.
         $response = $this->withAdminAccessToken()->getJson('api/v3/signups?include=user');
         $response->assertStatus(200);
@@ -402,6 +407,10 @@ class SignupTest extends TestCase
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
+        // Mock the Northstar API calls.
+            $this->mock(Registrar::class)
+                ->shouldReceive('find');
+
         // Test with admin that entire user is returned.
         $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups?include=user');
         $response->assertStatus(200);
@@ -421,6 +430,10 @@ class SignupTest extends TestCase
     {
         $post = factory(Post::class)->create();
         $signup = $post->signup;
+
+        // Mock the Northstar API calls.
+            $this->mock(Registrar::class)
+                ->shouldReceive('find');
 
         // Test with annoymous user that only a user's first name is returned.
         $response = $this->getJson('api/v3/signups?include=user');
