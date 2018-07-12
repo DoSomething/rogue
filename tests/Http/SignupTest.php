@@ -8,6 +8,7 @@ use Rogue\Models\User;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use DoSomething\Gateway\Blink;
+use DoSomething\Gateway\Resources\NorthstarUser;
 
 class SignupTest extends TestCase
 {
@@ -20,21 +21,14 @@ class SignupTest extends TestCase
         $this->mock(Registrar::class)
             ->shouldReceive('find')
             ->andReturnUsing(function($northstarId) {
-                $mockNorthstarUser = new \StdClass;
-
-                $mockNorthstarUser->id = $this->faker->northstar_id;
-
-                if ($northstarId) {
-                    $mockNorthstarUser->id = $northstarId;
-                }
-
-                $mockNorthstarUser->first_name = $this->faker->firstName;
-                $mockNorthstarUser->last_name = $this->faker->lastName;
-                $mockNorthstarUser->birthdate = $this->faker->date;
-                $mockNorthstarUser->email = $this->faker->email;
-                $mockNorthstarUser->mobile = $this->faker->phoneNumber;
-
-                return $mockNorthstarUser;
+                return new NorthstarUser([
+                    'id' => $northstarId ? $northstarId : $this->faker->northstar_id,
+                    'first_name' => $this->faker->firstName,
+                    'last_name' => $this->faker->lastName,
+                    'birthdate' => $this->faker->date,
+                    'email' => $this->faker->email,
+                    'mobile' => $this->faker->phoneNumber,
+                ]);
             }
         );
     }
