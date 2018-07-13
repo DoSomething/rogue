@@ -7,6 +7,7 @@ use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
+use DoSomething\Gateway\Northstar;
 use DoSomething\Gateway\Blink;
 use DoSomething\Gateway\Resources\NorthstarUser;
 
@@ -18,8 +19,8 @@ class SignupTest extends TestCase
     public function mockNorthstarApiCallAndReturnUser($northstarId = null)
     {
         // Mock the Northstar API calls.
-        $this->mock(Registrar::class)
-            ->shouldReceive('find')
+        $this->mock(Northstar::class)
+            ->shouldReceive('getUser')
             ->andReturnUsing(function($northstarId) {
                 return new NorthstarUser([
                     'id' => $northstarId ? $northstarId : $this->faker->northstar_id,
