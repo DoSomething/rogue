@@ -6,7 +6,6 @@ use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Signup;
-use Rogue\Services\Registrar;
 use DoSomething\Gateway\Northstar;
 use DoSomething\Gateway\Blink;
 use DoSomething\Gateway\Resources\NorthstarUser;

@@ -29,11 +29,11 @@ trait CreatesApplication
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $this->app = require __DIR__.'/../bootstrap/app.php';
 
-        $app->make(Kernel::class)->bootstrap();
+        $this->app->make(Kernel::class)->bootstrap();
 
-        $this->northstarMock = $this->mock(\DoSomething\Gateway\Northstar::class);
+        $this->northstarMock = $this->mock(Northstar::class);
         $this->northstarMock->shouldReceive('asClient')->andReturnSelf();
         $this->northstarMock->shouldReceive('getUser')->andReturnUsing(function ($type, $id) {
             return new NorthstarUser([
@@ -46,6 +46,6 @@ trait CreatesApplication
                 ]);
         });
 
-        return $app;
+        return $this->app;
     }
 }
