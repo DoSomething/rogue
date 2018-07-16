@@ -6,32 +6,10 @@ use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Signup;
-use DoSomething\Gateway\Northstar;
 use DoSomething\Gateway\Blink;
-use DoSomething\Gateway\Resources\NorthstarUser;
 
 class SignupTest extends TestCase
 {
-    /**
-     * Helper function to mock NS API calls and receive a user.
-     */
-    public function mockNorthstarApiCallAndReturnUser($northstarId = null)
-    {
-        // Mock the Northstar API calls.
-        $this->mock(Northstar::class)
-            ->shouldReceive('getUser')
-            ->andReturnUsing(function($northstarId) {
-                return new NorthstarUser([
-                    'id' => $northstarId ? $northstarId : $this->faker->northstar_id,
-                    'first_name' => $this->faker->firstName,
-                    'last_name' => $this->faker->lastName,
-                    'birthdate' => $this->faker->date,
-                    'email' => $this->faker->email,
-                    'mobile' => $this->faker->phoneNumber,
-                ]);
-            }
-        );
-    }
     /**
      * Test that a POST request to /signups creates a new signup.
      *
@@ -404,8 +382,8 @@ class SignupTest extends TestCase
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
-        // Mock the NS API call and return a user.
-        $this->mockNorthstarApiCallAndReturnUser();
+        // Mock the Northstar API calls.
+        $this->northstarMock;
 
         // Test with admin that entire user is returned.
         $response = $this->withAdminAccessToken()->getJson('api/v3/signups?include=user');
@@ -427,8 +405,8 @@ class SignupTest extends TestCase
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
-        // Mock the NS API call and return a user.
-        $this->mockNorthstarApiCallAndReturnUser($signup->northstar_id);
+        // Mock the Northstar API calls.
+        $this->northstarMock;
 
         // Test with admin that entire user is returned.
         $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups?include=user');
@@ -450,8 +428,8 @@ class SignupTest extends TestCase
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
-        // Mock the NS API call and return a user.
-        $this->mockNorthstarApiCallAndReturnUser();
+        // Mock the Northstar API calls.
+        $this->northstarMock;
 
         // Test with annoymous user that only a user's first name is returned.
         $response = $this->getJson('api/v3/signups?include=user');

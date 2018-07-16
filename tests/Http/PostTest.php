@@ -10,7 +10,6 @@ use Rogue\Models\Reaction;
 use Rogue\Services\Fastly;
 use DoSomething\Gateway\Blink;
 use Illuminate\Http\UploadedFile;
-use DoSomething\Gateway\Northstar;
 
 class PostTest extends TestCase
 {
@@ -68,8 +67,7 @@ class PostTest extends TestCase
             ->shouldReceive('userSignupPost');
 
         // Mock the Northstar API calls.
-            $this->mock(Northstar::class)
-                ->shouldReceive('getUser');
+        $this->northstarMock;
 
         // Create the post!
         $response = $this->withAccessToken($northstarId)->json('POST', 'api/v3/posts', [
@@ -120,8 +118,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Mock the Northstar API calls.
-            $this->mock(Northstar::class)
-                ->shouldReceive('getUser');
+        $this->northstarMock;
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
@@ -168,8 +165,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Mock the Northstar API calls.
-            $this->mock(Northstar::class)
-                ->shouldReceive('getUser');
+        $this->northstarMock;
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
@@ -213,8 +209,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Mock the Northstar API calls.
-            $this->mock(Northstar::class)
-                ->shouldReceive('getUser');
+        $this->northstarMock;
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
@@ -258,8 +253,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Mock the Northstar API calls.
-            $this->mock(Northstar::class)
-                ->shouldReceive('getUser');
+        $this->northstarMock;
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
@@ -365,8 +359,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Mock the Northstar API calls.
-            $this->mock(Northstar::class)
-                ->shouldReceive('getUser');
+        $this->northstarMock;
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
@@ -446,8 +439,8 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Mock the Northstar API calls.
-            $this->mock(Northstar::class)
-                ->shouldReceive('getUser');
+        $this->northstarMock;
+
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id, 'user')->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
@@ -490,8 +483,7 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Mock the Northstar API calls.
-            $this->mock(Northstar::class)
-                ->shouldReceive('getUser');
+        $this->northstarMock;
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
