@@ -35,6 +35,8 @@ trait CreatesApplication
 
         $this->northstarMock = $this->mock(Northstar::class);
         $this->northstarMock->shouldReceive('asClient')->andReturnSelf();
+        $this->northstarMock->shouldReceive('asUser')->andReturnSelf();
+        $this->northstarMock->shouldReceive('refreshIfExpired')->andReturnSelf();
         $this->northstarMock->shouldReceive('getUser')->andReturnUsing(function ($type, $id) {
             return new NorthstarUser([
                     'id' => $this->faker->northstar_id,
