@@ -4,7 +4,9 @@ namespace Tests;
 
 use Mockery;
 use Carbon\Carbon;
+use DoSomething\Gateway\Northstar;
 use Illuminate\Support\Facades\Storage;
+use DoSomething\Gateway\Resources\NorthstarUser;
 
 trait WithMocks
 {
@@ -30,6 +32,22 @@ trait WithMocks
         $this->faker = app(\Faker\Generator::class);
         $this->faker->addProvider(new \FakerNorthstarId($this->faker));
         $this->faker->addProvider(new \FakerCampaignId($this->faker));
+
+        // Northstar Mock
+        $this->northstarMock = $this->mock(Northstar::class);
+        $this->northstarMock->shouldReceive('asClient')->andReturnSelf();
+        $this->northstarMock->shouldReceive('asUser')->andReturnSelf();
+        $this->northstarMock->shouldReceive('refreshIfExpired')->andReturnSelf();
+        $this->northstarMock->shouldReceive('getUser')->andReturnUsing(function ($type, $id) {
+            return new NorthstarUser([
+                    'id' => $type === 'id' ? $id : $this->faker->northstar_id,
+                    'first_name' => $this->faker->firstName,
+                    'last_name' => $this->faker->lastName,
+                    'birthdate' => $this->faker->date,
+                    'email' => $this->faker->email,
+                    'mobile' => $this->faker->phoneNumber,
+                ]);
+        });
     }
 
     /**
