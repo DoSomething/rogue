@@ -382,9 +382,6 @@ class SignupTest extends TestCase
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
-        // Mock the Northstar API calls.
-        $this->northstarMock;
-
         // Test with admin that entire user is returned.
         $response = $this->withAdminAccessToken()->getJson('api/v3/signups?include=user');
         $response->assertStatus(200);
@@ -405,9 +402,6 @@ class SignupTest extends TestCase
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
-        // Mock the Northstar API calls.
-        $this->northstarMock;
-
         // Test with admin that entire user is returned.
         $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups?include=user');
         $response->assertStatus(200);
@@ -427,9 +421,6 @@ class SignupTest extends TestCase
     {
         $post = factory(Post::class)->create();
         $signup = $post->signup;
-
-        // Mock the Northstar API calls.
-        $this->northstarMock;
 
         // Test with annoymous user that only a user's first name is returned.
         $response = $this->getJson('api/v3/signups?include=user');

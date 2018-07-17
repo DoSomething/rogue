@@ -1102,10 +1102,6 @@ class PostTest extends TestCase
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
-        // Mock the Northstar API calls.
-            $this->mock(Northstar::class)
-                ->shouldReceive('getUser');
-
         // Create the post!
         $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
             'northstar_id' => $signup->northstar_id,
