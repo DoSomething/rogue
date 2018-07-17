@@ -40,7 +40,7 @@ trait WithMocks
         $this->northstarMock->shouldReceive('refreshIfExpired')->andReturnSelf();
         $this->northstarMock->shouldReceive('getUser')->andReturnUsing(function ($type, $id) {
             return new NorthstarUser([
-                    'id' => $id ? $id : $this->faker->northstar_id,
+                    'id' => $type === 'id' ? $id : $this->faker->northstar_id,
                     'first_name' => $this->faker->firstName,
                     'last_name' => $this->faker->lastName,
                     'birthdate' => $this->faker->date,
