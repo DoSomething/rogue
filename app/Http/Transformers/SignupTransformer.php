@@ -72,13 +72,11 @@ class SignupTransformer extends TransformerAbstract
                     'include' => 'Parameters must be one of: ' . implode(',', $this->validParams),
                 ]);
             }
+
+            return $this->collection($signup->visiblePosts($params->get('type')), new PostTransformer);
+        } else {
+            return $this->collection($signup->visiblePosts, new PostTransformer);
         }
-
-        $type = $params ? $params->get('type') : null;
-
-        // Only allow an admin or the user who owns the signup to see the signup's unapproved posts by type.
-        // $post = $signup->visiblePosts($params->get('type'));
-        return $this->collection($signup->visiblePosts($type), new PostTransformer);
     }
 
     /**

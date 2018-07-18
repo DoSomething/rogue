@@ -334,6 +334,7 @@ class SignupTest extends TestCase
         $response = $this->getJson('api/v3/signups' . '?include=posts:type(text|photo)');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
+
         $this->assertEquals(true, empty($decodedResponse['data'][0]['posts']['data']));
 
         // Test with annoymous user that the voter reg post is returned since it is accepted.
