@@ -58,6 +58,7 @@ class PostTest extends TestCase
         $campaignId = $this->faker->randomNumber(4);
         $campaignRunId = $this->faker->randomNumber(4);
         $quantity = $this->faker->numberBetween(10, 1000);
+        $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
@@ -73,7 +74,7 @@ class PostTest extends TestCase
             'type'             => 'photo',
             'action'           => 'test-action',
             'quantity'         => $quantity,
-            'why_participated' => $this->faker->paragraph,
+            'why_participated' => $why_participated,
             'text'             => $text,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
@@ -86,6 +87,7 @@ class PostTest extends TestCase
         $this->assertDatabaseHas('signups', [
             'campaign_id' => $campaignId,
             'northstar_id' => $northstarId,
+            'why_participated' => $why_participated,
         ]);
 
         $this->assertDatabaseHas('posts', [
@@ -108,6 +110,7 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
         $quantity = $this->faker->numberBetween(10, 1000);
+        $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
@@ -122,7 +125,7 @@ class PostTest extends TestCase
             'type'             => 'photo',
             'action'           => 'test-action',
             'quantity'         => $quantity,
-            'why_participated' => $this->faker->paragraph,
+            'why_participated' => $why_participated,
             'text'             => $text,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
@@ -141,6 +144,13 @@ class PostTest extends TestCase
             'quantity' => $quantity,
             'details' => json_encode($details),
         ]);
+
+        // Make sure the updated why_participated is updated on the signup.
+        $this->assertDatabaseHas('signups', [
+            'campaign_id' => $signup->campaign_id,
+            'northstar_id' => $signup->northstar_id,
+            'why_participated' => $why_participated,
+        ]);
     }
 
     /**
@@ -153,6 +163,7 @@ class PostTest extends TestCase
         $signup = factory(Signup::class)->create();
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
+        $why_participated = $this->faker->paragraph;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Mock the Blink API call.
@@ -166,7 +177,7 @@ class PostTest extends TestCase
             'type'             => 'text',
             'action'           => 'test-action',
             'quantity'         => $quantity,
-            'why_participated' => $this->faker->paragraph,
+            'why_participated' => $why_participated,
             'text'             => $text,
             'details'          => json_encode($details),
         ]);
@@ -183,6 +194,13 @@ class PostTest extends TestCase
             'status' => 'pending',
             'quantity' => $quantity,
             'details' => json_encode($details),
+        ]);
+
+        // Make sure the updated why_participated is updated on the signup.
+        $this->assertDatabaseHas('signups', [
+            'campaign_id' => $signup->campaign_id,
+            'northstar_id' => $signup->northstar_id,
+            'why_participated' => $why_participated,
         ]);
     }
 
