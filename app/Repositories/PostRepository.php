@@ -109,7 +109,11 @@ class PostRepository
             $this->crop($data, $post->id);
         }
 
-        // Update the signup's total quantity.
+        // Update the signup's total quantity and why_participated if sent.
+        if (isset($data['why_participated'])) {
+            $signup->why_participated = $data['why_participated'];
+        }
+
         $signup->quantity = $signup->posts->sum('quantity');
         $signup->save();
 
