@@ -76,7 +76,8 @@ class Signup extends Model
             if ($type === null) {
                 return $this->hasMany(Post::class)->where('status', '=', 'accepted')
                                                   ->orWhere('northstar_id', auth()->id())
-                                                  ->with('tags');
+                                                  ->with('tags')
+                                                  ->get();
             }
 
             return $this->hasMany(Post::class)->whereIn('type', array_values($type))
@@ -89,7 +90,7 @@ class Signup extends Model
         }
 
         if ($type === null) {
-            return $this->hasMany(Post::class)->with('tags');
+            return $this->hasMany(Post::class)->with('tags')->get();
         }
 
         return $this->hasMany(Post::class)->whereIn('type', array_values($type))
