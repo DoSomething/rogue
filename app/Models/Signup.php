@@ -219,7 +219,7 @@ class Signup extends Model
      */
     public function scopeWithVisiblePosts($query, $types = null)
     {
-        return $query->with(['posts' => function ($query) use ($types) {
+        return $query->with(['visiblePosts' => function ($query) use ($types) {
 
             if ($types) {
                 $query->whereIn('type', $types);
