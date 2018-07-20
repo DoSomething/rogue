@@ -67,35 +67,16 @@ class Signup extends Model
     /**
      * Get the visible posts associated with this signup, optionally by type.
      *
-     * @param string Optional param to specify post type.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function visiblePosts($type = null)
+    public function visiblePosts()
     {
         if (! is_staff_user()) {
-            if ($type === null) {
-                return $this->hasMany(Post::class)->where('status', '=', 'accepted')
-                                                  ->orWhere('northstar_id', auth()->id())
-                                                  ->with('tags')
-                                                  ->get();
-            }
-
-            return $this->hasMany(Post::class)->whereIn('type', array_values($type))
-                                              ->where(function($q) {
-                                                $q->where('status', '=', 'accepted')
-                                                  ->orWhere('northstar_id', auth()->id());
-                                              })
-                                              ->with('tags')
-                                              ->get();
+            return $this->hasMany(Post::class)->where('status', '=', 'accepted')
+                                              ->orWhere('northstar_id', auth()->id())
+                                              ->with('tags');
         }
-
-        if ($type === null) {
-            return $this->hasMany(Post::class)->with('tags')->get();
-        }
-
-        return $this->hasMany(Post::class)->whereIn('type', array_values($type))
-                                      ->with('tags')
-                                      ->get();
+        return $this->hasMany(Post::class)->with('tags');
     }
 
     /**
@@ -231,17 +212,23 @@ class Signup extends Model
     }
 
     /**
-     * Scope a query to only return signups if a user is an admin, staff, or is owner of signup.
+     * Scope a query to only return signups if a user is an admin, staff, or is owner of signup and by type (optional)
      *
+     * @param array $types
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWithVisiblePosts($query)
+    public function scopeWithVisiblePosts($query, $types = null)
     {
-        if (! is_staff_user()) {
-            return $query->with(['posts' => function ($query) {
-                $query->where('status', 'accepted')
-                ->orWhere('northstar_id', auth()->id());
-            }]);
-        }
+        return $query->with(['posts' => function ($query) use ($types) {
+
+            if ($types) {
+                $query->whereIn('type', $types);
+            }
+
+            if (! is_staff_user()) {
+               $query->where('status', 'accepted')
+                    ->orWhere('northstar_id', auth()->id());
+            }
+        }, 'posts.tags']);
     }
 }
