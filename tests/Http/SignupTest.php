@@ -341,7 +341,6 @@ class SignupTest extends TestCase
         $response = $this->getJson('api/v3/signups' . '?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
-        dd($decodedResponse);
         $this->assertEquals(false, empty($decodedResponse['data'][0]['posts']['data']));
     }
 

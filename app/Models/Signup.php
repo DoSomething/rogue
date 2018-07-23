@@ -71,13 +71,16 @@ class Signup extends Model
      */
     public function visiblePosts()
     {
+        $query = $this->hasMany(Post::class);
+
         if (! is_staff_user()) {
-            return $this->hasMany(Post::class)->where('status', '=', 'accepted')
-                                              ->orWhere('northstar_id', auth()->id())
-                                              ->with('tags');
+            $query->where(function($query) {
+                $query->where('status', 'accepted')
+                    ->orWhere('northstar_id', auth()->id());
+            });
         }
 
-        return $this->hasMany(Post::class)->with('tags');
+        return $query;
     }
 
     /**
@@ -221,21 +224,16 @@ class Signup extends Model
     public function scopeWithVisiblePosts($query, $types = null)
     {
         return $query->with(['visiblePosts' => function ($query) use ($types) {
-
-            if ($types) {
-                // $query->whereIn('type', $types);
-
-                if (count($types) >1 ) {
-                    $query->where(function ($query) use ($types) {
-                        foreach ($types as $type) {
-                            $query->orWhere('type', $type);
-                        }
-                    });
-                } else {
-                    $query->where('type', $types[0]);
-                }
+            if (! is_staff_user()) {
+                $query->where(function($query) {
+                    $query->where('status', 'accepted')
+                        ->orWhere('northstar_id', auth()->id());
+                });
             }
 
+            if ($types) {
+                $query->whereIn('type', $types);
+            }
         }]);
     }
 }
