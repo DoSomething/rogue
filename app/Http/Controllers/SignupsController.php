@@ -91,8 +91,14 @@ class SignupsController extends ApiController
         $query = $this->filter($query, $filters, Signup::$indexes);
 
         // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
-        if ($request->query('include') === 'posts') {
-            $query = $query->withVisiblePosts();
+        if (starts_with($request->query('include'), 'posts')) {
+            $types = (new \League\Fractal\Manager)
+                ->parseIncludes($request->query('include'))
+                ->getIncludeParams('posts');
+
+            $types = $types ? $types->get('type') : null;
+
+            $query = $query->withVisiblePosts($types);
         }
 
         $orderBy = $request->query('orderBy');

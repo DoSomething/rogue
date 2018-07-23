@@ -71,13 +71,16 @@ class Signup extends Model
      */
     public function visiblePosts()
     {
+        $query = $this->hasMany(Post::class);
+
         if (! is_staff_user()) {
-            return $this->hasMany(Post::class)->where('status', '=', 'accepted')
-                                              ->orWhere('northstar_id', auth()->id())
-                                              ->with('tags');
+            $query->where(function($query) {
+                $query->where('status', 'accepted')
+                    ->orWhere('northstar_id', auth()->id());
+            });
         }
 
-        return $this->hasMany(Post::class)->with('tags');
+        return $query;
     }
 
     /**
@@ -213,17 +216,17 @@ class Signup extends Model
     }
 
     /**
-     * Scope a query to only return signups if a user is an admin, staff, or is owner of signup.
+     * Scope a query to only return signups if a user is an admin, staff, or is owner of signup and by type (optional)
      *
+     * @param array $types
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWithVisiblePosts($query)
+    public function scopeWithVisiblePosts($query, $types = null)
     {
-        if (! is_staff_user()) {
-            return $query->with(['posts' => function ($query) {
-                $query->where('status', 'accepted')
-                ->orWhere('northstar_id', auth()->id());
-            }]);
-        }
+        return $query->with(['visiblePosts' => function ($query) use ($types) {
+            if ($types) {
+                $query->whereIn('type', $types);
+            }
+        }]);
     }
 }

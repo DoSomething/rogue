@@ -50,6 +50,7 @@ const reviewComponent = (Component, data) => {
           filter: {
             status: status,
             campaign_id: campaignId,
+            type: 'photo,text',
           },
           include: ['signup', 'siblings'],
         })

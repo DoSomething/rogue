@@ -29,8 +29,11 @@ Anonymous requests will only return accepted posts. Logged-in users can see acce
   - The northstar_id to filter the response by.
   - e.g. `/posts?filter[northstar_id]=47asdf23abc`
 - **filter[status]** _(string)_
-  - The string to filter the response by.
+  - The status to filter the response by.
   - e.g. `/posts?filter[status]=accepted`
+- **filter[type]** _(string)_
+  - The type to filter the response by.
+  - e.g. `/posts?filter[type]=photo,voter-reg`
 - **filter[exclude]** _(integer)_
   - The post id(s) to exclude in response.
   - e.g. `/posts?filter[exclude]=2,3,4`
