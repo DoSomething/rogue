@@ -65,7 +65,7 @@ class Signup extends Model
     }
 
     /**
-     * Get the visible posts associated with this signup, optionally by type.
+     * Get the visible posts associated with this signup.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -76,6 +76,7 @@ class Signup extends Model
                                               ->orWhere('northstar_id', auth()->id())
                                               ->with('tags');
         }
+
         return $this->hasMany(Post::class)->with('tags');
     }
 
@@ -222,13 +223,19 @@ class Signup extends Model
         return $query->with(['visiblePosts' => function ($query) use ($types) {
 
             if ($types) {
-                $query->whereIn('type', $types);
+                // $query->whereIn('type', $types);
+
+                if (count($types) >1 ) {
+                    $query->where(function ($query) use ($types) {
+                        foreach ($types as $type) {
+                            $query->orWhere('type', $type);
+                        }
+                    });
+                } else {
+                    $query->where('type', $types[0]);
+                }
             }
 
-            if (! is_staff_user()) {
-               $query->where('status', 'accepted')
-                    ->orWhere('northstar_id', auth()->id());
-            }
-        }, 'posts.tags']);
+        }]);
     }
 }
