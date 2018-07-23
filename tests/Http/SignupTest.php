@@ -355,38 +355,22 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        // Create a voter reg post
-        $post = factory(Post::class)->create();
-        $post->type = 'voter-reg';
-        $post->signup()->associate($signup);
-        $post->save();
-
-        // Create a text post
-        $textPost = factory(Post::class)->create();
-        $textPost->type = 'text';
-        $textPost->signup()->associate($signup);
-        $textPost->save();
-
-        // Create a photo post
-        $photoPost = factory(Post::class)->create();
-        $photoPost->type = 'photo';
-        $photoPost->signup()->associate($signup);
-        $photoPost->save();
+        // Create three voter registration posts, a text post, and a photo post.
+        factory(Post::class, 3)->create(['type' => 'voter-reg', 'signup_id' => $signup->id]);
+        factory(Post::class)->create(['type' => 'text', 'signup_id' => $signup->id]);
+        factory(Post::class)->create(['type' => 'photo', 'signup_id' => $signup->id]);
 
         // Test with admin that only photo and text posts are returned.
         $response = $this->withAdminAccessToken()->getJson('api/v3/signups?include=posts:type(text|photo)');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(2, count($decodedResponse['data'][0]['posts']['data']));
-        $this->assertEquals('text', $decodedResponse['data'][0]['posts']['data'][0]['type']);
-        $this->assertEquals('photo', $decodedResponse['data'][0]['posts']['data'][1]['type']);
 
         // Test with admin that only voter-reg posts are returned.
         $response = $this->withAdminAccessToken()->getJson('api/v3/signups?include=posts:type(voter-reg)');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
-        $this->assertEquals(1, count($decodedResponse['data'][0]['posts']['data']));
-        $this->assertEquals('voter-reg', $decodedResponse['data'][0]['posts']['data'][0]['type']);
+        $this->assertEquals(3, count($decodedResponse['data'][0]['posts']['data']));
     }
 
     /**
