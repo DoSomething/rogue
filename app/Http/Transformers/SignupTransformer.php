@@ -3,10 +3,8 @@
 namespace Rogue\Http\Transformers;
 
 use Rogue\Models\Signup;
-// use League\Fractal\ParamBag;
 use Rogue\Services\Registrar;
 use League\Fractal\TransformerAbstract;
-// use Illuminate\Validation\ValidationException;
 
 class SignupTransformer extends TransformerAbstract
 {
