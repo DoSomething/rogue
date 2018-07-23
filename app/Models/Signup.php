@@ -224,13 +224,6 @@ class Signup extends Model
     public function scopeWithVisiblePosts($query, $types = null)
     {
         return $query->with(['visiblePosts' => function ($query) use ($types) {
-            if (! is_staff_user()) {
-                $query->where(function($query) {
-                    $query->where('status', 'accepted')
-                        ->orWhere('northstar_id', auth()->id());
-                });
-            }
-
             if ($types) {
                 $query->whereIn('type', $types);
             }
