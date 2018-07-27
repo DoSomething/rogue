@@ -56,6 +56,13 @@ class Post extends Model
     public static $indexes = ['id', 'signup_id', 'campaign_id', 'type', 'action', 'northstar_id', 'status'];
 
     /**
+     * The tags prefixed with 'good' that will send a post to Slack.
+     *
+     * @var array
+     */
+    public $goodTags = ['good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote'];
+
+    /**
      * Each post has events.
      */
     public function events()
@@ -379,7 +386,7 @@ class Post extends Model
     public function hasGoodTag()
     {
         foreach ($this->tagSlugs() as $tagslug) {
-            if (in_array($tagslug, ['good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote'])) {
+            if (in_array($tagslug, $goodTags)) {
                 return true;
             }
         }
