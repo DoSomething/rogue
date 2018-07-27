@@ -47,6 +47,10 @@ class CampaignSingle extends React.Component {
             label: 'Good For Brand',
             active: false,
           },
+          'group-photo': {
+            label: 'Group Photo',
+            active: false,
+          },
           bulk: {
             label: 'Bulk',
             active: false,
