@@ -386,7 +386,7 @@ class Post extends Model
     public function hasGoodTag()
     {
         foreach ($this->tagSlugs() as $tagslug) {
-            if (in_array($tagslug, $goodTags)) {
+            if (in_array($tagslug, $this->goodTags)) {
                 return true;
             }
         }

@@ -72,8 +72,6 @@ class Tags extends React.Component {
       test: 'Test',
       'incomplete-action': 'Incomplete Action',
       bulk: 'Bulk',
-      'good-for-brand': 'Good For Brand',
-      'group-photo': 'Group Photo',
     };
 
     const showTags = this.props.disabled ? 'disabled' : 'enabled';
