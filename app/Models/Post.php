@@ -60,7 +60,7 @@ class Post extends Model
      *
      * @var array
      */
-    public $goodTags = ['good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote'];
+    public $goodTags = ['good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote', 'good-for-brand'];
 
     /**
      * Each post has events.
