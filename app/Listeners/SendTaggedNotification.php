@@ -36,7 +36,7 @@ class SendTaggedNotification
             ]);
         }
 
-        if (! ($post->hasGoodTag()) && in_array($tag->tag_slug, ['good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote'])) {
+        if (! ($post->hasGoodTag()) && in_array($tag->tag_slug, $post->goodTags)) {
             Notification::route('slack', config('services.slack.url'))
                 ->notify(new SlackTagNotification($post));
         }
