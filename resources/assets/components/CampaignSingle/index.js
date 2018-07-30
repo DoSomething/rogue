@@ -35,12 +35,20 @@ class CampaignSingle extends React.Component {
             label: 'Hide In Gallery 👻',
             active: false,
           },
+          'group-photo': {
+            label: 'Group Photo',
+            active: false,
+          },
           'good-for-sponsor': {
             label: 'Good For Sponsor',
             active: false,
           },
           'good-for-storytelling': {
             label: 'Good For Storytelling',
+            active: false,
+          },
+          'good-for-brand': {
+            label: 'Good For Brand',
             active: false,
           },
           bulk: {

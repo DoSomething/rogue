@@ -217,6 +217,24 @@ exports[`it renders correctly 1`] = `
                 Bulk
               </button>
             </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Good For Brand
+              </button>
+            </li>
+            <li>
+              <button
+                className="tag"
+                disabled={true}
+                onClick={[Function]}
+              >
+                Group Photo
+              </button>
+            </li>
           </ul>
         </div>
       </div>
