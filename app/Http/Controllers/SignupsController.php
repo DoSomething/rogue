@@ -124,6 +124,17 @@ class SignupsController extends ApiController
      */
     public function show(Request $request, Signup $signup)
     {
+        // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
+        if (starts_with($request->query('include'), 'posts')) {
+            $types = (new \League\Fractal\Manager)
+                ->parseIncludes($request->query('include'))
+                ->getIncludeParams('posts');
+
+            $types = $types ? $types->get('type') : null;
+
+            $signup = $signup->withVisiblePosts($types)->first();
+        }
+
         return $this->item($signup, 200, [], $this->transformer, $request->query('include'));
     }
 
