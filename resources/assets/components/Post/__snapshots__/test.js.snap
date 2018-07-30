@@ -223,16 +223,7 @@ exports[`it renders correctly 1`] = `
                 disabled={true}
                 onClick={[Function]}
               >
-                Good For Brand
-              </button>
-            </li>
-            <li>
-              <button
-                className="tag"
-                disabled={true}
-                onClick={[Function]}
-              >
-                Group Photo
+                Bulk
               </button>
             </li>
           </ul>
