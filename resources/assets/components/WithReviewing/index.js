@@ -52,7 +52,7 @@ const reviewComponent = (Component, data) => {
             campaign_id: campaignId,
             type: 'photo,text',
           },
-          include: ['signup', 'siblings'],
+          include: ['signup', 'siblings:limit(10)'],
         })
         .then(json =>
           this.setState({
@@ -196,7 +196,7 @@ const reviewComponent = (Component, data) => {
         // Make API request to Rogue to update the quantity on the backend
         let response = this.api.delete(`api/v3/posts/${postId}`);
 
-        response.then((result) => {
+        response.then(result => {
           // Update the state
           this.setState(previousState => {
             var newState = { ...previousState };

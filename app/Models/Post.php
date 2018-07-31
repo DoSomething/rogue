@@ -393,4 +393,19 @@ class Post extends Model
 
         return false;
     }
+
+    /**
+    * Scope a query to only return X amount of siblings, determined by limit param.
+    *
+    * @param int $limit
+    * @return \Illuminate\Database\Eloquent\Builder
+    */
+    public function scopeWithPostLimit($query, $limit = null)
+    {
+        return $query->with(['siblings' => function ($query) use ($limit) {
+            if ($limit) {
+                $query->take($limit);
+            }
+        }]);
+    }
 }
