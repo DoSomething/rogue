@@ -52,7 +52,7 @@ const reviewComponent = (Component, data) => {
             campaign_id: campaignId,
             type: 'photo,text',
           },
-          include: ['signup', 'siblings:limit(10)'],
+          include: ['signup', 'siblings'],
         })
         .then(json =>
           this.setState({
