@@ -85,21 +85,6 @@ class PostsController extends ApiController
             $query = $query->withTag($filters['tag']);
         }
 
-        // If there is a limit set on siblings, include in query.
-        if ($request->query('include')) {
-            foreach ($request->query('include') as $key => $value) {
-                if ((strpos($value, 'siblings') !== false) && (strpos($value, 'limit') !== false)) {
-
-                    $limit = (new \League\Fractal\Manager)
-                            ->parseIncludes($value)
-                            ->getIncludeParams('siblings');
-
-                    $limit = $limit ? (int) $limit->get('limit')[0] : null;
-
-                    $query = $query->withPostLimit($limit);
-                }
-            }
-        }
         return $this->paginatedCollection($query, $request);
     }
 
