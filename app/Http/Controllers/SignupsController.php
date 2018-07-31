@@ -132,7 +132,11 @@ class SignupsController extends ApiController
 
             $types = $types ? $types->get('type') : null;
 
-            $signup = $signup->withVisiblePosts($types)->get()->keyBy('id')[$signup->id];
+            $signup->load(['visiblePosts' => function ($query) use ($types) {
+                if ($types) {
+                    $query->whereIn('type', $types);
+                }
+            }]);
         }
 
         return $this->item($signup, 200, [], $this->transformer, $request->query('include'));
