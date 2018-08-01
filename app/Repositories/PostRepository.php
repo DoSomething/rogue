@@ -93,18 +93,18 @@ class PostRepository
             'details' => isset($data['details']) ? $data['details'] : null,
         ]);
 
-        // If there is a created_at property, fill this in (e.g. if created_at is sent when creating a record with the importer app).
-        if ($data['created_at']){
-            $post->created_at = $data['created_at'];
-        }
-
         $isAdmin = auth()->user() && auth()->user()->role === 'admin';
         $hasAdminScope = in_array('admin', token()->scopes());
 
-        // Admin users may provide a source and status when uploading a post.
+        // Admin users may provide a source, status, and created_at when uploading a post.
         if ($isAdmin || $hasAdminScope) {
             $post->status = isset($data['status']) ? $data['status'] : 'pending';
             $post->source = isset($data['source']) ? $data['source'] : token()->client();
+
+            // If there is a created_at property, fill this in (e.g. if created_at is sent when creating a record with the importer app).
+            if (isset($data['created_at'])) {
+                $post->created_at = $data['created_at'];
+            }
         }
 
         $post->save();
