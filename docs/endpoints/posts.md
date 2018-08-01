@@ -175,6 +175,8 @@ POST /api/v3/posts
   A JSON field to store extra details about a post.
 - **dont_send_to_blink** (boolean) optional.
   If included and true, the data for this Post will not be sent to Blink.
+- **created_at** (timestamp).
+  If included, the timestamp to set the `created_at` date to. This would be used in a case when we're importing data from the importer app (e.g. voter-reg posts, historical FB share posts, etc.).
 
 Example Response:
 
