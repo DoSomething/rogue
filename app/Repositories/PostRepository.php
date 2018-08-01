@@ -93,6 +93,11 @@ class PostRepository
             'details' => isset($data['details']) ? $data['details'] : null,
         ]);
 
+        // If there is a created_at property, fill this in (e.g. if created_at is sent when creating a record with the importer app).
+        if ($data['created_at']){
+            $post->created_at = $data['created_at'];
+        }
+
         $isAdmin = auth()->user() && auth()->user()->role === 'admin';
         $hasAdminScope = in_array('admin', token()->scopes());
 
@@ -102,7 +107,7 @@ class PostRepository
             $post->source = isset($data['source']) ? $data['source'] : token()->client();
         }
 
-        $post->save();
+        $post->save(['timestamps' => false]);
 
         // Edit the image if there is one
         if (isset($data['file'])) {
