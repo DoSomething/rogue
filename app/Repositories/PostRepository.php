@@ -107,7 +107,7 @@ class PostRepository
             $post->source = isset($data['source']) ? $data['source'] : token()->client();
         }
 
-        $post->save(['timestamps' => false]);
+        $post->save();
 
         // Edit the image if there is one
         if (isset($data['file'])) {
