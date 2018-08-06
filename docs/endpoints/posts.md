@@ -44,7 +44,7 @@ Anonymous requests will only return accepted posts. Logged-in users can see acce
 - **include** _(string)_
   - Include additional related records in the response: `signup`, `siblings`
   - e.g. `/posts?include=signup,siblings`
-  - Note: siblings will only load up to 10 siblings (for performance reasons).
+  - Note: siblings will only load up to 5 siblings (for performance reasons).
 
 Example Response:
 
