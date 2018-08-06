@@ -33,10 +33,10 @@ class PostTest extends TestCase
                 ],
                 'quantity',
                 'tags' => [],
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
+                // 'reactions' => [
+                //     'reacted',
+                //     'total',
+                // ],
                 'status',
                 'details',
                 'source',
@@ -565,10 +565,10 @@ class PostTest extends TestCase
                         'text',
                     ],
                     'quantity',
-                    'reactions' => [
-                        'reacted',
-                        'total',
-                    ],
+                    // 'reactions' => [
+                    //     'reacted',
+                    //     'total',
+                    // ],
                     'status',
                     'created_at',
                     'updated_at',
@@ -637,10 +637,10 @@ class PostTest extends TestCase
                         'text',
                     ],
                     'quantity',
-                    'reactions' => [
-                        'reacted',
-                        'total',
-                    ],
+                    // 'reactions' => [
+                    //     'reacted',
+                    //     'total',
+                    // ],
                     'status',
                     'created_at',
                     'updated_at',
@@ -724,10 +724,10 @@ class PostTest extends TestCase
                         'text',
                     ],
                     'quantity',
-                    'reactions' => [
-                        'reacted',
-                        'total',
-                    ],
+                    // 'reactions' => [
+                    //     'reacted',
+                    //     'total',
+                    // ],
                     'status',
                     'created_at',
                     'updated_at',
@@ -824,10 +824,10 @@ class PostTest extends TestCase
                     'text',
                 ],
                 'quantity',
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
+                // 'reactions' => [
+                //     'reacted',
+                //     'total',
+                // ],
                 'status',
                 'created_at',
                 'updated_at',
@@ -881,10 +881,10 @@ class PostTest extends TestCase
                     'text',
                 ],
                 'quantity',
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
+                // 'reactions' => [
+                //     'reacted',
+                //     'total',
+                // ],
                 'status',
                 'created_at',
                 'updated_at',
@@ -916,10 +916,10 @@ class PostTest extends TestCase
         $response->assertJson([
             'data' => [
                 'id' => $post->id,
-                'reactions' => [
-                    'reacted' => true,
-                    'total' => 2,
-                ],
+                // 'reactions' => [
+                //     'reacted' => true,
+                //     'total' => 2,
+                // ],
             ],
         ]);
     }
