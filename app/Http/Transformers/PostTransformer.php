@@ -52,7 +52,8 @@ class PostTransformer extends TransformerAbstract
         ];
 
         if (Gate::allows('viewAll', $post)) {
-            $response['tags'] = $post->tagSlugs();
+            // $response['tags'] = $post->tagSlugs();
+            $response['tags'] = [];
             $response['source'] = $post->source;
             $response['source_details'] = $post->source_details;
             $response['remote_addr'] = '0.0.0.0';
