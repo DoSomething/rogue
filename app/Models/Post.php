@@ -22,7 +22,7 @@ class Post extends Model
      * Always load a user's own reaction,
      * if they're logged-in.
      */
-    protected $with = ['reaction', 'tags'];
+    protected $with = ['tags'];
 
     /**
      * The relationship counts that should be eager loaded on every query.
@@ -175,7 +175,7 @@ class Post extends Model
      */
     public function siblings()
     {
-        return $this->hasMany(self::class, 'signup_id', 'signup_id')->take(5);
+        return $this->hasMany(self::class, 'signup_id', 'signup_id')->take(10);
     }
 
     /**
