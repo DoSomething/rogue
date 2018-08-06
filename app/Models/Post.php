@@ -175,7 +175,7 @@ class Post extends Model
      */
     public function siblings()
     {
-        return $this->hasMany(self::class, 'signup_id', 'signup_id')->take(10);
+        return $this->hasMany(self::class, 'signup_id', 'signup_id')->take(5);
     }
 
     /**
