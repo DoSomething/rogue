@@ -42,10 +42,10 @@ class PostTransformer extends TransformerAbstract
                 'text' => $post->text,
             ],
             'quantity' => $post->quantity,
-            // 'reactions' => [
-            //     'reacted' => ! empty($post->reaction),
-            //     'total' => $post->reactions_count,
-            // ],
+            'reactions' => [
+                'reacted' => false,
+                'total' => 0,
+            ],
             'status' => $post->status,
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),

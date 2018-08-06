@@ -22,7 +22,7 @@ class Post extends Model
      * Always load a user's own reaction,
      * if they're logged-in.
      */
-    protected $with = ['tags'];
+    // protected $with = ['reaction', 'tags'];
 
     /**
      * The relationship counts that should be eager loaded on every query.
