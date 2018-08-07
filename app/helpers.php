@@ -113,11 +113,15 @@ function is_staff_user()
  * @param $include str
  */
 function has_include($request, $include) {
-    $includes = $request->query('include');
+    if ($request->query('include')) {
+        $includes = $request->query('include');
 
-    if (is_string($includes)) {
-        $includes = explode(',', $request->query('include'));
+        if (is_string($includes)) {
+            $includes = explode(',', $request->query('include'));
+        }
+
+        return in_array($include, $includes);
     }
 
-    return in_array($include, $includes);
+    return false;
 }

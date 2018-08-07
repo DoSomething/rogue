@@ -71,7 +71,7 @@ class PostsController extends ApiController
         $query = $this->newQuery(Post::class)
             ->orderBy('created_at', 'desc');
 
-        if ($request->query('include') && has_include($request, 'signup')) {
+        if (has_include($request, 'signup')) {
             // Eagerly load the `signup` relationship.
             $query->with('signup');
         }
