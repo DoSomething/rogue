@@ -36,7 +36,8 @@ class PostRequest extends Request
             'quantity' => 'nullable|integer',
             'file' => 'image|dimensions:min_width=400,min_height=400,max_width=5000,max_height_4000',
             'status' => $this->getStatusRules($this->type),
-            'details'=> 'json',
+            'details' => 'json',
+            'created_at' => 'date',
         ];
     }
 
