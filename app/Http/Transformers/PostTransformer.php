@@ -43,8 +43,8 @@ class PostTransformer extends TransformerAbstract
             ],
             'quantity' => $post->quantity,
             'reactions' => [
-                'reacted' => false,
-                'total' => 0,
+                'reacted' => ! empty($post->reaction),
+                'total' => $post->reactions_count,
             ],
             'status' => $post->status,
             'created_at' => $post->created_at->toIso8601String(),
@@ -52,8 +52,7 @@ class PostTransformer extends TransformerAbstract
         ];
 
         if (Gate::allows('viewAll', $post)) {
-            // $response['tags'] = $post->tagSlugs();
-            $response['tags'] = [];
+            $response['tags'] = $post->tagSlugs();
             $response['source'] = $post->source;
             $response['source_details'] = $post->source_details;
             $response['remote_addr'] = '0.0.0.0';

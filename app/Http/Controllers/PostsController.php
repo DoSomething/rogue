@@ -70,6 +70,8 @@ class PostsController extends ApiController
     {
         $query = $this->newQuery(Post::class)
             ->orderBy('created_at', 'desc');
+            // Eagerly load the `signup` relationship.
+            ->with('signup');
 
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Post::$indexes);
@@ -84,6 +86,7 @@ class PostsController extends ApiController
         if (array_has($filters, 'tag')) {
             $query = $query->withTag($filters['tag']);
         }
+
 
         return $this->paginatedCollection($query, $request);
     }
