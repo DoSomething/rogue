@@ -69,9 +69,12 @@ class PostsController extends ApiController
     public function index(Request $request)
     {
         $query = $this->newQuery(Post::class)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'desc');
+
+        if (in_array('signup', $request->query('include'))) {
             // Eagerly load the `signup` relationship.
-            ->with('signup');
+            $query->with('signup');
+        }
 
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Post::$indexes);
