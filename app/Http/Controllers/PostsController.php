@@ -87,7 +87,6 @@ class PostsController extends ApiController
             $query = $query->withTag($filters['tag']);
         }
 
-
         return $this->paginatedCollection($query, $request);
     }
 
