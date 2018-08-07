@@ -105,3 +105,23 @@ function is_staff_user()
 
     return false;
 }
+
+/**
+ * Parses out ?includes in request.
+ *
+ * @param $request
+ * @param $include str
+ */
+function has_include($request, $include) {
+    if ($request->query('include')) {
+        $includes = $request->query('include');
+
+        if (is_string($includes)) {
+            $includes = explode(',', $request->query('include'));
+        }
+
+        return in_array($include, $includes);
+    }
+
+    return false;
+}

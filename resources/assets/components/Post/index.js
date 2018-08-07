@@ -39,7 +39,6 @@ class Post extends React.Component {
   getOtherPosts(post) {
     const post_id = post.id;
     const signup = this.props.signup;
-
     const posts = signup.posts ? signup.posts : post.siblings.data;
 
     // get array of posts
