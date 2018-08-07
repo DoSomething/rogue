@@ -69,7 +69,7 @@ class PostsController extends ApiController
     public function index(Request $request)
     {
         $query = $this->newQuery(Post::class)
-            ->orderBy('created_at', 'desc');
+            ->orderBy('created_at', 'desc')
             // Eagerly load the `signup` relationship.
             ->with('signup');
 
