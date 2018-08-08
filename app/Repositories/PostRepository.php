@@ -103,7 +103,7 @@ class PostRepository
 
             // If there is a created_at property, fill this in (e.g. if created_at is sent when creating a record with the importer app).
             if (isset($data['created_at'])) {
-                $post->created_at = $data['created_at'];
+                $post->created_at = strtotime($data['created_at']);
             }
         }
 
