@@ -55,7 +55,7 @@ class PostsController extends ApiController
 
         $this->middleware('scopes:activity');
         $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
-        $this->middleware('role:admin', ['only' => ['destroy']]);
+        $this->middleware('role:admin,staff', ['only' => ['destroy']]);
         $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
     }
 
