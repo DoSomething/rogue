@@ -16,7 +16,7 @@ class EventsController extends ApiController
         $this->transformer = new EventTransformer();
 
         $this->middleware('scopes:activity');
-        $this->middleware('role:admin');
+        $this->middleware('role:admin,staff');
     }
 
     /**
