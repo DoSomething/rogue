@@ -180,7 +180,7 @@ class EventTest extends TestCase
         $response->assertStatus(403);
 
         $decodedResponse = $response->decodeResponseJson();
-        $this->assertEquals('Requires one of the following roles: admin', $decodedResponse['message']);
+        $this->assertEquals('Requires one of the following roles: admin, staff', $decodedResponse['message']);
     }
 
     /**
