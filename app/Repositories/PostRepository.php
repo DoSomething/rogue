@@ -100,7 +100,17 @@ class PostRepository
 
         // Admin users may provide a source, status, and created_at when uploading a post.
         if ($isAdmin || $hasAdminScope) {
-            $post->status = isset($data['status']) ? $data['status'] : 'pending';
+            // If the admin sets a custom status, set this status.
+            if (isset($data['status'])) {
+                $post->status = $data['status'];
+            // If the admin doesn't set a custom status and it is a share-social post, auto-accept it.
+            } elseif (! isset($data['status']) && $post->type ==== 'share-social') {
+                $post->status = 'accepted';
+            // Otherwise, the status should be pending.
+            } else {
+                $post->status = 'pending';
+            }
+
             $post->source = isset($data['source']) ? $data['source'] : token()->client();
 
             // If there is a created_at property, fill this in (e.g. if created_at is sent when creating a record with the importer app).
