@@ -279,7 +279,8 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'share-social',
             'action' => 'test-action',
-            'status' => 'pending',
+            // Social share posts should be auto-accepted (unless an admin sends a custom status).
+            'status' => 'accepted',
             'details' => json_encode($details),
         ]);
     }
