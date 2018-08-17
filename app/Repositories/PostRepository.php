@@ -104,7 +104,7 @@ class PostRepository
             if (isset($data['status'])) {
                 $post->status = $data['status'];
             // If the admin doesn't set a custom status and it is a share-social post, auto-accept it.
-            } elseif (! isset($data['status']) && $post->type ==== 'share-social') {
+            } elseif (! isset($data['status']) && $post->type === 'share-social') {
                 $post->status = 'accepted';
             // Otherwise, the status should be pending.
             } else {
