@@ -279,6 +279,92 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'share-social',
             'action' => 'test-action',
+            // Social share posts should be auto-accepted (unless an admin sends a custom status).
+            'status' => 'accepted',
+            'details' => json_encode($details),
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /posts as an admin creates a new auto-accepted share-social post.
+     *
+     * @return void
+     */
+    public function testCreatingAShareSocialPostAsAdmin()
+    {
+        $signup = factory(Signup::class)->create();
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $text = $this->faker->sentence;
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'share-social',
+            'action'           => 'test-action',
+            'quantity'         => $quantity,
+            'text'             => $text,
+            'details'          => json_encode($details),
+        ]);
+
+        $response->assertStatus(201);
+        $this->assertPostStructure($response);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => 'share-social',
+            'action' => 'test-action',
+            // Social share posts should be auto-accepted (unless an admin sends a custom status).
+            'status' => 'accepted',
+            'details' => json_encode($details),
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /posts as an admin with a custom status creates a new share-social post that is pending.
+     *
+     * @return void
+     */
+    public function testCreatingAShareSocialPostAsAdminWithCustomStatus()
+    {
+        $signup = factory(Signup::class)->create();
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $text = $this->faker->sentence;
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'campaign_run_id'  => $signup->campaign_run_id,
+            'type'             => 'share-social',
+            'action'           => 'test-action',
+            'quantity'         => $quantity,
+            'text'             => $text,
+            'details'          => json_encode($details),
+            'status'           => 'pending',
+        ]);
+
+        $response->assertStatus(201);
+        $this->assertPostStructure($response);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => 'share-social',
+            'action' => 'test-action',
+            // Social share posts should be pending since the admin sent a custom status.
             'status' => 'pending',
             'details' => json_encode($details),
         ]);
