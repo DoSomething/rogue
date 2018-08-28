@@ -22,6 +22,9 @@ Anonymous requests will only return accepted posts. Logged-in users can see acce
 - **page** _(integer)_
   - For pagination, specify page of activity to return in the response.
   - e.g. `/posts?page=2`
+- **filter[signup_id]** _(integer)_
+  - The signup ID to filter the response by.
+  - e.g. `/posts?filter[signup_id]=47`
 - **filter[campaign_id]** _(integer)_
   - The campaign ID to filter the response by.
   - e.g. `/posts?filter[campaign_id]=47`
@@ -34,6 +37,12 @@ Anonymous requests will only return accepted posts. Logged-in users can see acce
 - **filter[type]** _(string)_
   - The type to filter the response by.
   - e.g. `/posts?filter[type]=photo,voter-reg`
+- **filter[action]** _(string)_
+  - The action to filter the response by.
+  - e.g. `/posts?filter[action]=action-1`
+- **filter[created_at]** _(timestamp)_
+  - The created_at date to filter the response by.
+  - e.g. `/posts?filter[created_at]=2017-04-28 01:46:45`
 - **filter[exclude]** _(integer)_
   - The post id(s) to exclude in response.
   - e.g. `/posts?filter[exclude]=2,3,4`
