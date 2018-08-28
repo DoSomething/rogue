@@ -53,7 +53,7 @@ class Post extends Model
      *
      * @var array
      */
-    public static $indexes = ['id', 'signup_id', 'campaign_id', 'type', 'action', 'northstar_id', 'status'];
+    public static $indexes = ['id', 'signup_id', 'campaign_id', 'type', 'action', 'northstar_id', 'status', 'created_at'];
 
     /**
      * The tags prefixed with 'good' that will send a post to Slack.
