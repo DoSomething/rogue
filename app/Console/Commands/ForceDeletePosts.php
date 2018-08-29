@@ -4,6 +4,7 @@ namespace Rogue\Console\Commands;
 
 use Rogue\Models\Post;
 use Illuminate\Console\Command;
+use Rogue\Managers\PostManager;
 
 class ForceDeletePosts extends Command
 {
@@ -28,8 +29,11 @@ class ForceDeletePosts extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PostManager $postManager)
     {
+        // Post Manager Instance.
+        $this->postManager = $postManager;
+
         parent::__construct();
     }
 
@@ -42,8 +46,18 @@ class ForceDeletePosts extends Command
     {
         info('Starting to force delete posts by type and source.');
 
-        Post::where('type', $this->argument('type'))->where('source', $this->argument('source'))->forceDelete();
+        $posts = Post::where('type', $this->argument('type'))->where('source', $this->argument('source'))->get();
 
-        info('All posts have been force deleted.');
+        if ($posts->isNotEmpty()) {
+            $posts->map(function ($post, $key) {
+                $this->postManager->destroy($post->id);
+
+                $post->forceDelete();
+            });
+
+            info('Posts Deleted!');
+        } else {
+            info('No Posts found');
+        }
     }
 }

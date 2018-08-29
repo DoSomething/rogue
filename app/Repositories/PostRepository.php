@@ -163,12 +163,14 @@ class PostRepository
     {
         $post = Post::findOrFail($postId);
 
-        // Delete the image file from AWS.
-        $this->aws->deleteImage($post->url);
+        if ($post->url) {
+            // Delete the image file from AWS.
+            $this->aws->deleteImage($post->url);
 
-        // Set the url of the post to null.
-        $post->url = null;
-        $post->save();
+            // Set the url of the post to null.
+            $post->url = null;
+            $post->save();
+        }
 
         // Soft delete the post.
         $post->delete();
