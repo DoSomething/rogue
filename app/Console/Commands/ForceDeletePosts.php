@@ -44,20 +44,23 @@ class ForceDeletePosts extends Command
      */
     public function handle()
     {
-        info('Starting to force delete posts by type and source.');
+        if ($this->confirm('"Are you sure you want to delete posts of type ' . $this->argument('type') . 'from ' . $this->argument('source'))) {
 
-        $posts = Post::where('type', $this->argument('type'))->where('source', $this->argument('source'))->get();
+            info('Starting to force delete posts by type and source.');
 
-        if ($posts->isNotEmpty()) {
-            $posts->map(function ($post, $key) {
-                $this->postManager->destroy($post->id);
+            $posts = Post::where('type', $this->argument('type'))->where('source', $this->argument('source'))->get();
 
-                $post->forceDelete();
-            });
+            if ($posts->isNotEmpty()) {
+                $posts->map(function ($post, $key) {
+                    $this->postManager->destroy($post->id);
 
-            info('Posts Deleted!');
-        } else {
-            info('No Posts found');
+                    $post->forceDelete();
+                });
+
+                info('Posts Deleted!');
+            } else {
+                info('No Posts found');
+            }
         }
     }
 }
