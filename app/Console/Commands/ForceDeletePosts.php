@@ -25,6 +25,12 @@ class ForceDeletePosts extends Command
     protected $description = 'Force deletes posts in Rogue by type and source';
 
     /**
+     * The post manager.
+     * @var PostManager
+     */
+    protected $postManager;
+
+    /**
      * Create a new command instance.
      *
      * @return void
