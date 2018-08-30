@@ -59,11 +59,11 @@ class ForceDeletePosts extends Command
         $posts = Post::where('type', $this->argument('type'))->where('source', $this->argument('source'))->get();
 
         if ($posts->isNotEmpty()) {
-            $posts->map(function ($post, $key) {
+            foreach ($posts as $post) {
                 $this->postManager->destroy($post->id);
 
                 $post->forceDelete();
-            });
+            }
 
             info('rogue:forceDeletePosts: Posts Deleted!');
         } else {
