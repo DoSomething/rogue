@@ -62,7 +62,7 @@ class ForceDeletePosts extends Command
                         $post->forceDelete();
                     }
 
-                    info('rogue:forceDeletePosts: Posts Deleted!');
+                    info('rogue:forceDeletePosts: 100 posts Deleted!');
                 } else {
                     info('rogue:forceDeletePosts: No Posts found');
                 }
