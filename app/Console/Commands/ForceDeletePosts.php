@@ -52,18 +52,21 @@ class ForceDeletePosts extends Command
     {
         info('rogue:forceDeletePosts: Starting to force delete posts by type and source.');
 
-        $posts = Post::where('type', $this->argument('type'))->where('source', $this->argument('source'))->get();
+        Post::where('type', $this->argument('type'))
+            ->where('source', $this->argument('source'))
+            ->chunk(100, function ($posts) {
+                if ($posts->isNotEmpty()) {
+                    foreach ($posts as $post) {
+                        $this->postManager->destroy($post->id);
 
-        if ($posts->isNotEmpty()) {
-            foreach ($posts as $post) {
-                $this->postManager->destroy($post->id);
+                        $post->forceDelete();
+                    }
 
-                $post->forceDelete();
-            }
-
-            info('rogue:forceDeletePosts: Posts Deleted!');
-        } else {
-            info('rogue:forceDeletePosts: No Posts found');
-        }
+                    info('rogue:forceDeletePosts: Posts Deleted!');
+                } else {
+                    info('rogue:forceDeletePosts: No Posts found');
+                }
+            });
+        info('rogue:forceDeletePosts: ALL DONE!');
     }
 }
