@@ -36,17 +36,17 @@
     "@dosomething/forge": "^6.8.1",
     "@dosomething/gateway": "^1.2.2",
     "babel-polyfill": "^6.26.0",
-    "classnames": "^2.2.5",
+    "classnames": "^2.2.6",
     "dosomething-modal": "^0.3.4",
+    "eslint-config-prettier": "^2.10.0",
     "lodash": "^4.17.5",
-    "prop-types": "^15.6.1",
+    "prop-types": "^15.6.2",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
-    "eslint-config-prettier": "^2.9.0",
     "sinon": "^4.5.0"
   },
   "devDependencies": {
-    "@dosomething/babel-config": "^2.1.0",
+    "@dosomething/babel-config": "^2.2.2",
     "@dosomething/eslint-config": "^4.0.0",
     "@dosomething/webpack-config": "^3.0.0",
     "babel-jest": "^21.0.2",
@@ -59,6 +59,6 @@
     "prettier": "1.13.4",
     "pretty-quick": "^1.4.1",
     "react-test-renderer": "^15.6.1",
-    "webpack": "^3.11.0"
+    "webpack": "^3.12.0"
   }
 }
