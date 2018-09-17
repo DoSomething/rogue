@@ -67,7 +67,7 @@ class GDPRComplianceCommand extends Command
         $path = $this->argument('path');
         $this->info('rogue:gdpr: Loading in csv from ' . $path);
 
-        $temp = tempnam('temp', 'command_csv');
+        $temp = tempnam(sys_get_temp_dir(), 'command_csv');
         file_put_contents($temp, fopen($this->argument('path'), 'r'));
 
         // Load users from the CSV
