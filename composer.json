@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": "~7.0.0",
+    "php": "~7.2.9",
     "laravel/framework": "5.5.*",
     "laravel/tinker": "^1.0",
     "aws/aws-sdk-php-laravel": "^3.1",
@@ -21,8 +21,8 @@
     "spatie/laravel-backup": "^5.1.1",
     "league/csv": "^9.0",
     "dfurnes/environmentalist": "0.0.2",
-    "ext-gd" : "*",
-    "ext-exif":"*",
+    "ext-gd": "*",
+    "ext-exif": "*",
     "barryvdh/laravel-cors": "^0.11.0"
   },
   "require-dev": {
