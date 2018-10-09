@@ -25,7 +25,7 @@ class ImagesTest extends TestCase
             $response = $this->getJson('images/' . $posts->random()->id . '?w=500&h=500&fit=crop');
             $response->assertStatus(200);
         }
-        for ($i = 10; $i < 15; $i++) {
+        for ($i = 10; $i < 30; $i++) {
             $response = $this->getJson('images/' . $posts->random()->id . '?w=250&h=400&fit=crop&filt=sepia');
             $response->assertStatus(200);
         }
