@@ -14,7 +14,7 @@ class CampaignTable extends React.Component {
         <Table
           key={cause}
           className="table"
-          headings={['Campaign Name', 'Inbox']}
+          headings={['Campaign Name', 'Pending', 'Inbox']}
           data={this.props.campaigns}
           type="campaigns"
         />
