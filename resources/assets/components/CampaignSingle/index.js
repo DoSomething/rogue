@@ -55,6 +55,26 @@ class CampaignSingle extends React.Component {
             label: 'Bulk',
             active: false,
           },
+          irrelevant: {
+            label: 'Irrelevant',
+            active: false,
+          },
+          inappropriate: {
+            label: 'Inappropriate',
+            active: false,
+          },
+          'unrealistic-quantity': {
+            label: 'Unrealistic Quantity',
+            active: false,
+          },
+          test: {
+            label: 'Test',
+            active: false,
+          },
+          'incomplete-action': {
+            label: 'Incomplete Action',
+            active: false,
+          },
         },
       },
     };
