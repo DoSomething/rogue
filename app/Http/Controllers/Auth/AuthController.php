@@ -42,7 +42,26 @@ class AuthController extends Controller
      */
     public function getLogin(ServerRequestInterface $request, ResponseInterface $response)
     {
-        return gateway('northstar')->authorize($request, $response, $this->redirectTo);
+        // Save the post-login redirect for when the user completes the flow: either to the intended
+        // page (if logging in to view a page protected by the 'auth' middleware), or the previous
+        // page (if the user clicked "Log In" in the top navigation).
+        if (! array_has($request->getQueryParams(), 'code')) {
+            $intended = session()->pull('url.intended', url()->previous());
+            session(['login.intended' => $intended]);
+        }
+        $options = [];
+        $jsonOptions = array_get($request->getQueryParams(), 'jsonOptions') ?: null;
+        // Check if the JS added auth options.
+        if ($jsonOptions) {
+            $options = (array) json_decode($jsonOptions);
+        }
+        // As a backup check the Blade template.
+        if (! $options) {
+            $options = array_get($request->getQueryParams(), 'options') ?: [];
+        }
+        $destination = array_get($request->getQueryParams(), 'destination');
+        $url = session('login.intended', $this->redirectTo);
+        return gateway('northstar')->authorize($request, $response, $url, $destination, $options);
     }
 
     /**
