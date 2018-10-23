@@ -45,6 +45,14 @@ class Signup extends Model
     ];
 
     /**
+     * Each signup belongs to a campaign.
+     */
+    public function campaign()
+    {
+        return $this->belongsTo(Campaign::class);
+    }
+
+    /**
      * Each signup has events.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
