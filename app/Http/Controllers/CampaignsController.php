@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers;
 use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 
-class CampaignController extends ApiController
+class CampaignsController extends ApiController
 {
 
     /**
@@ -16,7 +16,7 @@ class CampaignController extends ApiController
     {
         // $this->transformer = $transformer;
 
-        $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('auth');
         $this->middleware('role:admin,staff', ['only' => ['store', 'update', 'destroy']]);
         $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
     }
@@ -49,8 +49,6 @@ class CampaignController extends ApiController
             'internal_title' => $request['internal_title'],
         ])->first();
 
-        $code = $signup ? 200 : 201;
-
         // If there is no campaign with that title, create one.
         if (! $campaign) {
             $campaign = new Campaign;
@@ -61,7 +59,7 @@ class CampaignController extends ApiController
             $campaign->save();
         }
 
-        return $this->item($campaign, $code);
+        // @TODO: return redirect()->route('campaigns.show', $campaign->id);
     }
 
     /**
