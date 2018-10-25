@@ -90,11 +90,12 @@ class CampaignsController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Rogue\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Campaign $campaign)
     {
-        //
+        $campaign->delete();
+        // @TODO: redirect to campaign deleted page
     }
 }
