@@ -4,9 +4,14 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
+use Rogue\Http\Transformers\CampaignTransformer;
 
 class CampaignsController extends ApiController
 {
+    /**
+     * @var Rogue\Http\Transformers\SignupTransformer;
+     */
+    protected $transformer;
 
     /**
      * Create a controller instance.
@@ -14,7 +19,7 @@ class CampaignsController extends ApiController
      */
     public function __construct()
     {
-        // $this->transformer = $transformer;
+        $this->transformer = new CampaignTransformer;
 
         // $this->middleware('auth');
         // $this->middleware('role:admin,staff', ['only' => ['store', 'update', 'destroy']]);
@@ -25,9 +30,11 @@ class CampaignsController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = $this->newQuery(Campaign::class);
+
+        return $this->paginatedCollection($query, $request);
     }
 
     /**
