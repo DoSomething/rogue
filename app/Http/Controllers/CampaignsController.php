@@ -72,12 +72,12 @@ class CampaignsController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \Rogue\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Campaign $campaign)
     {
-        //
+        return $this->item($campaign, 200, [], $this->transformer);
     }
 
     /**
