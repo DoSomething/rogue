@@ -16,9 +16,9 @@ class CampaignsController extends ApiController
     {
         // $this->transformer = $transformer;
 
-        $this->middleware('auth');
-        $this->middleware('role:admin,staff', ['only' => ['store', 'update', 'destroy']]);
-        $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
+        // $this->middleware('auth');
+        // $this->middleware('role:admin,staff', ['only' => ['store', 'update', 'destroy']]);
+        // $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -77,12 +77,14 @@ class CampaignsController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Rogue\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Campaign $campaign)
     {
-        //
+        $campaign->update($request->all());
+
+        // @TODO: return redirect()->route('campaigns.show', $campaign->id);
     }
 
     /**

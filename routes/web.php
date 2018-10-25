@@ -22,6 +22,7 @@ $router->get('campaigns/{id}/inbox', 'Legacy\Web\CampaignsController@showInbox')
 $router->get('campaigns/{id}', 'Legacy\Web\CampaignsController@showCampaign')->name('campaigns.show');
 // Create, update, delete campaigns via Rogue.
 $router->post('campaigns', 'CampaignsController@store');
+$router->patch('campaigns/{campaign}', 'CampaignsController@update');
 
 // Exports
 $router->get('exports/{id}', 'Web\ExportController@show');
