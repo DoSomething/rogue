@@ -36,11 +36,20 @@ These endpoints use OAuth 2 to authenticate. [More information here](https://git
 | `POST /api/v3/posts/:post_id/reviews` | [Create or update a Review](reviews.md#create-or-update-a-reaction) |
 
 #### Tags
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`POST /api/v3/posts/:post_id/tags`             | [Tag or Untag a Post](tags.md#tag-or-untag-a-post)
+
+| Endpoint                           | Functionality                                      |
+| ---------------------------------- | -------------------------------------------------- |
+| `POST /api/v3/posts/:post_id/tags` | [Tag or Untag a Post](tags.md#tag-or-untag-a-post) |
 
 #### Events
-Endpoint                                       | Functionality
----------------------------------------------- | --------------------------------------------------------
-`GET /api/v3/events`                         | [Get all events](events.md#events)
+
+| Endpoint             | Functionality                      |
+| -------------------- | ---------------------------------- |
+| `GET /api/v3/events` | [Get all events](events.md#events) |
+
+#### Campaigns
+
+| Endpoint                             | Functionality                                           |
+| ------------------------------------ | ------------------------------------------------------- |
+| `GET /api/v3/campaigns`              | [Get campaigns](posts.md#retrieve-all-campaigns)        |
+| `GET /api/v3/campaigns/:campaign_id` | [Get a campaign](posts.md#retrieve-a-specific-campaign) |
