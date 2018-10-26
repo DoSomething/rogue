@@ -101,7 +101,7 @@ $factory->defineAs(User::class, 'admin', function () use ($factory) {
 $factory->define(Campaign::class, function (Generator $faker) {
 
     return [
-        'id' => $faker->randomNumber(4),
+        'id' => $faker->randomNumber,
         'internal_title' => $faker->sentence(),
         'start_date' => $this->faker->dateTime,
         'end_date' => $this->faker->dateTime,
