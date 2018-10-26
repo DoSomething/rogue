@@ -62,4 +62,25 @@ class CampaignTest extends Testcase
         $response->assertStatus(200);
         $this->assertEquals(5, $decodedResponse['meta']['pagination']['count']);
     }
+
+    /**
+     * Test that a GET request to api/v3/campaigns/:campaign_id returns the intended campaign.
+     *
+     * GET api/v3/campaigns/:campaign_id
+     * @return void
+     */
+    public function testCampaignShow()
+    {
+        // Create 5 campaigns
+        factory(Campaign::class, 5)->create();
+
+        // Create 1 specific campaign to search for
+        $campaign = factory(Campaign::class)->create();
+
+        $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+        $this->assertEquals($campaign->id, $decodedResponse['data']['campaign_id']);
+    }
 }
