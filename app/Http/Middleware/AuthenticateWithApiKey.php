@@ -18,6 +18,7 @@ class AuthenticateWithApiKey
      */
     public function handle($request, Closure $next)
     {
+        dd('hi');
         // Only protected POST, PUT, PATCH, and DELETE routes
         if (! in_array($request->method(), ['POST', 'PUT', 'PATCH', 'DELETE'])) {
             return $next($request);
