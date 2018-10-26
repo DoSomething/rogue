@@ -64,6 +64,9 @@ class CampaignsController extends ApiController
             $campaign->start_date = $request['start_date'];
             $campaign->end_date = $request['end_date'];
             $campaign->save();
+
+            // Log that a campaign was created.
+            info('campaign_created', ['id' => $campaign->id]);
         }
 
         // @TODO: return redirect()->route('campaigns.show', $campaign->id);
@@ -91,6 +94,9 @@ class CampaignsController extends ApiController
     {
         $campaign->update($request->all());
 
+        // Log that a campaign was updated.
+        info('campaign_updated', ['id' => $campaign->id]);
+
         // @TODO: return redirect()->route('campaigns.show', $campaign->id);
     }
 
@@ -103,6 +109,10 @@ class CampaignsController extends ApiController
     public function destroy(Campaign $campaign)
     {
         $campaign->delete();
+
+        // Log that a campaign was deleted.
+        info('campaign_deleted', ['id' => $campaign->id]);
+
         // @TODO: redirect to campaign deleted page
     }
 }
