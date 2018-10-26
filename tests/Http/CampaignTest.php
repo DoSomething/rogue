@@ -20,13 +20,11 @@ class CampaignTest extends Testcase
         $firstCampaignStartDate = $this->faker->date;
         $firstCampaignEndDate = $this->faker->date;
 
-        $response = $this->actingAsAdmin()->postJson('campaigns', [
+        $this->actingAsAdmin()->postJson('campaigns', [
             'internal_title' => $firstCampaignTitle,
             'start_date' => $firstCampaignStartDate,
             'end_date' => $firstCampaignEndDate,
         ]);
-
-        $response->assertStatus(200);
 
         // Make sure the campaign is persisted.
         $this->assertDatabaseHas('campaigns', [
@@ -49,9 +47,9 @@ class CampaignTest extends Testcase
     }
 
     /**
-     * Test that a GET request to api/v3/campaigns returns an index of all campaigns.
+     * Test that a GET request to /api/v3/campaigns returns an index of all campaigns.
      *
-     * GET api/v3/campaigns
+     * GET /api/v3/campaigns
      * @return void
      */
     public function testCampaignIndex()
@@ -66,9 +64,9 @@ class CampaignTest extends Testcase
     }
 
     /**
-     * Test that a GET request to api/v3/campaigns/:campaign_id returns the intended campaign.
+     * Test that a GET request to /api/v3/campaigns/:campaign_id returns the intended campaign.
      *
-     * GET api/v3/campaigns/:campaign_id
+     * GET /api/v3/campaigns/:campaign_id
      * @return void
      */
     public function testCampaignShow()
@@ -83,6 +81,30 @@ class CampaignTest extends Testcase
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
-        $this->assertEquals($campaign->id, $decodedResponse['data']['campaign_id']);
+        $this->assertEquals($campaign->id, $decodedResponse['data']['id']);
+    }
+
+    /**
+     * Test that a PATCH request to /campaigns/:campaign_id updates a campaign.
+     *
+     * PATCH /campaigns/:campaign_id
+     * @return void
+     */
+    public function testUpdatingACampaign()
+    {
+        // Create a campaign to update
+        $campaign = factory(Campaign::class)->create();
+
+        // Update the title
+        $this->actingAsAdmin()->patchJson('campaigns/' . $campaign->id, [
+            'internal_title' => 'Updated Title',
+        ]);
+
+        // Make sure the campaign update is persisted.
+        $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+        $this->assertEquals('Updated Title', $decodedResponse['data']['internal_title']);
     }
 }

@@ -16,7 +16,7 @@ class CampaignTransformer extends TransformerAbstract
     public function transform(Campaign $campaign)
     {
         return [
-            'campaign_id' => $campaign->id,
+            'id' => $campaign->id,
             'internal_title' => $campaign->internal_title,
             'start_date' => $campaign->start_date,
             'end_date' => $campaign->end_date,

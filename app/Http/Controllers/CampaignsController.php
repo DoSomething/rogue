@@ -21,9 +21,9 @@ class CampaignsController extends ApiController
     {
         $this->transformer = new CampaignTransformer;
 
-        // $this->middleware('auth', ['only' => ['store', 'update', 'destroy']]);
-        // $this->middleware('role:admin,staff', ['only' => ['store', 'update', 'destroy']]);
-        // $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('auth', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('role:admin,staff', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
     }
     /**
      * Display a listing of the resource.

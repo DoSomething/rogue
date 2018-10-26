@@ -12,7 +12,7 @@ Example Response:
 {
     "data": [
         {
-            "campaign_id": 9000,
+            "id": 9000,
             "internal_title": "Test campaign",
             "start_date": "2018-10-10 00:00:00",
             "end_date": "2018-12-10 00:00:00",
@@ -60,7 +60,7 @@ Example Response:
 ```
 {
     "data": {
-        "campaign_id": 9000,
+        "id": 9000,
         "internal_title": "Test Campaign",
         "start_date": "2018-10-10 00:00:00",
         "end_date": "2018-12-10 00:00:00",
