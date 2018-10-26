@@ -99,10 +99,9 @@ $factory->defineAs(User::class, 'admin', function () use ($factory) {
 
 // Campaign Factory
 $factory->define(Campaign::class, function (Generator $faker) {
-    $faker->addProvider(new FakerCampaignId($faker));
 
     return [
-        'id' => $faker->campaign_id,
+        'id' => $faker->numberBetween($min = 9000, $max = 20000),
         'internal_title' => $faker->sentence(),
         'start_date' => $this->faker->dateTime,
         'end_date' => $this->faker->dateTime,
