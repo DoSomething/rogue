@@ -21,7 +21,7 @@ class CampaignTransformer extends TransformerAbstract
             'start_date' => $campaign->start_date,
             'end_date' => $campaign->end_date,
             'created_at' => $campaign->created_at,
-            'update_at' => $campaign->update_at,
+            'updated_at' => $campaign->updated_at,
         ];
     }
 }

@@ -15,7 +15,7 @@ class CampaignTest extends Testcase
      */
     public function testCreatingACampaign()
     {
-        // First campaign
+        // Create a campaign.
         $firstCampaignTitle = $this->faker->sentence;
         $firstCampaignStartDate = $this->faker->date;
         $firstCampaignEndDate = $this->faker->date;
@@ -71,10 +71,10 @@ class CampaignTest extends Testcase
      */
     public function testCampaignShow()
     {
-        // Create 5 campaigns
+        // Create 5 campaigns.
         factory(Campaign::class, 5)->create();
 
-        // Create 1 specific campaign to search for
+        // Create 1 specific campaign to search for.
         $campaign = factory(Campaign::class)->create();
 
         $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
@@ -92,10 +92,10 @@ class CampaignTest extends Testcase
      */
     public function testUpdatingACampaign()
     {
-        // Create a campaign to update
+        // Create a campaign to update.
         $campaign = factory(Campaign::class)->create();
 
-        // Update the title
+        // Update the title.
         $this->actingAsAdmin()->patchJson('campaigns/' . $campaign->id, [
             'internal_title' => 'Updated Title',
         ]);
@@ -106,5 +106,27 @@ class CampaignTest extends Testcase
 
         $response->assertStatus(200);
         $this->assertEquals('Updated Title', $decodedResponse['data']['internal_title']);
+    }
+
+    /**
+     * Test that a DELETE request to /campaigns/:campaign_id deletes a campaign.
+     *
+     * DELETE /campaigns/:campaign_id
+     * @return void
+     */
+    public function testDeleteACampaign()
+    {
+        // Create a campaign to delete.
+        $campaign = factory(Campaign::class)->create();
+
+        // Delete the campaign.
+        $this->actingAsAdmin()->deleteJson('campaigns/' . $campaign->id);
+
+        // Make sure the campaign is deleted.
+        $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(404);
+        $this->assertEquals('That resource could not be found.', $decodedResponse['message']);
     }
 }
