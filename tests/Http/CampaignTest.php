@@ -16,11 +16,11 @@ class CampaignTest extends Testcase
     public function testCreatingACampaign()
     {
         // First campaign
-        $firstCampaignTitle = $faker->sentence();
-        $firstCampaignStartDate = $this->faker->dateTime;
-        $firstCampaignEndDate = $this->faker->dateTime;
+        $firstCampaignTitle = $this->faker->sentence;
+        $firstCampaignStartDate = $this->faker->date;
+        $firstCampaignEndDate = $this->faker->date;
 
-        $response = $this->postJson('campaigns', [
+        $response = $this->actingAsAdmin()->postJson('campaigns', [
             'internal_title' => $firstCampaignTitle,
             'start_date' => $firstCampaignStartDate,
             'end_date' => $firstCampaignEndDate,
@@ -36,14 +36,16 @@ class CampaignTest extends Testcase
         ]);
 
         // Try to create a second campaign with the same title and make sure it doesn't duplicate.
-        $this->postJson('/signups', [
+        $this->actingAsAdmin()->postJson('campaigns', [
             'internal_title' => $firstCampaignTitle,
             'start_date' => $this->faker->dateTime,
             'end_date' => $this->faker->dateTime,
         ]);
 
         $response = $this->getJson('api/v3/campaigns');
-        $this->assertEquals(1, count($response['data']));
+        $decodedResponse = $response->decodeResponseJson();
+
+        $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
     }
 
     /**
