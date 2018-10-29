@@ -21,9 +21,9 @@ $router->get('campaigns', 'Legacy\Web\AshesCampaignsController@index');
 $router->get('campaigns/{id}/inbox', 'Legacy\Web\AshesCampaignsController@showInbox');
 $router->get('campaigns/{id}', 'Legacy\Web\AshesCampaignsController@showCampaign')->name('campaigns.show');
 // Create, update, delete campaigns via Rogue.
-$router->post('campaigns', 'CampaignsController@store');
-$router->patch('campaigns/{campaign}', 'CampaignsController@update');
-$router->delete('campaigns/{campaign}', 'CampaignsController@destroy');
+$router->post('campaigns', 'Legacy\Web\CampaignsController@store');
+$router->patch('campaigns/{campaign}', 'Legacy\Web\CampaignsController@update');
+$router->delete('campaigns/{campaign}', 'Legacy\Web\CampaignsController@destroy');
 
 // Exports
 $router->get('exports/{id}', 'Web\ExportController@show');
