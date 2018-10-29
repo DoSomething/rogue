@@ -44,7 +44,7 @@ $router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function
     $this->post('tags', 'Legacy\Two\TagsController@store');
 
     // Campaigns
-    $this->get('campaigns', 'Legacy\Two\CampaignsController@index');
+    $this->get('campaigns', 'Legacy\Two\AshesCampaignsController@index');
 });
 
 // v3 routes
