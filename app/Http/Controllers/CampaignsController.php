@@ -41,6 +41,6 @@ class CampaignsController extends ApiController
      */
     public function show(Campaign $campaign)
     {
-        return $this->item($campaign, 200, [], $this->transformer);
+        return $this->item($campaign);
     }
 }
