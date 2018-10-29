@@ -16,7 +16,6 @@ class CampaignsController extends Controller
     {
         $this->middleware('auth', ['only' => ['store', 'update', 'destroy']]);
         $this->middleware('role:admin,staff', ['only' => ['store', 'update', 'destroy']]);
-        $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
     }
 
     /**
