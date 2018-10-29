@@ -55,6 +55,12 @@ class CampaignsController extends Controller
      */
     public function update(Request $request, Campaign $campaign)
     {
+        $this->validate($request, [
+            'internal_title' => 'string',
+            'start_date' => 'date',
+            'end_date' => 'date',
+        ]);
+
         $campaign->update($request->all());
 
         // Log that a campaign was updated.
