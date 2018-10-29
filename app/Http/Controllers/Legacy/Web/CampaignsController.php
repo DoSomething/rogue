@@ -28,28 +28,20 @@ class CampaignsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'internal_title' => 'required|string',
+            'internal_title' => 'required|string|unique:campaigns',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
         ]);
 
-        // Check to see if the campaign exists before creating one.
-        $campaign = Campaign::where([
-            'internal_title' => $request['internal_title'],
-        ])->first();
+        $campaign = new Campaign;
 
-        // If there is no campaign with that title, create one.
-        if (! $campaign) {
-            $campaign = new Campaign;
+        $campaign->internal_title = $request['internal_title'];
+        $campaign->start_date = $request['start_date'];
+        $campaign->end_date = $request['end_date'];
+        $campaign->save();
 
-            $campaign->internal_title = $request['internal_title'];
-            $campaign->start_date = $request['start_date'];
-            $campaign->end_date = $request['end_date'];
-            $campaign->save();
-
-            // Log that a campaign was created.
-            info('campaign_created', ['id' => $campaign->id]);
-        }
+        // Log that a campaign was created.
+        info('campaign_created', ['id' => $campaign->id]);
 
         // @TODO: return redirect()->route('campaigns.show', $campaign->id);
     }
