@@ -2,6 +2,7 @@
 
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
+use Rogue\Models\Campaign;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -48,5 +49,8 @@ class DatabaseSeeder extends Seeder
 
         // Create 100 signups with no posts yet.
         factory(Signup::class, 100)->create();
+
+        // Create 10 campaigns.
+        factory(Campaign::class, 10)->create();
     }
 }

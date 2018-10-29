@@ -5,6 +5,7 @@ use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Services\AWS;
 use Rogue\Models\Signup;
+use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -94,4 +95,15 @@ $factory->define(User::class, function (Generator $faker) {
 
 $factory->defineAs(User::class, 'admin', function () use ($factory) {
     return array_merge($factory->raw(User::class), ['role' => 'admin']);
+});
+
+// Campaign Factory
+$factory->define(Campaign::class, function (Generator $faker) {
+
+    return [
+        'id' => $faker->numberBetween($min = 9000, $max = 20000),
+        'internal_title' => $faker->sentence(),
+        'start_date' => $this->faker->dateTime,
+        'end_date' => $this->faker->dateTime,
+    ];
 });

@@ -5,7 +5,7 @@ namespace Rogue\Http\Controllers\Legacy\Two;
 use Illuminate\Http\Request;
 use Rogue\Services\CampaignService;
 
-class CampaignsController extends ApiController
+class AshesCampaignsController extends ApiController
 {
     /**
      * Phoenix instance

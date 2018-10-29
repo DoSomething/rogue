@@ -2,93 +2,80 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
-use Rogue\Services\Registrar;
-use Rogue\Services\CampaignService;
+use Rogue\Models\Campaign;
+use Illuminate\Http\Request;
 use Rogue\Http\Controllers\Controller;
 
 class CampaignsController extends Controller
 {
     /**
-     * Registrar instance
+     * Create a controller instance.
      *
-     * @var Rogue\Services\Registrar
      */
-    protected $registrar;
-
-    /**
-     * Phoenix instance
-     *
-     * @var Rogue\Services\CampaignService
-     */
-    protected $campaignService;
-
-    /**
-     * Constructor
-     *
-     * @param Rogue\Services\Registrar $registrar
-     * @param Rogue\Services\CampaignService $campaignService
-     */
-    public function __construct(Registrar $registrar, CampaignService $campaignService)
+    public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin,staff');
-
-        $this->registrar = $registrar;
-        $this->campaignService = $campaignService;
+        $this->middleware('auth', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('role:admin,staff', ['only' => ['store', 'update', 'destroy']]);
     }
 
     /**
-     * Show overview of campaigns.
-     */
-    public function index()
-    {
-        $ids = $this->campaignService->getCampaignIdsFromSignups();
-        $campaigns = $this->campaignService->findAll($ids);
-        $campaigns = $this->campaignService->appendPendingCountsToCampaigns($campaigns);
-
-        $causes = $campaigns ? $this->campaignService->groupByCause($campaigns) : null;
-
-        return view('pages.campaign_overview')
-            ->with('state', $causes);
-    }
-
-    /**
-     * Show particular campaign inbox.
+     * Store a newly created resource in storage.
      *
-     * @param  int $campaignId
-     */
-    public function showInbox($campaignId)
-    {
-        // Get the campaign data
-        $campaignData = $this->campaignService->find($campaignId);
-
-        return view('pages.campaign_inbox')
-            ->with('state', [
-                'campaign' => $campaignData,
-                'initial_posts' => 'pending',
-            ]);
-    }
-
-    /**
-     * Show particular campaign and it's posts.
-     *
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function showCampaign($id)
+    public function store(Request $request)
     {
-        $campaign = $this->campaignService->find($id);
-        $totals = $this->campaignService->getPostTotals($campaign);
+        $this->validate($request, [
+            'internal_title' => 'required|string|unique:campaigns',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+        ]);
 
-        return view('pages.campaign_single')
-            ->with('state', [
-                'campaign' => $campaign,
-                'initial_posts' => 'accepted',
-                'post_totals' => [
-                    'accepted_count' => $totals->accepted_count,
-                    'pending_count' => $totals->pending_count,
-                    'rejected_count' => $totals->rejected_count,
-                ],
-            ]);
+        $campaign = Campaign::create($request->all());
+
+        // Log that a campaign was created.
+        info('campaign_created', ['id' => $campaign->id]);
+
+        // @TODO: return redirect()->route('campaigns.show', $campaign->id);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Rogue\Models\Campaign  $campaign
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Campaign $campaign)
+    {
+        $this->validate($request, [
+            'internal_title' => 'string',
+            'start_date' => 'date',
+            'end_date' => 'date',
+        ]);
+
+        $campaign->update($request->all());
+
+        // Log that a campaign was updated.
+        info('campaign_updated', ['id' => $campaign->id]);
+
+        // @TODO: return redirect()->route('campaigns.show', $campaign->id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Rogue\Models\Campaign  $campaign
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Campaign $campaign)
+    {
+        $campaign->delete();
+
+        // Log that a campaign was deleted.
+        info('campaign_deleted', ['id' => $campaign->id]);
+
+        // @TODO: redirect to campaign deleted page
     }
 }
