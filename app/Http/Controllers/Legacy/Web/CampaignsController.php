@@ -33,12 +33,7 @@ class CampaignsController extends Controller
             'end_date' => 'required|date',
         ]);
 
-        $campaign = new Campaign;
-
-        $campaign->internal_title = $request['internal_title'];
-        $campaign->start_date = $request['start_date'];
-        $campaign->end_date = $request['end_date'];
-        $campaign->save();
+        $campaign = Campaign::create($request->all());
 
         // Log that a campaign was created.
         info('campaign_created', ['id' => $campaign->id]);
