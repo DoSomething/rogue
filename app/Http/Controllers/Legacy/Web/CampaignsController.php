@@ -23,7 +23,7 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        return view('pages.create_campaign');
+        return view('pages.campaigns_index');
     }
 
     /**
@@ -85,5 +85,16 @@ class CampaignsController extends Controller
         info('campaign_deleted', ['id' => $campaign->id]);
 
         // @TODO: redirect to campaign deleted page
+    }
+
+    /**
+     * Create a new redirect.
+     * GET /campaigns/create
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('pages.campaigns_create');
     }
 }
