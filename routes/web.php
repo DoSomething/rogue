@@ -24,6 +24,7 @@ $router->get('campaigns/{id}', 'Legacy\Web\AshesCampaignsController@showCampaign
 $router->post('campaigns', 'Legacy\Web\CampaignsController@store');
 $router->patch('campaigns/{campaign}', 'Legacy\Web\CampaignsController@update');
 $router->delete('campaigns/{campaign}', 'Legacy\Web\CampaignsController@destroy');
+$router->get('campaign-ids', 'Legacy\Web\CampaignsController@index');
 
 // Exports
 $router->get('exports/{id}', 'Web\ExportController@show');

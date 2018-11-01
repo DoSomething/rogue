@@ -19,6 +19,14 @@ class CampaignsController extends Controller
     }
 
     /**
+     * Show overview of campaigns and their IDs.
+     */
+    public function index()
+    {
+        return view('pages.create_campaign');
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

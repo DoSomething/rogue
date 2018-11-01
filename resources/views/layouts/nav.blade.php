@@ -14,8 +14,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/import">
-                        <strong class="navigation__title">Import CSV</strong>
+                    <a href="/campaign-ids">
+                        <strong class="navigation__title">Campaign IDs</strong>
                     </a>
                 </li>
                 <li>
