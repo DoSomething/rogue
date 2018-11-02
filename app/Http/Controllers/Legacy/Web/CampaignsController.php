@@ -30,14 +30,14 @@ class CampaignsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return campaigns.show page
      */
     public function store(Request $request)
     {
         $this->validate($request, [
             'internal_title' => 'required|string|unique:campaigns',
             'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'end_date' => 'date',
         ]);
 
         $campaign = Campaign::create($request->all());
