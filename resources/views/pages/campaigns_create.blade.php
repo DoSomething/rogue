@@ -20,12 +20,13 @@
 
                     <div class="form-item">
                         <label class="field-label">Start Date</label>
-                        <input type="text" name="start_date" class="text-field" placeholder="e.g. 6/6/2018">
+                        <input type="date" name="start_date" class="text-field">
                     </div>
 
                     <div class="form-item">
                         <label class="field-label">End Date</label>
-                        <input type="text" name="end_date" class="text-field" placeholder="e.g. 10/15/2018 or you can leave this blank if there's no end date">
+                        <input type="date" name="end_date" class="text-field">
+                        <p class="footnote">You can leave this blank if there's no end date.</p>
                     </div>
 
                     <ul class="form-actions -inline -padded">
