@@ -37,7 +37,7 @@ class CampaignsController extends Controller
         $this->validate($request, [
             'internal_title' => 'required|string|unique:campaigns',
             'start_date' => 'required|date',
-            'end_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after:start_date',
         ]);
 
         // Change dates to YYYY-MM-DD format so it will save in the database.
@@ -66,7 +66,7 @@ class CampaignsController extends Controller
         $this->validate($request, [
             'internal_title' => 'string',
             'start_date' => 'date',
-            'end_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after:start_date',
         ]);
 
         // Change dates to YYYY-MM-DD format so it will save in the database.
