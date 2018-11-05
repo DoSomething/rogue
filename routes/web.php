@@ -21,13 +21,13 @@ $router->get('campaigns', 'Legacy\Web\AshesCampaignsController@index');
 $router->get('campaigns/{id}/inbox', 'Legacy\Web\AshesCampaignsController@showInbox');
 $router->get('campaigns/{id}', 'Legacy\Web\AshesCampaignsController@showCampaign')->name('campaigns.show');
 // Create, update, delete campaigns via Rogue.
+// @TODO: rename these routes (to just /campaigns) when we get off Ashes.
 $router->get('campaign-ids/create', ['as' => 'campaign_id.create', 'uses' => 'Legacy\Web\CampaignsController@create']);
 $router->get('campaign-ids/{campaign}', ['as' => 'campaign_id.show', 'uses' => 'Legacy\Web\CampaignsController@show']);
-$router->post('campaigns', ['as' => 'campaigns.store', 'uses' => 'Legacy\Web\CampaignsController@store']);
-$router->patch('campaigns/{campaign}',['as' => 'campaign_id.update', 'uses' => 'Legacy\Web\CampaignsController@update']);
+$router->post('campaign-ids', ['as' => 'campaign_id.store', 'uses' => 'Legacy\Web\CampaignsController@store']);
+$router->patch('campaign-ids/{campaign}',['as' => 'campaign_id.update', 'uses' => 'Legacy\Web\CampaignsController@update']);
 $router->get('campaign-ids/{campaign}/edit', ['as' => 'campaign_id.edit', 'uses' => 'Legacy\Web\CampaignsController@edit']);
-$router->delete('campaigns/{campaign}', 'Legacy\Web\CampaignsController@destroy');
-// @TODO: rename this route to something else... this seems weird.
+$router->delete('campaign-ids/{campaign}', 'Legacy\Web\CampaignsController@destroy');
 $router->get('campaign-ids', 'Legacy\Web\CampaignsController@index');
 
 // Exports
