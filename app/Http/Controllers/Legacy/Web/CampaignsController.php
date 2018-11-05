@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
+use Carbon\Carbon;
 use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 use Rogue\Http\Controllers\Controller;
@@ -37,10 +38,17 @@ class CampaignsController extends Controller
         $this->validate($request, [
             'internal_title' => 'required|string|unique:campaigns',
             'start_date' => 'required|date',
-            'end_date' => 'date',
+            'end_date' => 'nullable|date',
         ]);
 
-        $campaign = Campaign::create($request->all());
+        // Change dates to YYYY-MM-DD format so it will save in the database.
+        $campaignDetails = [
+            'internal_title' => $request['internal_title'],
+            'start_date' => Carbon::parse($request['start_date']),
+            'end_date' => $request['end_date'] ? Carbon::parse($request['end_date']) : null,
+        ];
+
+        $campaign = Campaign::create($campaignDetails);
 
         // Log that a campaign was created.
         info('campaign_created', ['id' => $campaign->id]);
