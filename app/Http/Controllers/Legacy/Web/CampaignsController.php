@@ -24,7 +24,15 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        return view('pages.campaigns_index');
+        $campaigns = Campaign::all();
+
+        // Format start and end dates how we want them to be viewed.
+        foreach ($campaigns as $campaign) {
+            $campaign->start_date = date("m/d/Y", strtotime($campaign->start_date));
+            $campaign->end_date = $campaign->end_date ? date("m/d/Y", strtotime($campaign->end_date)) : '';
+        }
+
+        return view('pages.campaigns_index')->with('campaigns', $campaigns);
     }
 
     /**

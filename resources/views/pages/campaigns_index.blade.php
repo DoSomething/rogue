@@ -16,15 +16,24 @@
                  </div>
                 <div class="container__block">
                     <table class="table">
-                      <thead>
-                          <tr class="row table-header">
-                              <th class="table-cell">Internal Name</th>
-                              <th class="table-cell">Campaign ID</th>
-                              <th class="table-cell">Start Date</th>
-                              <th class="table-cell">End Date</th>
-                          </tr>
-                      </thead>
-
+                        <thead>
+                            <tr class="table__header">
+                              <th class="table__cell">Internal Name</th>
+                              <th class="table__cell">Campaign ID</th>
+                              <th class="table__cell">Start Date</th>
+                              <th class="table__cell">End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($campaigns as $campaign)
+                                <tr class="table__row">
+                                    <td class="table__cell"><a href="{{ route('campaign_id.show', [$campaign->id]) }}">{{ $campaign->internal_title}}</a></td>
+                                    <td class="table__cell">{{ $campaign->id }}</td>
+                                    <td class="table__cell">{{ $campaign->start_date }}</td>
+                                    <td class="table__cell">{{ $campaign->end_date }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
