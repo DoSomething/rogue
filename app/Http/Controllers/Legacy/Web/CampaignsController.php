@@ -28,8 +28,7 @@ class CampaignsController extends Controller
 
         // Format start and end dates how we want them to be viewed.
         foreach ($campaigns as $campaign) {
-            $campaign->start_date = date("m/d/Y", strtotime($campaign->start_date));
-            $campaign->end_date = $campaign->end_date ? date("m/d/Y", strtotime($campaign->end_date)) : '';
+            $campaign = $this->formatStartEndDates($campaign, '');
         }
 
         return view('pages.campaigns_index')->with('campaigns', $campaigns);
@@ -49,11 +48,7 @@ class CampaignsController extends Controller
         ]);
 
         // Change dates to YYYY-MM-DD format so it will save in the database.
-        $campaignDetails = [
-            'internal_title' => $request['internal_title'],
-            'start_date' => Carbon::parse($request['start_date']),
-            'end_date' => $request['end_date'] ? Carbon::parse($request['end_date']) : null,
-        ];
+        $campaignDetails = $this->formatDatesForDatabase($request->all());
 
         $campaign = Campaign::create($campaignDetails);
 
@@ -78,11 +73,7 @@ class CampaignsController extends Controller
         ]);
 
         // Change dates to YYYY-MM-DD format so it will save in the database.
-        $campaignDetails = [
-            'internal_title' => $request['internal_title'],
-            'start_date' => Carbon::parse($request['start_date']),
-            'end_date' => $request['end_date'] ? Carbon::parse($request['end_date']) : null,
-        ];
+        $campaignDetails = $this->formatDatesForDatabase($request->all());
 
         $campaign->update($campaignDetails);
 
@@ -123,8 +114,7 @@ class CampaignsController extends Controller
     public function show(Campaign $campaign)
     {
         // Format start and end dates how we want them to be viewed.
-        $campaign->start_date = date("m/d/Y", strtotime($campaign->start_date));
-        $campaign->end_date = $campaign->end_date ? date("m/d/Y", strtotime($campaign->end_date)) : 'There is no end date for this campaign.';
+        $campaign = $this->formatStartEndDates($campaign, 'There is no end date for this campaign.');
 
         return view('pages.campaigns_show')->with('campaign', $campaign);
     }
@@ -137,9 +127,36 @@ class CampaignsController extends Controller
     public function edit(Campaign $campaign)
     {
         // Format start and end dates how we want them to be viewed.
-        $campaign->start_date = date("m/d/Y", strtotime($campaign->start_date));
-        $campaign->end_date = $campaign->end_date ? date("m/d/Y", strtotime($campaign->end_date)) : null;
-        // dd($campaign);
+        $campaign = $this->formatStartEndDates($campaign, null);
+
         return view('pages.campaigns_edit')->with('campaign', $campaign);
+    }
+
+    /**
+     * Helper function to format start and end dates for frontend.
+     *
+     * @param $campaign
+     * @param $end_date_placeholder
+     */
+    public function formatStartEndDates($campaign, $end_date_placeholder)
+    {
+        $campaign->start_date = date("m/d/Y", strtotime($campaign->start_date));
+        $campaign->end_date = $campaign->end_date ? date("m/d/Y", strtotime($campaign->end_date)) : $end_date_placeholder;
+
+        return $campaign;
+    }
+
+    /** Helper function to format dates in YYYY-MM-DD format so it will save in the database.
+     * @param Request $request
+     */
+    public function formatDatesForDatabase($request)
+    {
+        $formattedCampaign = [
+            'internal_title' => $request['internal_title'],
+            'start_date' => Carbon::parse($request['start_date']),
+            'end_date' => $request['end_date'] ? Carbon::parse($request['end_date']) : null,
+        ];
+
+        return $formattedCampaign;
     }
 }
