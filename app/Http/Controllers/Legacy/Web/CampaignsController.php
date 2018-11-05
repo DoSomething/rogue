@@ -66,15 +66,22 @@ class CampaignsController extends Controller
         $this->validate($request, [
             'internal_title' => 'string',
             'start_date' => 'date',
-            'end_date' => 'date',
+            'end_date' => 'nullable|date',
         ]);
 
-        $campaign->update($request->all());
+        // Change dates to YYYY-MM-DD format so it will save in the database.
+        $campaignDetails = [
+            'internal_title' => $request['internal_title'],
+            'start_date' => Carbon::parse($request['start_date']),
+            'end_date' => $request['end_date'] ? Carbon::parse($request['end_date']) : null,
+        ];
+
+        $campaign->update($campaignDetails);
 
         // Log that a campaign was updated.
         info('campaign_updated', ['id' => $campaign->id]);
 
-        // @TODO: return redirect()->route('campaigns.show', $campaign->id);
+        return redirect()->route('campaign_id.show', $campaign);
     }
 
     /**
@@ -108,9 +115,23 @@ class CampaignsController extends Controller
     public function show(Campaign $campaign)
     {
         // Format start and end dates how we want them to be viewed.
-        $campaign->start_date = date("m-d-Y", strtotime($campaign->start_date));
-        $campaign->end_date = $campaign->end_date ? date("m-d-Y", strtotime($campaign->start_date)) : 'There is no end date for this campaign.';
+        $campaign->start_date = date("m/d/Y", strtotime($campaign->start_date));
+        $campaign->end_date = $campaign->end_date ? date("m/d/Y", strtotime($campaign->end_date)) : 'There is no end date for this campaign.';
 
         return view('pages.campaigns_show')->with('campaign', $campaign);
+    }
+
+    /**
+     * Edit a specific campaign page.
+     *
+     * @param  \Rogue\Models\Campaign  $campaign
+     */
+    public function edit(Campaign $campaign)
+    {
+        // Format start and end dates how we want them to be viewed.
+        $campaign->start_date = date("m/d/Y", strtotime($campaign->start_date));
+        $campaign->end_date = $campaign->end_date ? date("m/d/Y", strtotime($campaign->end_date)) : null;
+        // dd($campaign);
+        return view('pages.campaigns_edit')->with('campaign', $campaign);
     }
 }
