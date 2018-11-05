@@ -12,7 +12,7 @@
             </div>
             <ul class="gallery -duo">
                 <div class="container__block -narrow">
-                    <a class="button -secondary" href="{{ route('campaigns.create') }}">New Campaign ID</a>
+                    <a class="button -secondary" href="{{ route('campaign_id.create') }}">New Campaign ID</a>
                  </div>
                 <div class="container__block">
                     <table class="table">

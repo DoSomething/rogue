@@ -31,7 +31,6 @@ class CampaignsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return campaigns.show page
      */
     public function store(Request $request)
     {
@@ -53,7 +52,7 @@ class CampaignsController extends Controller
         // Log that a campaign was created.
         info('campaign_created', ['id' => $campaign->id]);
 
-        // @TODO: return redirect()->route('campaigns.show', $campaign->id);
+        return redirect()->route('campaign_id.show', $campaign->id);
     }
 
     /**
@@ -61,7 +60,6 @@ class CampaignsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Rogue\Models\Campaign  $campaign
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Campaign $campaign)
     {
@@ -83,7 +81,6 @@ class CampaignsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Rogue\Models\Campaign  $campaign
-     * @return \Illuminate\Http\Response
      */
     public function destroy(Campaign $campaign)
     {
@@ -96,13 +93,24 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Create a new redirect.
-     * GET /campaigns/create
-     *
-     * @return \Illuminate\Http\Response
+     * Create a new campaign.
      */
     public function create()
     {
         return view('pages.campaigns_create');
+    }
+
+    /**
+     * Show a specific campaign page.
+     *
+     * @param  \Rogue\Models\Campaign  $campaign
+     */
+    public function show(Campaign $campaign)
+    {
+        // Format start and end dates how we want them to be viewed.
+        $campaign->start_date = date("m-d-Y", strtotime($campaign->start_date));
+        $campaign->end_date = $campaign->end_date ? date("m-d-Y", strtotime($campaign->start_date)) : 'There is no end date for this campaign.';
+
+        return view('pages.campaigns_show')->with('campaign', $campaign);
     }
 }
