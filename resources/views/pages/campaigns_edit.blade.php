@@ -20,12 +20,12 @@
 
                     <div class="form-item">
                         <label class="field-label">Start Date</label>
-                        <input type="text" name="start_date" class="text-field" value="{{ $campaign->start_date }}">
+                        <input type="text" name="start_date" class="text-field" value="{{ $campaign->start_date->format('m/d/Y') }}">
                     </div>
 
                     <div class="form-item">
                         <label class="field-label">End Date</label>
-                        <input type="text" name="end_date" class="text-field" placeholder="e.g. 10/16/2018" value="{{ $campaign->end_date }}">
+                        <input type="text" name="end_date" class="text-field" placeholder="e.g. 10/16/2018 or you can leave this blank if there's no end date" value="{{ $campaign->end_date ? $campaign->end_date->format('m/d/Y') : null }}">
                     </div>
 
                     <ul class="form-actions -inline -padded">

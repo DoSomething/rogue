@@ -26,11 +26,6 @@ class CampaignsController extends Controller
     {
         $campaigns = Campaign::all();
 
-        // Format start and end dates how we want them to be viewed.
-        foreach ($campaigns as $campaign) {
-            $campaign = $this->formatStartEndDates($campaign, '');
-        }
-
         return view('pages.campaigns_index')->with('campaigns', $campaigns);
     }
 
@@ -113,9 +108,6 @@ class CampaignsController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        // Format start and end dates how we want them to be viewed.
-        $campaign = $this->formatStartEndDates($campaign, 'There is no end date for this campaign.');
-
         return view('pages.campaigns_show')->with('campaign', $campaign);
     }
 
@@ -126,24 +118,7 @@ class CampaignsController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        // Format start and end dates how we want them to be viewed.
-        $campaign = $this->formatStartEndDates($campaign, null);
-
         return view('pages.campaigns_edit')->with('campaign', $campaign);
-    }
-
-    /**
-     * Helper function to format start and end dates for frontend.
-     *
-     * @param $campaign
-     * @param $end_date_placeholder
-     */
-    public function formatStartEndDates($campaign, $end_date_placeholder)
-    {
-        $campaign->start_date = $campaign->displayStartDate();
-        $campaign->end_date = $campaign->displayEndDate($end_date_placeholder);
-
-        return $campaign;
     }
 
     /** Helper function to format dates in YYYY-MM-DD format so it will save in the database.

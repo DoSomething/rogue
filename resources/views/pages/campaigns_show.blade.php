@@ -11,10 +11,10 @@
                 <p>{{ $campaign->internal_title }}</p>
 
                 <h3>Start Date</h3>
-                <p>{{ $campaign->start_date }}</p>
+                <p>{{ $campaign->start_date->format('m/d/Y') }}</p>
 
                 <h3>End Date</h3>
-                <p>{{ $campaign->end_date }}</p>
+                <p>{{ $campaign->end_date ? $campaign->end_date->format('m/d/Y') : '–' }}</p>
             </div>
             <div class="container__block -narrow">
                 <a class="secondary" href="{{ route('campaign_id.edit', [ $campaign ]) }}">Edit this campaign</a>

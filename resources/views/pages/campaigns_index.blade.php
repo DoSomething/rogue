@@ -29,8 +29,8 @@
                                 <tr class="table__row">
                                     <td class="table__cell"><a href="{{ route('campaign_id.show', [$campaign->id]) }}">{{ $campaign->internal_title}}</a></td>
                                     <td class="table__cell">{{ $campaign->id }}</td>
-                                    <td class="table__cell">{{ $campaign->start_date }}</td>
-                                    <td class="table__cell">{{ $campaign->end_date }}</td>
+                                    <td class="table__cell">{{ $campaign->start_date->format('m/d/Y') }}</td>
+                                    <td class="table__cell">{{ $campaign->end_date ? $campaign->end_date->format('m/d/Y') : '–' }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
