@@ -30,4 +30,20 @@ class Campaign extends Model
     {
         return $this->hasMany(Signup::class);
     }
+
+    /**
+     * Get the display start date for the campaign.
+     */
+    public function displayStartDate()
+    {
+        return date("m/d/Y", strtotime($this->start_date));
+    }
+
+    /**
+     * Get the display end date for the campaign.
+     */
+    public function displayEndDate($end_date_placeholder)
+    {
+        return $this->end_date ? date("m/d/Y", strtotime($this->end_date)) : $end_date_placeholder;
+    }
 }

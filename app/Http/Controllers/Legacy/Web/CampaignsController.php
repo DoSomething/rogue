@@ -140,8 +140,8 @@ class CampaignsController extends Controller
      */
     public function formatStartEndDates($campaign, $end_date_placeholder)
     {
-        $campaign->start_date = date("m/d/Y", strtotime($campaign->start_date));
-        $campaign->end_date = $campaign->end_date ? date("m/d/Y", strtotime($campaign->end_date)) : $end_date_placeholder;
+        $campaign->start_date = $campaign->displayStartDate();
+        $campaign->end_date = $campaign->displayEndDate($end_date_placeholder);
 
         return $campaign;
     }
