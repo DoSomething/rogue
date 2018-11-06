@@ -22,13 +22,15 @@ $router->get('campaigns/{id}/inbox', 'Legacy\Web\AshesCampaignsController@showIn
 $router->get('campaigns/{id}', 'Legacy\Web\AshesCampaignsController@showCampaign')->name('campaigns.show');
 // Create, update, delete campaigns via Rogue.
 // @TODO: rename these routes (to just /campaigns) when we get off Ashes.
-$router->get('campaign-ids/create', ['as' => 'campaign_id.create', 'uses' => 'Legacy\Web\CampaignsController@create']);
-$router->get('campaign-ids/{campaign}', ['as' => 'campaign_id.show', 'uses' => 'Legacy\Web\CampaignsController@show']);
-$router->post('campaign-ids', ['as' => 'campaign_id.store', 'uses' => 'Legacy\Web\CampaignsController@store']);
-$router->patch('campaign-ids/{campaign}',['as' => 'campaign_id.update', 'uses' => 'Legacy\Web\CampaignsController@update']);
-$router->get('campaign-ids/{campaign}/edit', ['as' => 'campaign_id.edit', 'uses' => 'Legacy\Web\CampaignsController@edit']);
-$router->delete('campaign-ids/{campaign}', 'Legacy\Web\CampaignsController@destroy');
-$router->get('campaign-ids', 'Legacy\Web\CampaignsController@index');
+$router->resource('campaign-ids', 'Legacy\Web\CampaignsController', [
+    'names' => [
+        'create' => 'campaign_id.create',
+        'show' => 'campaign_id.show',
+        'store' => 'campaign_id.store',
+        'update' => 'campaign_id.update',
+        'edit' => 'campaign_id.edit',
+    ]
+]);
 
 // Exports
 $router->get('exports/{id}', 'Web\ExportController@show');
