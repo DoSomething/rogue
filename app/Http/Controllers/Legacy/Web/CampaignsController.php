@@ -24,7 +24,7 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::all();
+        $campaigns = Campaign::paginate(25);
 
         return view('pages.campaigns_index')->with('campaigns', $campaigns);
     }

@@ -31,3 +31,11 @@ button.delete {
 .figure__media.rounded-figure img {
   border-radius: 50%;
 }
+
+.pagination {
+  text-align: center;
+
+  li {
+    display: inline;
+  }
+}
