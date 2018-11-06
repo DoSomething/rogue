@@ -19,8 +19,8 @@
             <div class="container__block -narrow">
                 <a class="secondary" href="{{ route('campaign_id.edit', [ $campaign ]) }}">Edit this campaign</a>
                 <p class="footnote">
-                    Last updated: {{ $campaign->updated_at->format('F d, Y g:ia') }}<br />
-                    Created: {{ $campaign->created_at->format('F d, Y g:ia') }}
+                    Last updated: {{ $campaign->updated_at->setTimezone('EST')->format('F d, Y g:ia') }}<br />
+                    Created: {{ $campaign->created_at->setTimezone('EST')->format('F d, Y g:ia') }}
                 </p>
             </div>
         </div>
