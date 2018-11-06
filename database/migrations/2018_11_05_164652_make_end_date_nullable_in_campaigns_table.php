@@ -26,7 +26,6 @@ class MakeEndDateNullableInCampaignsTable extends Migration
     public function down()
     {
         Schema::table('campaigns', function (Blueprint $table) {
-            $table->dateTime('end_date')->comment('The end date of the campaign.');
-        });
+            $table->dateTime('end_date')->nullable(false)->change();
     }
 }
