@@ -17,7 +17,7 @@
                 <p>{{ $campaign->end_date ? $campaign->end_date->format('m/d/Y') : '–' }}</p>
             </div>
             <div class="container__block -narrow">
-                <a class="secondary" href="{{ route('campaign_id.edit', [ $campaign ]) }}">Edit this campaign</a>
+                <a class="secondary" href="{{ route('campaign-ids.edit', [ $campaign ]) }}">Edit this campaign</a>
                 <p class="footnote">
                     Last updated: {{ $campaign->updated_at->setTimezone('EST')->format('F d, Y g:ia') }}<br />
                     Created: {{ $campaign->created_at->setTimezone('EST')->format('F d, Y g:ia') }}

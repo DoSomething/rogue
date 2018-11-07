@@ -9,7 +9,7 @@
             <div class="container__block -narrow">
                 <h1>Edit {{ $campaign->internal_title }}</h1>
                 <br>
-                <form method="post" enctype="application/x-www-form-urlencoded" action="{{ route('campaign_id.update', $campaign) }}">
+                <form method="post" enctype="application/x-www-form-urlencoded" action="{{ route('campaign-ids.update', $campaign) }}">
                 {{ csrf_field()}}
                 <input name="_method" type="hidden" value="PATCH">
 

@@ -12,7 +12,7 @@
             </div>
             <ul class="gallery -duo">
                 <div class="container__block -narrow">
-                    <a class="button -secondary" href="{{ route('campaign_id.create') }}">New Campaign ID</a>
+                    <a class="button -secondary" href="{{ route('campaign-ids.create') }}">New Campaign ID</a>
                  </div>
                 <div class="container__block">
                     <table class="table">
@@ -27,7 +27,7 @@
                         <tbody>
                             @foreach($campaigns as $campaign)
                                 <tr class="table__row">
-                                    <td class="table__cell"><a href="{{ route('campaign_id.show', [$campaign->id]) }}">{{ $campaign->internal_title}}</a></td>
+                                    <td class="table__cell"><a href="{{ route('campaign-ids.show', [$campaign->id]) }}">{{ $campaign->internal_title}}</a></td>
                                     <td class="table__cell">{{ $campaign->id }}</td>
                                     <td class="table__cell">{{ $campaign->start_date->format('m/d/Y') }}</td>
                                     <td class="table__cell">{{ $campaign->end_date ? $campaign->end_date->format('m/d/Y') : '–' }}</td>
