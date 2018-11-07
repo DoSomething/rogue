@@ -30,6 +30,14 @@ class CampaignsController extends Controller
     }
 
     /**
+     * Create a new campaign.
+     */
+    public function create()
+    {
+        return view('pages.campaigns_create');
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -48,6 +56,26 @@ class CampaignsController extends Controller
         info('campaign_created', ['id' => $campaign->id]);
 
         return redirect()->route('campaign-ids.show', $campaign->id);
+    }
+
+    /**
+     * Show a specific campaign page.
+     *
+     * @param  \Rogue\Models\Campaign  $campaign
+     */
+    public function show(Campaign $campaign)
+    {
+        return view('pages.campaigns_show')->with('campaign', $campaign);
+    }
+
+    /**
+     * Edit a specific campaign page.
+     *
+     * @param  \Rogue\Models\Campaign  $campaign
+     */
+    public function edit(Campaign $campaign)
+    {
+        return view('pages.campaigns_edit')->with('campaign', $campaign);
     }
 
     /**
@@ -85,33 +113,5 @@ class CampaignsController extends Controller
         info('campaign_deleted', ['id' => $campaign->id]);
 
         // @TODO: redirect to campaign deleted page
-    }
-
-    /**
-     * Create a new campaign.
-     */
-    public function create()
-    {
-        return view('pages.campaigns_create');
-    }
-
-    /**
-     * Show a specific campaign page.
-     *
-     * @param  \Rogue\Models\Campaign  $campaign
-     */
-    public function show(Campaign $campaign)
-    {
-        return view('pages.campaigns_show')->with('campaign', $campaign);
-    }
-
-    /**
-     * Edit a specific campaign page.
-     *
-     * @param  \Rogue\Models\Campaign  $campaign
-     */
-    public function edit(Campaign $campaign)
-    {
-        return view('pages.campaigns_edit')->with('campaign', $campaign);
     }
 }
