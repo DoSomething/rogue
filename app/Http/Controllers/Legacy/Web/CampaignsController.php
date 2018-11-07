@@ -42,10 +42,7 @@ class CampaignsController extends Controller
             'end_date' => 'nullable|date|after:start_date',
         ]);
 
-        // Change dates to YYYY-MM-DD format so it will save in the database.
-        $campaignDetails = $this->formatDatesForDatabase($request->all());
-
-        $campaign = Campaign::create($campaignDetails);
+        $campaign = Campaign::create($request->all());
 
         // Log that a campaign was created.
         info('campaign_created', ['id' => $campaign->id]);
@@ -67,10 +64,7 @@ class CampaignsController extends Controller
             'end_date' => 'nullable|date|after:start_date',
         ]);
 
-        // Change dates to YYYY-MM-DD format so it will save in the database.
-        $campaignDetails = $this->formatDatesForDatabase($request->all());
-
-        $campaign->update($campaignDetails);
+        $campaign->update($request->all());
 
         // Log that a campaign was updated.
         info('campaign_updated', ['id' => $campaign->id]);
@@ -119,19 +113,5 @@ class CampaignsController extends Controller
     public function edit(Campaign $campaign)
     {
         return view('pages.campaigns_edit')->with('campaign', $campaign);
-    }
-
-    /** Helper function to format dates in YYYY-MM-DD format so it will save in the database.
-     * @param Request $request
-     */
-    public function formatDatesForDatabase($request)
-    {
-        $formattedCampaign = [
-            'internal_title' => $request['internal_title'],
-            'start_date' => Carbon::parse($request['start_date']),
-            'end_date' => $request['end_date'] ? Carbon::parse($request['end_date']) : null,
-        ];
-
-        return $formattedCampaign;
     }
 }
