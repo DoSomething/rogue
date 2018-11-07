@@ -99,11 +99,13 @@ $factory->defineAs(User::class, 'admin', function () use ($factory) {
 
 // Campaign Factory
 $factory->define(Campaign::class, function (Generator $faker) {
+    $start_date = $this->faker->date($format = 'm/d/Y');
 
     return [
         'id' => $faker->numberBetween($min = 9000, $max = 20000),
         'internal_title' => $faker->sentence(),
-        'start_date' => $this->faker->dateTime,
-        'end_date' => $this->faker->dateTime,
+        'start_date' => $start_date,
+        // Make sure the end date is after the start date
+        'end_date' => date('m/d/Y', strtotime("+3 months", strtotime($start_date))),
     ];
 });

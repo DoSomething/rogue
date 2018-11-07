@@ -17,10 +17,11 @@ class CampaignTest extends Testcase
     {
         // Create a campaign.
         $firstCampaignTitle = $this->faker->sentence;
-        $firstCampaignStartDate = $this->faker->date;
-        $firstCampaignEndDate = $this->faker->date;
+        $firstCampaignStartDate = $this->faker->date($format = 'm/d/Y');
+        // Make sure the end date is after the start date.
+        $firstCampaignEndDate = date('m/d/Y', strtotime("+3 months", strtotime($firstCampaignStartDate)));
 
-        $this->actingAsAdmin()->postJson('campaigns', [
+        $this->actingAsAdmin()->postJson('campaign-ids', [
             'internal_title' => $firstCampaignTitle,
             'start_date' => $firstCampaignStartDate,
             'end_date' => $firstCampaignEndDate,
@@ -29,15 +30,11 @@ class CampaignTest extends Testcase
         // Make sure the campaign is persisted.
         $this->assertDatabaseHas('campaigns', [
             'internal_title' => $firstCampaignTitle,
-            'start_date' => $firstCampaignStartDate,
-            'end_date' => $firstCampaignEndDate,
         ]);
 
         // Try to create a second campaign with the same title and make sure it doesn't duplicate.
-        $this->actingAsAdmin()->postJson('campaigns', [
+        $this->actingAsAdmin()->postJson('campaign-ids', [
             'internal_title' => $firstCampaignTitle,
-            'start_date' => $this->faker->dateTime,
-            'end_date' => $this->faker->dateTime,
         ]);
 
         $response = $this->getJson('api/v3/campaigns');
@@ -96,7 +93,7 @@ class CampaignTest extends Testcase
         $campaign = factory(Campaign::class)->create();
 
         // Update the title.
-        $this->actingAsAdmin()->patchJson('campaigns/' . $campaign->id, [
+        $this->actingAsAdmin()->patchJson('campaign-ids/' . $campaign->id, [
             'internal_title' => 'Updated Title',
         ]);
 
@@ -120,7 +117,7 @@ class CampaignTest extends Testcase
         $campaign = factory(Campaign::class)->create();
 
         // Delete the campaign.
-        $this->actingAsAdmin()->deleteJson('campaigns/' . $campaign->id);
+        $this->actingAsAdmin()->deleteJson('campaign-ids/' . $campaign->id);
 
         // Make sure the campaign is deleted.
         $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
