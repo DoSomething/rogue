@@ -24,6 +24,8 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
+
+        Route::model('campaign_id', \Rogue\Models\Campaign::class);
     }
 
     /**
