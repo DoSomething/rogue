@@ -26,7 +26,7 @@ class CampaignsController extends Controller
     {
         $campaigns = Campaign::paginate(25);
 
-        return view('pages.campaigns_index')->with('campaigns', $campaigns);
+        return view('campaign-ids.index')->with('campaigns', $campaigns);
     }
 
     /**
@@ -34,7 +34,7 @@ class CampaignsController extends Controller
      */
     public function create()
     {
-        return view('pages.campaigns_create');
+        return view('campaign-ids.create');
     }
 
     /**
@@ -65,7 +65,7 @@ class CampaignsController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        return view('pages.campaigns_show')->with('campaign', $campaign);
+        return view('campaign-ids.show')->with('campaign', $campaign);
     }
 
     /**
@@ -75,7 +75,7 @@ class CampaignsController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        return view('pages.campaigns_edit')->with('campaign', $campaign);
+        return view('campaign-ids.edit')->with('campaign', $campaign);
     }
 
     /**
