@@ -109,7 +109,10 @@ class CampaignsController extends Controller
             'Violence',
         ];
 
-        return view('campaign-ids.edit')->with('campaign', $campaign)->with('causes', $causes);
+        return view('campaign-ids.edit', [
+            'campaign' => $campaign,
+            'causes' => $causes
+        ]);
     }
 
     /**
