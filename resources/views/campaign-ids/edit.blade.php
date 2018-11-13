@@ -21,20 +21,9 @@
                     <div class="select form-item">
                         <label class="field-label">Cause</label>
                         <select name="cause">
-                            <option>Animals</option>
-                            <option>Bullying</option>
-                            <option>Disasters</option>
-                            <option>Discrimination</option>
-                            <option>Education</option>
-                            <option>Environment</option>
-                            <option>Homelessness</option>
-                            <option>Mental Health</option>
-                            <option>Physical Health</option>
-                            <option>Poverty</option>
-                            <option>Relationships</option>
-                            <option>Sex</option>
-                            <option>Violence</option>
-                            <option>No Cause</option>
+                            @foreach($causes as $cause)
+                                <option value="{{ $cause }}" {{ ($campaign->cause == $cause ? "selected":"") }}>{{ $cause }}</option>
+                            @endforeach
                         </select>
                     </div>
 

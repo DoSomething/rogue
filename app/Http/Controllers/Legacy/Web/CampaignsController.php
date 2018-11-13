@@ -35,7 +35,24 @@ class CampaignsController extends Controller
      */
     public function create()
     {
-        return view('campaign-ids.create');
+        $causes = [
+            'Animals',
+            'Bullying',
+            'Disasters',
+            'Discrimination',
+            'Education',
+            'Environment',
+            'Homelessness',
+            'Mental Health',
+            'Physical Health',
+            'Poverty',
+            'Relationships',
+            'Sex',
+            'Violence',
+            'No Cause',
+        ];
+
+        return view('campaign-ids.create')->with('causes', $causes);
     }
 
     /**
@@ -77,7 +94,24 @@ class CampaignsController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        return view('campaign-ids.edit')->with('campaign', $campaign);
+        $causes = [
+            'Animals',
+            'Bullying',
+            'Disasters',
+            'Discrimination',
+            'Education',
+            'Environment',
+            'Homelessness',
+            'Mental Health',
+            'Physical Health',
+            'Poverty',
+            'Relationships',
+            'Sex',
+            'Violence',
+            'No Cause',
+        ];
+
+        return view('campaign-ids.edit')->with('campaign', $campaign)->with('causes', $causes);
     }
 
     /**
