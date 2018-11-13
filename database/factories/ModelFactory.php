@@ -114,7 +114,6 @@ $factory->define(Campaign::class, function (Generator $faker) {
         'Relationships',
         'Sex',
         'Violence',
-        'No Cause',
     ];
 
     return [

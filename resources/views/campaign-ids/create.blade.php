@@ -21,6 +21,7 @@
                     <div class="select form-item">
                         <label class="field-label">Cause</label>
                         <select name="cause">
+                            <option value="" disabled selected>Select the cause</option>
                             @foreach($causes as $cause)
                                 @if (old('cause'))
                                     <option value="{{ old('cause') }}" {{ (old('cause') == $cause ? "selected":"") }}>{{ $cause }}</option>

@@ -36,7 +36,6 @@ class CampaignsController extends Controller
     public function create()
     {
         $causes = [
-            'No Cause',
             'Animals',
             'Bullying',
             'Disasters',
@@ -95,7 +94,6 @@ class CampaignsController extends Controller
     public function edit(Campaign $campaign)
     {
         $causes = [
-            'No Cause',
             'Animals',
             'Bullying',
             'Disasters',
