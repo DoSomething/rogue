@@ -20,6 +20,7 @@
                             <tr class="table__header">
                               <th class="table__cell">Internal Name</th>
                               <th class="table__cell">Campaign ID</th>
+                              <th class="table__cell">Cause</th>
                               <th class="table__cell">Start Date</th>
                               <th class="table__cell">End Date</th>
                             </tr>
@@ -29,6 +30,7 @@
                                 <tr class="table__row">
                                     <td class="table__cell"><a href="{{ route('campaign-ids.show', [$campaign->id]) }}">{{ $campaign->internal_title}}</a></td>
                                     <td class="table__cell">{{ $campaign->id }}</td>
+                                    <td class="table__cell">{{ $campaign->cause }}</td>
                                     <td class="table__cell">{{ $campaign->start_date->format('m/d/Y') }}</td>
                                     <td class="table__cell">{{ $campaign->end_date ? $campaign->end_date->format('m/d/Y') : '–' }}</td>
                                 </tr>
