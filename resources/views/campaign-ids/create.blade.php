@@ -18,6 +18,26 @@
                         <input type="text" name="internal_title" class="text-field" placeholder="e.g. Teens for Jeans 2018">
                     </div>
 
+                    <div class="select form-item">
+                        <label class="field-label">Cause</label>
+                        <select name="cause">
+                            <option>Animals</option>
+                            <option>Bullying</option>
+                            <option>Disasters</option>
+                            <option>Discrimination</option>
+                            <option>Education</option>
+                            <option>Environment</option>
+                            <option>Homelessness</option>
+                            <option>Mental Health</option>
+                            <option>Physical Health</option>
+                            <option>Poverty</option>
+                            <option>Relationships</option>
+                            <option>Sex</option>
+                            <option>Violence</option>
+                            <option>No Cause</option>
+                        </select>
+                    </div>
+
                     <div class="form-item">
                         <label class="field-label">Start Date</label>
                         <input type="text" name="start_date" class="text-field" placeholder="e.g. 6/6/2018">

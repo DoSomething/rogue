@@ -10,6 +10,9 @@
                 <h3>Internal Campaign Name</h3>
                 <p>{{ $campaign->internal_title }}</p>
 
+                <h3>Cause</h3>
+                <p>{{ $campaign->cause }}</p>
+
                 <h3>Start Date</h3>
                 <p>{{ $campaign->start_date->format('m/d/Y') }}</p>
 
