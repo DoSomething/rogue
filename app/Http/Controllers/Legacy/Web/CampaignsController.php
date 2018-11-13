@@ -36,6 +36,7 @@ class CampaignsController extends Controller
     public function create()
     {
         $causes = [
+            'No Cause',
             'Animals',
             'Bullying',
             'Disasters',
@@ -49,7 +50,6 @@ class CampaignsController extends Controller
             'Relationships',
             'Sex',
             'Violence',
-            'No Cause',
         ];
 
         return view('campaign-ids.create')->with('causes', $causes);
@@ -95,6 +95,7 @@ class CampaignsController extends Controller
     public function edit(Campaign $campaign)
     {
         $causes = [
+            'No Cause',
             'Animals',
             'Bullying',
             'Disasters',
@@ -108,7 +109,6 @@ class CampaignsController extends Controller
             'Relationships',
             'Sex',
             'Violence',
-            'No Cause',
         ];
 
         return view('campaign-ids.edit')->with('campaign', $campaign)->with('causes', $causes);
