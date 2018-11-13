@@ -18,6 +18,15 @@
                         <input type="text" name="internal_title" class="text-field" value="{{ $campaign->internal_title }}">
                     </div>
 
+                    <div class="select form-item">
+                        <label class="field-label">Cause</label>
+                        <select name="cause">
+                            @foreach($causes as $cause)
+                                <option value="{{ $cause }}" {{ ($campaign->cause == $cause ? "selected":"") }}>{{ $cause }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="form-item">
                         <label class="field-label">Start Date</label>
                         <input type="text" name="start_date" class="text-field" value="{{ $campaign->start_date->format('m/d/Y') }}">

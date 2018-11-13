@@ -21,7 +21,7 @@ class Campaign extends Model
      *
      * @var array
      */
-    protected $fillable = ['internal_title', 'start_date', 'end_date'];
+    protected $fillable = ['internal_title', 'cause', 'start_date', 'end_date'];
 
     /**
      * Get the signups associated with this campaign.

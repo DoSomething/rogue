@@ -35,7 +35,23 @@ class CampaignsController extends Controller
      */
     public function create()
     {
-        return view('campaign-ids.create');
+        $causes = [
+            'Animals',
+            'Bullying',
+            'Disasters',
+            'Discrimination',
+            'Education',
+            'Environment',
+            'Homelessness',
+            'Mental Health',
+            'Physical Health',
+            'Poverty',
+            'Relationships',
+            'Sex',
+            'Violence',
+        ];
+
+        return view('campaign-ids.create')->with('causes', $causes);
     }
 
     /**
@@ -47,6 +63,7 @@ class CampaignsController extends Controller
     {
         $this->validate($request, [
             'internal_title' => 'required|string|unique:campaigns',
+            'cause' => 'required|string',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after:start_date',
         ]);
@@ -76,7 +93,26 @@ class CampaignsController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        return view('campaign-ids.edit')->with('campaign', $campaign);
+        $causes = [
+            'Animals',
+            'Bullying',
+            'Disasters',
+            'Discrimination',
+            'Education',
+            'Environment',
+            'Homelessness',
+            'Mental Health',
+            'Physical Health',
+            'Poverty',
+            'Relationships',
+            'Sex',
+            'Violence',
+        ];
+
+        return view('campaign-ids.edit', [
+            'campaign' => $campaign,
+            'causes' => $causes
+        ]);
     }
 
     /**
@@ -89,6 +125,7 @@ class CampaignsController extends Controller
     {
         $this->validate($request, [
             'internal_title' => 'string',
+            'cause' => 'string',
             'start_date' => 'date',
             'end_date' => 'nullable|date|after:start_date',
         ]);
