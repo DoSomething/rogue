@@ -25,7 +25,7 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::paginate(25);
+        $campaigns = Campaign::orderBy('created_at', 'desc')->paginate(25);
 
         return view('campaign-ids.index')->with('campaigns', $campaigns);
     }
