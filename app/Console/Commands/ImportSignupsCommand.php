@@ -5,7 +5,6 @@ namespace Rogue\Console\Commands;
 use Carbon\Carbon;
 use League\Csv\Reader;
 use Rogue\Models\Signup;
-use Rogue\Services\Registrar;
 use Illuminate\Console\Command;
 use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Jobs\SendSignupToCustomerIo;
@@ -31,7 +30,7 @@ class ImportSignupsCommand extends Command
      *
      * @return void
      */
-    public function __construct(Registrar $registrar)
+    public function __construct()
     {
         parent::__construct();
     }

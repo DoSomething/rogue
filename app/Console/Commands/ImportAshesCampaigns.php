@@ -5,6 +5,7 @@ namespace Rogue\Console\Commands;
 use Carbon\Carbon;
 use League\Csv\Reader;
 use Rogue\Models\Campaign;
+use Rogue\Services\Registrar;
 use Illuminate\Console\Command;
 
 class ImportAshesCampaigns extends Command
