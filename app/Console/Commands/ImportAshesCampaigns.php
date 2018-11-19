@@ -41,6 +41,16 @@ class ImportAshesCampaigns extends Command
      */
     public function handle()
     {
+        // Make a local copy of the CSV
+        $path = $this->argument('path');
+        info('rogue:legacycampaignimport: Loading in csv from ' . $path);
 
+        $temp = tempnam(sys_get_temp_dir(), 'command_csv');
+        file_put_contents($temp, fopen($this->argument('path'), 'r'));
+
+        // Load the legacy campaigns from the CSV
+        $legacy_campaigns_csv = Reader::createFromPath($temp, 'r');
+        $legacy_campaigns_csv->setHeaderOffset(0);
+        $legacy_signups = $legacy_campaigns_csv->getRecords();
     }
 }
