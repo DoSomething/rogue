@@ -51,6 +51,19 @@ class ImportAshesCampaigns extends Command
         // Load the legacy campaigns from the CSV
         $legacy_campaigns_csv = Reader::createFromPath($temp, 'r');
         $legacy_campaigns_csv->setHeaderOffset(0);
-        $legacy_signups = $legacy_campaigns_csv->getRecords();
+        $legacy_campaigns = $legacy_campaigns_csv->getRecords();
+
+        // Import each legacy campaign
+        info('rogue:legacycampaignimport: Importing legacy campaigns...');
+
+        foreach ($legacy_campaigns as $legacy_campaign) {
+            // See if the campaign exists
+            $existing_campaign = Campaign::where('id', $legacy['id']);
+
+            // Create the campaign if there isn't one already
+            if (! $existing_campaign) {
+
+            }
+        }
     }
 }
