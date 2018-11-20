@@ -57,12 +57,32 @@ class ImportAshesCampaigns extends Command
         info('rogue:legacycampaignimport: Importing legacy campaigns...');
 
         foreach ($legacy_campaigns as $legacy_campaign) {
+            // Normalize all "NULL" values to null
+            foreach ($legacy_campaign as $key => $value) {
+                if ($value === "NULL") {
+                    $legacy_campaign[$key] = null;
+                }
+            }
+
             // See if the campaign exists
-            $existing_campaign = Campaign::where('id', $legacy['id']);
+            $existing_campaign = Campaign::where('id', $legacy_campaign['campaign_id'])->orWhere('id', $legacy_campaign['run_id'])->first();
 
             // Create the campaign if there isn't one already
             if (! $existing_campaign) {
-
+                // If there is no campaign_id, set the campaign_run_id to the id
+                if (is_null($legacy_campaign['campaign_id'])) {
+                    $campaign = Campaign::create([
+                        'id' => $legacy_campaign['run_id'],
+                        'internal_title' => $legacy_campaign['internal_title'],
+                        'cause' => $legacy_campaign['cause'],
+                        'secondary_causes' => $legacy_campaign['secondary_causes'],
+                        'campaign_run_id' => null,
+                        'start_date' => $legacy_campaign['start_date'],
+                        'end_date' => $legacy_campaign['end_date'],
+                        'created_at' => $legacy_campaign['created_at'],
+                        'updated_at' => $legacy_campaign['updated_at'],
+                    ]);
+                }
             }
         }
     }

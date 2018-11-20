@@ -1,0 +1,46 @@
+run_id,campaign_id,internal_title,cause,secondary_causes,start_date,end_date,created_at,updated_at
+6850,NULL,DoSomething App run 1,NULL,NULL,2016-04-28 00:00:00,NULL,1461861094,1461861094
+7145,NULL,Wack Wrappers run 1,NULL,NULL,2016-08-29 00:00:00,NULL,1472498808,1472498808
+7865,NULL,Recogedor campeón 1,NULL,NULL,2017-07-06 00:00:00,NULL,1499354654,1499354654
+7866,NULL,¡Hey Profe! run 1,NULL,NULL,2017-07-06 00:00:00,NULL,1499356402,1499356402
+7867,NULL,#MujerProtagonista run1,NULL,NULL,2017-07-06 00:00:00,NULL,1499359125,1499359125
+7868,NULL,Felices Fiestas Sustentables,NULL,NULL,2017-07-07 00:00:00,NULL,1499441119,1499441119
+7869,NULL,Sólo porque... run 1,NULL,NULL,2017-07-07 00:00:00,NULL,1499441670,1499441670
+6167,4,Banned Books Club run 1,Education,Education,2015-08-27 00:00:00,NULL,1452803496,1452803496
+6168,5,Test Campaign run 1,NULL,NULL,2015-08-27 00:00:00,NULL,1452803496,1452803496
+6169,6,ABC Cleanup run 1,Environment,Environment,2014-02-04 00:00:00,NULL,1452803496,1452803496
+6170,7,Mirror Messages run 1,Mental Health,"Bullying,Mental Health",2015-08-27 00:00:00,NULL,1452803496,1452803496
+6803,7,Mirror Messages Run 2,Mental Health,"Bullying,Mental Health",2016-03-31 00:00:00,2016-04-30 00:00:00,1459441232,1462899215
+6999,7,Mirror Messages run 3,Mental Health,"Bullying,Bullying,Mental Health,Mental Health,Bullying,Bullying,Mental Health,Mental Health,Bullying,Bullying,Mental Health,Mental Health,Bullying,Bullying,Mental Health,Mental Health",2016-06-23 00:00:00,2016-10-26 00:00:00,1466708497,1477590642
+7319,7,Mirror Messages run 4,Mental Health,"Bullying,Mental Health",2016-10-27 00:00:00,2016-11-30 00:00:00,1477590617,1480371148
+7520,7,Mirror Messages run 5,Mental Health,"Bullying,Mental Health",2017-01-06 00:00:00,2017-04-26 00:00:00,1483739369,1493239368
+7783,7,Mirror Messages run 6,Mental Health,"Bullying,Mental Health",2017-05-01 00:00:00,2017-05-31 00:00:00,1493309436,1493309471
+7818,7,Mirror Messages run 7,Mental Health,"Bullying,Mental Health",2017-06-01 00:00:00,2017-10-05 00:00:00,1496335932,1507040999
+8011,7,Mirror Messages run 8,Mental Health,"Bullying,Mental Health",2017-11-29 00:00:00,NULL,1511986470,1511986470
+8026,7,Mirror Messages run 9,Mental Health,"Bullying,Mental Health",2017-01-01 00:00:00,NULL,1513717668,1529605704
+8045,7,Mirror Messages run 10,Mental Health,"Bullying,Mental Health",2018-02-02 00:00:00,2018-02-28 00:00:00,1517494075,1517503302
+8076,7,Mirror Messages Run 11,Mental Health,"Bullying,Mental Health",2018-03-29 00:00:00,NULL,1522424520,1525187118
+5446,8,Custodian Care Run 1,Education,"Education,Mental Health",2014-02-24 00:00:00,2015-06-02 00:00:00,1433180455,1453763642
+6914,8,Custodian Care Run 2,Education,"Education,Mental Health",2016-05-17 00:00:00,NULL,1463520369,1463520369
+6171,9,Senior Socials run 1,Education,"Bullying,Education,Mental Health",2014-02-04 00:00:00,NULL,1452803496,1452803496
+6129,10,Quitters Always Win run 1,Physical Health,"Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health",2014-04-09 00:00:00,2015-12-02 00:00:00,1449103212,1454448442
+6172,10,Quitters Always Win run 2,Physical Health,Physical Health,2015-12-28 00:00:00,2016-02-01 00:00:00,1452803496,1458338196
+6173,12,Test Sponsored Campaign run 1,NULL,NULL,2015-08-27 00:00:00,NULL,1452803496,1452803496
+5417,13,I Heart Dad run 1,Physical Health,Physical Health,2015-06-01 00:00:00,2015-07-01 00:00:00,1431108734,1454373247
+6653,13,I Heart Dad run 2,Physical Health,"Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health",2015-07-02 00:00:00,NULL,1454373357,1470665556
+7810,13,I Heart Dad run 3,Physical Health,Physical Health,2017-06-01 00:00:00,2017-06-30 00:00:00,1495137517,1501252404
+8143,13,I Heart Dad run 4,Physical Health,Physical Health,2018-06-21 00:00:00,NULL,1529603553,1529603553
+6174,14,Parents Ride Shotty run 1,Physical Health,Physical Health,2014-02-05 00:00:00,NULL,1452803496,1452803496
+6175,15,Momm-o-grams run 1,Physical Health,"Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,Physical Health,",2014-02-05 00:00:00,NULL,1452803496,1452803496
+6176,17,Planting Par-tay run 1,Environment,"Environment,Mental Health",2014-02-06 00:00:00,NULL,1452803496,1452803496
+6177,18,Prom for All run 1,Poverty,"Homelessness,Poverty",2014-02-06 00:00:00,NULL,1452803496,1452803496
+6178,19,School Standstill run 1,Education,Education,2015-08-27 00:00:00,NULL,1452803496,1452803496
+6179,21,Positivity Page run 1,Bullying,"Bullying,Bullying,Bullying,Bullying,Bullying,Mental Health,Mental Health,Mental Health,Mental Health,Mental Health,Bullying,Bullying,Bullying,Bullying,Bullying,Mental Health,Mental Health,Mental Health,Mental Health,Mental Health,Bullying,Bullying,Bullying,Bullying,Bullying,Mental Health,Mental Health,Mental Health,Mental Health,Mental Health,Bullying,Bullying,Bullying,Bullying,Bullying,Mental Health,Mental Health,Mental Health,Mental Health,Mental Health,Bullying,Bullying,Bullying,Bullying,Bullying,Mental Health,Mental Health,Mental Health,Mental Health,Mental Health,Bullying,Bullying,Bullying,Bullying,Bullying,Mental Health,Mental Health,Mental Health,Mental Health,Mental Health,Bullying,Bullying,Bullying,Bullying,Bullying,Mental Health,Mental Health,Mental Health,Mental Health,Mental Health,Bullying,Bullying,Bullying,Bullying,Bullying,Mental Health,Mental Health,Mental Health,Mental Health,Mental Health,Bullying,Bullying,Bullying,Bullying,Bullying,Mental Health,Mental Health,Mental Health,Mental Health,Men",2014-02-07 00:00:00,NULL,1452803496,1452803496
+5057,22,Cell Phones for Survivors run 1,Violence,"Relationships,Violence",2014-03-12 00:00:00,2015-02-03 00:00:00,1422548170,1453817649
+6180,24,Free to Pee Petition run 1,Discrimination,"Discrimination,Mental Health,Physical Health,Sex,Violence",2014-01-01 00:00:00,2015-12-01 00:00:00,1452803496,1456948749
+6181,28,Comics to the Rescue run 1,Bullying,"Bullying,Bullying,Violence,Violence,Bullying,Bullying,Violence,Violence,Bullying,Bullying,Violence,Violence,Bullying,Bullying,Violence,Violence",2015-08-27 00:00:00,NULL,1452803496,1455737061
+6182,31,Project Shutdown run 1,Violence,"Relationships,Relationships,Relationships,Relationships,Sex,Sex,Sex,Sex,Violence,Violence,Violence,Violence,Relationships,Relationships,Relationships,Relationships,Sex,Sex,Sex,Sex,Violence,Violence,Violence,Violence,Relationships,Relationships,Relationships,Relationships,Sex,Sex,Sex,Sex,Violence,Violence,Violence,Violence,Relationships,Relationships,Relationships,Relationships,Sex,Sex,Sex,Sex,Violence,Violence,Violence,Violence,Relationships,Relationships,Relationships,Relationships,Sex,Sex,Sex,Sex,Violence,Violence,Violence,Violence,Relationships,Relationships,Relationships,Relationships,Sex,Sex,Sex,Sex,Violence,Violence,Violence,Violence,Relationships,Relationships,Relationships,Relationships,Sex,Sex,Sex,Sex,Violence,Violence,Violence,Violence,Relationships,Relationships,Relationships,Relationships,Sex,Sex,Sex,Sex,Violence,Violence,Violence,Violence,Relationships,Relationships,Relationships,Relationships,Sex,Sex,Sex,Sex,Violence,Violence,Violence,Violence,Relationships,Relationships,Relationships,Relationsh",2015-08-27 00:00:00,NULL,1452803496,1452803496
+6183,32,13 Gallon Challenge run 1,Environment,"Education,Education,Environment,Environment,Education,Education,Environment,Environment,Education,Education,Environment,Environment,Education,Education,Environment,Environment",2015-08-27 00:00:00,NULL,1452803496,1452803496
+6184,33,Unban Underpants! run 1,Education,Education,2015-08-27 00:00:00,NULL,1452803496,1452803496
+6185,34,Welcome Home run 1,Homelessness,Homelessness,2014-01-01 00:00:00,2015-06-01 00:00:00,1452803496,1456939891
+6186,35,Petition Plates run 1,Environment,Environment,2015-08-27 00:00:00,NULL,1452803496,1452803496
