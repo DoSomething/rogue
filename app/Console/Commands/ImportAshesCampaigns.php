@@ -82,8 +82,13 @@ class ImportAshesCampaigns extends Command
                 } else {
                     $campaign = $this->createCampaign($legacy_campaign['run_id'], $legacy_campaign);
                 }
+
+                info('rogue:legacycampaignimport: Created campaign ' . $campaign->id);
             }
         }
+
+        // Tell everyone we're done!
+        info('rogue:legacycampaignimport: ALL DONE!');
     }
 
     /**
