@@ -56,7 +56,7 @@ class ImportAshesCampaigns extends Command
         // Import each legacy campaign
         info('rogue:legacycampaignimport: Importing legacy campaigns...');
 
-        foreach ($legacy_campaigns as $legacy_campaign) {
+        foreach ($legacy_campaigns as $offset => $legacy_campaign) {
             // Normalize all "NULL" values to null
             foreach ($legacy_campaign as $key => $value) {
                 if ($value === "NULL") {
@@ -83,6 +83,10 @@ class ImportAshesCampaigns extends Command
                         'updated_at' => $legacy_campaign['updated_at'],
                     ]);
                 }
+
+                // If there is only one campaign_run_id, keep the original campaign_id as the id in Rogue.
+                // dd($legacy_campaigns_csv->fetchOne(9));
+                dd($offset, $legacy_campaign, $legacy_campaigns_csv->fetchOne($offset));
             }
         }
     }
