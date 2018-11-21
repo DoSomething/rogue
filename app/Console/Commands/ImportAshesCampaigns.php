@@ -69,47 +69,42 @@ class ImportAshesCampaigns extends Command
 
             // Create the campaign if there isn't one already
             if (! $existing_campaign) {
-                // If there is no campaign_id, set the campaign_run_id to the id
+                // If there is no campaign_id, set the campaign_run_id to the id.
                 if (is_null($legacy_campaign['campaign_id'])) {
-                    $campaign = Campaign::create([
-                        'id' => $legacy_campaign['run_id'],
-                        'internal_title' => $legacy_campaign['internal_title'],
-                        'cause' => $legacy_campaign['cause'],
-                        'secondary_causes' => $legacy_campaign['secondary_causes'],
-                        'campaign_run_id' => null,
-                        'start_date' => $legacy_campaign['start_date'],
-                        'end_date' => $legacy_campaign['end_date'],
-                        'created_at' => $legacy_campaign['created_at'],
-                        'updated_at' => $legacy_campaign['updated_at'],
-                    ]);
-                // If the campaign_id does not equal the next record's campaign_id or the previous record's campaign id, this is either the latest run or there is only one campaign_run_id so keep the original campaign_id as the id in Rogue.
+                    $campaign = $this->createCampaign($legacy_campaign['run_id'], $legacy_campaign);
+                    // If the campaign_id does not equal the next record's campaign_id or the previous record's campaign id, this is either the latest run or there is only one campaign run, so keep the original campaign_id as the id in Rogue.
                 } else if ($legacy_campaigns_csv->fetchOne($iterator) && $legacy_campaign['campaign_id'] != $legacy_campaigns_csv->fetchOne($iterator)['campaign_id'] && $legacy_campaign['campaign_id'] != $legacy_campaigns_csv->fetchOne($iterator - 1)) {
-                    $campaign = Campaign::create([
-                        'id' => $legacy_campaign['campaign_id'],
-                        'internal_title' => $legacy_campaign['internal_title'],
-                        'cause' => $legacy_campaign['cause'],
-                        'secondary_causes' => $legacy_campaign['secondary_causes'],
-                        'campaign_run_id' => $legacy_campaign['run_id'],
-                        'start_date' => $legacy_campaign['start_date'],
-                        'end_date' => $legacy_campaign['end_date'],
-                        'created_at' => $legacy_campaign['created_at'],
-                        'updated_at' => $legacy_campaign['updated_at'],
-                    ]);
-                // Else use the campaign_run_id as the id in Rogue.
+                    $campaign = $this->createCampaign($legacy_campaign['campaign_id'], $legacy_campaign);
+                    // If this is the last row in the CSV, it must either be the only run or last run, so use the campaign_id as the id in Rogue.
+                } else if (!$legacy_campaigns_csv->fetchOne($iterator)) {
+                    $campaign = $this->createCampaign($legacy_campaign['campaign_id'], $legacy_campaign);
+                    // Else use the campaign_run_id as the id in Rogue.
                 } else {
-                    $campaign = Campaign::create([
-                        'id' => $legacy_campaign['run_id'],
-                        'internal_title' => $legacy_campaign['internal_title'],
-                        'cause' => $legacy_campaign['cause'],
-                        'secondary_causes' => $legacy_campaign['secondary_causes'],
-                        'campaign_run_id' => $legacy_campaign['run_id'],
-                        'start_date' => $legacy_campaign['start_date'],
-                        'end_date' => $legacy_campaign['end_date'],
-                        'created_at' => $legacy_campaign['created_at'],
-                        'updated_at' => $legacy_campaign['updated_at'],
-                    ]);
+                    $campaign = $this->createCampaign($legacy_campaign['run_id'], $legacy_campaign);
                 }
             }
         }
+    }
+
+    /**
+     * Helper function to create a campaign.
+     *
+     * @param int value to populate campaign id
+     * @param array campaign
+     *
+     * @return mixed
+     */
+    public function createCampaign($id, $campaign) {
+        return Campaign::create([
+            'id' => $id,
+            'internal_title' => $campaign['internal_title'],
+            'cause' => $campaign['cause'],
+            'secondary_causes' => $campaign['secondary_causes'],
+            'campaign_run_id' => ! $campaign['campaign_id'] ? null : $campaign['run_id'],
+            'start_date' => $campaign['start_date'],
+            'end_date' => $campaign['end_date'],
+            'created_at' => $campaign['created_at'],
+            'updated_at' => $campaign['updated_at'],
+        ]);
     }
 }
