@@ -51,12 +51,12 @@ class ImportAshesCampaigns extends Command
         // Load the legacy campaigns from the CSV
         $legacy_campaigns_csv = Reader::createFromPath($temp, 'r');
         $legacy_campaigns_csv->setHeaderOffset(0);
-        $legacy_campaigns = $legacy_campaigns_csv->getRecords();
+        $legacy_campaigns = iterator_to_array($legacy_campaigns_csv->getRecords());
 
         // Import each legacy campaign
         info('rogue:legacycampaignimport: Importing legacy campaigns...');
 
-        foreach ($legacy_campaigns as $offset => $legacy_campaign) {
+        foreach ($legacy_campaigns as $iterator => $legacy_campaign) {
             // Normalize all "NULL" values to null
             foreach ($legacy_campaign as $key => $value) {
                 if ($value === "NULL") {
@@ -82,11 +82,33 @@ class ImportAshesCampaigns extends Command
                         'created_at' => $legacy_campaign['created_at'],
                         'updated_at' => $legacy_campaign['updated_at'],
                     ]);
+                // If the campaign_id does not equal the next record's campaign_id or the previous record's campaign id, this is either the latest run or there is only one campaign_run_id so keep the original campaign_id as the id in Rogue.
+                } else if ($legacy_campaigns_csv->fetchOne($iterator) && $legacy_campaign['campaign_id'] != $legacy_campaigns_csv->fetchOne($iterator)['campaign_id'] && $legacy_campaign['campaign_id'] != $legacy_campaigns_csv->fetchOne($iterator - 1)) {
+                    $campaign = Campaign::create([
+                        'id' => $legacy_campaign['campaign_id'],
+                        'internal_title' => $legacy_campaign['internal_title'],
+                        'cause' => $legacy_campaign['cause'],
+                        'secondary_causes' => $legacy_campaign['secondary_causes'],
+                        'campaign_run_id' => $legacy_campaign['run_id'],
+                        'start_date' => $legacy_campaign['start_date'],
+                        'end_date' => $legacy_campaign['end_date'],
+                        'created_at' => $legacy_campaign['created_at'],
+                        'updated_at' => $legacy_campaign['updated_at'],
+                    ]);
+                // Else use the campaign_run_id as the id in Rogue.
+                } else {
+                    $campaign = Campaign::create([
+                        'id' => $legacy_campaign['run_id'],
+                        'internal_title' => $legacy_campaign['internal_title'],
+                        'cause' => $legacy_campaign['cause'],
+                        'secondary_causes' => $legacy_campaign['secondary_causes'],
+                        'campaign_run_id' => $legacy_campaign['run_id'],
+                        'start_date' => $legacy_campaign['start_date'],
+                        'end_date' => $legacy_campaign['end_date'],
+                        'created_at' => $legacy_campaign['created_at'],
+                        'updated_at' => $legacy_campaign['updated_at'],
+                    ]);
                 }
-
-                // If there is only one campaign_run_id, keep the original campaign_id as the id in Rogue.
-                // dd($legacy_campaigns_csv->fetchOne(9));
-                dd($offset, $legacy_campaign, $legacy_campaigns_csv->fetchOne($offset));
             }
         }
     }
