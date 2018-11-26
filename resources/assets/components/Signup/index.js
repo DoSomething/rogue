@@ -64,7 +64,7 @@ class PostGroup extends React.Component {
         )}
 
         <ModalContainer>
-          {this.props.displayHistoryModal ?
+          {this.props.displayHistoryModal ? (
             <HistoryModal
               id={this.props.historyModalId}
               onUpdate={this.props.updateQuantity}
@@ -74,9 +74,8 @@ class PostGroup extends React.Component {
               post={this.props.posts[this.props.historyModalId]}
               signupEvents={this.props.signupEvents}
             />
-            : null}
+          ) : null}
         </ModalContainer>
-
       </div>
     );
   }
@@ -155,18 +154,18 @@ class Signup extends React.Component {
         filter: {
           signup_id: signupId,
         },
-    })
-    .then((result) => {
-      this.setState((prevState) => {
-        const newState = { ...prevState };
+      })
+      .then(result => {
+        this.setState(prevState => {
+          const newState = { ...prevState };
 
-        newState.displayHistoryModal = true;
-        newState.historyModalId = postId;
-        newState.signupEvents = Object.values(result.data);
+          newState.displayHistoryModal = true;
+          newState.historyModalId = postId;
+          newState.signupEvents = Object.values(result.data);
 
-        return newState;
+          return newState;
+        });
       });
-    });
   }
 
   // Close the open history modal
@@ -488,7 +487,7 @@ class Signup extends React.Component {
                 'Signup ID': signup.id,
                 'Northstar ID': user.id,
                 'Signup Source': signup.source,
-                'Created At': new Date(signup.created_at).toDateString(),
+                'Created At': new Date(signup.created_at).toString(),
               }}
             />
           </div>

@@ -154,7 +154,7 @@ class Post extends React.Component {
                 'Post ID': post.id,
                 'Post Type': post.type,
                 'Post Source': post.source,
-                Submitted: new Date(post.created_at).toDateString(),
+                Submitted: new Date(post.created_at).toString(),
                 'Northstar Id': signup.northstar_id,
               }}
             />
