@@ -120,6 +120,7 @@ $factory->define(Campaign::class, function (Generator $faker) {
         'id' => $faker->numberBetween($min = 9000, $max = 20000),
         'internal_title' => $faker->sentence(),
         'cause' => $causes[array_rand($causes)],
+        'impact_doc' => 'https://www.google.com/',
         'start_date' => $start_date,
         // Make sure the end date is after the start date
         'end_date' => date('m/d/Y', strtotime("+3 months", strtotime($start_date))),
