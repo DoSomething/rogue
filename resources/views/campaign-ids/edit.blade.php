@@ -28,6 +28,11 @@
                     </div>
 
                     <div class="form-item">
+                        <label class="field-label">Proof of Impact</label>
+                        <input type="text" name="impact_doc" class="text-field" value="{{ $campaign->impact_doc }}">
+                    </div>
+
+                    <div class="form-item">
                         <label class="field-label">Start Date</label>
                         <input type="text" name="start_date" class="text-field" value="{{ $campaign->start_date->format('m/d/Y') }}">
                     </div>

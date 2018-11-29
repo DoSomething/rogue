@@ -16,7 +16,7 @@ class AddSecondaryCausesRunIdImpactDocAndMakeCausesNullableToCampaignsTable exte
         Schema::table('campaigns', function (Blueprint $table) {
             $table->string('secondary_causes')->index()->after('cause')->nullable()->comment('Secondary causes associated with legacy campaigns');
             $table->integer('campaign_run_id')->index()->after('secondary_causes')->nullable()->comment('Campaign Run Id to reference when we run script to update signup and post ids after legacy campaign migration. This column can be deleted once migration and update script are complete.');
-            $table->integer('impact_doc')->index()->after('campaign_run_id')->nullable()->comment('URL to proof of impact doc.');
+            $table->string('impact_doc')->index()->after('campaign_run_id')->nullable()->comment('URL to proof of impact doc.');
             $table->string('cause')->nullable()->change();
         });
     }
