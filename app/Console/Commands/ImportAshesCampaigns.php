@@ -109,6 +109,7 @@ class ImportAshesCampaigns extends Command
             'cause' => $campaign['cause'],
             'secondary_causes' => $campaign['secondary_causes'],
             'campaign_run_id' => ! $campaign['campaign_id'] ? null : $campaign['run_id'],
+            'impact_doc' => $campaign['impact_doc'],
             'start_date' => $campaign['start_date'],
             'end_date' => $campaign['end_date'],
             'created_at' => $campaign['created_at'],
