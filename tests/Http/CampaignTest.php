@@ -24,6 +24,7 @@ class CampaignTest extends Testcase
         $this->actingAsAdmin()->postJson('campaign-ids', [
             'internal_title' => $firstCampaignTitle,
             'cause' => 'Animals',
+            'impact_doc' => 'https://www.google.com',
             'start_date' => $firstCampaignStartDate,
             'end_date' => $firstCampaignEndDate,
         ]);
