@@ -54,7 +54,7 @@ class ImportAshesCampaigns extends Command
         $legacy_campaigns = iterator_to_array($legacy_campaigns_csv->getRecords());
 
         // Import each legacy campaign
-        $this->line('rogue:legacycampaignimport: Loading in csv from ' . $path)
+        $this->line('rogue:legacycampaignimport: Loading in csv from ' . $path);
 
         foreach ($legacy_campaigns as $iterator => $legacy_campaign) {
             // Normalize all "NULL" values to null
