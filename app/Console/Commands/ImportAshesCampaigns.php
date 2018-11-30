@@ -103,7 +103,7 @@ class ImportAshesCampaigns extends Command
      * @return mixed
      */
     public function createCampaign($id, $campaign) {
-        return Campaign::create([
+        return Campaign::forceCreate([
             'id' => $id,
             'internal_title' => $campaign['internal_title'],
             'cause' => $campaign['cause'],
