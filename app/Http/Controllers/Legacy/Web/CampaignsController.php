@@ -64,7 +64,7 @@ class CampaignsController extends Controller
         $this->validate($request, [
             'internal_title' => 'required|string|unique:campaigns',
             'cause' => 'required|string',
-            'impact_doc' => 'required|string',
+            'impact_doc' => 'required|url',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after:start_date',
         ]);
@@ -127,7 +127,7 @@ class CampaignsController extends Controller
         $this->validate($request, [
             'internal_title' => 'string',
             'cause' => 'string',
-            'impact_doc' => 'string',
+            'impact_doc' => 'url',
             'start_date' => 'date',
             'end_date' => 'nullable|date|after:start_date',
         ]);
