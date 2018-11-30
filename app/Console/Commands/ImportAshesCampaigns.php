@@ -54,7 +54,7 @@ class ImportAshesCampaigns extends Command
         $legacy_campaigns = iterator_to_array($legacy_campaigns_csv->getRecords());
 
         // Import each legacy campaign
-        info('rogue:legacycampaignimport: Importing legacy campaigns...');
+        $this->line('rogue:legacycampaignimport: Loading in csv from ' . $path)
 
         foreach ($legacy_campaigns as $iterator => $legacy_campaign) {
             // Normalize all "NULL" values to null
@@ -86,12 +86,12 @@ class ImportAshesCampaigns extends Command
                     $campaign = $this->createCampaign($legacy_campaign['run_id'], $legacy_campaign);
                 }
 
-                info('rogue:legacycampaignimport: Created campaign ' . $campaign->id);
+                $this->line('rogue:legacycampaignimport: Created campaign ' . $campaign->internal_title);
             }
         }
 
         // Tell everyone we're done!
-        info('rogue:legacycampaignimport: ALL DONE!');
+        $this->line('rogue:legacycampaignimport: ALL DONE!');
     }
 
     /**
