@@ -1,0 +1,25 @@
+run_id,campaign_id,internal_title,cause,secondary_causes,impact_doc,start_date,end_date,created_at,updated_at
+6850,NULL,DoSomething App run 1,NULL,NULL,NULL,2016-04-28 00:00:00,NULL,1461861094,1461861094
+7145,NULL,Wack Wrappers run 1,NULL,NULL,NULL,2016-08-29 00:00:00,NULL,1472498808,1472498808
+7865,NULL,Recogedor campeón 1,NULL,NULL,NULL,2017-07-06 00:00:00,NULL,1499354654,1499354654
+7866,NULL,¡Hey Profe! run 1,NULL,NULL,NULL,2017-07-06 00:00:00,NULL,1499356402,1499356402
+7867,NULL,#MujerProtagonista run1,NULL,NULL,NULL,2017-07-06 00:00:00,NULL,1499359125,1499359125
+7868,NULL,Felices Fiestas Sustentables,NULL,NULL,NULL,2017-07-07 00:00:00,NULL,1499441119,1499441119
+7869,NULL,Sólo porque... run 1,NULL,NULL,NULL,2017-07-07 00:00:00,NULL,1499441670,1499441670
+6167,4,Banned Books Club run 1,Education,Education,https://docs.google.com/a/dosomething.org/document/d/1B21cGpdImMw7s9v7ds8_eR8-s_--NXrkderDC446zZA/edit,2015-08-27 00:00:00,NULL,1452803496,1452803496
+6168,5,Test Campaign run 1,NULL,NULL,NULL,2015-08-27 00:00:00,NULL,1452803496,1452803496
+6169,6,ABC Cleanup run 1,Environment,Environment,https://docs.google.com/a/dosomething.org/document/d/1Ca-iaDHz6vcK7p722OH_MfI-O2XaMAeTfLERIxO9Ubs/edit,2014-02-04 00:00:00,NULL,1452803496,1452803496
+6170,7,Mirror Messages run 1,Mental Health,"Bullying,Mental Health",https://docs.google.com/a/dosomething.org/document/d/18woW4gnNWHyqToQP0mjpEf_tKCxr45N5fh49iMK3pAM/edit,2015-08-27 00:00:00,NULL,1452803496,1452803496
+6803,7,Mirror Messages Run 2,Mental Health,"Bullying,Mental Health",https://docs.google.com/a/dosomething.org/document/d/18woW4gnNWHyqToQP0mjpEf_tKCxr45N5fh49iMK3pAM/edit,2016-03-31 00:00:00,2016-04-30 00:00:00,1459441232,1462899215
+6999,7,Mirror Messages run 3,Mental Health,"Bullying,Bullying,Mental Health,Mental Health,Bullying,Bullying,Mental Health,Mental Health,Bullying,Bullying,Mental Health,Mental Health,Bullying,Bullying,Mental Health,Mental Health",https://docs.google.com/a/dosomething.org/document/d/18woW4gnNWHyqToQP0mjpEf_tKCxr45N5fh49iMK3pAM/edit,2016-06-23 00:00:00,2016-10-26 00:00:00,1466708497,1477590642
+7319,7,Mirror Messages run 4,Mental Health,"Bullying,Mental Health",https://docs.google.com/a/dosomething.org/document/d/18woW4gnNWHyqToQP0mjpEf_tKCxr45N5fh49iMK3pAM/edit,2016-10-27 00:00:00,2016-11-30 00:00:00,1477590617,1480371148
+7520,7,Mirror Messages run 5,Mental Health,"Bullying,Mental Health",https://docs.google.com/a/dosomething.org/document/d/18woW4gnNWHyqToQP0mjpEf_tKCxr45N5fh49iMK3pAM/edit,2017-01-06 00:00:00,2017-04-26 00:00:00,1483739369,1493239368
+7783,7,Mirror Messages run 6,Mental Health,"Bullying,Mental Health",https://docs.google.com/a/dosomething.org/document/d/18woW4gnNWHyqToQP0mjpEf_tKCxr45N5fh49iMK3pAM/edit,2017-05-01 00:00:00,2017-05-31 00:00:00,1493309436,1493309471
+7818,7,Mirror Messages run 7,Mental Health,"Bullying,Mental Health",https://docs.google.com/a/dosomething.org/document/d/18woW4gnNWHyqToQP0mjpEf_tKCxr45N5fh49iMK3pAM/edit,2017-06-01 00:00:00,2017-10-05 00:00:00,1496335932,1507040999
+8011,7,Mirror Messages run 8,Mental Health,"Bullying,Mental Health",https://docs.google.com/a/dosomething.org/document/d/18woW4gnNWHyqToQP0mjpEf_tKCxr45N5fh49iMK3pAM/edit,2017-11-29 00:00:00,NULL,1511986470,1511986470
+8026,7,Mirror Messages run 9,Mental Health,"Bullying,Mental Health",https://docs.google.com/a/dosomething.org/document/d/18woW4gnNWHyqToQP0mjpEf_tKCxr45N5fh49iMK3pAM/edit,2017-01-01 00:00:00,NULL,1513717668,1529605704
+8045,7,Mirror Messages run 10,Mental Health,"Bullying,Mental Health",https://docs.google.com/a/dosomething.org/document/d/18woW4gnNWHyqToQP0mjpEf_tKCxr45N5fh49iMK3pAM/edit,2018-02-02 00:00:00,2018-02-28 00:00:00,1517494075,1517503302
+8076,7,Mirror Messages Run 11,Mental Health,"Bullying,Mental Health",https://docs.google.com/a/dosomething.org/document/d/18woW4gnNWHyqToQP0mjpEf_tKCxr45N5fh49iMK3pAM/edit,2018-03-29 00:00:00,NULL,1522424520,1525187118
+5446,8,Custodian Care Run 1,Education,"Education,Mental Health",https://docs.google.com/a/dosomething.org/document/d/1APo5MCfgwK_pj_vUa15WdXcaR-P47ya1GStqv_D_9ag/edit,2014-02-24 00:00:00,2015-06-02 00:00:00,1433180455,1453763642
+6914,8,Custodian Care Run 2,Education,"Education,Mental Health",https://docs.google.com/a/dosomething.org/document/d/1APo5MCfgwK_pj_vUa15WdXcaR-P47ya1GStqv_D_9ag/edit,2016-05-17 00:00:00,NULL,1463520369,1463520369
+6171,9,Senior Socials run 1,Education,"Bullying,Education,Mental Health",https://docs.google.com/a/dosomething.org/document/d/1kUPiRZiakgnahmmFBdvU8O4yg0edUILwfQWIDcsRAZA/edit,2014-02-04 00:00:00,NULL,1452803496,1452803496

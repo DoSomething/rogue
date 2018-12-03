@@ -13,6 +13,9 @@
                 <h3>Cause</h3>
                 <p>{{ $campaign->cause }}</p>
 
+                <h3>Proof of Impact</h3>
+                <p><a href="{{ url($campaign->impact_doc) }}" target="_blank">{{ $campaign->impact_doc }}</a></p>
+
                 <h3>Start Date</h3>
                 <p>{{ $campaign->start_date->format('m/d/Y') }}</p>
 

@@ -5,6 +5,7 @@ namespace Rogue\Http\Controllers\Legacy\Web;
 use Carbon\Carbon;
 use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
 
 class CampaignsController extends Controller
@@ -64,6 +65,7 @@ class CampaignsController extends Controller
         $this->validate($request, [
             'internal_title' => 'required|string|unique:campaigns',
             'cause' => 'required|string',
+            'impact_doc' => 'required|url',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after:start_date',
         ]);
@@ -124,8 +126,9 @@ class CampaignsController extends Controller
     public function update(Request $request, Campaign $campaign)
     {
         $this->validate($request, [
-            'internal_title' => 'string',
+            'internal_title' => [Rule::unique('campaigns')->ignore($campaign->id)],
             'cause' => 'string',
+            'impact_doc' => 'url',
             'start_date' => 'date',
             'end_date' => 'nullable|date|after:start_date',
         ]);
