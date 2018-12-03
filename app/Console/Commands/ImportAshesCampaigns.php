@@ -43,7 +43,7 @@ class ImportAshesCampaigns extends Command
     {
         // Make a local copy of the CSV
         $path = $this->argument('path');
-        info('rogue:legacycampaignimport: Loading in csv from ' . $path);
+        $this->line('rogue:legacycampaignimport: Loading in csv from ' . $path);
 
         $temp = tempnam(sys_get_temp_dir(), 'command_csv');
         file_put_contents($temp, fopen($this->argument('path'), 'r'));
