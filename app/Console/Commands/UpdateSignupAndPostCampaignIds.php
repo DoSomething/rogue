@@ -55,7 +55,6 @@ class UpdateSignupAndPostCampaignIds extends Command
         // Update each signup and the signup's post(s) in each campaign with new campaign id.
         foreach ($campaigns as $campaign) {
             $signups = Signup::where('campaign_run_id', $campaign->campaign_run_id)->get();
-
             foreach ($signups as $signup) {
                 // Update the signup's campaign id to the $campaign->id
                 $signup->campaign_id = $campaign->id;
