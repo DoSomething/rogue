@@ -90,9 +90,6 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->states('contentful')->create();
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignup');
-
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/signups', [
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
