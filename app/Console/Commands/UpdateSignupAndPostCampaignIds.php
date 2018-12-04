@@ -2,6 +2,7 @@
 
 namespace Rogue\Console\Commands;
 
+use DB;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
@@ -56,20 +57,16 @@ class UpdateSignupAndPostCampaignIds extends Command
         foreach ($campaigns as $campaign) {
             $this->line('rogue:updatesignupandpostcampaignids: Updating signups/posts under campaign id: ' . $campaign->id);
 
-            $signups = Signup::where('campaign_run_id', $campaign->campaign_run_id)->get();
-            foreach ($signups as $signup) {
-                // Update the signup's campaign id to the $campaign->id
-                $signup->campaign_id = $campaign->id;
-                $signup->save();
+            // Update the all the signups' campaign_id under this campaign to the new $campaign->id
+            DB::table('signups')
+                ->where('campaign_run_id', $campaign->campaign_run_id)
+                ->update(['campaign_id' => $campaign->id]);
 
-                // Update all the posts' campaign ids that are associated with this signup.
-                $posts = Post::where('signup_id', $signup->id)->get();
-
-                foreach ($posts as $post) {
-                    $post->campaign_id = $campaign->id;
-                    $post->save();
-                }
-            }
+            // Update all the posts' campaign_id under this campaign tot eh new $campaign->id
+            DB::table('posts')
+                ->join('signups', 'signups.id', '=', 'posts.signup_id')
+                ->where('signups.campaign_run_id', $campaign->campaign_run_id)
+                ->update(['posts.campaign_id' => $campaign->id]);
         }
 
         // Tell everyone we're done!
