@@ -56,7 +56,7 @@ class SignupRepository
         $signup = Signup::where([
             'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
-        ])->orderByRaw('campaign_run_id IS NULL')
+        ])->orderByRaw('campaign_run_id IS NULL DESC')
             ->orderBy('campaign_run_id', 'desc')
             ->first();
 
