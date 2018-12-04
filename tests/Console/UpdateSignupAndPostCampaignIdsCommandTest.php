@@ -15,18 +15,25 @@ class UpdateSignupAndPostCampaignIdsCommandTest extends TestCase
     {
         // Create campaign and set a campaign_run_id.
         $campaign = factory(Campaign::class)->create();
+        // Assign campaign id so we can be sure signup and post below do not have the same id to start.
+        $campaign->id = 99;
         $campaign->campaign_run_id = 1;
         $campaign->save();
 
         // Create a signup and two posts that belong to this signup with a run_id = 1.
         $post = factory(Post::class)->create();
+        $post->campaign_id = 2;
+        $post->save();
+
         $post2 = factory(Post::class)->create();
         $signup = $post->signup;
 
+        $signup->campaign_id = 2;
         $signup->campaign_run_id = 1;
         $signup->save();
 
         $post2->signup_id = $signup->id;
+        $post2->campaign_id = 2;
         $post2->save();
 
         // Run script to update signup and post's campaign id.
