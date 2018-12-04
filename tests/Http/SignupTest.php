@@ -138,6 +138,37 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test that a POST request to /signups doesn't create duplicate signups
+     * if we don't provide the same 'campaign_run_id' that already is set, and
+     * we've got signups created in a new run-less world alongside old runs.
+     *
+     * POST /api/v3/signups
+     * @return void
+     */
+    public function testNotCreatingDuplicateSignupsWithAndWithoutRunId()
+    {
+        // Create a signup with a `campaign_id` and `campaign_run_id`.
+        $olderSignup = factory(Signup::class)->create();
+        $newerSignup = factory(Signup::class)->create(['campaign_run_id' => null]);
+
+        // Now, try to sign up again (without providing the same run ID).
+        $response = $this->withAccessToken($newerSignup->northstar_id)->postJson('api/v3/signups', [
+            'northstar_id' => $newerSignup->northstar_id,
+            'campaign_id' => $newerSignup->campaign_id,
+        ]);
+
+        // Make sure we get the 200 response
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'id' => $newerSignup->id,
+                'campaign_id' => $newerSignup->campaign_id,
+                'campaign_run_id' => $newerSignup->campaign_run_id,
+            ],
+        ]);
+    }
+
+    /**
      * Test that non-authenticated user's/apps can't post signups.
      *
      * @return void
