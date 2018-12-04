@@ -49,7 +49,6 @@ class SignupRepository
      *
      * @param  string $northstarId
      * @param  int $campaignId
-     * @param  int $campaignRunId
      * @return \Rogue\Models\Signup|null
      */
     public function get($northstarId, $campaignId)
