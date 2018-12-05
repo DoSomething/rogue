@@ -15,7 +15,8 @@
 
                     <div class="form-item">
                         <label class="field-label">Internal Campaign Name</label>
-                        <input type="text" name="internal_title" class="text-field" placeholder="e.g. Teens for Jeans 2018" value="{{old('internal_title') }}">
+                        <input type="text" name="internal_title" class="text-field" placeholder="Campaign Name YYYY-MM Start Date
+ e.g. Teens for Jeans 2015-08" value="{{old('internal_title') }}">
                     </div>
 
                     <div class="select form-item">
