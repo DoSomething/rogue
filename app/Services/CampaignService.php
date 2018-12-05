@@ -50,20 +50,6 @@ class CampaignService
      */
     public function find($id)
     {
-        /* // Handle cases where the ID was not found. */
-        /* if (empty($campaign['data']['id'])) { */
-        /*     $placeholder = [ */
-        /*         'id' => $id, */
-        /*         'title' => 'Unknown Campaign (' . $id . ')', */
-        /*         'staff_pick' => false, */
-        /*         'causes' => [ */
-        /*             'primary' => [ */
-        /*                 'name' => null, */
-        /*             ], */
-        /*         ], */
-        /*         'uri' => null, */
-        /*     ]; */
-
         return Campaign::find($id);
     }
 
