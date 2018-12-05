@@ -19,7 +19,7 @@ class SignupTest extends TestCase
     public function testCreatingASignup()
     {
         $northstarId = $this->faker->northstar_id;
-        $campaignId = str_random(22);
+        $campaignId = $this->faker->randomNumber(4);
         $campaignRunId = $this->faker->randomNumber(4);
 
         // Mock the Blink API call.
@@ -88,7 +88,7 @@ class SignupTest extends TestCase
      */
     public function testNotCreatingDuplicateSignups()
     {
-        $signup = factory(Signup::class)->states('contentful')->create();
+        $signup = factory(Signup::class)->create();
 
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/signups', [
             'northstar_id' => $signup->northstar_id,
@@ -102,7 +102,7 @@ class SignupTest extends TestCase
         $response->assertJson([
             'data' => [
                 'campaign_id' => $signup->campaign_id,
-                'campaign_run_id' => null,
+                'campaign_run_id' => $signup->campaign_run_id,
                 'quantity' => $signup->getQuantity(),
             ],
         ]);
