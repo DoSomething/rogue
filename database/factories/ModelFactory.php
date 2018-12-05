@@ -20,18 +20,27 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
+    $faker->addProvider(new FakerNorthstarId($faker));
+
     $uploadPath = $faker->file(storage_path('fixtures'));
     $upload = new UploadedFile($uploadPath, basename($uploadPath), 'image/jpeg');
     $url = app(AWS::class)->storeImage($upload, $faker->unique()->randomNumber(5));
 
     return [
-        'signup_id' => function () {
-            return factory(Signup::class)->create()->id;
+        'campaign_id' => function () {
+            return factory(Campaign::class)->create()->id;
+        },
+        'signup_id' => function (array $attributes) {
+            // If a 'signup_id' is not provided, create one for the same Campaign & Northstar ID.
+            return factory(Signup::class)->create([
+                'campaign_id' => $attributes['campaign_id'],
+                'northstar_id' => $attributes['northstar_id']
+            ])->id;
         },
         'northstar_id' => $this->faker->northstar_id,
         'url' => $url,
         'text' => $faker->sentence(),
-        'source' => $faker->randomElement(['phoenix-oauth', 'phoenix-next']),
+        'source' => 'phpunit',
         'status' => 'pending',
         'quantity' => $faker->randomNumber(2),
     ];
@@ -48,14 +57,15 @@ $factory->defineAs(Post::class, 'rejected', function () use ($factory) {
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
     $faker->addProvider(new FakerNorthstarId($faker));
-    $faker->addProvider(new FakerCampaignId($faker));
 
     return [
         'northstar_id' => $faker->northstar_id,
-        'campaign_id' => $faker->campaign_id,
+        'campaign_id' => function () {
+            return factory(Campaign::class)->create()->id;
+        },
         'campaign_run_id' => $faker->randomNumber(4),
         'why_participated' => $faker->sentence(),
-        'source' => 'phoenix-web',
+        'source' => 'phpunit',
         'details' => $faker->randomElement([null, 'fun-affiliate-stuff', 'i-say-the-tails']),
     ];
 });
