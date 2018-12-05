@@ -21,7 +21,7 @@ const UserExport = props => (
 
 UserExport.propTypes = {
   campaign: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
   }).isRequired,
 };
 

@@ -66,10 +66,7 @@ class HistoryModal extends React.Component {
           <h3>Change Quantity</h3>
           <div className="container__block -half">
             <h4>Old Quantity</h4>
-            <p>
-              {post.quantity} {campaign.reportback_info.noun}{' '}
-              {campaign.reportback_info.verb}
-            </p>
+            <p>{post.quantity} things done</p>
           </div>
           <div className="container__block -half">
             <h4>New Quantity</h4>

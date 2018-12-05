@@ -16,7 +16,7 @@ class UploaderModal extends React.Component {
       campaignRunId: signup.campaign_run_id,
       northstarId: signup.northstar_id,
       noun: {
-        plural: campaign.reportback_info.noun,
+        plural: 'items',
       },
       source: 'rogue-admin',
       submissions: {

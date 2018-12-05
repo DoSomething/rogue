@@ -2,6 +2,7 @@
 
 namespace Rogue\Services;
 
+use Rogue\Models\Campaign;
 use Illuminate\Support\Facades\DB;
 use Rogue\Repositories\CacheRepository;
 
@@ -49,38 +50,21 @@ class CampaignService
      */
     public function find($id)
     {
-        $campaign = $this->cache->retrieve($id);
+        /* // Handle cases where the ID was not found. */
+        /* if (empty($campaign['data']['id'])) { */
+        /*     $placeholder = [ */
+        /*         'id' => $id, */
+        /*         'title' => 'Unknown Campaign (' . $id . ')', */
+        /*         'staff_pick' => false, */
+        /*         'causes' => [ */
+        /*             'primary' => [ */
+        /*                 'name' => null, */
+        /*             ], */
+        /*         ], */
+        /*         'uri' => null, */
+        /*     ]; */
 
-        if (! $campaign) {
-            // @TODO: change this to grab from Phoenix when Phoenix returns all info. we need!
-            $campaign = $this->ashes->getCampaign($id);
-
-            // Handle cases where the ID was not found.
-            if (empty($campaign['data']['id'])) {
-                $placeholder = [
-                    'id' => $id,
-                    'title' => 'Unknown Campaign (' . $id . ')',
-                    'staff_pick' => false,
-                    'causes' => [
-                        'primary' => [
-                            'name' => null,
-                        ],
-                    ],
-                    'uri' => null,
-                ];
-
-                $this->cache->store($id, $placeholder, 1440);
-
-                return $placeholder;
-            }
-
-            // Cache campaign for a day.
-            $this->cache->store($id, $campaign['data'], 1440);
-
-            $campaign = $campaign['data'];
-        }
-
-        return $campaign;
+        return Campaign::find($id);
     }
 
     /**
@@ -91,27 +75,7 @@ class CampaignService
      */
     public function findAll($ids = [])
     {
-        if ($ids) {
-            $campaigns = $this->cache->retrieveMany($ids);
-
-            if (! $campaigns) {
-                $campaigns = $this->getBatchedCollection($ids);
-
-                if (count($campaigns)) {
-                    $group = $campaigns->keyBy('id')->all();
-
-                    // Cache campaigns for a day.
-                    $this->cache->storeMany($group, 1440);
-                }
-            } else {
-                $campaigns = $this->resolveMissingCampaigns($campaigns);
-                $campaigns = collect(array_values($campaigns));
-            }
-
-            return collect($campaigns);
-        }
-
-        return collect($this->ashes->getAllCampaigns());
+        return $ids ? Campaign::find($ids) : Campaign::all();
     }
 
     /**
@@ -169,36 +133,7 @@ class CampaignService
      */
     public function groupByCause($campaigns)
     {
-        $grouped = $campaigns->groupBy(function ($campaign) {
-            if ($campaign['staff_pick']) {
-                return 'Staff Pick';
-            }
-
-            if (! $campaign['causes']['primary']['name']) {
-                return 'No Cause';
-            }
-
-            $cause = ucfirst($campaign['causes']['primary']['name']);
-
-            return $cause;
-        });
-
-        $sorted = $grouped->sortBy(function ($campaigns, $key) {
-            // Hacky solution to move the Staff Pick group to the top of the list,
-            // the No Cause group to the end of the list,
-            // and alphabetize everything inbetween.
-            if ($key === 'Staff Pick') {
-                return 'A';
-            }
-
-            if ($key === 'No Cause') {
-                return 'Z';
-            }
-
-            return $key;
-        });
-
-        return $sorted->toArray();
+        return $campaigns->groupBy('cause')->toArray();
     }
 
     /**

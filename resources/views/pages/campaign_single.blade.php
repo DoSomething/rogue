@@ -2,7 +2,7 @@
 
 @section('main_content')
 
-    @include('layouts.header', ['header' => $state['campaign']['title']])
+    @include('layouts.header', ['header' => $state['campaign']['internal_title']])
 
         <div class="container -padded">
             <div class="wrapper" data-container="CampaignSingle" data-reviewing="true">
