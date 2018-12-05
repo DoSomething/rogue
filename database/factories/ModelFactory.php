@@ -99,30 +99,16 @@ $factory->defineAs(User::class, 'admin', function () use ($factory) {
 
 // Campaign Factory
 $factory->define(Campaign::class, function (Generator $faker) {
-    $start_date = $this->faker->date($format = 'm/d/Y');
-    $causes = [
-        'Animals',
-        'Bullying',
-        'Disasters',
-        'Discrimination',
-        'Education',
-        'Environment',
-        'Homelessness',
-        'Mental Health',
-        'Physical Health',
-        'Poverty',
-        'Relationships',
-        'Sex',
-        'Violence',
-    ];
-
     return [
-        'id' => $faker->numberBetween($min = 9000, $max = 20000),
-        'internal_title' => $faker->sentence(),
-        'cause' => $causes[array_rand($causes)],
+        'internal_title' => title_case($faker->unique()->catchPhrase),
+        'cause' => $faker->randomElement([
+            'Animals', 'Bullying', 'Disasters', 'Discrimination', 'Education',
+            'Environment', 'Homelessness', 'Mental Health', 'Physical Health',
+            'Poverty', 'Relationships', 'Sex', 'Violence',
+        ]),
         'impact_doc' => 'https://www.google.com/',
-        'start_date' => $start_date,
-        // Make sure the end date is after the start date
-        'end_date' => date('m/d/Y', strtotime("+3 months", strtotime($start_date))),
+        // By default, we create an "open campaign".
+        'start_date' => $faker->dateTimeBetween('-6 months', 'now'),
+        'end_date' => $faker->dateTimeBetween('+1 months', '+6 months'),
     ];
 });
