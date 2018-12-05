@@ -50,6 +50,9 @@ Anonymous requests will only return accepted posts. Logged-in users can see acce
   - The tag(s) to filter the response by.
   - Tag is passed in as tag_slug.
   - e.g. `/posts?filter[tag]=good-submission,good-for-sponsor`
+- **filter[source]** _(string)_
+  - The source(s) to filter the response by.
+  - e.g. `/posts?filter[source]=sms`
 - **include** _(string)_
   - Include additional related records in the response: `signup`, `siblings`
   - e.g. `/posts?include=signup,siblings`
