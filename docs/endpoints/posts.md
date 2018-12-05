@@ -162,8 +162,8 @@ This will automatically create or update the corresponding signup.
 POST /api/v3/posts
 ```
 
-- **campaign_id**: (int|string) required.
-  The Drupal/Contentful ID of the campaign that the user's post is associated with.
+- **campaign_id**: (int) required.
+  The Campaign ID of the campaign that the user's post is associated with.
 - **campaign_run_id**: (int)
   The drupal campaign run node id of the campaign that the user's post is associated with.
 - **type**: (string) required.

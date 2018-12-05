@@ -70,15 +70,6 @@ $factory->define(Signup::class, function (Generator $faker) {
     ];
 });
 
-$factory->state(Signup::class, 'contentful', function (Generator $faker) {
-    $faker->addProvider(new FakerContentfulCampaignId($faker));
-
-    return [
-        'campaign_id' => $faker->contentful_id,
-        'campaign_run_id' => null,
-    ];
-});
-
 // Reaction Factory
 $factory->define(Reaction::class, function (Generator $faker) {
     $faker->addProvider(new FakerNorthstarId($faker));
