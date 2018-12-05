@@ -8,7 +8,7 @@
         <div class="wrapper">
             <div class="container__block -narrow">
                 <h1>All Campaign IDs</h1>
-                <p>These are all the campaign IDs assocaited with their campaign name, start date, and if applicable, end date.</p>
+                <p>These are all the campaign IDs associated with their campaign name, start date, and if applicable, end date.</p>
             </div>
             <ul class="gallery -duo">
                 <div class="container__block -narrow">
