@@ -309,7 +309,7 @@ class ActivityApiTest extends TestCase
      * GET /activity?filter[]=
      * @return void
      */
-    public function testActivityIndexWithNorthstarIdAndCampaignRunIdFilters()
+    public function testActivityIndexWithNorthstarIdAndCampaignIdFilters()
     {
         $signup = factory(Signup::class)->create(['northstar_id' => 17, 'campaign_id' => 143]);
         factory(Signup::class, 5)->create();

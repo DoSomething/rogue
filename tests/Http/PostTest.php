@@ -769,8 +769,8 @@ class PostTest extends TestCase
         factory(Post::class, 'rejected', 4)->create(['northstar_id' => $otherId]);
 
 
-        // Owners should only see their own pending/accepted posts, and not
-        // any others user's pending or rejected posts:
+        // Owners should be able to see their own posts of any status, but
+        // not pending or rejected posts from other users.
         $response = $this->withAccessToken($userId)->getJson('api/v3/posts');
 
         $response->assertSuccessful();
