@@ -49,16 +49,16 @@ class SignupRepository
      *
      * @param  string $northstarId
      * @param  int $campaignId
+     * @param  int $campaignRunId
      * @return \Rogue\Models\Signup|null
      */
-    public function get($northstarId, $campaignId)
+    public function get($northstarId, $campaignId, $campaignRunId)
     {
         $signup = Signup::where([
             'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
-        ])->orderByRaw('campaign_run_id IS NULL DESC')
-            ->orderBy('campaign_run_id', 'desc')
-            ->first();
+            'campaign_run_id' => $campaignRunId,
+        ])->first();
 
         return $signup;
     }
