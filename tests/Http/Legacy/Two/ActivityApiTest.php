@@ -29,7 +29,6 @@ class ActivityApiTest extends TestCase
                     'signup_id',
                     'northstar_id',
                     'campaign_id',
-                    'campaign_run_id',
                     'quantity',
                     'why_participated',
                     'signup_source',
@@ -125,17 +124,16 @@ class ActivityApiTest extends TestCase
      */
     public function testActivityIndexWithMultipleFilters()
     {
-        factory(Signup::class, 3)->create(['campaign_id' => 14, 'campaign_run_id' => 132]);
+        factory(Signup::class, 3)->create(['campaign_id' => 14, 'source' => 'factory']);
         factory(Signup::class, 5)->create();
 
-        $response = $this->getJson('api/v2/activity?filter[campaign_id]=14&filter[campaign_run_id]=132');
+        $response = $this->getJson('api/v2/activity?filter[campaign_id]=14&filter[source]=factory');
 
         $response->assertStatus(200);
         $response->assertJson([
             'data' => [
                 [
                     'campaign_id' => 14,
-                    'campaign_run_id' => 132,
                     // ...
                 ],
             ],
@@ -146,14 +144,14 @@ class ActivityApiTest extends TestCase
      * Test for retrieving a user's activity with combination of query params
      * where we expect nothing to be returned.
      *
-     * GET /activity?filter[campaign_run_id]=479,49&filter[campaign_run_id]=z
+     * GET /activity?filter[campaign_id]=479,49&filter[campaign_id]=z
      * @return void
      */
     public function testActivityIndexWithFilterAndNoResults()
     {
         $signups = factory(Signup::class, 2)->create();
 
-        $response = $this->getJson('api/v2/activity?filter[campaign_id]=' . $signups[0]->campaign_id . ',' . $signups[1]->campaign_id . '&filter[campaign_run_id]=z');
+        $response = $this->getJson('api/v2/activity?filter[campaign_id]=' . $signups[0]->campaign_id . ',' . $signups[1]->campaign_id . '&filter[campaign_id]=z');
 
         $response->assertStatus(200);
         $response->assertJson(['data' => []]);
@@ -247,7 +245,6 @@ class ActivityApiTest extends TestCase
                     'signup_id',
                     'northstar_id',
                     'campaign_id',
-                    'campaign_run_id',
                     'quantity',
                     'why_participated',
                     'signup_source',
@@ -307,17 +304,17 @@ class ActivityApiTest extends TestCase
     }
 
     /**
-     * Test for retrieving a user's activity with northstar_id and campaign_run_id query params.
+     * Test for retrieving a user's activity with northstar_id and campaign_id query params.
      *
      * GET /activity?filter[]=
      * @return void
      */
-    public function testActivityIndexWithNorthstarIdAndCampaignRunIdFilters()
+    public function testActivityIndexWithNorthstarIdAndCampaignIdFilters()
     {
-        $signup = factory(Signup::class)->create(['northstar_id' => 17, 'campaign_run_id' => 143]);
+        $signup = factory(Signup::class)->create(['northstar_id' => 17, 'campaign_id' => 143]);
         factory(Signup::class, 5)->create();
 
-        $response = $this->getJson('api/v2/activity?filter[northstar_id]=17&filter[campaign_run_id]=143');
+        $response = $this->getJson('api/v2/activity?filter[northstar_id]=17&filter[campaign_id]=143');
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -325,7 +322,7 @@ class ActivityApiTest extends TestCase
                 [
                     'signup_id' => $signup->id,
                     'northstar_id' => '17',
-                    'campaign_run_id' => '143',
+                    'campaign_id' => '143',
                 ],
             ],
             'meta' => [

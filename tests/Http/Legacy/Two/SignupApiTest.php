@@ -17,7 +17,6 @@ class SignupApiTest extends TestCase
     {
         $northstarId = '54fa272b469c64d7068b456a';
         $campaignId = $this->faker->randomNumber(4);
-        $campaignRunId = $this->faker->randomNumber(4);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
@@ -25,7 +24,6 @@ class SignupApiTest extends TestCase
         $response = $this->withRogueApiKey()->postJson('api/v2/signups', [
             'northstar_id'     => $northstarId,
             'campaign_id'      => $campaignId,
-            'campaign_run_id'  => $campaignRunId,
             'source'           => 'the-fox-den',
             'details'          => 'affiliate-messaging',
         ]);
@@ -36,7 +34,6 @@ class SignupApiTest extends TestCase
             'data' => [
                 'northstar_id' => $northstarId,
                 'campaign_id' => $campaignId,
-                'campaign_run_id' => $campaignRunId,
                 'signup_source' => 'the-fox-den',
                 'quantity' => null,
                 'why_participated' => null,
@@ -47,7 +44,6 @@ class SignupApiTest extends TestCase
         $this->assertDatabaseHas('signups', [
             'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
-            'campaign_run_id' => $campaignRunId,
             'details' => 'affiliate-messaging',
         ]);
     }

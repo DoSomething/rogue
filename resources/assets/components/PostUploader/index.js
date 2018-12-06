@@ -53,7 +53,6 @@ class PostUploader extends React.Component {
       media: this.state.media,
       text: this.caption.value,
       campaignId: this.props.campaignId,
-      campaignRunId: this.props.campaignRunId,
       northstarId: this.props.northstarId,
       status: 'accepted',
     };
@@ -174,7 +173,6 @@ class PostUploader extends React.Component {
 
 PostUploader.propTypes = {
   campaignId: PropTypes.string.isRequired,
-  campaignRunId: PropTypes.number,
   northstarId: PropTypes.string.isRequired,
   signup: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   source: PropTypes.string.isRequired,

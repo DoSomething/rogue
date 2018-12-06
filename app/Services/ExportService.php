@@ -33,7 +33,7 @@ class ExportService
      *
      * @return string CSV data
      */
-    public function exportSignups($campaignId, $campaignRunId)
+    public function exportSignups($campaignId)
     {
         // return $campaignId;
         $writer = Writer::createFromFileObject(new SplTempFileObject());
@@ -45,7 +45,6 @@ class ExportService
 
         $signups = Signup::whereNull('details')->where([
             ['campaign_id', '=', $campaignId],
-            ['campaign_run_id', '=', $campaignRunId],
             ['source', '=', 'phoenix-next'],
         ])->cursor();
 
@@ -54,7 +53,6 @@ class ExportService
 
             $nextRow = [
                 'campaign_id' => $signup->campaign_id,
-                'campaign_run_id' => $signup->campaign_run_id,
                 'northstar_id' => $signup->northstar_id,
                 'first_name' => $northstarUser->first_name ?? 'N/A',
                 'last_name' => $northstarUser->last_name ?? 'N/A',

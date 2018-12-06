@@ -13,7 +13,6 @@ class UploaderModal extends React.Component {
 
     const photoUploaderProps = {
       campaignId: signup.campaign_id,
-      campaignRunId: signup.campaign_run_id,
       northstarId: signup.northstar_id,
       noun: {
         plural: 'items',
@@ -46,7 +45,6 @@ class UploaderModal extends React.Component {
 UploaderModal.propTypes = {
   signup: PropTypes.shape({
     campaign_id: PropTypes.string,
-    campaign_run_id: PropTypes.number,
     northstar_id: PropTypes.string,
   }).isRequired,
   campaign: PropTypes.shape({

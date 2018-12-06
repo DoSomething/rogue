@@ -58,14 +58,13 @@ class SignupsController extends ApiController
     {
         $this->validate($request, [
             'campaign_id' => 'required|integer',
-            'campaign_run_id' => 'int',
             'why_participated' => 'string',
         ]);
 
         $northstarId = getNorthstarId($request);
 
         // Check to see if the signup exists before creating one.
-        $signup = $this->signups->get($northstarId, $request['campaign_id'], $request['campaign_run_id']);
+        $signup = $this->signups->get($northstarId, $request['campaign_id']);
 
         $code = $signup ? 200 : 201;
 

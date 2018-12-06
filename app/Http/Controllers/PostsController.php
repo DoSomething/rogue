@@ -103,7 +103,7 @@ class PostsController extends ApiController
     {
         $northstarId = getNorthstarId($request);
 
-        $signup = $this->signups->get($northstarId, $request['campaign_id'], $request['campaign_run_id']);
+        $signup = $this->signups->get($northstarId, $request['campaign_id']);
 
         if (! $signup) {
             $signup = $this->signups->create($request->all(), $northstarId);

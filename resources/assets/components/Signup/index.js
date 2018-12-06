@@ -359,7 +359,6 @@ class Signup extends React.Component {
     const fields = {
       northstar_id: post.northstarId,
       campaign_id: post.campaignId,
-      campaign_run_id: post.campaignRunId,
       quantity: post.quantity,
       why_participated: post.whyParticipated,
       text: post.text,

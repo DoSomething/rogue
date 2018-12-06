@@ -18,7 +18,7 @@ trait PostRequests
      */
     public function store(PostRequest $request)
     {
-        $signup = $this->signups->get($request['northstar_id'], $request['campaign_id'], $request['campaign_run_id']);
+        $signup = $this->signups->get($request['northstar_id'], $request['campaign_id']);
 
         $updating = ! is_null($signup);
 

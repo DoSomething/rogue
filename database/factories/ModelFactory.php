@@ -63,7 +63,6 @@ $factory->define(Signup::class, function (Generator $faker) {
         'campaign_id' => function () {
             return factory(Campaign::class)->create()->id;
         },
-        'campaign_run_id' => $faker->randomNumber(4),
         'why_participated' => $faker->sentence(),
         'source' => 'phpunit',
         'details' => $faker->randomElement([null, 'fun-affiliate-stuff', 'i-say-the-tails']),

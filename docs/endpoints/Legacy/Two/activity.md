@@ -9,7 +9,7 @@ GET /api/v2/activity
 ### Optional Query Parameters
 
 - **filter[column]** _(integer)_
-  - Filter results by the given column: `id`, `campaign_id`, `campaign_run_id`, `northstar_id`
+  - Filter results by the given column: `id`, `campaign_id`, `northstar_id`
   - You can filter by more than one column, e.g. `/activity?filter[id]=4&filter[campaign_id]=5`
   - You can filter by more than one value for a column, e.g. `/activity?filter[id]=121,122`
 - **limit** _(default is 20)_

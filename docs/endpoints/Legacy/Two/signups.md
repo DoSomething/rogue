@@ -9,9 +9,7 @@ POST /api/v2/signups
 - **northstar_id**: (string) required.
   The northstar id of the user signing up.
 - **campaign_id**: (int|string) required.
-  The drupal node id of the campaign the user is signing up for.
-- **campaign_run_id**: (int) optional.
-  The drupal campaign run node id of the campaign run the user is signing up for.
+  The ID of the campaign the user is signing up for.
 - **quantity**: (int) optional.
   The approved number of reportback nouns verbed.
 - **quantity_pending**: (int) optional.

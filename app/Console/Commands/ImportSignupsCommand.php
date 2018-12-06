@@ -63,7 +63,6 @@ class ImportSignupsCommand extends Command
             $existing_signup = Signup::where([
                 ['northstar_id', $missing_signup['northstar_id']],
                 ['campaign_id', $missing_signup['campaign_node_id']],
-                ['campaign_run_id', $missing_signup['campaign_run_id']],
             ])->first();
 
             // Create a signup if there isn't one already
@@ -71,7 +70,6 @@ class ImportSignupsCommand extends Command
                 $signup = Signup::create([
                     'northstar_id' => $missing_signup['northstar_id'],
                     'campaign_id' => $missing_signup['campaign_node_id'],
-                    'campaign_run_id' => $missing_signup['campaign_run_id'],
                     'source' => 'phoenix-next',
                     'created_at' => $missing_signup['signup_created_at_timestamp'] ? $missing_signup['signup_created_at_timestamp'] : Carbon::now(),
                 ]);
