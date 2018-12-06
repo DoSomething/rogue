@@ -20,18 +20,27 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
+    $faker->addProvider(new FakerNorthstarId($faker));
+
     $uploadPath = $faker->file(storage_path('fixtures'));
     $upload = new UploadedFile($uploadPath, basename($uploadPath), 'image/jpeg');
     $url = app(AWS::class)->storeImage($upload, $faker->unique()->randomNumber(5));
 
     return [
-        'signup_id' => function () {
-            return factory(Signup::class)->create()->id;
+        'campaign_id' => function () {
+            return factory(Campaign::class)->create()->id;
+        },
+        'signup_id' => function (array $attributes) {
+            // If a 'signup_id' is not provided, create one for the same Campaign & Northstar ID.
+            return factory(Signup::class)->create([
+                'campaign_id' => $attributes['campaign_id'],
+                'northstar_id' => $attributes['northstar_id']
+            ])->id;
         },
         'northstar_id' => $this->faker->northstar_id,
         'url' => $url,
         'text' => $faker->sentence(),
-        'source' => $faker->randomElement(['phoenix-oauth', 'phoenix-next']),
+        'source' => 'phpunit',
         'status' => 'pending',
         'quantity' => $faker->randomNumber(2),
     ];
@@ -48,24 +57,16 @@ $factory->defineAs(Post::class, 'rejected', function () use ($factory) {
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
     $faker->addProvider(new FakerNorthstarId($faker));
-    $faker->addProvider(new FakerCampaignId($faker));
 
     return [
         'northstar_id' => $faker->northstar_id,
-        'campaign_id' => $faker->campaign_id,
+        'campaign_id' => function () {
+            return factory(Campaign::class)->create()->id;
+        },
         'campaign_run_id' => $faker->randomNumber(4),
         'why_participated' => $faker->sentence(),
-        'source' => 'phoenix-web',
+        'source' => 'phpunit',
         'details' => $faker->randomElement([null, 'fun-affiliate-stuff', 'i-say-the-tails']),
-    ];
-});
-
-$factory->state(Signup::class, 'contentful', function (Generator $faker) {
-    $faker->addProvider(new FakerContentfulCampaignId($faker));
-
-    return [
-        'campaign_id' => $faker->contentful_id,
-        'campaign_run_id' => null,
     ];
 });
 
@@ -99,30 +100,23 @@ $factory->defineAs(User::class, 'admin', function () use ($factory) {
 
 // Campaign Factory
 $factory->define(Campaign::class, function (Generator $faker) {
-    $start_date = $this->faker->date($format = 'm/d/Y');
-    $causes = [
-        'Animals',
-        'Bullying',
-        'Disasters',
-        'Discrimination',
-        'Education',
-        'Environment',
-        'Homelessness',
-        'Mental Health',
-        'Physical Health',
-        'Poverty',
-        'Relationships',
-        'Sex',
-        'Violence',
-    ];
-
     return [
-        'id' => $faker->numberBetween($min = 9000, $max = 20000),
-        'internal_title' => $faker->sentence(),
-        'cause' => $causes[array_rand($causes)],
+        'internal_title' => title_case($faker->unique()->catchPhrase),
+        'cause' => $faker->randomElement([
+            'Animals', 'Bullying', 'Disasters', 'Discrimination', 'Education',
+            'Environment', 'Homelessness', 'Mental Health', 'Physical Health',
+            'Poverty', 'Relationships', 'Sex', 'Violence',
+        ]),
         'impact_doc' => 'https://www.google.com/',
-        'start_date' => $start_date,
-        // Make sure the end date is after the start date
-        'end_date' => date('m/d/Y', strtotime("+3 months", strtotime($start_date))),
+        // By default, we create an "open campaign".
+        'start_date' => $faker->dateTimeBetween('-6 months', 'now'),
+        'end_date' => $faker->dateTimeBetween('+1 months', '+6 months'),
     ];
+});
+
+$factory->defineAs(Campaign::class, 'closed', function () use ($factory) {
+    return array_merge($factory->raw(Campaign::class), [
+        'start_date' => $faker->dateTimeBetween('-12 months', '-6 months'),
+        'end_date' => $faker->dateTimeBetween('-3 months', 'now'),
+    ]);
 });

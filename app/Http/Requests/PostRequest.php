@@ -26,7 +26,7 @@ class PostRequest extends Request
         }
 
         return [
-            'campaign_id' => 'required',
+            'campaign_id' => 'required|integer',
             'campaign_run_id' => 'integer',
             'northstar_id' => 'nullable|objectid',
             'type' => 'required|string|in:photo,voter-reg,text,share-social',

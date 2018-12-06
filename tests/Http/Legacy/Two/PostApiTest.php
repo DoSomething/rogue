@@ -287,61 +287,6 @@ class PostApiTest extends TestCase
     }
 
     /**
-     * Test that we can make POST requess to /posts creates a new photo post
-     * when the campaign id and there is no campaign run id.
-     * (Mimics requests from phoenix-next)
-     *
-     * @return void
-     */
-    public function testCreatingAPostFromContentful()
-    {
-        $signup = factory(Signup::class)->states('contentful')->create();
-        $quantity = 10;
-        $caption = $this->faker->sentence;
-
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
-
-        // Create the post!
-        $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'quantity'         => $quantity,
-            'why_participated' => $this->faker->paragraph,
-            'num_participants' => null,
-            'caption'          => $caption,
-            'source'           => 'phpunit',
-            'file'             => UploadedFile::fake()->image('photo.jpg'),
-            'crop_x'           => 0,
-            'crop_y'           => 0,
-            'crop_width'       => 100,
-            'crop_height'      => 100,
-            'crop_rotate'      => 90,
-        ]);
-
-        $response->assertStatus(200);
-        $response->assertJson([
-            'data' => [
-                'northstar_id' => $signup->northstar_id,
-                'status' => 'pending',
-                // If we are supporting quantity on the post, this value will be the submitted quantity,
-                // otherwise, we don't put anything on the post and it will be null.
-                'quantity' => config('features.v3QuantitySupport') ? $quantity : null,
-                'media' => [
-                    'caption' => $caption,
-                ],
-            ],
-        ]);
-
-        $this->assertDatabaseHas('posts', [
-            'signup_id' => $signup->id,
-            'northstar_id' => $signup->northstar_id,
-            'campaign_id' => $signup->campaign_id,
-            'status' => 'pending',
-        ]);
-    }
-
-    /**
      * Turn on quantity splitting and make sure we are handling quantity correctly.
      *
      * GET /signups

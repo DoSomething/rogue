@@ -847,23 +847,18 @@ class PostTest extends TestCase
         $ownerId = $this->faker->northstar_id;
 
         // Create posts and associate to this $ownerId.
-        $posts = factory(Post::class, 'accepted', 2)->create();
-
-        foreach ($posts as $post) {
-            $post->northstar_id = $ownerId;
-            $post->save();
-        }
+        $posts = factory(Post::class, 'accepted', 2)->create(['northstar_id' => $ownerId]);
 
         // Create a hidden post from the same $ownerId.
-        $hiddenPost = factory(Post::class, 'accepted')->create();
+        $hiddenPost = factory(Post::class, 'accepted')->create(['northstar_id' => $ownerId]);
         $hiddenPost->tag('Hide In Gallery');
-        $hiddenPost->northstar_id = $ownerId;
         $hiddenPost->save();
 
         // Create anothter hidden post by different user.
-        $secondHiddenPost = factory(Post::class, 'accepted')->create();
+        $secondHiddenPost = factory(Post::class, 'accepted')->create([
+            'northstar_id' => $this->faker->unique()->northstar_id
+        ]);
         $secondHiddenPost->tag('Hide In Gallery');
-        $secondHiddenPost->northstar_id = $this->faker->unique()->northstar_id;
         $secondHiddenPost->save();
 
         $response = $this->withAccessToken($ownerId)->getJson('api/v3/posts');

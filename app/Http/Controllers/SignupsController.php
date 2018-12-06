@@ -57,7 +57,7 @@ class SignupsController extends ApiController
     public function store(Request $request)
     {
         $this->validate($request, [
-            'campaign_id' => 'required',
+            'campaign_id' => 'required|integer',
             'campaign_run_id' => 'int',
             'why_participated' => 'string',
         ]);

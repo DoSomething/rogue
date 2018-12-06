@@ -51,47 +51,4 @@ class SignupApiTest extends TestCase
             'details' => 'affiliate-messaging',
         ]);
     }
-
-    /**
-     * Test creating signups from a Contentful campaign
-     *
-     * @group creatingAPhoto
-     * @return void
-     */
-    public function testCreatingAContentfulSignup()
-    {
-        $northstarId = '54fa272b469c64d7068b456a';
-        $campaignId = '6LQzMvDNQcYQYwso8qSkQ8';
-
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignup');
-
-        $response = $this->withRogueApiKey()->postJson('api/v2/signups', [
-            'northstar_id'     => $northstarId,
-            'campaign_id'      => $campaignId,
-            'source'           => 'phoenix-next',
-            'details'          => 'affiliate-messaging-optout',
-        ]);
-
-        // Make sure we get the 201 Created response
-        $response->assertStatus(201);
-        $response->assertJson([
-            'data' => [
-                'northstar_id' => $northstarId,
-                'campaign_id' => $campaignId,
-                'campaign_run_id' => null,
-                'signup_source' => 'phoenix-next',
-                'quantity' => null,
-                'why_participated' => null,
-            ],
-        ]);
-
-        // Make sure the signup is persisted.
-        $this->assertDatabaseHas('signups', [
-            'northstar_id' => $northstarId,
-            'campaign_id' => $campaignId,
-            'campaign_run_id' => null,
-            'details' => 'affiliate-messaging-optout',
-        ]);
-    }
 }

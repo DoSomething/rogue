@@ -31,7 +31,6 @@ trait WithMocks
         // Get a new Faker generator from Laravel.
         $this->faker = app(\Faker\Generator::class);
         $this->faker->addProvider(new \FakerNorthstarId($this->faker));
-        $this->faker->addProvider(new \FakerCampaignId($this->faker));
 
         // Northstar Mock
         $this->northstarMock = $this->mock(Northstar::class);
