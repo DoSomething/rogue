@@ -23,10 +23,10 @@
     "dfurnes/environmentalist": "0.0.2",
     "ext-gd": "*",
     "ext-exif": "*",
-    "barryvdh/laravel-cors": "^0.11.0"
+    "barryvdh/laravel-cors": "^0.11.0",
+    "fzaninotto/faker": "^1.6"
   },
   "require-dev": {
-    "fzaninotto/faker": "^1.6",
     "filp/whoops": "~2.0",
     "mockery/mockery": "^0.9.5",
     "phpunit/phpunit": "~6.0",
