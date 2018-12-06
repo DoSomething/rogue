@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // Create 10 campaigns with signups & posts.
         factory(Campaign::class, 10)->create()->each(function (Campaign $campaign) {
-            // Create 10-30 signups with one accepted post & some pending posts.
+            // Create 10-20 signups with one accepted post & some pending posts.
             factory(Signup::class, rand(10, 20))->create(['campaign_id' => $campaign->id])
                 ->each(function (Signup $signup) {
                     $signup->posts()->save(factory(Post::class, 'accepted')->create([
