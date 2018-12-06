@@ -20,7 +20,6 @@ class PostApiTest extends TestCase
     {
         $northstar_id = $this->faker->uuid;
         $campaign_id = $this->faker->randomNumber(4);
-        $campaign_run_id = $this->faker->randomNumber(4);
         $quantity = 10;
         $caption = $this->faker->sentence;
 
@@ -33,7 +32,6 @@ class PostApiTest extends TestCase
         $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $northstar_id,
             'campaign_id'      => $campaign_id,
-            'campaign_run_id'  => $campaign_run_id,
             'quantity'         => $quantity,
             'type'             => 'photo',
             'action'           => 'default',
@@ -93,7 +91,6 @@ class PostApiTest extends TestCase
         $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
             'num_participants' => null,
@@ -147,7 +144,6 @@ class PostApiTest extends TestCase
         $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => $quantity,
             'type'             => 'photo',
             'action'           => 'default',
@@ -207,7 +203,6 @@ class PostApiTest extends TestCase
         $response = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
             'num_participants' => null,
@@ -249,7 +244,6 @@ class PostApiTest extends TestCase
         $secondResponse = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => $secondQuantity,
             'num_participants' => null,
             'caption'          => $secondCaption,
@@ -313,7 +307,6 @@ class PostApiTest extends TestCase
         $firstPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => 10,
             'caption'          => 'Fake caption',
             'source'           => 'testing',
@@ -335,7 +328,6 @@ class PostApiTest extends TestCase
         $secondPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => 20,
             'caption'          => 'Fake caption',
             'source'           => 'testing',
@@ -362,7 +354,6 @@ class PostApiTest extends TestCase
         $thirdPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => 5,
             'caption'          => 'Fake caption',
             'source'           => 'testing',
@@ -394,7 +385,6 @@ class PostApiTest extends TestCase
         $fourthPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => 25,
             'caption'          => 'Fake caption',
             'source'           => 'testing',
@@ -455,7 +445,6 @@ class PostApiTest extends TestCase
         $firstPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => 10,
             'caption'          => 'Fake caption',
             'source'           => 'testing',
@@ -477,7 +466,6 @@ class PostApiTest extends TestCase
         $secondPost = $this->withRogueApiKey()->json('POST', 'api/v2/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'quantity'         => 20,
             'caption'          => 'Fake caption',
             'source'           => 'testing',

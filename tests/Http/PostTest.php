@@ -56,7 +56,6 @@ class PostTest extends TestCase
     {
         $northstarId = $this->faker->northstar_id;
         $campaignId = $this->faker->randomNumber(4);
-        $campaignRunId = $this->faker->randomNumber(4);
         $quantity = $this->faker->numberBetween(10, 1000);
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
@@ -70,7 +69,6 @@ class PostTest extends TestCase
         // Create the post!
         $response = $this->withAccessToken($northstarId)->json('POST', 'api/v3/posts', [
             'campaign_id'      => $campaignId,
-            'campaign_run_id'  => $campaignRunId,
             'type'             => 'photo',
             'action'           => 'test-action',
             'quantity'         => $quantity,
@@ -121,7 +119,6 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'photo',
             'action'           => 'test-action',
             'quantity'         => $quantity,
@@ -173,7 +170,6 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'text',
             'action'           => 'test-action',
             'quantity'         => $quantity,
@@ -221,7 +217,6 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'voter-reg',
             'action'           => 'test-action',
             'quantity'         => null,
@@ -262,7 +257,6 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'share-social',
             'action'           => 'test-action',
             'quantity'         => $quantity,
@@ -304,7 +298,6 @@ class PostTest extends TestCase
         $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'share-social',
             'action'           => 'test-action',
             'quantity'         => $quantity,
@@ -346,7 +339,6 @@ class PostTest extends TestCase
         $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'share-social',
             'action'           => 'test-action',
             'quantity'         => $quantity,
@@ -389,7 +381,6 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'social-share',
             'action'           => 'test-action',
             'quantity'         => $quantity,
@@ -419,7 +410,6 @@ class PostTest extends TestCase
         $response = $this->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'photo',
             'action'           => 'test-action',
             'quantity'         => $quantity,
@@ -451,7 +441,6 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'photo',
             'action'           => 'test-action',
             'quantity'         => $quantity,
@@ -483,7 +472,6 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'photo',
             'action'           => 'test-action',
             'quantity'         => $secondQuantity,
@@ -528,7 +516,6 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id, 'user')->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'photo',
             'action'           => 'test-action',
             'quantity'         => null,
@@ -569,7 +556,6 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'photo',
             'action'           => 'test-action',
             'text'             => $text,
@@ -609,7 +595,6 @@ class PostTest extends TestCase
         $response = $this->postJson('api/v3/posts', [
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
-            'campaign_run_id'  => $signup->campaign_run_id,
             'type'             => 'photo',
             'action'           => 'test-action',
             'quantity'         => $quantity,
@@ -776,26 +761,20 @@ class PostTest extends TestCase
      */
     public function testPostsIndexAsOwner()
     {
-        // Owners should only see accepted posts and their own pending/rejected posts.
-        $posts = factory(Post::class, 2)->create();
-        $rejectedPosts = factory(Post::class, 'rejected', 3)->create();
+        $userId = $this->faker->unique()->northstar_id;
+        factory(Post::class, 2)->create(['northstar_id' => $userId]);
+        factory(Post::class, 'rejected', 1)->create(['northstar_id' => $userId]);
 
-        $northstarId = $this->faker->northstar_id;
+        $otherId = $this->faker->unique()->northstar_id;
+        factory(Post::class, 'rejected', 4)->create(['northstar_id' => $otherId]);
 
-        foreach ($posts as $post) {
-            $post->northstar_id = $northstarId;
-            $post->save();
-        }
 
-        foreach ($rejectedPosts as $rejectedPost) {
-            $rejectedPost->northstar_id = $this->faker->unique()->northstar_id;
-            $rejectedPost->save();
-        }
+        // Owners should only see their own pending/accepted posts, and not
+        // any others user's pending or rejected posts:
+        $response = $this->withAccessToken($userId)->getJson('api/v3/posts');
 
-        $response = $this->withAccessToken($northstarId)->getJson('api/v3/posts');
-        $response->assertStatus(200);
-        $response->assertJsonCount(2, 'data');
-
+        $response->assertSuccessful();
+        $response->assertJsonCount(3, 'data');
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
@@ -1205,7 +1184,6 @@ class PostTest extends TestCase
         $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
-            'campaign_run_id' => $signup->campaign_run_id,
             'type' => 'voter-reg',
             'action' => 'test-action',
             'status' => 'register-form',

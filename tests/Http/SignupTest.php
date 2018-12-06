@@ -20,14 +20,12 @@ class SignupTest extends TestCase
     {
         $northstarId = $this->faker->northstar_id;
         $campaignId = $this->faker->randomNumber(4);
-        $campaignRunId = $this->faker->randomNumber(4);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
         $response = $this->withAccessToken($northstarId)->postJson('api/v3/signups', [
             'campaign_id' => $campaignId,
-            'campaign_run_id' => $campaignRunId,
             'details' => 'affiliate-messaging',
         ]);
 
@@ -37,7 +35,6 @@ class SignupTest extends TestCase
             'data' => [
                 'northstar_id' => $northstarId,
                 'campaign_id' => $campaignId,
-                'campaign_run_id' => $campaignRunId,
                 'quantity' => null,
                 'source' => 'phpunit',
                 'why_participated' => null,
@@ -48,7 +45,6 @@ class SignupTest extends TestCase
         $this->assertDatabaseHas('signups', [
             'northstar_id' => $northstarId,
             'campaign_id' => $campaignId,
-            'campaign_run_id' => $campaignRunId,
             'quantity' => null,
             'details' => 'affiliate-messaging',
         ]);
@@ -64,14 +60,12 @@ class SignupTest extends TestCase
     {
         $northstarId = $this->faker->northstar_id;
         $campaignId = str_random(22);
-        $campaignRunId = $this->faker->randomNumber(4);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
         $response = $this->postJson('api/v3/signups', [
             'campaign_id' => $campaignId,
-            'campaign_run_id' => $campaignRunId,
             'details' => 'affiliate-messaging',
         ]);
 
@@ -96,7 +90,6 @@ class SignupTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/signups', [
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
-            'campaign_run_id' => $signup->campaign_run_id,
             'source' => 'the-fox-den',
             'details' => 'affiliate-messaging',
         ]);
@@ -106,7 +99,6 @@ class SignupTest extends TestCase
         $response->assertJson([
             'data' => [
                 'campaign_id' => $signup->campaign_id,
-                'campaign_run_id' => $signup->campaign_run_id,
                 'quantity' => $signup->getQuantity(),
             ],
         ]);
@@ -122,7 +114,6 @@ class SignupTest extends TestCase
         $response = $this->postJson('api/v3/signups', [
             'northstar_id'     => $this->faker->northstar_id,
             'campaign_id'      => $this->faker->randomNumber(4),
-            'campaign_run_id'  => $this->faker->randomNumber(4),
             'source'           => 'the-fox-den',
             'details'          => 'affiliate-messaging',
         ]);
@@ -150,7 +141,6 @@ class SignupTest extends TestCase
                     'id',
                     'northstar_id',
                     'campaign_id',
-                    'campaign_run_id',
                     'quantity',
                     'created_at',
                     'updated_at',
@@ -187,7 +177,6 @@ class SignupTest extends TestCase
                     'id',
                     'northstar_id',
                     'campaign_id',
-                    'campaign_run_id',
                     'quantity',
                     'created_at',
                     'updated_at',
@@ -229,7 +218,6 @@ class SignupTest extends TestCase
                     'id',
                     'northstar_id',
                     'campaign_id',
-                    'campaign_run_id',
                     'quantity',
                     'created_at',
                     'updated_at',
@@ -627,11 +615,10 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test for retrieving all signups as admin with northstar_id, campaign_id, and campaign_run_id filters (and a combinations of all).
+     * Test for retrieving all signups as admin with northstar_id & campaign_id filters (and a combinations of all).
      *
      * GET /api/v3/signups?filter[northstar_id]=56d5baa7a59dbf106b8b45aa
      * GET /api/v3/signups?filter[campaign_id]=1
-     * GET /api/v3/signups?filter[campaign_run_id]=32
      * GET /api/v3/signups?filter[campaign_id]=1&filter[northstar_id]=56d5baa7a59dbf106b8b45aa
      * GET /api/v3/signups?filter[campaign_id]=1,2
      *
@@ -641,24 +628,20 @@ class SignupTest extends TestCase
     {
         $northstarId = $this->faker->northstar_id;
         $campaignId = str_random(22);
-        $campaignRunId = $this->faker->randomNumber(4);
 
         // Create two signups
         factory(Signup::class, 2)->create([
            'northstar_id' => $northstarId,
            'campaign_id' => $campaignId,
-           'campaign_run_id' => $campaignRunId,
         ]);
 
-        // Create three more signups with different northstar_id, campaign_id, and campaign_run_id
+        // Create three more signups with different northstar_id & campaign_id
         $secondNorthstarId = $this->faker->unique()->northstar_id;
         $secondCampaignId = str_random(22);
-        $secondCampaignRunId = $this->faker->randomNumber(4);
 
         factory(Signup::class, 3)->create([
            'northstar_id' => $secondNorthstarId,
            'campaign_id' => $secondCampaignId,
-           'campaign_run_id' => $secondCampaignRunId,
         ]);
 
         // Filter by northstar_id
@@ -679,8 +662,8 @@ class SignupTest extends TestCase
         // Assert only 3 signups are returned
         $this->assertEquals(3, $decodedResponse['meta']['cursor']['count']);
 
-        // Filter by campaign_run_id
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId);
+        // Filter by campaign_id and northstar_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_id]=' . $campaignId . '&filter[northstar_id]=' . $northstarId);
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
@@ -688,17 +671,8 @@ class SignupTest extends TestCase
         // Assert only 2 signups are returned
         $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
 
-        // Filter by campaign_run_id and northstar_id
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId . '&filter[northstar_id]=' . $northstarId);
-        $decodedResponse = $response->decodeResponseJson();
-
-        $response->assertStatus(200);
-
-        // Assert only 2 signups are returned
-        $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
-
-        // Filter by multiple campaign_run_id
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_run_id]=' . $campaignRunId . ',' . $secondCampaignRunId);
+        // Filter by multiple campaign_id
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_id]=' . $campaignId . ',' . $secondCampaignId);
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
@@ -764,7 +738,6 @@ class SignupTest extends TestCase
                 'id',
                 'northstar_id',
                 'campaign_id',
-                'campaign_run_id',
                 'quantity',
                 'created_at',
                 'updated_at',
@@ -789,7 +762,6 @@ class SignupTest extends TestCase
                 'id',
                 'northstar_id',
                 'campaign_id',
-                'campaign_run_id',
                 'quantity',
                 'created_at',
                 'updated_at',
@@ -817,7 +789,6 @@ class SignupTest extends TestCase
                 'id',
                 'northstar_id',
                 'campaign_id',
-                'campaign_run_id',
                 'quantity',
                 'created_at',
                 'updated_at',
