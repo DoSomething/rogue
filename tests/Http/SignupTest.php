@@ -96,6 +96,7 @@ class SignupTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/signups', [
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
+            'campaign_run_id' => $signup->campaign_run_id,
             'source' => 'the-fox-den',
             'details' => 'affiliate-messaging',
         ]);
