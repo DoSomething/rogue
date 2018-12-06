@@ -58,11 +58,12 @@ class SignupManager
      *
      * @param  string $northstarId
      * @param  int $campaignId
+     * @param  int $campaignRunId
      * @return \Rogue\Models\Signup|null
      */
-    public function get($northstarId, $campaignId)
+    public function get($northstarId, $campaignId, $campaignRunId)
     {
-        $signup = $this->signup->get($northstarId, $campaignId);
+        $signup = $this->signup->get($northstarId, $campaignId, $campaignRunId);
 
         return $signup;
     }
