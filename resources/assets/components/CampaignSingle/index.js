@@ -12,7 +12,6 @@ import StatusCounter from '../StatusCounter';
 import DropdownFilter from '../DropdownFilter';
 import ModalContainer from '../ModalContainer';
 import MultiValueFilter from '../MultiValueFilter';
-import UserExport from '../UserExport';
 
 class CampaignSingle extends React.Component {
   constructor(props) {
@@ -177,9 +176,6 @@ class CampaignSingle extends React.Component {
                 postTotals={this.props.post_totals}
                 campaign={campaign}
               />
-            </div>
-            <div className="container__block -half">
-              <UserExport campaign={campaign} />
             </div>
           </div>
         </div>

@@ -24,9 +24,6 @@ $router->get('campaigns/{id}', 'Legacy\Web\AshesCampaignsController@showCampaign
 // @TODO: rename these routes (to just /campaigns) when we get off Ashes.
 $router->resource('campaign-ids', 'Legacy\Web\CampaignsController');
 
-// Exports
-$router->get('exports/{id}', 'Web\ExportController@show');
-
 // Posts
 $router->post('posts', 'Legacy\Web\PostController@store');
 $router->get('posts', 'Legacy\Web\PostController@index');
@@ -51,7 +48,3 @@ $router->get('search', ['as' => 'users.search', 'uses' => 'Legacy\Web\UsersContr
 
 // FAQ
 $router->get('faq', 'Legacy\Web\PagesController@faq');
-
-// Imports
-$router->get('import', 'Legacy\Web\ImportController@show')->name('import.show');
-$router->post('import', 'Legacy\Web\ImportController@store')->name('import.store');
