@@ -167,8 +167,6 @@ POST /api/v3/posts
 
 - **campaign_id**: (int) required.
   The Campaign ID of the campaign that the user's post is associated with.
-- **campaign_run_id**: (int)
-  The drupal campaign run node id of the campaign that the user's post is associated with.
 - **type**: (string) required.
   The type of post submitted. Must be one of the following types: `photo`, `voter-reg`, `text`, `share-social`. `share-social` posts will be auto-accepted unless an admin sets a custom `status`.
 - **action**: (string) required.

@@ -10,8 +10,6 @@ POST /api/v3/signups
 
 - **campaign_id**: (int|string) required.
   The drupal node id of the campaign the user is signing up for.
-- **campaign_run_id**: (int) optional.
-  The drupal campaign run node id of the campaign run the user is signing up for.
 - **northstar_id**: (int) optional.
   The `northstar_id` of the user who the signup belongs to. This `northstar_id` will be used when acting `asClient`. Otherwise, if the request comes in acting `asUser`, it will ignore this and attribute the signup to the `northstar_id` from OAuth.
 - **why_participated**: (string) optional.
@@ -65,7 +63,7 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
   - You can also use include parameters to only return posts by type.
   - e.g. To only return text and photo posts: `api/v3/signups?include=posts:type(text|photo)`
 - **filter[column]** _(string)_
-  - Filter results by the given column: `northstar_id`, `campaign_id`, `campaign_run_id`, `source`
+  - Filter results by the given column: `northstar_id`, `campaign_id`, `source`
   - You can filter by more than one column, e.g. `/signups?filter[id]=4&filter[campaign_id]=5`
   - You can filter by more than one value for a column, e.g. `/signups?filter[campaign_id]=121,122`
 - **orderBy** _(string)_

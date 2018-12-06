@@ -107,9 +107,7 @@ POST /api/v2/posts
 - **northstar_id**: (string) required.
   The northstar id of the user creating the post.
 - **campaign_id**: (int|string) required.
-  The drupal node id of the campaign that the user's post is associated with.
-- **campaign_run_id**: (int) optional.
-  The drupal campaign run node id of the campaign that the user's post is associated with.
+  The ID of the campaign that the user's post is associated with.
 - **quantity**: (int).
   The number of reportback nouns verbed.
 - **why_participated**: (string).
@@ -141,7 +139,7 @@ POST /api/v2/posts
 - **updated_at**: (string) optional.
   `Y-m-d H:i:s` format. When the post was last updated.
 - **type**: (string).
-  The type of post submitted. Must be one of the following types: photo, voter-reg, text, share-social. 
+  The type of post submitted. Must be one of the following types: photo, voter-reg, text, share-social.
 - **action**: (string).
   Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
 

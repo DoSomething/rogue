@@ -29,9 +29,6 @@ class SignupCard extends React.Component {
                 {campaign ? campaign.internal_title : signup.campaign_id}
               </h2>
               <h4 className="heading">Campaign ID: {signup.campaign_id}</h4>
-              <h4 className="heading">
-                Campaign Run ID: {signup.campaign_run_id}
-              </h4>
               {campaign ? (
                 <h4 className="heading">
                   Campaign Run Start Date: {campaign.start_date}
@@ -80,7 +77,6 @@ SignupCard.propTypes = {
     why_participated: PropTypes.string,
     signup_id: PropTypes.number,
     campaign_id: PropTypes.string,
-    campaign_run_id: PropTypes.number,
     quantity: PropTypes.number,
   }).isRequired,
   campaign: PropTypes.shape({

@@ -45,7 +45,6 @@ class UploaderModal extends React.Component {
 UploaderModal.propTypes = {
   signup: PropTypes.shape({
     campaign_id: PropTypes.string,
-    campaign_run_id: PropTypes.number,
     northstar_id: PropTypes.string,
   }).isRequired,
   campaign: PropTypes.shape({
