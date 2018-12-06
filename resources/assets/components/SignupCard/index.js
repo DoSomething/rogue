@@ -31,7 +31,7 @@ class SignupCard extends React.Component {
               <h4 className="heading">Campaign ID: {signup.campaign_id}</h4>
               {campaign ? (
                 <h4 className="heading">
-                  Campaign Run Start Date: {campaign.start_date}
+                  Campaign Start Date: {campaign.start_date}
                 </h4>
               ) : null}
             </div>
