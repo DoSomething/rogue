@@ -13,7 +13,6 @@ class UploaderModal extends React.Component {
 
     const photoUploaderProps = {
       campaignId: signup.campaign_id,
-      campaignRunId: signup.campaign_run_id,
       northstarId: signup.northstar_id,
       noun: {
         plural: 'items',

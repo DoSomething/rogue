@@ -7,26 +7,6 @@ import { RestApiClient } from '@dosomething/gateway';
 import { extractPostsFromSignups } from '../../helpers';
 
 class SignupCard extends React.Component {
-  /**
-   * Gets the campaign run start date.
-   *
-   * @param {Object} campaignRuns
-   * @param {String} campaignRunId
-   * @return {String}
-   */
-  getCampaignRunStartDate(campaignRuns, campaignRunId) {
-    for (const key in campaignRuns) {
-      if (campaignRuns[key].id == campaignRunId) {
-        const date = campaignRuns[key].start_date;
-
-        if (date) {
-          return campaignRuns[key].start_date.split(' ')[0];
-        }
-      }
-      return null;
-    }
-  }
-
   render() {
     const signup = this.props.signup;
     const campaign = this.props.campaign;
@@ -46,7 +26,7 @@ class SignupCard extends React.Component {
           <div className="container__block -half">
             <div className="container__row">
               <h2 className="heading">
-                {campaign ? campaign.title : signup.campaign_id}
+                {campaign ? campaign.internal_title : signup.campaign_id}
               </h2>
               <h4 className="heading">Campaign ID: {signup.campaign_id}</h4>
               <h4 className="heading">
@@ -54,11 +34,7 @@ class SignupCard extends React.Component {
               </h4>
               {campaign ? (
                 <h4 className="heading">
-                  Campaign Run Start Date:{' '}
-                  {this.getCampaignRunStartDate(
-                    campaign.campaign_runs.current,
-                    signup.campaign_run_id,
-                  )}
+                  Campaign Run Start Date: {campaign.start_date}
                 </h4>
               ) : null}
             </div>
@@ -74,13 +50,7 @@ class SignupCard extends React.Component {
                   <div className="quantity">{signup.quantity}</div>
                 </div>
                 <div className="figure__body">
-                  <h4 className="reportback-noun-verb">
-                    {campaign
-                      ? `${campaign.reportback_info.noun} ${
-                          campaign.reportback_info.verb
-                        }`
-                      : ''}
-                  </h4>
+                  <h4 className="reportback-noun-verb">things done</h4>
                 </div>
               </div>
             ) : null}
@@ -114,9 +84,8 @@ SignupCard.propTypes = {
     quantity: PropTypes.number,
   }).isRequired,
   campaign: PropTypes.shape({
-    title: PropTypes.string,
-    campaign_runs: PropTypes.object,
-    reportback_info: PropTypes.object,
+    internal_title: PropTypes.string,
+    start_date: PropTypes.string,
   }),
 };
 

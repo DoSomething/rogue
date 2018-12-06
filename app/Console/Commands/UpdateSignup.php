@@ -13,7 +13,7 @@ class UpdateSignup extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:updatesignups {--target= : The name of the field to update} {--targetValue= : The value to update the target with} {--campaign= : The campaign_id to search for signups under} {--campaign_run= : The campaign_run_id to search for signups under} {--date= : Will be used to search for signups greater than the provided value}';
+    protected $signature = 'rogue:updatesignups {--target= : The name of the field to update} {--targetValue= : The value to update the target with} {--campaign= : The campaign_id to search for signups under} {--date= : Will be used to search for signups greater than the provided value}';
 
     /**
      * The console command description.
@@ -67,10 +67,6 @@ class UpdateSignup extends Command
 
         if ($this->option('campaign')) {
             $query = $query->where('campaign_id', $this->option('campaign'));
-        }
-
-        if ($this->option('campaign_run')) {
-            $query = $query->where('campaign_run_id', $this->option('campaign_run'));
         }
 
         // Only take in one date and we assume to be looking for things on or after that date.
