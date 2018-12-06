@@ -8,7 +8,7 @@ use Rogue\Services\CampaignService;
 class AshesCampaignsController extends ApiController
 {
     /**
-     * Phoenix instance
+     * Campaign service.
      *
      * @var Rogue\Services\CampaignService
      */
@@ -17,7 +17,6 @@ class AshesCampaignsController extends ApiController
     /**
      * Constructor
      *
-     * @param Rogue\Services\Registrar $registrar
      * @param Rogue\Services\CampaignService $campaignService
      */
     public function __construct(CampaignService $campaignService)
