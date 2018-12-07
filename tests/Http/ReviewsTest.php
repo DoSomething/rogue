@@ -99,12 +99,8 @@ class ReviewsTest extends TestCase
             'status' => 'accepted',
         ]);
 
-        // Make sure the signup and post's updated_at are both updated.
+        // Make sure the post's updated_at matches the review time.
         $this->assertEquals('2017-08-03 16:55:00', (string) $post->fresh()->updated_at);
-
-        // @TODO: Laravel doesn't touch timestamps recursively - only direct relationships.
-        // $this->assertEquals('2017-08-03 16:55:00', (string) $signup->fresh()->updated_at);
-        $this->markTestIncomplete();
     }
 
     /**
