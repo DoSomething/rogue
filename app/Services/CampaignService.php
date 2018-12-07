@@ -4,49 +4,14 @@ namespace Rogue\Services;
 
 use Rogue\Models\Campaign;
 use Illuminate\Support\Facades\DB;
-use Rogue\Repositories\CacheRepository;
 
 class CampaignService
 {
     /**
-     * Ashes instance
-     *
-     * @var \Rogue\Services\Ashes
-     */
-    protected $ashes;
-
-    /**
-     * Phoenix instance
-     *
-     * @var \Rogue\Services\Phoenix
-     */
-    protected $phoenix;
-
-    /**
-     * The cache repository.
-     *
-     * @var CacheRepository
-     */
-    protected $cache;
-
-    /**
-     * Create new Registrar instance.
-     *
-     * @param Ashes $ashes
-     */
-    public function __construct(Ashes $ashes, Phoenix $phoenix)
-    {
-        $this->ashes = $ashes;
-        $this->phoenix = $phoenix;
-        $this->cache = new CacheRepository('campaign');
-    }
-
-    /**
-     * Finds a single campaign in Rogue. If the campaign is not found
-     * in the Cache, then we grab it directly from Phoenix and store in cache.
+     * Finds a single campaign in Rogue.
      *
      * @param  string $id
-     * @return object $user Northstar user object
+     * @return Campaign
      */
     public function find($id)
     {
@@ -62,53 +27,6 @@ class CampaignService
     public function findAll($ids = [])
     {
         return $ids ? Campaign::find($ids) : Campaign::all();
-    }
-
-    /**
-     * Resolving missing cached users in a user cache collection.
-     *
-     * @param  array $campaigns
-     * @return array
-     */
-    protected function resolveMissingCampaigns($campaigns)
-    {
-        foreach ($campaigns as $key => $value) {
-            if ($value === false or $value === null) {
-                $key = $this->cache->unsetPrefix($key);
-                $campaigns[$key] = $this->find($key);
-            }
-        }
-
-        return $campaigns;
-    }
-
-    /**
-     * Get large number of campaigns from Ashes.
-     *
-     * @param  array  $ids
-     * @param  int $size
-     * @return \Illuminate\Support\Collection
-     */
-    protected function getBatchedCollection($ids, $size = 50)
-    {
-        $count = intval(ceil(count($ids) / 50));
-        $index = 0;
-        $data = [];
-
-        for ($i = 0; $i < $count; $i++) {
-            $batch = array_slice($ids, $index, $size);
-
-            $parameters['count'] = '5000';
-            $parameters['ids'] = implode(',', $batch);
-
-            $campaigns = $this->ashes->getAllCampaigns($parameters);
-
-            $data = array_merge($data, $campaigns['data']);
-
-            $index += $size;
-        }
-
-        return collect($data);
     }
 
     /**

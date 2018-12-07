@@ -68,7 +68,7 @@ class UserOverview extends React.Component {
    */
   getCampaigns(ids) {
     this.api
-      .get('api/v2/campaigns', {
+      .get('api/v3/campaigns', {
         ids: ids.join(),
       })
       .then(json =>

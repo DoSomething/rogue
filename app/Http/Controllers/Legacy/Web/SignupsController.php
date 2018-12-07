@@ -33,7 +33,6 @@ class SignupsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
-
         $this->registrar = $registrar;
         $this->campaignService = $campaignService;
     }

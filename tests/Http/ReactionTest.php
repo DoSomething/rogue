@@ -130,12 +130,8 @@ class ReactionTest extends TestCase
             'post_id' => $post->id,
         ]);
 
-        // Make sure the signup and post's updated_at matches the reaction created_at time.
+        // Make sure the post's updated_at matches the reaction created_at time.
         $this->assertEquals($reaction->created_at, $post->fresh()->updated_at);
-
-        // @TODO: Laravel doesn't touch timestamps recursively - only direct relationships.
-        // $this->assertEquals($reaction->created_at, $signup->fresh()->updated_at);
-        $this->markTestIncomplete();
     }
 
     /**

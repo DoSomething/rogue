@@ -21,6 +21,7 @@ class CampaignsController extends ApiController
     {
         $this->transformer = new CampaignTransformer;
     }
+
     /**
      * Display a listing of the resource.
      *

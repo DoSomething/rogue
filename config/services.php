@@ -39,16 +39,6 @@ return [
         ],
     ],
 
-    'ashes' => [
-        'uri' => env('ASHES_URI'),
-        'version' => env('ASHES_API_VERSION'),
-    ],
-
-    'phoenix' => [
-        'uri' => env('PHOENIX_URI'),
-        'version' => env('PHOENIX_API_VERSION'),
-    ],
-
     'blink' => [
         'url' => env('BLINK_URL'),
         'user' => env('BLINK_USERNAME'),

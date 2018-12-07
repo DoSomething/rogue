@@ -2,157 +2,66 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
-use Carbon\Carbon;
-use Rogue\Models\Campaign;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Rogue\Services\CampaignService;
 use Rogue\Http\Controllers\Controller;
 
 class CampaignsController extends Controller
 {
     /**
-     * Create a controller instance.
+     * Campaign Service instance
      *
+     * @var Rogue\Services\CampaignService
      */
-    public function __construct()
+    protected $campaignService;
+
+    /**
+     * Constructor
+     *
+     * @param Rogue\Services\CampaignService $campaignService
+     */
+    public function __construct(CampaignService $campaignService)
     {
         $this->middleware('auth');
-        $this->middleware('role:admin,staff', ['only' => ['index', 'show']]);
-        $this->middleware('role:admin', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+        $this->middleware('role:admin,staff');
+
+        $this->campaignService = $campaignService;
     }
 
     /**
-     * Show overview of campaigns and their IDs.
+     * Show overview of campaigns.
      */
     public function index()
     {
-        $campaigns = Campaign::orderBy('created_at', 'desc')->paginate(25);
+        $ids = $this->campaignService->getCampaignIdsFromSignups();
+        $campaigns = $this->campaignService->findAll($ids);
+        $campaigns = $this->campaignService->appendPendingCountsToCampaigns($campaigns);
 
-        return view('campaign-ids.index')->with('campaigns', $campaigns);
+        $causes = $campaigns ? $this->campaignService->groupByCause($campaigns) : null;
+
+        return view('pages.campaign_overview')
+            ->with('state', $causes);
     }
 
     /**
-     * Create a new campaign.
-     */
-    public function create()
-    {
-        $causes = [
-            'Animals',
-            'Bullying',
-            'Disasters',
-            'Discrimination',
-            'Education',
-            'Environment',
-            'Homelessness',
-            'Mental Health',
-            'Physical Health',
-            'Poverty',
-            'Relationships',
-            'Sex',
-            'Violence',
-        ];
-
-        return view('campaign-ids.create')->with('causes', $causes);
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Show particular campaign and it's posts.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function show($id)
     {
-        $this->validate($request, [
-            'internal_title' => 'required|string|unique:campaigns',
-            'cause' => 'required|string',
-            'impact_doc' => 'required|url',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after:start_date',
-        ]);
+        $campaign = $this->campaignService->find($id);
+        $totals = $this->campaignService->getPostTotals($campaign);
 
-        $campaign = Campaign::create($request->all());
-
-        // Log that a campaign was created.
-        info('campaign_created', ['id' => $campaign->id]);
-
-        return redirect()->route('campaign-ids.show', $campaign->id);
-    }
-
-    /**
-     * Show a specific campaign page.
-     *
-     * @param  \Rogue\Models\Campaign  $campaign
-     */
-    public function show(Campaign $campaign)
-    {
-        return view('campaign-ids.show')->with('campaign', $campaign);
-    }
-
-    /**
-     * Edit a specific campaign page.
-     *
-     * @param  \Rogue\Models\Campaign  $campaign
-     */
-    public function edit(Campaign $campaign)
-    {
-        $causes = [
-            'Animals',
-            'Bullying',
-            'Disasters',
-            'Discrimination',
-            'Education',
-            'Environment',
-            'Homelessness',
-            'Mental Health',
-            'Physical Health',
-            'Poverty',
-            'Relationships',
-            'Sex',
-            'Violence',
-        ];
-
-        return view('campaign-ids.edit', [
-            'campaign' => $campaign,
-            'causes' => $causes
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Rogue\Models\Campaign  $campaign
-     */
-    public function update(Request $request, Campaign $campaign)
-    {
-        $this->validate($request, [
-            'internal_title' => [Rule::unique('campaigns')->ignore($campaign->id)],
-            'cause' => 'string',
-            'impact_doc' => 'url',
-            'start_date' => 'date',
-            'end_date' => 'nullable|date|after:start_date',
-        ]);
-
-        $campaign->update($request->all());
-
-        // Log that a campaign was updated.
-        info('campaign_updated', ['id' => $campaign->id]);
-
-        return redirect()->route('campaign-ids.show', $campaign);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Rogue\Models\Campaign  $campaign
-     */
-    public function destroy(Campaign $campaign)
-    {
-        $campaign->delete();
-
-        // Log that a campaign was deleted.
-        info('campaign_deleted', ['id' => $campaign->id]);
-
-        // @TODO: redirect to campaign deleted page
+        return view('pages.campaign_single')
+            ->with('state', [
+                'campaign' => $campaign,
+                'initial_posts' => 'accepted',
+                'post_totals' => [
+                    'accepted_count' => $totals->accepted_count,
+                    'pending_count' => $totals->pending_count,
+                    'rejected_count' => $totals->rejected_count,
+                ],
+            ]);
     }
 }
