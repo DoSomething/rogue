@@ -19,7 +19,7 @@ $router->get('logout', 'Auth\AuthController@getLogout');
 
 // Campaigns
 $router->get('campaigns', 'Legacy\Web\CampaignsController@index');
-$router->get('campaigns/{id}', 'Legacy\Web\CampaignsController@showCampaign')->name('campaigns.show');
+$router->get('campaigns/{id}', 'Legacy\Web\CampaignsController@show')->name('campaigns.show');
 
 // Create, update, delete campaigns via Rogue.
 // @TODO: Merge into CampaignsController, above.

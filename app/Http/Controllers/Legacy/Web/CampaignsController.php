@@ -43,29 +43,12 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Show particular campaign inbox.
-     *
-     * @param  int $campaignId
-     */
-    public function showInbox($campaignId)
-    {
-        // Get the campaign data
-        $campaignData = $this->campaignService->find($campaignId);
-
-        return view('pages.campaign_inbox')
-            ->with('state', [
-                'campaign' => $campaignData,
-                'initial_posts' => 'pending',
-            ]);
-    }
-
-    /**
      * Show particular campaign and it's posts.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function showCampaign($id)
+    public function show($id)
     {
         $campaign = $this->campaignService->find($id);
         $totals = $this->campaignService->getPostTotals($campaign);
