@@ -18,12 +18,15 @@ $router->get('login', 'Auth\AuthController@getLogin');
 $router->get('logout', 'Auth\AuthController@getLogout');
 
 // Campaigns
-$router->get('campaigns', 'Legacy\Web\AshesCampaignsController@index');
-$router->get('campaigns/{id}/inbox', 'Legacy\Web\AshesCampaignsController@showInbox');
-$router->get('campaigns/{id}', 'Legacy\Web\AshesCampaignsController@showCampaign')->name('campaigns.show');
+$router->get('campaigns', 'Legacy\Web\CampaignsController@index');
+$router->get('campaigns/{id}', 'Legacy\Web\CampaignsController@showCampaign')->name('campaigns.show');
+
 // Create, update, delete campaigns via Rogue.
-// @TODO: rename these routes (to just /campaigns) when we get off Ashes.
-$router->resource('campaign-ids', 'Legacy\Web\CampaignsController');
+// @TODO: Merge into CampaignsController, above.
+$router->resource('campaign-ids', 'Legacy\Web\CampaignIdsController');
+
+// Inbox
+$router->get('campaigns/{id}/inbox', 'Legacy\Web\InboxController@show');
 
 // Users
 $router->get('users', ['as' => 'users.index', 'uses' => 'Legacy\Web\UsersController@index']);

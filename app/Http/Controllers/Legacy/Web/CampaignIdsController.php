@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
 
-class CampaignsController extends Controller
+class CampaignIdsController extends Controller
 {
     /**
      * Create a controller instance.

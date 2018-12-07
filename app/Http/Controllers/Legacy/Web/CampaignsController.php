@@ -6,7 +6,7 @@ use Rogue\Services\Registrar;
 use Rogue\Services\CampaignService;
 use Rogue\Http\Controllers\Controller;
 
-class AshesCampaignsController extends Controller
+class CampaignsController extends Controller
 {
     /**
      * Registrar instance
