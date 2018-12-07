@@ -2,21 +2,13 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
-use Rogue\Services\Registrar;
 use Rogue\Services\CampaignService;
 use Rogue\Http\Controllers\Controller;
 
 class CampaignsController extends Controller
 {
     /**
-     * Registrar instance
-     *
-     * @var Rogue\Services\Registrar
-     */
-    protected $registrar;
-
-    /**
-     * Phoenix instance
+     * Campaign Service instance
      *
      * @var Rogue\Services\CampaignService
      */
@@ -25,15 +17,13 @@ class CampaignsController extends Controller
     /**
      * Constructor
      *
-     * @param Rogue\Services\Registrar $registrar
      * @param Rogue\Services\CampaignService $campaignService
      */
-    public function __construct(Registrar $registrar, CampaignService $campaignService)
+    public function __construct(CampaignService $campaignService)
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
 
-        $this->registrar = $registrar;
         $this->campaignService = $campaignService;
     }
 
