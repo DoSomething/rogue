@@ -24,9 +24,6 @@ $router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function
     // activity
     $this->get('activity', 'Legacy\Two\ActivityController@index');
 
-    // events
-    $this->get('events', 'Legacy\Two\EventController@index');
-
     // posts
     $this->post('posts', 'Legacy\Two\PostsController@store');
     $this->get('posts', 'Legacy\Two\PostsController@index');
@@ -34,14 +31,8 @@ $router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function
     // reactions
     $this->post('reactions', 'Legacy\Two\ReactionController@store');
 
-    // reviews
-    $this->post('reviews', 'Legacy\Two\ReviewsController@reviews');
-
     // signups
     $this->post('signups', 'Legacy\Two\SignupsController@store');
-
-    // tags
-    $this->post('tags', 'Legacy\Two\TagsController@store');
 
     // Campaigns
     $this->get('campaigns', 'Legacy\Two\AshesCampaignsController@index');
