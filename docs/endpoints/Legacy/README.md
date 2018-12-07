@@ -26,12 +26,6 @@ Most recent stable release is V3
 | ---------------------- | ------------------------------------------------------------------ |
 | `GET /api/v2/activity` | [Get all user activity](endpoints/legacy/two/activity.md#activity) |
 
-#### Events
-
-| Endpoint             | Functionality                                           |
-| -------------------- | ------------------------------------------------------- |
-| `GET /api/v2/events` | [Get all events](endpoints/legacy/two/events.md#events) |
-
 #### Posts
 
 | Endpoint               | Functionality                                                                              |
@@ -51,15 +45,3 @@ Most recent stable release is V3
 | Endpoint               | Functionality                                                      |
 | ---------------------- | ------------------------------------------------------------------ |
 | `POST /api/v2/signups` | [Create a signup](endpoints/legacy/two/signups.md#create-a-signup) |
-
-#### Reviews
-
-| Endpoint               | Functionality                                                  |
-| ---------------------- | -------------------------------------------------------------- |
-| `POST /api/v2/reviews` | [Create a review](endpoints/legacy/two/reviews.md#reviews-api) |
-
-#### Tags
-
-| Endpoint            | Functionality                                                                |
-| ------------------- | ---------------------------------------------------------------------------- |
-| `POST /api/v2/tags` | [Tag/Untag a Post](endpoints/legacy/two/tags.md#add-or-delete-a-post's-tags) |
