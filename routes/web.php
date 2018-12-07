@@ -28,6 +28,9 @@ $router->resource('campaign-ids', 'Legacy\Web\CampaignIdsController');
 // Inbox
 $router->get('campaigns/{id}/inbox', 'Legacy\Web\InboxController@show');
 
+// Signups
+$router->get('signups/{id}', 'Legacy\Web\SignupsController@show')->name('signups.show');
+
 // Users
 $router->get('users', ['as' => 'users.index', 'uses' => 'Legacy\Web\UsersController@index']);
 $router->get('users/{id}', ['as' => 'users.show', 'uses' => 'Legacy\Web\UsersController@show']);
