@@ -58,12 +58,6 @@ Most recent stable release is V3
 | ---------------------- | -------------------------------------------------------------- |
 | `POST /api/v2/reviews` | [Create a review](endpoints/legacy/two/reviews.md#reviews-api) |
 
-#### Campaigns
-
-| Endpoint                | Functionality                                                    |
-| ----------------------- | ---------------------------------------------------------------- |
-| `GET /api/v2/campaigns` | [Get all campaigns](endpoints/legacy/two/campaigns.md#campaigns) |
-
 #### Tags
 
 | Endpoint            | Functionality                                                                |

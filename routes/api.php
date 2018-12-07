@@ -20,7 +20,6 @@ $router->group(['prefix' => 'api/v1', 'middleware' => ['legacy-auth']], function
 
 // v2 routes
 $router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function () {
-
     // activity
     $this->get('activity', 'Legacy\Two\ActivityController@index');
 
@@ -33,9 +32,6 @@ $router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function
 
     // signups
     $this->post('signups', 'Legacy\Two\SignupsController@store');
-
-    // Campaigns
-    $this->get('campaigns', 'Legacy\Two\CampaignsController@index');
 });
 
 // v3 routes
