@@ -119,11 +119,11 @@ class EventTest extends TestCase
      */
     public function testDeletingPostViaApiEvent()
     {
-        $this->mockTime('8/4/2017 18:02:00');
         $post = factory(Post::class)->create();
 
         // Delete the post via the API.
-        $this->actingAsAdmin()->deleteJson('posts/' . $post->id);
+        $this->mockTime('8/4/2017 18:02:00');
+        $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id);
 
         // Make sure an event is created when the post is deleted.
         $this->assertDatabaseHas('events', [
