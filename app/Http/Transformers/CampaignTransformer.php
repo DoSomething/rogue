@@ -19,7 +19,7 @@ class CampaignTransformer extends TransformerAbstract
             'id' => $campaign->id,
             'internal_title' => $campaign->internal_title,
             'start_date' => $campaign->start_date->toIso8601String(),
-            'end_date' => $campaign->end_date->toIso8601String(),
+            'end_date' => optional($campaign->end_date)->toIso8601String(),
             'created_at' => $campaign->created_at->toIso8601String(),
             'updated_at' => $campaign->updated_at->toIso8601String(),
         ];
