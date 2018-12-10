@@ -32,7 +32,7 @@
                                     <td class="table__cell"><a href="{{ route('campaign-ids.show', [$campaign->id]) }}">{{ $campaign->internal_title}}</a></td>
                                     <td class="table__cell">{{ $campaign->id }}</td>
                                     <td class="table__cell">{{ $campaign->cause }}</td>
-                                    <td class="table__cell"><a href="{{ $campaign->impact_doc }}" target="_blank">{{ $campaign->impact_doc }}</a></td>
+                                    <td class="table__cell"><a href="{{ $campaign->impact_doc }}" target="_blank">Read</a></td>
                                     <td class="table__cell">{{ $campaign->start_date->format('m/d/Y') }}</td>
                                     <td class="table__cell">{{ $campaign->end_date ? $campaign->end_date->format('m/d/Y') : '–' }}</td>
                                 </tr>
