@@ -18,10 +18,10 @@
                     <table class="table">
                         <thead>
                             <tr class="table__header">
+                              <th class="table__cell">ID</th>
                               <th class="table__cell">Internal Name</th>
-                              <th class="table__cell">Campaign ID</th>
                               <th class="table__cell">Cause</th>
-                              <th class="table__cell">Proof of Impact</th>
+                              <th class="table__cell">Impact</th>
                               <th class="table__cell">Start Date</th>
                               <th class="table__cell">End Date</th>
                             </tr>
@@ -29,8 +29,8 @@
                         <tbody>
                             @foreach($campaigns as $campaign)
                                 <tr class="table__row">
+                                    <td class="table__cell"><code>{{ $campaign->id }}</code></td>
                                     <td class="table__cell"><a href="{{ route('campaign-ids.show', [$campaign->id]) }}">{{ $campaign->internal_title}}</a></td>
-                                    <td class="table__cell">{{ $campaign->id }}</td>
                                     <td class="table__cell">{{ $campaign->cause }}</td>
                                     <td class="table__cell"><a href="{{ $campaign->impact_doc }}" target="_blank">Read</a></td>
                                     <td class="table__cell">{{ $campaign->start_date->format('m/d/Y') }}</td>

@@ -10,7 +10,7 @@ class Table extends React.Component {
   render() {
     const heading = this.props.headings.map((title, index) => (
       <th key={index} className="table__cell">
-        <h3 className="heading -delta">{title}</h3>
+        {title}
       </th>
     ));
 
