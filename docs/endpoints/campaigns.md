@@ -16,26 +16,18 @@ Example Response:
         {
             "id": 9000,
             "internal_title": "Test campaign",
-            "start_date": "2018-10-10 00:00:00",
-            "end_date": "2018-12-10 00:00:00",
-            "created_at": {
-                "date": "2018-10-24 19:02:06.000000",
-                "timezone_type": 3,
-                "timezone": "UTC"
-            },
-            "update_at": null
+            "start_date": "2001-03-13T00:00:00+00:00",
+            "end_date": "2001-06-13T00:00:00+00:00",
+            "created_at": "2018-12-05T16:24:05+00:00",
+            "updated_at": "2018-12-05T16:24:05+00:00"
         },
         {
             "campaign_id": 9001,
             "internal_title": "2nd test campaign",
-            "start_date": "2018-10-10 00:00:00",
-            "end_date": "2018-12-10 00:00:00",
-            "created_at": {
-                "date": "2018-10-25 14:27:51.000000",
-                "timezone_type": 3,
-                "timezone": "UTC"
-            },
-            "update_at": null
+            "start_date": "2001-03-13T00:00:00+00:00",
+            "end_date": "2001-06-13T00:00:00+00:00",
+            "created_at": "2018-12-05T16:24:05+00:00",
+            "updated_at": "2018-12-05T16:24:05+00:00"
         }
     ],
     "meta": {
@@ -64,14 +56,10 @@ Example Response:
     "data": {
         "id": 9000,
         "internal_title": "Test Campaign",
-        "start_date": "2018-10-10 00:00:00",
-        "end_date": "2018-12-10 00:00:00",
-        "created_at": {
-            "date": "2018-10-24 19:02:06.000000",
-            "timezone_type": 3,
-            "timezone": "UTC"
-        },
-        "update_at": null
+        "start_date": "2001-03-13T00:00:00+00:00",
+        "end_date": "2001-06-13T00:00:00+00:00",
+        "created_at": "2018-12-05T16:24:05+00:00",
+        "updated_at": "2018-12-05T16:24:05+00:00"
     }
 }
 ```
