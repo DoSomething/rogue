@@ -50,15 +50,16 @@ class PostTransformer extends TransformerAbstract
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
-        dd('hi', is_staff_user());
+
         if (Gate::allows('viewAll', $post)) {
+            dd('hi');
             $response['tags'] = $post->tagSlugs();
             $response['source'] = $post->source;
             $response['source_details'] = $post->source_details;
             $response['remote_addr'] = '0.0.0.0';
             $response['details'] = $post->details;
         }
-
+        dd('bye');
         return $response;
     }
 

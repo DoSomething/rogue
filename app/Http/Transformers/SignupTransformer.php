@@ -34,7 +34,7 @@ class SignupTransformer extends TransformerAbstract
             'created_at' => $signup->created_at->toIso8601String(),
             'updated_at' => $signup->updated_at->toIso8601String(),
         ];
-        dd(is_staff_user());
+
         if (is_staff_user() || auth()->id() === $signup->northstar_id) {
             $response['why_participated'] = $signup->why_participated;
             $response['source'] = $signup->source;
