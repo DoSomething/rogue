@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Legacy\Two;
 
+use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Managers\Legacy\Two\PostManager;
 use Rogue\Http\Requests\Legacy\Two\PostRequest;
