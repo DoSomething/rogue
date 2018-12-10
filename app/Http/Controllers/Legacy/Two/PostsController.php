@@ -5,14 +5,11 @@ namespace Rogue\Http\Controllers\Legacy\Two;
 use Illuminate\Http\Request;
 use Rogue\Managers\Legacy\Two\PostManager;
 use Rogue\Http\Requests\Legacy\Two\PostRequest;
-use Rogue\Http\Controllers\Traits\FiltersRequests;
 use Rogue\Repositories\Legacy\Two\SignupRepository;
 use Rogue\Http\Transformers\Legacy\Two\PostTransformer;
 
 class PostsController extends ApiController
 {
-    use FiltersRequests;
-
     /**
      * The post manager instance.
      *
