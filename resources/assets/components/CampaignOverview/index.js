@@ -10,7 +10,7 @@ class CampaignOverview extends React.Component {
     const causeTables = map(causeData, (data, cause) => (
       <CampaignTable
         key={cause}
-        cause={cause}
+        cause={cause || 'Uncategorized'}
         campaigns={data}
         causeData={causeData}
       />
