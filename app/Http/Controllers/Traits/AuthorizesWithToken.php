@@ -11,7 +11,7 @@ trait AuthorizesWithToken
      * Determine if the full object should be displayed.
      *
      * @param  Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  Rogue\Models $model
+     * @param  $model
      * @return bool
      */
     public function allowOwnerStaffOrMachine($user, $model)
