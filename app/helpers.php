@@ -98,8 +98,7 @@ function is_staff_user()
 {
     $isStaffUser = token()->exists() && in_array(token()->role, ['admin', 'staff']);
     $isStaffClient = token()->exists() && in_array('admin', token()->scopes());
-
-    if ($isStaffUser || $isStaffClient) {
+ if ($isStaffUser || $isStaffClient) {
         return true;
     }
 
