@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Transformers;
 
+use Gate;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use League\Fractal\TransformerAbstract;
@@ -35,7 +36,7 @@ class SignupTransformer extends TransformerAbstract
             'updated_at' => $signup->updated_at->toIso8601String(),
         ];
 
-        if (is_staff_user() || auth()->id() === $signup->northstar_id) {
+        if (Gate::allows('viewAll', $signup)) {
             $response['why_participated'] = $signup->why_participated;
             $response['source'] = $signup->source;
             $response['source_details'] = $signup->source_details;
