@@ -27,11 +27,17 @@ class PostPolicy
      */
     public function viewAll($user, Post $post)
     {
-        // If there is no user and it is not a client with admin credentials, return false.
-        if ($user === null && is_staff_user() === false) {
-            return false;
+        // If this is a machine token, show full post:
+        if (token()->exists() && ! token()->id()) {
+          return true;
         }
 
+        // If this is an anonymous request, only show public fields:
+        if ($user == null) {
+          return false;
+        }
+
+        // Otherwise, only allow staffers & post owner to see  full post:
         return is_staff_user() || $user->northstar_id === $post->northstar_id;
     }
 
