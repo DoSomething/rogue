@@ -50,6 +50,7 @@ class PostTransformer extends TransformerAbstract
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
+
         if (Gate::allows('viewAll', $post)) {
             $response['tags'] = $post->tagSlugs();
             $response['source'] = $post->source;
