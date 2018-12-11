@@ -27,7 +27,8 @@ class PostPolicy
      */
     public function viewAll($user, Post $post)
     {
-        if ($user === null) {
+        // If there is no user and it is not a client with admin credentials, return false.
+        if ($user === null && is_staff_user() === false) {
             return false;
         }
 
