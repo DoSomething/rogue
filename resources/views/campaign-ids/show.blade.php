@@ -11,7 +11,7 @@
                 <p>{{ $campaign->internal_title }}</p>
 
                 <h3>Cause</h3>
-                <p>{{ $campaign->cause }}</p>
+                <p>{{ $campaign->cause or '–' }}</p>
 
                 <h3>Proof of Impact</h3>
                 @if($campaign->impact_doc)
