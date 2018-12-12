@@ -63,10 +63,12 @@ class Campaign extends Model
 
             return;
         }
+
         // Parse user-entered strings like '10/31/1990' or `October 31st 1990'.
         if (is_string($value)) {
             $value = strtotime($value);
         }
+
         $this->attributes[$attribute] = $this->fromDateTime($value);
     }
 }
