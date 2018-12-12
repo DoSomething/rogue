@@ -14,7 +14,11 @@
                 <p>{{ $campaign->cause }}</p>
 
                 <h3>Proof of Impact</h3>
-                <p><a href="{{ url($campaign->impact_doc) }}" target="_blank">{{ $campaign->impact_doc }}</a></p>
+                @if($campaign->impact_doc)
+                    <p><a href="{{ $campaign->impact_doc }}" target="_blank">{{ $campaign->impact_doc }}</a></p>
+                @else
+                    <p>–</p>
+                @endif
 
                 <h3>Start Date</h3>
                 <p>{{ $campaign->start_date->format('m/d/Y') }}</p>
