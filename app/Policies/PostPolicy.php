@@ -8,8 +8,7 @@ use Rogue\Http\Controllers\Traits\AuthorizesWithToken;
 
 class PostPolicy
 {
-    use AuthorizesWithToken;
-    use HandlesAuthorization;
+    use AuthorizesWithToken, HandlesAuthorization;
 
     /**
      * Create a new policy instance.
