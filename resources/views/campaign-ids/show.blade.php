@@ -10,6 +10,9 @@
                 <h3>Internal Campaign Name</h3>
                 <p>{{ $campaign->internal_title }}</p>
 
+                <h3>Campaign ID</h3>
+                <p>{{ $campaign->id }}</p>
+
                 <h3>Cause</h3>
                 <p>{{ $campaign->cause or '–' }}</p>
 
