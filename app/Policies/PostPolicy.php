@@ -4,10 +4,11 @@ namespace Rogue\Policies;
 
 use Rogue\Models\Post;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Rogue\Http\Controllers\Traits\AuthorizesWithToken;
 
 class PostPolicy
 {
-    use HandlesAuthorization;
+    use AuthorizesWithToken, HandlesAuthorization;
 
     /**
      * Create a new policy instance.
@@ -27,11 +28,7 @@ class PostPolicy
      */
     public function viewAll($user, Post $post)
     {
-        if ($user === null) {
-            return false;
-        }
-
-        return is_staff_user() || $user->northstar_id === $post->northstar_id;
+        return $this->allowOwnerStaffOrMachine($user, $post);
     }
 
     /**
