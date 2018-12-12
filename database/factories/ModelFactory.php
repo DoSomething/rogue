@@ -34,7 +34,7 @@ $factory->define(Post::class, function (Generator $faker) {
             // If a 'signup_id' is not provided, create one for the same Campaign & Northstar ID.
             return factory(Signup::class)->create([
                 'campaign_id' => $attributes['campaign_id'],
-                'northstar_id' => $attributes['northstar_id']
+                'northstar_id' => $attributes['northstar_id'],
             ])->id;
         },
         'northstar_id' => $this->faker->northstar_id,

@@ -60,6 +60,7 @@ class Campaign extends Model
     {
         if (is_null($value)) {
             $this->attributes[$attribute] = null;
+
             return;
         }
         // Parse user-entered strings like '10/31/1990' or `October 31st 1990'.

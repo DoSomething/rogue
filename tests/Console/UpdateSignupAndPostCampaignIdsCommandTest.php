@@ -2,7 +2,6 @@
 
 namespace Tests\Console;
 
-use Carbon\Carbon;
 use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
@@ -10,7 +9,6 @@ use Rogue\Models\Campaign;
 
 class UpdateSignupAndPostCampaignIdsCommandTest extends TestCase
 {
-
     public function testUpdatingSignupAndPostCampaignIds()
     {
         // Create campaign and set a campaign_run_id.

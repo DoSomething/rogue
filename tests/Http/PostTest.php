@@ -15,7 +15,6 @@ class PostTest extends TestCase
 {
     /**
      * Helper function to assert post structure
-     *
      */
     public function assertPostStructure($response)
     {
@@ -46,6 +45,7 @@ class PostTest extends TestCase
             ],
         ]);
     }
+
     /**
      * Test that a POST request to /posts creates a new
      * post and signup, if it doesn't already exist.
@@ -768,7 +768,6 @@ class PostTest extends TestCase
         $otherId = $this->faker->unique()->northstar_id;
         factory(Post::class, 'rejected', 4)->create(['northstar_id' => $otherId]);
 
-
         // Owners should be able to see their own posts of any status, but
         // not pending or rejected posts from other users.
         $response = $this->withAccessToken($userId)->getJson('api/v3/posts');
@@ -835,7 +834,7 @@ class PostTest extends TestCase
 
         // Create anothter hidden post by different user.
         $secondHiddenPost = factory(Post::class, 'accepted')->create([
-            'northstar_id' => $this->faker->unique()->northstar_id
+            'northstar_id' => $this->faker->unique()->northstar_id,
         ]);
         $secondHiddenPost->tag('Hide In Gallery');
         $secondHiddenPost->save();

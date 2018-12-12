@@ -43,7 +43,6 @@ class UpdateSignupAndPostCampaignIds extends Command
     {
         $this->line('rogue:updatesignupandpostcampaignids: Starting script to update campaign ids!');
 
-
         // Grab all of the campaigns in the campaigns table.
         $query = (new Campaign)->newQuery();
 

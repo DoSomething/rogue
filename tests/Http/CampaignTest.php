@@ -19,7 +19,7 @@ class CampaignTest extends Testcase
         $firstCampaignTitle = $this->faker->sentence;
         $firstCampaignStartDate = $this->faker->date($format = 'm/d/Y');
         // Make sure the end date is after the start date.
-        $firstCampaignEndDate = date('m/d/Y', strtotime("+3 months", strtotime($firstCampaignStartDate)));
+        $firstCampaignEndDate = date('m/d/Y', strtotime('+3 months', strtotime($firstCampaignStartDate)));
 
         $this->actingAsAdmin()->postJson('campaign-ids', [
             'internal_title' => $firstCampaignTitle,

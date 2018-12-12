@@ -2,7 +2,6 @@
 
 namespace Tests\Console;
 
-use Carbon\Carbon;
 use Tests\TestCase;
 use Rogue\Models\Campaign;
 
