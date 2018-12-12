@@ -13,9 +13,9 @@ class DropFileIdFromReactions extends Migration
     public function up()
     {
         Schema::table('reactions', function (Blueprint $table) {
-            $table->dropColumn('file_id');
-
             $table->dropUnique('file_drupal_ns_taxonomy_unique');
+
+            $table->dropColumn('file_id');
         });
     }
 
