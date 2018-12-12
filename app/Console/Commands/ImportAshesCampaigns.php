@@ -2,7 +2,6 @@
 
 namespace Rogue\Console\Commands;
 
-use Carbon\Carbon;
 use League\Csv\Reader;
 use Rogue\Models\Campaign;
 use Rogue\Services\Registrar;
@@ -59,7 +58,7 @@ class ImportAshesCampaigns extends Command
         foreach ($legacy_campaigns as $iterator => $legacy_campaign) {
             // Normalize all "NULL" values to null
             foreach ($legacy_campaign as $key => $value) {
-                if ($value === "NULL") {
+                if ($value === 'NULL') {
                     $legacy_campaign[$key] = null;
                 }
             }
@@ -72,16 +71,15 @@ class ImportAshesCampaigns extends Command
                 // If there is no campaign_id, set the campaign_run_id to the id.
                 if (is_null($legacy_campaign['campaign_id'])) {
                     $campaign = $this->createCampaign($legacy_campaign['run_id'], $legacy_campaign);
-                    // If the campaign_id does not equal the next record's campaign_id or the previous record's campaign id, this is either the latest run or there is only one campaign run, so keep the original campaign_id as the id in Rogue.
-                } else if ($legacy_campaigns_csv->fetchOne($iterator) &&
+                // If the campaign_id does not equal the next record's campaign_id or the previous record's campaign id, this is either the latest run or there is only one campaign run, so keep the original campaign_id as the id in Rogue.
+                } elseif ($legacy_campaigns_csv->fetchOne($iterator) &&
                            $legacy_campaign['campaign_id'] != $legacy_campaigns_csv->fetchOne($iterator)['campaign_id'] &&
                            $legacy_campaign['campaign_id'] != $legacy_campaigns_csv->fetchOne($iterator - 1)) {
-
-                           $campaign = $this->createCampaign($legacy_campaign['campaign_id'], $legacy_campaign);
-                    // If this is the last row in the CSV, it must either be the only run or last run, so use the campaign_id as the id in Rogue.
-                } else if (!$legacy_campaigns_csv->fetchOne($iterator)) {
                     $campaign = $this->createCampaign($legacy_campaign['campaign_id'], $legacy_campaign);
-                    // Else use the campaign_run_id as the id in Rogue.
+                // If this is the last row in the CSV, it must either be the only run or last run, so use the campaign_id as the id in Rogue.
+                } elseif (! $legacy_campaigns_csv->fetchOne($iterator)) {
+                    $campaign = $this->createCampaign($legacy_campaign['campaign_id'], $legacy_campaign);
+                // Else use the campaign_run_id as the id in Rogue.
                 } else {
                     $campaign = $this->createCampaign($legacy_campaign['run_id'], $legacy_campaign);
                 }
@@ -102,7 +100,8 @@ class ImportAshesCampaigns extends Command
      *
      * @return mixed
      */
-    public function createCampaign($id, $campaign) {
+    public function createCampaign($id, $campaign)
+    {
         return Campaign::forceCreate([
             'id' => $id,
             'internal_title' => $campaign['internal_title'],

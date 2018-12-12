@@ -15,7 +15,6 @@ class CampaignsController extends ApiController
 
     /**
      * Create a controller instance.
-     *
      */
     public function __construct()
     {

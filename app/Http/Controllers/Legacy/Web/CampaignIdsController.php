@@ -2,7 +2,6 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
-use Carbon\Carbon;
 use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -12,7 +11,6 @@ class CampaignIdsController extends Controller
 {
     /**
      * Create a controller instance.
-     *
      */
     public function __construct()
     {
@@ -113,7 +111,7 @@ class CampaignIdsController extends Controller
 
         return view('campaign-ids.edit', [
             'campaign' => $campaign,
-            'causes' => $causes
+            'causes' => $causes,
         ]);
     }
 

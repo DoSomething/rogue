@@ -41,7 +41,7 @@ class Signup extends Model
      * @var array
      */
     public static $indexes = [
-        'campaign_id', 'updated_at', 'northstar_id', 'id', 'quantity', 'source'
+        'campaign_id', 'updated_at', 'northstar_id', 'id', 'quantity', 'source',
     ];
 
     /**
@@ -82,7 +82,7 @@ class Signup extends Model
         $query = $this->hasMany(Post::class);
 
         if (! is_staff_user()) {
-            $query->where(function($query) {
+            $query->where(function ($query) {
                 $query->where('status', 'accepted')
                     ->orWhere('northstar_id', auth()->id());
             });

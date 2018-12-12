@@ -3,7 +3,6 @@
 namespace Rogue\Http\Controllers\Traits;
 
 use Rogue\Models\Post;
-use Rogue\Models\Signup;
 
 trait AuthorizesWithToken
 {
@@ -18,12 +17,12 @@ trait AuthorizesWithToken
     {
         // If this is a machine token, show full post:
         if (token()->exists() && ! token()->id()) {
-          return true;
+            return true;
         }
 
         // If this is an anonymous request, only show public fields:
         if ($user == null) {
-          return false;
+            return false;
         }
 
         // Otherwise, only allow staffers & model owner to see full object:
