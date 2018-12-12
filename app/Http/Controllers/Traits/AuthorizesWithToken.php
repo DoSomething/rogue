@@ -2,8 +2,6 @@
 
 namespace Rogue\Http\Controllers\Traits;
 
-use Rogue\Models\Post;
-
 trait AuthorizesWithToken
 {
     /**
@@ -15,7 +13,7 @@ trait AuthorizesWithToken
      */
     public function allowOwnerStaffOrMachine($user, $model)
     {
-        // If this is a machine token, show full post:
+        // If this is a machine token, show full model:
         if (token()->exists() && ! token()->id()) {
             return true;
         }
