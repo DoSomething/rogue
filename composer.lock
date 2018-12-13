@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4dd6ddbbba1ff400e8a74770c790460",
+    "content-hash": "d20514417c28bcd0420ca433e0a3fb39",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -60,16 +60,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.81.0",
+            "version": "3.81.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "99e35b38e894425f7626880f6ba017189a1ec337"
+                "reference": "e569fa3e8998dd20896ff189b063b61a5d42369d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/99e35b38e894425f7626880f6ba017189a1ec337",
-                "reference": "99e35b38e894425f7626880f6ba017189a1ec337",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/e569fa3e8998dd20896ff189b063b61a5d42369d",
+                "reference": "e569fa3e8998dd20896ff189b063b61a5d42369d",
                 "shasum": ""
             },
             "require": {
@@ -139,7 +139,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2018-12-05T21:13:40+00:00"
+            "time": "2018-12-11T23:08:33+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -3234,16 +3234,16 @@
         },
         {
             "name": "spatie/db-dumper",
-            "version": "2.11.1",
+            "version": "2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/db-dumper.git",
-                "reference": "858ea38e341e2e5f74a5b59cc8184c5c7e94b50d"
+                "reference": "61cf73e3b53e163d6e888a0013b9df6bb235752c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/858ea38e341e2e5f74a5b59cc8184c5c7e94b50d",
-                "reference": "858ea38e341e2e5f74a5b59cc8184c5c7e94b50d",
+                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/61cf73e3b53e163d6e888a0013b9df6bb235752c",
+                "reference": "61cf73e3b53e163d6e888a0013b9df6bb235752c",
                 "shasum": ""
             },
             "require": {
@@ -3280,7 +3280,7 @@
                 "mysqldump",
                 "spatie"
             ],
-            "time": "2018-09-27T06:30:34+00:00"
+            "time": "2018-12-10T10:41:18+00:00"
         },
         {
             "name": "spatie/laravel-backup",
@@ -4847,16 +4847,16 @@
         },
         {
             "name": "itsgoingd/clockwork",
-            "version": "v3.1",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itsgoingd/clockwork.git",
-                "reference": "4adcf0a923849bd68b3f4d2fcb0041a5b8ca59f8"
+                "reference": "69f311569e2bbb0ec4e01e732767c5c8d7c0ef0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itsgoingd/clockwork/zipball/4adcf0a923849bd68b3f4d2fcb0041a5b8ca59f8",
-                "reference": "4adcf0a923849bd68b3f4d2fcb0041a5b8ca59f8",
+                "url": "https://api.github.com/repos/itsgoingd/clockwork/zipball/69f311569e2bbb0ec4e01e732767c5c8d7c0ef0d",
+                "reference": "69f311569e2bbb0ec4e01e732767c5c8d7c0ef0d",
                 "shasum": ""
             },
             "require": {
@@ -4901,7 +4901,7 @@
                 "profiling",
                 "slim"
             ],
-            "time": "2018-12-03T17:36:12+00:00"
+            "time": "2018-12-06T20:42:00+00:00"
         },
         {
             "name": "laravel/dusk",
@@ -6500,7 +6500,8 @@
     "platform": {
         "php": "~7.2.0",
         "ext-gd": "*",
-        "ext-exif": "*"
+        "ext-exif": "*",
+        "ext-newrelic": "*"
     },
     "platform-dev": []
 }
