@@ -8,6 +8,12 @@ These endpoints require the role `admin` or `staff` to use.
 GET /api/v3/campaigns
 ```
 
+### Optional Query Parameters
+
+- **filter[column]** _(string)_
+  - Filter results by the given column: `id`
+  - You can filter by more than one value for a column, e.g. `/campaigns?filter[id]=121,122`
+
 Example Response:
 
 ```
