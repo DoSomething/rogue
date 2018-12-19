@@ -95,11 +95,11 @@ class PostRepository
         // If this is a share-social type post, auto-accept.
         $post->status = $post->type === 'share-social' ? 'accepted' : 'pending';
 
-        $isAdmin = auth()->user() && auth()->user()->role === 'admin';
+        $isAdminOrStaff = auth()->user() && auth()->user()->role === 'admin' || auth()->user()->role === 'staff';
         $hasAdminScope = in_array('admin', token()->scopes());
 
         // Admin users may provide a source, status, and created_at when uploading a post.
-        if ($isAdmin || $hasAdminScope) {
+        if ($isAdminOrStaff || $hasAdminScope) {
             // If the admin sets a custom status, set this status.
             if (isset($data['status'])) {
                 $post->status = $data['status'];
