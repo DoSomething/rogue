@@ -24,6 +24,16 @@ class Campaign extends Model
     protected $fillable = ['internal_title', 'cause', 'secondary_causes', 'impact_doc', 'start_date', 'end_date'];
 
     /**
+     * Attributes that can be queried when filtering.
+     *
+     * This array is manually maintained. It does not necessarily mean that
+     * any of these are actual indexes on the database... but they should be!
+     *
+     * @var array
+     */
+    public static $indexes = ['id'];
+
+    /**
      * Get the signups associated with this campaign.
      */
     public function signup()

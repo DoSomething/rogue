@@ -30,6 +30,9 @@ class CampaignsController extends ApiController
     {
         $query = $this->newQuery(Campaign::class);
 
+        $filters = $request->query('filter');
+        $query = $this->filter($query, $filters, Campaign::$indexes);
+
         return $this->paginatedCollection($query, $request);
     }
 
