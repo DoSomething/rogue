@@ -72,6 +72,8 @@ class UserOverview extends React.Component {
         filter: {
           id: ids.join(),
         },
+        //@TODO: when we update TransformsRequest.php to include limit=all,
+        // update this API request to use that instead of abritrary 1000.
         limit: 1000,
       })
       .then(json =>
