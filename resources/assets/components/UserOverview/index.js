@@ -72,6 +72,7 @@ class UserOverview extends React.Component {
         filter: {
           id: ids.join(),
         },
+        limit: 1000,
       })
       .then(json =>
         this.setState({
