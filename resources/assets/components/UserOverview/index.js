@@ -72,6 +72,10 @@ class UserOverview extends React.Component {
         filter: {
           id: ids.join(),
         },
+        // @TODO: update this to paginate calls to smaller batches or use GraphQL
+        // to be able to request only the subset of campaign fields we actually use for the UI
+        // (to make sure performance isn't hit).
+        limit: 100,
       })
       .then(json =>
         this.setState({
