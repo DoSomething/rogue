@@ -72,9 +72,10 @@ class UserOverview extends React.Component {
         filter: {
           id: ids.join(),
         },
-        //@TODO: when we update TransformsRequest.php to include limit=all,
-        // update this API request to use that instead of abritrary 1000.
-        limit: 1000,
+        // @TODO: update this to paginate calls to smaller batches or use GraphQL
+        // to be able to request only the subset of campaign fields we actually use for the UI
+        // (to make sure performance isn't hit).
+        limit: 100,
       })
       .then(json =>
         this.setState({
