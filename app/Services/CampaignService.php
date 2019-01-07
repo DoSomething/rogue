@@ -70,6 +70,7 @@ class CampaignService
                     DB::raw('SUM(case when posts.status = "rejected" && posts.deleted_at is null then 1 else 0 end) as rejected_count'))
                 ->where('signups.campaign_id', '=', $campaign['id'])
                 ->groupBy('signups.campaign_id')
+                ->whereNull('signups.deleted_at')
                 ->first();
     }
 
