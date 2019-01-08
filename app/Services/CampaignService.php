@@ -64,11 +64,12 @@ class CampaignService
     {
         return DB::table('posts')
                 ->select('campaign_id',
-                    DB::raw('SUM(case when status = "accepted" && deleted_at is null then 1 else 0 end) as accepted_count'),
-                    DB::raw('SUM(case when status = "pending" && deleted_at is null then 1 else 0 end) as pending_count'),
-                    DB::raw('SUM(case when status = "rejected" && deleted_at is null then 1 else 0 end) as rejected_count'))
+                    DB::raw('SUM(status = "accepted") as accepted_count'),
+                    DB::raw('SUM(status = "pending") as pending_count'),
+                    DB::raw('SUM(status = "rejected") as rejected_count'))
                 ->whereIn('status', ['accepted', 'pending', 'rejected'])
                 ->where('campaign_id', '=', $campaign['id'])
+                ->whereNull('deleted_at')
                 ->first();
     }
 
