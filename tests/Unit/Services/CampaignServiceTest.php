@@ -25,6 +25,13 @@ class CampaignServiceTest extends TestCase
                 $signup->posts()->saveMany(factory(Post::class, 'rejected', 3)->make());
             });
 
+        $posts = Post::all();
+
+        foreach ($posts as $post) {
+            $post->campaign_id = 57;
+            $post->save();
+        }
+
         $campaignService = $this->app->make(CampaignService::class);
         $campaignCounts = $campaignService->getPostTotals($testCampaign);
 
