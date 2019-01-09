@@ -22,7 +22,7 @@ class CampaignServiceTest extends TestCase
                 $signup->posts()->saveMany(factory(Post::class, 3)->make(['campaign_id' => $testCampaign['id']]));
                 $signup->posts()->saveMany(factory(Post::class, 'accepted', 3)->make(['campaign_id' => $testCampaign['id']]));
                 $signup->posts()->saveMany(factory(Post::class, 'rejected', 3)->make(['campaign_id' => $testCampaign['id']]));
-        });
+            });
 
         $campaignService = $this->app->make(CampaignService::class);
         $campaignCounts = $campaignService->getPostTotals($testCampaign);
