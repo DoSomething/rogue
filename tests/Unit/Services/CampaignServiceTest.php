@@ -15,22 +15,14 @@ class CampaignServiceTest extends TestCase
             'id' => 57,
             'title' => 'Babysitters Club',
         ];
-
         // Create 10 signups for the campaign.
         factory(Signup::class, 10)->create(['campaign_id' => $testCampaign['id']])
-            ->each(function (Signup $signup) {
+            ->each(function (Signup $signup) use ($testCampaign) {
                 // And for each signup, make 3 accepted, 3 rejected, and 3 pending posts.
-                $signup->posts()->saveMany(factory(Post::class, 3)->make());
-                $signup->posts()->saveMany(factory(Post::class, 'accepted', 3)->make());
-                $signup->posts()->saveMany(factory(Post::class, 'rejected', 3)->make());
-            });
-
-        $posts = Post::all();
-
-        foreach ($posts as $post) {
-            $post->campaign_id = 57;
-            $post->save();
-        }
+                $signup->posts()->saveMany(factory(Post::class, 3)->make(['campaign_id' => $testCampaign['id']]));
+                $signup->posts()->saveMany(factory(Post::class, 'accepted', 3)->make(['campaign_id' => $testCampaign['id']]));
+                $signup->posts()->saveMany(factory(Post::class, 'rejected', 3)->make(['campaign_id' => $testCampaign['id']]));
+        });
 
         $campaignService = $this->app->make(CampaignService::class);
         $campaignCounts = $campaignService->getPostTotals($testCampaign);
