@@ -68,6 +68,8 @@ class CampaignService
                     DB::raw('SUM(status = "pending") as pending_count'),
                     DB::raw('SUM(status = "rejected") as rejected_count'))
                 ->whereIn('status', ['accepted', 'pending', 'rejected'])
+                // @TODO: if we ever want to expose other post types in Rogue to review/count, update this.
+                ->whereIn('type', ['photo', 'text'])
                 ->where('campaign_id', '=', $campaign['id'])
                 ->whereNull('deleted_at')
                 ->first();
