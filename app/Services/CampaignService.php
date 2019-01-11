@@ -68,6 +68,7 @@ class CampaignService
                     DB::raw('SUM(status = "pending") as pending_count'),
                     DB::raw('SUM(status = "rejected") as rejected_count'))
                 ->whereIn('status', ['accepted', 'pending', 'rejected'])
+                ->whereIn('type', ['photo', 'text'])
                 ->where('campaign_id', '=', $campaign['id'])
                 ->whereNull('deleted_at')
                 ->first();
