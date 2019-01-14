@@ -3,7 +3,6 @@
 namespace Rogue\Models;
 
 use Carbon\Carbon;
-use Rogue\Scopes\ReviewableScope;
 use Rogue\Events\PostTagged;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -62,17 +61,6 @@ class Post extends Model
      * @var array
      */
     public $goodTags = ['good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote', 'good-for-brand'];
-    /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::addGlobalScope(new ReviewableScope);
-    }
 
     /**
      * Each post has events.
