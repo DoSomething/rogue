@@ -3,6 +3,7 @@
 namespace Rogue\Services;
 
 use Rogue\Models\Campaign;
+use Rogue\Models\Post;
 use Illuminate\Support\Facades\DB;
 
 class CampaignService
@@ -62,14 +63,15 @@ class CampaignService
      */
     public function getPostTotals($campaign)
     {
-        return DB::table('posts')
-                ->select('campaign_id',
+        // return DB::table('posts')
+            return Post::select(
+                // ->select('campaign_id',
+                    'campaign_id',
                     DB::raw('SUM(status = "accepted") as accepted_count'),
                     DB::raw('SUM(status = "pending") as pending_count'),
                     DB::raw('SUM(status = "rejected") as rejected_count'))
                 ->whereIn('status', ['accepted', 'pending', 'rejected'])
-                // @TODO: if we ever want to expose other post types in Rogue to review/count, update this.
-                // ->whereIn('type', ['photo', 'text'])
+                ->reviewable()
                 ->where('campaign_id', '=', $campaign['id'])
                 ->whereNull('deleted_at')
                 ->first();
