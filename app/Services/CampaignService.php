@@ -2,8 +2,8 @@
 
 namespace Rogue\Services;
 
-use Rogue\Models\Campaign;
 use Rogue\Models\Post;
+use Rogue\Models\Campaign;
 use Illuminate\Support\Facades\DB;
 
 class CampaignService
@@ -63,18 +63,16 @@ class CampaignService
      */
     public function getPostTotals($campaign)
     {
-        // return DB::table('posts')
-            return Post::select(
-                // ->select('campaign_id',
-                    'campaign_id',
-                    DB::raw('SUM(status = "accepted") as accepted_count'),
-                    DB::raw('SUM(status = "pending") as pending_count'),
-                    DB::raw('SUM(status = "rejected") as rejected_count'))
-                ->whereIn('status', ['accepted', 'pending', 'rejected'])
-                ->reviewable()
-                ->where('campaign_id', '=', $campaign['id'])
-                ->whereNull('deleted_at')
-                ->first();
+        return Post::select(
+                'campaign_id',
+                DB::raw('SUM(status = "accepted") as accepted_count'),
+                DB::raw('SUM(status = "pending") as pending_count'),
+                DB::raw('SUM(status = "rejected") as rejected_count'))
+            ->whereIn('status', ['accepted', 'pending', 'rejected'])
+            ->reviewable()
+            ->where('campaign_id', '=', $campaign['id'])
+            ->whereNull('deleted_at')
+            ->first();
     }
 
     /**
