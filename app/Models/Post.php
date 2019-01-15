@@ -342,7 +342,7 @@ class Post extends Model
     /**
      * Returns posts that are reviewable.
      */
-    public function scopeReviewable($query)
+    public function scopeWhereReviewable($query)
     {
         return $query->whereIn('type', ['photo', 'text']);
     }

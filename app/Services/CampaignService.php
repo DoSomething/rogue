@@ -68,8 +68,7 @@ class CampaignService
                 DB::raw('SUM(status = "accepted") as accepted_count'),
                 DB::raw('SUM(status = "pending") as pending_count'),
                 DB::raw('SUM(status = "rejected") as rejected_count'))
-            ->whereIn('status', ['accepted', 'pending', 'rejected'])
-            ->reviewable()
+            ->whereReviewable()
             ->where('campaign_id', '=', $campaign['id'])
             ->first();
     }
