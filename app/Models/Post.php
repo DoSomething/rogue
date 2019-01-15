@@ -171,7 +171,7 @@ class Post extends Model
     }
 
     /**
-     * Get the sibilngs associated with this post.
+     * Get the siblings associated with this post.
      */
     public function siblings()
     {
