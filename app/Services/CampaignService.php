@@ -88,6 +88,7 @@ class CampaignService
                 ->leftJoin('posts', 'signups.id', '=', 'posts.signup_id')
                 ->selectRaw('signups.campaign_id, count(posts.id) as pending_count')
                 ->where('status', '=', 'pending')
+                ->whereIn('type', ['photo', 'text'])
                 ->where('posts.deleted_at', '=', null)
                 ->wherein('signups.campaign_id', $ids)
                 ->groupBy('signups.campaign_id')
