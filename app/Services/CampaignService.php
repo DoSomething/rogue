@@ -2,6 +2,7 @@
 
 namespace Rogue\Services;
 
+use Rogue\Models\Post;
 use Rogue\Models\Campaign;
 use Illuminate\Support\Facades\DB;
 
@@ -62,17 +63,14 @@ class CampaignService
      */
     public function getPostTotals($campaign)
     {
-        return DB::table('posts')
-                ->select('campaign_id',
-                    DB::raw('SUM(status = "accepted") as accepted_count'),
-                    DB::raw('SUM(status = "pending") as pending_count'),
-                    DB::raw('SUM(status = "rejected") as rejected_count'))
-                ->whereIn('status', ['accepted', 'pending', 'rejected'])
-                // @TODO: if we ever want to expose other post types in Rogue to review/count, update this.
-                ->whereIn('type', ['photo', 'text'])
-                ->where('campaign_id', '=', $campaign['id'])
-                ->whereNull('deleted_at')
-                ->first();
+        return Post::select(
+                'campaign_id',
+                DB::raw('SUM(status = "accepted") as accepted_count'),
+                DB::raw('SUM(status = "pending") as pending_count'),
+                DB::raw('SUM(status = "rejected") as rejected_count'))
+            ->whereReviewable()
+            ->where('campaign_id', '=', $campaign['id'])
+            ->first();
     }
 
     /**
@@ -85,14 +83,12 @@ class CampaignService
     {
         $ids = $campaigns->pluck('id')->filter()->toArray();
 
-        $totals = DB::table('signups')
-                ->leftJoin('posts', 'signups.id', '=', 'posts.signup_id')
-                ->selectRaw('signups.campaign_id, count(posts.id) as pending_count')
-                ->where('status', '=', 'pending')
-                ->where('posts.deleted_at', '=', null)
-                ->wherein('signups.campaign_id', $ids)
-                ->groupBy('signups.campaign_id')
-                ->get();
+        $totals = Post::selectRaw('campaign_id, count(id) as pending_count')
+                    ->where('status', '=', 'pending')
+                    ->whereReviewable()
+                    ->wherein('campaign_id', $ids)
+                    ->groupBy('campaign_id')
+                    ->get();
 
         return $totals ? collect($totals)->keyBy('campaign_id') : collect();
     }

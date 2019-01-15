@@ -171,7 +171,7 @@ class Post extends Model
     }
 
     /**
-     * Get the reactions associated with this post.
+     * Get the siblings associated with this post.
      */
     public function siblings()
     {
@@ -337,6 +337,14 @@ class Post extends Model
         return $query->whereHas('tags', function ($query) use ($tagSlug) {
             multipleValueQuery($query, $tagSlug, 'tag_slug');
         });
+    }
+
+    /**
+     * Returns posts that are reviewable.
+     */
+    public function scopeWhereReviewable($query)
+    {
+        return $query->whereIn('type', ['photo', 'text']);
     }
 
     /**
