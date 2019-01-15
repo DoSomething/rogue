@@ -71,7 +71,6 @@ class CampaignService
             ->whereIn('status', ['accepted', 'pending', 'rejected'])
             ->reviewable()
             ->where('campaign_id', '=', $campaign['id'])
-            ->whereNull('deleted_at')
             ->first();
     }
 
