@@ -25,6 +25,8 @@ class AddActionsTable extends Migration
             $table->boolean('active')->comment('Whether or not the action is active.');
             $table->string('noun', 255)->nullable()->comment('The noun of the post (e.g. jeans).');
             $table->string('verb', 255)->nullable()->comment('The verb of of the post (e.g. donated).');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
