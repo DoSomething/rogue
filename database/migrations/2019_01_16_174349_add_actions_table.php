@@ -35,6 +35,6 @@ class AddActionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tagging_tagged');
+        Schema::drop('actions');
     }
 }
