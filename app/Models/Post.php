@@ -95,6 +95,14 @@ class Post extends Model
     }
 
     /**
+     * Each post has one action.
+     */
+    public function action()
+    {
+        return $this->hasOne(Action::class);
+    }
+
+    /**
      * Get the reactions associated with this post
      * for the given user ID.
      */

@@ -40,4 +40,12 @@ class Action extends Model
     {
         return $this->belongsTo(Campaign::class);
     }
+
+    /**
+     * An action has many posts.
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
