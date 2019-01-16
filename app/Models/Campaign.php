@@ -42,6 +42,14 @@ class Campaign extends Model
     }
 
     /**
+     * A campaign has many actions.
+     */
+    public function actions()
+    {
+        return $this->hasMany(Action::class);
+    }
+
+    /**
      * Mutator for setting the start_date field.
      *
      * @param string|Carbon $value
