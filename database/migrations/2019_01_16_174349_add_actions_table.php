@@ -17,7 +17,7 @@ class AddActionsTable extends Migration
             $table->increments('id');
             $table->string('name', 255)->index()->comment('The action name of the post.');
             $table->unsignedInteger('campaign_id')->index()->comment('The campaign id the post is associated to.');
-            $table->foreign('campaign_id')->references('id')->on('campaigns')->index()->comment('The campaign id the post is associated to.');
+            $table->foreign('campaign_id')->references('id')->on('campaigns');
             $table->string('post_type', 255)->index()->comment('The type of post the post is (e.g. photo, text, voter-reg, etc).');
             $table->boolean('reportback')->comment('Whether or not the post should count as a reportback.');
             $table->boolean('civic_action')->comment('Whether or not the post should count as a civic action.');
