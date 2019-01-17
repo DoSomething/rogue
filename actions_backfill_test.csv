@@ -1,0 +1,74 @@
+campaign_id,internal_title,type,action,COUNT(*),reportback,civic_action,scholarship_entry,active,noun,verb
+9000,Mirror Messages Run 11,photo,default,2126,1,0,1,1,notes ,posted
+9001,Notes From Shawn run 3,photo,default,2755,1,0,1,0,notes ,posted
+9002,Love It Forward run 1,photo,default,193,1,0,0,0,things ,done
+9003,Support for Survivors run 1,photo,default,341,1,0,1,1,resources,shared
+9003,Support for Survivors run 1,share-social,action-1,5,0,0,0,1,resources,shared
+9003,Support for Survivors run 1,share-social,action-page,7,0,0,0,1,resources,shared
+9003,Support for Survivors run 1,share-social,default,16,1,0,1,1,resources,shared
+9004,Fight Fire With Cookies run 1,photo,default,311,1,0,1,0,cookies,baked
+9005,Lose Your V-Card run 6,share-social,sms,13,0,0,0,0,votes,registered 
+9005,Lose Your V-Card run 6,voter-reg,august-2018-turbovote,8,1,1,0,1,votes,registered
+9005,Lose Your V-Card run 6,voter-reg,december-2018-turbovote,2,1,1,0,1,votes,registered
+9005,Lose Your V-Card run 6,voter-reg,july-2018-turbovote,7,1,1,0,1,votes,registered
+9005,Lose Your V-Card run 6,voter-reg,june-2018-turbovote,1,1,1,0,1,votes,registered
+9005,Lose Your V-Card run 6,voter-reg,may-2018-rockthevote,10,1,1,0,1,votes,registered
+9005,Lose Your V-Card run 6,voter-reg,may-2018-turbovote,34,1,1,0,1,votes,registered
+9005,Lose Your V-Card run 6,voter-reg,november-2018-turbovote,2,1,1,0,1,votes,registered
+9005,Lose Your V-Card run 6,voter-reg,october-2018-turbovote,40,1,1,0,1,votes,registered
+9005,Lose Your V-Card run 6,voter-reg,september-2018-turbovote,6,1,1,0,1,votes,registered
+9006,Lose Your V-Card Run 1,photo,default,10317,0,0,0,0,votes,registered
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
