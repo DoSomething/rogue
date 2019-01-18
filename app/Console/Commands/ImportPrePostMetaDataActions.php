@@ -60,7 +60,7 @@ class ImportPrePostMetaDataActions extends Command
 
             // Create the action if there isn't one already
             if (! $existing_action) {
-                $action = Action::forceCreate([
+                $action = Action::create([
                     'name' => $backfill_action['action'],
                     'campaign_id' => $backfill_action['campaign_id'],
                     'post_type' => $backfill_action['type'],
