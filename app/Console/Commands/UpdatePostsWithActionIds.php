@@ -21,7 +21,7 @@ class UpdatePostsWithActionIds extends Command
      *
      * @var string
      */
-    protected $description = 'Adds action_ids to all posts pre post metadata.';
+    protected $description = 'Adds action_ids to all posts created pre post metadata.';
 
     /**
      * Create a new command instance.
