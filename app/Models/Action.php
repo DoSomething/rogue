@@ -10,13 +10,6 @@ class Action extends Model
     use SoftDeletes;
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at', 'start_date', 'end_date'];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
