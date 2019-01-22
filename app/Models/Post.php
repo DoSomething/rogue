@@ -95,7 +95,7 @@ class Post extends Model
     }
 
     /**
-     * Each post has one action.
+     * Each post belongs to an action.
      */
     public function action()
     {
@@ -205,7 +205,8 @@ class Post extends Model
             'campaign_run_id' => (string) $this->signup->campaign_run_id,
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
-            'action' => $this->action,
+            'action' => $this->action->name,
+            'action_id' => $this->action_id,
             'url' => $this->getMediaUrl(),
             'caption' => $this->text,
             'text' => $this->text,
@@ -234,7 +235,8 @@ class Post extends Model
             'campaign_run_id' => $this->signup->campaign_run_id,
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
-            'action' => $this->action,
+            'action' => $this->action->name,
+            'action_id' => $this->action_id,
             'quantity' => $this->getQuantity(),
             'why_participated' => $this->signup->why_participated,
             // Add cache-busting query string to urls to make sure we get the

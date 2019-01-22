@@ -6,6 +6,7 @@ use Rogue\Models\Post;
 use Rogue\Services\AWS;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
+use Rogue\Models\Action;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
 
@@ -85,6 +86,7 @@ class PostRepository
             'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
             'type' => isset($data['type']) ? $data['type'] : 'photo',
             'action' => isset($data['action']) ? $data['action'] : null,
+            'action_id' => $data['action_id'],
             'url' => $fileUrl,
             'text' => isset($data['text']) ? $data['text'] : null,
             'source' => token()->client(),
@@ -113,7 +115,6 @@ class PostRepository
                 $post->created_at = strtotime($data['created_at']);
             }
         }
-
         $post->save();
 
         // Edit the image if there is one

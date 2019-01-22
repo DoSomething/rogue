@@ -55,9 +55,10 @@ class PostManager
         $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
 
         // Save the new post in Customer.io, via Blink.
-        if (config('features.blink') && $should_send_to_blink) {
+        // if (config('features.blink') && $should_send_to_blink) {
+        dd('hi');
             SendPostToCustomerIo::dispatch($post);
-        }
+        // }
 
         SendPostToQuasar::dispatch($post);
 

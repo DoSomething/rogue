@@ -30,6 +30,7 @@ class PostRequest extends Request
             'northstar_id' => 'nullable|objectid',
             'type' => 'required|string|in:photo,voter-reg,text,share-social',
             'action' => 'required|string',
+            'action_id' => 'required|integer',
             'why_participated' => 'nullable|string',
             'text' => 'nullable|string|max:256',
             'quantity' => 'nullable|integer',
