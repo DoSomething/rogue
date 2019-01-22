@@ -99,7 +99,7 @@ class Post extends Model
      */
     public function action()
     {
-        return $this->hasOne(Action::class);
+        return $this->belongsTo(Action::class);
     }
 
     /**
