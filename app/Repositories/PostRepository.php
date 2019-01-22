@@ -78,6 +78,15 @@ class PostRepository
 
         $signup = Signup::find($signupId);
 
+        // Get the action_id either from the payload or the DB.
+        if (isset($data['action_id'])) {
+            $actionId = $data['action_id'];
+        } else {
+            $type = isset($data['type']) ? $data['type'] : 'photo';
+            $action = Action::where('campaign_id', $signup->campaign_id)->where('post_type', $type)->where('name', $data['action'])->first();
+            $actionId = $action->id;
+        }
+
         // Create a post.
         $post = new Post([
             'signup_id' => $signup->id,
@@ -86,7 +95,7 @@ class PostRepository
             'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
             'type' => isset($data['type']) ? $data['type'] : 'photo',
             'action' => isset($data['action']) ? $data['action'] : null,
-            'action_id' => $data['action_id'],
+            'action_id' => $actionId,
             'url' => $fileUrl,
             'text' => isset($data['text']) ? $data['text'] : null,
             'source' => token()->client(),
@@ -115,6 +124,7 @@ class PostRepository
                 $post->created_at = strtotime($data['created_at']);
             }
         }
+
         $post->save();
 
         // Edit the image if there is one
