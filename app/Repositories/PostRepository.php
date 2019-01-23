@@ -84,7 +84,12 @@ class PostRepository
         } else {
             $type = isset($data['type']) ? $data['type'] : 'photo';
             $action = Action::where('campaign_id', $signup->campaign_id)->where('post_type', $type)->where('name', $data['action'])->first();
-            $actionId = $action->id;
+
+            if (! $action) {
+                // Throw an exception that no action exists... should this be caught at an earlier point though?
+            } else {
+                $actionId = $action->id;
+            }
         }
 
         // Create a post.
@@ -124,7 +129,6 @@ class PostRepository
                 $post->created_at = strtotime($data['created_at']);
             }
         }
-
         $post->save();
 
         // Edit the image if there is one
