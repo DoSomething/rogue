@@ -97,7 +97,7 @@ class Post extends Model
     /**
      * Each post belongs to an action.
      */
-    public function action()
+    public function actionModel()
     {
         return $this->belongsTo(Action::class);
     }
