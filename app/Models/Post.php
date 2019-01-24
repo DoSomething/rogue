@@ -99,7 +99,7 @@ class Post extends Model
      */
     public function actionModel()
     {
-        return $this->belongsTo(Action::class);
+        return $this->belongsTo(Action::class, 'action_id');
     }
 
     /**
