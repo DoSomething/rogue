@@ -196,6 +196,9 @@ class Post extends Model
         // Blink expects quantity to be a number.
         $quantity = $this->quantity === null ? 0 : $this->quantity;
 
+        // @TODO: once we get rid of the action column in the posts table, just use $post->actionModel['name']
+        $action = $post->actionModel ? $post->actionModel['name'] : $post->action;
+
         return [
             'id' => $this->id,
             'signup_id' => $this->signup_id,
@@ -205,7 +208,7 @@ class Post extends Model
             'campaign_run_id' => (string) $this->signup->campaign_run_id,
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
-            'action' => $this->action->name,
+            'action' => $action,
             'action_id' => $this->action_id,
             'url' => $this->getMediaUrl(),
             'caption' => $this->text,
@@ -228,6 +231,9 @@ class Post extends Model
      */
     public function toQuasarPayload()
     {
+        // @TODO: once we get rid of the action column in the posts table, just use $post->actionModel['name']
+        $action = $post->actionModel ? $post->actionModel['name'] : $post->action;
+
         return [
             'id' => $this->id,
             'signup_id' => $this->signup_id,
@@ -235,7 +241,7 @@ class Post extends Model
             'campaign_run_id' => $this->signup->campaign_run_id,
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
-            'action' => $this->action->name,
+            'action' => $action,
             'action_id' => $this->action_id,
             'quantity' => $this->getQuantity(),
             'why_participated' => $this->signup->why_participated,
