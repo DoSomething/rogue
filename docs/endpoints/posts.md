@@ -66,55 +66,53 @@ Example Response:
         {
             "id": 2984,
             "signup_id": 4673,
-            "northstar_id": "5594429fa59dbfc9578b48f4",
+            "type": "photo",
+            "action": "default",
+            "action_id": 1,
+            "northstar_id": "123",
             "media": {
-                "url": "https://s3.amazonaws.com/ds-rogue-qa/uploads/reportback-items/edited_2984.jpeg",
+                "url": "http://rogue.test/images/914",
+                "original_image_url": "http://rogue.test/storage/uploads/reportback-items/476-923df5957838355206574f72d5520f0f-1548449285.jpeg?time=1548449285",
                 "text": null
             },
             "quantity": "12",
-            "tags": [],
             "reactions": {
                 "reacted": true,
                 "total": 2
             },
             "status": "accepted",
-            "source": null,
-            "remote_addr": "0.0.0.0",
             "created_at": "2016-11-30T21:21:24+00:00",
             "updated_at": "2017-08-02T14:11:26+00:00"
         },
         {
             "id": 3655,
             "signup_id": 5787,
-            "northstar_id": "5575e568a59dbf3b7a8b4572",
+            "type": "photo",
+            "action": "default",
+            "action_id": 1,
+            "northstar_id": "1234",
             "media": {
                 "url": "https://s3.amazonaws.com/ds-rogue-qa/uploads/reportback-items/edited_3655.jpeg",
+                "original_image_url": "http://rogue.test/storage/uploads/reportback-items/476-923df5957838355206574f72d5520f0f-1548449285.jpeg?time=1548449285",
                 "text": "Perhaps you CAN be of some assistance, Bill"
             },
             "quantity": "12",
-            "tags": [],
             "reactions": {
                 "reacted": false,
                 "total": 8
             },
             "status": "accepted",
-            "source": null,
-            "remote_addr": "0.0.0.0",
             "created_at": "2016-02-10T16:19:25+00:00",
             "updated_at": "2017-08-02T14:11:35+00:00"
         }
     ],
     "meta": {
-        "pagination": {
-            "total": 53,
-            "count": 2,
-            "per_page": 2,
-            "current_page": 1,
-            "total_pages": 27,
-            "links": {
-                "next": "http://rogue.app/api/v2/posts?filter%5Bcampaign_id%5D=1631%2C12&filter%5Bstatus%5D=accepted&filter%5Bexclude%5D=2962%2C3654&limit=2&as_user=559442cca59dbfc&page=2"
-            }
-        }
+        "cursor": {
+        "current": 1,
+        "prev": null,
+        "next": "http://rogue.test/api/v3/posts?page=2",
+        "count": 20
+      }
     }
 }
 ```
@@ -134,25 +132,25 @@ Example Response:
 ```
 {
   "data": {
-    "id": 332,
-    "signup_id": 289,
-    "northstar_id": "5589c991a59dbfa93d8b45ae",
+    "id": 871,
+    "signup_id": 1330,
+    "type": "photo",
+    "action": "default",
+    "action_id": 1,
+    "northstar_id": "123",
     "media": {
-      "url": "http://localhost/storage/uploads/reportback-items/edited_332.jpeg?time=1509129880",
-      "original_image_url": "http://localhost/storage/uploads/reportback-items/289-923df5957838355206574f72d5520f0f-1509115822.jpeg?time=1509129880",
-      "text": "fe"
-    },
-    "quantity": "12",
-    "tags": [],
+      "url": "http://rogue.test/images/871",
+      "original_image_url": "http://rogue.test/storage/uploads/reportback-items/63517-676c9c02029df581d3668ae869d937b8-1548272527.jpeg?time=1548449546",
+      "text": "Sequi praesentium labore sed velit et velit pariatur."
+      },
+    "quantity": 23,
     "reactions": {
-      "reacted": false,
-      "total": null
+    "reacted": false,
+    "total": 0
     },
     "status": "accepted",
-    "source": "rogue-admin",
-    "remote_addr": "0.0.0.0",
-    "created_at": "2017-10-27T14:50:22+00:00",
-    "updated_at": "2017-10-27T14:50:22+00:00"
+    "created_at": "2019-01-23T19:42:07+00:00",
+    "updated_at": "2019-01-23T19:42:07+00:00"
   }
 }
 ```
@@ -196,7 +194,8 @@ Example Response:
     "id": 96,
     "signup_id": 141,
     "type": "text",
-    "action": "0",
+    "action": "default",
+    "action_id": 1
     "northstar_id": "123",
     "media": {
         "url": null,
@@ -286,6 +285,9 @@ Example response:
   "data": {
       "id": 332,
       "signup_id": 289,
+      "type": "text",
+      "action": "default",
+      "action_id": 1
       "northstar_id": "5589c991a59dbfa93d8b45ae",
       "media": {
           "url": "http://localhost/storage/uploads/reportback-items/edited_332.jpeg?time=1509379493",
