@@ -9,6 +9,7 @@ use Rogue\Models\Signup;
 use Rogue\Models\Action;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PostRepository
 {
@@ -87,6 +88,7 @@ class PostRepository
 
             if (! $action) {
                 // Throw an exception that no action exists... should this be caught at an earlier point though?
+                throw new ModelNotFoundException('Action not found.');
             } else {
                 $actionId = $action->id;
             }
@@ -129,6 +131,7 @@ class PostRepository
                 $post->created_at = strtotime($data['created_at']);
             }
         }
+
         $post->save();
 
         // Edit the image if there is one

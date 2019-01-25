@@ -27,14 +27,11 @@ class PostTransformer extends TransformerAbstract
      */
     public function transform(Post $post)
     {
-        // @TODO: once we get rid of the action column in the posts table, just use $post->actionModel['name']
-        $action = $post->actionModel ? $post->actionModel['name'] : $post->action;
-
         $response = [
             'id' => $post->id,
             'signup_id' => $post->signup_id,
             'type' => $post->type,
-            'action' => $action,
+            'action' => $post->getActionName(),
             'action_id' => $post->action_id,
             'northstar_id' => $post->northstar_id,
             // Add cache-busting query string to urls to make sure we get the
