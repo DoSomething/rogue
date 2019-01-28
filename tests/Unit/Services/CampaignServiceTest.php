@@ -13,16 +13,10 @@ class CampaignServiceTest extends TestCase
 {
     public function testGetCampaignPostStatusCounts()
     {
-        // $testCampaign = [
-        //     'id' => 57,
-        //     'title' => 'Babysitters Club',
-        // ];
-
         $testCampaign = factory(Campaign::class)->create([
                                                     'id' => 57,
                                                     'internal_title' => 'Babysitters Club',
                                                 ]);
-
 
         // Create 10 signups for the campaign.
         factory(Signup::class, 10)->create(['campaign_id' => $testCampaign['id']])
