@@ -67,7 +67,6 @@ class ImportPrePostMetaDataActions extends Command
                     'reportback' => $backfill_action['reportback'],
                     'civic_action' => $backfill_action['civic_action'],
                     'scholarship_entry' => $backfill_action['scholarship_entry'],
-                    'active' => $backfill_action['active'],
                     'noun' => $backfill_action['noun'],
                     'verb' => $backfill_action['verb'],
                 ]);
