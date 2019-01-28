@@ -64,8 +64,7 @@ class PostTest extends TestCase
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Create an action to refer to.
-        $action = factory(Action::class)->create([
-            'campaign_id' => $campaignId, ]);
+        $action = factory(Action::class)->create(['campaign_id' => $campaignId]);
 
         // Mock the Blink API calls.
         $this->mock(Blink::class)
@@ -119,8 +118,7 @@ class PostTest extends TestCase
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
-        $action = factory(Action::class)->create([
-            'campaign_id' => $signup->campaign_id, ]);
+        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -174,8 +172,7 @@ class PostTest extends TestCase
         $text = $this->faker->sentence;
         $why_participated = $this->faker->paragraph;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
-        $action = factory(Action::class)->create([
-            'campaign_id' => $signup->campaign_id, ]);
+        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -225,8 +222,7 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
-        $action = factory(Action::class)->create([
-            'campaign_id' => $signup->campaign_id, ]);
+        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -269,8 +265,7 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
-        $action = factory(Action::class)->create([
-            'campaign_id' => $signup->campaign_id, ]);
+        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -314,8 +309,7 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
-        $action = factory(Action::class)->create([
-            'campaign_id' => $signup->campaign_id, ]);
+        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -359,8 +353,7 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
-        $action = factory(Action::class)->create([
-            'campaign_id' => $signup->campaign_id, ]);
+        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -465,8 +458,7 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
-        $action = factory(Action::class)->create([
-            'campaign_id' => $signup->campaign_id, ]);
+        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -546,8 +538,7 @@ class PostTest extends TestCase
         $signup = factory(Signup::class)->create();
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
-        $action = factory(Action::class)->create([
-            'campaign_id' => $signup->campaign_id, ]);
+        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -590,8 +581,7 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
         $text = $this->faker->sentence;
-        $action = factory(Action::class)->create([
-            'campaign_id' => $signup->campaign_id, ]);
+        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -1253,8 +1243,7 @@ class PostTest extends TestCase
     public function testCreatingVoterRegistrationPost()
     {
         $signup = factory(Signup::class)->create();
-        $action = factory(Action::class)->create([
-            'campaign_id' => $signup->campaign_id, ]);
+        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
 
         $details = [
             'hostname' => 'dosomething.turbovote.org',
