@@ -70,7 +70,4 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
     $this->get('campaigns', 'CampaignsController@index');
     $this->get('campaigns/{campaign}', 'CampaignsController@show');
 
-    // actions
-    $this->post('actions', 'ActionsController@store');
-
 });
