@@ -697,6 +697,7 @@ class PostTest extends TestCase
             'quantity' => $quantity,
         ]);
     }
+
     /**
      * Test for retrieving all posts as non-admin and non-owner.
      * Non-admins/non-owners should not see tags, source, and remote_addr.
