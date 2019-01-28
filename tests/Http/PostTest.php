@@ -653,6 +653,51 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test creating a post without sending an action_id
+     *
+     * @return void
+     */
+    public function testCreatingAPostWithoutSendingActionId()
+    {
+        $signup = factory(Signup::class)->create();
+        $text = $this->faker->sentence;
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id,
+            'name' => 'test-action',
+            'post_type' => 'photo',
+        ]);
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post without sending an action_id!
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
+            'northstar_id'     => $signup->northstar_id,
+            'campaign_id'      => $signup->campaign_id,
+            'type'             => 'photo',
+            'action'           => 'test-action',
+            'quantity'         => $quantity,
+            'why_participated' => $this->faker->paragraph,
+            'text'             => $text,
+            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+        ]);
+
+        $response->assertStatus(201);
+        $this->assertPostStructure($response);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => 'photo',
+            'action' => 'test-action',
+            'action_id' => $action->id,
+            'status' => 'pending',
+            'quantity' => $quantity,
+        ]);
+    }
+    /**
      * Test for retrieving all posts as non-admin and non-owner.
      * Non-admins/non-owners should not see tags, source, and remote_addr.
      *
