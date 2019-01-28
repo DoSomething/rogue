@@ -4,6 +4,7 @@ use Faker\Generator;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Services\AWS;
+use Rogue\Models\Action;
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
@@ -35,6 +36,11 @@ $factory->define(Post::class, function (Generator $faker) {
             return factory(Signup::class)->create([
                 'campaign_id' => $attributes['campaign_id'],
                 'northstar_id' => $attributes['northstar_id'],
+            ])->id;
+        },
+        'action_id' => function (array $attributes) {
+            return factory(Action::class)->create([
+                'campaign_id' => $attributes['campaign_id'],
             ])->id;
         },
         'northstar_id' => $this->faker->northstar_id,
@@ -118,4 +124,24 @@ $factory->defineAs(Campaign::class, 'closed', function () use ($factory) {
         'start_date' => $faker->dateTimeBetween('-12 months', '-6 months'),
         'end_date' => $faker->dateTimeBetween('-3 months', 'now'),
     ]);
+});
+
+// Action Factory
+$factory->define(Action::class, function (Generator $faker) {
+    return [
+        'name' => $faker->randomElement([
+            'default', 'action-1', 'action-page', 'sms', 'august-2018-turbovote',
+            'december-2018-turbovote', 'july-2018-turbovote', 'june-2018-turbovote',
+            'may-2018-rockthevote', 'november-2018-turbovote',
+        ]),
+        'campaign_id' => $faker->randomElement([
+            9000, 9001, 9002, 9003, 9004, 9005,
+        ]),
+        'post_type' => 'photo',
+        'reportback' => 1,
+        'civic_action' => 1,
+        'scholarship_entry' => 1,
+        'noun' => 'things',
+        'verb' => 'done',
+    ];
 });

@@ -1,6 +1,7 @@
 <?php
 
 use Rogue\Models\Post;
+use Rogue\Models\Action;
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
 use Illuminate\Database\Seeder;
@@ -58,5 +59,8 @@ class DatabaseSeeder extends Seeder
 
         // And two campaigns with no activity yet.
         factory(Campaign::class, 2)->create();
+
+        // Create four actions.
+        factory(Action::class, 4)->create();
     }
 }

@@ -5,7 +5,9 @@ namespace Tests\Http;
 use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\User;
+use Rogue\Models\Action;
 use Rogue\Models\Signup;
+use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
 use Rogue\Services\Fastly;
 use DoSomething\Gateway\Blink;
@@ -55,11 +57,15 @@ class PostTest extends TestCase
     public function testCreatingAPostAndSignup()
     {
         $northstarId = $this->faker->northstar_id;
-        $campaignId = $this->faker->randomNumber(4);
+        $campaignId = factory(Campaign::class)->create()->id;
         $quantity = $this->faker->numberBetween(10, 1000);
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+
+        // Create an action to refer to.
+        $action = factory(Action::class)->create([
+            'campaign_id' => $campaignId]);
 
         // Mock the Blink API calls.
         $this->mock(Blink::class)
@@ -71,6 +77,7 @@ class PostTest extends TestCase
             'campaign_id'      => $campaignId,
             'type'             => 'photo',
             'action'           => 'test-action',
+            'action_id'        => $action->id,
             'quantity'         => $quantity,
             'why_participated' => $why_participated,
             'text'             => $text,
@@ -93,6 +100,7 @@ class PostTest extends TestCase
             'campaign_id' => $campaignId,
             'type' => 'photo',
             'action' => 'test-action',
+            'action_id' => $action->id,
             'status' => 'pending',
             'quantity' => $quantity,
             'details' => json_encode($details),
@@ -111,6 +119,8 @@ class PostTest extends TestCase
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -121,6 +131,7 @@ class PostTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'type'             => 'photo',
             'action'           => 'test-action',
+            'action_id'        => $action->id,
             'quantity'         => $quantity,
             'why_participated' => $why_participated,
             'text'             => $text,
@@ -137,6 +148,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'photo',
             'action' => 'test-action',
+            'action_id' => $action->id,
             'status' => 'pending',
             'quantity' => $quantity,
             'details' => json_encode($details),
@@ -162,6 +174,8 @@ class PostTest extends TestCase
         $text = $this->faker->sentence;
         $why_participated = $this->faker->paragraph;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -172,6 +186,7 @@ class PostTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'type'             => 'text',
             'action'           => 'test-action',
+            'action_id'        => $action->id,
             'quantity'         => $quantity,
             'why_participated' => $why_participated,
             'text'             => $text,
@@ -187,6 +202,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'text',
             'action' => 'test-action',
+            'action_id' => $action->id,
             'status' => 'pending',
             'quantity' => $quantity,
             'details' => json_encode($details),
@@ -209,6 +225,8 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -219,6 +237,7 @@ class PostTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'type'             => 'voter-reg',
             'action'           => 'test-action',
+            'action_id'        => $action->id,
             'quantity'         => null,
             'text'             => null,
             'details'          => json_encode($details),
@@ -233,6 +252,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'voter-reg',
             'action' => 'test-action',
+            'action_id' => $action->id,
             'status' => 'pending',
             'details' => json_encode($details),
         ]);
@@ -249,6 +269,8 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -259,6 +281,7 @@ class PostTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'type'             => 'share-social',
             'action'           => 'test-action',
+            'action_id'        => $action->id,
             'quantity'         => $quantity,
             'text'             => $text,
             'details'          => json_encode($details),
@@ -273,6 +296,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'share-social',
             'action' => 'test-action',
+            'action_id' => $action->id,
             // Social share posts should be auto-accepted (unless an admin sends a custom status).
             'status' => 'accepted',
             'details' => json_encode($details),
@@ -290,6 +314,8 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -300,6 +326,7 @@ class PostTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'type'             => 'share-social',
             'action'           => 'test-action',
+            'action_id'        => $action->id,
             'quantity'         => $quantity,
             'text'             => $text,
             'details'          => json_encode($details),
@@ -314,6 +341,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'share-social',
             'action' => 'test-action',
+            'action_id' => $action->id,
             // Social share posts should be auto-accepted (unless an admin sends a custom status).
             'status' => 'accepted',
             'details' => json_encode($details),
@@ -331,6 +359,8 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -341,6 +371,7 @@ class PostTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'type'             => 'share-social',
             'action'           => 'test-action',
+            'action_id'        => $action->id,
             'quantity'         => $quantity,
             'text'             => $text,
             'details'          => json_encode($details),
@@ -356,6 +387,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'share-social',
             'action' => 'test-action',
+            'action_id' => $action->id,
             // Social share posts should be pending since the admin sent a custom status.
             'status' => 'pending',
             'details' => json_encode($details),
@@ -433,6 +465,8 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -443,6 +477,7 @@ class PostTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'type'             => 'photo',
             'action'           => 'test-action',
+            'action_id'        => $action->id,
             'quantity'         => $quantity,
             'why_participated' => $this->faker->paragraph,
             'text'             => $text,
@@ -459,6 +494,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'photo',
             'action' => 'test-action',
+            'action_id' => $action->id,
             'status' => 'pending',
             'quantity' => $quantity,
             'details' => json_encode($details),
@@ -474,6 +510,7 @@ class PostTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'type'             => 'photo',
             'action'           => 'test-action',
+            'action_id'        => $action->id,
             'quantity'         => $secondQuantity,
             'text'             => $secondText,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
@@ -489,6 +526,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'photo',
             'action' => 'test-action',
+            'action_id' => $action->id,
             'status' => 'pending',
             'quantity' => $secondQuantity,
             'details' => json_encode($secondDetails),
@@ -508,6 +546,8 @@ class PostTest extends TestCase
         $signup = factory(Signup::class)->create();
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -518,6 +558,7 @@ class PostTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'type'             => 'photo',
             'action'           => 'test-action',
+            'action_id'        => $action->id,
             'quantity'         => null,
             'text'             => $text,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
@@ -533,6 +574,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'photo',
             'action' => 'test-action',
+            'action_id' => $action->id,
             'status' => 'pending',
             'quantity' => null,
             'details' => json_encode($details),
@@ -548,6 +590,8 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
         $text = $this->faker->sentence;
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
@@ -558,6 +602,7 @@ class PostTest extends TestCase
             'campaign_id'      => $signup->campaign_id,
             'type'             => 'photo',
             'action'           => 'test-action',
+            'action_id'        => $action->id,
             'text'             => $text,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
         ]);
@@ -571,6 +616,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'photo',
             'action' => 'test-action',
+            'action_id' => $action->id,
             'status' => 'pending',
             'quantity' => null,
             'details' => null,
@@ -1161,6 +1207,8 @@ class PostTest extends TestCase
     public function testCreatingVoterRegistrationPost()
     {
         $signup = factory(Signup::class)->create();
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id]);
 
         $details = [
             'hostname' => 'dosomething.turbovote.org',
@@ -1185,6 +1233,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'voter-reg',
             'action' => 'test-action',
+            'action_id' => $action->id,
             'status' => 'register-form',
             'details' => json_encode($details),
         ]);
@@ -1198,6 +1247,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
             'type' => 'voter-reg',
             'action' => 'test-action',
+            'action_id' => $action->id,
             'status' => 'register-form',
             'details' => json_encode($details),
         ]);
