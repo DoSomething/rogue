@@ -89,9 +89,9 @@ class PostRepository
             if (! $action) {
                 // Throw an exception that no action exists... should this be caught at an earlier point though?
                 throw new ModelNotFoundException('Action not found.');
-            } else {
-                $actionId = $action->id;
             }
+
+            $actionId = $action->id;
         }
 
         // Create a post.
