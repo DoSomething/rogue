@@ -56,7 +56,7 @@ class ImportPrePostMetaDataActions extends Command
 
         foreach ($backfill_actions as $backfill_action) {
             // See if the action exists
-            $existing_action = Action::where('campaign_id', $backfill_action['campaign_id'])->where('name', $backfill_action['action'])->first();
+            $existing_action = Action::where('campaign_id', $backfill_action['campaign_id'])->where('name', $backfill_action['action'])->where('post_type', $backfill_action['type'])->first();
 
             // Create the action if there isn't one already
             if (! $existing_action) {
