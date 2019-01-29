@@ -87,7 +87,6 @@ class PostRepository
             $action = Action::where('campaign_id', $signup->campaign_id)->where('post_type', $type)->where('name', $data['action'])->first();
 
             if (! $action) {
-                // Throw an exception that no action exists... should this be caught at an earlier point though?
                 throw new ModelNotFoundException('Action not found.');
             }
 
