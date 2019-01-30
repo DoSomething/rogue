@@ -4,10 +4,12 @@ namespace Rogue\Repositories;
 
 use Rogue\Models\Post;
 use Rogue\Services\AWS;
+use Rogue\Models\Action;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PostRepository
 {
@@ -77,6 +79,20 @@ class PostRepository
 
         $signup = Signup::find($signupId);
 
+        // Get the action_id either from the payload or the DB.
+        if (isset($data['action_id'])) {
+            $actionId = $data['action_id'];
+        } else {
+            $type = isset($data['type']) ? $data['type'] : 'photo';
+            $action = Action::where('campaign_id', $signup->campaign_id)->where('post_type', $type)->where('name', $data['action'])->first();
+
+            if (! $action) {
+                throw new ModelNotFoundException('Action not found.');
+            }
+
+            $actionId = $action->id;
+        }
+
         // Create a post.
         $post = new Post([
             'signup_id' => $signup->id,
@@ -85,6 +101,7 @@ class PostRepository
             'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
             'type' => isset($data['type']) ? $data['type'] : 'photo',
             'action' => isset($data['action']) ? $data['action'] : null,
+            'action_id' => $actionId,
             'url' => $fileUrl,
             'text' => isset($data['text']) ? $data['text'] : null,
             'source' => token()->client(),

@@ -43,7 +43,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'type', 'action', 'details', 'quantity', 'url', 'text', 'status', 'source', 'source_details'];
+    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'type', 'action', 'action_id', 'details', 'quantity', 'url', 'text', 'status', 'source', 'source_details'];
 
     /**
      * Attributes that can be queried when filtering.
@@ -95,11 +95,11 @@ class Post extends Model
     }
 
     /**
-     * Each post has one action.
+     * Each post belongs to an action.
      */
-    public function action()
+    public function actionModel()
     {
-        return $this->hasOne(Action::class);
+        return $this->belongsTo(Action::class, 'action_id');
     }
 
     /**
@@ -205,7 +205,8 @@ class Post extends Model
             'campaign_run_id' => (string) $this->signup->campaign_run_id,
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
-            'action' => $this->action,
+            'action' => $this->getActionName(),
+            'action_id' => $this->action_id,
             'url' => $this->getMediaUrl(),
             'caption' => $this->text,
             'text' => $this->text,
@@ -234,7 +235,8 @@ class Post extends Model
             'campaign_run_id' => $this->signup->campaign_run_id,
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
-            'action' => $this->action,
+            'action' => $this->getActionName(),
+            'action_id' => $this->action_id,
             'quantity' => $this->getQuantity(),
             'why_participated' => $this->signup->why_participated,
             // Add cache-busting query string to urls to make sure we get the
@@ -261,6 +263,15 @@ class Post extends Model
                 'type' => 'post',
             ],
         ];
+    }
+
+    /**
+     * Get the post's action name.
+     * @TODO: This function should be deleted once we delete the action column from the posts table.
+     */
+    public function getActionName()
+    {
+        return $this->actionModel ? $this->actionModel['name'] : $this->action;
     }
 
     /**
