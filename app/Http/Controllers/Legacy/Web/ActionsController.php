@@ -66,4 +66,16 @@ class ActionsController extends Controller
         info('action_updated', ['id' => $action->id]);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Rogue\Models\Action  $campaign
+     */
+    public function destroy(Action $action)
+    {
+        $action->delete();
+
+        // Log that an action was deleted.
+        info('action_deleted', ['id' => $action->id]);
+    }
 }
