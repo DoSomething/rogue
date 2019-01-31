@@ -1,26 +1,21 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace Rogue\Http\Controllers\Legacy\Web;
 
 use Rogue\Models\Action;
 use Illuminate\Http\Request;
 use Rogue\Http\Controllers\Controller;
 
 
-class ActionsController extends ApiController
+class ActionsController extends Controller
 {
-    /**
-     * @var Rogue\Http\Transformers\ActionTransformer;
-     */
-    protected $transformer;
-
     /**
      * Create a controller instance.
      */
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin,staff', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+        // $this->middleware('auth');
+        // $this->middleware('role:admin,staff', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
     }
 
     /**
@@ -32,14 +27,13 @@ class ActionsController extends ApiController
     {
         $this->validate($request, [
             'name' => 'required|string',
-            'campaign_id' => 'required|ingeger|unique:campaigns'
+            'campaign_id' => 'required|integer|exists:campaigns,id',
             'post_type' => 'required|string',
             'reportback' => 'required|boolean',
             'civic_action' => 'required|boolean',
             'scholarship_entry' => 'required|boolean',
-            'active' => 'nullable|boolean',
             'noun' => 'required|string',
-            'vert' => 'required|string',
+            'verb' => 'required|string',
         ]);
 
         $action = Action::create($request->all());
