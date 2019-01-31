@@ -41,4 +41,29 @@ class ActionsController extends Controller
         // Log that a action was created.
         info('action_created', ['id' => $action->id]);
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Rogue\Models\Action  $action
+     */
+    public function update(Request $request, Action $action)
+    {
+        $this->validate($request, [
+            'name' => 'string',
+            'post_type' => 'string',
+            'reportback' => 'boolean',
+            'civic_action' => 'boolean',
+            'scholarship_entry' => 'boolean',
+            'noun' => 'string',
+            'verb' => 'string',
+        ]);
+
+        $action->update($request->all());
+
+        // Log that an action was updated.
+        info('action_updated', ['id' => $action->id]);
+    }
+
 }
