@@ -9,7 +9,7 @@ use Rogue\Http\Transformers\CampaignTransformer;
 class CampaignsController extends ApiController
 {
     /**
-     * @var Rogue\Http\Transformers\SignupTransformer;
+     * @var Rogue\Http\Transformers\CampaignTransformer;
      */
     protected $transformer;
 
