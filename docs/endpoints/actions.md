@@ -57,32 +57,30 @@ Example Response:
         }
     }
 }
+```
 
 ## Retrieve A Specific Action
-```
 
+```
 GET /api/v3/actions/:action_id
-
 ```
+
 Example Response:
-```
 
+```
 {
-"data": {
-"id": 8,
-"name": "action-page",
-"campaign_id": 9003,
-"post_type": "share-social",
-"reportback": 0,
-"civic_action": 0,
-"scholarship_entry": 0,
-"noun": "resources",
-"verb": "shared",
-"created_at": "2019-01-23T21:23:42+00:00",
-"updated_at": "2019-01-23T21:23:42+00:00"
+  "data": {
+  "id": 8,
+  "name": "action-page",
+  "campaign_id": 9003,
+  "post_type": "share-social",
+  "reportback": 0,
+  "civic_action": 0,
+  "scholarship_entry": 0,
+  "noun": "resources",
+  "verb": "shared",
+  "created_at": "2019-01-23T21:23:42+00:00",
+  "updated_at": "2019-01-23T21:23:42+00:00"
+  }
 }
-}
-
-```
-
 ```
