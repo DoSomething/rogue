@@ -39,3 +39,9 @@ button.delete {
     display: inline;
   }
 }
+
+.form-item.-half {
+  float: left;
+  width: 50%;
+  padding-right: $base-spacing / 2;
+}
