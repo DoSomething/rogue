@@ -6,7 +6,6 @@ use Tests\TestCase;
 use Rogue\Models\Action;
 use Rogue\Models\Campaign;
 
-
 class ActionTest extends TestCase
 {
     /**

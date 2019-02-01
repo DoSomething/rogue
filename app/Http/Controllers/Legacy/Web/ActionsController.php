@@ -6,7 +6,6 @@ use Rogue\Models\Action;
 use Illuminate\Http\Request;
 use Rogue\Http\Controllers\Controller;
 
-
 class ActionsController extends Controller
 {
     /**
