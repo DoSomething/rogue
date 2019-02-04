@@ -2,8 +2,9 @@ import React from 'react';
 import { map } from 'lodash';
 import PropTypes from 'prop-types';
 
-import CampaignRow from './CampaignRow';
 import EventRow from './EventRow';
+import CampaignRow from './CampaignRow';
+import CampaignIdRow from './CampaignIdRow';
 import './table.scss';
 
 class Table extends React.Component {
@@ -18,6 +19,8 @@ class Table extends React.Component {
     const rows = this.props.data.map((content, index) => {
       if (this.props.type === 'campaigns') {
         return <CampaignRow key={index} data={content} />;
+      } else if (this.props.type === 'campaignIds') {
+        return <CampaignIdRow key={index} data={content} />;
       }
 
       return <EventRow key={index} data={content} />;

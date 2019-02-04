@@ -10,6 +10,7 @@ import UserOverview from './components/UserOverview';
 import CampaignInbox from './components/CampaignInbox';
 import CampaignSingle from './components/CampaignSingle';
 import CampaignOverview from './components/CampaignOverview';
+import CampaignIdOverview from './components/CampaignIdOverview';
 
 // Display environment badge on local, dev, or QA:
 require('environment-badge')();
@@ -17,6 +18,7 @@ require('environment-badge')();
 ready(() => {
   mountContainer({
     CampaignOverview,
+    CampaignIdOverview,
     CampaignInbox,
     CampaignSingle,
     UserOverview,

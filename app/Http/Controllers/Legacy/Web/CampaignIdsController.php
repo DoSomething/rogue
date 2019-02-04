@@ -23,9 +23,8 @@ class CampaignIdsController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::orderBy('created_at', 'desc')->paginate(25);
-
-        return view('campaign-ids.index')->with('campaigns', $campaigns);
+        $campaigns = Campaign::orderBy('created_at', 'desc')->get()->toArray();
+        return view('pages.campaign_id_overview')->with('state', $campaigns);
     }
 
     /**
