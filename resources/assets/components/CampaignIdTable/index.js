@@ -16,10 +16,7 @@ class CampaignIdTable extends React.Component {
         </p>
 
         <div className="container__block -narrow">
-          <a
-            className="button -secondary"
-            href="{{ route('campaign-ids.create') }}"
-          >
+          <a className="button -secondary" href={`/campaign-ids/create`}>
             New Campaign ID
           </a>
         </div>

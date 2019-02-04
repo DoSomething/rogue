@@ -16,7 +16,7 @@ class CampaignIdRow extends React.Component {
         title: campaign.id,
       },
       {
-        url: null,
+        url: `/campaign-ids/${campaign.id}`,
         title: campaign.internal_title,
       },
       {
