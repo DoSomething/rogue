@@ -9,6 +9,21 @@ class CampaignIdTable extends React.Component {
 
     return (
       <div className="table-responsive container__block">
+        <h1>All Campaign IDs</h1>
+        <p>
+          These are all the campaign IDs associated with their campaign name,
+          start date, and if applicable, end date.
+        </p>
+
+        <div className="container__block -narrow">
+          <a
+            className="button -secondary"
+            href="{{ route('campaign-ids.create') }}"
+          >
+            New Campaign ID
+          </a>
+        </div>
+
         <Table
           className="table"
           headings={[
@@ -19,7 +34,7 @@ class CampaignIdTable extends React.Component {
             'Start Date',
             'End Date',
           ]}
-          data={[campaigns]}
+          data={Object.values(campaigns)}
           type="campaignIds"
         />
       </div>
@@ -28,7 +43,7 @@ class CampaignIdTable extends React.Component {
 }
 
 CampaignIdTable.propTypes = {
-  campaigns: PropTypes.array,
+  campaigns: PropTypes.object,
 };
 
 CampaignIdTable.defaultProps = {
