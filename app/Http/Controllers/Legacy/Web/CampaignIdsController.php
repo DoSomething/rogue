@@ -75,13 +75,17 @@ class CampaignIdsController extends Controller
     }
 
     /**
-     * Show a specific campaign page.
+     * Show a specific campaign page and it's actions.
      *
      * @param  \Rogue\Models\Campaign  $campaign
      */
     public function show(Campaign $campaign)
     {
-        return view('campaign-ids.show')->with('campaign', $campaign);
+        return view('pages.campaign_id_single')
+            ->with('state', [
+                'campaign' => $campaign,
+                'actions' => $campaign->actions,
+        ]);
     }
 
     /**
