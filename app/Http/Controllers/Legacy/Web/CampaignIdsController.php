@@ -85,7 +85,8 @@ class CampaignIdsController extends Controller
             ->with('state', [
                 'campaign' => $campaign,
                 'actions' => $campaign->actions,
-        ]);
+            ]
+        );
     }
 
     /**

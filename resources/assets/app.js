@@ -9,6 +9,7 @@ import Signup from './components/Signup';
 import UserOverview from './components/UserOverview';
 import CampaignInbox from './components/CampaignInbox';
 import CampaignSingle from './components/CampaignSingle';
+import CampaignIdSingle from './components/CampaignIdSingle';
 import CampaignOverview from './components/CampaignOverview';
 import CampaignIdOverview from './components/CampaignIdOverview';
 
@@ -20,6 +21,7 @@ ready(() => {
     CampaignOverview,
     CampaignIdOverview,
     CampaignInbox,
+    CampaignIdSingle,
     CampaignSingle,
     UserOverview,
     Signup,
