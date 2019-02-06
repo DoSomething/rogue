@@ -13,27 +13,30 @@ class CampaignIdRow extends React.Component {
     const row = [
       {
         url: null,
-        title: campaign.id,
+        title: campaign ? campaign.id : 'Campaign Not Found',
       },
       {
-        url: `/campaign-ids/${campaign.id}`,
-        title: campaign.internal_title,
+        url: campaign ? `/campaign-ids/${campaign.id}` : '/campaign-ids',
+        title: campaign ? campaign.internal_title : 'Campaign Not Found',
       },
       {
         url: null,
-        title: campaign.cause,
+        title: campaign ? campaign.cause : 'Campaign Not Found',
       },
       {
-        url: campaign.impact_doc,
+        url: campaign ? campaign.impact_doc : '/campaign-ids',
         title: 'Read',
       },
       {
         url: null,
-        title: new Date(campaign.start_date).toString(),
+        title: campaign ? new Date(campaign.start_date).toString() : '-',
       },
       {
         url: null,
-        title: campaign.end_date ? new Date(campaign.end_date).toString() : '-',
+        title:
+          campaign && campaign.end_date
+            ? new Date(campaign.end_date).toString()
+            : '-',
       },
     ];
 

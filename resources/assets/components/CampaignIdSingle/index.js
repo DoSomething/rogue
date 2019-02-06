@@ -1,8 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './campaignidsingle.scss';
 
 class CampaignIdSingle extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const campaign = this.props.campaign;
     const actions = this.props.actions;
@@ -41,11 +46,13 @@ class CampaignIdSingle extends React.Component {
             <p>–</p>
           )}
           <h3>Start Date</h3>
-          <p>{new Date(campaign.start_date).toString()}</p>
+          <p>{new Date(campaign.start_date).toDateString()}</p>
 
           <h3>End Date</h3>
           <p>
-            {campaign.end_date ? new Date(campaign.end_date).toString() : '–'}
+            {campaign.end_date
+              ? new Date(campaign.end_date).toDateString()
+              : '–'}
           </p>
         </div>
         <div className="container__block -narrow">
@@ -53,14 +60,29 @@ class CampaignIdSingle extends React.Component {
             Edit this campaign
           </a>
           <p className="footnote">
-            Last updated: {new Date(campaign.updated_at).toString()}
+            Last updated:{' '}
+            {new Date(campaign.updated_at).toLocaleString('en-US', {
+              timeZone: 'America/New_York',
+            })}
             <br />
-            Created: {new Date(campaign.created_at).toString()}
+            Created:{' '}
+            {new Date(campaign.created_at).toLocaleString('en-US', {
+              timeZone: 'America/New_York',
+            })}
           </p>
         </div>
       </div>
     );
   }
 }
+
+CampaignIdSingle.propTypes = {
+  campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  actions: PropTypes.array,
+};
+
+CampaignIdSingle.defaultProps = {
+  actions: null,
+};
 
 export default CampaignIdSingle;
