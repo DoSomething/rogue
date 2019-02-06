@@ -29,11 +29,11 @@ class CampaignIdRow extends React.Component {
       },
       {
         url: null,
-        title: campaign.start_date,
+        title: new Date(campaign.start_date).toString(),
       },
       {
         url: null,
-        title: campaign.end_date ? campaign.end_date : '-',
+        title: campaign.end_date ? new Date(campaign.end_date).toString() : '-',
       },
     ];
 

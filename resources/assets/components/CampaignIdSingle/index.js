@@ -41,19 +41,21 @@ class CampaignIdSingle extends React.Component {
             <p>–</p>
           )}
           <h3>Start Date</h3>
-          <p>{campaign.start_date}</p>
+          <p>{new Date(campaign.start_date).toString()}</p>
 
           <h3>End Date</h3>
-          <p>{campaign.end_date ? campaign.end_date : '–'}</p>
+          <p>
+            {campaign.end_date ? new Date(campaign.end_date).toString() : '–'}
+          </p>
         </div>
         <div className="container__block -narrow">
           <a className="button" href={`/campaign-ids/${campaign.id}/edit`}>
             Edit this campaign
           </a>
           <p className="footnote">
-            Last updated: {campaign.updated_at}
+            Last updated: {new Date(campaign.updated_at).toString()}
             <br />
-            Created: {campaign.created_at}
+            Created: {new Date(campaign.created_at).toString()}
           </p>
         </div>
       </div>
