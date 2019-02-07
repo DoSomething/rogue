@@ -15,7 +15,7 @@ class CampaignIdSingle extends React.Component {
     return (
       <div className="container -padded">
         <div className="container__block -narrow -half">
-          <h2>Campaign Information</h2>
+          <h3>Campaign Information</h3>
         </div>
         <div className="container__block -narrow -half">
           <a
@@ -26,16 +26,16 @@ class CampaignIdSingle extends React.Component {
           </a>
         </div>
         <div className="container__block -narrow">
-          <h3>Internal Campaign Name</h3>
+          <h4>Internal Campaign Name</h4>
           <p>{campaign.internal_title}</p>
 
-          <h3>Campaign ID</h3>
+          <h4>Campaign ID</h4>
           <p>{campaign.id}</p>
 
-          <h3>Cause Area</h3>
+          <h4>Cause Area</h4>
           <p>{campaign.cause ? campaign.cause : '–'}</p>
 
-          <h3>Proof of Impact</h3>
+          <h4>Proof of Impact</h4>
           {campaign.impact_doc ? (
             <p>
               <a href={campaign.impact_doc} target="_blank">
@@ -45,10 +45,10 @@ class CampaignIdSingle extends React.Component {
           ) : (
             <p>–</p>
           )}
-          <h3>Start Date</h3>
+          <h4>Start Date</h4>
           <p>{new Date(campaign.start_date).toDateString()}</p>
 
-          <h3>End Date</h3>
+          <h4>End Date</h4>
           <p>
             {campaign.end_date
               ? new Date(campaign.end_date).toDateString()
@@ -69,6 +69,15 @@ class CampaignIdSingle extends React.Component {
             {new Date(campaign.created_at).toLocaleString('en-US', {
               timeZone: 'America/New_York',
             })}
+          </p>
+        </div>
+
+        <div className="container__block -narrow">
+          <h3>Campaign Actions</h3>
+          <p>
+            Each action in your campaign requires a different set of metadata,
+            to determine how it will be treated by Rogue. Use this Action ID in
+            Contentful to link user submissions in Rogue.
           </p>
         </div>
       </div>
