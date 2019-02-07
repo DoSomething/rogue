@@ -35,6 +35,7 @@ class ActionTest extends TestCase
         // Make sure the action is persisted.
         $this->assertDatabaseHas('actions', [
             'name' => $actionName,
+            'campaign_id' => $campaign->id,
         ]);
     }
 
@@ -47,19 +48,13 @@ class ActionTest extends TestCase
     public function testActionIndex()
     {
         // Create five actions.
-        factory(Action::class, 5)->create();
-
-        // Create a few more for a different campaign.
-        factory(Action::class, 3)->create();
-
-        // And one more for good measure.
-        factory(Action::class, 2)->create();
+        $first = factory(Action::class, 5)->create();
 
         $response = $this->getJson('api/v3/actions');
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
-        $this->assertEquals(10, $decodedResponse['meta']['pagination']['count']);
+        $this->assertEquals(5, $decodedResponse['meta']['pagination']['count']);
     }
 
     /**
