@@ -15,8 +15,7 @@ class CampaignIdsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:admin,staff', ['only' => ['index', 'show']]);
-        $this->middleware('role:admin', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+        $this->middleware('role:admin,staff', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
     }
 
     /**

@@ -2,14 +2,14 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Models\Campaign;
+use Rogue\Models\Action;
 use Illuminate\Http\Request;
-use Rogue\Http\Transformers\CampaignTransformer;
+use Rogue\Http\Transformers\ActionTransformer;
 
-class CampaignsController extends ApiController
+class ActionsController extends ApiController
 {
     /**
-     * @var Rogue\Http\Transformers\CampaignTransformer;
+     * @var Rogue\Http\Transformers\ActionTransformer;
      */
     protected $transformer;
 
@@ -18,7 +18,7 @@ class CampaignsController extends ApiController
      */
     public function __construct()
     {
-        $this->transformer = new CampaignTransformer;
+        $this->transformer = new ActionTransformer;
     }
 
     /**
@@ -28,10 +28,10 @@ class CampaignsController extends ApiController
      */
     public function index(Request $request)
     {
-        $query = $this->newQuery(Campaign::class);
+        $query = $this->newQuery(Action::class);
 
         $filters = $request->query('filter');
-        $query = $this->filter($query, $filters, Campaign::$indexes);
+        $query = $this->filter($query, $filters, Action::$indexes);
 
         return $this->paginatedCollection($query, $request);
     }
@@ -39,11 +39,11 @@ class CampaignsController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \Rogue\Models\Campaign  $campaign
+     * @param  \Rogue\Models\Action  $action
      * @return \Illuminate\Http\Response
      */
-    public function show(Campaign $campaign)
+    public function show(Action $action)
     {
-        return $this->item($campaign);
+        return $this->item($action);
     }
 }

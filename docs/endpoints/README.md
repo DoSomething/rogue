@@ -49,7 +49,14 @@ These endpoints use OAuth 2 to authenticate. [More information here](https://git
 
 #### Campaigns
 
-| Endpoint                             | Functionality                                           |
-| ------------------------------------ | ------------------------------------------------------- |
-| `GET /api/v3/campaigns`              | [Get campaigns](posts.md#retrieve-all-campaigns)        |
-| `GET /api/v3/campaigns/:campaign_id` | [Get a campaign](posts.md#retrieve-a-specific-campaign) |
+| Endpoint                             | Functionality                                               |
+| ------------------------------------ | ----------------------------------------------------------- |
+| `GET /api/v3/campaigns`              | [Get campaigns](campaigns.md#retrieve-all-campaigns)        |
+| `GET /api/v3/campaigns/:campaign_id` | [Get a campaign](campaigns.md#retrieve-a-specific-campaign) |
+
+#### Actions
+
+| Endpoint                         | Functionality                                          |
+| -------------------------------- | ------------------------------------------------------ |
+| `GET /api/v3/actions`            | [Get actions](actions.md#retrieve-all-actions)         |
+| `GET /api/v3/actions/:action_id` | [Get an action](actions.md#retrieve-a-specific-action) |
