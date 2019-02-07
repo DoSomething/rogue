@@ -134,9 +134,7 @@ $factory->define(Action::class, function (Generator $faker) {
             'december-2018-turbovote', 'july-2018-turbovote', 'june-2018-turbovote',
             'may-2018-rockthevote', 'november-2018-turbovote',
         ]),
-        'campaign_id' => $faker->randomElement([
-            9000, 9001, 9002, 9003, 9004, 9005,
-        ]),
+        'campaign_id' => factory(Campaign::class)->create()->id,
         'post_type' => 'photo',
         'reportback' => 1,
         'civic_action' => 1,

@@ -46,11 +46,8 @@ class ActionTest extends TestCase
      */
     public function testActionIndex()
     {
-        // Create a campaign that the actions will belong to.
-        $campaign = factory(Campaign::class)->create();
-
         // Create five actions.
-        factory(Action::class, 5)->create(['campaign_id' => $campaign->id]);
+        factory(Action::class, 5)->create();
 
         $response = $this->getJson('api/v3/actions');
         $decodedResponse = $response->decodeResponseJson();
@@ -67,16 +64,11 @@ class ActionTest extends TestCase
      */
     public function testActionShow()
     {
-        // Create a campaign that the action will belong to.
-        $campaign = factory(Campaign::class)->create();
-
         // Create five actions.
-        factory(Action::class, 5)->create(['campaign_id' => $campaign->id]);
+        factory(Action::class, 5)->create();
 
         // Create 1 specific action to search for.
-        $secondCampaign = factory(Campaign::class)->create();
-
-        $action = factory(Action::class)->create(['campaign_id' => $secondCampaign->id]);
+        $action = factory(Action::class)->create();
 
         $response = $this->getJson('api/v3/actions/' . $action->id);
         $decodedResponse = $response->decodeResponseJson();
@@ -93,11 +85,8 @@ class ActionTest extends TestCase
      */
     public function testUpdatingAnAction()
     {
-        // Create a campaign that the action will belong to.
-        $campaign = factory(Campaign::class)->create();
-
         // Create an action.
-        $action = factory(Action::class)->create(['campaign_id' => $campaign->id]);
+        $action = factory(Action::class)->create();
 
         // Update the name.
         $this->actingAsAdmin()->patchJson('actions/' . $action->id, [
@@ -120,11 +109,8 @@ class ActionTest extends TestCase
      */
     public function testDeleteAnAction()
     {
-        // Create a campaign that the action will belong to.
-        $campaign = factory(Campaign::class)->create();
-
         // Create an action.
-        $action = factory(Action::class)->create(['campaign_id' => $campaign->id]);
+        $action = factory(Action::class)->create();
 
         // Delete the action.
         $this->actingAsAdmin()->deleteJson('actions/' . $action->id);
