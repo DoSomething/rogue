@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { map, isEmpty } from 'lodash';
 
 import './campaignidsingle.scss';
+
+import Action from '../Action';
 
 class CampaignIdSingle extends React.Component {
   constructor(props) {
@@ -79,6 +82,20 @@ class CampaignIdSingle extends React.Component {
             to determine how it will be treated by Rogue. Use this Action ID in
             Contentful to link user submissions in Rogue.
           </p>
+          {!isEmpty(actions)
+            ? map(actions, (action, key) => {
+                return <Action key={key} action={action} />;
+              })
+            : null}
+        </div>
+
+        <div className="container__block -narrow">
+          <a
+            className="button -secondary"
+            href={`/campaigns/${campaign.id}/inbox`}
+          >
+            Add Action
+          </a>
         </div>
       </div>
     );
