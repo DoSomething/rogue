@@ -5,10 +5,41 @@ import { map, isEmpty } from 'lodash';
 import './campaignidsingle.scss';
 
 import Action from '../Action';
+import UploaderModal from '../UploaderModal';
+// import CreateActionModal from '../CreateActionModal';
 
 class CampaignIdSingle extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      displayCreateActionModal: false,
+    };
+
+    this.showCreateActionModal = this.showCreateActionModal.bind(this);
+    this.hideCreateActionModal = this.hideCreateActionModal.bind(this);
+  }
+
+  // Open the create action modal
+  showCreateActionModal(campaign, event) {
+    event.preventDefault();
+
+    this.setState({
+      displayCreateActionModal: true,
+      campaign,
+    });
+  }
+
+  // Close the create action modal
+  hideCreateActionModal(event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    this.setState({
+      displayCreateActionModal: false,
+      campaign: null,
+    });
   }
 
   render() {
@@ -92,10 +123,21 @@ class CampaignIdSingle extends React.Component {
         <div className="container__block -narrow">
           <a
             className="button -secondary"
-            href={`/campaigns/${campaign.id}/inbox`}
+            href="#"
+            onClick={e => this.showCreateActionModal(campaign, e)}
           >
             Add Action
           </a>
+          <ModalContainer>
+            {this.state.displayCreateActionModal ? (
+              <CreateActionModal
+                onClose={e => this.hideCreateActionModal(e)}
+                campaign={campaign}
+                // submitPost={this.submitPost}
+                // success={this.state.successfulSubmission}
+              />
+            ) : null}
+          </ModalContainer>
         </div>
       </div>
     );
