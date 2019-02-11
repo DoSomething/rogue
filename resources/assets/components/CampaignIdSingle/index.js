@@ -6,6 +6,7 @@ import './campaignidsingle.scss';
 
 import Action from '../Action';
 import UploaderModal from '../UploaderModal';
+import ModalContainer from '../ModalContainer';
 // import CreateActionModal from '../CreateActionModal';
 
 class CampaignIdSingle extends React.Component {
@@ -128,6 +129,7 @@ class CampaignIdSingle extends React.Component {
           >
             Add Action
           </a>
+          {console.log(this.state)}
           <ModalContainer>
             {this.state.displayCreateActionModal ? (
               <CreateActionModal
