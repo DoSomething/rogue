@@ -37,6 +37,23 @@ class ActionTest extends TestCase
             'name' => $actionName,
             'campaign_id' => $campaign->id,
         ]);
+
+        // Try to create a second action with the same name, post type, and campaign id to make sure it doesn't duplicate.
+        $this->actingAsAdmin()->postJson('actions', [
+            'name' => $actionName,
+            'campaign_id' => $campaign->id,
+            'post_type' => 'photo',
+            'reportback' => 1,
+            'civic_action' => 0,
+            'scholarship_entry' => 1,
+            'noun' => 'things',
+            'verb' => 'done',
+        ]);
+
+        $response = $this->getJson('api/v3/actions');
+        $decodedResponse = $response->decodeResponseJson();
+
+        $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
     }
 
     /**
