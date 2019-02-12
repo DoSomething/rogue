@@ -7,7 +7,7 @@ import './campaignidsingle.scss';
 import Action from '../Action';
 import UploaderModal from '../UploaderModal';
 import ModalContainer from '../ModalContainer';
-// import CreateActionModal from '../CreateActionModal';
+import CreateActionModal from '../CreateActionModal';
 
 class CampaignIdSingle extends React.Component {
   constructor(props) {
@@ -17,6 +17,7 @@ class CampaignIdSingle extends React.Component {
       displayCreateActionModal: false,
     };
 
+    console.log('campaignidsingle');
     this.showCreateActionModal = this.showCreateActionModal.bind(this);
     this.hideCreateActionModal = this.hideCreateActionModal.bind(this);
   }
