@@ -35,10 +35,19 @@ class ActionsController extends Controller
             'verb' => 'required|string',
         ]);
 
-        $action = Action::create($request->all());
+        // Check to see if the action exists before creating one.
+        $action = Action::where([
+            'name' => $request['name'],
+            'campaign_id' => $request['campaign_id'],
+            'post_type' => $request['post_type'],
+        ])->first();
 
-        // Log that a action was created.
-        info('action_created', ['id' => $action->id]);
+        if (! $action) {
+            $action = Action::create($request->all());
+
+            // Log that a action was created.
+            info('action_created', ['id' => $action->id]);
+        }
     }
 
     /**
