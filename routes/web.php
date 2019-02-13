@@ -24,6 +24,7 @@ $router->get('campaigns/{id}', 'Legacy\Web\CampaignsController@show')->name('cam
 // Create, update, delete campaigns via Rogue.
 // @TODO: Merge into CampaignsController, above.
 $router->resource('campaign-ids', 'Legacy\Web\CampaignIdsController');
+$router->get('campaign-ids/{id}/actions/create', 'Legacy\Web\ActionsController@create');
 
 // Actions
 $router->resource('actions', 'Legacy\Web\ActionsController');

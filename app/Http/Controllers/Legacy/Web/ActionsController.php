@@ -18,6 +18,21 @@ class ActionsController extends Controller
     }
 
     /**
+     * Create a new action.
+     */
+    public function create()
+    {
+        $postTypes = [
+            'text',
+            'photo',
+            'voter-reg',
+            'share-social',
+        ];
+
+        return view('actions.create')->with('postTypes', $postTypes);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

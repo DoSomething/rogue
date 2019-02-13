@@ -7,7 +7,7 @@ import './campaignidsingle.scss';
 import Action from '../Action';
 import UploaderModal from '../UploaderModal';
 import ModalContainer from '../ModalContainer';
-import CreateActionModal from '../CreateActionModal';
+// import CreateActionModal from '../CreateActionModal';
 
 class CampaignIdSingle extends React.Component {
   constructor(props) {
@@ -17,32 +17,31 @@ class CampaignIdSingle extends React.Component {
       displayCreateActionModal: false,
     };
 
-    console.log('campaignidsingle');
-    this.showCreateActionModal = this.showCreateActionModal.bind(this);
-    this.hideCreateActionModal = this.hideCreateActionModal.bind(this);
+    // this.showCreateActionModal = this.showCreateActionModal.bind(this);
+    // this.hideCreateActionModal = this.hideCreateActionModal.bind(this);
   }
 
   // Open the create action modal
-  showCreateActionModal(campaign, event) {
-    event.preventDefault();
+  // showCreateActionModal(campaign, event) {
+  //   event.preventDefault();
 
-    this.setState({
-      displayCreateActionModal: true,
-      campaign,
-    });
-  }
+  //   this.setState({
+  //     displayCreateActionModal: true,
+  //     campaign,
+  //   });
+  // }
 
   // Close the create action modal
-  hideCreateActionModal(event) {
-    if (event) {
-      event.preventDefault();
-    }
+  // hideCreateActionModal(event) {
+  //   if (event) {
+  //     event.preventDefault();
+  //   }
 
-    this.setState({
-      displayCreateActionModal: false,
-      campaign: null,
-    });
-  }
+  //   this.setState({
+  //     displayCreateActionModal: false,
+  //     campaign: null,
+  //   });
+  // }
 
   render() {
     const campaign = this.props.campaign;
@@ -125,22 +124,10 @@ class CampaignIdSingle extends React.Component {
         <div className="container__block -narrow">
           <a
             className="button -secondary"
-            href="#"
-            onClick={e => this.showCreateActionModal(campaign, e)}
+            href={`${campaign.id}/actions/create`}
           >
             Add Action
           </a>
-          {console.log(this.state)}
-          <ModalContainer>
-            {this.state.displayCreateActionModal ? (
-              <CreateActionModal
-                onClose={e => this.hideCreateActionModal(e)}
-                campaign={campaign}
-                // submitPost={this.submitPost}
-                // success={this.state.successfulSubmission}
-              />
-            ) : null}
-          </ModalContainer>
         </div>
       </div>
     );
