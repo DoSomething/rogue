@@ -6,6 +6,7 @@ import CampaignTable from '../CampaignTable';
 class CampaignOverview extends React.Component {
   render() {
     const causeData = this.props;
+
     const causeTables = map(causeData, (data, cause) => (
       <CampaignTable
         key={cause}

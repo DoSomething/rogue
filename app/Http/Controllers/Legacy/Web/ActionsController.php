@@ -3,7 +3,6 @@
 namespace Rogue\Http\Controllers\Legacy\Web;
 
 use Rogue\Models\Action;
-use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 use Rogue\Http\Controllers\Controller;
 
@@ -32,7 +31,7 @@ class ActionsController extends Controller
 
         return view('actions.create')->with([
             'postTypes' => $postTypes,
-            'campaignId' => (integer) $campaignId,
+            'campaignId' => (int) $campaignId,
         ]);
     }
 
