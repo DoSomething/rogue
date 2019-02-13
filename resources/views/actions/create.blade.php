@@ -8,17 +8,17 @@
         <div class="wrapper">
             <div class="container__block -narrow">
                 <h1>Add Post Metadata</h1>
-                <form method="post" enctype="application/x-www-form-urlencoded" action="{{ route('actions.store') }}">
+                <form method="post" enctype="application/x-www-form-urlencoded" action="{{ route('actions.store', ['campaign_id' => $campaignId]) }}">
                 {{ csrf_field()}}
 
                     <div class="form-item">
                         <label class="field-label">Action Name</label>
-                        <input type="text" name="action_name" class="text-field" placeholder="Name your action e.g. Teens for Jeans Photo Upload" value="{{old('internal_title') }}">
+                        <input type="text" name="name" class="text-field" placeholder="Name your action e.g. Teens for Jeans Photo Upload" value="{{old('internal_title') }}">
                     </div>
 
                     <div class="select form-item">
                         <label class="field-label">Post Type</label>
-                        <select name="cause">
+                        <select name="post_type">
                             <option value="" disabled selected>Select the post type</option>
                             @foreach($postTypes as $postType)
                                 @if (old('postType'))
@@ -40,17 +40,17 @@
                     <div class="form-item">
                         <label class="field-label">Post Details</label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=reportback>
+                          <input type="checkbox" id=reportback name=reportback value=1>
                           <span class="option__indicator"></span>
                           <span>Reportback</span>
                         </label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id="civic_action">
+                          <input type="checkbox" id=civic_action name=civic_action value=1>
                           <span class="option__indicator"></span>
                           <span>Civic action</span>
                         </label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id="scholarship">
+                          <input type="checkbox" id=scholarship_entry name=scholarship_entry value=1>
                           <span class="option__indicator"></span>
                           <span>Scholarship entry</span>
                         </label>
