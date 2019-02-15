@@ -52,9 +52,9 @@ class ActionsController extends Controller
 
         // Checkbox values are only sent from the front end if they are checked.
         // Assign checkbox values if sent from the front end or are 1 (sent from API).
-        $request['reportback'] = isset($request['reportback']) || $request['reportback'] === 1 ? 1 : 0;
-        $request['civic_action'] = isset($request['civic_action']) || $request['civic_action'] === 1 ? 1 : 0;
-        $request['scholarship_entry'] = isset($request['scholarship_entry']) || $request['scholarship_entry'] === 1 ? 1 : 0;
+        $request['reportback'] = isset($request['reportback']) || $request['reportback'] == 1 ? 1 : 0;
+        $request['civic_action'] = isset($request['civic_action']) || $request['civic_action'] == 1 ? 1 : 0;
+        $request['scholarship_entry'] = isset($request['scholarship_entry']) || $request['scholarship_entry'] == 1 ? 1 : 0;
 
         // Check to see if the action exists before creating one.
         $action = Action::where([
