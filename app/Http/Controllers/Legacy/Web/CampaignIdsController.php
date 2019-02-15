@@ -24,7 +24,6 @@ class CampaignIdsController extends Controller
     public function index()
     {
         $campaigns = Campaign::orderBy('created_at', 'desc')->get()->toArray();
-        // $campaigns = Campaign::paginate(25);
 
         return view('pages.campaign_id_overview')->with('state', $campaigns);
     }
@@ -77,7 +76,7 @@ class CampaignIdsController extends Controller
     }
 
     /**
-     * Show a specific campaign page and it's actions.
+     * Show a specific campaign page and its actions.
      *
      * @param  \Rogue\Models\Campaign  $campaign
      */
