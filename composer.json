@@ -23,7 +23,7 @@
     "dfurnes/environmentalist": "0.0.2",
     "ext-gd": "*",
     "ext-exif": "*",
-    "barryvdh/laravel-cors": "^0.11.0",
+    "barryvdh/laravel-cors": "^0.11.2",
     "fzaninotto/faker": "^1.6",
     "ext-newrelic": "*"
   },
