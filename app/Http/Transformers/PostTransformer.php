@@ -52,13 +52,13 @@ class PostTransformer extends TransformerAbstract
         ];
 
         // If the post isn't anonymous or if this is the owner of the post, return PII information.
-        if ((! filter_var($post->actionModel->anonymous,FILTER_VALIDATE_BOOLEAN) && !is_null($post->actionModel->anonymous)) || $post->northstar_id === token()->id()) {
+        if ((! filter_var($post->actionModel->anonymous, FILTER_VALIDATE_BOOLEAN) && ! is_null($post->actionModel->anonymous)) || $post->northstar_id === token()->id()) {
             $response['northstar_id'] = $post->northstar_id;
             $response['location'] = $post->location;
         }
 
         // If the post isn't anonymous and the user has credientials to viewAll, return the following detais.
-        if (! filter_var($post->actionModel->anonymous,FILTER_VALIDATE_BOOLEAN) && Gate::allows('viewAll', $post)) {
+        if (! filter_var($post->actionModel->anonymous, FILTER_VALIDATE_BOOLEAN) && Gate::allows('viewAll', $post)) {
             $response['tags'] = $post->tagSlugs();
             $response['source'] = $post->source;
             $response['source_details'] = $post->source_details;
