@@ -9,7 +9,6 @@ use Rogue\Models\Review;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PostRepository
 {
@@ -84,11 +83,11 @@ class PostRepository
             $actionId = $data['action_id'];
         } else {
             $type = isset($data['type']) ? $data['type'] : 'photo';
-            $action = Action::where('campaign_id', $signup->campaign_id)->where('post_type', $type)->where('name', $data['action'])->first();
-
-            if (! $action) {
-                throw new ModelNotFoundException('Action not found.');
-            }
+            $action = Action::where([
+                'campaign_id' => $signup->campaign_id,
+                'post_type' => $type,
+                'name' => $data['action'],
+            ])->firstOrFail();
 
             $actionId = $action->id;
         }
