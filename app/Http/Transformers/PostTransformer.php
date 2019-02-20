@@ -33,7 +33,6 @@ class PostTransformer extends TransformerAbstract
             'type' => $post->type,
             'action' => $post->getActionName(),
             'action_id' => $post->action_id,
-            'northstar_id' => $post->northstar_id,
             // Add cache-busting query string to urls to make sure we get the
             // most recent version of the image.
             // @NOTE - Remove if we get rid of rotation.
@@ -48,12 +47,18 @@ class PostTransformer extends TransformerAbstract
                 'total' => $post->reactions_count,
             ],
             'status' => $post->status,
-            'location' => $post->location,
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
 
-        if (Gate::allows('viewAll', $post)) {
+        // If the post isn't anonymous or if this is the owner of the post, return PII information.
+        if ((! filter_var($post->actionModel->anonymous,FILTER_VALIDATE_BOOLEAN) && !is_null($post->actionModel->anonymous)) || $post->northstar_id === token()->id()) {
+            $response['northstar_id'] = $post->northstar_id;
+            $response['location'] = $post->location;
+        }
+
+        // If the post isn't anonymous and the user has credientials to viewAll, return the following detais.
+        if (! filter_var($post->actionModel->anonymous,FILTER_VALIDATE_BOOLEAN) && Gate::allows('viewAll', $post)) {
             $response['tags'] = $post->tagSlugs();
             $response['source'] = $post->source;
             $response['source_details'] = $post->source_details;
