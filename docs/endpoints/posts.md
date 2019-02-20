@@ -81,6 +81,7 @@ Example Response:
                 "total": 2
             },
             "status": "accepted",
+            "location": "US-NY",
             "created_at": "2016-11-30T21:21:24+00:00",
             "updated_at": "2017-08-02T14:11:26+00:00"
         },
@@ -102,6 +103,7 @@ Example Response:
                 "total": 8
             },
             "status": "accepted",
+            "location": "US-NY",
             "created_at": "2016-02-10T16:19:25+00:00",
             "updated_at": "2017-08-02T14:11:35+00:00"
         }
@@ -149,6 +151,7 @@ Example Response:
     "total": 0
     },
     "status": "accepted",
+    "location": "US-NY",
     "created_at": "2019-01-23T19:42:07+00:00",
     "updated_at": "2019-01-23T19:42:07+00:00"
   }
@@ -179,6 +182,8 @@ POST /api/v3/posts
   Option to set status upon creation if admin uploads post for user.
 - **file**: (multipart/form-data) required for `photo` posts.
   File to save of post image.
+- **location** (string).
+  The The ISO 3166-2 region code this was submitted from, e.g. `US-NY`.
 - **details** (json).
   A JSON field to store extra details about a post.
 - **dont_send_to_blink** (boolean) optional.
@@ -208,6 +213,7 @@ Example Response:
         "total": null
     },
     "status": "pending",
+    "location": "US-NY",
     "created_at": "2018-12-06T21:44:15+00:00",
     "updated_at": "2018-12-06T21:44:15+00:00",
     "tags": [],
@@ -301,6 +307,7 @@ Example response:
           "total": null
       },
       "status": "accepted",
+      "location": "US-NY",
       "source": "rogue-admin",
       "remote_addr": "0.0.0.0",
       "created_at": "2017-10-27T14:50:22+00:00",
