@@ -30,8 +30,8 @@ class PostRequest extends Request
             'northstar_id' => 'nullable|objectid',
             'type' => 'required|string|in:photo,voter-reg,text,share-social',
             // @TODO: eventually, deprecate action in the payload and make action_id required when all systems have been updated.
-            'action' => 'required|string',
-            'action_id' => 'integer',
+            'action' => 'required_without:action_id|string',
+            'action_id' => 'required_without:action|integer|exists:actions',
             'why_participated' => 'nullable|string',
             'text' => 'nullable|string|max:256',
             'location' => 'nullable|iso3166',
