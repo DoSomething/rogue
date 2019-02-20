@@ -54,6 +54,11 @@
                           <span class="option__indicator"></span>
                           <span>Scholarship entry</span>
                         </label>
+                        <label class="option -checkbox">
+                          <input type="checkbox" id=anonymous name=anonymous value=1>
+                          <span class="option__indicator"></span>
+                          <span>Anonymous Post</span>
+                        </label>
                     </div>
                     <ul class="form-actions -inline -padded">
                         <li><input type="submit" class="button" value="Create Action"></li>

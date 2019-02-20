@@ -56,6 +56,7 @@ class ActionsController extends Controller
         $request['civic_action'] = isset($request['civic_action']) && $request['civic_action'] ? 1 : 0;
         $request['scholarship_entry'] = isset($request['scholarship_entry']) && $request['scholarship_entry'] ? 1 : 0;
         $request['anonymous'] = isset($request['anonymous']) && $request['anonymous'] ? 1 : 0;
+        dd($request['anonymous']);
 
         // Check to see if the action exists before creating one.
         $action = Action::where([
