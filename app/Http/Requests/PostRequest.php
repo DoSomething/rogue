@@ -31,7 +31,7 @@ class PostRequest extends Request
             'type' => 'required|string|in:photo,voter-reg,text,share-social',
             // @TODO: eventually, deprecate action in the payload and make action_id required when all systems have been updated.
             'action' => 'required_without:action_id|string',
-            'action_id' => 'required_without:action|integer|exists:actions',
+            'action_id' => 'required_without:action|integer|exists:actions,id',
             'why_participated' => 'nullable|string',
             'text' => 'nullable|string|max:256',
             'location' => 'nullable|iso3166',
