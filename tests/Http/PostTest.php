@@ -61,6 +61,7 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
+        $location = 'US-'.$this->faker->stateAbbr();
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Create an action to refer to.
@@ -80,6 +81,7 @@ class PostTest extends TestCase
             'quantity'         => $quantity,
             'why_participated' => $why_participated,
             'text'             => $text,
+            'location'         => $location,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
         ]);
@@ -101,6 +103,7 @@ class PostTest extends TestCase
             'action' => 'test-action',
             'action_id' => $action->id,
             'status' => 'pending',
+            'location' => $location,
             'quantity' => $quantity,
             'details' => json_encode($details),
         ]);
