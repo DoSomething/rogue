@@ -28,6 +28,7 @@ class ActionTest extends TestCase
             'reportback' => 1,
             'civic_action' => 0,
             'scholarship_entry' => 1,
+            'anonymous' => 0,
             'noun' => 'things',
             'verb' => 'done',
         ]);
@@ -46,6 +47,7 @@ class ActionTest extends TestCase
             'reportback' => 1,
             'civic_action' => 0,
             'scholarship_entry' => 1,
+            'anonymous' => 0,
             'noun' => 'things',
             'verb' => 'done',
         ]);

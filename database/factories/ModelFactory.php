@@ -140,6 +140,7 @@ $factory->define(Action::class, function (Generator $faker) {
         'reportback' => 1,
         'civic_action' => 1,
         'scholarship_entry' => 1,
+        'anonymous' => 0,
         'noun' => 'things',
         'verb' => 'done',
     ];
