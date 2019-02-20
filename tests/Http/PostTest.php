@@ -780,29 +780,23 @@ class PostTest extends TestCase
         $anonymousPost->actionModel->anonymous = 1;
         $anonymousPost->actionModel->save();
 
-        // Anonymously hit the endpoint and norhtstar_id / location should not be returned for the anonymous post (first post since it was most recently created).
+        // Anonymously hit the endpoint and norhtstar_id should not be returned for the anonymous post (first post since it was most recently created).
         $response = $this->getJson('api/v3/posts');
         $response->assertStatus(200);
         $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data'][0]);
-        $this->assertArrayNotHasKey('location', $response->decodeResponseJson()['data'][0]);
         $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
-        $this->assertEquals($regularPost->location, $response->decodeResponseJson()['data'][1]['location']);
 
         // Hit the endpoint with admin credientals and same results as above.
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
         $response->assertStatus(200);
         $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data'][0]);
-        $this->assertArrayNotHasKey('location', $response->decodeResponseJson()['data'][0]);
         $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
-        $this->assertEquals($regularPost->location, $response->decodeResponseJson()['data'][1]['location']);
 
-        // Hit the endpoint as the owner of the post and you should be able to see northstar_id / location for anonymous post.
+        // Hit the endpoint as the owner of the post and you should be able to see northstar_id for anonymous post.
         $response = $this->withAccessToken($anonymousPost->northstar_id)->getJson('api/v3/posts');
         $response->assertStatus(200);
         $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
-        $this->assertEquals($anonymousPost->location, $response->decodeResponseJson()['data'][0]['location']);
         $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
-        $this->assertEquals($regularPost->location, $response->decodeResponseJson()['data'][1]['location']);
     }
 
     /**
