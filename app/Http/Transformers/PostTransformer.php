@@ -49,16 +49,15 @@ class PostTransformer extends TransformerAbstract
             'status' => $post->status,
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
+            'location' => $post->location,
         ];
 
         // If the post isn't anonymous or if this is the owner of the post, return PII information.
-        if ((! filter_var($post->actionModel->anonymous, FILTER_VALIDATE_BOOLEAN) && ! is_null($post->actionModel->anonymous)) || $post->northstar_id === token()->id()) {
+        if ((! $post->actionModel->anonymous && ! is_null($post->actionModel->anonymous)) || Gate::allows('viewAll', $post) {
             $response['northstar_id'] = $post->northstar_id;
-            $response['location'] = $post->location;
         }
 
-        // If the post isn't anonymous and the user has credientials to viewAll, return the following detais.
-        if (! filter_var($post->actionModel->anonymous, FILTER_VALIDATE_BOOLEAN) && Gate::allows('viewAll', $post)) {
+        if (Gate::allows('viewAll', $post)) {
             $response['tags'] = $post->tagSlugs();
             $response['source'] = $post->source;
             $response['source_details'] = $post->source_details;
