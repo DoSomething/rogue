@@ -46,6 +46,7 @@ $factory->define(Post::class, function (Generator $faker) {
         'northstar_id' => $this->faker->northstar_id,
         'url' => $url,
         'text' => $faker->sentence(),
+        'location' => 'US-'.$faker->stateAbbr(),
         'source' => 'phpunit',
         'status' => 'pending',
         'quantity' => $faker->randomNumber(2),

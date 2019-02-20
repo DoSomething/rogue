@@ -28,6 +28,13 @@ class AppServiceProvider extends ServiceProvider
             return preg_match('/^[a-f\d]{24}$/i', $value);
         }, 'The :attribute must be a valid ObjectID.');
 
+        Validator::extend('iso3166', function ($attribute, $value, $parameters, $validator) {
+            $isoCodes = new \Sokil\IsoCodes\IsoCodesFactory();
+            $subDivisions = $isoCodes->getSubdivisions();
+
+            return ! is_null($subDivisions->getByCode($value));
+        }, 'The :attribute must be a valid ISO-3166-2 region code.');
+
         // Attach the user & request ID to context for all log messages.
         Log::getMonolog()->pushProcessor(function ($record) {
             $record['extra']['user_id'] = auth()->id();

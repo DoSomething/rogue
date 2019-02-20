@@ -273,6 +273,11 @@ exports[`it renders correctly 1`] = `
           <br />
         </span>
         <span>
+          Location
+          : 
+          <br />
+        </span>
+        <span>
           Post Source
           : 
           <br />

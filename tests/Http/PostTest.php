@@ -40,6 +40,7 @@ class PostTest extends TestCase
                 ],
                 'status',
                 'details',
+                'location',
                 'source',
                 'remote_addr',
                 'created_at',
@@ -61,6 +62,7 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
+        $location = 'US-'.$this->faker->stateAbbr();
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Create an action to refer to.
@@ -80,6 +82,7 @@ class PostTest extends TestCase
             'quantity'         => $quantity,
             'why_participated' => $why_participated,
             'text'             => $text,
+            'location'         => $location,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
         ]);
@@ -101,6 +104,7 @@ class PostTest extends TestCase
             'action' => 'test-action',
             'action_id' => $action->id,
             'status' => 'pending',
+            'location' => $location,
             'quantity' => $quantity,
             'details' => json_encode($details),
         ]);
@@ -211,6 +215,26 @@ class PostTest extends TestCase
             'northstar_id' => $signup->northstar_id,
             'why_participated' => $why_participated,
         ]);
+    }
+
+    /**
+     * test validation for updating a post.
+     *
+     * patch /api/v3/posts/195
+     * @return void
+     */
+    public function testCreatingAPostWithValidationErrors()
+    {
+        $signup = factory(Signup::class)->create();
+
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
+            'campaign_id' => 'dog', // This should be a numeric ID.
+            'signup_id' => $signup->id, // This one is okay.
+            'location' => 'the world', // This should be an ISO-3166-2 code.
+            // and we've omitted the required 'type' and 'action' fields!
+        ]);
+
+        $response->assertJsonValidationErrors(['campaign_id', 'location', 'type', 'action']);
     }
 
     /**

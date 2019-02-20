@@ -48,6 +48,7 @@ class PostTransformer extends TransformerAbstract
                 'total' => $post->reactions_count,
             ],
             'status' => $post->status,
+            'location' => $post->location,
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
