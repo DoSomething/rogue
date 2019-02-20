@@ -40,6 +40,7 @@ class PostTest extends TestCase
                 ],
                 'status',
                 'details',
+                'location',
                 'source',
                 'remote_addr',
                 'created_at',
