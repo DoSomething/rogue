@@ -25,7 +25,8 @@
     "ext-exif": "*",
     "barryvdh/laravel-cors": "^0.11.2",
     "fzaninotto/faker": "^1.6",
-    "ext-newrelic": "*"
+    "ext-newrelic": "*",
+    "sokil/php-isocodes": "^2.2"
   },
   "require-dev": {
     "filp/whoops": "~2.0",

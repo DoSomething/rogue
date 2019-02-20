@@ -218,6 +218,26 @@ class PostTest extends TestCase
     }
 
     /**
+     * test validation for updating a post.
+     *
+     * patch /api/v3/posts/195
+     * @return void
+     */
+    public function testCreatingAPostWithValidationErrors()
+    {
+        $signup = factory(Signup::class)->create();
+
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
+            'campaign_id' => 'dog', // This should be a numeric ID.
+            'signup_id' => $signup->id, // This one is okay.
+            'location' => 'the world', // This should be an ISO-3166-2 code.
+            // and we've omitted the required 'type' and 'action' fields!
+        ]);
+
+        $response->assertJsonValidationErrors(['campaign_id', 'location', 'type', 'action']);
+    }
+
+    /**
      * Test that a POST request to /posts creates a new voter-reg post.
      *
      * @return void
