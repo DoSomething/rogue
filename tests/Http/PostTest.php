@@ -780,13 +780,13 @@ class PostTest extends TestCase
         $anonymousPost->actionModel->anonymous = 1;
         $anonymousPost->actionModel->save();
 
-        // Anonymously hit the endpoint and norhtstar_id should not be returned for the anonymous post (first post since it was most recently created).
+        // Anonymously hit the endpoint and northstar_id should not be returned for the anonymous post (first post since it was most recently created).
         $response = $this->getJson('api/v3/posts');
         $response->assertStatus(200);
         $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data'][0]);
         $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
 
-        // Hit the endpoint with access credientals from another user and should have same results as above.
+        // Hit the endpoint with access credentials from another user and should have same results as above.
         $response = $this->withAccessToken($regularPost->northstar_id)->getJson('api/v3/posts');
         $response->assertStatus(200);
         $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data'][0]);
