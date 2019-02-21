@@ -786,17 +786,32 @@ class PostTest extends TestCase
         $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data'][0]);
         $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
 
-        // Hit the endpoint with admin credientals and same results as above.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
+        // Hit the endpoint with access credientals from another user and should have same results as above.
+        $response = $this->withAccessToken($regularPost->northstar_id)->getJson('api/v3/posts');
         $response->assertStatus(200);
         $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data'][0]);
         $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
+
+        // Hit the endpoint with filter[northstar_id] and should have same results as above.
+        $response = $this->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response->assertStatus(200);
+        $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data']);
+
+        $response = $this->withAccessToken($regularPost->northstar_id)->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response->assertStatus(200);
+        $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data']);
 
         // Hit the endpoint as the owner of the post and you should be able to see northstar_id for anonymous post.
         $response = $this->withAccessToken($anonymousPost->northstar_id)->getJson('api/v3/posts');
         $response->assertStatus(200);
         $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
         $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
+
+        // Hit the endpoint with filter[northstar_id] and should have same results as above.
+        $response = $this->withAccessToken($anonymousPost->northstar_id)->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response->assertStatus(200);
+        $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
+
     }
 
     /**
