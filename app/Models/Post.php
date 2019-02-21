@@ -385,11 +385,22 @@ class Post extends Model
     public function scopeWhereVisible($query)
     {
         if (! is_staff_user()) {
+            return $query->where('status', 'accepted')
+                         ->orWhere('northstar_id', auth()->id());
+        }
+    }
+
+    /**
+     * Scope a query to only return anonymous posts if a user is an admin, staff, or is owner of post.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithoutAnonymousPosts($query)
+    {
+        if (! is_staff_user()) {
             return $query->whereDoesntHave('actionModel', function ($query) {
                 $query->where('anonymous', true);
-            })
-                ->orWhere('status', 'accepted')
-                ->orWhere('northstar_id', auth()->id());
+            });
         }
     }
 

@@ -79,8 +79,11 @@ class PostsController extends ApiController
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Post::$indexes);
 
-        // Only allow admins, staff, or owner to see un-approved and anonymous posts from other users.
+        // Only allow admins, staff, or owner to see un-approved posts from other users.
         $query = $query->whereVisible();
+
+        // Only allow admins, staff, or owner to see anonymous posts.
+        $query = $query->withoutAnonymousPosts();
 
         // Only return posts tagged "Hide In Gallery" if staff user or if is owner of the post.
         $query = $query->withHiddenPosts();
