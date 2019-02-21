@@ -400,7 +400,8 @@ class Post extends Model
         if (! is_staff_user()) {
             return $query->whereDoesntHave('actionModel', function ($query) {
                 $query->where('anonymous', true);
-            });
+            })
+                ->orWhere('northstar_id', auth()->id());
         }
     }
 
