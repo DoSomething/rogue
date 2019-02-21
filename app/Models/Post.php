@@ -378,15 +378,18 @@ class Post extends Model
     }
 
     /**
-     * Scope a query to only return posts if a user is an admin, staff, or is owner of post.
+     * Scope a query to only return posts if a user is an admin, staff, or is owner of post and the post's action is not anonymous.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWhereVisible($query)
     {
         if (! is_staff_user()) {
-            return $query->where('status', 'accepted')
-                         ->orWhere('northstar_id', auth()->id());
+            return $query->whereDoesntHave('actionModel', function ($query) {
+                $query->where('anonymous', true);
+            })
+                ->orWhere('status', 'accepted')
+                ->orWhere('northstar_id', auth()->id());
         }
     }
 
