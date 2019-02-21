@@ -772,10 +772,11 @@ class PostTest extends TestCase
     public function testPostsIndexWithAnonymousPosts()
     {
         // Create an accepted post.
+        $this->mockTime('8/3/2017 14:00:00');
         $regularPost = factory(Post::class, 'accepted')->create();
 
-        // Create 1 post that is anonymous.
-        sleep(1);
+        // And then later, create 1 post that is anonymous.
+        $this->mockTime('8/3/2017 17:30:00');
         $anonymousPost = factory(Post::class, 'accepted')->create();
         $anonymousPost->actionModel->anonymous = 1;
         $anonymousPost->actionModel->save();
@@ -783,6 +784,7 @@ class PostTest extends TestCase
         // Anonymously hit the endpoint and northstar_id should not be returned for the anonymous post (first post since it was most recently created).
         $response = $this->getJson('api/v3/posts');
         $response->assertStatus(200);
+
         $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data'][0]);
         $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
 

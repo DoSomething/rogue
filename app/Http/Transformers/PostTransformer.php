@@ -53,7 +53,7 @@ class PostTransformer extends TransformerAbstract
         ];
 
         // If the post isn't anonymous or if this is the owner of the post, return PII information.
-        if ((! $post->actionModel->anonymous || Gate::allows('viewAll', $post)) {
+        if (! $post->actionModel->anonymous || Gate::allows('viewAll', $post)) {
             $response['northstar_id'] = $post->northstar_id;
         }
 
