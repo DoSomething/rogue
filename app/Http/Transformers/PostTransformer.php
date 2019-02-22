@@ -33,7 +33,6 @@ class PostTransformer extends TransformerAbstract
             'type' => $post->type,
             'action' => $post->getActionName(),
             'action_id' => $post->action_id,
-            'northstar_id' => $post->northstar_id,
             // Add cache-busting query string to urls to make sure we get the
             // most recent version of the image.
             // @NOTE - Remove if we get rid of rotation.
@@ -52,6 +51,11 @@ class PostTransformer extends TransformerAbstract
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
+
+        // If this post is for an anonymous action (and viewer is not owner/staff), hide the user ID.
+        if (! $post->actionModel->anonymous || Gate::allows('viewAll', $post)) {
+            $response['northstar_id'] = $post->northstar_id;
+        }
 
         if (Gate::allows('viewAll', $post)) {
             $response['tags'] = $post->tagSlugs();

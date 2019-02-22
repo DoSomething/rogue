@@ -763,6 +763,70 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test for retrieving all posts with some anonymous posts.
+     * Non-owners should not northstar_id or location.
+     *
+     * GET /api/v3/posts
+     * @return void
+     */
+    public function testPostsIndexWithAnonymousPosts()
+    {
+        // Create an accepted post.
+        $this->mockTime('8/3/2017 14:00:00');
+        $regularPost = factory(Post::class, 'accepted')->create();
+
+        // And then later, create 1 post that is anonymous.
+        $this->mockTime('8/3/2017 17:30:00');
+        $anonymousPost = factory(Post::class, 'accepted')->create();
+        $anonymousPost->actionModel->anonymous = 1;
+        $anonymousPost->actionModel->save();
+
+        // Anonymously hit the endpoint and northstar_id should not be returned for the anonymous post (first post since it was most recently created).
+        $response = $this->getJson('api/v3/posts');
+        $response->assertStatus(200);
+
+        $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data'][0]);
+        $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
+
+        // Hit the endpoint with access credentials from another user and should have same results as above.
+        $response = $this->withAccessToken($regularPost->northstar_id)->getJson('api/v3/posts');
+        $response->assertStatus(200);
+        $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data'][0]);
+        $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
+
+        // Hit the endpoint with filter[northstar_id] and no posts should be returned.
+        $response = $this->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response->assertStatus(200);
+        $this->assertEquals(0, $response->decodeResponseJson()['meta']['cursor']['count']);
+
+        $response = $this->withAccessToken($regularPost->northstar_id)->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response->assertStatus(200);
+        $this->assertEquals(0, $response->decodeResponseJson()['meta']['cursor']['count']);
+
+        // Hit the endpoint as the owner of the post and you should be able to see northstar_id for anonymous post.
+        $response = $this->withAccessToken($anonymousPost->northstar_id)->getJson('api/v3/posts');
+        $response->assertStatus(200);
+        $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
+        $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
+
+        // Hit the endpoint with filter[northstar_id] and should have same results as above.
+        $response = $this->withAccessToken($anonymousPost->northstar_id)->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response->assertStatus(200);
+        $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
+
+        // Hit the endpoint with admin credentials and you should be able to see northstar_id for anonymous post.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
+        $response->assertStatus(200);
+        $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
+        $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
+
+        // Hit the endpoint with filter[northstar_id] and should have same results as above.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response->assertStatus(200);
+        $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
+    }
+
+    /**
      * Test for retrieving all posts as non-admin and non-owner.
      * Posts tagged as "Hide In Gallery" should not be returned to Non-admins/non-owners.
      *

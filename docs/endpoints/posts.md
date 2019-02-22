@@ -14,6 +14,8 @@ Only admins and post owners will have `tags`, `source`, `remote_addr` (which wil
 
 Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 
+If the post's action is marked as "anonymous", the `northstar_id` field will only be returned for the owner.
+
 ### Optional Query Parameters
 
 - **limit**

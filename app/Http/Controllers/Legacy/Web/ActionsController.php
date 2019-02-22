@@ -55,6 +55,7 @@ class ActionsController extends Controller
         $request['reportback'] = isset($request['reportback']) && $request['reportback'] ? 1 : 0;
         $request['civic_action'] = isset($request['civic_action']) && $request['civic_action'] ? 1 : 0;
         $request['scholarship_entry'] = isset($request['scholarship_entry']) && $request['scholarship_entry'] ? 1 : 0;
+        $request['anonymous'] = isset($request['anonymous']) && $request['anonymous'] ? 1 : 0;
 
         // Check to see if the action exists before creating one.
         $action = Action::where([
@@ -87,6 +88,7 @@ class ActionsController extends Controller
             'reportback' => 'boolean',
             'civic_action' => 'boolean',
             'scholarship_entry' => 'boolean',
+            'anonymous' => 'boolean',
             'noun' => 'string',
             'verb' => 'string',
         ]);

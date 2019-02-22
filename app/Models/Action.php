@@ -10,11 +10,23 @@ class Action extends Model
     use SoftDeletes;
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'reportback' => 'boolean',
+        'civic_action' => 'boolean',
+        'scholarship_entry' => 'boolean',
+        'anonymous' => 'boolean',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'campaign_id', 'post_type', 'reportback', 'civic_action', 'scholarship_entry', 'active', 'noun', 'verb'];
+    protected $fillable = ['name', 'campaign_id', 'post_type', 'reportback', 'civic_action', 'scholarship_entry', 'anonymous', 'noun', 'verb'];
 
     /**
      * Attributes that can be queried when filtering.

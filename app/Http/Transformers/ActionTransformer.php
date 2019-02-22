@@ -23,6 +23,7 @@ class ActionTransformer extends TransformerAbstract
             'reportback' => $action->reportback,
             'civic_action' => $action->civic_action,
             'scholarship_entry' => $action->scholarship_entry,
+            'anonymous' => $action->anonymous,
             'noun' => $action->noun,
             'verb' => $action->verb,
             'created_at' => $action->created_at->toIso8601String(),

@@ -22,7 +22,7 @@ class Post extends Model
      * Always load a user's own reaction,
      * if they're logged-in.
      */
-    protected $with = ['reaction', 'tags'];
+    protected $with = ['reaction', 'tags', 'actionModel'];
 
     /**
      * The relationship counts that should be eager loaded on every query.
@@ -378,7 +378,7 @@ class Post extends Model
     }
 
     /**
-     * Scope a query to only return posts if a user is an admin, staff, or is owner of post.
+     * Scope a query to only return posts if a user is an admin, staff, or is owner of post and the post's action is not anonymous.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -387,6 +387,21 @@ class Post extends Model
         if (! is_staff_user()) {
             return $query->where('status', 'accepted')
                          ->orWhere('northstar_id', auth()->id());
+        }
+    }
+
+    /**
+     * Scope a query to only return anonymous posts if a user is an admin, staff, or is owner of post.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithoutAnonymousPosts($query)
+    {
+        if (! is_staff_user()) {
+            return $query->whereDoesntHave('actionModel', function ($query) {
+                $query->where('anonymous', true);
+            })
+                ->orWhere('northstar_id', auth()->id());
         }
     }
 

@@ -40,7 +40,7 @@ class Action extends React.Component {
           <ul>
             <li>
               <h4>REPORTBACK</h4>
-              {action.reportback === 1 ? (
+              {action.reportback === true ? (
                 <p className="yes">Yes</p>
               ) : (
                 <p className="no">No</p>
@@ -48,15 +48,15 @@ class Action extends React.Component {
             </li>
             <li>
               <h4>CIVIC ACTION</h4>
-              {action.civic_action === 1 ? (
+              {action.civic_action === true ? (
                 <p className="yes">Yes</p>
               ) : (
                 <p className="no">No</p>
               )}
             </li>
             <li>
-              <h4>SCHOLARHIP</h4>
-              {action.scholarship_entry === 1 ? (
+              <h4>SCHOLARSHIP</h4>
+              {action.scholarship_entry === true ? (
                 <p className="yes">Yes</p>
               ) : (
                 <p className="no">No</p>
