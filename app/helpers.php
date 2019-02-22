@@ -137,5 +137,6 @@ function has_include($request, $include)
 function get_campaign_by_action_id($actionId)
 {
     $action = Action::findOrFail($actionId);
+
     return Campaign::findOrFail($action->campaign_id);
 }
