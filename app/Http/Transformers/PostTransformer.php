@@ -52,7 +52,7 @@ class PostTransformer extends TransformerAbstract
             'updated_at' => $post->updated_at->toIso8601String(),
         ];
 
-        // If the post isn't anonymous or if this is the owner of the post, return PII information.
+        // If this post is for an anonymous action (and viewer is not owner/staff), hide the user ID.
         if (! $post->actionModel->anonymous || Gate::allows('viewAll', $post)) {
             $response['northstar_id'] = $post->northstar_id;
         }
