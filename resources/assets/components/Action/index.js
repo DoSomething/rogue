@@ -64,7 +64,7 @@ class Action extends React.Component {
             </li>
             <li>
               <h4>ANONYMOUS POST</h4>
-              {action.anonymous === 1 ? (
+              {action.anonymous === true ? (
                 <p className="yes">Yes</p>
               ) : (
                 <p className="no">No</p>
