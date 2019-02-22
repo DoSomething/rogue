@@ -188,6 +188,16 @@ Required params:
 Optional params:
 
 - **quantity**: (int|nullable).
+- **campaign_id**: (int) required without action_id.
+  The Campaign ID of the campaign that the user's post is associated with.
+- **type**: (string) required.
+  The type of post submitted. Must be one of the following types: `photo`, `voter-reg`, `text`, `share-social`. `share-social` posts will be auto-accepted unless an admin sets a custom `status`.
+- **action**: (string) required without action_id.
+  Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
+- **action_id**: (int) required without action.
+  The action ID of the action that the user's post is associated with.
+- **quantity**: (int|nullable) optional.
+>>>>>>> updates documentation
   The number of reportback nouns verbed. Can be `null`.
 - **why_participated**: (string).
   The reason why the user participated.
