@@ -19,7 +19,7 @@ class SignupRepository
         $signup = new Signup;
 
         $signup->northstar_id = $northstarId;
-        $signup->campaign_id = $data['campaign_id'] ? $data['campaign_id'] : get_campaign_by_action_id($data['action_id'])->id;];
+        $signup->campaign_id = $data['campaign_id'] ? $data['campaign_id'] : get_campaign_by_action_id($data['action_id'])->id;
         $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : null;
         $signup->source = isset($data['source']) ? $data['source'] : token()->client();
         $signup->source_details = isset($data['source_details']) ? $data['source_details'] : null;

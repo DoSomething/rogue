@@ -58,8 +58,8 @@ class SignupsController extends ApiController
     {
         $this->validate($request, [
             'campaign_id' => 'required_without:action_id|integer',
-            'why_participated' => 'string',
             'action_id' => 'required_without:campaign_id|integer',
+            'why_participated' => 'string',
         ]);
 
         $northstarId = getNorthstarId($request);
