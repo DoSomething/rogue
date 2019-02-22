@@ -108,7 +108,10 @@ class PostsController extends ApiController
     {
         $northstarId = getNorthstarId($request);
 
-        $signup = $this->signups->get($northstarId, $request['campaign_id']);
+        // Get the campaign id from the request by campaign_id or action_id.
+        $campaignId = $request['campaign_id'] ? $request['campaign_id'] : get_campaign_by_action_id($request['action_id'])->id;
+
+        $signup = $this->signups->get($northstarId, $campaignId);
 
         if (! $signup) {
             $signup = $this->signups->create($request->all(), $northstarId);
