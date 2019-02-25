@@ -1,8 +1,6 @@
 <?php
 
 use Carbon\Carbon;
-use Rogue\Models\Action;
-use Rogue\Models\Campaign;
 use Illuminate\Support\HtmlString;
 
 /**
@@ -127,16 +125,4 @@ function has_include($request, $include)
     }
 
     return false;
-}
-
-/**
- * Gets campaign by action_id.
- *
- * @param $actionId
- */
-function get_campaign_by_action_id($actionId)
-{
-    $action = Action::findOrFail($actionId);
-
-    return Campaign::findOrFail($action->campaign_id);
 }
