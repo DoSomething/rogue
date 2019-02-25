@@ -74,11 +74,11 @@ class Campaign extends Model
      *
      * @param $actionId
      */
-    function fromActionId($actionId)
+    public function fromActionId($actionId)
     {
         $action = Action::findOrFail($actionId);
 
-        return Campaign::findOrFail($action->campaign_id);
+        return self::findOrFail($action->campaign_id);
     }
 
     /**
