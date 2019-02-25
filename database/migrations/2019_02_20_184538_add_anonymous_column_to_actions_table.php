@@ -26,7 +26,7 @@ class AddAnonymousColumnToActionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('actions', function (Blueprint $table) {
             $table->dropColumn('anonymous');
             $table->boolean('active')->comment('Whether or not the action is active.');
         });
