@@ -73,7 +73,7 @@ class SignupsController extends ApiController
         $code = $signup ? 200 : 201;
 
         if (! $signup) {
-            $signup = $this->signups->create($request->all(), $northstarId);
+            $signup = $this->signups->create($request->all(), $northstarId, $campaignId);
         }
 
         return $this->item($signup, $code);

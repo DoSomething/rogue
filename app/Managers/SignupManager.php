@@ -32,9 +32,10 @@ class SignupManager
      *
      * @param array $data
      * @param string $northstarId
+     * @param integer $campaignId
      * @return Illuminate\Database\Eloquent\Model $model
      */
-    public function create($data, $northstarId)
+    public function create($data, $northstarId, $campaignId)
     {
         $signup = $this->signup->create($data, $northstarId);
 
