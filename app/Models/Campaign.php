@@ -74,7 +74,7 @@ class Campaign extends Model
      *
      * @param $actionId
      */
-    public function fromActionId($actionId)
+    public static function fromActionId($actionId)
     {
         $action = Action::findOrFail($actionId);
 
