@@ -11,7 +11,7 @@ class SignupRepository
      *
      * @param  array $data
      * @param  string $northstarId
-     * @param  integer $campaignId
+     * @param  int $campaignId
      * @return \Rogue\Models\Signup|null
      */
     public function create($data, $northstarId, $campaignId)

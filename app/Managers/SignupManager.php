@@ -32,7 +32,7 @@ class SignupManager
      *
      * @param array $data
      * @param string $northstarId
-     * @param integer $campaignId
+     * @param int $campaignId
      * @return Illuminate\Database\Eloquent\Model $model
      */
     public function create($data, $northstarId, $campaignId)
