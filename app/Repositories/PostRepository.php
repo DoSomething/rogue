@@ -87,7 +87,11 @@ class PostRepository
                 'campaign_id' => $signup->campaign_id,
                 'post_type' => $data['type'],
                 'name' => $data['action'],
-            ])->firstOrFail();
+            ])->first();
+
+            if (! $action) {
+                abort(500, 'No action found.');
+            }
 
             $actionId = $action->id;
         }
