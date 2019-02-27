@@ -81,11 +81,11 @@ class PostRepository
         // Get the action_id either from the payload or the DB.
         if (isset($data['action_id'])) {
             $actionId = $data['action_id'];
+            $action = Action::findOrFail($data['action_id']);
         } else {
-            $type = isset($data['type']) ? $data['type'] : 'photo';
             $action = Action::where([
                 'campaign_id' => $signup->campaign_id,
-                'post_type' => $type,
+                'post_type' => $data['type'],
                 'name' => $data['action'],
             ])->firstOrFail();
 
@@ -98,8 +98,8 @@ class PostRepository
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
-            'type' => isset($data['type']) ? $data['type'] : 'photo',
-            'action' => isset($data['action']) ? $data['action'] : null,
+            'type' => $action->post_type,
+            'action' => $action->name,
             'action_id' => $actionId,
             'url' => $fileUrl,
             'text' => isset($data['text']) ? $data['text'] : null,
