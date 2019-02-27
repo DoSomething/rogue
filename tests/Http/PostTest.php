@@ -171,6 +171,64 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test that a POST request to /posts creates a new
+     * post and signup (if it doesn't already exist) without campaign_id or type.
+     *
+     * @return void
+     */
+    public function testCreatingAPostAndSignupWithoutCampaignIdOrType()
+    {
+        $northstarId = $this->faker->northstar_id;
+        $campaignId = factory(Campaign::class)->create()->id;
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $why_participated = $this->faker->paragraph;
+        $text = $this->faker->sentence;
+        $location = 'US-'.$this->faker->stateAbbr();
+        $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+
+        // Create an action to refer to.
+        $action = factory(Action::class)->create(['campaign_id' => $campaignId]);
+
+        // Mock the Blink API calls.
+        $this->mock(Blink::class)
+            ->shouldReceive('userSignup')
+            ->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAccessToken($northstarId)->json('POST', 'api/v3/posts', [
+            'action_id'        => $action->id,
+            'quantity'         => $quantity,
+            'why_participated' => $why_participated,
+            'text'             => $text,
+            'location'         => $location,
+            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'details'          => json_encode($details),
+        ]);
+        dd($response->decodeResponseJson());
+        $response->assertStatus(201);
+        $this->assertPostStructure($response);
+
+        // Make sure the signup & post are persisted to the database.
+        $this->assertDatabaseHas('signups', [
+            'campaign_id' => $campaignId,
+            'northstar_id' => $northstarId,
+            'why_participated' => $why_participated,
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'northstar_id' => $northstarId,
+            'campaign_id' => $campaignId,
+            'type' => 'photo',
+            'action' => $action->name,
+            'action_id' => $action->id,
+            'status' => 'pending',
+            'location' => $location,
+            'quantity' => $quantity,
+            'details' => json_encode($details),
+        ]);
+    }
+
+    /**
      * Test that a POST request to /posts creates a new photo post.
      *
      * @return void
