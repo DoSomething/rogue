@@ -48,6 +48,7 @@ class PostTransformer extends TransformerAbstract
             ],
             'status' => $post->status,
             'location' => $post->location,
+            'location_name' => $post->location_name,
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
         ];

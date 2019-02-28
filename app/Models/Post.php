@@ -4,6 +4,7 @@ namespace Rogue\Models;
 
 use Carbon\Carbon;
 use Rogue\Events\PostTagged;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -134,6 +135,27 @@ class Post extends Model
     public function tagSlugs()
     {
         return $this->tags->pluck('tag_slug');
+    }
+
+    /**
+     * Get the location as a human-readable name.
+     *
+     * @return string
+     */
+    public function getLocationNameAttribute()
+    {
+        $code = $this->attributes['location'];
+        if (! $code) {
+            return null;
+        }
+
+        return Cache::rememberForever('region-'.$code, function () use ($code) {
+            $isoCodes = new \Sokil\IsoCodes\IsoCodesFactory();
+            $subDivisions = $isoCodes->getSubdivisions();
+            $region = $subDivisions->getByCode($code);
+
+            return $region ? $region->getLocalName() : null;
+        });
     }
 
     /**

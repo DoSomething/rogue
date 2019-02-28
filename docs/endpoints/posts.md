@@ -84,6 +84,7 @@ Example Response:
             },
             "status": "accepted",
             "location": "US-NY",
+            "location_name": "New York",
             "created_at": "2016-11-30T21:21:24+00:00",
             "updated_at": "2017-08-02T14:11:26+00:00"
         },
@@ -106,6 +107,7 @@ Example Response:
             },
             "status": "accepted",
             "location": "US-NY",
+            "location_name": "New York",
             "created_at": "2016-02-10T16:19:25+00:00",
             "updated_at": "2017-08-02T14:11:35+00:00"
         }
@@ -154,6 +156,7 @@ Example Response:
     },
     "status": "accepted",
     "location": "US-NY",
+    "location_name": "New York",
     "created_at": "2019-01-23T19:42:07+00:00",
     "updated_at": "2019-01-23T19:42:07+00:00"
   }
@@ -216,6 +219,7 @@ Example Response:
     },
     "status": "pending",
     "location": "US-NY",
+    "location_name": "New York",
     "created_at": "2018-12-06T21:44:15+00:00",
     "updated_at": "2018-12-06T21:44:15+00:00",
     "tags": [],
@@ -309,7 +313,8 @@ Example response:
           "total": null
       },
       "status": "accepted",
-      "location": "US-NY",
+      "location": "US-MN",
+      "location_name": "Minnesota",
       "source": "rogue-admin",
       "remote_addr": "0.0.0.0",
       "created_at": "2017-10-27T14:50:22+00:00",
