@@ -138,9 +138,9 @@ class Post extends Model
     }
 
     /**
-     * Cast the location field as a Subdivision object.
+     * Get the location as a human-readable name.
      *
-     * @return \Sokil\IsoCodes\Database\Subdivisions\Subdivision
+     * @return string
      */
     public function getLocationNameAttribute()
     {
