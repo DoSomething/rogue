@@ -184,6 +184,8 @@ Required params:
   Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
 - **action_id**: (int) required without action or campaign_id.
   The action ID of the action that the user's post is associated with.
+- **type**: (string) required.
+  The type of post submitted. Must be one of the following types: `photo`, `voter-reg`, `text`, `share-social`. `share-social` posts will be auto-accepted unless an admin sets a custom `status`.
 - **file**: (multipart/form-data) required for `photo` posts.
   File to save of post image.
 
@@ -212,8 +214,6 @@ Deprecated params:
   The Campaign ID of the campaign that the user's post is associated with.
 - **action**: (string) required without action_id.
   Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
-  - **type**: (string) required without action_id.
-    The type of post submitted. Must be one of the following types: `photo`, `voter-reg`, `text`, `share-social`. `share-social` posts will be auto-accepted unless an admin sets a custom `status`.
 
 Example Response:
 
