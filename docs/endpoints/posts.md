@@ -42,6 +42,9 @@ If the post's action is marked as "anonymous", the `northstar_id` field will onl
 - **filter[action]** _(string)_
   - The action to filter the response by.
   - e.g. `/posts?filter[action]=action-1`
+- **filter[action_id]** _(string)_
+  - The action id to filter the response by.
+  - e.g. `/posts?filter[action_id]=1`
 - **filter[created_at]** _(timestamp)_
   - The created_at date to filter the response by.
   - e.g. `/posts?filter[created_at]=2017-04-28 01:46:45`
