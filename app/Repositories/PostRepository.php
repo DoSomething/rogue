@@ -90,6 +90,12 @@ class PostRepository
             ])->first();
 
             if (! $action) {
+                info('action_not_found', [
+                    'campaign_id' => $signup->campaign_id,
+                    'post_type' => $data['type'],
+                    'name' => $data['action'],
+                ]);
+
                 abort(500, 'No action found.');
             }
 
