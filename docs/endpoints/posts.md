@@ -113,7 +113,23 @@ Example Response:
             "location_name": "New York",
             "created_at": "2016-02-10T16:19:25+00:00",
             "updated_at": "2017-08-02T14:11:35+00:00"
-        }
+            "action_details": {
+              "data": {
+                "id": 1,
+                "name": "default",
+                "campaign_id": 9009,
+                "post_type": "photo",
+                "reportback": true,
+                "civic_action": true,
+                "scholarship_entry": true,
+                "anonymous": false,
+                "noun": "things",
+                "verb": "done",
+                "created_at": "2019-02-20T21:42:01+00:00",
+                "updated_at": "2019-02-20T21:42:01+00:00"
+              }
+            }
+          }
     ],
     "meta": {
         "cursor": {
@@ -162,6 +178,22 @@ Example Response:
     "location_name": "New York",
     "created_at": "2019-01-23T19:42:07+00:00",
     "updated_at": "2019-01-23T19:42:07+00:00"
+    "action_details": {
+      "data": {
+        "id": 1,
+        "name": "default",
+        "campaign_id": 9009,
+        "post_type": "photo",
+        "reportback": true,
+        "civic_action": true,
+        "scholarship_entry": true,
+        "anonymous": false,
+        "noun": "things",
+        "verb": "done",
+        "created_at": "2019-02-20T21:42:01+00:00",
+        "updated_at": "2019-02-20T21:42:01+00:00"
+      }
+    }
   }
 }
 ```
@@ -265,6 +297,22 @@ Example Response:
           }
         }
       }
+    },
+    "action_details": {
+      "data": {
+        "id": 1,
+        "name": "default",
+        "campaign_id": 1173,
+        "post_type": "text",
+        "reportback": true,
+        "civic_action": true,
+        "scholarship_entry": true,
+        "anonymous": false,
+        "noun": "things",
+        "verb": "done",
+        "created_at": "2019-02-20T21:42:01+00:00",
+        "updated_at": "2019-02-20T21:42:01+00:00"
+      }
     }
   }
 }
@@ -334,6 +382,23 @@ Example response:
       "remote_addr": "0.0.0.0",
       "created_at": "2017-10-27T14:50:22+00:00",
       "updated_at": "2017-10-30T16:04:53+00:00"
+      "action_details": {
+        "data": {
+          "id": 1,
+          "name": "default",
+          "campaign_id": 9009,
+          "post_type": "text",
+          "reportback": true,
+          "civic_action": true,
+          "scholarship_entry": true,
+          "anonymous": false,
+          "noun": "things",
+          "verb": "done",
+          "created_at": "2019-02-20T21:42:01+00:00",
+          "updated_at": "2019-02-20T21:42:01+00:00"
+        }
+      }
+    }
   }
 }
 ```
