@@ -97,7 +97,7 @@ class PostRepository
                     'name' => $data['action'],
                 ]);
 
-                throw new ValidationException::withMessages(array_fill_keys(['campaign_id', 'post_type', 'name'], 'An action with the given fields does not exist.'));
+                throw ValidationException::withMessages(array_fill_keys(['campaign_id', 'post_type', 'name'], 'An action with the given fields does not exist.'));
             }
 
             $actionId = $action->id;
