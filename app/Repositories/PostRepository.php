@@ -9,6 +9,7 @@ use Rogue\Models\Review;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
+use Illuminate\Validation\ValidationException;
 
 class PostRepository
 {
