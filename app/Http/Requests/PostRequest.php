@@ -28,7 +28,7 @@ class PostRequest extends Request
         return [
             'campaign_id' => 'required_without:action_id|integer',
             'northstar_id' => 'nullable|objectid',
-            'type' => 'required_without:action_id|string|in:photo,voter-reg,text,share-social',
+            'type' => 'required|string|in:photo,voter-reg,text,share-social',
             // @TODO: eventually, deprecate action in the payload and make action_id required when all systems have been updated.
             'action' => 'required_without:action_id|string',
             'action_id' => 'required_without:action,campaign_id|integer|exists:actions,id',
