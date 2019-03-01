@@ -9,6 +9,10 @@ use League\Fractal\TransformerAbstract;
 
 class PostTransformer extends TransformerAbstract
 {
+    protected $defaultIncludes = [
+        'action_details',
+    ];
+
     /**
      * List of resources possible to include
      *
@@ -95,5 +99,16 @@ class PostTransformer extends TransformerAbstract
     public function includeSiblings(Post $post)
     {
         return $this->collection($post->siblings, new self);
+    }
+
+    /**
+     * Include the action.
+     *
+     * @param \Rogue\Models\Post $post
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeActionDetails(Post $post)
+    {
+        return $this->item($post->actionModel, new ActionTransformer);
     }
 }
