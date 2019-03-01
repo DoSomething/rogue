@@ -174,15 +174,20 @@ This will automatically create or update the corresponding signup.
 POST /api/v3/posts
 ```
 
-- **campaign_id**: (int) required.
-  The Campaign ID of the campaign that the user's post is associated with.
+Required params:
+
+- **northstar_id**: (string)
+  The `northstar_id` of the user the post belongs to.
+- **action_id**: (int) required without action or campaign_id.
+  The action ID of the action that the user's post is associated with.
 - **type**: (string) required.
   The type of post submitted. Must be one of the following types: `photo`, `voter-reg`, `text`, `share-social`. `share-social` posts will be auto-accepted unless an admin sets a custom `status`.
-- **northstar_id**: (string)
-  The northstar_id of the user the post belongs to.
-- **action**: (string) required.
-  Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
-- **quantity**: (int|nullable) optional.
+- **file**: (multipart/form-data) required for `photo` posts.
+  File to save of post image.
+
+Optional params:
+
+- **quantity**: (int|nullable).
   The number of reportback nouns verbed. Can be `null`.
 - **why_participated**: (string).
   The reason why the user participated.
@@ -190,16 +195,21 @@ POST /api/v3/posts
   Corresponding text for the post (could be photo caption or other words). 256 max characters.
 - **status**: (string).
   Option to set status upon creation if admin uploads post for user.
-- **file**: (multipart/form-data) required for `photo` posts.
-  File to save of post image.
 - **location** (string).
   The The ISO 3166-2 region code this was submitted from, e.g. `US-NY`.
 - **details** (json).
   A JSON field to store extra details about a post.
-- **dont_send_to_blink** (boolean) optional.
+- **dont_send_to_blink** (boolean).
   If included and true, the data for this Post will not be sent to Blink.
 - **created_at** (timestamp).
   If admin and included, the timestamp to set the `created_at` date to. This would be used in a case when we're importing data from the importer app (e.g. `voter-reg` posts, historical FB share posts, etc.).
+
+Deprecated params:
+
+- **campaign_id**: (int) required without action_id.
+  The Campaign ID of the campaign that the user's post is associated with.
+- **action**: (string) required without action_id.
+  Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throughout the life of the campaign.
 
 Example Response:
 

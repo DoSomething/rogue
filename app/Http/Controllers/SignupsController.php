@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Signup;
+use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 use Rogue\Managers\SignupManager;
 use Rogue\Http\Transformers\SignupTransformer;
@@ -57,19 +58,23 @@ class SignupsController extends ApiController
     public function store(Request $request)
     {
         $this->validate($request, [
-            'campaign_id' => 'required|integer',
+            'campaign_id' => 'required_without:action_id|integer',
+            'action_id' => 'required_without:campaign_id|integer',
             'why_participated' => 'string',
         ]);
 
         $northstarId = getNorthstarId($request);
 
+        // Get the campaign id from the request by campaign_id or action_id.
+        $campaignId = $request['campaign_id'] ? $request['campaign_id'] : Campaign::fromActionId($request['action_id'])->id;
+
         // Check to see if the signup exists before creating one.
-        $signup = $this->signups->get($northstarId, $request['campaign_id']);
+        $signup = $this->signups->get($northstarId, $campaignId);
 
         $code = $signup ? 200 : 201;
 
         if (! $signup) {
-            $signup = $this->signups->create($request->all(), $northstarId);
+            $signup = $this->signups->create($request->all(), $northstarId, $campaignId);
         }
 
         return $this->item($signup, $code);

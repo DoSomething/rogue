@@ -11,15 +11,16 @@ class SignupRepository
      *
      * @param  array $data
      * @param  string $northstarId
+     * @param  int $campaignId
      * @return \Rogue\Models\Signup|null
      */
-    public function create($data, $northstarId)
+    public function create($data, $northstarId, $campaignId)
     {
         // Create the signup
         $signup = new Signup;
 
         $signup->northstar_id = $northstarId;
-        $signup->campaign_id = $data['campaign_id'];
+        $signup->campaign_id = $campaignId;
         $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : null;
         $signup->source = isset($data['source']) ? $data['source'] : token()->client();
         $signup->source_details = isset($data['source_details']) ? $data['source_details'] : null;

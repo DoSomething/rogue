@@ -70,6 +70,18 @@ class Campaign extends Model
     }
 
     /**
+     * Gets campaign by action_id.
+     *
+     * @param $actionId
+     */
+    public static function fromActionId($actionId)
+    {
+        $action = Action::findOrFail($actionId);
+
+        return self::findOrFail($action->campaign_id);
+    }
+
+    /**
      * Mutator to parse non-standard date strings into dates accepted by Laravel.
      *
      * @param string|Carbon $value

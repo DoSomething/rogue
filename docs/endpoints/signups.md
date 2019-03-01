@@ -8,8 +8,10 @@ All `v3 /signups` endpoints require the `activity` scope. `Create`/`update`/`del
 POST /api/v3/signups
 ```
 
-- **campaign_id**: (int|string) required.
+- **campaign_id**: (int|string) required without action_id.
   The drupal node id of the campaign the user is signing up for.
+- **action_id**: (int) required without campaign_id.
+  The action ID of the action that the user's post is associated with.
 - **northstar_id**: (int) optional.
   The `northstar_id` of the user who the signup belongs to. This `northstar_id` will be used when acting `asClient`. Otherwise, if the request comes in acting `asUser`, it will ignore this and attribute the signup to the `northstar_id` from OAuth.
 - **why_participated**: (string) optional.

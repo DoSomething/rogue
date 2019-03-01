@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Post;
+use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 use Rogue\Managers\PostManager;
 use Rogue\Managers\SignupManager;
@@ -108,10 +109,13 @@ class PostsController extends ApiController
     {
         $northstarId = getNorthstarId($request);
 
-        $signup = $this->signups->get($northstarId, $request['campaign_id']);
+        // Get the campaign id from the request by campaign_id or action_id.
+        $campaignId = $request['campaign_id'] ? $request['campaign_id'] : Campaign::fromActionId($request['action_id'])->id;
+
+        $signup = $this->signups->get($northstarId, $campaignId);
 
         if (! $signup) {
-            $signup = $this->signups->create($request->all(), $northstarId);
+            $signup = $this->signups->create($request->all(), $northstarId, $campaignId);
         }
 
         $post = $this->posts->create($request->all(), $signup->id);

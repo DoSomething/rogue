@@ -32,11 +32,12 @@ class SignupManager
      *
      * @param array $data
      * @param string $northstarId
+     * @param int $campaignId
      * @return Illuminate\Database\Eloquent\Model $model
      */
-    public function create($data, $northstarId)
+    public function create($data, $northstarId, $campaignId)
     {
-        $signup = $this->signup->create($data, $northstarId);
+        $signup = $this->signup->create($data, $northstarId, $campaignId);
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
         $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
