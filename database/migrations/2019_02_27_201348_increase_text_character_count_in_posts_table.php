@@ -14,7 +14,8 @@ class IncreaseTextCharacterCountInPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            DB::statement('ALTER TABLE posts MODIFY COLUMN text VARCHAR(500)');
+            $table->string('text')->default(NULL)->change();
+            $table->string('text', 500)->nullable()->change();
         });
     }
 
@@ -26,7 +27,8 @@ class IncreaseTextCharacterCountInPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            DB::statement('ALTER TABLE posts MODIFY COLUMN text VARCHAR(255)');
+            $table->string('text')->default('NULL')->change();
+            $table->string('text', 255)->change();
         });
     }
 }
