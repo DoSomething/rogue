@@ -9,6 +9,7 @@ use Rogue\Models\Review;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
+use Illuminate\Validation\ValidationException;
 
 class PostRepository
 {
@@ -87,7 +88,17 @@ class PostRepository
                 'campaign_id' => $signup->campaign_id,
                 'post_type' => $data['type'],
                 'name' => $data['action'],
-            ])->firstOrFail();
+            ])->first();
+
+            if (! $action) {
+                info('action_not_found', [
+                    'campaign_id' => $signup->campaign_id,
+                    'post_type' => $data['type'],
+                    'name' => $data['action'],
+                ]);
+
+                throw ValidationException::withMessages(array_fill_keys(['campaign_id', 'post_type', 'name'], 'An action with the given fields does not exist.'));
+            }
 
             $actionId = $action->id;
         }
