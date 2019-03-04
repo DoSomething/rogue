@@ -14,7 +14,7 @@ class IncreaseTextCharacterCountInPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('text')->default(NULL)->change();
+            $table->string('text')->default(null)->change();
             $table->string('text', 500)->nullable()->change();
         });
     }
