@@ -8,6 +8,15 @@ use League\Fractal\TransformerAbstract;
 class CampaignTransformer extends TransformerAbstract
 {
     /**
+     * List of resources possible to include
+     *
+     * @var array
+     */
+    protected $availableIncludes = [
+        'actions',
+    ];
+
+    /**
      * Transform resource data.
      *
      * @param \Rogue\Models\Campaign $campaign
@@ -23,5 +32,16 @@ class CampaignTransformer extends TransformerAbstract
             'created_at' => $campaign->created_at->toIso8601String(),
             'updated_at' => $campaign->updated_at->toIso8601String(),
         ];
+    }
+
+    /**
+     * Include the actions.
+     *
+     * @param \Rogue\Models\Campaign $campaign
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeActions(Campaign $campaign)
+    {
+        return $this->collection($campaign->actions, new ActionTransformer);
     }
 }

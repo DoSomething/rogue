@@ -30,6 +30,11 @@ class CampaignsController extends ApiController
     {
         $query = $this->newQuery(Campaign::class);
 
+        if (has_include($request, 'actions')) {
+            // Eagerly load the `action` relationship.
+            $query->with('actions');
+        }
+
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Campaign::$indexes);
 
