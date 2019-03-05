@@ -33,7 +33,7 @@ class PostRequest extends Request
             'action' => 'required_without:action_id|string',
             'action_id' => 'required_without:action,campaign_id|integer|exists:actions,id',
             'why_participated' => 'nullable|string',
-            'text' => 'nullable|string|max:256',
+            'text' => 'nullable|string|max:500',
             'location' => 'nullable|iso3166',
             'quantity' => 'nullable|integer',
             'file' => 'image|dimensions:min_width=400,min_height=400,max_width=5000,max_height_4000',
