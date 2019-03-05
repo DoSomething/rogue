@@ -13,6 +13,9 @@ GET /api/v3/campaigns
 - **filter[column]** _(string)_
   - Filter results by the given column: `id`
   - You can filter by more than one value for a column, e.g. `/campaigns?filter[id]=121,122`
+- **filter[internal_title]** _(string)_
+  - Filter results by the given column: `internal_title`
+  - You can filter by more than one value for a column, e.g. `/campaigns?filter[internal_title]=First Campaign,Second Campaign`
 
 Example Response:
 
