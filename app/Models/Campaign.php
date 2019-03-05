@@ -31,7 +31,7 @@ class Campaign extends Model
      *
      * @var array
      */
-    public static $indexes = ['id'];
+    public static $indexes = ['id', 'internal_title'];
 
     /**
      * Get the signups associated with this campaign.
