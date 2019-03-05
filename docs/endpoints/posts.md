@@ -224,7 +224,7 @@ Optional params:
 - **why_participated**: (string).
   The reason why the user participated.
 - **text**: (string).
-  Corresponding text for the post (could be photo caption or other words). 256 max characters.
+  Corresponding text for the post (could be photo caption or other words). 500 max characters.
 - **status**: (string).
   Option to set status upon creation if admin uploads post for user.
 - **location** (string).
