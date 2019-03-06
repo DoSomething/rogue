@@ -31,7 +31,7 @@
                     </div>
                     <div class="form-item -third">
                         <label class="field-label">CallPower Campaign ID</label>
-                        <input type="text" name="callpower_campaign_id" class="text-field" placeholder="e.g. 4" value="{{ old('callpower_campaign_id') }}">
+                        <input type="text" name="callpower_campaign_id" class="text-field" placeholder="e.g. 4 (optional)" value="{{ old('callpower_campaign_id') }}">
                     </div>
                     <div class="form-item -third">
                         <label class="field-label">Action Noun</label>
