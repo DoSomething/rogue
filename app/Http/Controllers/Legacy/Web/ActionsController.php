@@ -27,6 +27,7 @@ class ActionsController extends Controller
             'photo',
             'voter-reg',
             'share-social',
+            'phone-call',
         ];
 
         return view('actions.create')->with([
@@ -46,6 +47,7 @@ class ActionsController extends Controller
             'name' => 'required|string',
             'campaign_id' => 'required|integer|exists:campaigns,id',
             'post_type' => 'required|string',
+            'callpower_campaign_id' => 'integer',
             'noun' => 'required|string',
             'verb' => 'required|string',
         ]);

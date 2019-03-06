@@ -29,11 +29,15 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-item -half">
+                    <div class="form-item -third">
+                        <label class="field-label">CallPower Campaign ID</label>
+                        <input type="text" name="callpower_campaign_id" class="text-field" placeholder="e.g. 4" value="{{ old('callpower_campaign_id') }}">
+                    </div>
+                    <div class="form-item -third">
                         <label class="field-label">Action Noun</label>
                         <input type="text" name="noun" class="text-field" placeholder="e.g. Jeans" value="{{ old('noun') }}">
                     </div>
-                    <div class="form-item -half">
+                    <div class="form-item -third">
                         <label class="field-label">Action Verb</label>
                         <input type="text" name="verb" class="text-field" placeholder="e.g. Collected" value="{{ old('verb') }}">
                     </div>
