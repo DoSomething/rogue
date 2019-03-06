@@ -13,7 +13,7 @@
 
                     <div class="form-item">
                         <label class="field-label">Action Name</label>
-                        <input type="text" name="name" class="text-field" placeholder="Name your action e.g. Teens for Jeans Photo Upload" value="{{old('internal_title') }}">
+                        <input type="text" name="name" class="text-field" placeholder="Name your action e.g. Teens for Jeans Photo Upload" value="{{old('name') }}">
                     </div>
 
                     <div class="select form-item">
@@ -21,19 +21,23 @@
                         <select name="post_type">
                             <option value="" disabled selected>Select the post type</option>
                             @foreach($postTypes as $postType)
-                                @if (old('postType'))
-                                    <option value="{{ old('postType') }}" {{ (old('postType') == $postType ? "selected":"") }}>{{ $postType }}</option>
+                                @if (old('post_type'))
+                                    <option value="{{ old('postType') }}" {{ (old('post_type') == $postType ? "selected":"") }}>{{ $postType }}</option>
                                 @else
                                     <option>{{ $postType }}</option>
                                 @endif
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-item -half">
+                    <div class="form-item -third">
+                        <label class="field-label">CallPower Campaign ID</label>
+                        <input type="text" name="callpower_campaign_id" class="text-field" placeholder="e.g. 4 (optional)" value="{{ old('callpower_campaign_id') }}">
+                    </div>
+                    <div class="form-item -third">
                         <label class="field-label">Action Noun</label>
                         <input type="text" name="noun" class="text-field" placeholder="e.g. Jeans" value="{{ old('noun') }}">
                     </div>
-                    <div class="form-item -half">
+                    <div class="form-item -third">
                         <label class="field-label">Action Verb</label>
                         <input type="text" name="verb" class="text-field" placeholder="e.g. Collected" value="{{ old('verb') }}">
                     </div>

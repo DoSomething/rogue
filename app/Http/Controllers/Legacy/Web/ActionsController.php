@@ -27,6 +27,7 @@ class ActionsController extends Controller
             'photo',
             'voter-reg',
             'share-social',
+            'phone-call',
         ];
 
         return view('actions.create')->with([
@@ -45,7 +46,8 @@ class ActionsController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'campaign_id' => 'required|integer|exists:campaigns,id',
-            'post_type' => 'required|string',
+            'post_type' => 'required|string|in:photo,voter-reg,text,share-social,phone-call',
+            'callpower_campaign_id' => 'required_if:post_type,phone-call|exists:actions,callpower_campaign_id',
             'noun' => 'required|string',
             'verb' => 'required|string',
         ]);
@@ -84,7 +86,8 @@ class ActionsController extends Controller
     {
         $this->validate($request, [
             'name' => 'string',
-            'post_type' => 'string',
+            'post_type' => 'string|in:photo,voter-reg,text,share-social,phone-call',
+            'callpower_campaign_id' => 'required_if:post_type,phone-call|exists:actions,callpower_campaign_id',
             'reportback' => 'boolean',
             'civic_action' => 'boolean',
             'scholarship_entry' => 'boolean',
