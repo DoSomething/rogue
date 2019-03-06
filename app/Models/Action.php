@@ -26,7 +26,7 @@ class Action extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'campaign_id', 'post_type', 'reportback', 'civic_action', 'scholarship_entry', 'anonymous', 'noun', 'verb'];
+    protected $fillable = ['name', 'campaign_id', 'post_type', 'callpower_campaign_id', 'reportback', 'civic_action', 'scholarship_entry', 'anonymous', 'noun', 'verb'];
 
     /**
      * Attributes that can be queried when filtering.
