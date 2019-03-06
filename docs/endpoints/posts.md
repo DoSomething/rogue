@@ -213,7 +213,7 @@ Required params:
 - **action_id**: (int) required without action or campaign_id.
   The action ID of the action that the user's post is associated with.
 - **type**: (string) required.
-  The type of post submitted. Must be one of the following types: `photo`, `voter-reg`, `text`, `share-social`. `share-social` posts will be auto-accepted unless an admin sets a custom `status`.
+  The type of post submitted. Must be one of the following types: `photo`, `voter-reg`, `text`, `share-social`, `phone-call`. `share-social` posts will be auto-accepted unless an admin sets a custom `status`.
 - **file**: (multipart/form-data) required for `photo` posts.
   File to save of post image.
 
