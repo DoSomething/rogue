@@ -87,6 +87,7 @@ class ActionsController extends Controller
         $this->validate($request, [
             'name' => 'string',
             'post_type' => 'string',
+            'callpower_campaign_id' => 'integer',
             'reportback' => 'boolean',
             'civic_action' => 'boolean',
             'scholarship_entry' => 'boolean',
