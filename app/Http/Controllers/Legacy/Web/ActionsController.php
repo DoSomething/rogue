@@ -47,7 +47,7 @@ class ActionsController extends Controller
             'name' => 'required|string',
             'campaign_id' => 'required|integer|exists:campaigns,id',
             'post_type' => 'required|string|in:photo,voter-reg,text,share-social,phone-call',
-            'callpower_campaign_id' => 'required_if:post_type,phone-call|exists:actions,callpower_campaign_id',
+            'callpower_campaign_id' => 'nullable|required_if:post_type,phone-call|integer|unique:actions,id',
             'noun' => 'required|string',
             'verb' => 'required|string',
         ]);
