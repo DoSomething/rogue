@@ -21,6 +21,14 @@ class Action extends React.Component {
           <p>{action.id}</p>
         </div>
         <div className="container__row">
+          <h4>CALLPOWER CAMPAIGN ID</h4>
+          {action.callpower_campaign_id ? (
+            <p>{action.callpower_campaign_id}</p>
+          ) : (
+            <p>-</p>
+          )}
+        </div>
+        <div className="container__row">
           <ul>
             <li>
               <h4>POST TYPE</h4>
