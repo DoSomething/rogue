@@ -46,7 +46,7 @@ class ActionsController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'campaign_id' => 'required|integer|exists:campaigns,id',
-            'post_type' => 'required|string',
+            'post_type' => 'required|string|in:photo,voter-reg,text,share-social,phone-call',
             'callpower_campaign_id' => 'integer',
             'noun' => 'required|string',
             'verb' => 'required|string',
