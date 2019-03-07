@@ -4,6 +4,7 @@ namespace Rogue\Http\Controllers\Legacy\Web;
 
 use Rogue\Models\Action;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
 
 class ActionsController extends Controller
@@ -47,7 +48,7 @@ class ActionsController extends Controller
             'name' => 'required|string',
             'campaign_id' => 'required|integer|exists:campaigns,id',
             'post_type' => 'required|string|in:photo,voter-reg,text,share-social,phone-call',
-            'callpower_campaign_id' => 'required_if:post_type,phone-call|exists:actions,callpower_campaign_id',
+            'callpower_campaign_id' => 'nullable|required_if:post_type,phone-call|integer|unique:actions',
             'noun' => 'required|string',
             'verb' => 'required|string',
         ]);
@@ -87,7 +88,10 @@ class ActionsController extends Controller
         $this->validate($request, [
             'name' => 'string',
             'post_type' => 'string|in:photo,voter-reg,text,share-social,phone-call',
-            'callpower_campaign_id' => 'required_if:post_type,phone-call|exists:actions,callpower_campaign_id',
+            'callpower_campaign_id' => [
+                'required_if:post_type,phone-call',
+                Rule::unique('actions')->ignore($action->id),
+            ],
             'reportback' => 'boolean',
             'civic_action' => 'boolean',
             'scholarship_entry' => 'boolean',
