@@ -36,7 +36,7 @@ class Action extends Model
      *
      * @var array
      */
-    public static $indexes = ['id'];
+    public static $indexes = ['id', 'callpower_campaign_id'];
 
     /**
      * Each action belongs to a campaign.
