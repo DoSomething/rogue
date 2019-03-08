@@ -20,6 +20,7 @@ class ActionTransformer extends TransformerAbstract
             'name' => $action->name,
             'campaign_id' => $action->campaign_id,
             'post_type' => $action->post_type,
+            'callpower_campaign_id' => $action->callpower_campaign_id,
             'reportback' => $action->reportback,
             'civic_action' => $action->civic_action,
             'scholarship_entry' => $action->scholarship_entry,
