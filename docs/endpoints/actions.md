@@ -11,7 +11,7 @@ GET /api/v3/actions
 ### Optional Query Parameters
 
 - **filter[column]** _(string)_
-  - Filter results by the given column: `id`
+  - Filter results by the given column: `id`, `callpower_campaign_id`
   - You can filter by more than one value for a column, e.g. `/actions?filter[id]=121,122`
 
 Example Response:
@@ -24,6 +24,7 @@ Example Response:
             "name": "august-2018-turbovote",
             "campaign_id": 9005,
             "post_type": "voter-reg",
+            "callpower_campaign_id": null,
             "reportback": 1,
             "civic_action": 1,
             "scholarship_entry": 0,
@@ -37,6 +38,7 @@ Example Response:
             "name": "december-2018-turbovote",
             "campaign_id": 9005,
             "post_type": "voter-reg",
+            "callpower_campaign_id": null,
             "reportback": 1,
             "civic_action": 1,
             "scholarship_entry": 0,
@@ -74,6 +76,7 @@ Example Response:
   "name": "action-page",
   "campaign_id": 9003,
   "post_type": "share-social",
+  "callpower_campaign_id": null,
   "reportback": 0,
   "civic_action": 0,
   "scholarship_entry": 0,
