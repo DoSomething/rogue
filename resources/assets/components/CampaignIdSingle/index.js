@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { map, isEmpty } from 'lodash';
+import { parse } from 'date-fns';
 
 import './campaignidsingle.scss';
 
@@ -81,8 +82,7 @@ class CampaignIdSingle extends React.Component {
             <p>–</p>
           )}
           <h4>Start Date</h4>
-          <p>{new Date(campaign.start_date).toDateString()}</p>
-
+          <p>{parse(campaign.start_date)}</p>
           <h4>End Date</h4>
           <p>
             {campaign.end_date
