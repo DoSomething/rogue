@@ -10,6 +10,7 @@ class Action extends React.Component {
 
   render() {
     const action = this.props.action;
+    const campaign = this.props.campaign;
 
     return (
       <div className="container__action">

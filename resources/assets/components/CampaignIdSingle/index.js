@@ -110,7 +110,7 @@ class CampaignIdSingle extends React.Component {
           </p>
           {!isEmpty(actions)
             ? map(actions, (action, key) => {
-                return <Action key={key} action={action} />;
+                return <Action key={key} action={action} campaign={campaign} />;
               })
             : null}
         </div>
