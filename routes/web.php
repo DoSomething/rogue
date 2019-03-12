@@ -25,6 +25,7 @@ $router->get('campaigns/{id}', 'Legacy\Web\CampaignsController@show')->name('cam
 // @TODO: Merge into CampaignsController, above.
 $router->resource('campaign-ids', 'Legacy\Web\CampaignIdsController');
 $router->get('campaign-ids/{id}/actions/create', 'Legacy\Web\ActionsController@create');
+$router->get('campaign-ids/{campaignId}/actions/{actionId}/edit', 'Legacy\Web\ActionsController@edit');
 
 // Actions
 $router->resource('actions', 'Legacy\Web\ActionsController');

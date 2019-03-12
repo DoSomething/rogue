@@ -78,6 +78,17 @@ class ActionsController extends Controller
     }
 
     /**
+     * Edit an existing action.
+     */
+    public function edit($campaignId, $actionId)
+    {
+        return view('actions.edit')->with([
+            'campaignId' => (int) $campaignId,
+            'actionId' => (int) $actionId,
+        ]);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
