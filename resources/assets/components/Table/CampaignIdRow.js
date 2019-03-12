@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
 class CampaignIdRow extends React.Component {
@@ -29,13 +30,15 @@ class CampaignIdRow extends React.Component {
       },
       {
         url: null,
-        title: campaign ? new Date(campaign.start_date).toString() : '-',
+        title: campaign
+          ? format(new Date(campaign.start_date), 'MM/dd/yyyy')
+          : '-',
       },
       {
         url: null,
         title:
           campaign && campaign.end_date
-            ? new Date(campaign.end_date).toString()
+            ? format(new Date(campaign.end_date), 'MM/dd/yyyy')
             : '-',
       },
     ];
