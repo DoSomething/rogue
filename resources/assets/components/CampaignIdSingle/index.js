@@ -47,7 +47,9 @@ class CampaignIdSingle extends React.Component {
   render() {
     const campaign = this.props.campaign;
     const actions = this.props.actions;
-
+    console.log(
+      format(new Date(campaign.start_date.replace(/-/g, '/')), 'MM/dd/yyyy'),
+    );
     return (
       <div className="container -padded">
         <div className="container__block -narrow -half">
@@ -82,9 +84,21 @@ class CampaignIdSingle extends React.Component {
             <p>–</p>
           )}
           <h4>Start Date</h4>
-          <p>{format(new Date(campaign.start_date), 'MM/dd/yyyy')}</p>
+          <p>
+            {format(
+              new Date(campaign.start_date.replace(/-/g, '/')),
+              'MM/dd/yyyy',
+            )}
+          </p>
           <h4>End Date</h4>
-          <p>{campaign.end_date ? format(new Date(campaign.end_date)) : '–'}</p>
+          <p>
+            {campaign.end_date
+              ? format(
+                  new Date(campaign.end_date.replace(/-/g, '/')),
+                  'MM/dd/yyyy',
+                )
+              : '–'}
+          </p>
         </div>
         <div className="container__block -narrow">
           <a className="button" href={`/campaign-ids/${campaign.id}/edit`}>
@@ -92,9 +106,16 @@ class CampaignIdSingle extends React.Component {
           </a>
           <p className="footnote">
             Last updated:{' '}
-            {format(new Date(campaign.updated_at), 'MM/dd/yyyy h:m:s')}
+            {format(
+              new Date(campaign.updated_at.replace(/-/g, '/')),
+              'MM/dd/yyyy h:m:s',
+            )}
             <br />
-            Created: {format(new Date(campaign.created_at), 'MM/dd/yyyy h:m:s')}
+            Created:{' '}
+            {format(
+              new Date(campaign.created_at.replace(/-/g, '/')),
+              'MM/dd/yyyy h:m:s',
+            )}
           </p>
         </div>
 

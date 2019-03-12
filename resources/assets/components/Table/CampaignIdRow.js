@@ -31,14 +31,20 @@ class CampaignIdRow extends React.Component {
       {
         url: null,
         title: campaign
-          ? format(new Date(campaign.start_date), 'MM/dd/yyyy')
+          ? format(
+              new Date(campaign.start_date.replace(/-/g, '/')),
+              'MM/dd/yyyy',
+            )
           : '-',
       },
       {
         url: null,
         title:
           campaign && campaign.end_date
-            ? format(new Date(campaign.end_date), 'MM/dd/yyyy')
+            ? format(
+                new Date(campaign.end_date.replace(/-/g, '/')),
+                'MM/dd/yyyy',
+              )
             : '-',
       },
     ];
