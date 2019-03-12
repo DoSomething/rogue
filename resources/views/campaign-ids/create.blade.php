@@ -39,11 +39,11 @@
                     </div>
                     <div class="form-item -half">
                         <label class="field-label">Start Date</label>
-                        <input type="text" name="start_date" class="text-field" placeholder="MM-DD-YYYY" value="{{ old('start_date') }}">
+                        <input type="text" name="start_date" class="text-field" placeholder="MM/DD/YYYY" value="{{ old('start_date') }}">
                     </div>
                     <div class="form-item -half">
                         <label class="field-label">End Date</label>
-                        <input type="text" name="end_date" class="text-field" placeholder="MM-DD-YYYY or blank" value="{{ old('end_date') }}">
+                        <input type="text" name="end_date" class="text-field" placeholder="MM/DD/YYYY or blank" value="{{ old('end_date') }}">
                     </div>
 
                     <p>Each action in your campaign will require a different set of metadata, to determine how it will be treated by Rogue. After creating your campaign, you'll be taken to a Campaign ID page that will allow you to create your actions.</p>
