@@ -22,7 +22,7 @@
                             <option value="" disabled selected>Select the post type</option>
                             @foreach($postTypes as $postType)
                                 @if (old('post_type'))
-                                    <option value="{{ old('postType') }}" {{ (old('post_type') == $postType ? "selected":"") }}>{{ $postType }}</option>
+                                    <option value="{{ $postType }}" {{ (old('post_type') == $postType ? "selected":"") }}>{{ $postType }}</option>
                                 @else
                                     <option>{{ $postType }}</option>
                                 @endif

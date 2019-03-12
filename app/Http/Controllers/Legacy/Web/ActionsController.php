@@ -82,9 +82,20 @@ class ActionsController extends Controller
      */
     public function edit($campaignId, $actionId)
     {
+        $action = Action::find($actionId);
+
+        $postTypes = [
+            'text',
+            'photo',
+            'voter-reg',
+            'share-social',
+            'phone-call',
+        ];
+
         return view('actions.edit')->with([
-            'campaignId' => (int) $campaignId,
-            'actionId' => (int) $actionId,
+            'campaignId' => $campaignId,
+            'action' => $action,
+            'postTypes' => $postTypes,
         ]);
     }
 
@@ -115,6 +126,8 @@ class ActionsController extends Controller
 
         // Log that an action was updated.
         info('action_updated', ['id' => $action->id]);
+
+        return redirect()->route('campaign-ids.show', $action->campaign_id);
     }
 
     /**
