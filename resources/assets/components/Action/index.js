@@ -85,6 +85,16 @@ class Action extends React.Component {
             </li>
           </ul>
         </div>
+        {new Date(campaign.start_date.replace(/-/g, '/')) > Date.now() ? (
+          <div className="container__row">
+            <a
+              className="button -secondary"
+              href={`${campaign.id}/actions/${action.id}/edit`}
+            >
+              Edit Action
+            </a>
+          </div>
+        ) : null}
       </div>
     );
   }
