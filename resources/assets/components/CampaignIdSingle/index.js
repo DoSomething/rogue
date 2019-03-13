@@ -83,12 +83,18 @@ class CampaignIdSingle extends React.Component {
           )}
           <h4>Start Date</h4>
           <p>
-            {format(new Date(campaign.start_date.replace(/-/g, '/')), 'M/d/yy')}
+            {format(
+              new Date(campaign.start_date.replace(/-/g, '/')),
+              'M/d/YYYY',
+            )}
           </p>
           <h4>End Date</h4>
           <p>
             {campaign.end_date
-              ? format(new Date(campaign.end_date.replace(/-/g, '/')), 'M/d/yy')
+              ? format(
+                  new Date(campaign.end_date.replace(/-/g, '/')),
+                  'M/d/YYYY',
+                )
               : '–'}
           </p>
         </div>
@@ -100,13 +106,13 @@ class CampaignIdSingle extends React.Component {
             Last updated:{' '}
             {format(
               new Date(campaign.updated_at.replace(/-/g, '/')),
-              'M/d/yy h:m:s',
+              'M/d/YYYY h:m:s',
             )}
             <br />
             Created:{' '}
             {format(
               new Date(campaign.created_at.replace(/-/g, '/')),
-              'M/d/yy h:m:s',
+              'M/d/YYYY h:m:s',
             )}
           </p>
         </div>
