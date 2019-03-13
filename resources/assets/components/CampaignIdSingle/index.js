@@ -47,9 +47,7 @@ class CampaignIdSingle extends React.Component {
   render() {
     const campaign = this.props.campaign;
     const actions = this.props.actions;
-    console.log(
-      format(new Date(campaign.start_date.replace(/-/g, '/')), 'MM/dd/yyyy'),
-    );
+
     return (
       <div className="container -padded">
         <div className="container__block -narrow -half">
