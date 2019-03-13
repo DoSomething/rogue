@@ -112,7 +112,7 @@ class ActionsController extends Controller
             'post_type' => 'string|in:photo,voter-reg,text,share-social,phone-call',
             'callpower_campaign_id' => [
                 'required_if:post_type,phone-call',
-                Rule::unique('actions')->ignore($action->id),
+                Rule::unique('actions')->whereNotNull('callpower_campaign_id')->ignore($action->id),
             ],
             'reportback' => 'boolean',
             'civic_action' => 'boolean',
