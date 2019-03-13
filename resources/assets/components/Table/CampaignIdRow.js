@@ -33,7 +33,7 @@ class CampaignIdRow extends React.Component {
         title: campaign
           ? format(
               new Date(campaign.start_date.replace(/-/g, '/')),
-              'MM/dd/yyyy',
+              'MM/DD/YYYY',
             )
           : '-',
       },
@@ -43,7 +43,7 @@ class CampaignIdRow extends React.Component {
           campaign && campaign.end_date
             ? format(
                 new Date(campaign.end_date.replace(/-/g, '/')),
-                'MM/dd/yyyy',
+                'MM/DD/YYYY',
               )
             : '-',
       },
