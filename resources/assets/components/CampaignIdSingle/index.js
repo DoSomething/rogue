@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { map, isEmpty } from 'lodash';
+import { format } from 'date-fns';
 
 import './campaignidsingle.scss';
 
@@ -81,12 +82,19 @@ class CampaignIdSingle extends React.Component {
             <p>–</p>
           )}
           <h4>Start Date</h4>
-          <p>{new Date(campaign.start_date).toDateString()}</p>
-
+          <p>
+            {format(
+              new Date(campaign.start_date.replace(/-/g, '/')),
+              'MM/dd/yyyy',
+            )}
+          </p>
           <h4>End Date</h4>
           <p>
             {campaign.end_date
-              ? new Date(campaign.end_date).toDateString()
+              ? format(
+                  new Date(campaign.end_date.replace(/-/g, '/')),
+                  'MM/dd/yyyy',
+                )
               : '–'}
           </p>
         </div>
@@ -96,14 +104,16 @@ class CampaignIdSingle extends React.Component {
           </a>
           <p className="footnote">
             Last updated:{' '}
-            {new Date(campaign.updated_at).toLocaleString('en-US', {
-              timeZone: 'America/New_York',
-            })}
+            {format(
+              new Date(campaign.updated_at.replace(/-/g, '/')),
+              'MM/dd/yyyy h:m:s',
+            )}
             <br />
             Created:{' '}
-            {new Date(campaign.created_at).toLocaleString('en-US', {
-              timeZone: 'America/New_York',
-            })}
+            {format(
+              new Date(campaign.created_at.replace(/-/g, '/')),
+              'MM/dd/yyyy h:m:s',
+            )}
           </p>
         </div>
 
