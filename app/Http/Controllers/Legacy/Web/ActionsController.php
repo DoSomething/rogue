@@ -122,6 +122,19 @@ class ActionsController extends Controller
             'verb' => 'string',
         ]);
 
+        $checkboxes = [
+                        'reportback',
+                        'civic_action',
+                        'scholarship_entry',
+                        'anonymous',
+                      ];
+
+        foreach ($checkboxes as $checkbox) {
+            if (! isset($request[$checkbox])) {
+                $request[$checkbox] = 0;
+            }
+        }
+
         $action->update($request->all());
 
         // Log that an action was updated.
