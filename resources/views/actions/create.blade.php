@@ -44,17 +44,17 @@
                     <div class="form-item">
                         <label class="field-label">Post Details</label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=reportback name=reportback value=1>
+                          <input type="checkbox" id=reportback name=reportback value=1 {{ old('reportback') ? 'checked="checked"' : '' }}>
                           <span class="option__indicator"></span>
                           <span>Reportback</span>
                         </label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=civic_action name=civic_action value=1>
+                          <input type="checkbox" id=civic_action name=civic_action value=1 {{ old('civic_action') ? 'checked="checked"' : '' }}>
                           <span class="option__indicator"></span>
                           <span>Civic action</span>
                         </label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=scholarship_entry name=scholarship_entry value=1>
+                          <input type="checkbox" id=scholarship_entry name=scholarship_entry value=1 {{ old('scholarship_entry') ? 'checked="checked"' : '' }}>
                           <span class="option__indicator"></span>
                           <span>Scholarship entry</span>
                         </label>
