@@ -93,6 +93,13 @@ class Action extends React.Component {
             >
               Edit Action
             </a>
+
+            <button
+              className="button delete -tertiary"
+              onClick={e => this.deleteSignup(signup.id, e)}
+            >
+              Delete Action
+            </button>
           </div>
         ) : null}
       </div>
