@@ -150,9 +150,15 @@ class ActionsController extends Controller
      */
     public function destroy(Action $action)
     {
-        $action->delete();
+        $trashed = $action->delete();
 
-        // Log that an action was deleted.
-        info('action_deleted', ['id' => $action->id]);
+        if ($trashed) {
+            // Log that an action was deleted.
+            info('action_deleted', ['id' => $action->id]);
+
+            return $this->respond('Action deleted.', 200);
+        }
+
+        return response()->json(['code' => 500, 'message' => 'There was an error deleting the action']);
     }
 }

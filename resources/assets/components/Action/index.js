@@ -96,7 +96,7 @@ class Action extends React.Component {
 
             <button
               className="button delete -tertiary"
-              onClick={e => this.deleteSignup(signup.id, e)}
+              onClick={e => this.props.deleteAction(action.id, e)}
             >
               Delete Action
             </button>
