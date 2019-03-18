@@ -51,7 +51,7 @@ class PostRequest extends Request
     private function patchRules()
     {
         return [
-            'text' => 'nullable|string|max:140',
+            'text' => 'nullable|string|max:500',
             'location' => 'nullable|iso3166',
             'quantity' => 'nullable|integer',
             'status' => $this->getStatusRules($this->post->type),
