@@ -52,6 +52,7 @@ class PostRequest extends Request
     {
         return [
             'text' => 'nullable|string|max:140',
+            'location' => 'nullable|iso3166',
             'quantity' => 'nullable|integer',
             'status' => $this->getStatusRules($this->post->type),
         ];
