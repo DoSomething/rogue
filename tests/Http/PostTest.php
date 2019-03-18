@@ -1279,6 +1279,33 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test that a user can update their own post, but can't
+     * change it's review status.
+     *
+     * @return void
+     */
+    public function testNonStaffUpdatePost()
+    {
+        $post = factory(Post::class)->create();
+
+        $response = $this->withAccessToken($post->northstar_id)->patchJson('api/v3/posts/' . $post->id, [
+            'status' => 'accepted',
+            'location' => 'US-MA',
+            'text' => 'new caption',
+        ]);
+
+        $response->assertJson([
+            'data' => [
+                'media' => [
+                    'text' => 'new caption', // check!
+                ],
+                'location' => 'US-MA',       // check!
+                'status' => 'pending',       // no way, buddy!
+            ],
+        ]);
+    }
+
+    /**
      * Test that a non-admin or user that doesn't own the post can't update post.
      *
      * @return void
