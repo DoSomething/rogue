@@ -1231,7 +1231,7 @@ class PostTest extends TestCase
             'status' => 'register-form',
         ]);
 
-        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['status']);
     }
 
     /**
@@ -1253,7 +1253,6 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(401);
-        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
     /**
