@@ -58,10 +58,23 @@ class PostPolicy
      */
     public function update($user, Post $post)
     {
-        if (is_staff_user()) {
+        return $this->allowOwnerStaffOrMachine($user, $post);
+    }
+
+    /**
+     * Determine if the given post can be reviewed by the user.
+     *
+     * @param  Illuminate\Contracts\Auth\Authenticatable $user
+     * @param  Rogue\Models\Post $post
+     * @return bool
+     */
+    public function review($user, Post $post)
+    {
+        // If this is a machine token, show full model:
+        if (token()->exists() && ! token()->id()) {
             return true;
         }
 
-        return $user && $user->northstar_id === $post->northstar_id;
+        return is_staff_user();
     }
 }

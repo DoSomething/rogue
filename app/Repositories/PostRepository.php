@@ -8,6 +8,7 @@ use Rogue\Models\Action;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
+use Illuminate\Support\Facades\Gate;
 use Intervention\Image\Facades\Image;
 use Illuminate\Validation\ValidationException;
 
@@ -170,6 +171,10 @@ class PostRepository
      */
     public function update($post, $data)
     {
+        if (! Gate::allows('review', $post)) {
+            unset($data['status']);
+        }
+
         $post->update($data);
 
         // If the quantity was updated, update the total quantity on the signup.
