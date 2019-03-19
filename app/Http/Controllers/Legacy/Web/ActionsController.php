@@ -152,13 +152,13 @@ class ActionsController extends Controller
     {
         $trashed = $action->delete();
 
-        if ($trashed) {
-            // Log that an action was deleted.
-            info('action_deleted', ['id' => $action->id]);
-
-            return $this->respond('Action deleted.', 200);
+        if (! $trashed) {
+            return response()->json(['code' => 500, 'message' => 'There was an error deleting the action']);
         }
 
-        return response()->json(['code' => 500, 'message' => 'There was an error deleting the action']);
+        // Log that an action was deleted.
+        info('action_deleted', ['id' => $action->id]);
+
+        return $this->respond('Action deleted.', 200);
     }
 }
