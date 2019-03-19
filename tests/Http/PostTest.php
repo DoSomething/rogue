@@ -1231,7 +1231,7 @@ class PostTest extends TestCase
             'status' => 'register-form',
         ]);
 
-        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['status']);
     }
 
     /**
@@ -1253,7 +1253,6 @@ class PostTest extends TestCase
         ]);
 
         $response->assertStatus(401);
-        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
     /**
@@ -1268,14 +1267,10 @@ class PostTest extends TestCase
 
         $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
             'quantity' => 'this is words not a number!',
-            'text' => 'This must be longer than 140 characters to break the validation rules so here I will create a caption that is longer than 140 characters to test.',
+            'text' => 'a' . str_repeat('h', 512), // ahhh...hhhhh!
         ]);
 
-        $response->assertStatus(422);
-
-        $json = $response->json();
-        $this->assertEquals('The quantity must be an integer.', $json['errors']['quantity'][0]);
-        $this->assertEquals('The text may not be greater than 140 characters.', $json['errors']['text'][0]);
+        $response->assertJsonValidationErrors(['quantity', 'text']);
     }
 
     /**
