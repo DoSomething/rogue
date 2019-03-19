@@ -60,7 +60,7 @@ class CampaignIdSingle extends React.Component {
   deleteAction(actionId, event) {
     event.preventDefault();
     const confirmed = confirm(
-      '🚨🔥🚨 Are you sure you want to delete this? 🚨🔥🚨',
+      '🚨🔥🚨 Are you sure you want to delete this action? 🚨🔥🚨',
     );
 
     if (confirmed) {
