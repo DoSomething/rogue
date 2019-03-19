@@ -73,6 +73,9 @@ class PostRequest extends Request
             case 'voter-reg':
                 $rule = 'in:pending,register-form,register-OVR,confirmed,ineligible,uncertain';
                 break;
+            case 'phone-call':
+                $rule = 'in:accepted,incomplete';
+                break;
             default:
                 $rule = 'in:pending,accepted,rejected';
         }
