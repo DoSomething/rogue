@@ -70,22 +70,54 @@
                     <div class="form-item">
                         <label class="field-label">Post Details</label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=reportback name=reportback value=1 {{ old('reportback') || $action->reportback ? 'checked="checked"' : '' }}>
+                          <input type="checkbox" id=reportback name=reportback value=1
+                            @if ($errors->any()))
+                                @if (old('reportback'))
+                                    checked="checked"
+                                @endif
+                            @elseif ($action->reportback)
+                                checked="checked"
+                            @endif
+                          >
                           <span class="option__indicator"></span>
                           <span>Reportback</span>
                         </label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=civic_action name=civic_action value=1 {{ old('civic_action') || $action->civic_action ? 'checked="checked"' : '' }}>
+                          <input type="checkbox" id=civic_action name=civic_action value=1
+                            @if ($errors->any()))
+                                @if (old('civic_action'))
+                                    checked="checked"
+                                @endif
+                            @elseif ($action->civic_action)
+                                checked="checked"
+                            @endif
+                          >
                           <span class="option__indicator"></span>
                           <span>Civic action</span>
                         </label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=scholarship_entry name=scholarship_entry value=1 {{ old('scholarship_entry') || $action->scholarship_entry ? 'checked="checked"' : '' }}>
+                          <input type="checkbox" id=scholarship_entry name=scholarship_entry value=1
+                            @if ($errors->any()))
+                                @if (old('scholarship_entry'))
+                                    checked="checked"
+                                @endif
+                            @elseif ($action->scholarship_entry)
+                                checked="checked"
+                            @endif
+                          >
                           <span class="option__indicator"></span>
                           <span>Scholarship entry</span>
                         </label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=anonymous name=anonymous value=1 {{ old('anonymous') || $action->anonymous ? 'checked="checked"' : '' }}>
+                          <input type="checkbox" id=anonymous name=anonymous value=1
+                            @if ($errors->any()))
+                                @if (old('anonymous'))
+                                    checked="checked"
+                                @endif
+                            @elseif ($action->anonymous)
+                                checked="checked"
+                            @endif
+                          >
                           <span class="option__indicator"></span>
                           <span>Anonymous Post</span>
                         </label>
