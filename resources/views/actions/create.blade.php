@@ -59,7 +59,7 @@
                           <span>Scholarship entry</span>
                         </label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=anonymous name=anonymous value=1>
+                          <input type="checkbox" id=anonymous name=anonymous value=1 {{ old('anonymous') ? 'checked="checked"' : '' }}>
                           <span class="option__indicator"></span>
                           <span>Anonymous Post</span>
                         </label>
