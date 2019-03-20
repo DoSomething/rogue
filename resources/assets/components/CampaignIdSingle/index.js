@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { map, isEmpty } from 'lodash';
 import { format, parse } from 'date-fns';
+import { keyBy } from 'lodash';
+import RogueClient from '../../utilities/RogueClient';
 
 import './campaignidsingle.scss';
 
@@ -15,11 +17,68 @@ class CampaignIdSingle extends React.Component {
     super(props);
 
     this.state = {
+      actions: {},
       displayCreateActionModal: false,
     };
 
+    this.api = new RogueClient(window.location.origin, {
+      headers: {
+        Authorization: `Bearer ${window.AUTH}`,
+      },
+    });
+
+    this.deleteAction = this.deleteAction.bind(this);
     // this.showCreateActionModal = this.showCreateActionModal.bind(this);
     // this.hideCreateActionModal = this.hideCreateActionModal.bind(this);
+  }
+
+  componentDidMount() {
+    this.getActions(this.props.campaign.id);
+  }
+
+  /**
+   * Gets the campaign's actions.
+   *
+   * @param {Integer} campaignId
+   * @return {Object}
+   */
+  getActions(campaignId) {
+    this.api
+      .get(`api/v3/actions`, {
+        filter: {
+          campaign_id: campaignId,
+        },
+      })
+      .then(json =>
+        this.setState({
+          actions: keyBy(json.data, 'id'),
+        }),
+      );
+  }
+
+  // Delete an action.
+  deleteAction(actionId, event) {
+    event.preventDefault();
+    const confirmed = confirm(
+      '🚨🔥🚨 Are you sure you want to delete this action? 🚨🔥🚨',
+    );
+
+    if (confirmed) {
+      // Make API request to Rogue to delete the action.
+      const response = this.api.delete(`actions/${actionId}`);
+
+      response.then(result => {
+        // Update the state
+        this.setState(previousState => {
+          const newState = { ...previousState };
+          // Remove the deleted action from the state
+          delete newState.actions[actionId];
+
+          // Return the new state
+          return newState;
+        });
+      });
+    }
   }
 
   // Open the create action modal
@@ -46,7 +105,7 @@ class CampaignIdSingle extends React.Component {
 
   render() {
     const campaign = this.props.campaign;
-    const actions = this.props.actions;
+    const actions = this.state.actions;
 
     return (
       <div className="container -padded">
@@ -82,11 +141,11 @@ class CampaignIdSingle extends React.Component {
             <p>–</p>
           )}
           <h4>Start Date</h4>
-          <p>{format(parse(campaign.updated_at), 'M/d/YY')}</p>
+          <p>{format(parse(campaign.start_date), 'M/d/YY')}</p>
           <h4>End Date</h4>
           <p>
             {campaign.end_date
-              ? format(parse(campaign.updated_at), 'M/d/YY')
+              ? format(parse(campaign.end_date), 'M/d/YY')
               : '–'}
           </p>
         </div>
@@ -97,7 +156,7 @@ class CampaignIdSingle extends React.Component {
           <p className="footnote">
             Last updated: {format(parse(campaign.updated_at), 'M/d/YY h:m:s')}
             <br />
-            Created: {format(parse(campaign.updated_at), 'M/d/YY h:m:s')}
+            Created: {format(parse(campaign.created_at), 'M/d/YY h:m:s')}
           </p>
         </div>
 
@@ -110,7 +169,14 @@ class CampaignIdSingle extends React.Component {
           </p>
           {!isEmpty(actions)
             ? map(actions, (action, key) => {
-                return <Action key={key} action={action} />;
+                return (
+                  <Action
+                    key={key}
+                    action={action}
+                    campaign={campaign}
+                    deleteAction={this.deleteAction}
+                  />
+                );
               })
             : null}
         </div>

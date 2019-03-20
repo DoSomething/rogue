@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { format, parse } from 'date-fns';
 
 import './action.scss';
 
@@ -10,6 +11,7 @@ class Action extends React.Component {
 
   render() {
     const action = this.props.action;
+    const campaign = this.props.campaign;
 
     return (
       <div className="container__action">
@@ -84,6 +86,23 @@ class Action extends React.Component {
             </li>
           </ul>
         </div>
+        {new Date(format(parse(campaign.start_date), 'M/d/YY')) > Date.now() ? (
+          <div className="container__row">
+            <a
+              className="button -secondary"
+              href={`${campaign.id}/actions/${action.id}/edit`}
+            >
+              Edit Action
+            </a>
+
+            <button
+              className="button delete -tertiary"
+              onClick={e => this.props.deleteAction(action.id, e)}
+            >
+              Delete Action
+            </button>
+          </div>
+        ) : null}
       </div>
     );
   }

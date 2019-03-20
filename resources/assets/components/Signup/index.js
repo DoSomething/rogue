@@ -300,7 +300,7 @@ class Signup extends React.Component {
     );
 
     if (confirmed) {
-      // Make API request to Rogue to update the quantity on the backend
+      // Make API request to Rogue to delete the post.
       const response = this.api.delete(`api/v3/posts/${postId}`);
 
       response.then(result => {

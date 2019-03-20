@@ -22,7 +22,7 @@
                             <option value="" disabled selected>Select the post type</option>
                             @foreach($postTypes as $postType)
                                 @if (old('post_type'))
-                                    <option value="{{ old('postType') }}" {{ (old('post_type') == $postType ? "selected":"") }}>{{ $postType }}</option>
+                                    <option value="{{ $postType }}" {{ (old('post_type') == $postType ? "selected":"") }}>{{ $postType }}</option>
                                 @else
                                     <option>{{ $postType }}</option>
                                 @endif
@@ -44,22 +44,22 @@
                     <div class="form-item">
                         <label class="field-label">Post Details</label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=reportback name=reportback value=1>
+                          <input type="checkbox" id=reportback name=reportback value=1 {{ old('reportback') ? 'checked="checked"' : '' }}>
                           <span class="option__indicator"></span>
                           <span>Reportback</span>
                         </label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=civic_action name=civic_action value=1>
+                          <input type="checkbox" id=civic_action name=civic_action value=1 {{ old('civic_action') ? 'checked="checked"' : '' }}>
                           <span class="option__indicator"></span>
                           <span>Civic action</span>
                         </label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=scholarship_entry name=scholarship_entry value=1>
+                          <input type="checkbox" id=scholarship_entry name=scholarship_entry value=1 {{ old('scholarship_entry') ? 'checked="checked"' : '' }}>
                           <span class="option__indicator"></span>
                           <span>Scholarship entry</span>
                         </label>
                         <label class="option -checkbox">
-                          <input type="checkbox" id=anonymous name=anonymous value=1>
+                          <input type="checkbox" id=anonymous name=anonymous value=1 {{ old('anonymous') ? 'checked="checked"' : '' }}>
                           <span class="option__indicator"></span>
                           <span>Anonymous Post</span>
                         </label>

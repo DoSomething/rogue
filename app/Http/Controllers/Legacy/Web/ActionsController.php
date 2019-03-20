@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
+use Rogue\PostType;
 use Rogue\Models\Action;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -23,16 +24,8 @@ class ActionsController extends Controller
      */
     public function create($campaignId)
     {
-        $postTypes = [
-            'text',
-            'photo',
-            'voter-reg',
-            'share-social',
-            'phone-call',
-        ];
-
         return view('actions.create')->with([
-            'postTypes' => $postTypes,
+            'postTypes' => PostType::all(),
             'campaignId' => (int) $campaignId,
         ]);
     }
@@ -78,6 +71,18 @@ class ActionsController extends Controller
     }
 
     /**
+     * Edit an existing action.
+     */
+    public function edit($campaignId, $actionId)
+    {
+        return view('actions.edit')->with([
+            'campaignId' => $campaignId,
+            'action' => Action::find($actionId),
+            'postTypes' => PostType::all(),
+        ]);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -90,7 +95,7 @@ class ActionsController extends Controller
             'post_type' => 'string|in:photo,voter-reg,text,share-social,phone-call',
             'callpower_campaign_id' => [
                 'required_if:post_type,phone-call',
-                Rule::unique('actions')->ignore($action->id),
+                Rule::unique('actions')->whereNotNull('callpower_campaign_id')->ignore($action->id),
             ],
             'reportback' => 'boolean',
             'civic_action' => 'boolean',
@@ -100,10 +105,25 @@ class ActionsController extends Controller
             'verb' => 'string',
         ]);
 
+        $checkboxes = [
+                        'reportback',
+                        'civic_action',
+                        'scholarship_entry',
+                        'anonymous',
+                      ];
+
+        foreach ($checkboxes as $checkbox) {
+            if (! isset($request[$checkbox])) {
+                $request[$checkbox] = 0;
+            }
+        }
+
         $action->update($request->all());
 
         // Log that an action was updated.
         info('action_updated', ['id' => $action->id]);
+
+        return redirect()->route('campaign-ids.show', $action->campaign_id);
     }
 
     /**
@@ -113,9 +133,15 @@ class ActionsController extends Controller
      */
     public function destroy(Action $action)
     {
-        $action->delete();
+        $trashed = $action->delete();
+
+        if (! $trashed) {
+            return response()->json(['code' => 500, 'message' => 'There was an error deleting the action']);
+        }
 
         // Log that an action was deleted.
         info('action_deleted', ['id' => $action->id]);
+
+        return $this->respond('Action deleted.', 200);
     }
 }

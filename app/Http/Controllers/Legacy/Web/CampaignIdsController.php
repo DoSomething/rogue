@@ -85,7 +85,6 @@ class CampaignIdsController extends Controller
         return view('pages.campaign_id_single')
             ->with('state', [
                 'campaign' => $campaign,
-                'actions' => $campaign->actions,
             ]
         );
     }
