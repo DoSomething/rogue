@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
+use Rogue\PostType;
 use Rogue\Models\Action;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -23,16 +24,8 @@ class ActionsController extends Controller
      */
     public function create($campaignId)
     {
-        $postTypes = [
-            'text',
-            'photo',
-            'voter-reg',
-            'share-social',
-            'phone-call',
-        ];
-
         return view('actions.create')->with([
-            'postTypes' => $postTypes,
+            'postTypes' => PostType::all(),
             'campaignId' => (int) $campaignId,
         ]);
     }
@@ -82,20 +75,10 @@ class ActionsController extends Controller
      */
     public function edit($campaignId, $actionId)
     {
-        $action = Action::find($actionId);
-
-        $postTypes = [
-            'text',
-            'photo',
-            'voter-reg',
-            'share-social',
-            'phone-call',
-        ];
-
         return view('actions.edit')->with([
             'campaignId' => $campaignId,
-            'action' => $action,
-            'postTypes' => $postTypes,
+            'action' => Action::find($actionId),
+            'postTypes' => PostType::all(),
         ]);
     }
 
