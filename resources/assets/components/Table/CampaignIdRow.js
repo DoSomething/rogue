@@ -30,13 +30,13 @@ class CampaignIdRow extends React.Component {
       },
       {
         url: null,
-        title: campaign ? format(parse(campaign.start_date), 'M/d/YY') : '-',
+        title: campaign ? format(parse(campaign.start_date), 'MM/D/YYYY') : '-',
       },
       {
         url: null,
         title:
           campaign && campaign.end_date
-            ? format(parse(campaign.end_date), 'M/d/YY')
+            ? format(parse(campaign.end_date), 'MM/D/YYYY')
             : '-',
       },
     ];

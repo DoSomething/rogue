@@ -141,11 +141,11 @@ class CampaignIdSingle extends React.Component {
             <p>–</p>
           )}
           <h4>Start Date</h4>
-          <p>{format(parse(campaign.start_date), 'M/d/YY')}</p>
+          <p>{format(parse(campaign.start_date), 'MM/D/YYYY')}</p>
           <h4>End Date</h4>
           <p>
             {campaign.end_date
-              ? format(parse(campaign.end_date), 'M/d/YY')
+              ? format(parse(campaign.end_date), 'MM/D/YYYY')
               : '–'}
           </p>
         </div>
@@ -154,9 +154,10 @@ class CampaignIdSingle extends React.Component {
             Edit this campaign
           </a>
           <p className="footnote">
-            Last updated: {format(parse(campaign.updated_at), 'M/d/YY h:m:s')}
+            Last updated:{' '}
+            {format(parse(campaign.updated_at), 'MM/D/YYYY h:m:s')}
             <br />
-            Created: {format(parse(campaign.created_at), 'M/d/YY h:m:s')}
+            Created: {format(parse(campaign.created_at), 'M/D/YYYY h:m:s')}
           </p>
         </div>
 

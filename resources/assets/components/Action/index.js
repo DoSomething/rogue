@@ -86,7 +86,8 @@ class Action extends React.Component {
             </li>
           </ul>
         </div>
-        {new Date(format(parse(campaign.start_date), 'M/d/YY')) > Date.now() ? (
+        {new Date(format(parse(campaign.start_date), 'MM/D/YYYY')) >
+        Date.now() ? (
           <div className="container__row">
             <a
               className="button -secondary"
