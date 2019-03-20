@@ -1,4 +1,5 @@
 <?php
+
 namespace Rogue;
 
 class PostType
@@ -43,7 +44,8 @@ class PostType
      *
      * @return array
      */
-    public static function all() {
+    public static function all()
+    {
         return [self::$text, self::$photo, self::$voterReg, self::$shareSocial, self::$phoneCall];
     }
 }
