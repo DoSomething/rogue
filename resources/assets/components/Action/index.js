@@ -86,7 +86,7 @@ class Action extends React.Component {
             </li>
           </ul>
         </div>
-        {new Date(parse(campaign.start_date)) > Date.now() ? (
+        {parse(campaign.start_date) > Date.now() ? (
           <div className="container__row">
             <a
               className="button -secondary"
