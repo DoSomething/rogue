@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { format, parse } from 'date-fns';
+import { parse } from 'date-fns';
 
 import './action.scss';
 
@@ -86,7 +86,7 @@ class Action extends React.Component {
             </li>
           </ul>
         </div>
-        {new Date(format(parse(campaign.start_date), 'M/d/YY')) > Date.now() ? (
+        {parse(campaign.start_date) > Date.now() ? (
           <div className="container__row">
             <a
               className="button -secondary"
