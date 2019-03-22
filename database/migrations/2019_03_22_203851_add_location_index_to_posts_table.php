@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddsCallpowerCampaignIdUniqueIndexInActionsTable extends Migration
+class AddLocationIndexToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddsCallpowerCampaignIdUniqueIndexInActionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('actions', function (Blueprint $table) {
-            $table->unique('callpower_campaign_id');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->index('location');
         });
     }
 
@@ -25,8 +25,8 @@ class AddsCallpowerCampaignIdUniqueIndexInActionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('actions', function (Blueprint $table) {
-            $table->dropUnique(['callpower_campaign_id']);
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropIndex(['location']);
         });
     }
 }
