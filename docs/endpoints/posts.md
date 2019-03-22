@@ -58,6 +58,9 @@ If the post's action is marked as "anonymous", the `northstar_id` field will onl
 - **filter[source]** _(string)_
   - The source(s) to filter the response by.
   - e.g. `/posts?filter[source]=sms`
+- **filter[location]** _(string)_
+  - The location to filter the response by.
+  - e.g. `/posts?filter[location]=US-NY`
 - **include** _(string)_
   - Include additional related records in the response: `signup`, `siblings`
   - e.g. `/posts?include=signup,siblings`
