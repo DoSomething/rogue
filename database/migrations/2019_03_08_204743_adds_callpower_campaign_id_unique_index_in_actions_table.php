@@ -26,7 +26,7 @@ class AddsCallpowerCampaignIdUniqueIndexInActionsTable extends Migration
     public function down()
     {
         Schema::table('actions', function (Blueprint $table) {
-            $table->dropUnique('callpower_campaign_id');
+            $table->dropUnique(['callpower_campaign_id']);
         });
     }
 }
