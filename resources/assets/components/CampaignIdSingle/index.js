@@ -52,6 +52,12 @@ class CampaignIdSingle extends React.Component {
       .then(json =>
         this.setState({
           actions: keyBy(json.data, 'id'),
+          nextPage: json.meta.pagination.links.next
+            ? json.meta.pagination.links.next
+            : null,
+          prevPage: json.meta.pagination.links.previous
+            ? json.meta.pagination.links.previous
+            : null,
         }),
       );
   }
