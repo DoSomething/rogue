@@ -8,6 +8,7 @@ import RogueClient from '../../utilities/RogueClient';
 import './campaignidsingle.scss';
 
 import Action from '../Action';
+import PagingButtons from '../PagingButtons';
 import UploaderModal from '../UploaderModal';
 import ModalContainer from '../ModalContainer';
 // import CreateActionModal from '../CreateActionModal';
@@ -196,6 +197,11 @@ class CampaignIdSingle extends React.Component {
             Add Action
           </a>
         </div>
+        <PagingButtons
+          onPaginate={this.getActionsByPaginatedLink}
+          prev={this.state.prevPage}
+          next={this.state.nextPage}
+        />
       </div>
     );
   }
