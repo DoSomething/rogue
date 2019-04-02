@@ -7,7 +7,7 @@ class PagingButtons extends React.Component {
   render() {
     const prev = this.props.prev;
     const next = this.props.next;
-
+    console.log(prev, next);
     return (
       <div className="container__block">
         <a
