@@ -198,7 +198,13 @@ class CampaignIdSingle extends React.Component {
               })
             : null}
         </div>
-
+        <div className="container__block -narrow">
+          <PagingButtons
+            onPaginate={this.getActionsByPaginatedLink}
+            prev={this.state.prevPage}
+            next={this.state.nextPage}
+          />
+        </div>
         <div className="container__block -narrow">
           <a
             className="button -secondary"
@@ -207,11 +213,6 @@ class CampaignIdSingle extends React.Component {
             Add Action
           </a>
         </div>
-        <PagingButtons
-          onPaginate={this.getActionsByPaginatedLink}
-          prev={this.state.prevPage}
-          next={this.state.nextPage}
-        />
       </div>
     );
   }
