@@ -70,8 +70,8 @@ class PostPolicy
      */
     public function review($user, Post $post)
     {
-        // If this is a machine token, show full model:
-        if (token()->exists() && ! token()->id()) {
+        // If this is a machine token or this is from the bulk approve script, show full model:
+        if (token()->exists() && ! token()->id() || app()->runningInConsole()) {
             return true;
         }
 
