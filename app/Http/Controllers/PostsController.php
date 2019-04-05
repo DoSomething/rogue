@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Rogue\Managers\PostManager;
 use Rogue\Managers\SignupManager;
 use Rogue\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Gate;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
 
@@ -150,6 +151,11 @@ class PostsController extends ApiController
     {
         // Only allow an admin/staff or the user who owns the post to update.
         $this->authorize('update', $post);
+
+        // But don't allow user's to review their own posts.
+        if (! Gate::allows('review', $post)) {
+            unset($request['status']);
+        }
 
         $this->posts->update($post, $request->validated());
 
