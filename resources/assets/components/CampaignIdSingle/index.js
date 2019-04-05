@@ -8,6 +8,7 @@ import RogueClient from '../../utilities/RogueClient';
 import './campaignidsingle.scss';
 
 import Action from '../Action';
+import PagingButtons from '../PagingButtons';
 import UploaderModal from '../UploaderModal';
 import ModalContainer from '../ModalContainer';
 // import CreateActionModal from '../CreateActionModal';
@@ -28,6 +29,7 @@ class CampaignIdSingle extends React.Component {
     });
 
     this.deleteAction = this.deleteAction.bind(this);
+    this.getActionsByPaginatedLink = this.getActionsByPaginatedLink.bind(this);
     // this.showCreateActionModal = this.showCreateActionModal.bind(this);
     // this.hideCreateActionModal = this.hideCreateActionModal.bind(this);
   }
@@ -36,12 +38,7 @@ class CampaignIdSingle extends React.Component {
     this.getActions(this.props.campaign.id);
   }
 
-  /**
-   * Gets the campaign's actions.
-   *
-   * @param {Integer} campaignId
-   * @return {Object}
-   */
+  // Gets campaign's actions.
   getActions(campaignId) {
     this.api
       .get(`api/v3/actions`, {
@@ -52,8 +49,28 @@ class CampaignIdSingle extends React.Component {
       .then(json =>
         this.setState({
           actions: keyBy(json.data, 'id'),
+          nextPage: json.meta.pagination.links.next,
+          prevPage: json.meta.pagination.links.previous,
         }),
       );
+  }
+
+  // Make API call to paginated link to get next/previous batch of posts.
+  getActionsByPaginatedLink(url, event) {
+    event.preventDefault();
+
+    // Strip the url to get query parameters.
+    const splitEndpoint = url.split('/');
+    const path = splitEndpoint.slice(-1)[0];
+    const queryString = path.split('?')[1];
+
+    this.api.get('api/v3/actions', queryString).then(json =>
+      this.setState({
+        actions: keyBy(json.data, 'id'),
+        nextPage: json.meta.pagination.links.next,
+        prevPage: json.meta.pagination.links.previous,
+      }),
+    );
   }
 
   // Delete an action.
@@ -181,7 +198,13 @@ class CampaignIdSingle extends React.Component {
               })
             : null}
         </div>
-
+        <div className="container__block -narrow">
+          <PagingButtons
+            onPaginate={this.getActionsByPaginatedLink}
+            prev={this.state.prevPage}
+            next={this.state.nextPage}
+          />
+        </div>
         <div className="container__block -narrow">
           <a
             className="button -secondary"
