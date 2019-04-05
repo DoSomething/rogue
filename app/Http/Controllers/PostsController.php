@@ -7,8 +7,8 @@ use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 use Rogue\Managers\PostManager;
 use Rogue\Managers\SignupManager;
-use Rogue\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Gate;
+use Rogue\Http\Requests\PostRequest;
 use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Http\Controllers\Traits\FiltersRequests;
 
