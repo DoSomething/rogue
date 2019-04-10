@@ -1,19 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { parse, format } from 'date-fns';
 import { remove, map, clone } from 'lodash';
-import { getImageUrlFromPost, getEditedImageUrl } from '../../helpers';
+import { getImageUrlFromPost } from '../../helpers';
 
-import './post.scss';
-
-import Tags from '../Tags';
 import PostTile from '../PostTile';
 import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
 import ReviewBlock from '../ReviewBlock';
-import StatusButton from '../StatusButton';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
+
+import './post.scss';
 
 class Post extends React.Component {
   constructor(props) {
@@ -143,16 +141,27 @@ class Post extends React.Component {
           </div>
           <div className="container__row">
             <MetaInformation
-              title="Meta"
+              title="Post Information"
               details={{
-                'Signup ID': signup.id,
-                'Signup Source': signup.source,
-                'Post ID': post.id,
-                'Post Type': post.type,
-                Location: post.location,
-                'Post Source': post.source,
-                Submitted: new Date(post.created_at).toString(),
-                'Northstar Id': signup.northstar_id,
+                ID: post.id,
+                Type: post.type,
+                Source: post.source,
+                Location: post.location_name,
+                Submitted: format(parse(post.created_at), 'M/D/YYYY h:m:s'),
+              }}
+            />
+          </div>
+          <div className="container__row">
+            <MetaInformation
+              title="Signup Information"
+              details={{
+                ID: <a href={`/signups/${signup.id}`}>{signup.id}</a>,
+                User: (
+                  <a href={`/users/${signup.northstar_id}`}>
+                    {signup.northstar_id}
+                  </a>
+                ),
+                Source: signup.source,
               }}
             />
           </div>
