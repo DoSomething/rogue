@@ -178,7 +178,7 @@ class CampaignIdSingle extends React.Component {
           </p>
         </div>
 
-        <div className="container__block -narrow">
+        <div id="actions" className="container__block -narrow">
           <h3>Campaign Actions</h3>
           <p>
             Each action in your campaign requires a different set of metadata,
