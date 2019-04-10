@@ -8,12 +8,8 @@ exports[`it renders correctly 1`] = `
     className="container__block -third"
   >
     <div
-      className="post__image"
-    >
-      <img
-        src={undefined}
-      />
-    </div>
+      className="post-tile -fallback"
+    />
     <div
       className="admin-tools"
     >
@@ -248,49 +244,116 @@ exports[`it renders correctly 1`] = `
         <h4
           className="heading"
         >
-          Meta
+          Post Information
         </h4>
         <span>
-          Signup ID
-          : 
-          <br />
-        </span>
-        <span>
-          Signup Source
-          : 
-          <br />
-        </span>
-        <span>
-          Post ID
-          : 
+          <strong>
+            ID
+            :
+          </strong>
+           
           123
           <br />
         </span>
         <span>
-          Post Type
-          : 
+          <strong>
+            Campaign
+            :
+          </strong>
+           
+          <a
+            href="/campaign-ids/undefined"
+          />
+          <br />
+        </span>
+        <span>
+          <strong>
+            Action
+            :
+          </strong>
+           
+          <a
+            href="/campaign-ids/undefined"
+          >
+            default
+          </a>
+          <br />
+        </span>
+        <span>
+          <strong>
+            Type
+            :
+          </strong>
+           
           photo
           <br />
         </span>
         <span>
-          Location
-          : 
+          <strong>
+            Source
+            :
+          </strong>
+           
           <br />
         </span>
         <span>
-          Post Source
-          : 
+          <strong>
+            Location
+            :
+          </strong>
+           
           <br />
         </span>
         <span>
-          Submitted
-          : 
+          <strong>
+            Submitted
+            :
+          </strong>
+           
           Invalid Date
           <br />
         </span>
+      </div>
+    </div>
+    <div
+      className="container__row"
+    >
+      <div
+        className="container"
+      >
+        <h4
+          className="heading"
+        >
+          Signup Information
+        </h4>
         <span>
-          Northstar Id
-          : 
+          <strong>
+            ID
+            :
+          </strong>
+           
+          <a
+            href="/signups/undefined"
+          />
+          <br />
+        </span>
+        <span>
+          <strong>
+            User
+            :
+          </strong>
+           
+          <a
+            href="/users/undefined"
+          />
+          <br />
+        </span>
+        <span>
+          <strong>
+            Source
+            :
+          </strong>
+           
           <br />
         </span>
       </div>

@@ -2,20 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getImageUrlFromProp } from '../../helpers';
 
-class PostTile extends React.Component {
-  render() {
-    const post = this.props.details;
+import './post-tile.scss';
 
-    return (
-      <li>
-        <img src={getImageUrlFromProp(post) || post.media.url} />
-      </li>
-    );
+const PostTile = ({ post }) => {
+  const url = getImageUrlFromProp(post, 'edited');
+  const altText = `Post #${post.id}`;
+
+  if (!url) {
+    return <div className="post-tile -fallback" />;
   }
-}
+
+  return <img className="post-tile" alt={altText} src={url} />;
+};
 
 PostTile.propTypes = {
-  details: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  post: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default PostTile;

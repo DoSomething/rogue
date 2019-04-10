@@ -1,19 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { parse, format } from 'date-fns';
 import { remove, map, clone } from 'lodash';
-import { getImageUrlFromPost, getEditedImageUrl } from '../../helpers';
+import { getImageUrlFromPost } from '../../helpers';
 
-import './post.scss';
-
-import Tags from '../Tags';
 import PostTile from '../PostTile';
 import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
 import ReviewBlock from '../ReviewBlock';
-import StatusButton from '../StatusButton';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
+
+import './post.scss';
 
 class Post extends React.Component {
   constructor(props) {
@@ -60,17 +58,15 @@ class Post extends React.Component {
     const signup = this.props.signup;
     const campaign = this.props.campaign;
     const quantity = post.quantity != null ? post.quantity : 0;
-    const containerSize = post.type === 'photo' ? '-third' : '-half';
     const textOrCaption = post.type === 'photo' ? 'Photo Caption' : 'Text';
+    const containerSize = '-third';
 
     return (
       <div className="post container__row">
         {/* Post Images */}
-        {post.type === 'photo' ? (
-          <div className="container__block -third">
-            <div className="post__image">
-              <img src={getImageUrlFromPost(post, 'original')} />
-            </div>
+        <div className="container__block -third">
+          <PostTile post={post} />
+          {post.type === 'photo' ? (
             <div className="admin-tools">
               <div className="admin-tools__links">
                 <a href={getImageUrlFromPost(post, 'original')} target="_blank">
@@ -90,15 +86,17 @@ class Post extends React.Component {
                 </div>
               ) : null}
             </div>
-            {this.props.showSiblings ? (
-              <ul className="gallery -duo">
-                {map(this.getOtherPosts(post), (post, key) => (
-                  <PostTile key={key} details={post} />
-                ))}
-              </ul>
-            ) : null}
-          </div>
-        ) : null}
+          ) : null}
+          {this.props.showSiblings ? (
+            <ul className="gallery -duo">
+              {map(this.getOtherPosts(post), siblingPost => (
+                <li key={siblingPost.id}>
+                  <PostTile post={siblingPost} />
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
 
         {/* User and Post information */}
         <div className={`container__block ${containerSize}`}>
@@ -143,16 +141,37 @@ class Post extends React.Component {
           </div>
           <div className="container__row">
             <MetaInformation
-              title="Meta"
+              title="Post Information"
               details={{
-                'Signup ID': signup.id,
-                'Signup Source': signup.source,
-                'Post ID': post.id,
-                'Post Type': post.type,
-                Location: post.location,
-                'Post Source': post.source,
-                Submitted: new Date(post.created_at).toString(),
-                'Northstar Id': signup.northstar_id,
+                ID: post.id,
+                Campaign: (
+                  <a href={`/campaign-ids/${post.campaign_id}`}>
+                    {campaign.internal_title}
+                  </a>
+                ),
+                Action: (
+                  <a href={`/campaign-ids/${post.action_id}`}>
+                    {post.action_details.data.name}
+                  </a>
+                ),
+                Type: post.type,
+                Source: post.source,
+                Location: post.location_name,
+                Submitted: format(parse(post.created_at), 'M/D/YYYY h:m:s'),
+              }}
+            />
+          </div>
+          <div className="container__row">
+            <MetaInformation
+              title="Signup Information"
+              details={{
+                ID: <a href={`/signups/${signup.id}`}>{signup.id}</a>,
+                User: (
+                  <a href={`/users/${signup.northstar_id}`}>
+                    {signup.northstar_id}
+                  </a>
+                ),
+                Source: signup.source,
               }}
             />
           </div>

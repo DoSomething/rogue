@@ -7,7 +7,7 @@ const MetaInformation = props => (
     {props.title ? <h4 className="heading">{props.title}</h4> : null}
     {map(props.details, (item, key) => (
       <span key={key}>
-        {key}: {item}
+        <strong>{key}:</strong> {item}
         <br />
       </span>
     ))}

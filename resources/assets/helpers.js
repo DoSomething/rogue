@@ -244,22 +244,16 @@ function stripExifData(image, dv = null) {
 
 // DEPRECATED: Uses getImageUrlFromPost() instead.
 export function getImageUrlFromProp(photoProp) {
-  let photo_url;
-
   // Sometimes we get the url right on the post and sometimes it is nested under
   // media (in cases where it goes through the PostTransformer), so handle both cases
   // @TODO: make sure everything goes through a transformer so we don't need this
-  if ('url' in photoProp) {
-    photo_url = photoProp.url;
-  } else if ('media' in photoProp) {
-    photo_url = photoProp.media.original_image_url;
+  const photoUrl = photoProp.url || photoProp.media.url;
+
+  if (photoUrl === 'default') {
+    return null;
   }
 
-  if (photo_url == 'default' || photo_url == null) {
-    return 'https://www.dosomething.org/sites/default/files/JenBugError.png';
-  }
-
-  return photo_url;
+  return photoUrl;
 }
 
 // DEPRECATED: Uses getImageUrlFromPost() instead.
