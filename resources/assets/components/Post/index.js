@@ -67,7 +67,7 @@ class Post extends React.Component {
         {post.type === 'photo' ? (
           <div className="container__block -third">
             <div className="post__image">
-              <img src={getImageUrlFromPost(post, 'original')} />
+              <img src={getImageUrlFromPost(post, 'edited')} />
             </div>
             <div className="admin-tools">
               <div className="admin-tools__links">
