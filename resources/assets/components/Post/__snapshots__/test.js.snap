@@ -8,12 +8,8 @@ exports[`it renders correctly 1`] = `
     className="container__block -third"
   >
     <div
-      className="post__image"
-    >
-      <img
-        src={undefined}
-      />
-    </div>
+      className="post-tile -fallback"
+    />
     <div
       className="admin-tools"
     >
