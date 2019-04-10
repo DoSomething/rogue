@@ -9,11 +9,8 @@ $accepted-green: #80e85d;
   &.-outlined-button {
     background: $white;
     color: $light-gray;
-    border-color: $light-gray;
-    border-width: 3px;
-    border-style: solid;
+    border: 3px solid $light-gray;
     text-transform: capitalize;
-    box-sizing: border-box; // Prevent button from resizing when clicked.
     padding: 14px !important; // Fix alignment bug in Forge.
 
     &.-accepted {
