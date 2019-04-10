@@ -150,7 +150,7 @@ class Post extends React.Component {
                   </a>
                 ),
                 Action: (
-                  <a href={`/campaign-ids/${post.action_id}`}>
+                  <a href={`/campaign-ids/${post.campaign_id}#actions`}>
                     {post.action_details.data.name}
                   </a>
                 ),

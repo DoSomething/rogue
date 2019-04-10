@@ -273,7 +273,7 @@ exports[`it renders correctly 1`] = `
           </strong>
            
           <a
-            href="/campaign-ids/undefined"
+            href="/campaign-ids/undefined#actions"
           >
             default
           </a>
