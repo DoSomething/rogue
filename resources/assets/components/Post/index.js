@@ -58,17 +58,15 @@ class Post extends React.Component {
     const signup = this.props.signup;
     const campaign = this.props.campaign;
     const quantity = post.quantity != null ? post.quantity : 0;
-    const containerSize = post.type === 'photo' ? '-third' : '-half';
     const textOrCaption = post.type === 'photo' ? 'Photo Caption' : 'Text';
+    const containerSize = '-third';
 
     return (
       <div className="post container__row">
         {/* Post Images */}
-        {post.type === 'photo' ? (
-          <div className="container__block -third">
-            <div className="post__image">
-              <img src={getImageUrlFromPost(post, 'edited')} />
-            </div>
+        <div className="container__block -third">
+          <PostTile post={post} />
+          {post.type === 'photo' ? (
             <div className="admin-tools">
               <div className="admin-tools__links">
                 <a href={getImageUrlFromPost(post, 'original')} target="_blank">
@@ -88,15 +86,17 @@ class Post extends React.Component {
                 </div>
               ) : null}
             </div>
-            {this.props.showSiblings ? (
-              <ul className="gallery -duo">
-                {map(this.getOtherPosts(post), (post, key) => (
-                  <PostTile key={key} details={post} />
-                ))}
-              </ul>
-            ) : null}
-          </div>
-        ) : null}
+          ) : null}
+          {this.props.showSiblings ? (
+            <ul className="gallery -duo">
+              {map(this.getOtherPosts(post), siblingPost => (
+                <li key={siblingPost.id}>
+                  <PostTile post={siblingPost} />
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
 
         {/* User and Post information */}
         <div className={`container__block ${containerSize}`}>

@@ -249,8 +249,8 @@ export function getImageUrlFromProp(photoProp) {
   // @TODO: make sure everything goes through a transformer so we don't need this
   const photoUrl = photoProp.url || photoProp.media.url;
 
-  if (photoUrl === 'default' || photoUrl === null) {
-    return 'https://www.dosomething.org/sites/default/files/JenBugError.png';
+  if (photoUrl === 'default') {
+    return null;
   }
 
   return photoUrl;

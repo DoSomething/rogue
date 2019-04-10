@@ -4,19 +4,19 @@ import { getImageUrlFromProp } from '../../helpers';
 
 import './post-tile.scss';
 
-const PostTile = ({ details }) => {
-  const url = getImageUrlFromProp(details, 'edited');
-  const altText = `Post #${details.id}`;
+const PostTile = ({ post }) => {
+  const url = getImageUrlFromProp(post, 'edited');
+  const altText = `Post #${post.id}`;
 
-  return (
-    <li>
-      <img className="post-tile" alt={altText} src={url} />
-    </li>
-  );
+  if (!url) {
+    return <div className="post-tile -fallback" />;
+  }
+
+  return <img className="post-tile" alt={altText} src={url} />;
 };
 
 PostTile.propTypes = {
-  details: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  post: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default PostTile;
