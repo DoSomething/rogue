@@ -2,17 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getImageUrlFromProp } from '../../helpers';
 
-class PostTile extends React.Component {
-  render() {
-    const post = this.props.details;
+import './post-tile.scss';
 
-    return (
-      <li>
-        <img src={getImageUrlFromProp(post) || post.media.url} />
-      </li>
-    );
-  }
-}
+const PostTile = ({ details }) => {
+  const url = getImageUrlFromProp(details, 'edited');
+  const altText = `Post #${details.id}`;
+
+  return (
+    <li>
+      <img className="post-tile" alt={altText} src={url} />
+    </li>
+  );
+};
 
 PostTile.propTypes = {
   details: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
