@@ -175,7 +175,7 @@ class Post extends Model
         // Ask the storage driver for the path to the image for this post.
         $path = Storage::url('uploads/reportback-items/edited_' . $this->id . '.jpeg');
 
-        return url($path) . '?time='. Carbon::now()->timestamp;
+        return url($path);
     }
 
     /**
