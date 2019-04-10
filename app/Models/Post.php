@@ -2,7 +2,6 @@
 
 namespace Rogue\Models;
 
-use Carbon\Carbon;
 use Rogue\Events\PostTagged;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
