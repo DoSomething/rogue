@@ -144,6 +144,16 @@ class Post extends React.Component {
               title="Post Information"
               details={{
                 ID: post.id,
+                Action: (
+                  <a href={`/campaign-ids/${post.action_id}`}>
+                    {post.action_details.data.name}
+                  </a>
+                ),
+                Campaign: (
+                  <a href={`/campaign-ids/${post.campaign_id}`}>
+                    {post.campaign_id}
+                  </a>
+                ),
                 Type: post.type,
                 Source: post.source,
                 Location: post.location_name,
