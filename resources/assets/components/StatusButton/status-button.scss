@@ -9,40 +9,39 @@ $accepted-green: #80e85d;
   &.-outlined-button {
     background: $white;
     color: $light-gray;
-    border-color: $light-gray;
-    border-width: 3px;
-    border-style: solid;
+    border: 3px solid $light-gray;
     text-transform: capitalize;
+    padding: 14px !important; // Fix alignment bug in Forge.
 
     &.-accepted {
       &.-accepted:hover {
         background: lighten($accepted-green, $color-tint);
+        border-color: lighten($accepted-green, $color-tint);
         color: $white;
-        border-color: $white;
       }
 
       &.-accepted:active,
       &.-accepted:focus,
       &.is-selected {
         background: darken($accepted-green, $color-tint);
+        border-color: darken($accepted-green, $color-tint);
         color: $white;
-        border: none;
       }
     }
 
     &.-rejected {
       &.-rejected:hover {
         background: lighten($error-color, $color-tint);
+        border-color: lighten($error-color, $color-tint);
         color: $white;
-        border-color: $white;
       }
 
       &.-rejected:active,
       &.-rejected:focus,
       &.is-selected {
         background: darken($error-color, $color-tint);
+        border-color: darken($error-color, $color-tint);
         color: $white;
-        border: none;
       }
     }
   }
