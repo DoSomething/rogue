@@ -9,6 +9,13 @@ import Events from '../../_mocks_/__mockData__/events.json';
 
 jest.mock('../../utilities/RogueClient');
 
+// Mock the 'window.AUTH' object:
+window.AUTH = {
+  id: '5571f4f5a59dbf3c7a8b4569',
+  token: 'eyJ0eXAiOiJKV1QiL…iAYvaQ6WjXLRDn-ybli4tynNeDarwaB8YviUJfRT1B2XHutB8',
+  role: 'admin',
+};
+
 describe('WithReviewing', () => {
   let Wrapper;
   let ReviewingComponent;

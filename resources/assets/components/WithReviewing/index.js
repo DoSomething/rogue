@@ -18,7 +18,7 @@ const reviewComponent = (Component, data) => {
       };
 
       this.api = new RogueClient(window.location.origin, {
-        headers: { Authorization: `Bearer ${window.AUTH}` },
+        headers: { Authorization: `Bearer ${window.AUTH.token}` },
       });
       this.updatePost = this.updatePost.bind(this);
       this.updateTag = this.updateTag.bind(this);

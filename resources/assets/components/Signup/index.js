@@ -104,7 +104,7 @@ class Signup extends React.Component {
 
     this.api = new RogueClient(window.location.origin, {
       headers: {
-        Authorization: `Bearer ${window.AUTH}`,
+        Authorization: `Bearer ${window.AUTH.token}`,
       },
     });
 
@@ -350,7 +350,7 @@ class Signup extends React.Component {
     // To submit a post with a file, we need to change the Content-Type to muultipart/form-data.
     const api = new RestApiClient(window.location.origin, {
       headers: {
-        Authorization: `Bearer ${window.AUTH}`,
+        Authorization: `Bearer ${window.AUTH.token}`,
         'Content-Type': 'multipart/form-data',
       },
     });

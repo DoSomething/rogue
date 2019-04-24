@@ -24,7 +24,7 @@ class CampaignIdSingle extends React.Component {
 
     this.api = new RogueClient(window.location.origin, {
       headers: {
-        Authorization: `Bearer ${window.AUTH}`,
+        Authorization: `Bearer ${window.AUTH.token}`,
       },
     });
 

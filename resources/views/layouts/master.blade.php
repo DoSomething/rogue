@@ -45,6 +45,5 @@
         <script src="{{ elixir('app.js', 'dist') }}"></script>
     </body>
 
-    {{ scriptify(auth()->user() ? auth()->user()->access_token : null, 'AUTH') }}
-
+    {{ scriptify($auth, 'AUTH') }}
 </html>

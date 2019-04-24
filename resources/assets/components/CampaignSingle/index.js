@@ -79,7 +79,7 @@ class CampaignSingle extends React.Component {
     };
 
     this.api = new RestApiClient(window.location.origin, {
-      headers: { Authorization: `Bearer ${window.AUTH}` },
+      headers: { Authorization: `Bearer ${window.AUTH.token}` },
     });
     this.filterPosts = this.filterPosts.bind(this);
     this.getPostsByFilter = this.getPostsByFilter.bind(this);
