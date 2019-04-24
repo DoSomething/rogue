@@ -12,7 +12,7 @@ class Action extends React.Component {
   render() {
     const action = this.props.action;
     const campaign = this.props.campaign;
-    const campaignInProgress = parse(campaign.start_date) > Date.now();
+    const campaignInProgress = Date.now() > parse(campaign.start_date);
     const isAdmin = window.AUTH.role == 'admin';
 
     return (
