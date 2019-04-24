@@ -1,9 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "start": "npm run clean && NODE_ENV=development webpack --watch",
-    "build": "npm run clean && NODE_ENV=production webpack",
-    "build:dev": "npm run clean && NODE_ENV=development webpack",
+    "start": "npm run clean && webpack --env=development --hide-modules --watch",
+    "build": "npm run clean && webpack  --env=production",
+    "build:dev": "npm run clean && webpack --env=development",
     "clean": "rm -rf public/dist",
     "test": "jest --watch",
     "test:ci": "jest",
@@ -14,7 +14,7 @@
   },
   "engines": {
     "node": "8.x",
-    "npm": "5.x"
+    "npm": "6.x"
   },
   "prettier": {
     "singleQuote": true,
@@ -50,7 +50,7 @@
   "devDependencies": {
     "@dosomething/babel-config": "^2.2.2",
     "@dosomething/eslint-config": "^4.0.0",
-    "@dosomething/webpack-config": "^3.0.0",
+    "@dosomething/webpack-config": "^4.1.1",
     "babel-jest": "^21.0.2",
     "enzyme": "^2.9.1",
     "enzyme-to-json": "^2.0.0",
@@ -61,6 +61,7 @@
     "prettier": "1.13.4",
     "pretty-quick": "^1.8.0",
     "react-test-renderer": "^15.6.1",
-    "webpack": "^3.12.0"
+    "webpack": "~4.28.0",
+    "webpack-cli": "^3.3.1"
   }
 }
