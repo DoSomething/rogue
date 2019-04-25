@@ -4,6 +4,7 @@ namespace Rogue\Providers;
 
 use Rogue\Auth\CustomGate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
@@ -21,6 +22,15 @@ class AppServiceProvider extends ServiceProvider
             return new CustomGate($app, function () use ($app) {
                 return call_user_func($app['auth']->userResolver());
             });
+        });
+
+        // Register global view composer.
+        View::composer('*', function ($view) {
+            $view->with('auth', [
+                'id' => auth()->id(),
+                'token' => auth()->user() ? auth()->user()->access_token : null,
+                'role' => auth()->user() ? auth()->user()->role : 'user',
+            ]);
         });
 
         // Add a custom validator for Mongo ObjectIDs.
