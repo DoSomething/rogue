@@ -1026,7 +1026,7 @@ class PostTest extends TestCase
     public function testPostsIndexAsOwnerHiddenPosts()
     {
         // Owners should only see accepted posts and their own hidden posts.
-        $ownerId = $this->faker->northstar_id;
+        $ownerId = $this->faker->unique()->northstar_id;
 
         // Create posts and associate to this $ownerId.
         $posts = factory(Post::class, 'accepted', 2)->create(['northstar_id' => $ownerId]);
