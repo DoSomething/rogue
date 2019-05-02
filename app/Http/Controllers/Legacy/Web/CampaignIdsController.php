@@ -6,6 +6,7 @@ use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
+use Rogue\Http\Transformers\CampaignTransformer;
 
 class CampaignIdsController extends Controller
 {
@@ -25,7 +26,7 @@ class CampaignIdsController extends Controller
     {
         $campaigns = Campaign::orderBy('created_at', 'desc')->get()->toArray();
 
-        return view('pages.campaign_id_overview')->with('state', $campaigns);
+        return view('campaign-ids.index')->with('state', $campaigns);
     }
 
     /**
@@ -82,9 +83,9 @@ class CampaignIdsController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        return view('pages.campaign_id_single')
+        return view('campaign-ids.show')
             ->with('state', [
-                'campaign' => $campaign,
+                'campaign' => (new CampaignTransformer)->transform($campaign),
             ]
         );
     }

@@ -50,6 +50,19 @@ class Campaign extends Model
     }
 
     /**
+     * Should we accept new signups & posts for this campaign?
+     *
+     * @return bool
+     */
+    public function isOpen()
+    {
+        $hasStarted = $this->start_date < now();
+        $hasEnded = $this->end_date && $this->end_date < now();
+
+        return $hasStarted && ! $hasEnded;
+    }
+
+    /**
      * Mutator for setting the start_date field.
      *
      * @param string|Carbon $value
