@@ -17,6 +17,13 @@ class CampaignIdsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
+
+        $this->rules = [
+            'internal_title' => ['required', 'string'],
+            'impact_doc' => ['required', 'url'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['nullable', 'date', 'after:start_date'],
+        ];
     }
 
     /**
@@ -60,15 +67,11 @@ class CampaignIdsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'internal_title' => 'required|string|unique:campaigns',
-            'cause' => 'required|string',
-            'impact_doc' => 'required|url',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after:start_date',
-        ]);
+        $values = $this->validate($request, array_merge_recursive($this->rules, [
+            'internal_title' => ['required', 'string', Rule::unique('campaigns')],
+        ]));
 
-        $campaign = Campaign::create($request->all());
+        $campaign = Campaign::create($values);
 
         // Log that a campaign was created.
         info('campaign_created', ['id' => $campaign->id]);
@@ -127,15 +130,11 @@ class CampaignIdsController extends Controller
      */
     public function update(Request $request, Campaign $campaign)
     {
-        $this->validate($request, [
+        $values = $this->validate($request, array_merge_recursive($this->rules, [
             'internal_title' => [Rule::unique('campaigns')->ignore($campaign->id)],
-            'cause' => 'string',
-            'impact_doc' => 'url',
-            'start_date' => 'date',
-            'end_date' => 'nullable|date|after:start_date',
-        ]);
+        ]));
 
-        $campaign->update($request->all());
+        $campaign->update($values);
 
         // Log that a campaign was updated.
         info('campaign_updated', ['id' => $campaign->id]);
