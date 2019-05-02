@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { parse } from 'date-fns';
 
 import './action.scss';
 
@@ -12,7 +11,6 @@ class Action extends React.Component {
   render() {
     const action = this.props.action;
     const campaign = this.props.campaign;
-    const campaignInProgress = Date.now() > parse(campaign.start_date);
     const isAdmin = window.AUTH.role == 'admin';
 
     return (
@@ -88,7 +86,7 @@ class Action extends React.Component {
             </li>
           </ul>
         </div>
-        {campaignInProgress && !isAdmin ? null : (
+        {campaign.is_open && !isAdmin ? null : (
           <div className="container__row">
             <a
               className="button -secondary"
