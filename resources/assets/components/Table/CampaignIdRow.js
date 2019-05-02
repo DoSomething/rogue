@@ -14,7 +14,7 @@ class CampaignIdRow extends React.Component {
     const row = [
       {
         url: null,
-        title: campaign ? campaign.id : 'Campaign Not Found',
+        title: campaign ? campaign.id : '–',
       },
       {
         url: campaign ? `/campaign-ids/${campaign.id}` : '/campaign-ids',
@@ -22,7 +22,7 @@ class CampaignIdRow extends React.Component {
       },
       {
         url: null,
-        title: campaign ? campaign.cause : 'Campaign Not Found',
+        title: campaign ? campaign.cause_names.join(', ') : '–',
       },
       {
         url: campaign ? campaign.impact_doc : '/campaign-ids',

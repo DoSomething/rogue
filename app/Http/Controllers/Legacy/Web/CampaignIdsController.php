@@ -33,7 +33,9 @@ class CampaignIdsController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::orderBy('created_at', 'desc')->get()->toArray();
+        $campaigns = Campaign::orderBy('created_at', 'desc')->get()->map(function ($campaign) {
+            return (new CampaignTransformer)->transform($campaign);
+        });
 
         return view('campaign-ids.index')->with('state', $campaigns);
     }
