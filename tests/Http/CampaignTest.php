@@ -23,7 +23,7 @@ class CampaignTest extends Testcase
 
         $this->actingAsAdmin()->postJson('campaign-ids', [
             'internal_title' => $firstCampaignTitle,
-            'cause' => 'Animals',
+            'cause' => ['animal-welfare'],
             'impact_doc' => 'https://www.google.com',
             'start_date' => $firstCampaignStartDate,
             'end_date' => $firstCampaignEndDate,
@@ -95,16 +95,24 @@ class CampaignTest extends Testcase
         $campaign = factory(Campaign::class)->create();
 
         // Update the title.
-        $this->actingAsAdmin()->patchJson('campaign-ids/' . $campaign->id, [
+        $response = $this->actingAsAdmin()->patch('campaign-ids/' . $campaign->id, [
             'internal_title' => 'Updated Title',
+            'impact_doc' => 'https://www.bing.com/',
+            'cause' => ['lgbtq-rights'],
+            'start_date' => '1/1/2018',
         ]);
 
         // Make sure the campaign update is persisted.
         $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
-        $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
-        $this->assertEquals('Updated Title', $decodedResponse['data']['internal_title']);
+        $response->assertJson([
+            'data' => [
+                'internal_title' => 'Updated Title',
+                'cause' => ['lgbtq-rights'],
+                'start_date' => '2018-01-01T00:00:00+00:00',
+            ],
+        ]);
     }
 
     /**

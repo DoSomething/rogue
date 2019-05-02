@@ -20,6 +20,8 @@ class CampaignIdsController extends Controller
 
         $this->rules = [
             'internal_title' => ['required', 'string'],
+            'cause' => ['required', 'array', 'between:1,5'],
+            'cause.*' => ['string', Rule::in(array_keys(Campaign::$causes))],
             'impact_doc' => ['required', 'url'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date', 'after:start_date'],
@@ -41,23 +43,7 @@ class CampaignIdsController extends Controller
      */
     public function create()
     {
-        $causes = [
-            'Animals',
-            'Bullying',
-            'Disasters',
-            'Discrimination',
-            'Education',
-            'Environment',
-            'Homelessness',
-            'Mental Health',
-            'Physical Health',
-            'Poverty',
-            'Relationships',
-            'Sex',
-            'Violence',
-        ];
-
-        return view('campaign-ids.create')->with('causes', $causes);
+        return view('campaign-ids.create')->with('causes', Campaign::$causes);
     }
 
     /**
@@ -68,7 +54,7 @@ class CampaignIdsController extends Controller
     public function store(Request $request)
     {
         $values = $this->validate($request, array_merge_recursive($this->rules, [
-            'internal_title' => ['required', 'string', Rule::unique('campaigns')],
+            'internal_title' => [Rule::unique('campaigns')],
         ]));
 
         $campaign = Campaign::create($values);
@@ -100,25 +86,9 @@ class CampaignIdsController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        $causes = [
-            'Animals',
-            'Bullying',
-            'Disasters',
-            'Discrimination',
-            'Education',
-            'Environment',
-            'Homelessness',
-            'Mental Health',
-            'Physical Health',
-            'Poverty',
-            'Relationships',
-            'Sex',
-            'Violence',
-        ];
-
         return view('campaign-ids.edit', [
             'campaign' => $campaign,
-            'causes' => $causes,
+            'causes' => Campaign::$causes,
         ]);
     }
 

@@ -19,6 +19,19 @@
  e.g. Teens for Jeans 2015-08" value="{{old('internal_title') }}">
                     </div>
 
+                    <div class="form-item">
+                        <label class="field-label">Cause Area <em>(choose between 1-5)</em></label>
+                        <div class="columns-2">
+                            @foreach($causes as $cause => $name)
+                                <label class="option -checkbox">
+                                    <input {{ old('cause.' . $cause) }} name="cause[{{ $cause }}]" type="checkbox" value="{{ $cause }}">
+                                    <span class="option__indicator"></span>
+                                    <span>{{ $name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+
                     <div class="select form-item">
                         <label class="field-label">Cause</label>
                         <select name="cause">
