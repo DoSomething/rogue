@@ -803,11 +803,15 @@ class PostTest extends TestCase
     {
         // Create an accepted post.
         $this->mockTime('8/3/2017 14:00:00');
-        $regularPost = factory(Post::class, 'accepted')->create();
+        $regularPost = factory(Post::class, 'accepted')->create([
+            'northstar_id' => $this->faker->unique()->northstar_id,
+        ]);
 
-        // And then later, create 1 post that is anonymous.
+        // And then later, create an anonymous post from another user.
         $this->mockTime('8/3/2017 17:30:00');
-        $anonymousPost = factory(Post::class, 'accepted')->create();
+        $anonymousPost = factory(Post::class, 'accepted')->create([
+            'northstar_id' => $this->faker->unique()->northstar_id,
+        ]);
         $anonymousPost->actionModel->anonymous = 1;
         $anonymousPost->actionModel->save();
 
@@ -1022,7 +1026,7 @@ class PostTest extends TestCase
     public function testPostsIndexAsOwnerHiddenPosts()
     {
         // Owners should only see accepted posts and their own hidden posts.
-        $ownerId = $this->faker->northstar_id;
+        $ownerId = $this->faker->unique()->northstar_id;
 
         // Create posts and associate to this $ownerId.
         $posts = factory(Post::class, 'accepted', 2)->create(['northstar_id' => $ownerId]);
