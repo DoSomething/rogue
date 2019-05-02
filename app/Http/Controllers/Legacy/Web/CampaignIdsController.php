@@ -6,6 +6,7 @@ use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
+use Rogue\Http\Transformers\CampaignTransformer;
 
 class CampaignIdsController extends Controller
 {
@@ -84,7 +85,7 @@ class CampaignIdsController extends Controller
     {
         return view('pages.campaign_id_single')
             ->with('state', [
-                'campaign' => $campaign,
+                'campaign' => (new CampaignTransformer)->transform($campaign),
             ]
         );
     }
