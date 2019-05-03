@@ -82,6 +82,14 @@ class Campaign extends Model
     }
 
     /**
+     * A campaign has many posts.
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
      * Should we accept new signups & posts for this campaign?
      *
      * @return bool
