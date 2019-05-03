@@ -33,14 +33,13 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::withCount(['posts' => function ($query) {
-            return $query->where('status', 'pending');
-        }])->get();
+        $campaigns = $this->campaignService->findAll();
+        $campaigns = $this->campaignService->appendPendingCountsToCampaigns($campaigns);
 
         $sortedCampaigns = $campaigns->sortByDesc('posts_count')
             ->groupBy(function ($campaign) {
                 $isActive = $campaign->isOpen();
-                $hasPendingPosts = $campaign->posts_count > 0;
+                $hasPendingPosts = $campaign->pending_count > 0;
 
                 return $isActive && $hasPendingPosts ? 'pending' : 'etc';
             })->toArray();
