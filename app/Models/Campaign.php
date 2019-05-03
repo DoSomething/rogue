@@ -56,7 +56,7 @@ class Campaign extends Model
         'lgbtq-rights' => 'LGBTQ+ Rights & Equality ',
         'mental-health' => 'Mental Health',
         'veterans' => 'Military/Veterans',
-        'physical-health' => 'Physical health',
+        'physical-health' => 'Physical Health',
         'racial-justice' => 'Racial Justice/Racial Equity',
         'sexual-harassment' => 'Sexual Harassment & Assault',
         'voter-registration' => 'Voter Registration',
