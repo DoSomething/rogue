@@ -36,7 +36,7 @@ class CampaignsController extends Controller
         $campaigns = $this->campaignService->findAll();
         $campaigns = $this->campaignService->appendPendingCountsToCampaigns($campaigns);
 
-        $sortedCampaigns = $campaigns->sortByDesc('posts_count')
+        $sortedCampaigns = $campaigns->sortByDesc('pending_count')
             ->groupBy(function ($campaign) {
                 $isActive = $campaign->isOpen();
                 $hasPendingPosts = $campaign->pending_count > 0;
