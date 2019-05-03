@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
+use Rogue\Models\Campaign;
 use Rogue\Services\CampaignService;
 use Rogue\Http\Controllers\Controller;
 
@@ -32,14 +33,20 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        $ids = $this->campaignService->getCampaignIdsFromSignups();
-        $campaigns = $this->campaignService->findAll($ids);
-        $campaigns = $this->campaignService->appendPendingCountsToCampaigns($campaigns);
+        $campaigns = Campaign::withCount(['posts' => function ($query) {
+            return $query->where('status', 'pending');
+        }])->get();
 
-        $causes = $campaigns ? $this->campaignService->groupByCause($campaigns) : null;
+        $sortedCampaigns = $campaigns->sortByDesc('posts_count')
+            ->groupBy(function ($campaign) {
+                $isActive = $campaign->isOpen();
+                $hasPendingPosts = $campaign->posts_count > 0;
+
+                return $isActive && $hasPendingPosts ? 'pending' : 'etc';
+            })->toArray();
 
         return view('pages.campaign_overview')
-            ->with('state', $causes);
+            ->with('state', $sortedCampaigns);
     }
 
     /**
