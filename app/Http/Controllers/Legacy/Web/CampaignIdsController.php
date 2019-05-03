@@ -16,7 +16,16 @@ class CampaignIdsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:admin,staff', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+        $this->middleware('role:admin,staff');
+
+        $this->rules = [
+            'internal_title' => ['required', 'string'],
+            'cause' => ['required', 'array', 'between:1,5'],
+            'cause.*' => ['string', Rule::in(array_keys(Campaign::$causes))],
+            'impact_doc' => ['required', 'url'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['nullable', 'date', 'after:start_date'],
+        ];
     }
 
     /**
@@ -24,7 +33,9 @@ class CampaignIdsController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::orderBy('created_at', 'desc')->get()->toArray();
+        $campaigns = Campaign::orderBy('created_at', 'desc')->get()->map(function ($campaign) {
+            return (new CampaignTransformer)->transform($campaign);
+        });
 
         return view('campaign-ids.index')->with('state', $campaigns);
     }
@@ -34,23 +45,7 @@ class CampaignIdsController extends Controller
      */
     public function create()
     {
-        $causes = [
-            'Animals',
-            'Bullying',
-            'Disasters',
-            'Discrimination',
-            'Education',
-            'Environment',
-            'Homelessness',
-            'Mental Health',
-            'Physical Health',
-            'Poverty',
-            'Relationships',
-            'Sex',
-            'Violence',
-        ];
-
-        return view('campaign-ids.create')->with('causes', $causes);
+        return view('campaign-ids.create')->with('causes', Campaign::$causes);
     }
 
     /**
@@ -60,15 +55,11 @@ class CampaignIdsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'internal_title' => 'required|string|unique:campaigns',
-            'cause' => 'required|string',
-            'impact_doc' => 'required|url',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after:start_date',
-        ]);
+        $values = $this->validate($request, array_merge_recursive($this->rules, [
+            'internal_title' => [Rule::unique('campaigns')],
+        ]));
 
-        $campaign = Campaign::create($request->all());
+        $campaign = Campaign::create($values);
 
         // Log that a campaign was created.
         info('campaign_created', ['id' => $campaign->id]);
@@ -97,25 +88,9 @@ class CampaignIdsController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        $causes = [
-            'Animals',
-            'Bullying',
-            'Disasters',
-            'Discrimination',
-            'Education',
-            'Environment',
-            'Homelessness',
-            'Mental Health',
-            'Physical Health',
-            'Poverty',
-            'Relationships',
-            'Sex',
-            'Violence',
-        ];
-
         return view('campaign-ids.edit', [
             'campaign' => $campaign,
-            'causes' => $causes,
+            'causes' => Campaign::$causes,
         ]);
     }
 
@@ -127,15 +102,11 @@ class CampaignIdsController extends Controller
      */
     public function update(Request $request, Campaign $campaign)
     {
-        $this->validate($request, [
+        $values = $this->validate($request, array_merge_recursive($this->rules, [
             'internal_title' => [Rule::unique('campaigns')->ignore($campaign->id)],
-            'cause' => 'string',
-            'impact_doc' => 'url',
-            'start_date' => 'date',
-            'end_date' => 'nullable|date|after:start_date',
-        ]);
+        ]));
 
-        $campaign->update($request->all());
+        $campaign->update($values);
 
         // Log that a campaign was updated.
         info('campaign_updated', ['id' => $campaign->id]);

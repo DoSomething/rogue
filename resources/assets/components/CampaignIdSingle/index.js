@@ -145,7 +145,11 @@ class CampaignIdSingle extends React.Component {
           <p>{campaign.id}</p>
 
           <h4>Cause Area</h4>
-          <p>{campaign.cause ? campaign.cause : '–'}</p>
+          <p>
+            {campaign.cause_names.length
+              ? campaign.cause_names.join(', ')
+              : '–'}
+          </p>
 
           <h4>Proof of Impact</h4>
           {campaign.impact_doc ? (

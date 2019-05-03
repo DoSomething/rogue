@@ -26,7 +26,7 @@ class CampaignIdTable extends React.Component {
           headings={[
             'ID',
             'Internal Name',
-            'Cause',
+            'Causes',
             'Impact',
             'Start Date',
             'End Date',

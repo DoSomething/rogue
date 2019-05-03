@@ -24,17 +24,17 @@
                         >
                     </div>
 
-                    <div class="select form-item">
-                        <label class="field-label">Cause</label>
-                        <select name="cause">
-                            @foreach($causes as $cause)
-                                @if (old('cause'))
-                                    <option value="{{ $cause }}" {{ (old('cause') == $cause ? "selected":"") }}>{{ $cause }}</option>
-                                @else
-                                    <option value="{{ $cause }}" {{ ($campaign->cause == $cause ? "selected":"") }}>{{ $cause }}</option>
-                                @endif
+                    <div class="form-item">
+                        <label class="field-label">Cause Area <em>(choose between 1-5)</em></label>
+                        <div class="columns-2">
+                            @foreach($causes as $cause => $name)
+                                <label class="option -checkbox">
+                                    <input {{ in_array($cause, $campaign->cause) ? 'checked' : '' }} name="cause[{{ $cause }}]" type="checkbox" value="{{ $cause }}">
+                                    <span class="option__indicator"></span>
+                                    <span>{{ $name }}</span>
+                                </label>
                             @endforeach
-                        </select>
+                        </div>
                     </div>
 
                     <div class="form-item">
@@ -52,7 +52,7 @@
                         <label class="field-label">Start Date</label>
                         <input type="text" name="start_date" class="text-field"
                             @if (old('start_date'))
-                                value="{{ old('start_date') ? old('start_date')->format('m/d/Y') : null }}"
+                                value="{{ old('start_date') }}"
                             @else
                                 value="{{ $campaign->start_date->format('m/d/Y') }}"
                             @endif
@@ -63,7 +63,7 @@
                         <label class="field-label">End Date</label>
                         <input type="text" name="end_date" class="text-field" placeholder="e.g. 10/16/2018 or you can leave this blank if there's no end date"
                             @if (old('end_date'))
-                                value="{{ old('end_date') ? old('end_date')->format('m/d/Y') : null }}"
+                                value="{{ old('end_date') }}"
                             @else
                                 value="{{ $campaign->end_date ? $campaign->end_date->format('m/d/Y') : null }}"
                             @endif
