@@ -66,8 +66,23 @@ class CampaignOverview extends React.Component {
             onChange={this.onChange}
           />
         </div>
-        <CampaignTable cause="Pending Review" campaigns={pending} />
-        <CampaignTable cause="etc." campaigns={etc} />
+        <div className="container__block">
+          <h3>Pending Review</h3>
+          <p>
+            These campaigns are currently active &amp; have posts pending
+            review:
+          </p>
+        </div>
+        <div className="container__block">
+          <CampaignTable campaigns={pending} />
+        </div>
+        <div className="container__block">
+          <h3>Everything Else</h3>
+          <p>These campaigns are either closed or have no pending posts:</p>
+        </div>
+        <div className="container__block">
+          <CampaignTable campaigns={etc} />
+        </div>
       </div>
     );
   }

@@ -5,14 +5,11 @@ import Table from '../Table';
 
 class CampaignTable extends React.Component {
   render() {
-    const cause = this.props.cause;
     const campaigns = this.props.campaigns;
 
     return (
-      <div className="table-responsive container__block">
-        <h2>{cause}</h2>
+      <div className="table-responsive">
         <Table
-          key={cause}
           className="table"
           headings={['Campaign Name', 'Pending', 'Inbox']}
           data={this.props.campaigns}
@@ -24,7 +21,6 @@ class CampaignTable extends React.Component {
 }
 
 CampaignTable.propTypes = {
-  cause: PropTypes.string.isRequired,
   campaigns: PropTypes.array, // eslint-disable-line react/forbid-prop-types
 };
 
