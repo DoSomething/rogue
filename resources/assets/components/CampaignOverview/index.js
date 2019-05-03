@@ -1,22 +1,17 @@
 import React from 'react';
-import { map } from 'lodash';
 
 import CampaignTable from '../CampaignTable';
 
 class CampaignOverview extends React.Component {
   render() {
-    const causeData = this.props;
+    const { pending, etc } = this.props;
 
-    const causeTables = map(causeData, (data, cause) => (
-      <CampaignTable
-        key={cause}
-        cause={cause || 'Uncategorized'}
-        campaigns={data}
-        causeData={causeData}
-      />
-    ));
-
-    return <div className="container">{causeTables}</div>;
+    return (
+      <div className="container">
+        <CampaignTable cause="Pending Review" campaigns={pending} />
+        <CampaignTable cause="etc." campaigns={etc} />
+      </div>
+    );
   }
 }
 
