@@ -32,20 +32,6 @@
                         </div>
                     </div>
 
-                    <div class="select form-item">
-                        <label class="field-label">Cause</label>
-                        <select name="cause">
-                            <option value="" disabled selected>Select the cause</option>
-                            @foreach($causes as $cause)
-                                @if (old('cause'))
-                                    <option value="{{ old('cause') }}" {{ (old('cause') == $cause ? "selected":"") }}>{{ $cause }}</option>
-                                @else
-                                    <option>{{ $cause }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-
                     <div class="form-item">
                         <label class="field-label">Proof of Impact</label>
                         <input type="text" name="impact_doc" class="text-field" placeholder="Link to Proof of Impact doc, including https://" value="{{ old('impact_doc') }}">
