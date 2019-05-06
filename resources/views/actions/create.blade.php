@@ -7,63 +7,43 @@
     <div class="container -padded">
         <div class="wrapper">
             <div class="container__block -narrow">
-                <h1>Add Post Metadata</h1>
-                <form method="post" enctype="application/x-www-form-urlencoded" action="{{ route('actions.store', ['campaign_id' => $campaignId]) }}">
-                {{ csrf_field()}}
+                <h1>Create Action</h1>
+                <form method="POST" action="{{ route('actions.store', ['campaign_id' => $campaignId]) }}">
+                    {{ csrf_field()}}
 
                     <div class="form-item">
                         <label class="field-label">Action Name</label>
-                        <input type="text" name="name" class="text-field" placeholder="Name your action e.g. Teens for Jeans Photo Upload" value="{{old('name') }}">
+                        @include('forms.text', ['name' => 'name', 'placeholder' => 'Name your action e.g. Teens for Jeans Photo Upload'])
                     </div>
 
-                    <div class="select form-item">
+                    <div class="form-item">
                         <label class="field-label">Post Type</label>
-                        <select name="post_type">
-                            <option value="" disabled selected>Select the post type</option>
-                            @foreach($postTypes as $postType)
-                                @if (old('post_type'))
-                                    <option value="{{ $postType }}" {{ (old('post_type') == $postType ? "selected":"") }}>{{ $postType }}</option>
-                                @else
-                                    <option>{{ $postType }}</option>
-                                @endif
-                            @endforeach
-                        </select>
+                        @include('forms.select', ['name' => 'post_type', 'options' => $postTypes, 'placeholder' => 'What type of post is this?'])
                     </div>
+
                     <div class="form-item -third">
                         <label class="field-label">CallPower Campaign ID</label>
-                        <input type="text" name="callpower_campaign_id" class="text-field" placeholder="e.g. 4 (optional)" value="{{ old('callpower_campaign_id') }}">
+                        @include('forms.text', ['name' => 'callpower_campaign_id', 'placeholder' => 'e.g. 4 (optional)'])
                     </div>
+
                     <div class="form-item -third">
                         <label class="field-label">Action Noun</label>
-                        <input type="text" name="noun" class="text-field" placeholder="e.g. Jeans" value="{{ old('noun') }}">
+                        @include('forms.text', ['name' => 'noun', 'placeholder' => 'e.g. Jeans'])
                     </div>
+
                     <div class="form-item -third">
                         <label class="field-label">Action Verb</label>
-                        <input type="text" name="verb" class="text-field" placeholder="e.g. Collected" value="{{ old('verb') }}">
+                        @include('forms.text', ['name' => 'verb', 'placeholder' => 'e.g. Collected'])
                     </div>
+
                     <div class="form-item">
                         <label class="field-label">Post Details</label>
-                        <label class="option -checkbox">
-                          <input type="checkbox" id=reportback name=reportback value=1 {{ old('reportback') ? 'checked="checked"' : '' }}>
-                          <span class="option__indicator"></span>
-                          <span>Reportback</span>
-                        </label>
-                        <label class="option -checkbox">
-                          <input type="checkbox" id=civic_action name=civic_action value=1 {{ old('civic_action') ? 'checked="checked"' : '' }}>
-                          <span class="option__indicator"></span>
-                          <span>Civic action</span>
-                        </label>
-                        <label class="option -checkbox">
-                          <input type="checkbox" id=scholarship_entry name=scholarship_entry value=1 {{ old('scholarship_entry') ? 'checked="checked"' : '' }}>
-                          <span class="option__indicator"></span>
-                          <span>Scholarship entry</span>
-                        </label>
-                        <label class="option -checkbox">
-                          <input type="checkbox" id=anonymous name=anonymous value=1 {{ old('anonymous') ? 'checked="checked"' : '' }}>
-                          <span class="option__indicator"></span>
-                          <span>Anonymous Post</span>
-                        </label>
+                        @include('forms.option', ['name' => 'reportback', 'label' => 'Reportback'])
+                        @include('forms.option', ['name' => 'civic_action', 'label' => 'Civic Action'])
+                        @include('forms.option', ['name' => 'scholarship_entry', 'label' => 'Scholarship Entry'])
+                        @include('forms.option', ['name' => 'anonymous', 'label' => 'Anonymous'])
                     </div>
+
                     <ul class="form-actions -inline -padded">
                         <li><input type="submit" class="button" value="Create Action"></li>
                     </ul>

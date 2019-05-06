@@ -17,6 +17,14 @@ class ActionsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+
+        $this->rules = [
+            'name' => ['required', 'string'],
+            'post_type' => ['required', 'string', Rule::in(PostType::values())],
+            'callpower_campaign_id' => ['nullable', 'required_if:post_type,phone-call', 'integer'],
+            'noun' => ['required', 'string'],
+            'verb' => ['required', 'string'],
+        ];
     }
 
     /**
@@ -37,23 +45,15 @@ class ActionsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'campaign_id' => 'required|integer|exists:campaigns,id',
-            'post_type' => 'required|string|in:photo,voter-reg,text,share-social,phone-call',
-            'callpower_campaign_id' => 'nullable|required_if:post_type,phone-call|integer|unique:actions',
-            'noun' => 'required|string',
-            'verb' => 'required|string',
-        ]);
+        $request = $this->fillInOmittedCheckboxes($request);
 
-        // Checkbox values are only sent from the front end if they are checked.
-        // Get checkbox values if sent from the front end or via the API.
-        $request['reportback'] = isset($request['reportback']) && $request['reportback'] ? true : false;
-        $request['civic_action'] = isset($request['civic_action']) && $request['civic_action'] ? true : false;
-        $request['scholarship_entry'] = isset($request['scholarship_entry']) && $request['scholarship_entry'] ? true : false;
-        $request['anonymous'] = isset($request['anonymous']) && $request['anonymous'] ? true : false;
+        $this->validate($request, array_merge_recursive($this->rules, [
+            'campaign_id' => ['required', 'integer', 'exists:campaigns,id'],
+            'callpower_campaign_id' => [Rule::unique('actions')],
+        ]));
 
         // Check to see if the action exists before creating one.
+        // @TODO: Remove once we're no longer fetching by this combination of fields.
         $action = Action::where([
             'name' => $request['name'],
             'campaign_id' => $request['campaign_id'],
@@ -72,12 +72,14 @@ class ActionsController extends Controller
 
     /**
      * Edit an existing action.
+     *
+     * @param  \Rogue\Models\Action  $action
+     * @param  $campaignId
      */
-    public function edit($campaignId, $actionId)
+    public function edit(Action $action)
     {
         return view('actions.edit')->with([
-            'campaignId' => $campaignId,
-            'action' => Action::find($actionId),
+            'action' => $action,
             'postTypes' => PostType::all(),
         ]);
     }
@@ -85,38 +87,16 @@ class ActionsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Rogue\Models\Action  $action
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function update(Request $request, Action $action)
+    public function update(Action $action, Request $request)
     {
-        $this->validate($request, [
-            'name' => 'string',
-            'post_type' => 'string|in:photo,voter-reg,text,share-social,phone-call',
-            'callpower_campaign_id' => [
-                'required_if:post_type,phone-call',
-                Rule::unique('actions')->whereNotNull('callpower_campaign_id')->ignore($action->id),
-            ],
-            'reportback' => 'boolean',
-            'civic_action' => 'boolean',
-            'scholarship_entry' => 'boolean',
-            'anonymous' => 'boolean',
-            'noun' => 'string',
-            'verb' => 'string',
-        ]);
+        $request = $this->fillInOmittedCheckboxes($request);
 
-        $checkboxes = [
-                        'reportback',
-                        'civic_action',
-                        'scholarship_entry',
-                        'anonymous',
-                      ];
-
-        foreach ($checkboxes as $checkbox) {
-            if (! isset($request[$checkbox])) {
-                $request[$checkbox] = 0;
-            }
-        }
+        $this->validate($request, array_merge_recursive($this->rules, [
+            'callpower_campaign_id' => [Rule::unique('actions')->ignore($action->id)],
+        ]));
 
         $action->update($request->all());
 
@@ -129,7 +109,7 @@ class ActionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Rogue\Models\Action  $campaign
+     * @param  \Rogue\Models\Action  $action
      */
     public function destroy(Action $action)
     {
@@ -139,5 +119,23 @@ class ActionsController extends Controller
         info('action_deleted', ['id' => $action->id]);
 
         return $this->respond('Action deleted.', 200);
+    }
+
+    /**
+     * Fill in any omitted boolean values.
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Request
+     */
+    public function fillInOmittedCheckboxes(Request $request)
+    {
+        // Frustratingly, browsers will just omit an unchecked field from the
+        // request. To ensure we can "unset" checked fields, we'll update the
+        // request so any boolean fields are set 'false' if omitted.
+        foreach (Action::getBooleans() as $field) {
+            $request[$field] = $request->has($field);
+        }
+
+        return $request;
     }
 }

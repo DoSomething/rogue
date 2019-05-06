@@ -48,8 +48,11 @@ button.delete {
 
 .form-item.-third {
   float: left;
-  width: 33%;
-  padding-right: $base-spacing / 2;
+  width: 33.33333333333%;
+}
+
+.form-item.-third + .form-item.-third {
+  padding-left: $base-spacing / 2;
 }
 
 .columns-2 {

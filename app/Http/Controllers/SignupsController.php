@@ -108,7 +108,7 @@ class SignupsController extends ApiController
         $orderBy = $request->query('orderBy');
 
         if ($orderBy) {
-            list($column, $direction) = explode(',', $orderBy, 2);
+            [$column, $direction] = explode(',', $orderBy, 2);
 
             if (in_array($column, Signup::$indexes)) {
                 $query = $query->orderBy($column, $direction);

@@ -109,16 +109,20 @@ class ActionTest extends TestCase
         $action = factory(Action::class)->create();
 
         // Update the name.
-        $this->actingAsAdmin()->patchJson('actions/' . $action->id, [
+        $this->actingAsAdmin()->patch('actions/' . $action->id, [
             'name' => 'Updated Name',
+            'post_type' => $action->post_type,
+            'noun' => $action->noun,
+            'verb' => $action->verb,
         ]);
 
         // Make sure the action update is persisted.
         $response = $this->getJson('api/v3/actions/' . $action->id);
-        $decodedResponse = $response->decodeResponseJson();
-
-        $response->assertStatus(200);
-        $this->assertEquals('Updated Name', $decodedResponse['data']['name']);
+        $response->assertJson([
+            'data' => [
+                'name' => 'Updated Name',
+            ],
+        ]);
     }
 
     /**
