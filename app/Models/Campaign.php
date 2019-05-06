@@ -2,6 +2,7 @@
 
 namespace Rogue\Models;
 
+use Rogue\Types\Cause;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -39,30 +40,6 @@ class Campaign extends Model
      * @var array
      */
     public static $causes = [
-        'addiction' => 'Addiction',
-        'animal-welfare' => 'Animal Welfare',
-        'body-positivity' => 'Body Positivity',
-        'bullying' => 'Bullying',
-        'criminal-justice' => 'Criminal Justice',
-        'disaster-relief' => 'Disaster Relief',
-        'education' => 'Education (access, affordability) ',
-        'environment' => 'Environment',
-        'financial-skills' => 'Financial Skills',
-        'gun-violence' => 'Gun Violence',
-        'healthcare' => 'Healthcare',
-        'homelessness-and-poverty' => 'Homelessness & Poverty',
-        'immigration' => 'Immigration/Refugees',
-        'income-inequality' => 'Income Inequality',
-        'lgbtq-rights' => 'LGBTQ+ Rights & Equality ',
-        'mental-health' => 'Mental Health',
-        'veterans' => 'Military/Veterans',
-        'physical-health' => 'Physical Health',
-        'racial-justice' => 'Racial Justice/Racial Equity',
-        'sexual-harassment' => 'Sexual Harassment & Assault',
-        'voter-registration' => 'Voter Registration',
-        'week-of-action' => 'Week of Action',
-        'womens-rights' => 'Women\'s Rights & Equality',
-        'other' => 'Other',
     ];
 
     /**
@@ -103,13 +80,13 @@ class Campaign extends Model
     }
 
     /**
-     * Get list of causes in human-friendly format.
+     * Get a human-friendly list of this campaign's causes.
      *
      * @return array
      */
     public function getCauseNames()
     {
-        return array_values(array_intersect_key(self::$causes, array_flip($this->cause)));
+        return array_values(array_intersect_key(Cause::labels(), array_flip($this->cause)));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
+use Rogue\Types\Cause;
 use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -21,7 +22,7 @@ class CampaignIdsController extends Controller
         $this->rules = [
             'internal_title' => ['required', 'string'],
             'cause' => ['required', 'array', 'between:1,5'],
-            'cause.*' => ['string', Rule::in(array_keys(Campaign::$causes))],
+            'cause.*' => ['string', Rule::in(Cause::all())],
             'impact_doc' => ['required', 'url'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date', 'after:start_date'],
@@ -45,7 +46,7 @@ class CampaignIdsController extends Controller
      */
     public function create()
     {
-        return view('campaign-ids.create')->with('causes', Campaign::$causes);
+        return view('campaign-ids.create')->with('causes', Cause::labels());
     }
 
     /**
@@ -90,7 +91,7 @@ class CampaignIdsController extends Controller
     {
         return view('campaign-ids.edit', [
             'campaign' => $campaign,
-            'causes' => Campaign::$causes,
+            'causes' => Cause::labels(),
         ]);
     }
 
