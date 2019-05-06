@@ -17,6 +17,14 @@ class ActionsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+
+        $this->rules = [
+            'name' => ['required', 'string'],
+            'post_type' => ['required', 'string', Rule::in(PostType::values())],
+            'callpower_campaign_id' => ['nullable', 'required_if:post_type,phone-call', 'integer'],
+            'noun' => ['required', 'string'],
+            'verb' => ['required', 'string'],
+        ];
     }
 
     /**
@@ -37,14 +45,6 @@ class ActionsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'campaign_id' => 'required|integer|exists:campaigns,id',
-            'post_type' => 'required|string|in:photo,voter-reg,text,share-social,phone-call',
-            'callpower_campaign_id' => 'nullable|required_if:post_type,phone-call|integer|unique:actions',
-            'noun' => 'required|string',
-            'verb' => 'required|string',
-        ]);
 
         // Checkbox values are only sent from the front end if they are checked.
         // Get checkbox values if sent from the front end or via the API.
@@ -52,6 +52,10 @@ class ActionsController extends Controller
         $request['civic_action'] = isset($request['civic_action']) && $request['civic_action'] ? true : false;
         $request['scholarship_entry'] = isset($request['scholarship_entry']) && $request['scholarship_entry'] ? true : false;
         $request['anonymous'] = isset($request['anonymous']) && $request['anonymous'] ? true : false;
+        $this->validate($request, array_merge_recursive($this->rules, [
+            'campaign_id' => ['required', 'integer', 'exists:campaigns,id'],
+            'callpower_campaign_id' => [Rule::unique('actions')],
+        ]));
 
         // Check to see if the action exists before creating one.
         $action = Action::where([
@@ -90,20 +94,6 @@ class ActionsController extends Controller
      */
     public function update(Request $request, Action $action)
     {
-        $this->validate($request, [
-            'name' => 'string',
-            'post_type' => 'string|in:photo,voter-reg,text,share-social,phone-call',
-            'callpower_campaign_id' => [
-                'required_if:post_type,phone-call',
-                Rule::unique('actions')->whereNotNull('callpower_campaign_id')->ignore($action->id),
-            ],
-            'reportback' => 'boolean',
-            'civic_action' => 'boolean',
-            'scholarship_entry' => 'boolean',
-            'anonymous' => 'boolean',
-            'noun' => 'string',
-            'verb' => 'string',
-        ]);
 
         $checkboxes = [
                         'reportback',
@@ -117,6 +107,9 @@ class ActionsController extends Controller
                 $request[$checkbox] = 0;
             }
         }
+        $this->validate($request, array_merge_recursive($this->rules, [
+            'callpower_campaign_id' => [Rule::unique('actions')->ignore($action->id)],
+        ]));
 
         $action->update($request->all());
 
