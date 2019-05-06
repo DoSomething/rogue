@@ -9,119 +9,43 @@
             <div class="container__block -narrow">
                 <h1>Edit {{ $action->name }}</h1>
 
-                <form method="post" enctype="application/x-www-form-urlencoded" action="{{ route('actions.update', $action->id) }}">
-                {{ csrf_field()}}
-                <input name="_method" type="hidden" value="PATCH">
+                <form method="POST" action="{{ route('actions.update', $action->id) }}">
+                    {{ csrf_field()}}
+                    {{ method_field('PATCH') }}
 
                     <div class="form-item">
                         <label class="field-label">Action Name</label>
-                        <input type="text" name="name" class="text-field"
-                            @if (old('name'))
-                                value="{{ old('name') }}"
-                            @else
-                                value="{{ $action->name }}"
-                            @endif
-                        >
+                        @include('forms.text', ['name' => 'name', 'placeholder' => 'Name your action e.g. Teens for Jeans Photo Upload', 'value' => $action->name])
                     </div>
 
-                    <div class="select form-item">
+                    <div class="form-item">
                         <label class="field-label">Post Type</label>
-                        <select name="post_type">
-                            <option value="">Select the post type</option>
-                            @foreach($postTypes as $postType)
-                                @if (old('post_type'))
-                                    <option value="{{ $postType }}" {{ (old('post_type') == $postType ? "selected":"") }}>{{ $postType }}</option>
-                                @else
-                                    <option value="{{ $postType }}" {{ ($action->post_type == $postType ? "selected":"") }}>{{ $postType }}</option>
-                                @endif
-                            @endforeach
-                        </select>
+                        @include('forms.select', ['name' => 'post_type', 'options' => $postTypes, 'value' => $action->post_type, 'placeholder' => 'What type of post is this?'])
                     </div>
+
                     <div class="form-item -third">
                         <label class="field-label">CallPower Campaign ID</label>
-                        <input type="text" name="callpower_campaign_id" class="text-field" placeholder="e.g. 4 (optional)"
-                            @if (old('callpower_campaign_id'))
-                                value="{{ old('callpower_campaign_id') }}"
-                            @else
-                                value="{{ $action->callpower_campaign_id }}"
-                            @endif
-                        >
+                        @include('forms.text', ['name' => 'callpower_campaign_id', 'placeholder' => 'e.g. 4 (optional)', 'value' => $action->callpower_campaign_id])
                     </div>
+
                     <div class="form-item -third">
                         <label class="field-label">Action Noun</label>
-                        <input type="text" name="noun" class="text-field" placeholder="e.g. Jeans"
-                            @if (old('noun'))
-                                value="{{ old('noun') }}"
-                            @else
-                                value="{{ $action->noun }}"
-                            @endif
-                        >
+                        @include('forms.text', ['name' => 'noun', 'placeholder' => 'e.g. Jeans', 'value' => $action->noun])
                     </div>
+
                     <div class="form-item -third">
                         <label class="field-label">Action Verb</label>
-                        <input type="text" name="verb" class="text-field" placeholder="e.g. Collected"
-                            @if (old('verb'))
-                                value="{{ old('verb') }}"
-                            @else
-                                value="{{ $action->verb }}"
-                            @endif
-                        >
+                        @include('forms.text', ['name' => 'verb', 'placeholder' => 'e.g. Collected', 'value' => $action->verb])
                     </div>
+
                     <div class="form-item">
-                        <label class="field-label">Post Details</label>
-                        <label class="option -checkbox">
-                          <input type="checkbox" id=reportback name=reportback value=1
-                            @if ($errors->any()))
-                                @if (old('reportback'))
-                                    checked="checked"
-                                @endif
-                            @elseif ($action->reportback)
-                                checked="checked"
-                            @endif
-                          >
-                          <span class="option__indicator"></span>
-                          <span>Reportback</span>
-                        </label>
-                        <label class="option -checkbox">
-                          <input type="checkbox" id=civic_action name=civic_action value=1
-                            @if ($errors->any()))
-                                @if (old('civic_action'))
-                                    checked="checked"
-                                @endif
-                            @elseif ($action->civic_action)
-                                checked="checked"
-                            @endif
-                          >
-                          <span class="option__indicator"></span>
-                          <span>Civic action</span>
-                        </label>
-                        <label class="option -checkbox">
-                          <input type="checkbox" id=scholarship_entry name=scholarship_entry value=1
-                            @if ($errors->any()))
-                                @if (old('scholarship_entry'))
-                                    checked="checked"
-                                @endif
-                            @elseif ($action->scholarship_entry)
-                                checked="checked"
-                            @endif
-                          >
-                          <span class="option__indicator"></span>
-                          <span>Scholarship entry</span>
-                        </label>
-                        <label class="option -checkbox">
-                          <input type="checkbox" id=anonymous name=anonymous value=1
-                            @if ($errors->any()))
-                                @if (old('anonymous'))
-                                    checked="checked"
-                                @endif
-                            @elseif ($action->anonymous)
-                                checked="checked"
-                            @endif
-                          >
-                          <span class="option__indicator"></span>
-                          <span>Anonymous Post</span>
-                        </label>
+                        <label class="field-label">Action Details</label>
+                        @include('forms.option', ['name' => 'reportback', 'label' => 'Reportback', 'value' => $action->reportback])
+                        @include('forms.option', ['name' => 'civic_action', 'label' => 'Civic Action', 'value' => $action->civic_action])
+                        @include('forms.option', ['name' => 'scholarship_entry', 'label' => 'Scholarship Entry', 'value' => $action->scholarship_entry])
+                        @include('forms.option', ['name' => 'anonymous', 'label' => 'Anonymous', 'value' => $action->anonymous])
                     </div>
+
                     <ul class="form-actions -inline -padded">
                         <li><input type="submit" class="button" value="Update Action"></li>
                     </ul>

@@ -44,8 +44,24 @@ class PostType
      *
      * @return array
      */
+    public static function values()
+    {
+        return array_keys(self::all());
+    }
+
+    /**
+     * Returns list of all valid post types.
+     *
+     * @return array
+     */
     public static function all()
     {
-        return [self::$text, self::$photo, self::$voterReg, self::$shareSocial, self::$phoneCall];
+        return [
+            self::$text => 'Text Post',
+            self::$photo => 'Photo Post',
+            self::$voterReg => 'Voter Registration',
+            self::$shareSocial => 'Social Share',
+            self::$phoneCall => 'Phone Call (CallPower)',
+        ];
     }
 }
