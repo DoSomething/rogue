@@ -13,6 +13,20 @@ abstract class Type extends Enum
      */
     public static function all()
     {
-        return array_values(self::toArray());
+        return array_values(static::toArray());
+    }
+
+    /**
+     * If a type has labels, return the label for the given type.
+     *
+     * @return string
+     */
+    public static function label($type)
+    {
+        if (! method_exists(static::class, 'labels')) {
+            throw new \InvalidArgumentException('This type does not have labels.');
+        }
+
+        return array_get(static::labels(), $type);
     }
 }

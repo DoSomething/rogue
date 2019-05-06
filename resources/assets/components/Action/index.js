@@ -19,23 +19,21 @@ class Action extends React.Component {
           <h2>{action.name}</h2>
         </div>
         <div className="container__row">
-          <h4>ID</h4>
-          <p>{action.id}</p>
-        </div>
-        <div className="container__row">
-          <h4>CALLPOWER CAMPAIGN ID</h4>
-          {action.callpower_campaign_id ? (
-            <p>{action.callpower_campaign_id}</p>
-          ) : (
-            <p>-</p>
-          )}
+          <ul>
+            <li>
+              <h4>ID</h4>
+              <p>{action.id}</p>
+            </li>
+            {action.post_type === 'phone-call' ? (
+              <li>
+                <h4>CALLPOWER ID</h4>
+                <p>{action.callpower_campaign_id}</p>
+              </li>
+            ) : null}
+          </ul>
         </div>
         <div className="container__row">
           <ul>
-            <li>
-              <h4>POST TYPE</h4>
-              <p>{action.post_type}</p>
-            </li>
             <li>
               <h4>NOUN</h4>
               <p>{action.noun}</p>
@@ -43,6 +41,22 @@ class Action extends React.Component {
             <li>
               <h4>VERB</h4>
               <p>{action.verb}</p>
+            </li>
+          </ul>
+        </div>
+        <div className="container__row">
+          <ul>
+            <li>
+              <h4>POST TYPE</h4>
+              <p>{action.post_label}</p>
+            </li>
+            <li>
+              <h4>ACTION TYPE</h4>
+              <p>{action.action_label}</p>
+            </li>
+            <li>
+              <h4>TIME COMMITMENT</h4>
+              <p>{action.time_commitment_label}</p>
             </li>
           </ul>
         </div>
@@ -79,6 +93,22 @@ class Action extends React.Component {
             <li>
               <h4>ANONYMOUS POST</h4>
               {action.anonymous === true ? (
+                <p className="yes">Yes</p>
+              ) : (
+                <p className="no">No</p>
+              )}
+            </li>
+            <li>
+              <h4>ONLINE ACTION</h4>
+              {action.online === true ? (
+                <p className="yes">Yes</p>
+              ) : (
+                <p className="no">No</p>
+              )}
+            </li>
+            <li>
+              <h4>QUIZ ACTION</h4>
+              {action.quiz === true ? (
                 <p className="yes">Yes</p>
               ) : (
                 <p className="no">No</p>

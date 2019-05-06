@@ -8,6 +8,8 @@ use Rogue\Models\Action;
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
+use Rogue\Types\ActionType;
+use Rogue\Types\TimeCommitment;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -162,6 +164,8 @@ $factory->define(Action::class, function (Generator $faker) {
         ]),
         'campaign_id' => factory(Campaign::class)->create()->id,
         'post_type' => 'photo',
+        'action_type' => $this->faker->randomElement(ActionType::all()),
+        'time_commitment' => $this->faker->randomElement(TimeCommitment::all()),
         'reportback' => true,
         'civic_action' => true,
         'scholarship_entry' => true,
