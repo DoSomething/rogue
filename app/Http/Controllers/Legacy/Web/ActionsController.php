@@ -2,10 +2,12 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
-use Rogue\PostType;
 use Rogue\Models\Action;
+use Rogue\Types\PostType;
+use Rogue\Types\ActionType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Rogue\Types\TimeCommitment;
 use Rogue\Http\Controllers\Controller;
 
 class ActionsController extends Controller
@@ -20,7 +22,9 @@ class ActionsController extends Controller
 
         $this->rules = [
             'name' => ['required', 'string'],
-            'post_type' => ['required', 'string', Rule::in(PostType::values())],
+            'post_type' => ['required', 'string', Rule::in(PostType::all())],
+            'action_type' => ['required', 'string', Rule::in(ActionType::all())],
+            'time_commitment' => ['required', 'string', Rule::in(TimeCommitment::all())],
             'callpower_campaign_id' => ['nullable', 'required_if:post_type,phone-call', 'integer'],
             'noun' => ['required', 'string'],
             'verb' => ['required', 'string'],
@@ -33,7 +37,9 @@ class ActionsController extends Controller
     public function create($campaignId)
     {
         return view('actions.create')->with([
-            'postTypes' => PostType::all(),
+            'postTypes' => PostType::labels(),
+            'actionTypes' => ActionType::labels(),
+            'timeCommitments' => TimeCommitment::labels(),
             'campaignId' => (int) $campaignId,
         ]);
     }
@@ -80,7 +86,9 @@ class ActionsController extends Controller
     {
         return view('actions.edit')->with([
             'action' => $action,
-            'postTypes' => PostType::all(),
+            'postTypes' => PostType::labels(),
+            'actionTypes' => ActionType::labels(),
+            'timeCommitments' => TimeCommitment::labels(),
         ]);
     }
 

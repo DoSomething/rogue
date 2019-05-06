@@ -23,6 +23,16 @@
                         @include('forms.select', ['name' => 'post_type', 'options' => $postTypes, 'value' => $action->post_type, 'placeholder' => 'What type of post is this?'])
                     </div>
 
+                    <div class="form-item">
+                        <label class="field-label">Action Type</label>
+                        @include('forms.select', ['name' => 'action_type', 'options' => $actionTypes, 'value' => $action->action_type, 'placeholder' => 'What type of action is this?'])
+                    </div>
+
+                    <div class="form-item">
+                        <label class="field-label">Time Commitment</label>
+                        @include('forms.select', ['name' => 'time_commitment', 'options' => $timeCommitments, 'value' => $action->time_commitment, 'placeholder' => 'How long will this take?'])
+                    </div>
+
                     <div class="form-item -third">
                         <label class="field-label">CallPower Campaign ID</label>
                         @include('forms.text', ['name' => 'callpower_campaign_id', 'placeholder' => 'e.g. 4 (optional)', 'value' => $action->callpower_campaign_id])
@@ -44,6 +54,8 @@
                         @include('forms.option', ['name' => 'civic_action', 'label' => 'Civic Action', 'value' => $action->civic_action])
                         @include('forms.option', ['name' => 'scholarship_entry', 'label' => 'Scholarship Entry', 'value' => $action->scholarship_entry])
                         @include('forms.option', ['name' => 'anonymous', 'label' => 'Anonymous', 'value' => $action->anonymous])
+                        @include('forms.option', ['name' => 'online', 'label' => 'Online Action', 'value' => $action->online])
+                        @include('forms.option', ['name' => 'quiz', 'label' => 'Quiz Action', 'value' => $action->quiz])
                     </div>
 
                     <ul class="form-actions -inline -padded">

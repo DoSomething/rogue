@@ -21,6 +21,16 @@
                         @include('forms.select', ['name' => 'post_type', 'options' => $postTypes, 'placeholder' => 'What type of post is this?'])
                     </div>
 
+                    <div class="form-item">
+                        <label class="field-label">Action Type</label>
+                        @include('forms.select', ['name' => 'action_type', 'options' => $actionTypes, 'placeholder' => 'What type of action is this?'])
+                    </div>
+
+                    <div class="form-item">
+                        <label class="field-label">Time Commitment</label>
+                        @include('forms.select', ['name' => 'time_commitment', 'options' => $timeCommitments, 'placeholder' => 'How long will this take?'])
+                    </div>
+
                     <div class="form-item -third">
                         <label class="field-label">CallPower Campaign ID</label>
                         @include('forms.text', ['name' => 'callpower_campaign_id', 'placeholder' => 'e.g. 4 (optional)'])
@@ -42,6 +52,8 @@
                         @include('forms.option', ['name' => 'civic_action', 'label' => 'Civic Action'])
                         @include('forms.option', ['name' => 'scholarship_entry', 'label' => 'Scholarship Entry'])
                         @include('forms.option', ['name' => 'anonymous', 'label' => 'Anonymous'])
+                        @include('forms.option', ['name' => 'online', 'label' => 'Online Action'])
+                        @include('forms.option', ['name' => 'quiz', 'label' => 'Quiz Action'])
                     </div>
 
                     <ul class="form-actions -inline -padded">

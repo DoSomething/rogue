@@ -16,6 +16,8 @@ class Action extends Model
         'civic_action' => 'boolean',
         'scholarship_entry' => 'boolean',
         'anonymous' => 'boolean',
+        'online' => 'boolean',
+        'quiz' => 'boolean',
     ];
 
     /**

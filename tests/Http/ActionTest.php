@@ -25,6 +25,8 @@ class ActionTest extends TestCase
             'name' => $actionName,
             'campaign_id' => $campaign->id,
             'post_type' => 'photo',
+            'action_type' => 'make-something',
+            'time_commitment' => '0.5-1.0',
             'reportback' => true,
             'civic_action' => false,
             'scholarship_entry' => true,
@@ -109,9 +111,11 @@ class ActionTest extends TestCase
         $action = factory(Action::class)->create();
 
         // Update the name.
-        $this->actingAsAdmin()->patch('actions/' . $action->id, [
+        $response = $this->actingAsAdmin()->patchJson('actions/' . $action->id, [
             'name' => 'Updated Name',
             'post_type' => $action->post_type,
+            'action_type' => $action->action_type,
+            'time_commitment' => $action->time_commitment,
             'noun' => $action->noun,
             'verb' => $action->verb,
         ]);
