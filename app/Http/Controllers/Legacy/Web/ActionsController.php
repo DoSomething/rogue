@@ -53,6 +53,7 @@ class ActionsController extends Controller
         ]));
 
         // Check to see if the action exists before creating one.
+        // @TODO: Remove once we're no longer fetching by this combination of fields.
         $action = Action::where([
             'name' => $request['name'],
             'campaign_id' => $request['campaign_id'],
