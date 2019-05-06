@@ -106,7 +106,7 @@ class ActionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Rogue\Models\Action  $campaign
+     * @param  \Rogue\Models\Action  $action
      */
     public function destroy(Action $action)
     {
