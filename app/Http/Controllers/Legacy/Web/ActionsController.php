@@ -84,10 +84,10 @@ class ActionsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Rogue\Models\Action  $action
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function update(Request $request, Action $action)
+    public function update(Action $action, Request $request)
     {
         $request = $this->fillInOmittedCheckboxes($request);
 
