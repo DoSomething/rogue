@@ -26,7 +26,8 @@
     "barryvdh/laravel-cors": "^0.11.2",
     "fzaninotto/faker": "^1.6",
     "ext-newrelic": "*",
-    "sokil/php-isocodes": "^2.2"
+    "sokil/php-isocodes": "^2.2",
+    "myclabs/php-enum": "^1.7"
   },
   "require-dev": {
     "filp/whoops": "~2.0",

@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
-use Rogue\PostType;
 use Rogue\Models\Action;
+use Rogue\Types\PostType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
@@ -20,7 +20,7 @@ class ActionsController extends Controller
 
         $this->rules = [
             'name' => ['required', 'string'],
-            'post_type' => ['required', 'string', Rule::in(PostType::values())],
+            'post_type' => ['required', 'string', Rule::in(PostType::all())],
             'callpower_campaign_id' => ['nullable', 'required_if:post_type,phone-call', 'integer'],
             'noun' => ['required', 'string'],
             'verb' => ['required', 'string'],
