@@ -37,9 +37,4 @@ class ActionType extends Type
             self::CONTACT_DECISIONMAKER => 'Contact a Decision-Maker',
         ];
     }
-
-    public static function label($type)
-    {
-        return array_get(self::labels(), $type);
-    }
 }
