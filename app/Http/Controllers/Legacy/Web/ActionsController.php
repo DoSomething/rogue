@@ -45,13 +45,8 @@ class ActionsController extends Controller
      */
     public function store(Request $request)
     {
+        $request = $this->fillInOmittedCheckboxes($request);
 
-        // Checkbox values are only sent from the front end if they are checked.
-        // Get checkbox values if sent from the front end or via the API.
-        $request['reportback'] = isset($request['reportback']) && $request['reportback'] ? true : false;
-        $request['civic_action'] = isset($request['civic_action']) && $request['civic_action'] ? true : false;
-        $request['scholarship_entry'] = isset($request['scholarship_entry']) && $request['scholarship_entry'] ? true : false;
-        $request['anonymous'] = isset($request['anonymous']) && $request['anonymous'] ? true : false;
         $this->validate($request, array_merge_recursive($this->rules, [
             'campaign_id' => ['required', 'integer', 'exists:campaigns,id'],
             'callpower_campaign_id' => [Rule::unique('actions')],
@@ -94,19 +89,8 @@ class ActionsController extends Controller
      */
     public function update(Request $request, Action $action)
     {
+        $request = $this->fillInOmittedCheckboxes($request);
 
-        $checkboxes = [
-                        'reportback',
-                        'civic_action',
-                        'scholarship_entry',
-                        'anonymous',
-                      ];
-
-        foreach ($checkboxes as $checkbox) {
-            if (! isset($request[$checkbox])) {
-                $request[$checkbox] = 0;
-            }
-        }
         $this->validate($request, array_merge_recursive($this->rules, [
             'callpower_campaign_id' => [Rule::unique('actions')->ignore($action->id)],
         ]));
@@ -132,5 +116,23 @@ class ActionsController extends Controller
         info('action_deleted', ['id' => $action->id]);
 
         return $this->respond('Action deleted.', 200);
+    }
+
+    /**
+     * Fill in any omitted boolean values.
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Request
+     */
+    public function fillInOmittedCheckboxes(Request $request)
+    {
+        // Frustratingly, browsers will just omit an unchecked field from the
+        // request. To ensure we can "unset" checked fields, we'll update the
+        // request so any boolean fields are set 'false' if omitted.
+        foreach (Action::getBooleans() as $field) {
+            $request[$field] = $request->has($field);
+        }
+
+        return $request;
     }
 }

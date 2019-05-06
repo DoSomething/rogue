@@ -23,7 +23,10 @@ class Action extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'campaign_id', 'post_type', 'callpower_campaign_id', 'reportback', 'civic_action', 'scholarship_entry', 'anonymous', 'noun', 'verb'];
+    protected $fillable = [
+        'name', 'campaign_id', 'post_type', 'action_type', 'time_commitment', 'callpower_campaign_id',
+        'reportback', 'civic_action', 'scholarship_entry', 'anonymous', 'online', 'quiz', 'noun', 'verb',
+    ];
 
     /**
      * Attributes that can be queried when filtering.
@@ -34,6 +37,16 @@ class Action extends Model
      * @var array
      */
     public static $indexes = ['id', 'campaign_id', 'callpower_campaign_id'];
+
+    /**
+     * Get any fields on this model that are casted to a boolean.
+     *
+     * @return array
+     */
+    public static function getBooleans()
+    {
+        return array_keys(((new self)->casts), 'boolean');
+    }
 
     /**
      * Each action belongs to a campaign.
