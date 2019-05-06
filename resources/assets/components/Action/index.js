@@ -90,7 +90,7 @@ class Action extends React.Component {
           <div className="container__row">
             <a
               className="button -secondary"
-              href={`${campaign.id}/actions/${action.id}/edit`}
+              href={`/actions/${action.id}/edit`}
             >
               Edit Action
             </a>

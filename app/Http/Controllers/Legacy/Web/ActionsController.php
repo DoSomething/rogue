@@ -71,12 +71,14 @@ class ActionsController extends Controller
 
     /**
      * Edit an existing action.
+     *
+     * @param  \Rogue\Models\Action  $action
+     * @param  $campaignId
      */
-    public function edit($campaignId, $actionId)
+    public function edit(Action $action)
     {
         return view('actions.edit')->with([
-            'campaignId' => $campaignId,
-            'action' => Action::find($actionId),
+            'action' => $action,
             'postTypes' => PostType::all(),
         ]);
     }
