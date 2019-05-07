@@ -35,14 +35,6 @@ class Campaign extends Model
     public static $indexes = ['id'];
 
     /**
-     * Valid campaign causes & their human-readable names.
-     *
-     * @var array
-     */
-    public static $causes = [
-    ];
-
-    /**
      * Get the signups associated with this campaign.
      */
     public function signup()
