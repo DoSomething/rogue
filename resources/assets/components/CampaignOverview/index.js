@@ -23,6 +23,7 @@ class CampaignOverview extends React.Component {
   /**
    * Filter the given campaigns by current search term.
    *
+   * @param  {Array|Null} campaigns
    * @return {Array}
    */
   filterCampaigns(campaigns) {
