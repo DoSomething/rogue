@@ -48,15 +48,28 @@ class CampaignOverview extends React.Component {
   }
 
   /**
+   * Render a tabled list of campaigns or a placeholder message if there are none to display.
+   *
+   * @return {Object}
+   */
+  renderCampaignsTable(campaigns) {
+    return (
+      <div className="container__block">
+        {campaigns ? (
+          <CampaignTable campaigns={this.filterCampaigns(campaigns)} />
+        ) : (
+          <p>No campaigns to display!</p>
+        )}
+      </div>
+    );
+  }
+
+  /**
    * Render the campaign overview!
    *
    * @return {React.Element}
    */
   render() {
-    const { pending, etc } = this.props;
-
-    const noCampaignsMessage = <p>No campaigns to display!</p>;
-
     return (
       <div className="container">
         <div className="container__block -half">
@@ -74,24 +87,12 @@ class CampaignOverview extends React.Component {
             review:
           </p>
         </div>
-        <div className="container__block">
-          {pending ? (
-            <CampaignTable campaigns={this.filterCampaigns(pending)} />
-          ) : (
-            noCampaignsMessage
-          )}
-        </div>
+        {this.renderCampaignsTable(this.props.pending)}
         <div className="container__block">
           <h3>Everything Else</h3>
           <p>These campaigns are either closed or have no pending posts:</p>
         </div>
-        <div className="container__block">
-          {etc ? (
-            <CampaignTable campaigns={this.filterCampaigns(etc)} />
-          ) : (
-            noCampaignsMessage
-          )}
-        </div>
+        {this.renderCampaignsTable(this.props.etc)}
       </div>
     );
   }
