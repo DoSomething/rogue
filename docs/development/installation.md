@@ -11,4 +11,7 @@ $ php artisan rogue:setup
 
 # And finally, build the frontend assets:
 $ npm run build
+
+# Also, feel free to seed the database with dummy data:
+$ php artisan db:seed
 ```
