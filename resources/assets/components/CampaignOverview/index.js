@@ -53,8 +53,9 @@ class CampaignOverview extends React.Component {
    * @return {React.Element}
    */
   render() {
-    const pending = this.filterCampaigns(this.props.pending);
-    const etc = this.filterCampaigns(this.props.etc);
+    const { pending, etc } = this.props;
+
+    const noCampaignsMessage = <p>No campaigns to display!</p>;
 
     return (
       <div className="container">
@@ -74,14 +75,22 @@ class CampaignOverview extends React.Component {
           </p>
         </div>
         <div className="container__block">
-          <CampaignTable campaigns={pending} />
+          {pending ? (
+            <CampaignTable campaigns={this.filterCampaigns(pending)} />
+          ) : (
+            noCampaignsMessage
+          )}
         </div>
         <div className="container__block">
           <h3>Everything Else</h3>
           <p>These campaigns are either closed or have no pending posts:</p>
         </div>
         <div className="container__block">
-          <CampaignTable campaigns={etc} />
+          {etc ? (
+            <CampaignTable campaigns={this.filterCampaigns(etc)} />
+          ) : (
+            noCampaignsMessage
+          )}
         </div>
       </div>
     );
