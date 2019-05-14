@@ -23,7 +23,7 @@ class CampaignOverview extends React.Component {
   /**
    * Filter the given campaigns by current search term.
    *
-   * @param  {Array|Null} campaigns
+   * @param  {Array} campaigns
    * @return {Array}
    */
   filterCampaigns(campaigns) {
@@ -51,6 +51,7 @@ class CampaignOverview extends React.Component {
   /**
    * Render a tabled list of campaigns or a placeholder message if there are none to display.
    *
+   * @param  {Array|Null} campaigns
    * @return {Object}
    */
   renderCampaignsTable(campaigns) {
