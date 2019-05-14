@@ -23,6 +23,7 @@ class CampaignOverview extends React.Component {
   /**
    * Filter the given campaigns by current search term.
    *
+   * @param  {Array} campaigns
    * @return {Array}
    */
   filterCampaigns(campaigns) {
@@ -48,14 +49,29 @@ class CampaignOverview extends React.Component {
   }
 
   /**
+   * Render a tabled list of campaigns or a placeholder message if there are none to display.
+   *
+   * @param  {Array|Null} campaigns
+   * @return {Object}
+   */
+  renderCampaignsTable(campaigns) {
+    return (
+      <div className="container__block">
+        {campaigns ? (
+          <CampaignTable campaigns={this.filterCampaigns(campaigns)} />
+        ) : (
+          <p>No campaigns to display!</p>
+        )}
+      </div>
+    );
+  }
+
+  /**
    * Render the campaign overview!
    *
    * @return {React.Element}
    */
   render() {
-    const pending = this.filterCampaigns(this.props.pending);
-    const etc = this.filterCampaigns(this.props.etc);
-
     return (
       <div className="container">
         <div className="container__block -half">
@@ -73,16 +89,12 @@ class CampaignOverview extends React.Component {
             review:
           </p>
         </div>
-        <div className="container__block">
-          <CampaignTable campaigns={pending} />
-        </div>
+        {this.renderCampaignsTable(this.props.pending)}
         <div className="container__block">
           <h3>Everything Else</h3>
           <p>These campaigns are either closed or have no pending posts:</p>
         </div>
-        <div className="container__block">
-          <CampaignTable campaigns={etc} />
-        </div>
+        {this.renderCampaignsTable(this.props.etc)}
       </div>
     );
   }
