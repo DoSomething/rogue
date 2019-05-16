@@ -17,7 +17,6 @@ exports[`it renders correctly 1`] = `
         className="admin-tools__links"
       >
         <a
-          href={undefined}
           target="_blank"
         >
           Original Photo
