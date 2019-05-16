@@ -1,5 +1,3 @@
-import 'babel-polyfill';
-
 import { ready } from './helpers';
 import './app.scss';
 

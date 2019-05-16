@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import sinon from 'sinon';
-import 'babel-polyfill';
 
 import MultiValueFilter from './index';
 
