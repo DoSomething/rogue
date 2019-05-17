@@ -86,7 +86,7 @@ MultiValueFilter.propTypes = {
   }).isRequired,
   updateFilters: PropTypes.func,
   header: PropTypes.string,
-  subheader: PropTypes.string,
+  subheader: PropTypes.arrayOf([PropTypes.string, PropTypes.node]),
 };
 
 MultiValueFilter.defaultProps = {
