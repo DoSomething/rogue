@@ -31,7 +31,6 @@ class Tag extends React.Component {
   render() {
     return (
       <button
-        disabled={this.props.disabled}
         className={classnames(
           'tag',
           { 'is-active': this.props.isActive },
@@ -76,11 +75,9 @@ class Tags extends React.Component {
       'group-photo': 'Group Photo',
     };
 
-    const showTags = this.props.disabled ? 'disabled' : 'enabled';
-
     return (
       <div>
-        <h4 className={showTags}>Tags</h4>
+        <h4>Tags</h4>
         <ul className="aligned-actions">
           {map(tags, (label, key) => (
             <li key={key}>
@@ -89,7 +86,6 @@ class Tags extends React.Component {
                 isClicked={this.props.onTag}
                 label={label}
                 post={this.props.id}
-                disabled={this.props.disabled}
               />
             </li>
           ))}
