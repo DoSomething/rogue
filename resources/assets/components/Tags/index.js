@@ -77,7 +77,12 @@ class Tags extends React.Component {
 
     return (
       <div>
-        <h4>Tags</h4>
+        <h4>
+          Tags (see{' '}
+          <a href="/faq#tags" target="_blank">
+            tag definitions
+          </a>)
+        </h4>
         <ul className="aligned-actions">
           {map(tags, (label, key) => (
             <li key={key}>
