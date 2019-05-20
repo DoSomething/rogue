@@ -181,16 +181,12 @@ class CampaignSingle extends React.Component {
         </div>
         <FilterBar onSubmit={this.filterPosts}>
           <DropdownFilter options={statusFilters} header={'Post Status'} />
-          <MultiValueFilter
-            options={tagFilters}
-            header={'Tags'}
-            subheader={[
-              'Not sure which tag to filter by? ',
-              <a className="font-normal" href="/faq#tags">
-                See tag definitions.
-              </a>,
-            ]}
-          />
+          <MultiValueFilter options={tagFilters}>
+            <b>Tags</b> Not sure which tag to filter by?{' '}
+            <a className="font-normal" href="/faq#tags">
+              See tag definitions.
+            </a>
+          </MultiValueFilter>
         </FilterBar>
 
         <h2 className="heading -emphasized">Posts</h2>
