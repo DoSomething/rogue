@@ -45,12 +45,9 @@ class ReviewBlock extends React.Component {
             </button>
           </li>
         </ul>
-        <Tags
-          id={post.id}
-          tagged={post.tags}
-          onTag={this.props.onTag}
-          disabled={disableTags}
-        />
+        {!disableTags ? (
+          <Tags id={post.id} tagged={post.tags} onTag={this.props.onTag} />
+        ) : null}
       </div>
     );
   }

@@ -22,8 +22,8 @@
                     <li><b>Why participated:</b> The why participated is the reason a user submits explaining why they took action in the campaign. A user may submit multiple posts for a campaign, but they only have one "why participated."</li>
                 </ul>
 
-                <h3>What do the different tags mean?</h3>
                 <p>After selecting a status, you are able to apply tags. It's important to add tags as you're reviewing because admins can filter by tags on the Campaign Filtering page!</p>
+                <h3 id="tags">What do the different tags mean?</h3>
 
                 <h4>These are self-explanatory:</h4>
                 <ul class='list'>

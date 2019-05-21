@@ -62,12 +62,7 @@ test('it renders an active Accept button when clicked', () => {
   );
 
   // Tags should be disabled.
-  expect(
-    component
-      .find('.tag')
-      .first()
-      .is('[disabled]'),
-  ).toBe(true);
+  expect(component.find('.tag')).toHaveLength(0);
 
   // Click the "Accept" button.
   component
@@ -122,12 +117,7 @@ test('it renders an active Reject button when clicked', () => {
   );
 
   // Tags should be disabled.
-  expect(
-    component
-      .find('.tag')
-      .first()
-      .is('[disabled]'),
-  ).toBe(true);
+  expect(component.find('.tag')).toHaveLength(0);
 
   // Click the "Reject" button.
   component

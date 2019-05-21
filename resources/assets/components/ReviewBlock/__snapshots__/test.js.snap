@@ -39,11 +39,5 @@ exports[`it renders accepted, rejected, disabled tags, and delete buttons 1`] = 
       </button>
     </li>
   </ul>
-  <Tags
-    disabled={true}
-    id={1}
-    onTag={[Function]}
-    tagged={Array []}
-  />
 </div>
 `;

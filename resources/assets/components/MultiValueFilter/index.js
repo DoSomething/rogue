@@ -49,7 +49,10 @@ class MultiValueFilter extends React.Component {
   render() {
     return (
       <div className="container__block -third">
-        <h2 className="heading -delta">{this.props.header}</h2>
+        {this.props.header ? (
+          <h2 className="heading -delta">{this.props.header}</h2>
+        ) : null}
+        {this.props.children}
         <ul className="aligned-actions">
           {map(Object.values(this.state)[0], (option, key) => (
             <li key={key}>
@@ -82,11 +85,13 @@ MultiValueFilter.propTypes = {
   }).isRequired,
   updateFilters: PropTypes.func,
   header: PropTypes.string,
+  children: PropTypes.node,
 };
 
 MultiValueFilter.defaultProps = {
   header: null,
   updateFilters: null,
+  children: null,
 };
 
 export default MultiValueFilter;

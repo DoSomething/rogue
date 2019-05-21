@@ -55,6 +55,11 @@ button.delete {
   padding-left: $base-spacing / 2;
 }
 
+// Utility classes.
 .columns-2 {
   columns: 2;
+}
+
+.font-normal {
+  font-weight: $weight-normal;
 }
