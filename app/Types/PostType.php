@@ -9,6 +9,7 @@ class PostType extends Type
     private const VOTER_REG = 'voter-reg';
     private const SHARE_SOCIAL = 'share-social';
     private const PHONE_CALL = 'phone-call';
+    private const EMAIL = 'email';
 
     /**
      * Returns labeled list of values.
@@ -23,6 +24,7 @@ class PostType extends Type
             self::VOTER_REG => 'Voter Registration',
             self::SHARE_SOCIAL => 'Social Share',
             self::PHONE_CALL => 'Phone Call (CallPower)',
+            self::EMAIL => 'Email (SoftEdge)',
         ];
     }
 }
