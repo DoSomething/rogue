@@ -27,7 +27,8 @@
     "fzaninotto/faker": "^1.6",
     "ext-newrelic": "*",
     "sokil/php-isocodes": "^2.2",
-    "myclabs/php-enum": "^1.7"
+    "myclabs/php-enum": "^1.7",
+    "softonic/graphql-client": "^1.2"
   },
   "require-dev": {
     "filp/whoops": "~2.0",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c89857c4e58d775acb7c904b2b03ae65",
+    "content-hash": "fa02a754e87aed5e8d83273ce1e3d6c3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2889,6 +2889,52 @@
             "time": "2016-06-16T16:22:20+00:00"
         },
         {
+            "name": "psr/cache",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/cache.git",
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for caching libraries",
+            "keywords": [
+                "cache",
+                "psr",
+                "psr-6"
+            ],
+            "time": "2016-08-06T20:24:11+00:00"
+        },
+        {
             "name": "psr/container",
             "version": "1.0.0",
             "source": {
@@ -3277,6 +3323,91 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
+        },
+        {
+            "name": "softonic/graphql-client",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/softonic/graphql-client.git",
+                "reference": "d57e7772eb354b31d358cf35b3b14adba877fcd7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/softonic/graphql-client/zipball/d57e7772eb354b31d358cf35b3b14adba877fcd7",
+                "reference": "d57e7772eb354b31d358cf35b3b14adba877fcd7",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3",
+                "php": ">=7.0",
+                "softonic/guzzle-oauth2-middleware": "^1.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.4",
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Softonic\\GraphQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Softonic GraphQL client",
+            "homepage": "https://github.com/softonic/graphql-client",
+            "keywords": [
+                "client",
+                "graphql",
+                "oauth2",
+                "softonic"
+            ],
+            "time": "2018-08-16T09:13:17+00:00"
+        },
+        {
+            "name": "softonic/guzzle-oauth2-middleware",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/softonic/guzzle-oauth2-middleware.git",
+                "reference": "07425eaf2779174614b6c07b4c4efbad4359a452"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/softonic/guzzle-oauth2-middleware/zipball/07425eaf2779174614b6c07b4c4efbad4359a452",
+                "reference": "07425eaf2779174614b6c07b4c4efbad4359a452",
+                "shasum": ""
+            },
+            "require": {
+                "league/oauth2-client": "^2.2",
+                "php": ">=7.0",
+                "psr/cache": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.4",
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Softonic\\OAuth2\\Guzzle\\Middleware\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Guzzle middleware with OAuth2 integration",
+            "homepage": "https://github.com/softonic/guzzle-oauth2-middleware",
+            "keywords": [
+                "Guzzle",
+                "middleware",
+                "oauth2"
+            ],
+            "time": "2017-08-21T08:26:49+00:00"
         },
         {
             "name": "sokil/php-isocodes",
@@ -4110,7 +4241,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -6076,7 +6207,6 @@
                 "mock",
                 "xunit"
             ],
-            "abandoned": true,
             "time": "2018-08-09T05:50:03+00:00"
         },
         {
