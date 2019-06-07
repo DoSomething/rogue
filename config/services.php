@@ -70,4 +70,7 @@ return [
         'key' => env('FASTLY_API_TOKEN'),
         'service_id' => env('FASTLY_SERVICE_ID'),
     ],
+    'graphql' => [
+        'url' => env('GRAPHQL_URL'),
+    ],
 ];
