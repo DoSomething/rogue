@@ -28,10 +28,11 @@ class GraphQL
         try {
             $response = $this->client->query($query, $variables);
         } catch (\Exception $exception) {
-            Log::error(
-                'GraphQL request failed. Query: '.$query
-                .' Variables: '.json_encode($variables).' Exception: '.$exception->getMessage()
-            );
+            Log::error('GraphQL request failed.', [
+                'query' => $query,
+                'variables' => $variables,
+                'exception' => $exception->getMessage(),
+            ]);
 
             return null;
         }
