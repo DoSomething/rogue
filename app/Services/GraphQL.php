@@ -39,5 +39,27 @@ class GraphQL
 
         return $response ? array_get($response->getData(), $queryKey) : null;
     }
+
+    /**
+     * Query for a CampaignWebsite by campaignId field.
+     *
+     * @param  $campaignId String
+     * @return Array|null
+     */
+    public function getCampaignWebsiteByCampaignId($campaignId)
+    {
+        $query = '
+        query GetCampaignWebsiteByCampaignId($campaignId: String!) {
+          campaignWebsiteByCampaignId(campaignId: $campaignId) {
+            title
+            slug
+          }
+        }';
+
+        $variables = [
+            'campaignId' => $campaignId,
+        ];
+
+        return $this->query($query, $variables, 'campaignWebsiteByCampaignId');
     }
 }
