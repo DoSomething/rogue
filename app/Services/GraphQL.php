@@ -16,15 +16,13 @@ class GraphQL
     }
 
     /**
-     * Run a GraphQL query using the client
-     * and parse the data result into a convenient format.
+     * Run a GraphQL query using the client and return the data result.
      *
      * @param  $query     String
      * @param  $variables Array
-     * @param  $queryKey  String
      * @return array|null
      */
-    public function query($query, $variables, $queryKey)
+    public function query($query, $variables)
     {
         // Use try/catch to avoid any GraphQL related errors breaking the application.
         try {
@@ -37,7 +35,7 @@ class GraphQL
             return null;
         }
 
-        return $response ? array_get($response->getData(), $queryKey) : null;
+        return $response ? $response->getData() : null;
     }
 
     /**
