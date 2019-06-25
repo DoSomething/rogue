@@ -29,7 +29,8 @@ class GraphQL
             $response = $this->client->query($query, $variables);
         } catch (\Exception $exception) {
             Log::error(
-                'GraphQL request failed. Variables: '.json_encode($variables).' Exception: '.$exception->getMessage()
+                'GraphQL request failed. Query: '.$query
+                .' Variables: '.json_encode($variables).' Exception: '.$exception->getMessage()
             );
 
             return null;
