@@ -22,7 +22,7 @@ class GraphQL
      * @param  $query     String
      * @param  $variables Array
      * @param  $queryKey  String
-     * @return Array|null
+     * @return array|null
      */
     public function query($query, $variables, $queryKey)
     {
@@ -44,7 +44,7 @@ class GraphQL
      * Query for a CampaignWebsite by campaignId field.
      *
      * @param  $campaignId String
-     * @return Array|null
+     * @return array|null
      */
     public function getCampaignWebsiteByCampaignId($campaignId)
     {
