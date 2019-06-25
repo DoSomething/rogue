@@ -2,6 +2,7 @@
 
 namespace Rogue\Services;
 
+use Illuminate\Support\Facades\Log;
 use Softonic\GraphQL\ClientBuilder;
 
 class GraphQL
@@ -15,14 +16,28 @@ class GraphQL
     }
 
     /**
-     * Run a GraphQL query using the client.
+     * Run a GraphQL query using the client
+     * and parse the data result into a convenient format.
      *
      * @param  $query     String
      * @param  $variables Array
-     * @return \Softonic\GraphQL\Response
+     * @param  $queryKey  String
+     * @return Array|null
      */
-    public function query($query, $variables)
+    public function query($query, $variables, $queryKey)
     {
-        return $this->client->query($query, $variables);
+        // Use try/catch to avoid any GraphQL related errors breaking the application.
+        try {
+            $response = $this->client->query($query, $variables);
+        } catch (\Exception $exception) {
+            Log::error(
+                'GraphQL request failed. Variables: '.json_encode($variables).' Exception: '.$exception->getMessage()
+            );
+
+            return null;
+        }
+
+        return $response ? array_get($response->getData(), $queryKey) : null;
+    }
     }
 }
