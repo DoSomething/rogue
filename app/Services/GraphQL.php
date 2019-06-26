@@ -2,7 +2,6 @@
 
 namespace Rogue\Services;
 
-use Illuminate\Support\Facades\Log;
 use Softonic\GraphQL\ClientBuilder;
 
 class GraphQL
