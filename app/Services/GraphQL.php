@@ -24,18 +24,7 @@ class GraphQL
      */
     public function query($query, $variables)
     {
-        // Use try/catch to avoid any GraphQL related errors breaking the application.
-        try {
-            $response = $this->client->query($query, $variables);
-        } catch (\Exception $exception) {
-            Log::error('GraphQL request failed.', [
-                'query' => $query,
-                'variables' => $variables,
-                'exception' => $exception->getMessage(),
-            ]);
-
-            return [];
-        }
+        $response = $this->client->query($query, $variables);
 
         return $response ? $response->getData() : [];
     }
