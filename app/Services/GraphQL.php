@@ -20,7 +20,7 @@ class GraphQL
      *
      * @param  $query     String
      * @param  $variables Array
-     * @return array|null
+     * @return array
      */
     public function query($query, $variables)
     {
@@ -34,17 +34,17 @@ class GraphQL
                 'exception' => $exception->getMessage(),
             ]);
 
-            return null;
+            return [];
         }
 
-        return $response ? $response->getData() : null;
+        return $response ? $response->getData() : [];
     }
 
     /**
      * Query for a CampaignWebsite by campaignId field.
      *
      * @param  $campaignId String
-     * @return array|null
+     * @return array
      */
     public function getCampaignWebsiteByCampaignId($campaignId)
     {
