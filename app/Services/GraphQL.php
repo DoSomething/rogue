@@ -52,6 +52,6 @@ class GraphQL
             'campaignId' => $campaignId,
         ];
 
-        return $this->query($query, $variables);
+        return $this->query($query, $variables)['campaignWebsiteByCampaignId'];
     }
 }
