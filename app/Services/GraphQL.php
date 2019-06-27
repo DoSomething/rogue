@@ -31,6 +31,10 @@ class GraphQL
     /**
      * Query for a CampaignWebsite by campaignId field.
      *
+     * NOTE: We prefer to bundle queries with their associated usage logic.
+     * We've opted to utilize this helper method as an exception to avoid duplication.
+     * (See thread https://git.io/fjoqd).
+     *
      * @param  $campaignId String
      * @return array
      */
