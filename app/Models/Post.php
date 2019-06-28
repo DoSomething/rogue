@@ -2,6 +2,7 @@
 
 namespace Rogue\Models;
 
+use Rogue\Services\GraphQL;
 use Rogue\Events\PostTagged;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
@@ -217,6 +218,9 @@ class Post extends Model
         // Blink expects quantity to be a number.
         $quantity = $this->quantity === null ? 0 : $this->quantity;
 
+        // Fetch Campaign Website information via GraphQL.
+        $campaignWebsite = (new GraphQL)->getCampaignWebsiteByCampaignId($this->campaign_id);
+
         return [
             'id' => $this->id,
             'signup_id' => $this->signup_id,
@@ -224,6 +228,8 @@ class Post extends Model
             'why_participated' => $this->signup->why_participated,
             'campaign_id' => (string) $this->campaign_id,
             'campaign_run_id' => (string) $this->signup->campaign_run_id,
+            'campaign_title' => array_get($campaignWebsite, 'title'),
+            'campaign_slug' => array_get($campaignWebsite, 'slug'),
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
             'action' => $this->getActionName(),
