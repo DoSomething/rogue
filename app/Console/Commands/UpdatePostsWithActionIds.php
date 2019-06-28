@@ -3,7 +3,6 @@
 namespace Rogue\Console\Commands;
 
 use DB;
-use Rogue\Models\Post;
 use Rogue\Models\Action;
 use Illuminate\Console\Command;
 
