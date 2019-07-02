@@ -4,6 +4,7 @@ namespace Tests;
 
 use Mockery;
 use Carbon\Carbon;
+use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Northstar;
 use Illuminate\Support\Facades\Storage;
 use DoSomething\Gateway\Resources\NorthstarUser;
@@ -47,6 +48,10 @@ trait WithMocks
                     'mobile' => $this->faker->phoneNumber,
                 ]);
         });
+
+        // GraphQL Mock
+        $this->graphqlMock = $this->mock(GraphQL::class);
+        $this->graphqlMock->shouldReceive('getCampaignWebsiteByCampaignId')->andReturn(null);
     }
 
     /**
