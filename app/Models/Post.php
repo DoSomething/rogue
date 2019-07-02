@@ -219,7 +219,7 @@ class Post extends Model
         $quantity = $this->quantity === null ? 0 : $this->quantity;
 
         // Fetch Campaign Website information via GraphQL.
-        $campaignWebsite = (new GraphQL)->getCampaignWebsiteByCampaignId($this->campaign_id);
+        $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
 
         return [
             'id' => $this->id,
