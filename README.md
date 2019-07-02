@@ -2,15 +2,6 @@
 
 This is **Rogue**, the DoSomething.org user activity service. Rogue is built using [Laravel 5.5](https://laravel.com/docs/5.5) and [React](http://reactjs.com).
 
-Maintained by [Team Bleed](https://github.com/orgs/DoSomething/teams/team-bleed)
-- [Jen](https://github.com/ngjo) - Product Manager
-- [Shae](https://github.com/sbsmith86) - Tech Lead
-- [Katie](https://github.com/katiecrane) - Engineer
-- [Chloe](https://github.com/chloealee) - Engineer
-- [Luke](https://github.com/lkpttn) - Product Designer
-- [Dave](https://github.com/DFurnes) - Staff Engineer
-
-If you ever have any questions about working in Rogue, please reach out to the #team-bleed slack channel.
 
 ### Getting Started
 
@@ -20,11 +11,8 @@ To get started using the API, see our [API Documentation](https://github.com/DoS
 
 ### Security Vulnerabilities
 
-We take security very seriously. Any vulnerabilities in Rogue should be reported to [security@dosomething.org](mailto:security@dosomething.org),
-and will be promptly addressed. Thank you for taking the time to responsibly disclose any issues you find.
+We take security very seriously. Any vulnerabilities in Rogue should be reported to [security@dosomething.org](mailto:security@dosomething.org), and will be promptly addressed. Thank you for taking the time to responsibly disclose any issues you find.
 
 ### License
 
-&copy;2017 DoSomething.org. Rogue is free software, and may be redistributed under the terms specified
-in the [LICENSE](https://github.com/DoSomething/rogue/blob/master/LICENSE) file. The name and logo for
-DoSomething.org are trademarks of Do Something, Inc and may not be used without permission.
+&copy;2019 DoSomething.org. Rogue is free software, and may be redistributed under the terms specified in the [LICENSE](https://github.com/DoSomething/rogue/blob/master/LICENSE) file. The name and logo for DoSomething.org are trademarks of Do Something, Inc and may not be used without permission.
