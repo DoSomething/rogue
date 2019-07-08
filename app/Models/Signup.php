@@ -2,6 +2,7 @@
 
 namespace Rogue\Models;
 
+use Rogue\Services\GraphQL;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -145,11 +146,16 @@ class Signup extends Model
         // Blink expects quantity to be a number.
         $quantity = $this->quantity === null ? 0 : $this->quantity;
 
+        // Fetch Campaign Website information via GraphQL.
+        $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
+
         return [
             'id' => $this->id,
             'northstar_id' => $this->northstar_id,
             'campaign_id' => (string) $this->campaign_id,
             'campaign_run_id' => (string) $this->campaign_run_id,
+            'campaign_title' => $campaignWebsite['title'],
+            'campaign_slug' => $campaignWebsite['slug'],
             'quantity' => $quantity,
             'why_participated' => $this->why_participated,
             'source' => $this->source,
