@@ -12,12 +12,13 @@ class UserOverview extends React.Component {
   constructor(props) {
     super(props);
 
-    (this.state = {
+    this.api = new RestApiClient();
+
+    this.state = {
       loading: false,
       signups: [],
       campaigns: [],
-    }),
-      (this.api = new RestApiClient());
+    };
   }
 
   componentDidMount() {
@@ -45,11 +46,12 @@ class UserOverview extends React.Component {
    * @return {Object}
    */
   getUserActivity(id) {
-    const request = this.api.get('api/v2/activity', {
+    const request = this.api.get('api/v3/signups', {
       filter: {
         northstar_id: id,
       },
-      orderBy: 'desc',
+      include: 'posts',
+      orderBy: 'created_at,desc',
       limit: 80,
     });
 
