@@ -12,12 +12,13 @@ class UserOverview extends React.Component {
   constructor(props) {
     super(props);
 
-    (this.state = {
+    this.api = new RestApiClient();
+
+    this.state = {
       loading: false,
       signups: [],
       campaigns: [],
-    }),
-      (this.api = new RestApiClient());
+    };
   }
 
   componentDidMount() {
