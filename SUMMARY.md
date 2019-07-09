@@ -1,9 +1,11 @@
 # Table of Contents
 
 ## Welcome
+
 - [Introduction](/README.md)
 
 ## Development
+
 - [Installation](/development/installation.md)
 - [Developer Onboarding](/development/developer_onboarding.md)
 - [Architecture](/development/architecture.md)
@@ -12,10 +14,9 @@
 - [Testing](/development/testing.md)
 
 ## API Reference
+
 - [Introduction](/endpoints/README.md)
-- [Web API (deprecated)](/endpoints/Legacy/web/README.md)
-- [API v1 and v2 (deprecated)](/endpoints/Legacy/README.md)
-- [API v3](/endpoints/README.md)
+- [API Endpoints](/endpoints/README.md)
   - [Signups](/endpoints/signups.md)
   - [Posts](/endpoints/posts.md)
   - [Reviews](/endpoints/reviews.md)
