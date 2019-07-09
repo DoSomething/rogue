@@ -12,28 +12,6 @@
 // Assets
 $router->get('images/{post}', 'Legacy\Web\ImagesController@show');
 
-// Legacy API Routes
-$router->group(['prefix' => 'api/v1', 'middleware' => ['legacy-auth']], function () {
-    // reportbacks
-    $this->get('reportbacks', 'Legacy\Two\ReportbackController@index');
-});
-
-// v2 routes
-$router->group(['prefix' => 'api/v2', 'middleware' => ['legacy-auth']], function () {
-    // activity
-    $this->get('activity', 'Legacy\Two\ActivityController@index');
-
-    // posts
-    $this->post('posts', 'Legacy\Two\PostsController@store');
-    $this->get('posts', 'Legacy\Two\PostsController@index');
-
-    // reactions
-    $this->post('reactions', 'Legacy\Two\ReactionController@store');
-
-    // signups
-    $this->post('signups', 'Legacy\Two\SignupsController@store');
-});
-
 // v3 routes
 $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function () {
     // signups
@@ -53,9 +31,6 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
     // reactions
     $this->post('posts/{post}/reactions', 'ReactionController@store');
     $this->get('posts/{post}/reactions', 'ReactionController@index');
-    // @TODO: delete these endpoints once Pheonix Next swaps over to above
-    $this->post('post/{post}/reactions', 'ReactionController@store');
-    $this->get('post/{post}/reactions', 'ReactionController@index');
 
     // reviews
     $this->post('posts/{post}/reviews', 'ReviewsController@reviews');
