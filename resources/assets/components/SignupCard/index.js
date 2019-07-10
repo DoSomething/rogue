@@ -18,7 +18,7 @@ class SignupCard extends React.Component {
       .slice(0, gallerySize)
       .map(post => <PostTile key={post.id} post={post} />);
 
-    const signupUrl = `/signups/${signup.signup_id}`;
+    const signupUrl = `/signups/${signup.id}`;
 
     return (
       <article className="container__row signup-card">
