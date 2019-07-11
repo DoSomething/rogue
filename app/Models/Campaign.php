@@ -88,7 +88,9 @@ class Campaign extends Model
      */
     public function getCauseAttribute()
     {
-        return explode(',', $this->attributes['cause']);
+        $cause = $this->attributes['cause'];
+
+        return blank($cause) ? [] : explode(',', $cause);
     }
 
     /**
