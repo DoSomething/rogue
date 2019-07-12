@@ -224,6 +224,9 @@ class Post extends Model
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
 
+        // The associated Action for this post.
+        $action = $this->actionModel;
+
         return [
             'id' => $this->id,
             'signup_id' => $this->signup_id,
@@ -238,6 +241,12 @@ class Post extends Model
             'type' => $this->type,
             'action' => $this->getActionName(),
             'action_id' => $this->action_id,
+            'action_type' => (string) $action['action_type'],
+            'scholarship_entry' => (bool) $action['scholarship_entry'],
+            'civic_action' => (bool) $action['civic_action'],
+            'quiz' => (bool) $action['quiz'],
+            'online' => (bool) $action['online'],
+            'time_commitment' => (string) $action['time_commitment'],
             'url' => $this->getMediaUrl(),
             'caption' => $this->text,
             'text' => $this->text,
