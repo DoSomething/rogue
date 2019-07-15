@@ -218,7 +218,8 @@ class Post extends Model
         // Blink expects quantity to be a number.
         $quantity = $this->quantity === null ? 0 : $this->quantity;
 
-        // Array values aren't supported in Customer.io event attributes.
+        // Bypass Campaign->cause accessor method so the value isn't converted to an array
+        // which Customer.io does not support.
         $campaign_cause = (string) optional($this->signup->campaign)->getAttributes()['cause'];
 
         // Fetch Campaign Website information via GraphQL.
