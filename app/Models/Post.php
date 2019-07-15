@@ -219,7 +219,7 @@ class Post extends Model
         $quantity = $this->quantity === null ? 0 : $this->quantity;
 
         // Array values aren't supported in Customer.io event attributes.
-        $campaign_cause = implode(',', (array) $this->signup->campaign['cause']);
+        $campaign_cause = (string) optional($this->signup->campaign)->getAttributes()['cause'];
 
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
