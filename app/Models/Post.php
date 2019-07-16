@@ -218,8 +218,15 @@ class Post extends Model
         // Blink expects quantity to be a number.
         $quantity = $this->quantity === null ? 0 : $this->quantity;
 
+        // Bypass Campaign->cause accessor method so the value isn't converted to an array
+        // which Customer.io does not support.
+        $campaign_cause = optional($this->signup->campaign)->getAttributes()['cause'];
+
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
+
+        // The associated Action for this post.
+        $action = $this->actionModel;
 
         return [
             'id' => $this->id,
@@ -230,10 +237,17 @@ class Post extends Model
             'campaign_run_id' => (string) $this->signup->campaign_run_id,
             'campaign_title' => $campaignWebsite['title'],
             'campaign_slug' => $campaignWebsite['slug'],
+            'campaign_cause' => $campaign_cause,
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
             'action' => $this->getActionName(),
             'action_id' => $this->action_id,
+            'action_type' => $action['action_type'],
+            'scholarship_entry' => $action['scholarship_entry'],
+            'civic_action' => $action['civic_action'],
+            'quiz' => $action['quiz'],
+            'online' => $action['online'],
+            'time_commitment' => $action['time_commitment'],
             'url' => $this->getMediaUrl(),
             'caption' => $this->text,
             'text' => $this->text,

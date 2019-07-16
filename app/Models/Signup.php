@@ -146,6 +146,10 @@ class Signup extends Model
         // Blink expects quantity to be a number.
         $quantity = $this->quantity === null ? 0 : $this->quantity;
 
+        // Bypass Campaign->cause accessor method so the value isn't converted to an array
+        // which Customer.io does not support.
+        $campaign_cause = optional($this->campaign)->getAttributes()['cause'];
+
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
 
@@ -156,6 +160,7 @@ class Signup extends Model
             'campaign_run_id' => (string) $this->campaign_run_id,
             'campaign_title' => $campaignWebsite['title'],
             'campaign_slug' => $campaignWebsite['slug'],
+            'campaign_cause' => $campaign_cause,
             'quantity' => $quantity,
             'why_participated' => $this->why_participated,
             'source' => $this->source,
