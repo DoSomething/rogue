@@ -220,7 +220,7 @@ class Post extends Model
 
         // Bypass Campaign->cause accessor method so the value isn't converted to an array
         // which Customer.io does not support.
-        $campaign_cause = (string) optional($this->signup->campaign)->getAttributes()['cause'];
+        $campaign_cause = optional($this->signup->campaign)->getAttributes()['cause'];
 
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
