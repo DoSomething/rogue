@@ -486,6 +486,7 @@ class Signup extends React.Component {
                 'Signup ID': signup.id,
                 'Northstar ID': user.id,
                 'Signup Source': signup.source,
+                'Signup Source Details': signup.source_details,
                 'Created At': new Date(signup.created_at).toString(),
               }}
             />
