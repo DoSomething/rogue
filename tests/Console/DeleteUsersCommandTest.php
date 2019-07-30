@@ -12,7 +12,7 @@ class DeleteUsersCommandTest extends TestCase
     public function it_should_delete_users()
     {
         // Create the signups & posts we're going to destroy:
-        $post1 = factory(Post::class)->create(['northstar_id' => '5d3630a0fdce2742ff6c64d4'])->first();
+        $post1 = factory(Post::class)->create(['northstar_id' => '5d3630a0fdce2742ff6c64d4', 'details' => '{"hello": "world"}'])->first();
         $post2 = factory(Post::class)->create(['northstar_id' => '5d3630a0fdce2742ff6c64d5'])->first();
         $post3 = factory(Post::class)->create(['northstar_id' => '5d3630a0fdce2742ff6c64d5'])->first();
 
@@ -34,7 +34,7 @@ class DeleteUsersCommandTest extends TestCase
     {
         // The post and its signup should be soft deleted, and fields that may
         // contain personally-identifiable information should be erased:
-        $this->assertSoftDeleted('posts', ['id' => $post->id, 'text' => null, 'location' => null]);
-        $this->assertSoftDeleted('signups', ['id' => $post->signup_id, 'why_participated' => null]);
+        $this->assertSoftDeleted('posts', ['id' => $post->id, 'text' => null, 'url' => null, 'location' => null, 'details' => null]);
+        $this->assertSoftDeleted('signups', ['id' => $post->signup_id, 'why_participated' => null, 'details' => null]);
     }
 }
