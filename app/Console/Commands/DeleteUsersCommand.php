@@ -73,5 +73,7 @@ class DeleteUsersCommand extends Command
 
             $this->info('Deleted: ' . $id . '(' . $posts->count() . ' posts and ' . $signups->count() . ' signups)');
         }
+
+        $this->info('Done!');
     }
 }
