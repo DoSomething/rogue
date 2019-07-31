@@ -39,7 +39,7 @@ class DeleteUsersCommand extends Command
         $csv = Reader::createFromString($input);
         $csv->setHeaderOffset(0);
 
-        $this->line('Deleting activity for ' . count($csv) . ' users...');
+        info('Deleting activity for ' . count($csv) . ' users...');
 
         foreach ($csv->getRecords() as $record) {
             $id = $record[$this->option('id_column')];
@@ -71,9 +71,9 @@ class DeleteUsersCommand extends Command
                 $post->delete();
             }
 
-            $this->info('Deleted: ' . $id . '(' . $posts->count() . ' posts and ' . $signups->count() . ' signups)');
+            info('Deleted: ' . $id . '(' . $posts->count() . ' posts and ' . $signups->count() . ' signups)');
         }
 
-        $this->info('Done!');
+        info('Done!');
     }
 }
