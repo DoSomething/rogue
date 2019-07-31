@@ -1,5 +1,8 @@
 <?php
 
+$minImageSize = config('posts.image.min');
+$maxImageSize = config('posts.image.max');
+
 return [
 
     /*
@@ -34,7 +37,7 @@ return [
     'different'            => 'The :attribute and :other must be different.',
     'digits'               => 'The :attribute must be :digits digits.',
     'digits_between'       => 'The :attribute must be between :min and :max digits.',
-    'dimensions'           => 'The :attribute size is invalid: must be at least 400x400 and no larger than 5000x4000.',
+    'dimensions'           => 'The :attribute size is invalid: must be at least '.$minImageSize['width'].'x'.$minImageSize['height'].' and no larger than '.$maxImageSize['width'].'x'.$maxImageSize['height'].'.',
     'distinct'             => 'The :attribute field has a duplicate value.',
     'email'                => 'The :attribute must be a valid email address.',
     'exists'               => 'The selected :attribute is invalid.',
