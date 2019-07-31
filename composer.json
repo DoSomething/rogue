@@ -6,7 +6,6 @@
   "require": {
     "php": "~7.2.0",
     "laravel/framework": "5.5.*",
-    "laravel/tinker": "^1.0",
     "aws/aws-sdk-php-laravel": "^3.1",
     "doctrine/dbal": "~2.5.13",
     "dosomething/gateway": "^1.14.9",
@@ -32,6 +31,7 @@
   },
   "require-dev": {
     "filp/whoops": "~2.0",
+    "laravel/tinker": "^1.0",
     "mockery/mockery": "^0.9.5",
     "phpunit/phpunit": "~6.0",
     "symfony/css-selector": "3.1.*",
