@@ -28,6 +28,9 @@ class PostRequest extends Request
             return $this->patchRules();
         }
 
+        $minImageSize = config('posts.image.min');
+        $maxImageSize = config('posts.image.max');
+
         return [
             'campaign_id' => 'required_without:action_id|integer',
             'northstar_id' => 'nullable|objectid',
@@ -39,7 +42,7 @@ class PostRequest extends Request
             'text' => 'nullable|string|max:500',
             'location' => 'nullable|iso3166',
             'quantity' => 'nullable|integer',
-            'file' => 'image|dimensions:min_width=400,min_height=400,max_width=5000,max_height_4000',
+            'file' => 'image|dimensions:min_width='.$minImageSize['width'].',min_height='.$minImageSize['height'].',max_width='.$maxImageSize['width'].',max_height='.$maxImageSize['height'],
             'status' => $this->getStatusRules($this->type),
             'details' => 'json',
             'created_at' => 'date',
