@@ -179,7 +179,6 @@ return [
         Aws\Laravel\AwsServiceProvider::class,
         DoSomething\Gateway\Laravel\GatewayServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Spatie\Backup\BackupServiceProvider::class,
 
         /*
          * Application Service Providers...
