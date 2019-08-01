@@ -21,6 +21,7 @@ class CampaignTransformer extends TransformerAbstract
             'start_date' => $campaign->start_date->toIso8601String(),
             'end_date' => optional($campaign->end_date)->toIso8601String(),
             'is_open' => $campaign->isOpen(),
+            'impact_doc' => $campaign->impact_doc,
             'cause' => $campaign->cause,
             'cause_names' => $campaign->getCauseNames(),
             'created_at' => $campaign->created_at->toIso8601String(),
