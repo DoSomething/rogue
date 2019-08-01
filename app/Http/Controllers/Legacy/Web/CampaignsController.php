@@ -49,7 +49,7 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Show particular campaign and it's posts.
+     * Show particular campaign and its posts.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
