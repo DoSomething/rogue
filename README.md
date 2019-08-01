@@ -1,7 +1,6 @@
-# Rogue [![wercker status](https://app.wercker.com/status/518aafc1808a35e38f658c849f93630a/s/master "wercker status")](https://app.wercker.com/project/byKey/518aafc1808a35e38f658c849f93630a) [![StyleCI](https://styleci.io/repos/64166359/shield?style=flat-rounded)](https://styleci.io/repos/64166359)
+# Rogue [![wercker status](https://app.wercker.com/status/518aafc1808a35e38f658c849f93630a/s/master 'wercker status')](https://app.wercker.com/project/byKey/518aafc1808a35e38f658c849f93630a) [![StyleCI](https://styleci.io/repos/64166359/shield?style=flat-rounded)](https://styleci.io/repos/64166359)
 
 This is **Rogue**, the DoSomething.org user activity service. Rogue is built using [Laravel 5.5](https://laravel.com/docs/5.5) and [React](http://reactjs.com).
-
 
 ### Getting Started
 
