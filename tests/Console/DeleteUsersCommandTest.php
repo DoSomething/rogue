@@ -34,7 +34,7 @@ class DeleteUsersCommandTest extends TestCase
     {
         // The post and its signup should be soft deleted, and fields that may
         // contain personally-identifiable information should be erased:
-        $this->assertSoftDeleted('posts', ['id' => $post->id, 'text' => null, 'url' => null, 'location' => null, 'details' => null]);
+        $this->assertSoftDeleted('posts', ['id' => $post->id, 'text' => null, 'url' => null, 'details' => null]);
         $this->assertSoftDeleted('signups', ['id' => $post->signup_id, 'why_participated' => null, 'details' => null]);
     }
 }

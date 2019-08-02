@@ -64,7 +64,6 @@ class DeleteUsersCommand extends Command
                 $post->update([
                     'text' => null,
                     'details' => null,
-                    'location' => null,
                     'url' => null,
                 ]);
 
