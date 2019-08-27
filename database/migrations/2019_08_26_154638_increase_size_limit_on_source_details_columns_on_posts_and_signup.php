@@ -32,7 +32,7 @@ class IncreaseSizeLimitOnSourceDetailsColumnsOnPostsAndSignup extends Migration
         Schema::table('signups', function (Blueprint $table) {
             $table->string('source_details', 255)->change();    
         });
-        
+
         Schema::table('posts', function (Blueprint $table) {
             $table->string('source_details', 255)->change();
         });
