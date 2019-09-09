@@ -115,6 +115,7 @@ class PostRepository
             'url' => $fileUrl,
             'text' => isset($data['text']) ? $data['text'] : null,
             'location' => isset($data['location']) ? $data['location'] : null,
+            'postal_code' => isset($data['postal_code']) ? $data['postal_code'] : null,
             'source' => token()->client(),
             'source_details' => isset($data['source_details']) ? $data['source_details'] : null,
             'details' => isset($data['details']) ? $data['details'] : null,
