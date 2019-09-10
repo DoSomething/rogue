@@ -41,6 +41,7 @@ class PostRequest extends Request
             'why_participated' => 'nullable|string',
             'text' => 'nullable|string|max:500',
             'location' => 'nullable|iso3166',
+            'postal_code' => 'nullable|max:10',
             'quantity' => 'nullable|integer',
             'file' => 'image|dimensions:min_width='.$minImageSize['width'].',min_height='.$minImageSize['height'].',max_width='.$maxImageSize['width'].',max_height='.$maxImageSize['height'],
             'status' => $this->getStatusRules($this->type),
