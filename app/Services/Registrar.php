@@ -3,7 +3,6 @@
 namespace Rogue\Services;
 
 use DoSomething\Gateway\Northstar;
-use Rogue\Repositories\CacheRepository;
 
 class Registrar
 {
@@ -15,7 +14,6 @@ class Registrar
     public function __construct(Northstar $northstar)
     {
         $this->northstar = $northstar;
-        $this->cache = new CacheRepository('user');
     }
 
     /**
