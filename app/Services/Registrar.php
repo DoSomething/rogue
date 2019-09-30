@@ -3,7 +3,6 @@
 namespace Rogue\Services;
 
 use DoSomething\Gateway\Northstar;
-use Rogue\Repositories\CacheRepository;
 
 class Registrar
 {
@@ -15,7 +14,6 @@ class Registrar
     public function __construct(Northstar $northstar)
     {
         $this->northstar = $northstar;
-        $this->cache = new CacheRepository('user');
     }
 
     /**
@@ -27,18 +25,7 @@ class Registrar
      */
     public function find($id)
     {
-        $user = $this->cache->retrieve($id);
-
-        if (! $user) {
-            $user = $this->northstar->asClient()->getUser('id', $id);
-
-            if ($user) {
-                // @TODO - How long should we store users in Cache?
-                $this->cache->store($user->id, $user);
-            }
-        }
-
-        return $user;
+        return $this->northstar->getUser($id);
     }
 
     /**
@@ -49,43 +36,7 @@ class Registrar
      */
     public function findAll(array $ids = [])
     {
-        if ($ids) {
-            $users = $this->cache->retrieveMany($ids);
-
-            if (! $users) {
-                $users = $this->getBatchedCollection($ids);
-
-                if (count($users)) {
-                    $group = $users->keyBy('id')->all();
-
-                    $this->cache->storeMany($group);
-                }
-            } else {
-                $users = $this->resolveMissingUsers($users);
-                $users = collect(array_values($users));
-            }
-
-            return $users;
-        }
-
-        return null;
-    }
-
-    /**
-     * Resolving missing cached users in a user cache collection.
-     *
-     * @param  array $users
-     * @return array
-     */
-    protected function resolveMissingUsers($users)
-    {
-        foreach ($users as $key => $value) {
-            if ($value === false or $value === null) {
-                $users[$key] = $this->find($this->cache->unsetPrefix($key));
-            }
-        }
-
-        return $users;
+        return $this->getBatchedCollection($ids);
     }
 
     /**
@@ -107,7 +58,7 @@ class Registrar
             $parameters['limit'] = '50';
             $parameters['filter[_id]'] = implode(',', $batch);
 
-            $accounts = $this->northstar->asClient()->getAllUsers($parameters);
+            $accounts = $this->northstar->getAllUsers($parameters);
 
             $data = array_merge($data, $accounts->toArray());
 
@@ -126,14 +77,8 @@ class Registrar
      */
     public function search($query, $page = 1)
     {
-        // Attempt to fetch all users.
-        $users = $this->northstar->asClient()->getAllUsers([
-            'search' => [
-                '_id' => $query,
-                'drupal_id' => $query,
-                'email' => $query,
-                'mobile' => $query,
-            ],
+        $users = $this->northstar->getAllUsers([
+            'search' => $query,
             'page' => $page,
         ]);
 

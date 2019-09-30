@@ -561,7 +561,7 @@ class SignupTest extends TestCase
      * GET /api/v3/signups?include=user
      * @return void
      */
-    public function testSignupIndexWithIncludedUserAsAdmin()
+    public function testSignupIndexWithIncludedUser()
     {
         $post = factory(Post::class)->create();
         $signup = $post->signup;
@@ -569,49 +569,10 @@ class SignupTest extends TestCase
         // Test with admin that entire user is returned.
         $response = $this->withAdminAccessToken()->getJson('api/v3/signups?include=user');
         $response->assertStatus(200);
+
         $decodedResponse = $response->decodeResponseJson();
 
         $this->assertEquals(false, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
-    }
-
-    /**
-     * Test for signup index with included user info. as owner.
-     * Only admins/owners should be able to see all user info.
-     *
-     * GET /api/v3/signups?include=user
-     * @return void
-     */
-    public function testSignupIndexWithIncludedUserAsOwner()
-    {
-        $post = factory(Post::class)->create();
-        $signup = $post->signup;
-
-        // Test with admin that entire user is returned.
-        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups?include=user');
-        $response->assertStatus(200);
-        $decodedResponse = $response->decodeResponseJson();
-
-        $this->assertEquals(false, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
-    }
-
-    /**
-     * Test for signup index with included user info. as non-admin/non-owner.
-     * Only admins/owners should be able to see all user info.
-     *
-     * GET /api/v3/signups?include=user
-     * @return void
-     */
-    public function testSignupIndexWithIncludedUserAsNonAdminNonOwner()
-    {
-        $post = factory(Post::class)->create();
-        $signup = $post->signup;
-
-        // Test with annoymous user that only a user's first name is returned.
-        $response = $this->getJson('api/v3/signups?include=user');
-        $response->assertStatus(200);
-        $decodedResponse = $response->decodeResponseJson();
-
-        $this->assertEquals(true, empty($decodedResponse['data'][0]['user']['data']['birthdate']));
     }
 
     /**
