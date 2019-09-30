@@ -1,3 +1,5 @@
+/* global document */
+
 /**
  * Wait until the DOM is ready.
  *
@@ -13,18 +15,6 @@ export function ready(fn) {
   }
 }
 
-export function calculateAge(date) {
-  let formattedAge = null;
-
-  if (date) {
-    const birthdate = new Date(date);
-    const today = Date.now();
-    formattedAge = Math.floor((today - birthdate) / 31536000000);
-  }
-
-  return formattedAge;
-}
-
 export function extractPostsFromSignups(signups) {
   const posts = keyBy(flatMap(signups, signup => signup.posts), 'id');
 
@@ -35,42 +25,6 @@ export function extractSignupsFromPosts(posts) {
   const signups = keyBy(flatMap(posts, post => post.signup.data), 'id');
 
   return signups;
-}
-
-/**
- * Returns a readable display name and age (if provided).
- *
- * @param {String} firstName
- * @param {String} lastName
- * @param {Date} birthDate
- */
-export function displayUserInfo(firstName, lastName, birthDate) {
-  let displayName = firstName;
-  if (lastName) {
-    displayName = `${displayName} ${lastName}`;
-  }
-
-  if (birthDate) {
-    const age = calculateAge(birthDate);
-    return `${displayName}, ${age}`;
-  }
-
-  return displayName;
-}
-
-/**
- * Returns a readable City and State string.
- *
- * @param {String} city
- * @param {String} state
- * @return {String|null} City and State string.
- */
-export function displayCityState(city, state) {
-  if (!city && !state) {
-    return null;
-  }
-
-  return `${city || ''}${city && state ? ', ' : ''}${state || ''}`;
 }
 
 /**
