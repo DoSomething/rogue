@@ -1,69 +1,74 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
-import { displayUserInfo, displayCityState } from '../../helpers';
+
+/* eslint-disable react/prop-types */
+
+/**
+ * Returns a readable City and State string.
+ *
+ * @param {Object} user
+ * @return {ReactElement|null}
+ */
+const UserLocation = ({ user }) => {
+  if (!user || !user.addr_city || !user.addr_state) {
+    return null;
+  }
+
+  return (
+    <span>
+      {user.addr_city}, {user.addr_state}
+      <br />
+    </span>
+  );
+};
+
+/**
+ * Returns a readable display name and age (if provided).
+ *
+ * @param {Object} user
+ * @return {ReactElement}
+ */
+const UserName = ({ user, link }) => {
+  let displayName = user.display_name || 'N/A';
+
+  if (user.age) {
+    displayName += `, ${user.age}`;
+  }
+
+  if (link) {
+    return <a href={link}>{displayName}</a>;
+  }
+
+  return <span>{displayName}</span>;
+};
 
 const UserInformation = props => (
   <div>
     {!isEmpty(props.user) ? (
       <div className="container -padded">
-        {props.linkSignup ? (
-          <h2 className="heading">
-            <a href={`/signups/${props.linkSignup}`}>
-              {displayUserInfo(
-                props.user.first_name,
-                props.user.last_name,
-                props.user.birthdate,
-              )}
-            </a>
-          </h2>
-        ) : (
-          <h2 className="heading">
-            {displayUserInfo(
-              props.user.first_name,
-              props.user.last_name,
-              props.user.birthdate,
-            )}
-          </h2>
-        )}
+        <h2 className="heading">
+          <UserName
+            user={props.user}
+            link={props.linkSignup ? `/signups/${props.linkSignup}` : null}
+          />
+        </h2>
         <p>
-          {props.user.email ? (
+          {props.user.email_preview ? (
             <span>
-              {props.user.email}
+              {props.user.email_preview}
               <br />
             </span>
           ) : null}
 
-          {(() => {
-            if (props.user.mobile) {
-              if (props.linkSignup && isEmpty(props.user.first_name)) {
-                return (
-                  <span>
-                    <a href={`/signups/${props.linkSignup}`}>
-                      {props.user.mobile}
-                    </a>
-                    <br />
-                  </span>
-                );
-              }
-
-              return (
-                <span>
-                  {props.user.mobile}
-                  <br />
-                </span>
-              );
-            }
-
-            return null;
-          })()}
-
-          {displayCityState(props.user.addr_city, props.user.addr_state) ? (
+          {props.user.mobile_preview ? (
             <span>
-              {displayCityState(props.user.addr_city, props.user.addr_state)}
+              {props.user.mobile_preview}
               <br />
             </span>
           ) : null}
+
+          <UserLocation user={props.user} />
         </p>
       </div>
     ) : null}

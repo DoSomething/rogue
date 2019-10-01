@@ -123,9 +123,7 @@ const reviewComponent = (Component, data) => {
     updatePost(post, fields) {
       fields.post_id = post.id;
 
-      let request = this.api.postReview(fields);
-
-      return request.then(result => {
+      return this.api.postReview(fields).then(() => {
         this.setState(previousState => {
           const newState = { ...previousState };
 
