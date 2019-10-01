@@ -10,7 +10,7 @@ use Rogue\Jobs\RejectPost;
 use Illuminate\Support\ServiceProvider;
 
 
-use function GuzzleHttp\Promise\is_rejected;
+
 
 class ModelServiceProvider extends ServiceProvider
 {
@@ -39,7 +39,7 @@ class ModelServiceProvider extends ServiceProvider
             // Check if caption matches 'Test runscope upload' and 'caption_ghost_test'                
              if (in_array($post->text, ['Test runscope upload', 'caption_ghost_test'])) {
                  // If it does, run the RejectPost function and delay for 15 minutes 
-                RejectPost::dispatch($post)->delay(now()->addMinutes(15));
+                RejectPost::dispatch($post)->delay(now()->addMinutes(2));
              }
                 
         });
@@ -50,7 +50,7 @@ class ModelServiceProvider extends ServiceProvider
                 // @TODO: this should include the tags with the post
                 'content' => $post->toJson(),
                 // Use the authenticated user if coming from the web,
-                // Otherwise use the id of the user in the request.
+                // otherwise use the id of the user in the request.
                 'user' => auth()->id() ? auth()->id() : $post->northstar_id,
             ]);
         });

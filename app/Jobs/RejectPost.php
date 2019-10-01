@@ -9,13 +9,12 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-
 class RejectPost implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The post to send to Customer.io.
+     * The post to reject.
      *
      * @var Post
      */
@@ -38,7 +37,6 @@ class RejectPost implements ShouldQueue
      */
     public function handle()
     {
-        // Set the status of post to rejected 
         $this->post->status = 'rejected'; 
         $this->post->save();
 
@@ -46,4 +44,3 @@ class RejectPost implements ShouldQueue
         info('Automatically rejected post ' . $this->post->id);
     }
 }
-
