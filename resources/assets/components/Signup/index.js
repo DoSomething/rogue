@@ -206,9 +206,7 @@ class Signup extends React.Component {
   updatePost(post, fields) {
     fields.post_id = post.id;
 
-    let request = this.api.postReview(fields);
-
-    request.then(result => {
+    return this.api.postReview(fields).then(() => {
       this.setState(previousState => {
         const newState = { ...previousState };
 
