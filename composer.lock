@@ -791,16 +791,16 @@
         },
         {
             "name": "dosomething/gateway",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DoSomething/gateway.git",
-                "reference": "48ad67c67eb843557bbca7acf6e28be0e683ff5f"
+                "reference": "856fafe5bccc2028c29b4c2966a93aedd20be243"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/48ad67c67eb843557bbca7acf6e28be0e683ff5f",
-                "reference": "48ad67c67eb843557bbca7acf6e28be0e683ff5f",
+                "url": "https://api.github.com/repos/DoSomething/gateway/zipball/856fafe5bccc2028c29b4c2966a93aedd20be243",
+                "reference": "856fafe5bccc2028c29b4c2966a93aedd20be243",
                 "shasum": ""
             },
             "require": {
@@ -848,7 +848,7 @@
                 }
             ],
             "description": "Standard PHP API client for DoSomething.org services.",
-            "time": "2019-09-30T21:44:03+00:00"
+            "time": "2019-10-01T14:39:02+00:00"
         },
         {
             "name": "egulias/email-validator",
