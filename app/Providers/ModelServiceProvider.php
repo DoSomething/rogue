@@ -6,6 +6,7 @@ use Rogue\Models\Post;
 use Rogue\Models\Event;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
+use Rogue\Jobs\RejectPost;
 use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider
@@ -28,6 +29,15 @@ class ModelServiceProvider extends ServiceProvider
                     'user' => auth()->id() ? auth()->id() : $signup->northstar_id,
                 ]);
             }
+        });
+
+         // When Posts are created reject test events.
+         Post::created(function ($post) {                  
+             if (in_array($post->text, ['Test runscope upload', 'caption_ghost_test'])) {
+                 // The post will delay for 2 minutes before being rejected to assure tests are running normally 
+                RejectPost::dispatch($post)->delay(now()->addMinutes(2));
+                
+             }    
         });
 
         // When Posts are saved create an event for them.
