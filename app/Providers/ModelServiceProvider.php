@@ -9,9 +9,6 @@ use Rogue\Models\Signup;
 use Rogue\Jobs\RejectPost;
 use Illuminate\Support\ServiceProvider;
 
-
-
-
 class ModelServiceProvider extends ServiceProvider
 {
     /**
@@ -35,13 +32,12 @@ class ModelServiceProvider extends ServiceProvider
         });
 
          // When Posts are created reject test events.
-         Post::created(function ($post) {
-            // Check if caption matches 'Test runscope upload' and 'caption_ghost_test'                
+         Post::created(function ($post) {                  
              if (in_array($post->text, ['Test runscope upload', 'caption_ghost_test'])) {
-                 // If it does, run the RejectPost function and delay for 15 minutes 
+                 // The post will delay for 2 minutes before being rejected to assure tests are running normally 
                 RejectPost::dispatch($post)->delay(now()->addMinutes(2));
-             }
                 
+             }    
         });
 
         // When Posts are saved create an event for them.

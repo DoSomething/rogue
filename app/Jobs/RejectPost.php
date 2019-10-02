@@ -37,10 +37,12 @@ class RejectPost implements ShouldQueue
      */
     public function handle()
     {
+
         $this->post->status = 'rejected'; 
         $this->post->save();
 
         // Log
         info('Automatically rejected post ' . $this->post->id);
     }
+    
 }
