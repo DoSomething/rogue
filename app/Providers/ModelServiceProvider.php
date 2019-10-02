@@ -31,7 +31,6 @@ class ModelServiceProvider extends ServiceProvider
             }
         });
 
-        
          // When Posts are created reject test events.
          Post::created(function ($post) {                  
              if (in_array($post->text, ['Test runscope upload', 'caption_ghost_test'])) {
