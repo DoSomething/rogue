@@ -31,13 +31,12 @@ class ModelServiceProvider extends ServiceProvider
             }
         });
 
-         // When Posts are created reject test events.
-         Post::created(function ($post) {                  
-             if (in_array($post->text, ['Test runscope upload', 'caption_ghost_test'])) {
-                 // The post will delay for 2 minutes before being rejected to assure tests are running normally 
+        // When Posts are created reject test events.
+        Post::created(function ($post) {
+            if (in_array($post->text, ['Test runscope upload', 'caption_ghost_test'])) {
+                // The post will delay for 2 minutes before being rejected to assure tests are running normally
                 RejectPost::dispatch($post)->delay(now()->addMinutes(2));
-                
-             }    
+            }
         });
 
         // When Posts are saved create an event for them.
