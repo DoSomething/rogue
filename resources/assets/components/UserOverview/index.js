@@ -14,6 +14,7 @@ const USER_OVERVIEW_QUERY = gql`
   query UserOverviewQuery($id: String!) {
     user(id: $id) {
       ...UserInformation
+      permalink
       source
     }
 
@@ -63,7 +64,7 @@ const UserOverview = ({ id }) => {
             title="Meta"
             details={{
               Source: user.source,
-              'Northstar ID': user.id,
+              'Northstar ID': <a href={user.permalink}>{user.id}</a>,
             }}
           />
         </UserInformation>
