@@ -1,12 +1,12 @@
 /* global document */
 
+import { flatMap, keyBy, get, mapKeys, camelCase } from 'lodash';
+
 /**
  * Wait until the DOM is ready.
  *
  * @param {Function} fn
  */
-import { flatMap, keyBy, get } from 'lodash';
-
 export function ready(fn) {
   if (document.readyState !== 'loading') {
     fn();
@@ -261,7 +261,7 @@ export function getImageUrlFromPost(post, type) {
   return url === 'default' ? defaultPhotoUrl : url;
 }
 
-/**
+/*
  * Get a value from the environment.
  *
  * @param  {String} key
@@ -270,3 +270,14 @@ export function getImageUrlFromPost(post, type) {
 export function env(key) {
   return (window.ENV || {})[key];
 }
+
+/*
+ * Change the keys in the given object to camelCase. This
+ * is useful as a "compatibility layer" for components
+ * that recieve data from GraphQL & REST APIs.
+ *
+ * @param {Object} object
+ * @return {Object}
+ */
+export const camelCaseKeys = object =>
+  mapKeys(object, (value, key) => camelCase(key));

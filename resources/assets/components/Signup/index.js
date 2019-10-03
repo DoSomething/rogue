@@ -14,6 +14,7 @@ import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
 import HistoryModal from '../HistoryModal';
 import UploaderModal from '../UploaderModal';
+import { camelCaseKeys } from '../../helpers';
 import ModalContainer from '../ModalContainer';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
@@ -421,7 +422,7 @@ class Signup extends React.Component {
       <div className="signup">
         <div className="container__row">
           <div className="container__block -half">
-            <UserInformation user={user}>
+            <UserInformation user={camelCaseKeys(user)}>
               <TextBlock
                 title="Why Statement"
                 content={signup.why_participated}

@@ -1,149 +1,84 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { map, keyBy } from 'lodash';
-import { RestApiClient } from '@dosomething/gateway';
+import gql from 'graphql-tag';
+import { map } from 'lodash';
+import { useQuery } from '@apollo/react-hooks';
 
 import Empty from '../Empty';
 import SignupCard from '../SignupCard';
 import MetaInformation from '../MetaInformation';
-import UserInformation from '../Users/UserInformation';
+import UserInformation, {
+  UserInformationFragment,
+} from '../Users/UserInformation';
 
-class UserOverview extends React.Component {
-  constructor(props) {
-    super(props);
+const USER_OVERVIEW_QUERY = gql`
+  query UserOverviewQuery($id: String!) {
+    user(id: $id) {
+      ...UserInformation
+      source
+    }
 
-    this.api = new RestApiClient();
+    signups(userId: $id, orderBy: "created_at,desc") {
+      id
+      quantity
+      whyParticipated
 
-    this.state = {
-      loading: false,
-      signups: [],
-      campaigns: [],
-    };
+      campaign {
+        id
+        internalTitle
+        startDate
+      }
+
+      posts {
+        id
+        type
+        url(w: 200, h: 200)
+      }
+    }
   }
 
-  componentDidMount() {
-    this.setState({
-      loading: true,
-    });
+  ${UserInformationFragment}
+`;
 
-    // Get user activity.
-    this.getUserActivity(this.props.user.id)
-      // Then get the campaign data tied to that activity.
-      .then(() => {
-        const ids = map(this.state.signups, 'campaign_id');
-        this.getCampaigns(ids);
+const UserOverview = ({ id }) => {
+  const { loading, error, data } = useQuery(USER_OVERVIEW_QUERY, {
+    variables: { id },
+  });
 
-        this.setState({
-          loading: false,
-        });
-      });
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
 
-  /**
-   * Gets the user activity for the specified user and update state.
-   *
-   * @param {String} id
-   * @return {Object}
-   */
-  getUserActivity(id) {
-    const request = this.api.get('api/v3/signups', {
-      filter: {
-        northstar_id: id,
-      },
-      include: 'posts',
-      orderBy: 'created_at,desc',
-      limit: 80,
-    });
+  const { user, signups } = data;
 
-    return request.then(result => {
-      this.setState({
-        signups: result.data,
-      });
-    });
-  }
-
-  /**
-   * Gets campaigns associated with signups.
-   *
-   * @param {Array} ids
-   * @return {Object}
-   */
-  getCampaigns(ids) {
-    this.api
-      .get('api/v3/campaigns', {
-        filter: {
-          id: ids.join(),
-        },
-        // @TODO: update this to paginate calls to smaller batches or use GraphQL
-        // to be able to request only the subset of campaign fields we actually use for the UI
-        // (to make sure performance isn't hit).
-        limit: 100,
-      })
-      .then(json =>
-        this.setState({
-          campaigns: keyBy(json.data, 'id'),
-        }),
-      );
-  }
-
-  render() {
-    const user = this.props.user;
-
-    return (
-      <div>
-        <div className="container__block">
-          <h2 className="heading -emphasized -padded">
-            <span>User Info</span>
-          </h2>
-        </div>
-
-        <div className="container__block">
-          <UserInformation user={user}>
-            <MetaInformation
-              title="Meta"
-              details={{
-                Source: user.source,
-                'Northstar ID': user.id,
-              }}
-            />
-          </UserInformation>
-        </div>
-
-        <div className="container__block">
-          <h2 className="heading -emphasized -padded">
-            <span>Campaigns</span>
-          </h2>
-        </div>
-
-        <div className="container__block">
-          {this.state.loading ? (
-            <div className="spinner" />
-          ) : this.state.signups.length === 0 ? (
-            <Empty header="This user has no campaign signups." />
-          ) : (
-            map(this.state.signups, (signup, index) => (
-              <SignupCard
-                key={index}
-                signup={signup}
-                campaign={
-                  this.state.campaigns
-                    ? this.state.campaigns[signup.campaign_id]
-                    : null
-                }
-              />
-            ))
-          )}
-        </div>
+  return (
+    <div>
+      <div className="container__block">
+        <h2 className="heading -emphasized -padded">
+          <span>User Info</span>
+        </h2>
       </div>
-    );
-  }
-}
 
-UserOverview.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.string,
-    source: PropTypes.string,
-  }).isRequired,
+      <div className="container__block -half">
+        <UserInformation user={user}>
+          <MetaInformation
+            title="Meta"
+            details={{
+              Source: user.source,
+              'Northstar ID': user.id,
+            }}
+          />
+        </UserInformation>
+      </div>
+
+      <div className="container__block">
+        <h2 className="heading -emphasized -padded">
+          <span>Campaigns</span>
+        </h2>
+        {map(signups, signup => {
+          return <SignupCard key={signup.id} signup={signup} />;
+        })}
+      </div>
+    </div>
+  );
 };
 
 export default UserOverview;

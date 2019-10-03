@@ -8,6 +8,7 @@ import PostTile from '../PostTile';
 import Quantity from '../Quantity';
 import TextBlock from '../TextBlock';
 import ReviewBlock from '../ReviewBlock';
+import { camelCaseKeys } from '../../helpers';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
 
@@ -100,7 +101,7 @@ class Post extends React.Component {
 
         {/* User and Post information */}
         <div className={`container__block ${containerSize}`}>
-          <UserInformation user={user} linkSignup={signup.id}>
+          <UserInformation user={camelCaseKeys(user)} linkSignup={signup.id}>
             {this.props.showQuantity ? (
               <Quantity quantity={quantity} noun="things" verb="done" />
             ) : null}

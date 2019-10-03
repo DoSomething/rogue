@@ -1,11 +1,11 @@
 @import '~@dosomething/forge/scss/toolkit';
 
 .post-tile {
+  width: 100%;
   background: $off-white;
 }
 
 .post-tile.-fallback {
-  width: 100%;
   background-image: url('./fallback.svg');
   background-position: center;
   background-repeat: no-repeat;

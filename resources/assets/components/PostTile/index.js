@@ -5,7 +5,7 @@ import { getImageUrlFromProp } from '../../helpers';
 import './post-tile.scss';
 
 const PostTile = ({ post }) => {
-  const url = getImageUrlFromProp(post, 'edited');
+  const url = post.media ? getImageUrlFromProp(post, 'edited') : post.url;
   const altText = `Post #${post.id}`;
 
   if (!url) {

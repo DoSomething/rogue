@@ -1,8 +1,19 @@
 import React from 'react';
+import gql from 'graphql-tag';
 import { isEmpty } from 'lodash';
-import PropTypes from 'prop-types';
+import { useQuery } from '@apollo/react-hooks';
 
-/* eslint-disable react/prop-types */
+export const UserInformationFragment = gql`
+  fragment UserInformation on User {
+    id
+    displayName
+    # age
+    emailPreview
+    mobilePreview
+    addrCity
+    addrState
+  }
+`;
 
 /**
  * Returns a readable City and State string.
@@ -11,13 +22,13 @@ import PropTypes from 'prop-types';
  * @return {ReactElement|null}
  */
 const UserLocation = ({ user }) => {
-  if (!user || !user.addr_city || !user.addr_state) {
+  if (!user || !user.addrCity || !user.addrState) {
     return null;
   }
 
   return (
     <span>
-      {user.addr_city}, {user.addr_state}
+      {user.addrCity}, {user.addrState}
       <br />
     </span>
   );
@@ -30,7 +41,7 @@ const UserLocation = ({ user }) => {
  * @return {ReactElement}
  */
 const UserName = ({ user, link }) => {
-  let displayName = user.display_name || 'N/A';
+  let displayName = user.displayName || 'N/A';
 
   if (user.age) {
     displayName += `, ${user.age}`;
@@ -43,53 +54,36 @@ const UserName = ({ user, link }) => {
   return <span>{displayName}</span>;
 };
 
-const UserInformation = props => (
+export default ({ user, linkSignup, children }) => (
   <div>
-    {!isEmpty(props.user) ? (
+    {!isEmpty(user) ? (
       <div className="container -padded">
         <h2 className="heading">
           <UserName
-            user={props.user}
-            link={props.linkSignup ? `/signups/${props.linkSignup}` : null}
+            user={user}
+            link={linkSignup ? `/signups/${linkSignup}` : null}
           />
         </h2>
         <p>
-          {props.user.email_preview ? (
+          {user.emailPreview ? (
             <span>
-              {props.user.email_preview}
+              {user.emailPreview}
               <br />
             </span>
           ) : null}
 
-          {props.user.mobile_preview ? (
+          {user.mobilePreview ? (
             <span>
-              {props.user.mobile_preview}
+              {user.mobilePreview}
               <br />
             </span>
           ) : null}
 
-          <UserLocation user={props.user} />
+          <UserLocation user={user} />
         </p>
       </div>
     ) : null}
 
-    {props.children}
+    {children}
   </div>
 );
-
-UserInformation.propTypes = {
-  // @TODO: For the `user` and `children` props sometimes they come
-  // in as an array and sometimes as an object.
-  // Figure out why and update the validation.
-  user: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  children: PropTypes.node,
-  linkSignup: PropTypes.number,
-};
-
-UserInformation.defaultProps = {
-  children: null,
-  linkSignup: null,
-  user: null,
-};
-
-export default UserInformation;
