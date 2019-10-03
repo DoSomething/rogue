@@ -15,9 +15,9 @@
                     @foreach ($users as $user)
                         @if ($user)
                             <tr class="table__row">
-                                <td class="table__cell"><a href={{ "/users/" . $user->id }}>{{ $user->first_name or 'Anonymous' }} {{ $user->last_name or '' }}</a></td>
-                                <td class="table__cell">{{ $user->email or ''}}</td>
-                                <td class="table__cell">{{ $user->mobile or ''}}</td>
+                                <td class="table__cell"><a href={{ "/users/" . $user->id }}>{{ $user->display_name }}</a></td>
+                                <td class="table__cell">{{ $user->email_preview or ''}}</td>
+                                <td class="table__cell">{{ $user->mobile_preview or ''}}</td>
                             </tr>
                         @endif
                     @endforeach
