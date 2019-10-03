@@ -46,4 +46,5 @@
     </body>
 
     {{ scriptify($auth, 'AUTH') }}
+    {{ scriptify(['GRAPHQL_URL' => config('services.graphql.url')], 'ENV') }}
 </html>

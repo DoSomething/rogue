@@ -260,3 +260,13 @@ export function getImageUrlFromPost(post, type) {
 
   return url === 'default' ? defaultPhotoUrl : url;
 }
+
+/**
+ * Get a value from the environment.
+ *
+ * @param  {String} key
+ * @return {String}
+ */
+export function env(key) {
+  return (window.ENV || {})[key];
+}
