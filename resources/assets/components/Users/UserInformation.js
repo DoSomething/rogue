@@ -1,7 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { isEmpty } from 'lodash';
-import { useQuery } from '@apollo/react-hooks';
 
 export const UserInformationFragment = gql`
   fragment UserInformation on User {
