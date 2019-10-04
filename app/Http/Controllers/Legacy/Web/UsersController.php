@@ -43,12 +43,9 @@ class UsersController extends Controller
      * @param  string  $id  Northstar ID
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        $user = $this->registrar->find($id);
-
-        return view('users.show')
-            ->with('state', ['user' => $user->toArray()]);
+        return view('users.show');
     }
 
     /**

@@ -7,31 +7,6 @@
     color: $purple;
   }
 
-  .gallery {
-    @include clearfix;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-
-    > li {
-      margin: gutter() 0;
-      padding: 0 gutter();
-      overflow: hidden;
-
-      @include media($tablet) {
-        @include span(3 of 15);
-
-        &:first-child {
-          padding-left: 0px;
-        }
-
-        &:nth-of-type(5n + 1) {
-          clear: both;
-        }
-      }
-    }
-  }
-
   a {
     color: $black;
     font-weight: $weight-normal;
