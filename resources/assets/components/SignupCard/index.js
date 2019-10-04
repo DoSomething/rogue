@@ -23,9 +23,9 @@ const SignupCard = ({ signup }) => {
             <h2 className="heading">
               {campaign.internalTitle || 'Unknown Campaign'}
             </h2>
-            <h4 className="heading">Campaign ID: {campaign.id}</h4>
+            <h4 className="heading">Campaign ID: {campaign.id || 'N/A'}</h4>
             <h4 className="heading">
-              Campaign Start Date: {campaign ? campaign.startDate : '???'}
+              Campaign Start Date: {campaign.startDate || '???'}
             </h4>
           </div>
           <div className="container__row">
