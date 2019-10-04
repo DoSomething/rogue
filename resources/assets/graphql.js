@@ -42,7 +42,7 @@ export default uri => {
   const httpLink = new BatchHttpLink({ uri });
 
   return new ApolloClient({
-    link: ApolloLink.from([errorLink, authLink, httpLink]),
+    link: ApolloLink.from([errorLink, authLink, persistedLink, httpLink]),
     cache: new InMemoryCache(),
   });
 };
