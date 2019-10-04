@@ -6,7 +6,7 @@ export const UserInformationFragment = gql`
   fragment UserInformation on User {
     id
     displayName
-    # age
+    age
     emailPreview
     mobilePreview
     addrCity
