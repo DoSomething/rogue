@@ -53,7 +53,7 @@ const UserName = ({ user, link }) => {
   return <span>{displayName}</span>;
 };
 
-export default ({ user, linkSignup, children }) => (
+const UserInformation = ({ user, linkSignup, children }) => (
   <div>
     {!isEmpty(user) ? (
       <div className="container -padded">
@@ -86,3 +86,5 @@ export default ({ user, linkSignup, children }) => (
     {children}
   </div>
 );
+
+export default UserInformation;
