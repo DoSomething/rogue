@@ -1,6 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { map } from 'lodash';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import Empty from '../Empty';
@@ -40,7 +41,9 @@ const USER_OVERVIEW_QUERY = gql`
   ${UserInformationFragment}
 `;
 
-const UserOverview = ({ id }) => {
+const UserOverview = () => {
+  const { id } = useParams();
+
   const { loading, error, data } = useQuery(USER_OVERVIEW_QUERY, {
     variables: { id },
   });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router } from '@reach/router';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import { env } from '../helpers';
@@ -12,7 +12,9 @@ const Application = () => {
   return (
     <ApolloProvider client={graphql(endpoint)}>
       <Router>
-        <UserOverview path="users/:id" />
+        <Switch>
+          <Route path="/users/:id" component={UserOverview} />
+        </Switch>
       </Router>
     </ApolloProvider>
   );
