@@ -13,7 +13,9 @@ const Application = () => {
     <ApolloProvider client={graphql(endpoint)}>
       <Router>
         <Switch>
-          <Route path="/users/:id" component={UserOverview} />
+          <Route path="/users/:id">
+            <UserOverview />
+          </Route>
         </Switch>
       </Router>
     </ApolloProvider>
