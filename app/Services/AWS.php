@@ -13,6 +13,12 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 class AWS
 {
     /**
+     * The base path where images are stored.
+     * @param string
+     */
+    protected $base = 'uploads/reportback-items/';
+
+    /**
      * Store a reportback item (image) in S3.
      *
      * @param UploadedFile $file
@@ -32,7 +38,7 @@ class AWS
 
         // Add a unique timestamp (e.g. uploads/folder/filename-1456498664.jpeg) to
         // uploads to prevent AWS cache giving the user an old upload.
-        $path = 'uploads/reportback-items' . '/' . $filename . '-' . md5($data) . '-' . time() . '.' . $extension;
+        $path = $this->base . $filename . '-' . md5($data) . '-' . time() . '.' . $extension;
 
         // Push file to S3.
         $success = Storage::put($path, $data);
@@ -67,8 +73,7 @@ class AWS
     public function deleteImage($path)
     {
         // We need to use the relative url for the request to s3.
-        $path = basename($path);
-        $path = 'uploads/reportback-items' . '/' . $path;
+        $path = $this->base . basename($path);
 
         // The delete() method always returns true because it doesn't seem to do anything with
         // any exception that is thrown while trying to delete and just returns true.
