@@ -145,11 +145,6 @@ class PostRepository
 
         $post->save();
 
-        // Edit the image if there is one
-        if (isset($data['file'])) {
-            $this->crop($data, $post->id);
-        }
-
         // Update the signup's total quantity and why_participated if sent.
         if (isset($data['why_participated'])) {
             $signup->why_participated = $data['why_participated'];
@@ -274,23 +269,5 @@ class PostRepository
 
         // Return the post object including the tags that are related to it.
         return Post::with('signup', 'tags')->findOrFail($post->id);
-    }
-
-    /**
-     * Crop an image
-     *
-     * @TODO - remove when glide is permanent.
-     *
-     * @param  int $signupId
-     * @return url|null
-     */
-    protected function crop($data, $postId)
-    {
-        $editedImage = Image::make($data['file']);
-
-        // use default crop (400x400)
-        $editedImage = $editedImage->fit(400, 400)->encode('jpg', 75);
-
-        return $this->aws->storeImageData((string) $editedImage, 'edited_' . $postId);
     }
 }
