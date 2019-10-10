@@ -5,6 +5,7 @@ namespace Rogue\Services;
 use Log;
 use finfo;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
@@ -14,20 +15,14 @@ class AWS
     /**
      * Store a reportback item (image) in S3.
      *
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|string $file
-     *  File object, or a base-64 encoded data URI
+     * @param UploadedFile $file
      * @param string $filename - Filename to write image to
      *
      * @return string - URL of stored image
      */
-    public function storeImage($file, $filename)
+    public function storeImage(UploadedFile $file, string $filename)
     {
-        if (is_string($file)) {
-            $data = $this->base64StringToDataString($file);
-        } else {
-            $data = file_get_contents($file->getPathname());
-        }
-
+        $data = file_get_contents($file->getPathname());
         $extension = $this->guessExtension($data);
 
         // Make sure we're only uploading valid image types
@@ -38,34 +33,6 @@ class AWS
         // Add a unique timestamp (e.g. uploads/folder/filename-1456498664.jpeg) to
         // uploads to prevent AWS cache giving the user an old upload.
         $path = 'uploads/reportback-items' . '/' . $filename . '-' . md5($data) . '-' . time() . '.' . $extension;
-
-        // Push file to S3.
-        $success = Storage::put($path, $data);
-
-        if (! $success) {
-            throw new HttpException(500, 'Unable to save image to S3.');
-        }
-
-        return Storage::url($path);
-    }
-
-    /**
-     * Store a reportback item (image) in S3.
-     *
-     * @param string $data - File data
-     *
-     * @return string - URL of stored image
-     */
-    public function storeImageData($data, $filename)
-    {
-        $extension = $this->guessExtension($data);
-
-        // Make sure we're only uploading valid image types
-        if (! in_array($extension, ['jpeg', 'png', 'gif'])) {
-            throw new UnprocessableEntityHttpException('Invalid file type. Upload a JPEG, PNG or GIF.');
-        }
-
-        $path = 'uploads/reportback-items/' . $filename . '.' . $extension;
 
         // Push file to S3.
         $success = Storage::put($path, $data);
@@ -89,19 +56,6 @@ class AWS
         $guesser = ExtensionGuesser::getInstance();
 
         return $guesser->guess($mimeType);
-    }
-
-    /**
-     * Decode Base-64 encoded string into a raw data buffer string.
-     * @param $string - Base-64 encoded string
-     * @return string - raw data
-     */
-    protected function base64StringToDataString($string)
-    {
-        // Trim the mime-type (e.g. `data:image/png;base64,`) from the string
-        $file = last(explode(',', $string));
-
-        return base64_decode($file);
     }
 
     /**
