@@ -7,7 +7,6 @@ use Rogue\Services\AWS;
 use Rogue\Models\Action;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
-use Rogue\Services\Registrar;
 use Intervention\Image\Facades\Image;
 use Illuminate\Validation\ValidationException;
 
@@ -21,29 +20,13 @@ class PostRepository
     protected $aws;
 
     /**
-     * The user repository.
-     *
-     * @var \Rogue\Services\Registrar
-     */
-    protected $registrar;
-
-    /**
-     * Array of properties needed for cropping and rotating.
-     *
-     * @var array
-     */
-    protected $cropProperties = ['crop_x', 'crop_y', 'crop_width', 'crop_height', 'crop_rotate'];
-
-    /**
      * Create a PostRepository.
      *
      * @param AWS $aws
-     * @param Registrar $registrar
      */
-    public function __construct(AWS $aws, Registrar $registrar)
+    public function __construct(AWS $aws)
     {
         $this->aws = $aws;
-        $this->registrar = $registrar;
     }
 
     /**
