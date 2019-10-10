@@ -4,10 +4,10 @@ namespace Rogue\Console\Commands;
 
 use League\Csv\Reader;
 use Rogue\Models\Post;
-use Rogue\Services\AWS;
 use Rogue\Models\Signup;
 use Rogue\Services\Fastly;
 use Illuminate\Console\Command;
+use Rogue\Services\ImageStorage;
 
 class DeleteUsersCommand extends Command
 {
@@ -28,12 +28,12 @@ class DeleteUsersCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param AWS $aws
+     * @param ImageStorage $storage
      * @param Fastly $fastly
      *
      * @return mixed
      */
-    public function handle(AWS $aws, Fastly $fastly)
+    public function handle(ImageStorage $storage, Fastly $fastly)
     {
         $input = file_get_contents($this->argument('input'));
         $csv = Reader::createFromString($input);
@@ -58,7 +58,7 @@ class DeleteUsersCommand extends Command
             // Find the user's posts, anonymize & delete images, and soft-delete:
             $posts = Post::withTrashed()->where('northstar_id', $id);
             foreach ($posts->cursor() as $post) {
-                $aws->deleteImage($post->url);
+                $storage->deleteImage($post->url);
                 $fastly->purgeKey('post-'.$post->id);
 
                 $post->update([

@@ -3,30 +3,30 @@
 namespace Rogue\Repositories;
 
 use Rogue\Models\Post;
-use Rogue\Services\AWS;
 use Rogue\Models\Action;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
+use Rogue\Services\ImageStorage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Validation\ValidationException;
 
 class PostRepository
 {
     /**
-     * AWS service class instance.
+     * Image storage service (either disk or S3).
      *
-     * @var \Rogue\Services\AWS
+     * @var \Rogue\Services\ImageStorage
      */
-    protected $aws;
+    protected $storage;
 
     /**
      * Create a PostRepository.
      *
-     * @param AWS $aws
+     * @param ImageStorage $storage
      */
-    public function __construct(AWS $aws)
+    public function __construct(ImageStorage $storage)
     {
-        $this->aws = $aws;
+        $this->storage = $storage;
     }
 
     /**
@@ -52,7 +52,7 @@ class PostRepository
     public function create(array $data, $signupId, $authenticatedUserRole = null)
     {
         if (isset($data['file'])) {
-            $fileUrl = $this->aws->storeImage($data['file'], $signupId);
+            $fileUrl = $this->storage->put($signupId, $data['file']);
         } else {
             $fileUrl = null;
         }
@@ -169,8 +169,7 @@ class PostRepository
         $post = Post::findOrFail($postId);
 
         if ($post->url) {
-            // Delete the image file from AWS.
-            $this->aws->deleteImage($post->url);
+            $this->storage->delete($post->url);
 
             // Set the url of the post to null.
             $post->url = null;

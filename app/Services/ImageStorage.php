@@ -4,11 +4,11 @@ namespace Rogue\Services;
 
 use Log;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
-class AWS
+class ImageStorage
 {
     /**
      * The base path where images are stored.
@@ -19,12 +19,12 @@ class AWS
     /**
      * Store a reportback item (image) in S3.
      *
-     * @param UploadedFile $file
+     * @param File $file
      * @param string $filename - Filename to write image to
      *
      * @return string - URL of stored image
      */
-    public function storeImage(UploadedFile $file, string $filename)
+    public function put(string $filename, File $file)
     {
         $data = file_get_contents($file->getPathname());
         $extension = $file->guessExtension();
@@ -54,7 +54,7 @@ class AWS
      * @param string $path
      * @return bool
      */
-    public function deleteImage($path)
+    public function delete($path)
     {
         // We need to use the relative url for the request to s3.
         $path = $this->base . basename($path);
