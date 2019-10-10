@@ -2,7 +2,6 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
-use Carbon\Carbon;
 use Rogue\Models\Post;
 use Rogue\Services\AWS;
 use Rogue\Services\Fastly;
@@ -47,11 +46,6 @@ class ImagesController extends Controller
      */
     public function show(Post $post, Request $request)
     {
-        if (! config('features.glide')) {
-            abort(501, 'Glide image URLs are not enabled in this environment.');
-        }
-
-        // Create the Glide server.
         $server = ServerFactory::create([
             'response' => new LaravelResponseFactory($request),
             'cache' => new Flysystem(new MemoryAdapter()),
@@ -107,23 +101,15 @@ class ImagesController extends Controller
         $originalImage = $this->aws->storeImageData($originalImage->__toString(), $originalFilename);
         $editedImage = $this->aws->storeImageData((string) $editedImage, 'edited_' . $post->id);
 
-        if (config('features.glide')) {
-            // Purge image from cache if Fastly is configured.
-            if (! is_null(config('services.fastly.url')) && ! is_null(config('services.fastly.key')) && ! is_null(config('services.fastly.service_id'))) {
-                $this->fastly->purgeKey('post-'.$post->id);
-            }
-
-            return response()->json([
-                'url' => $editedImage,
-                'original_image_url' => $originalImage,
-            ]);
-        // @TODO - If glide is off, we still need to return a cache-busting timestamp on the media URLs since they will be cached without a cache-key and are not purged via the API. Remove this when we switch to glide fulltime.
-        } else {
-            return response()->json([
-                'url' => $editedImage . '?time='. Carbon::now()->timestamp,
-                'original_image_url' => $editedImage . '?time='. Carbon::now()->timestamp,
-            ]);
+        // Purge image from cache if Fastly is configured.
+        if (! is_null(config('services.fastly.url')) && ! is_null(config('services.fastly.key')) && ! is_null(config('services.fastly.service_id'))) {
+            $this->fastly->purgeKey('post-'.$post->id);
         }
+
+        return response()->json([
+            'url' => $editedImage,
+            'original_image_url' => $originalImage,
+        ]);
     }
 
     /**
