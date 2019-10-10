@@ -3,11 +3,9 @@
 namespace Rogue\Services;
 
 use Log;
-use finfo;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class AWS
@@ -29,7 +27,7 @@ class AWS
     public function storeImage(UploadedFile $file, string $filename)
     {
         $data = file_get_contents($file->getPathname());
-        $extension = $this->guessExtension($data);
+        $extension = $file->guessExtension();
 
         // Make sure we're only uploading valid image types
         if (! in_array($extension, ['jpeg', 'png', 'gif'])) {
@@ -48,20 +46,6 @@ class AWS
         }
 
         return Storage::url($path);
-    }
-
-    /**
-     * Guess the extension from a data buffer string.
-     * @param string $data - Data buffer string
-     * @return string - file extension
-     */
-    protected function guessExtension($data)
-    {
-        $f = new finfo();
-        $mimeType = $f->buffer($data, FILEINFO_MIME_TYPE);
-        $guesser = ExtensionGuesser::getInstance();
-
-        return $guesser->guess($mimeType);
     }
 
     /**
