@@ -171,7 +171,7 @@ class PostsController extends ApiController
      */
     public function destroy(Post $post)
     {
-        $this->posts->destroy($post->id);
+        $this->posts->destroy($post);
 
         return $this->respond('Post deleted.', 200);
     }

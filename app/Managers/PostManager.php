@@ -126,16 +126,15 @@ class PostManager
      * @param int $postId
      * @return bool
      */
-    public function destroy($postId)
+    public function destroy(Post $post)
     {
-        $post = Post::findOrFail($postId);
-
         $trashed = $this->repository->destroy($post->id);
+
         $this->fastly->purge($post);
 
-        SendDeletedPostToQuasar::dispatch($postId);
+        SendDeletedPostToQuasar::dispatch($post->id);
 
-        info('post_deleted', ['id' => $postId]);
+        info('post_deleted', ['id' => $post->id]);
 
         return $trashed;
     }
