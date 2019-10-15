@@ -76,7 +76,7 @@ class ImagesController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, [
-            'rotate' => 'required|int'
+            'rotate' => 'required|int',
         ]);
 
         $post = Post::findOrFail($id);

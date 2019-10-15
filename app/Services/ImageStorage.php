@@ -23,8 +23,11 @@ class ImageStorage
      *
      * @param string $signupId
      * @param File $file
+     *
+     * @return string - URL of stored image
      */
-    public function put(string $signupId, File $file) {
+    public function put(string $signupId, File $file)
+    {
         $extension = $file->guessExtension();
         $contents = file_get_contents($file->getPathname());
 
@@ -45,8 +48,10 @@ class ImageStorage
      * @param string $filename
      * @param Image $image
      *
+     * @return string - URL of stored image
      */
-    public function edit(Post $post, Image $image) {
+    public function edit(Post $post, Image $image)
+    {
         if (! $post->url) {
             throw new InvalidArgumentException('Cannot edit an image that does not exist.');
         }
