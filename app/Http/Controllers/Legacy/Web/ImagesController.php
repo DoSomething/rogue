@@ -69,17 +69,15 @@ class ImagesController extends Controller
     /**
      * Edits and overwrites an image based on given request parameters.
      *
-     * @param  $id
+     * @param  Post $post
      * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Post $post, Request $request)
     {
         $this->validate($request, [
             'rotate' => 'required|int',
         ]);
-
-        $post = Post::findOrFail($id);
 
         $image = Storage::get($post->getMediaPath());
 
