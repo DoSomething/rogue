@@ -169,7 +169,7 @@ class PostRepository
         $post = Post::findOrFail($postId);
 
         if ($post->url) {
-            $this->storage->delete($post->url);
+            $this->storage->delete($post);
 
             // Set the url of the post to null.
             $post->url = null;

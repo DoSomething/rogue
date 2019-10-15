@@ -2,7 +2,6 @@
 
 namespace Rogue\Services;
 
-use Log;
 use Rogue\Models\Post;
 use Intervention\Image\Image;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +18,7 @@ class ImageStorage
     protected $base = 'uploads/reportback-items/';
 
     /**
-     * Write the given File to the storage backend.
+     * Save a new image for the given signup ID.
      *
      * @param string $signupId
      * @param File $file
@@ -43,7 +42,7 @@ class ImageStorage
     }
 
     /**
-     * Write the given Image to the storage backend.
+     * Replace the image on an existing post.
      *
      * @param string $filename
      * @param Image $image
@@ -82,27 +81,24 @@ class ImageStorage
     }
 
     /**
-     * Delete a file from s3
+     * Delete the image for the given post.
      *
      * @param string $path
      * @return bool
      */
-    public function delete($path)
+    public function delete(Post $post)
     {
-        // We need to use the relative url for the request to s3.
-        $path = $this->base . basename($path);
+        $path = $post->getMediaPath();
 
         // The delete() method always returns true because it doesn't seem to do anything with
         // any exception that is thrown while trying to delete and just returns true.
         // see: \Illuminate\Filesystem\FilesystemAdapter::delete().
         // So we check if the file exists first and then try to delete it.
-        if (Storage::exists($path)) {
-            $success = Storage::delete($path);
-        } else {
-            Log::info('Could not find file when trying to delete.', ['path' => $path]);
-            $success = false;
+        if (! Storage::exists($path)) {
+            info('Could not find file when trying to delete.', ['path' => $path]);
+            return false;
         }
 
-        return $success;
+        return Storage::delete($path);
     }
 }
