@@ -3,6 +3,8 @@
 namespace Rogue\Services;
 
 use Log;
+use Rogue\Models\Post;
+use Intervention\Image\Image;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -17,32 +19,58 @@ class ImageStorage
     protected $base = 'uploads/reportback-items/';
 
     /**
-     * Store a reportback item (image) in S3.
+     * Write the given File to the storage backend.
      *
+     * @param string $signupId
      * @param File $file
-     * @param string $filename - Filename to write image to
-     *
-     * @return string - URL of stored image
      */
-    public function put(string $filename, File $file)
-    {
-        $data = file_get_contents($file->getPathname());
+    public function put(string $signupId, File $file) {
         $extension = $file->guessExtension();
+        $contents = file_get_contents($file->getPathname());
 
         // Make sure we're only uploading valid image types
         if (! in_array($extension, ['jpeg', 'png', 'gif'])) {
             throw new UnprocessableEntityHttpException('Invalid file type. Upload a JPEG, PNG or GIF.');
         }
 
-        // Add a unique timestamp (e.g. uploads/folder/filename-1456498664.jpeg) to
-        // uploads to prevent AWS cache giving the user an old upload.
-        $path = $this->base . $filename . '-' . md5($data) . '-' . time() . '.' . $extension;
+        // Create a unique filename for this upload (since we don't know post ID yet).
+        $path = $this->base . $signupId . '-' . md5($contents) . '-' . time() . '.' . $extension;
 
-        // Push file to S3.
-        $success = Storage::put($path, $data);
+        return $this->write($path, $contents);
+    }
+
+    /**
+     * Write the given Image to the storage backend.
+     *
+     * @param string $filename
+     * @param Image $image
+     *
+     */
+    public function edit(Post $post, Image $image) {
+        if (! $post->url) {
+            throw new InvalidArgumentException('Cannot edit an image that does not exist.');
+        }
+
+        $path = $post->getMediaPath();
+        $contents = (string) $image->encode();
+
+        return $this->write($path, $contents);
+    }
+
+    /**
+     * Write the image contents to the storage backend.
+     *
+     * @param string $extension
+     * @param string $contents
+     *
+     * @return string - URL of stored image
+     */
+    protected function write(string $path, string $contents)
+    {
+        $success = Storage::put($path, $contents);
 
         if (! $success) {
-            throw new HttpException(500, 'Unable to save image to S3.');
+            throw new HttpException(500, 'Unable to save image.');
         }
 
         return Storage::url($path);

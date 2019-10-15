@@ -51,12 +51,6 @@ class PostRepository
      */
     public function create(array $data, $signupId, $authenticatedUserRole = null)
     {
-        if (isset($data['file'])) {
-            $fileUrl = $this->storage->put($signupId, $data['file']);
-        } else {
-            $fileUrl = null;
-        }
-
         $signup = Signup::find($signupId);
 
         // Get the action_id either from the payload or the DB.
@@ -81,6 +75,12 @@ class PostRepository
             }
 
             $actionId = $action->id;
+        }
+
+        if (isset($data['file'])) {
+            $fileUrl = $this->storage->put($signup->id, $data['file']);
+        } else {
+            $fileUrl = null;
         }
 
         // Create a post.
