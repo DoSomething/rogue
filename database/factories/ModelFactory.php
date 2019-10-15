@@ -4,13 +4,13 @@ use Faker\Generator;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Types\Cause;
-use Rogue\Services\AWS;
 use Rogue\Models\Action;
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
 use Rogue\Types\ActionType;
 use Rogue\Types\TimeCommitment;
+use Rogue\Services\ImageStorage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -28,7 +28,7 @@ $factory->define(Post::class, function (Generator $faker) {
 
     $uploadPath = $faker->file(storage_path('fixtures'));
     $upload = new UploadedFile($uploadPath, basename($uploadPath), 'image/jpeg');
-    $url = app(AWS::class)->storeImage($upload, $faker->unique()->randomNumber(5));
+    $url = app(ImageStorage::class)->put($faker->unique()->randomNumber(5), $upload);
 
     return [
         'campaign_id' => function () {

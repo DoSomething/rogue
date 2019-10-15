@@ -3,47 +3,30 @@
 namespace Rogue\Repositories;
 
 use Rogue\Models\Post;
-use Rogue\Services\AWS;
 use Rogue\Models\Action;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
-use Rogue\Services\Registrar;
+use Rogue\Services\ImageStorage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Validation\ValidationException;
 
 class PostRepository
 {
     /**
-     * AWS service class instance.
+     * Image storage service (either disk or S3).
      *
-     * @var \Rogue\Services\AWS
+     * @var \Rogue\Services\ImageStorage
      */
-    protected $aws;
-
-    /**
-     * The user repository.
-     *
-     * @var \Rogue\Services\Registrar
-     */
-    protected $registrar;
-
-    /**
-     * Array of properties needed for cropping and rotating.
-     *
-     * @var array
-     */
-    protected $cropProperties = ['crop_x', 'crop_y', 'crop_width', 'crop_height', 'crop_rotate'];
+    protected $storage;
 
     /**
      * Create a PostRepository.
      *
-     * @param AWS $aws
-     * @param Registrar $registrar
+     * @param ImageStorage $storage
      */
-    public function __construct(AWS $aws, Registrar $registrar)
+    public function __construct(ImageStorage $storage)
     {
-        $this->aws = $aws;
-        $this->registrar = $registrar;
+        $this->storage = $storage;
     }
 
     /**
@@ -68,15 +51,6 @@ class PostRepository
      */
     public function create(array $data, $signupId, $authenticatedUserRole = null)
     {
-        if (isset($data['file'])) {
-            // Auto-orient the photo by default based on exif data.
-            $image = Image::make($data['file']);
-
-            $fileUrl = $this->aws->storeImage((string) $image->encode('data-url'), $signupId);
-        } else {
-            $fileUrl = null;
-        }
-
         $signup = Signup::find($signupId);
 
         // Get the action_id either from the payload or the DB.
@@ -101,6 +75,12 @@ class PostRepository
             }
 
             $actionId = $action->id;
+        }
+
+        if (isset($data['file'])) {
+            $fileUrl = $this->storage->put($signup->id, $data['file']);
+        } else {
+            $fileUrl = null;
         }
 
         // Create a post.
@@ -144,11 +124,6 @@ class PostRepository
         }
 
         $post->save();
-
-        // Edit the image if there is one
-        if (isset($data['file'])) {
-            $this->crop($data, $post->id);
-        }
 
         // Update the signup's total quantity and why_participated if sent.
         if (isset($data['why_participated'])) {
@@ -194,8 +169,7 @@ class PostRepository
         $post = Post::findOrFail($postId);
 
         if ($post->url) {
-            // Delete the image file from AWS.
-            $this->aws->deleteImage($post->url);
+            $this->storage->delete($post);
 
             // Set the url of the post to null.
             $post->url = null;
@@ -274,23 +248,5 @@ class PostRepository
 
         // Return the post object including the tags that are related to it.
         return Post::with('signup', 'tags')->findOrFail($post->id);
-    }
-
-    /**
-     * Crop an image
-     *
-     * @TODO - remove when glide is permanent.
-     *
-     * @param  int $signupId
-     * @return url|null
-     */
-    protected function crop($data, $postId)
-    {
-        $editedImage = Image::make($data['file']);
-
-        // use default crop (400x400)
-        $editedImage = $editedImage->fit(400, 400)->encode('jpg', 75);
-
-        return $this->aws->storeImageData((string) $editedImage, 'edited_' . $postId);
     }
 }

@@ -2,12 +2,12 @@
 
 namespace Rogue\Http\Controllers\Legacy\Web;
 
-use Carbon\Carbon;
+use Storage;
 use Rogue\Models\Post;
-use Rogue\Services\AWS;
 use Rogue\Services\Fastly;
 use Illuminate\Http\Request;
 use League\Glide\ServerFactory;
+use Rogue\Services\ImageStorage;
 use Intervention\Image\Facades\Image;
 use Rogue\Http\Controllers\Controller;
 use League\Flysystem\Memory\MemoryAdapter;
@@ -29,13 +29,13 @@ class ImagesController extends Controller
      *
      * @param Filesystem $filesystem
      */
-    public function __construct(Filesystem $filesystem, AWS $aws, Fastly $fastly)
+    public function __construct(Filesystem $filesystem, ImageStorage $storage, Fastly $fastly)
     {
         $this->filesystem = $filesystem;
-        $this->aws = $aws;
+        $this->storage = $storage;
         $this->fastly = $fastly;
 
-        $this->middleware('throttle:30');
+        $this->middleware('throttle:60');
     }
 
     /**
@@ -47,11 +47,6 @@ class ImagesController extends Controller
      */
     public function show(Post $post, Request $request)
     {
-        if (! config('features.glide')) {
-            abort(501, 'Glide image URLs are not enabled in this environment.');
-        }
-
-        // Create the Glide server.
         $server = ServerFactory::create([
             'response' => new LaravelResponseFactory($request),
             'cache' => new Flysystem(new MemoryAdapter()),
@@ -74,75 +69,33 @@ class ImagesController extends Controller
     /**
      * Edits and overwrites an image based on given request parameters.
      *
-     * @TODO - Currently rotates and overwrites both the original image and
-     * processed, edited image. We will not need to work with the edited image
-     * when Glide processing is turned on, so we should remove this logic when
-     * that is live on prod.
-     *
      * @param  $id
      * @param  Request $request
      * @return \Illuminate\Http\Response
      */
     public function update($id, Request $request)
     {
+        $this->validate($request, [
+            'rotate' => 'required|int',
+        ]);
+
         $post = Post::findOrFail($id);
 
-        // Get the filename of the original image.
-        $originalImage = $post->url;
-        $originalFilename = $this->getFilenameFromUrl($originalImage);
+        $image = Storage::get($post->getMediaPath());
 
-        // Get the url of the processed, edited image.
-        $editedImage = $post->getMediaUrl();
+        $angle = (int) -$request->input('rotate');
+        $rotatedImage = Image::make($image)->rotate($angle);
 
-        // Only supports rotation, right now.
-        if ($request->input('rotate')) {
-            $value = (int) -$request->input('rotate');
+        $this->storage->edit($post, $rotatedImage);
 
-            // Save the original image with it's original format.
-            $originalImage = Image::make($originalImage)->rotate($value)->stream();
-            $editedImage = Image::make($editedImage)->rotate($value)->encode('jpg', 75);
+        // Purge image from cache if Fastly is configured.
+        if (! is_null(config('services.fastly.url')) && ! is_null(config('services.fastly.key')) && ! is_null(config('services.fastly.service_id'))) {
+            $this->fastly->purgeKey('post-'.$post->id);
         }
 
-        // Store images in s3.
-        $originalImage = $this->aws->storeImageData($originalImage->__toString(), $originalFilename);
-        $editedImage = $this->aws->storeImageData((string) $editedImage, 'edited_' . $post->id);
-
-        if (config('features.glide')) {
-            // Purge image from cache if Fastly is configured.
-            if (! is_null(config('services.fastly.url')) && ! is_null(config('services.fastly.key')) && ! is_null(config('services.fastly.service_id'))) {
-                $this->fastly->purgeKey('post-'.$post->id);
-            }
-
-            return response()->json([
-                'url' => $editedImage,
-                'original_image_url' => $originalImage,
-            ]);
-        // @TODO - If glide is off, we still need to return a cache-busting timestamp on the media URLs since they will be cached without a cache-key and are not purged via the API. Remove this when we switch to glide fulltime.
-        } else {
-            return response()->json([
-                'url' => $editedImage . '?time='. Carbon::now()->timestamp,
-                'original_image_url' => $editedImage . '?time='. Carbon::now()->timestamp,
-            ]);
-        }
-    }
-
-    /**
-     * Returns an image file name, without the extension, based on a given url
-     *
-     * @param  string $url
-     * @return string $filename
-     */
-    private function getFilenameFromUrl($url)
-    {
-        $path = explode('/', $url);
-
-        if ($path) {
-            $filename = end($path);
-            $filename = pathinfo($filename, PATHINFO_FILENAME);
-
-            return $filename;
-        }
-
-        return null;
+        return response()->json([
+            'url' => $post->getMediaUrl(),
+            'original_image_url' => $post->url,
+        ]);
     }
 }

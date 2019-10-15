@@ -167,15 +167,7 @@ class Post extends Model
             return null;
         }
 
-        // If Glide is enabled, provide the default image URL.
-        if (config('features.glide')) {
-            return url('images/' . $this->id);
-        }
-
-        // Ask the storage driver for the path to the image for this post.
-        $path = Storage::url('uploads/reportback-items/edited_' . $this->id . '.jpeg');
-
-        return url($path);
+        return url('images/' . $this->id);
     }
 
     /**
