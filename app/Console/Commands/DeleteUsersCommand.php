@@ -58,7 +58,7 @@ class DeleteUsersCommand extends Command
             // Find the user's posts, anonymize & delete images, and soft-delete:
             $posts = Post::withTrashed()->where('northstar_id', $id);
             foreach ($posts->cursor() as $post) {
-                $storage->deleteImage($post->url);
+                $storage->delete($post->url);
                 $fastly->purgeKey('post-'.$post->id);
 
                 $post->update([
