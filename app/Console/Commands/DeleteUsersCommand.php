@@ -59,7 +59,7 @@ class DeleteUsersCommand extends Command
             $posts = Post::withTrashed()->where('northstar_id', $id);
             foreach ($posts->cursor() as $post) {
                 $storage->delete($post);
-                $fastly->purgeKey('post-'.$post->id);
+                $fastly->purge($post);
 
                 $post->update([
                     'text' => null,
