@@ -96,6 +96,7 @@ class ImageStorage
         // So we check if the file exists first and then try to delete it.
         if (! Storage::exists($path)) {
             info('Could not find file when trying to delete.', ['path' => $path]);
+
             return false;
         }
 
