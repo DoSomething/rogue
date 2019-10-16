@@ -2,25 +2,37 @@
 
 namespace Rogue\Services;
 
+use Rogue\Models\Post;
 use DoSomething\Gateway\Common\RestApiClient;
 
 class Fastly extends RestApiClient
 {
     /**
+     * The Fastly service for this app.
+     */
+    protected $service;
+
+    /**
      * Create a new Fastly API client.
      */
     public function __construct()
     {
-        $url = config('services.fastly.url');
+        $this->service = config('services.fastly.service_id');
 
-        $options = [
+        parent::__construct(config('services.fastly.url'), [
             'headers' => [
                 'Fastly-Key' => config('services.fastly.key'),
                 'Accept'     => 'application/json',
             ],
-        ];
+        ]);
+    }
 
-        parent::__construct($url, $options);
+    /**
+     * Purge any cached content for the given post.
+     */
+    public function purge(Post $post) : void
+    {
+        $this->purgeKey('post-' . $post->id);
     }
 
     /**
@@ -28,26 +40,13 @@ class Fastly extends RestApiClient
      *
      * @param $cacheKey String
      */
-    public function purgeKey($cacheKey)
+    protected function purgeKey($cacheKey) : void
     {
-        $fastlyConfigured = config('features.glide') &&
-            ! is_null(config('services.fastly.url')) &&
-            ! is_null(config('services.fastly.key')) &&
-            ! is_null(config('services.fastly.service_id')) &&
-            isset($cacheKey);
-
-        if (! $fastlyConfigured) {
-            info('image_cache_purge_failed', ['response' => 'Fastly not configured correctly on this environment.']);
-
-            return null;
+        if (! $this->service) {
+            return;
         }
 
-        $service = config('services.fastly.service_id');
-
-        $purgeResponse = $this->post('service/'.$service.'/purge/'.$cacheKey);
-
+        $purgeResponse = $this->post('service/'.$this->service.'/purge/'.$cacheKey);
         info('image_cache_purge_successful', ['response' => $purgeResponse]);
-
-        return $purgeResponse;
     }
 }

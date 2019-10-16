@@ -41,17 +41,15 @@ class TagsController extends ApiController
     /**
      * Updates a post's tags when added or deleted.
      *
-     * @param  \Illuminate\Http\Request $request
      * @param  Post $post
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Post $post)
+    public function store(Post $post, Request $request)
     {
         $request->validate([
             'tag_name' => 'required|string',
         ]);
-
-        $post = $this->post->find($post->id);
 
         // If the post already has the tag, remove it. Otherwise, add the tag to the post.
         if ($post->tagNames()->contains($request->tag_name)) {

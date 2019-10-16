@@ -24,7 +24,7 @@ class ReviewsController extends ApiController
     /**
      * Create a controller instance.
      *
-     * @param  PostContract $posts
+     * @param  PostManager $post
      * @return void
      */
     public function __construct(PostManager $post)

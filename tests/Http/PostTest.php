@@ -1339,8 +1339,7 @@ class PostTest extends TestCase
         $this->mockTime('8/3/2017 14:00:00');
 
         // Mock the Fastly API calls.
-        $this->mock(Fastly::class)
-            ->shouldReceive('purgeKey');
+        $this->mock(Fastly::class)->shouldReceive('purge');
 
         $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id);
 

@@ -69,17 +69,15 @@ class ImagesController extends Controller
     /**
      * Edits and overwrites an image based on given request parameters.
      *
-     * @param  $id
+     * @param  Post $post
      * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Post $post, Request $request)
     {
         $this->validate($request, [
             'rotate' => 'required|int',
         ]);
-
-        $post = Post::findOrFail($id);
 
         $image = Storage::get($post->getMediaPath());
 
@@ -87,11 +85,7 @@ class ImagesController extends Controller
         $rotatedImage = Image::make($image)->rotate($angle);
 
         $this->storage->edit($post, $rotatedImage);
-
-        // Purge image from cache if Fastly is configured.
-        if (! is_null(config('services.fastly.url')) && ! is_null(config('services.fastly.key')) && ! is_null(config('services.fastly.service_id'))) {
-            $this->fastly->purgeKey('post-'.$post->id);
-        }
+        $this->fastly->purge($post);
 
         return response()->json([
             'url' => $post->getMediaUrl(),

@@ -13,14 +13,14 @@ use Rogue\Jobs\SendReviewedPostToCustomerIo;
 class PostManager
 {
     /**
-     * The Fastly service instance
+     * The Fastly API client.
      *
      * @var Rogue\Services\Fastly
      */
     protected $fastly;
 
     /*
-     * PostRepository Instance
+     * The post repository.
      *
      * @var Rogue\Repositories\PostRepository;
      */
@@ -126,20 +126,15 @@ class PostManager
      * @param int $postId
      * @return bool
      */
-    public function destroy($postId)
+    public function destroy(Post $post)
     {
-        info('post_deleted', [
-            'id' => $postId,
-        ]);
+        $trashed = $this->repository->destroy($post->id);
 
-        $trashed = $this->repository->destroy($postId);
+        $this->fastly->purge($post);
 
-        if ($trashed) {
-            $this->fastly->purgeKey('post-'.$postId);
-        }
+        SendDeletedPostToQuasar::dispatch($post->id);
 
-        // Dispatch job to send post to Quasar
-        SendDeletedPostToQuasar::dispatch($postId);
+        info('post_deleted', ['id' => $post->id]);
 
         return $trashed;
     }
