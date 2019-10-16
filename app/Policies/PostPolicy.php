@@ -4,20 +4,10 @@ namespace Rogue\Policies;
 
 use Rogue\Models\Post;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Rogue\Http\Controllers\Traits\AuthorizesWithToken;
 
 class PostPolicy
 {
-    use AuthorizesWithToken, HandlesAuthorization;
-
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
+    use HandlesAuthorization;
 
     /**
      * Determine if the full post should be displayed.
@@ -28,7 +18,7 @@ class PostPolicy
      */
     public function viewAll($user, Post $post)
     {
-        return $this->allowOwnerStaffOrMachine($user, $post);
+        return is_staff_user() || is_owner($post);
     }
 
     /**
@@ -40,10 +30,8 @@ class PostPolicy
      */
     public function show($user, Post $post)
     {
-        if ($post->status !== 'accepted' && $user !== null) {
-            return is_staff_user() || $user->northstar_id === $post->northstar_id;
-        } elseif ($user === null && $post->status !== 'accepted') {
-            return false;
+        if ($post->status !== 'accepted') {
+            return is_staff_user() || is_owner($post);
         }
 
         return true;
@@ -58,7 +46,7 @@ class PostPolicy
      */
     public function update($user, Post $post)
     {
-        return $this->allowOwnerStaffOrMachine($user, $post);
+        return is_staff_user() || is_owner($post);
     }
 
     /**
@@ -70,11 +58,6 @@ class PostPolicy
      */
     public function review($user, Post $post)
     {
-        // If this is a machine token, show full model:
-        if (token()->exists() && ! token()->id()) {
-            return true;
-        }
-
         return is_staff_user();
     }
 }
