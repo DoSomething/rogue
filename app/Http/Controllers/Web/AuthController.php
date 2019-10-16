@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Auth;
+namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Http\Controllers\Controller;
 use Psr\Http\Message\ResponseInterface;

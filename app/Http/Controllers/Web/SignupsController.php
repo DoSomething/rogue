@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Legacy\Web;
+namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
