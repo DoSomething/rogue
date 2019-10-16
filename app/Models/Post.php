@@ -181,7 +181,8 @@ class Post extends Model
      *
      * @return string
      */
-    public function getHashAttribute() {
+    public function getHashAttribute()
+    {
         return app(Hashids::class)->encode($this->id);
     }
 
