@@ -2,6 +2,7 @@
 
 namespace Rogue\Providers;
 
+use Hashids\Hashids;
 use Rogue\Auth\CustomGate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
             return new CustomGate($app, function () use ($app) {
                 return call_user_func($app['auth']->userResolver());
             });
+        });
+
+        $this->app->singleton(Hashids::class, function ($app) {
+            return new Hashids(config('app.key'), 10);
         });
 
         // Register global view composer.

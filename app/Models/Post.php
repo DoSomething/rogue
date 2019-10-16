@@ -2,6 +2,7 @@
 
 namespace Rogue\Models;
 
+use Hashids\Hashids;
 use Rogue\Services\GraphQL;
 use Rogue\Events\PostTagged;
 use Illuminate\Support\Facades\Cache;
@@ -62,6 +63,23 @@ class Post extends Model
      * @var array
      */
     public $goodTags = ['good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote', 'good-for-brand'];
+
+    /**
+     * Get a post by its unique hash.
+     *
+     * @param string $hash
+     * @return Post
+     */
+    public static function fromHash($hash)
+    {
+        $result = app(Hashids::class)->decode($hash);
+
+        if (empty($result)) {
+            return null;
+        }
+
+        return self::findOrFail($result[0]);
+    }
 
     /**
      * Each post has events.
@@ -159,6 +177,15 @@ class Post extends Model
     }
 
     /**
+     * Create a hard-to-guess "hash" ID.
+     *
+     * @return string
+     */
+    public function getHashAttribute() {
+        return app(Hashids::class)->encode($this->id);
+    }
+
+    /**
      * Get the URL for the media for this post.
      */
     public function getMediaUrl()
@@ -167,7 +194,7 @@ class Post extends Model
             return null;
         }
 
-        return url('images/' . $this->id);
+        return url('images/' . $this->hash);
     }
 
     /**
