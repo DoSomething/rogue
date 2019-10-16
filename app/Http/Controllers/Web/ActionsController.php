@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Legacy\Web;
+namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Models\Action;
 use Rogue\Types\PostType;

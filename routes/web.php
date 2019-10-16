@@ -14,32 +14,32 @@ $router->view('/', 'pages.home')->middleware('guest')->name('login');
 $router->view('faq', 'pages.faq');
 
 // Authentication
-$router->get('login', 'Auth\AuthController@getLogin');
-$router->get('logout', 'Auth\AuthController@getLogout');
+$router->get('login', 'AuthController@getLogin');
+$router->get('logout', 'AuthController@getLogout');
 
 // Campaigns
-$router->get('campaigns', 'Legacy\Web\CampaignsController@index');
-$router->get('campaigns/{id}', 'Legacy\Web\CampaignsController@show')->name('campaigns.show');
+$router->get('campaigns', 'CampaignsController@index');
+$router->get('campaigns/{id}', 'CampaignsController@show')->name('campaigns.show');
 
 // Create, update, delete campaigns via Rogue.
 // @TODO: Merge into CampaignsController, above.
-$router->resource('campaign-ids', 'Legacy\Web\CampaignIdsController');
-$router->get('campaign-ids/{id}/actions/create', 'Legacy\Web\ActionsController@create');
+$router->resource('campaign-ids', 'CampaignIdsController');
+$router->get('campaign-ids/{id}/actions/create', 'ActionsController@create');
 
 // Actions
-$router->resource('actions', 'Legacy\Web\ActionsController');
+$router->resource('actions', 'ActionsController');
 
 // Inbox
-$router->get('campaigns/{id}/inbox', 'Legacy\Web\InboxController@show');
+$router->get('campaigns/{id}/inbox', 'InboxController@show');
 
 // Signups
-$router->get('signups/{id}', 'Legacy\Web\SignupsController@show')->name('signups.show');
+$router->get('signups/{id}', 'SignupsController@show')->name('signups.show');
 
 // Users
-$router->get('users', ['as' => 'users.index', 'uses' => 'Legacy\Web\UsersController@index']);
-$router->get('users/{id}', ['as' => 'users.show', 'uses' => 'Legacy\Web\UsersController@show']);
-$router->get('search', ['as' => 'users.search', 'uses' => 'Legacy\Web\UsersController@search']);
+$router->get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
+$router->get('users/{id}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
+$router->get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
 
 // Images
-$router->post('images/{postId}', 'Legacy\Web\ImagesController@update');
-$router->get('originals/{post}', 'Legacy\Web\OriginalsController@show');
+$router->post('images/{postId}', 'ImagesController@update');
+$router->get('originals/{post}', 'OriginalsController@show');
