@@ -171,6 +171,18 @@ class Post extends Model
     }
 
     /**
+     * Get the URL for the media for this post.
+     */
+    public function getOriginalUrl()
+    {
+        if ($this->url === null) {
+            return null;
+        }
+
+        return url('originals/' . $this->id);
+    }
+
+    /**
      * Return the filesystem path for this post.
      *
      * @return string|null

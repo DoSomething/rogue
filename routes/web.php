@@ -42,3 +42,4 @@ $router->get('search', ['as' => 'users.search', 'uses' => 'Legacy\Web\UsersContr
 
 // Images
 $router->post('images/{postId}', 'Legacy\Web\ImagesController@update');
+$router->get('originals/{post}', 'Legacy\Web\OriginalsController@show');

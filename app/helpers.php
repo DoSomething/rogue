@@ -93,17 +93,28 @@ function getNorthstarId($request)
 
 /**
  * Determines if the user is an admin or staff.
+ *
+ * @return bool
  */
-function is_staff_user()
+function is_staff_user() : bool
 {
-    $isStaffUser = token()->exists() && in_array(token()->role, ['admin', 'staff']);
-    $isStaffClient = token()->exists() && in_array('admin', token()->scopes());
-
-    if ($isStaffUser || $isStaffClient) {
+    // If this is a machine client, then it's de-facto an admin:
+    if (token()->exists() && ! token()->id()) {
         return true;
     }
 
-    return false;
+    // Otherwise, do we have a (web or OAuth) user? If so, are they a staff/admin?
+    return auth()->user() && in_array(auth()->user()->role, ['admin', 'staff']);
+}
+
+/**
+ * Determine if the user owns the given resource.
+ *
+ * @return bool
+ */
+function is_owner($resource) : bool
+{
+    return auth()->id() === $resource->northstar_id;
 }
 
 /**

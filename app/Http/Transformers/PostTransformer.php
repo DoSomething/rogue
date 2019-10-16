@@ -3,7 +3,6 @@
 namespace Rogue\Http\Transformers;
 
 use Gate;
-use Carbon\Carbon;
 use Rogue\Models\Post;
 use League\Fractal\TransformerAbstract;
 
@@ -38,12 +37,9 @@ class PostTransformer extends TransformerAbstract
             'action' => $post->getActionName(),
             'action_id' => $post->action_id,
             'campaign_id' => $post->campaign_id,
-            // Add cache-busting query string to urls to make sure we get the
-            // most recent version of the image.
-            // @NOTE - Remove if we get rid of rotation.
             'media' => [
                 'url' => $post->getMediaUrl(),
-                'original_image_url' => $post->url . '?time='. Carbon::now()->timestamp,
+                'original_image_url' => $post->getOriginalUrl(),
                 'text' => $post->text,
             ],
             'quantity' => $post->quantity,
