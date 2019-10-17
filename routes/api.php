@@ -10,7 +10,7 @@
  */
 
 // Assets
-$router->get('images/{post}', 'Web\ImagesController@show');
+$router->get('images/{hash}', 'Web\ImagesController@show');
 
 // v3 routes
 $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function () {

@@ -26,7 +26,8 @@
     "ext-newrelic": "*",
     "sokil/php-isocodes": "^3.0",
     "myclabs/php-enum": "^1.7",
-    "softonic/graphql-client": "^1.2"
+    "softonic/graphql-client": "^1.2",
+    "hashids/hashids": "^4.0"
   },
   "require-dev": {
     "filp/whoops": "~2.0",

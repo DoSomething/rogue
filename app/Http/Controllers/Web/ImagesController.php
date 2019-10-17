@@ -45,8 +45,10 @@ class ImagesController extends Controller
      * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post, Request $request)
+    public function show(string $hash, Request $request)
     {
+        $post = Post::fromHash($hash);
+
         $server = ServerFactory::create([
             'response' => new LaravelResponseFactory($request),
             'cache' => new Flysystem(new MemoryAdapter()),
