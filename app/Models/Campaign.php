@@ -4,6 +4,7 @@ namespace Rogue\Models;
 
 use Rogue\Types\Cause;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Campaign extends Model
@@ -56,6 +57,34 @@ class Campaign extends Model
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Scope a query to only include "open" campaigns.
+     */
+    public function scopeWhereOpen($query)
+    {
+        $today = now()->format('Y-m-d');
+
+        return $query->whereDate('start_date', '<=', $today)
+            ->where(function (Builder $query) use ($today) {
+                $query->whereNull('end_date')
+                    ->orWhereDate('end_date', '>', $today);
+            });
+    }
+
+    /**
+     * Scope a query to only include "closed" campaigns.
+     */
+    public function scopeWhereClosed($query)
+    {
+        $today = now()->format('Y-m-d');
+
+        return $query->whereDate('start_date', '>', $today)
+            ->orWhere(function (Builder $query) use ($today) {
+                $query->whereNotNull('end_date')
+                    ->whereDate('end_date', '<', $today);
+            });
     }
 
     /**

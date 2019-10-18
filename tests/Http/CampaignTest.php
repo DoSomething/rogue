@@ -63,6 +63,26 @@ class CampaignTest extends Testcase
     }
 
     /**
+     * Test that we can filter open or closed campaigns.
+     *
+     * GET /api/v3/campaigns
+     * @return void
+     */
+    public function testFilteredCampaignIndex()
+    {
+        factory(Campaign::class, 5)->create();
+        factory(Campaign::class, 'closed', 3)->create();
+
+        $response = $this->getJson('api/v3/campaigns?filter[is_open]=true');
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals(5, $decodedResponse['meta']['pagination']['count']);
+
+        $response = $this->getJson('api/v3/campaigns?filter[is_open]=false');
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals(3, $decodedResponse['meta']['pagination']['count']);
+    }
+
+    /**
      * Test that a GET request to /api/v3/campaigns/:campaign_id returns the intended campaign.
      *
      * GET /api/v3/campaigns/:campaign_id
