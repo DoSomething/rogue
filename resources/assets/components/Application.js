@@ -4,6 +4,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 
 import { env } from '../helpers';
 import graphql from '../graphql';
+import UserIndex from './UserIndex';
 import UserOverview from './UserOverview';
 
 const Application = () => {
@@ -13,6 +14,9 @@ const Application = () => {
     <ApolloProvider client={graphql(endpoint)}>
       <Router>
         <Switch>
+          <Route path="/users" exact>
+            <UserIndex />
+          </Route>
           <Route path="/users/:id">
             <UserOverview />
           </Route>

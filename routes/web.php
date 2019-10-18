@@ -35,13 +35,12 @@ $router->get('campaigns/{id}/inbox', 'InboxController@show');
 // Signups
 $router->get('signups/{id}', 'SignupsController@show')->name('signups.show');
 
-// Users
-Route::middleware(['auth', 'role:staff,admin'])->group(function() {
+// Client-side routes:
+Route::middleware(['auth', 'role:staff,admin'])->group(function () {
+    // Users
+    Route::view('users', 'app')->name('users.index');
     Route::view('users/{id}', 'app')->name('users.show');
 });
-
-$router->get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
-$router->get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
 
 // Images
 $router->post('images/{postId}', 'ImagesController@update');
