@@ -4,9 +4,10 @@ import { map } from 'lodash';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
-import Empty from '../Empty';
+import UserShell from '../UserShell';
 import SignupCard from '../SignupCard';
 import MetaInformation from '../MetaInformation';
+import PagePlaceholder from '../PagePlaceholder';
 import UserInformation, {
   UserInformationFragment,
 } from '../Users/UserInformation';
@@ -48,13 +49,19 @@ const UserOverview = () => {
     variables: { id },
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (loading)
+    return (
+      <UserShell>
+        <PagePlaceholder />
+      </UserShell>
+    );
+
+  if (error) return <UserShell>Error :(</UserShell>;
 
   const { user, signups } = data;
 
   return (
-    <div>
+    <UserShell>
       <div className="container__block">
         <h2 className="heading -emphasized -padded">
           <span>User Info</span>
@@ -81,7 +88,7 @@ const UserOverview = () => {
           return <SignupCard key={signup.id} signup={signup} />;
         })}
       </div>
-    </div>
+    </UserShell>
   );
 };
 

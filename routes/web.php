@@ -36,8 +36,11 @@ $router->get('campaigns/{id}/inbox', 'InboxController@show');
 $router->get('signups/{id}', 'SignupsController@show')->name('signups.show');
 
 // Users
+Route::middleware(['auth', 'role:staff,admin'])->group(function() {
+    Route::view('users/{id}', 'app')->name('users.show');
+});
+
 $router->get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
-$router->get('users/{id}', ['as' => 'users.show', 'uses' => 'UsersController@show']);
 $router->get('search', ['as' => 'users.search', 'uses' => 'UsersController@search']);
 
 // Images
