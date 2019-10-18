@@ -63,3 +63,17 @@ button.delete {
 .font-normal {
   font-weight: $weight-normal;
 }
+
+.placeholder {
+  width: 100%;
+  color: $light-gray;
+
+  // This should fill the viewport, minus the header height:
+  min-height: calc(100vh - 267px);
+}
+
+.flex-center-xy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
