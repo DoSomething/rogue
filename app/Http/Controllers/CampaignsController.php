@@ -73,7 +73,7 @@ class CampaignsController extends ApiController
             $query->withPendingPostCount();
         }
 
-        $campaign = $query->find($id);
+        $campaign = $query->findOrFail($id);
 
         return $this->item($campaign);
     }
