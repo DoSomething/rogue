@@ -23,6 +23,7 @@ class CampaignTransformer extends TransformerAbstract
             'is_open' => $campaign->isOpen(),
             'impact_doc' => $campaign->impact_doc,
             'cause' => $campaign->cause,
+            'pending_count' => $campaign->pending_count,
             'cause_names' => $campaign->getCauseNames(),
             'created_at' => $campaign->created_at->toIso8601String(),
             'updated_at' => $campaign->updated_at->toIso8601String(),
