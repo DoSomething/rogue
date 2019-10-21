@@ -66,4 +66,25 @@ trait FiltersRequests
 
         return $query;
     }
+
+    /**
+     * Order results by the given column & direction.
+     *
+     * @param $query
+     * @param $order - The provided 'orderBy' query string.
+     * @param $indexes - Whitelisted fields that we can order by.
+     * @return mixed
+     */
+    public function orderBy($query, $orderBy, $indexes)
+    {
+        if ($orderBy) {
+            [$column, $direction] = explode(',', $orderBy, 2);
+
+            if (in_array($column, $indexes)) {
+                $query = $query->orderBy($column, $direction);
+            }
+        }
+
+        return $query;
+    }
 }

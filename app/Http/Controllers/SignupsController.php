@@ -103,14 +103,7 @@ class SignupsController extends ApiController
         }
 
         $orderBy = $request->query('orderBy');
-
-        if ($orderBy) {
-            [$column, $direction] = explode(',', $orderBy, 2);
-
-            if (in_array($column, Signup::$indexes)) {
-                $query = $query->orderBy($column, $direction);
-            }
-        }
+        $query = $this->orderBy($query, $orderBy, Signup::$indexes);
 
         return $this->paginatedCollection($query, $request);
     }
