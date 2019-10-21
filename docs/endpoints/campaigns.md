@@ -11,8 +11,8 @@ GET /api/v3/campaigns
 ### Optional Query Parameters
 
 - **filter[column]** _(string)_
-  - Filter results by the given column: `id`
-  - You can filter by more than one value for a column, e.g. `/campaigns?filter[id]=121,122`
+  - Filter results by the given column: `id`, `is_open`
+  - You can filter by more than one value for the ID column, e.g. `/campaigns?filter[id]=121,122`
 
 Example Response:
 

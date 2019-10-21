@@ -148,10 +148,10 @@ $factory->define(Campaign::class, function (Generator $faker) {
     ];
 });
 
-$factory->defineAs(Campaign::class, 'closed', function () use ($factory) {
+$factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($factory) {
     return array_merge($factory->raw(Campaign::class), [
         'start_date' => $faker->dateTimeBetween('-12 months', '-6 months'),
-        'end_date' => $faker->dateTimeBetween('-3 months', 'now'),
+        'end_date' => $faker->dateTimeBetween('-3 months', 'yesterday'),
     ]);
 });
 

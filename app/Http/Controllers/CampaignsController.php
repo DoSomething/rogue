@@ -33,6 +33,18 @@ class CampaignsController extends ApiController
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Campaign::$indexes);
 
+        // Apply scope for the "computed" is_open field:
+        if (isset($filters['is_open'])) {
+            // We can use this to find only open campaigns with a truthy filter
+            // applied, e.g. `?filter[is_open]=true`, or closed campaigns with
+            // a falsy filter, e.g. `?filter[is_open]=false`.
+            if (filter_var($filters['is_open'], FILTER_VALIDATE_BOOLEAN)) {
+                $query->whereOpen();
+            } else {
+                $query->whereClosed();
+            }
+        }
+
         return $this->paginatedCollection($query, $request);
     }
 
