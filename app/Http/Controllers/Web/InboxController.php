@@ -2,29 +2,18 @@
 
 namespace Rogue\Http\Controllers\Web;
 
-use Rogue\Services\CampaignService;
+use Rogue\Models\Campaign;
 use Rogue\Http\Controllers\Controller;
 
 class InboxController extends Controller
 {
     /**
-     * Campaign Service instance
-     *
-     * @var Rogue\Services\CampaignService
-     */
-    protected $campaignService;
-
-    /**
      * Constructor
-     *
-     * @param Rogue\Services\CampaignService $campaignService
      */
-    public function __construct(CampaignService $campaignService)
+    public function __construct()
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
-
-        $this->campaignService = $campaignService;
     }
 
     /**
@@ -35,7 +24,7 @@ class InboxController extends Controller
     public function show($campaignId)
     {
         // Get the campaign data
-        $campaignData = $this->campaignService->find($campaignId);
+        $campaignData = Campaign::findOrFail($campaignId);
 
         return view('pages.campaign_inbox')
             ->with('state', [

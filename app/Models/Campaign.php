@@ -88,6 +88,21 @@ class Campaign extends Model
     }
 
     /**
+     * Attach count of pending posts to a query.
+     */
+    public function scopeWithPendingPostCount($query)
+    {
+        // Get a "pure" query, without eager loads/counts:
+        $posts = (new Post)->newModelQuery();
+
+        $counts = $posts->selectRaw('campaign_id, count(*) as pending_count')
+                ->whereReviewable()->where('status', 'pending')
+                ->groupBy('campaign_id');
+
+        return $query->leftJoinSub($counts, 'counts', 'campaigns.id', '=', 'counts.campaign_id');
+    }
+
+    /**
      * Should we accept new signups & posts for this campaign?
      *
      * @return bool

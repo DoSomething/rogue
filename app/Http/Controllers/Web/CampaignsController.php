@@ -3,29 +3,17 @@
 namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Models\Campaign;
-use Rogue\Services\CampaignService;
 use Rogue\Http\Controllers\Controller;
 
 class CampaignsController extends Controller
 {
     /**
-     * Campaign Service instance
-     *
-     * @var Rogue\Services\CampaignService
-     */
-    protected $campaignService;
-
-    /**
      * Constructor
-     *
-     * @param Rogue\Services\CampaignService $campaignService
      */
-    public function __construct(CampaignService $campaignService)
+    public function __construct()
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
-
-        $this->campaignService = $campaignService;
     }
 
     /**
@@ -33,8 +21,7 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        $campaigns = $this->campaignService->findAll();
-        $campaigns = $this->campaignService->appendPendingCountsToCampaigns($campaigns);
+        $campaigns = Campaign::withPendingPostCount()->get();
 
         $sortedCampaigns = $campaigns->sortByDesc('pending_count')
             ->groupBy(function ($campaign) {
@@ -56,17 +43,14 @@ class CampaignsController extends Controller
      */
     public function show($id)
     {
-        $campaign = $this->campaignService->find($id);
-        $totals = $this->campaignService->getPostTotals($campaign);
+        $campaign = Campaign::withPendingPostCount()->findOrFail($id);
 
         return view('pages.campaign_single')
             ->with('state', [
                 'campaign' => $campaign,
                 'initial_posts' => 'accepted',
                 'post_totals' => [
-                    'accepted_count' => $totals->accepted_count,
-                    'pending_count' => $totals->pending_count,
-                    'rejected_count' => $totals->rejected_count,
+                    'pending_count' => $campaign->pending_count,
                 ],
             ]);
     }
