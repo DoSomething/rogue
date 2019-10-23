@@ -50,7 +50,7 @@ class SlackTagNotification extends Notification
      *
      * @return void
      */
-    public function __construct(Post $post, Tag $tag, string $adminId)
+    public function __construct(Post $post, Tag $tag, $adminId)
     {
         $this->post = $post;
         $this->tag = $tag;
@@ -83,7 +83,7 @@ class SlackTagNotification extends Notification
         // Get the user & reviewer's names for the notification:
         $data = app(GraphQL::class)->query(SLACK_NOTIFICATION_QUERY, [
             'userId' => $this->post->northstar_id,
-            'adminId' => $this->adminId
+            'adminId' => $this->adminId,
         ]);
 
         $userName = $data['user']['displayName'];
