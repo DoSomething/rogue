@@ -57,7 +57,7 @@ class SlackTagNotification extends Notification
             ->attachment(function ($attachment) {
                 $attachment->title('Click here for more details in Rogue! We\'ll be adding member info. in Slack soon.', route('signups.show', [$this->post->signup_id], true))
                         ->fields([
-                            'Caption' => str_limit($this->post->caption, 140),
+                            'Caption' => str_limit($this->post->text, 140),
                             'Why Participated' => str_limit($this->post->signup->why_participated),
                         ])
                         ->color(array_random(['#FCD116', '#23b7fb', '#4e2b63']))
