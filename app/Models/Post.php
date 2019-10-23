@@ -82,6 +82,14 @@ class Post extends Model
     }
 
     /**
+     * Each post belongs to an action.
+     */
+    public function campaign()
+    {
+        return $this->belongsTo(Campaign::class);
+    }
+
+    /**
      * Each post has events.
      */
     public function events()
