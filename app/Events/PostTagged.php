@@ -26,21 +26,13 @@ class PostTagged
     public $tag;
 
     /**
-     * Whether or not to log that this Signup was sent to Quasar.
-     *
-     * @var bool
-     */
-    public $log;
-
-    /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Post $post, Tag $tag, $log)
+    public function __construct(Post $post, Tag $tag)
     {
         $this->post = $post;
         $this->tag = $tag;
-        $this->log = $log;
     }
 }

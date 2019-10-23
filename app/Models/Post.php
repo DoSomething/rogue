@@ -365,9 +365,8 @@ class Post extends Model
     /**
      * Apply the given tag to this post.
      * @param $tag Tag to tag post with
-     * @param $log Whether or not to log when a post is tagged.
      */
-    public function tag($tag, $log = true)
+    public function tag($tag)
     {
         // If a tag slug is sent in, change to the tag name.
         if (strpos($tag, '-')) {
@@ -388,7 +387,7 @@ class Post extends Model
             // Update timestamps on the Post when adding a tag
             $this->touch();
 
-            event(new PostTagged($this, $tag, $log));
+            event(new PostTagged($this, $tag));
         }
 
         return $this;
