@@ -34,7 +34,7 @@ class SendTaggedNotification
 
         if (! ($post->hasGoodTag()) && in_array($tag->tag_slug, $post->goodTags)) {
             Notification::route('slack', config('services.slack.url'))
-                ->notify(new SlackTagNotification($post));
+                ->notify(new SlackTagNotification($post, $tag, $adminId));
         }
     }
 }
