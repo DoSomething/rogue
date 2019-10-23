@@ -11,7 +11,7 @@ import Application from './components/Application';
 import CampaignInbox from './components/CampaignInbox';
 import CampaignSingle from './components/CampaignSingle';
 import CampaignIdSingle from './components/CampaignIdSingle';
-import CampaignOverview from './components/CampaignOverview';
+import CampaignOverview from './components/CampaignIndex';
 import CampaignIdOverview from './components/CampaignIdOverview';
 
 // Display environment badge on local, dev, or QA:
