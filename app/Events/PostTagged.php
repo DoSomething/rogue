@@ -25,6 +25,13 @@ class PostTagged
      */
     public $tag;
 
+    /*
+     * The user ID who tagged this post.
+     *
+     * @var string
+     */
+    public $adminId;
+
     /**
      * Create a new event instance.
      *
@@ -34,5 +41,6 @@ class PostTagged
     {
         $this->post = $post;
         $this->tag = $tag;
+        $this->adminId = auth()->id();
     }
 }

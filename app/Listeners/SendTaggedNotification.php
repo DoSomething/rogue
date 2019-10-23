@@ -28,6 +28,7 @@ class SendTaggedNotification
     {
         $post = $event->post;
         $tag = $event->tag;
+        $adminId = $event->adminId;
 
         info('post_tagged', ['id' => $post->id, 'tag' => $tag->tag_slug]);
 
