@@ -28,17 +28,13 @@ class SendTaggedNotification
     {
         $post = $event->post;
         $tag = $event->tag;
+        $adminId = $event->adminId;
 
-        if ($event->log) {
-            info('post_tagged', [
-                'id' => $post->id,
-                'tag' => $tag->tag_slug,
-            ]);
-        }
+        info('post_tagged', ['id' => $post->id, 'tag' => $tag->tag_slug]);
 
         if (! ($post->hasGoodTag()) && in_array($tag->tag_slug, $post->goodTags)) {
             Notification::route('slack', config('services.slack.url'))
-                ->notify(new SlackTagNotification($post));
+                ->notify(new SlackTagNotification($post, $tag, $adminId));
         }
     }
 }

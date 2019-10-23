@@ -25,22 +25,22 @@ class PostTagged
      */
     public $tag;
 
-    /**
-     * Whether or not to log that this Signup was sent to Quasar.
+    /*
+     * The user ID who tagged this post.
      *
-     * @var bool
+     * @var string
      */
-    public $log;
+    public $adminId;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Post $post, Tag $tag, $log)
+    public function __construct(Post $post, Tag $tag)
     {
         $this->post = $post;
         $this->tag = $tag;
-        $this->log = $log;
+        $this->adminId = auth()->id();
     }
 }
