@@ -5,17 +5,12 @@
             <ul class="navigation__primary">
                 <li>
                     <a href="/campaigns">
-                        <strong class="navigation__title">Campaign Overview</strong>
+                        <strong class="navigation__title">Campaigns</strong>
                     </a>
                 </li>
                 <li>
                     <a href="/users">
-                        <strong class="navigation__title">User Search</strong>
-                    </a>
-                </li>
-                <li>
-                    <a href="/campaign-ids">
-                        <strong class="navigation__title">Campaign IDs</strong>
+                        <strong class="navigation__title">Users</strong>
                     </a>
                 </li>
                 <li>
