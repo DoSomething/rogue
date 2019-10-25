@@ -20,7 +20,7 @@ class ImportSignupsCommandTest extends TestCase
         $this->assertDatabaseHas('signups', [
             'northstar_id' => '56e83a07469c64d8578b5ed4',
             'campaign_id' => '362',
-            'source' => 'phoenix-next',
+            'source' => 'sms',
             'created_at' => '2014-03-13 21:39:01',
         ]);
 
