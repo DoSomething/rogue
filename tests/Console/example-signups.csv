@@ -1,4 +1,4 @@
-"drupal_id","campaign_run_id","campaign_node_id","signup_source","signup_created_at_timestamp","northstar_id"
-10,2341,362,"sms","2014-03-13 21:39:01","56e83a07469c64d8578b5ed4"
-10,2341,362,"sms","2014-03-13 21:39:01","56e83a07469c64d8578b5ed4"
-3526,5066,1144,"sms","2013-11-06 23:32:03","5589c9bb469c6475138b81f0"
+"campaign_id","source","signup_created_at_timestamp","northstar_id"
+362,"sms","2014-03-13 21:39:01","56e83a07469c64d8578b5ed4"
+362,"sms","2014-03-13 21:39:01","56e83a07469c64d8578b5ed4"
+1144,"phoenix-next","2013-11-06 23:32:03","5589c9bb469c6475138b81f0"
