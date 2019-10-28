@@ -46,7 +46,8 @@ class CampaignsController extends ApiController
         }
 
         // Attach counts for total posts & pending posts:
-        $includePendingCount = str_contains($request->query('include'), 'pending_count');
+        $includePendingCount = str_contains($request->query('include'), 'pending_count')
+            || str_contains($request->query('orderBy'), 'pending_count');
         if ($includePendingCount && is_staff_user()) {
             $query->withPendingPostCount();
         }
