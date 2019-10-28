@@ -51,6 +51,14 @@ class CampaignsController extends ApiController
             $query->withPendingPostCount();
         }
 
+        // Experimental: Allow paginating by cursor (e.g. `?after=OTAxNg==`):
+        if ($after = $request->query('after')) {
+            $query->where('id', '>', base64_decode($after));
+
+            // Using 'after' implies cursor pagination:
+            $this->useCursorPagination = true;
+        }
+
         // Allow ordering results:
         $orderBy = $request->query('orderBy');
         $query = $this->orderBy($query, $orderBy, ['id', 'pending_count']);

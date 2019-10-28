@@ -83,6 +83,11 @@ trait FiltersRequests
             if (in_array($column, $indexes)) {
                 $query = $query->orderBy($column, $direction);
             }
+        } else {
+            // If we don't specify an ordering in the query, we should default
+            // to order by ID. (Fun fact: MySQL makes no guarantees of ordering
+            // if we don't include this in the query!)
+            $query->orderBy('id', 'asc');
         }
 
         return $query;
