@@ -107,16 +107,17 @@ trait TransformsRequests
             $transformer = $this->transformer;
         }
 
-        $pages = (int) $request->query('limit', 20);
+        // You can request up to 100 items per page (default 20).
+        $pages = min((int) $request->query('limit', 20), 100);
 
         // Is cursor pagination enabled for this route? (Or opted-in using
         // the `?pagination=cursor` query param?)
         $fastMode = ! empty($this->useCursorPagination) || $request->query('pagination') === 'cursor';
 
         if ($fastMode) {
-            $paginator = $query->simplePaginate(min($pages, 100));
+            $paginator = $query->simplePaginate($pages);
         } else {
-            $paginator = $query->paginate(min($pages, 100));
+            $paginator = $query->paginate($pages);
         }
 
         $queryParams = array_diff_key($request->query(), array_flip(['page']));

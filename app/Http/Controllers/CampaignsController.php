@@ -46,9 +46,18 @@ class CampaignsController extends ApiController
         }
 
         // Attach counts for total posts & pending posts:
-        $includePendingCount = str_contains($request->query('include'), 'pending_count');
+        $includePendingCount = str_contains($request->query('include'), 'pending_count')
+            || str_contains($request->query('orderBy'), 'pending_count');
         if ($includePendingCount && is_staff_user()) {
             $query->withPendingPostCount();
+        }
+
+        // Experimental: Allow paginating by cursor (e.g. `?after=OTAxNg==`):
+        if ($after = $request->query('after')) {
+            $query->where('id', '>', base64_decode($after));
+
+            // Using 'after' implies cursor pagination:
+            $this->useCursorPagination = true;
         }
 
         // Allow ordering results:
