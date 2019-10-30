@@ -1,6 +1,14 @@
 /* global document */
 
-import { flatMap, keyBy, get, mapKeys, camelCase } from 'lodash';
+import {
+  camelCase,
+  flatMap,
+  get,
+  isArray,
+  keyBy,
+  mapKeys,
+  mergeWith,
+} from 'lodash';
 
 /**
  * Wait until the DOM is ready.
@@ -281,3 +289,19 @@ export function env(key) {
  */
 export const camelCaseKeys = object =>
   mapKeys(object, (value, key) => camelCase(key));
+
+/**
+ * Merge paginated GraphQL queries.
+ *
+ * @param {*} previous
+ * @param {*} param1
+ */
+export const updateQuery = (previous, { fetchMoreResult }) => {
+  return mergeWith({}, previous, fetchMoreResult, (dest, src) => {
+    // By default, Lodash's `merge` would try to merge *each* array
+    // item (e.g. `edges[0]` with then next page's `edges[0]`).
+    if (isArray(dest)) {
+      return [...dest, ...src];
+    }
+  });
+};

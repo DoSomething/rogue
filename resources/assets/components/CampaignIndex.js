@@ -1,21 +1,30 @@
 import gql from 'graphql-tag';
-import { merge } from 'lodash';
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import Empty from './Empty';
+import { updateQuery } from '../helpers';
 
 const CAMPAIGNS_QUERY = gql`
-  query CampaignsOverviewQuery($isOpen: Boolean!, $page: Int!) {
-    campaigns(
+  query CampaignsOverviewQuery($isOpen: Boolean!, $cursor: String) {
+    campaigns: paginatedCampaigns(
       isOpen: $isOpen
       orderBy: "pending_count,desc"
-      count: 15
-      page: $page
+      after: $cursor
+      first: 15
     ) {
-      id
-      internalTitle
-      pendingCount
+      edges {
+        cursor
+        node {
+          id
+          internalTitle
+          pendingCount
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
     }
   }
 `;
@@ -34,8 +43,10 @@ const filterCampaigns = (campaigns, filter) => {
       return true;
     }
 
-    const matchesId = campaign.id.toString().includes(search);
-    const matchesTitle = campaign.internalTitle.toLowerCase().includes(search);
+    const matchesId = campaign.node.id.toString().includes(search);
+    const matchesTitle = campaign.node.internalTitle
+      .toLowerCase()
+      .includes(search);
     // const matchesCause = campaign.cause.some(cause =>
     //   cause.toLowerCase().includes(search),
     // );
@@ -63,9 +74,19 @@ const CampaignsTable = ({ isOpen, filter }) => {
     return <div className="spinner" />;
   }
 
-  const campaigns = filterCampaigns(data.campaigns, filter);
+  const campaigns = filterCampaigns(data.campaigns.edges, filter);
+  const { endCursor, hasNextPage } = data.campaigns.pageInfo;
+  const handleViewMore = () =>
+    fetchMore({
+      variables: { cursor: endCursor },
+      updateQuery,
+    });
 
-  return campaigns.length ? (
+  if (campaigns.length === 0 && !hasNextPage) {
+    return <Empty />;
+  }
+
+  return (
     <table className="table">
       <thead>
         <tr className="table__header">
@@ -76,20 +97,20 @@ const CampaignsTable = ({ isOpen, filter }) => {
         </tr>
       </thead>
       <tbody>
-        {campaigns.map(campaign => (
-          <tr className="table__row" key={campaign.id}>
+        {campaigns.map(({ node, cursor }) => (
+          <tr className="table__row" key={cursor}>
             <td className="table__cell">
               <a href="">
-                {campaign.internalTitle}{' '}
-                <code className="footnote">({campaign.id})</code>
+                {node.internalTitle}{' '}
+                <code className="footnote">({node.id})</code>
               </a>
             </td>
-            <td className="table__cell">{campaign.pendingCount || 0}</td>
+            <td className="table__cell">{node.pendingCount || 0}</td>
             <td className="table__cell">
-              <a href={`/campaigns/${campaign.id}/inbox`}>review</a>
+              <a href={`/campaigns/${node.id}/inbox`}>review</a>
             </td>
             <td className="table__cell">
-              <a href={`/campaign-ids/${campaign.id}`}>edit</a>
+              <a href={`/campaign-ids/${node.id}`}>edit</a>
             </td>
           </tr>
         ))}
@@ -97,39 +118,15 @@ const CampaignsTable = ({ isOpen, filter }) => {
       <tfoot>
         <tr>
           <td>
-            <button
-              className="button -tertiary"
-              onClick={() => {
-                fetchMore({
-                  variables: {
-                    // The value in `variables.page` doesn't get updated here on
-                    // subsequent clicks, so we have to recalculate each time...
-                    page: Math.ceil(data.campaigns.length / 10) + 1,
-                  },
-                  updateQuery: (previous, { fetchMoreResult }) => {
-                    if (!fetchMoreResult) return previous;
-                    return {
-                      ...previous,
-                      campaigns: [
-                        ...previous.campaigns,
-                        ...fetchMoreResult.campaigns,
-                      ],
-                    };
-                  },
-                });
-                // updateQuery: (previous, { fetchMoreResult }) =>
-                //   merge(previous, fetchMoreResult),
-                // },
-              }}
-            >
-              view more...
-            </button>
+            {hasNextPage ? (
+              <button className="button -tertiary" onClick={handleViewMore}>
+                view more...
+              </button>
+            ) : null}
           </td>
         </tr>
       </tfoot>
     </table>
-  ) : (
-    <Empty />
   );
 };
 
