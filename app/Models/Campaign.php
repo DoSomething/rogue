@@ -36,6 +36,16 @@ class Campaign extends Model
     public static $indexes = ['id'];
 
     /**
+     * Attributes that can be sorted by.
+     *
+     * This array is manually maintained. It does not necessarily mean that
+     * any of these are actual indexes on the database... but they should be!
+     *
+     * @var array
+     */
+    public static $sortable = ['id', 'pending_count'];
+
+    /**
      * Get the signups associated with this campaign.
      */
     public function signup()

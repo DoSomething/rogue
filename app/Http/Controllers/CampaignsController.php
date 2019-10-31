@@ -62,7 +62,7 @@ class CampaignsController extends ApiController
 
         // Allow ordering results:
         $orderBy = $request->query('orderBy');
-        $query = $this->orderBy($query, $orderBy, ['id', 'pending_count']);
+        $query = $this->orderBy($query, $orderBy, Campaign::$sortable);
 
         return $this->paginatedCollection($query, $request);
     }
