@@ -103,7 +103,7 @@ class CampaignTest extends Testcase
 
         // Then, we'll use the last post's cursor to fetch the remaining two:
         $lastCursor = $json['data'][2]['cursor'];
-        $response = $this->withAdminAccessToken()->getJson($endpoint . '&after=' . $lastCursor);
+        $response = $this->withAdminAccessToken()->getJson($endpoint . '&cursor[after]=' . $lastCursor);
 
         $response->assertSuccessful();
         $json = $response->json();
@@ -136,7 +136,7 @@ class CampaignTest extends Testcase
 
         // Then, we'll use the last post's cursor to fetch the remaining two:
         $lastCursor = $response->json()['data'][2]['cursor'];
-        $response = $this->withAdminAccessToken()->getJson($endpoint . '&after=' . $lastCursor);
+        $response = $this->withAdminAccessToken()->getJson($endpoint . '&cursor[after]=' . $lastCursor);
         $data = $response->json()['data'];
 
         $this->assertArraySubset(['id' => $two->id, 'pending_count' => 2], $data[0]);

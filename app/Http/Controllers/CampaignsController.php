@@ -52,11 +52,11 @@ class CampaignsController extends ApiController
             $query->withPendingPostCount();
         }
 
-        // Experimental: Allow paginating by cursor (e.g. `?after=OTAxNg==`):
-        if ($cursor = $request->query('after')) {
+        // Experimental: Allow paginating by cursor (e.g. `?cursor[after]=OTAxNg==`):
+        if ($cursor = array_get($request->query('cursor'), 'after')) {
             $query->whereAfterCursor($cursor);
 
-            // Using 'after' implies cursor pagination:
+            // Using 'cursor' implies cursor pagination:
             $this->useCursorPagination = true;
         }
 
