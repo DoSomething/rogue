@@ -199,4 +199,22 @@ class Campaign extends Model
 
         $this->attributes[$attribute] = $this->fromDateTime($value);
     }
+
+    /**
+     * Create a cursor for this item.
+     *
+     * @return string
+     */
+    public function getCursor()
+    {
+        return base64_encode($this->id);
+    }
+
+    /**
+     * Scope a query to only include items after the given cursor.
+     */
+    public function scopeWhereAfterCursor($query, $cursor)
+    {
+        $query->where('id', '>', base64_decode($cursor));
+    }
 }

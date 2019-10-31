@@ -53,8 +53,8 @@ class CampaignsController extends ApiController
         }
 
         // Experimental: Allow paginating by cursor (e.g. `?after=OTAxNg==`):
-        if ($after = $request->query('after')) {
-            $query->where('id', '>', base64_decode($after));
+        if ($cursor = $request->query('after')) {
+            $query->whereAfterCursor($cursor);
 
             // Using 'after' implies cursor pagination:
             $this->useCursorPagination = true;
