@@ -83,6 +83,33 @@ class CampaignTest extends Testcase
     }
 
     /**
+     * Test that we can use cursor pagination.
+     *
+     * GET /api/v3/campaigns
+     * @return void
+     */
+    public function testCampaignCursor()
+    {
+        $campaigns = factory(Campaign::class, 5)->create();
+
+        // First, let's get the three campaigns with the most pending posts:
+        $endpoint = 'api/v3/campaigns?limit=3';
+        $response = $this->withAdminAccessToken()->getJson($endpoint);
+
+        $response->assertSuccessful();
+        $json = $response->json();
+        $this->assertCount(3, $json['data']);
+
+        // Then, we'll use the last post's cursor to fetch the remaining two:
+        $lastCursor = $json['data'][2]['cursor'];
+        $response = $this->withAdminAccessToken()->getJson($endpoint . '&after=' . $lastCursor);
+
+        $response->assertSuccessful();
+        $json = $response->json();
+        $this->assertCount(2, $json['data']);
+    }
+
+    /**
      * Test that a GET request to /api/v3/campaigns/:campaign_id returns the intended campaign.
      *
      * GET /api/v3/campaigns/:campaign_id
