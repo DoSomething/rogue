@@ -136,14 +136,14 @@ const CampaignsTable = ({ isOpen, filter }) => {
         <tfoot className="form-actions">
           {loading ? (
             <tr>
-              <td colspan="4">
+              <td colSpan="4">
                 <div className="spinner margin-horizontal-auto margin-vertical" />
               </td>
             </tr>
           ) : null}
           {hasNextPage ? (
             <tr>
-              <td colspan="4">
+              <td colSpan="4">
                 <button
                   className="button -tertiary"
                   onClick={handleViewMore}
