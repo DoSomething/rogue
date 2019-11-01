@@ -8,7 +8,7 @@ import Empty from './Empty';
 import { updateQuery } from '../helpers';
 
 const CAMPAIGNS_QUERY = gql`
-  query CampaignsOverviewQuery($isOpen: Boolean!, $cursor: String) {
+  query CampaignsIndexQuery($isOpen: Boolean!, $cursor: String) {
     campaigns: paginatedCampaigns(
       isOpen: $isOpen
       orderBy: "pending_count,desc"
@@ -37,8 +37,8 @@ const CAMPAIGNS_QUERY = gql`
 /**
  * Filter the given campaigns by current search term.
  *
- * @param  {Array} campaigns
- * @return {Array}
+ * @param  {Object} data - GraphQL response
+ * @return {Object}
  */
 const filterCampaigns = (data, filter) => {
   const search = filter.toLowerCase();
@@ -65,9 +65,10 @@ const filterCampaigns = (data, filter) => {
 };
 
 /**
- * Filter and list the given campaigns.
+ * This component handles fetching & paginating the campaign
+ * tables on this page (for either open or closed campaigns).
  *
- * @param {Array} campaigns
+ * @param {Boolean} isOpen
  * @param {String} filter
  */
 const CampaignsTable = ({ isOpen, filter }) => {
@@ -163,7 +164,10 @@ const CampaignsTable = ({ isOpen, filter }) => {
   );
 };
 
-const CampaignOverview = () => {
+/**
+ * The campaign index page!
+ */
+const CampaignIndex = () => {
   const [showClosed, setShowClosed] = useState(false);
   const [filter, setFilter] = useState('');
 
@@ -229,4 +233,4 @@ const CampaignOverview = () => {
   );
 };
 
-export default CampaignOverview;
+export default CampaignIndex;
