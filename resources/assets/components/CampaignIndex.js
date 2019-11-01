@@ -40,10 +40,14 @@ const CAMPAIGNS_QUERY = gql`
  * @param  {Array} campaigns
  * @return {Array}
  */
-const filterCampaigns = (campaigns, filter) => {
+const filterCampaigns = (data, filter) => {
   const search = filter.toLowerCase();
 
-  return campaigns.filter(campaign => {
+  if (!data) {
+    return [];
+  }
+
+  return data.campaigns.edges.filter(campaign => {
     if (search === '') {
       return true;
     }
@@ -67,16 +71,16 @@ const filterCampaigns = (campaigns, filter) => {
  * @param {String} filter
  */
 const CampaignsTable = ({ isOpen, filter }) => {
-  const { error, data, fetchMore, networkStatus } = useQuery(CAMPAIGNS_QUERY, {
+  const { error, loading, data, fetchMore } = useQuery(CAMPAIGNS_QUERY, {
     variables: { isOpen },
     notifyOnNetworkStatusChange: true,
   });
 
-  const loading = networkStatus !== 7; // TODO: This is gross.
-
+  const campaigns = filterCampaigns(data, filter);
+  const noFilteredResults = campaigns.length === 0 && !loading;
   const { endCursor, hasNextPage } = get(data, 'campaigns.pageInfo', {});
+
   const handleViewMore = () => {
-    console.log('trying to view more', endCursor);
     if (!endCursor) {
       return;
     }
@@ -87,17 +91,14 @@ const CampaignsTable = ({ isOpen, filter }) => {
     });
   };
 
-  const campaigns =
-    data && data.campaigns ? filterCampaigns(data.campaigns.edges, filter) : [];
-
-  // Automatically fetch more results if we can & have empty set:
+  // If we've filtered all results & can load more, do so automatically:
   useEffect(() => {
-    if (campaigns.length === 0 && hasNextPage && !loading) {
+    if (noFilteredResults && hasNextPage) {
       handleViewMore();
     }
   }, [filter, endCursor]);
 
-  if (campaigns.length === 0 && !hasNextPage && !loading) {
+  if (noFilteredResults && !hasNextPage) {
     return <Empty />;
   }
 
@@ -131,20 +132,29 @@ const CampaignsTable = ({ isOpen, filter }) => {
             </tr>
           ))}
         </tbody>
+        <tfoot className="form-actions">
+          {loading ? (
+            <tr>
+              <td colspan="4">
+                <div className="spinner margin-horizontal-auto margin-vertical" />
+              </td>
+            </tr>
+          ) : null}
+          {hasNextPage ? (
+            <tr>
+              <td colspan="4">
+                <button
+                  className="button -tertiary"
+                  onClick={handleViewMore}
+                  disabled={loading}
+                >
+                  view more...
+                </button>
+              </td>
+            </tr>
+          ) : null}
+        </tfoot>
       </table>
-      {hasNextPage || loading ? (
-        <div className="form-actions">
-          <button
-            className={classNames('button -tertiary', {
-              'is-loading': loading,
-            })}
-            disabled={loading}
-            onClick={handleViewMore}
-          >
-            view more...
-          </button>
-        </div>
-      ) : null}
     </>
   );
 };
