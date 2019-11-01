@@ -1,6 +1,8 @@
+import { get } from 'lodash';
 import gql from 'graphql-tag';
-import React, { useState } from 'react';
+import classNames from 'classnames';
 import { useQuery } from '@apollo/react-hooks';
+import React, { useState, useEffect } from 'react';
 
 import Empty from './Empty';
 import { updateQuery } from '../helpers';
@@ -62,71 +64,79 @@ const filterCampaigns = (campaigns, filter) => {
  * @param {String} filter
  */
 const CampaignsTable = ({ isOpen, filter }) => {
-  const { loading, error, data, fetchMore } = useQuery(CAMPAIGNS_QUERY, {
-    variables: { isOpen, page: 1 },
+  const { error, data, fetchMore, networkStatus } = useQuery(CAMPAIGNS_QUERY, {
+    variables: { isOpen },
+    notifyOnNetworkStatusChange: true,
   });
 
-  if (error) {
-    return 'Error :(';
-  }
+  const loading = networkStatus !== 7; // TODO: This is gross.
 
-  if (loading) {
-    return <div className="spinner" />;
-  }
+  const { endCursor, hasNextPage } = get(data, 'campaigns.pageInfo', {});
+  const handleViewMore = () => {
+    console.log('trying to view more', endCursor);
+    if (!endCursor) {
+      return;
+    }
 
-  const campaigns = filterCampaigns(data.campaigns.edges, filter);
-  const { endCursor, hasNextPage } = data.campaigns.pageInfo;
-  const handleViewMore = () =>
     fetchMore({
       variables: { cursor: endCursor },
       updateQuery,
     });
+  };
 
-  if (campaigns.length === 0 && !hasNextPage) {
+  const campaigns =
+    data && data.campaigns ? filterCampaigns(data.campaigns.edges, filter) : [];
+
+
+  if (campaigns.length === 0 && !hasNextPage && !loading) {
     return <Empty />;
   }
 
   return (
-    <table className="table">
-      <thead>
-        <tr className="table__header">
-          <td className="table__cell">Campaign</td>
-          <td className="table__cell">Pending</td>
-          <td className="table__cell"></td>
-          <td className="table__cell"></td>
-        </tr>
-      </thead>
-      <tbody>
-        {campaigns.map(({ node, cursor }) => (
-          <tr className="table__row" key={cursor}>
-            <td className="table__cell">
-              <a href="">
-                {node.internalTitle}{' '}
-                <code className="footnote">({node.id})</code>
-              </a>
-            </td>
-            <td className="table__cell">{node.pendingCount || 0}</td>
-            <td className="table__cell">
-              <a href={`/campaigns/${node.id}/inbox`}>review</a>
-            </td>
-            <td className="table__cell">
-              <a href={`/campaign-ids/${node.id}`}>edit</a>
-            </td>
+    <>
+      <table className="table">
+        <thead>
+          <tr className="table__header">
+            <td className="table__cell">Campaign</td>
+            <td className="table__cell">Pending</td>
+            <td className="table__cell"></td>
+            <td className="table__cell"></td>
           </tr>
-        ))}
-      </tbody>
-      <tfoot>
-        <tr>
-          <td>
-            {hasNextPage ? (
-              <button className="button -tertiary" onClick={handleViewMore}>
-                view more...
-              </button>
-            ) : null}
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+        </thead>
+        <tbody>
+          {campaigns.map(({ node, cursor }) => (
+            <tr className="table__row" key={cursor}>
+              <td className="table__cell">
+                <a href="">
+                  {node.internalTitle}{' '}
+                  <code className="footnote">({node.id})</code>
+                </a>
+              </td>
+              <td className="table__cell">{node.pendingCount || 0}</td>
+              <td className="table__cell">
+                <a href={`/campaigns/${node.id}/inbox`}>review</a>
+              </td>
+              <td className="table__cell">
+                <a href={`/campaign-ids/${node.id}`}>edit</a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {hasNextPage || loading ? (
+        <div className="form-actions">
+          <button
+            className={classNames('button -tertiary', {
+              'is-loading': loading,
+            })}
+            disabled={loading}
+            onClick={handleViewMore}
+          >
+            view more...
+          </button>
+        </div>
+      ) : null}
+    </>
   );
 };
 
@@ -176,7 +186,7 @@ const CampaignOverview = () => {
               </div>
             </>
           ) : (
-            <div className="container__block">
+            <div className="container__block form-actions">
               <button
                 className="button -tertiary"
                 onClick={() => setShowClosed(true)}
