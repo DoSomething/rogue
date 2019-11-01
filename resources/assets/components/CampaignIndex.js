@@ -113,7 +113,7 @@ const CampaignsTable = ({ isOpen, filter }) => {
           {campaigns.map(({ node, cursor }) => (
             <tr className="table__row" key={cursor}>
               <td className="table__cell">
-                <a href="">
+                <a href={`/campaigns/${node.id}`}>
                   {node.internalTitle}{' '}
                   <code className="footnote">({node.id})</code>
                 </a>
