@@ -87,6 +87,12 @@ const CampaignsTable = ({ isOpen, filter }) => {
   const campaigns =
     data && data.campaigns ? filterCampaigns(data.campaigns.edges, filter) : [];
 
+  // Automatically fetch more results if we can & have empty set:
+  useEffect(() => {
+    if (campaigns.length === 0 && hasNextPage && !loading) {
+      handleViewMore();
+    }
+  }, [filter, endCursor]);
 
   if (campaigns.length === 0 && !hasNextPage && !loading) {
     return <Empty />;
