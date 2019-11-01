@@ -98,6 +98,10 @@ const CampaignsTable = ({ isOpen, filter }) => {
     }
   }, [filter, endCursor]);
 
+  if (error) {
+    return 'There was an error. :(';
+  }
+
   if (noFilteredResults && !hasNextPage) {
     return <Empty />;
   }
