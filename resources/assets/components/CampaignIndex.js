@@ -1,6 +1,5 @@
 import { get } from 'lodash';
 import gql from 'graphql-tag';
-import classNames from 'classnames';
 import { useQuery } from '@apollo/react-hooks';
 import React, { useState, useEffect } from 'react';
 
@@ -81,6 +80,7 @@ const CampaignsTable = ({ isOpen, filter }) => {
   const noFilteredResults = campaigns.length === 0 && !loading;
   const { endCursor, hasNextPage } = get(data, 'campaigns.pageInfo', {});
 
+  // We can use this function to load more results:
   const handleViewMore = () => {
     fetchMore({
       variables: { cursor: endCursor },
