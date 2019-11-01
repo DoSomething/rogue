@@ -82,10 +82,6 @@ const CampaignsTable = ({ isOpen, filter }) => {
   const { endCursor, hasNextPage } = get(data, 'campaigns.pageInfo', {});
 
   const handleViewMore = () => {
-    if (!endCursor) {
-      return;
-    }
-
     fetchMore({
       variables: { cursor: endCursor },
       updateQuery,
