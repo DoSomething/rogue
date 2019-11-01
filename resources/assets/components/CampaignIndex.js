@@ -21,6 +21,9 @@ const CAMPAIGNS_QUERY = gql`
           id
           internalTitle
           pendingCount
+          causes {
+            name
+          }
         }
       }
       pageInfo {
@@ -45,15 +48,15 @@ const filterCampaigns = (campaigns, filter) => {
       return true;
     }
 
-    const matchesId = campaign.node.id.toString().includes(search);
-    const matchesTitle = campaign.node.internalTitle
-      .toLowerCase()
-      .includes(search);
-    // const matchesCause = campaign.cause.some(cause =>
-    //   cause.toLowerCase().includes(search),
-    // );
+    const { id, internalTitle, causes } = campaign.node;
 
-    return matchesId || matchesTitle;
+    const matchesId = id.toString().includes(search);
+    const matchesTitle = internalTitle.toLowerCase().includes(search);
+    const matchesCause = causes.some(cause =>
+      cause.name.toLowerCase().includes(search),
+    );
+
+    return matchesId || matchesTitle || matchesCause;
   });
 };
 
