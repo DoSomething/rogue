@@ -82,6 +82,12 @@ trait FiltersRequests
 
             if (in_array($column, $indexes)) {
                 $query = $query->orderBy($column, $direction);
+
+                // If we have multiple items with the same '$column' value,
+                // use ID as a secondary sort column to ensure stable sort.
+                if ($column != 'id') {
+                    $query->orderBy('id', 'asc');
+                }
             }
         } else {
             // If we don't specify an ordering in the query, we should default

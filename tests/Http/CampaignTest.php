@@ -3,6 +3,7 @@
 namespace Tests\Http;
 
 use Tests\TestCase;
+use Rogue\Models\Post;
 use Rogue\Models\Campaign;
 
 class CampaignTest extends Testcase
@@ -83,6 +84,66 @@ class CampaignTest extends Testcase
     }
 
     /**
+     * Test that we can use cursor pagination.
+     *
+     * GET /api/v3/campaigns
+     * @return void
+     */
+    public function testCampaignCursor()
+    {
+        $campaigns = factory(Campaign::class, 5)->create();
+
+        // First, let's get the three campaigns with the most pending posts:
+        $endpoint = 'api/v3/campaigns?limit=3';
+        $response = $this->withAdminAccessToken()->getJson($endpoint);
+
+        $response->assertSuccessful();
+        $json = $response->json();
+        $this->assertCount(3, $json['data']);
+
+        // Then, we'll use the last post's cursor to fetch the remaining two:
+        $lastCursor = $json['data'][2]['cursor'];
+        $response = $this->withAdminAccessToken()->getJson($endpoint . '&cursor[after]=' . $lastCursor);
+
+        $response->assertSuccessful();
+        $json = $response->json();
+        $this->assertCount(2, $json['data']);
+    }
+
+    /**
+     * Test that we can use cursor pagination with ordered results.
+     *
+     * GET /api/v3/campaigns
+     * @return void
+     */
+    public function testCampaignCursorWithOrderBy()
+    {
+        // Create campaigns with varied number of 'pending' posts:
+        $one = $this->createCampaignWithPosts(1);
+        $two = $this->createCampaignWithPosts(2);
+        $three = $this->createCampaignWithPosts(3);
+        $four = $this->createCampaignWithPosts(4);
+        $five = $this->createCampaignWithPosts(5);
+
+        // First, let's get the three campaigns with the most pending posts:
+        $endpoint = 'api/v3/campaigns?orderBy=pending_count,desc&limit=3';
+        $response = $this->withAdminAccessToken()->getJson($endpoint);
+        $data = $response->json()['data'];
+
+        $this->assertArraySubset(['id' => $five->id, 'pending_count' => 5], $data[0]);
+        $this->assertArraySubset(['id' => $four->id, 'pending_count' => 4], $data[1]);
+        $this->assertArraySubset(['id' => $three->id, 'pending_count' => 3], $data[2]);
+
+        // Then, we'll use the last post's cursor to fetch the remaining two:
+        $lastCursor = $response->json()['data'][2]['cursor'];
+        $response = $this->withAdminAccessToken()->getJson($endpoint . '&cursor[after]=' . $lastCursor);
+        $data = $response->json()['data'];
+
+        $this->assertArraySubset(['id' => $two->id, 'pending_count' => 2], $data[0]);
+        $this->assertArraySubset(['id' => $one->id, 'pending_count' => 1], $data[1]);
+    }
+
+    /**
      * Test that a GET request to /api/v3/campaigns/:campaign_id returns the intended campaign.
      *
      * GET /api/v3/campaigns/:campaign_id
@@ -155,5 +216,20 @@ class CampaignTest extends Testcase
 
         $response->assertStatus(404);
         $this->assertEquals('That resource could not be found.', $decodedResponse['message']);
+    }
+
+    /**
+     * Create a campaign with the given number of pending posts.
+     *
+     * @return Campaign
+     */
+    public function createCampaignWithPosts($numberOfPosts)
+    {
+        $campaign = factory(Campaign::class)->create();
+        factory(Post::class, $numberOfPosts)->create([
+            'campaign_id' => $campaign->id,
+        ]);
+
+        return $campaign;
     }
 }

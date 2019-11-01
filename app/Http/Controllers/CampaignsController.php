@@ -52,17 +52,17 @@ class CampaignsController extends ApiController
             $query->withPendingPostCount();
         }
 
-        // Experimental: Allow paginating by cursor (e.g. `?after=OTAxNg==`):
-        if ($after = $request->query('after')) {
-            $query->where('id', '>', base64_decode($after));
+        // Experimental: Allow paginating by cursor (e.g. `?cursor[after]=OTAxNg==`):
+        if ($cursor = array_get($request->query('cursor'), 'after')) {
+            $query->whereAfterCursor($cursor);
 
-            // Using 'after' implies cursor pagination:
+            // Using 'cursor' implies cursor pagination:
             $this->useCursorPagination = true;
         }
 
         // Allow ordering results:
         $orderBy = $request->query('orderBy');
-        $query = $this->orderBy($query, $orderBy, ['id', 'pending_count']);
+        $query = $this->orderBy($query, $orderBy, Campaign::$sortable);
 
         return $this->paginatedCollection($query, $request);
     }

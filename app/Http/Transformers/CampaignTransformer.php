@@ -27,7 +27,7 @@ class CampaignTransformer extends TransformerAbstract
             'cause_names' => $campaign->getCauseNames(),
             'created_at' => $campaign->created_at->toIso8601String(),
             'updated_at' => $campaign->updated_at->toIso8601String(),
-            'cursor' => base64_encode($campaign->id),
+            'cursor' => $campaign->getCursor(),
         ];
     }
 }
