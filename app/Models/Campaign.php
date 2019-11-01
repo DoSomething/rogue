@@ -247,12 +247,13 @@ class Campaign extends Model
         if ($orderBy && $sortCursor) {
             // If we're sorting by a column, things get a lil' tricky:
             [ $column, $direction ] = explode(',', $orderBy, 2);
+            $operator = $direction === 'asc' ? '>' : '<';
 
             // Check that we're allowed to sort by this column:
             if (in_array($column, self::$sortable)) {
-                $query->where($column, '<', $sortCursor)
-                    ->orWhere(function ($query) use ($column, $sortCursor, $id) {
-                        $query->where($column, '<=', $sortCursor)
+                $query->where($column, $operator, $sortCursor)
+                    ->orWhere(function ($query) use ($column, $operator, $sortCursor, $id) {
+                        $query->where($column, $operator.'=', $sortCursor)
                             ->where('id', '>', $id);
                     });
             }
