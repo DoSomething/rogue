@@ -51,11 +51,18 @@ class TagsController extends ApiController
             'tag_name' => 'required|string',
         ]);
 
+        // If a tag slug is sent in, change to the tag name.
+        // @TODO: This controller/model should really deal in slugs...
+        $tag = $request->tag_name;
+        if (str_contains($tag, '-')) {
+            $tag = ucwords(str_replace('-', ' ', $tag));
+        }
+
         // If the post already has the tag, remove it. Otherwise, add the tag to the post.
-        if ($post->tagNames()->contains($request->tag_name)) {
-            $updatedPost = $this->post->untag($post, $request->tag_name);
+        if ($post->tagNames()->contains($tag)) {
+            $updatedPost = $this->post->untag($post, $tag);
         } else {
-            $updatedPost = $this->post->tag($post, $request->tag_name);
+            $updatedPost = $this->post->tag($post, $tag);
         }
 
         return $this->item($updatedPost);
