@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
 import React, { useEffect } from 'react';
+import { useQuery } from '@apollo/react-hooks';
 
 import Empty from './Empty';
 import { updateQuery } from '../helpers';
