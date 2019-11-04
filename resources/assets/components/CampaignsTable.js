@@ -46,11 +46,11 @@ const filterCampaigns = (data, filter) => {
     return [];
   }
 
-  return data.campaigns.edges.filter(campaign => {
-    if (search === '') {
-      return true;
-    }
+  if (filter === '') {
+    return data.campaigns.edges;
+  }
 
+  return data.campaigns.edges.filter(campaign => {
     const { id, internalTitle, causes } = campaign.node;
 
     const matchesId = id.toString().includes(search);
