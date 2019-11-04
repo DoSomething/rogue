@@ -64,8 +64,8 @@ const filterCampaigns = (data, filter) => {
 };
 
 /**
- * This component handles fetching & paginating a list campaign
- * of campaigns matching the given filter(s).
+ * This component handles fetching & paginating a list of
+ * campaigns matching the given filter(s).
  *
  * @param {Boolean} isOpen
  * @param {String} filter
