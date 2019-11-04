@@ -30,18 +30,6 @@ class CampaignIdsController extends Controller
     }
 
     /**
-     * Show overview of campaigns and their IDs.
-     */
-    public function index()
-    {
-        $campaigns = Campaign::orderBy('created_at', 'desc')->get()->map(function ($campaign) {
-            return (new CampaignTransformer)->transform($campaign);
-        });
-
-        return view('campaign-ids.index')->with('state', $campaigns);
-    }
-
-    /**
      * Create a new campaign.
      */
     public function create()

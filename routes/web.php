@@ -18,7 +18,6 @@ $router->get('login', 'AuthController@getLogin');
 $router->get('logout', 'AuthController@getLogout');
 
 // Campaigns
-$router->get('campaigns', 'CampaignsController@index');
 $router->get('campaigns/{id}', 'CampaignsController@show')->name('campaigns.show');
 
 // Create, update, delete campaigns via Rogue.
@@ -37,6 +36,9 @@ $router->get('signups/{id}', 'SignupsController@show')->name('signups.show');
 
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
+    // Campaigns
+    Route::view('campaigns', 'app')->name('campaigns.index');
+
     // Users
     Route::view('users', 'app')->name('users.index');
     Route::view('users/{id}', 'app')->name('users.show');

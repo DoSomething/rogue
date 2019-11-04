@@ -6,6 +6,7 @@ import { env } from '../helpers';
 import graphql from '../graphql';
 import UserIndex from './UserIndex';
 import UserOverview from './UserOverview';
+import CampaignIndex from './CampaignIndex';
 
 const Application = () => {
   const endpoint = env('GRAPHQL_URL');
@@ -14,6 +15,9 @@ const Application = () => {
     <ApolloProvider client={graphql(endpoint)}>
       <Router>
         <Switch>
+          <Route path="/campaigns" exact>
+            <CampaignIndex />
+          </Route>
           <Route path="/users" exact>
             <UserIndex />
           </Route>
