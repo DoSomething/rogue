@@ -6,10 +6,6 @@ const CampaignIndex = () => {
   const [showClosed, setShowClosed] = useState(false);
   const [filter, setFilter] = useState('');
 
-  const onChange = event => {
-    setFilter(event.target.value);
-  };
-
   return (
     <>
       <header className="header" role="banner">
@@ -27,7 +23,7 @@ const CampaignIndex = () => {
               type="text"
               className="text-field -search"
               placeholder="Filter by campaign ID, name, cause..."
-              onChange={onChange}
+              onChange={event => setFilter(event.target.value)}
             />
           </div>
           <div className="container__block -half form-actions -inline text-right">
