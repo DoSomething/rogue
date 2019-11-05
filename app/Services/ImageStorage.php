@@ -6,6 +6,7 @@ use Rogue\Models\Post;
 use Intervention\Image\Image;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\File;
+use Intervention\Image\Facades\Image as ImageManager;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -16,6 +17,19 @@ class ImageStorage
      * @param string
      */
     protected $base = 'uploads/reportback-items/';
+
+    /**
+     * Get image for the given post.
+     *
+     * @param Post $post
+     * @return Image
+     */
+    public function get(Post $post)
+    {
+        $contents = Storage::get($post->getMediaPath());
+
+        return ImageManager::make($contents);
+    }
 
     /**
      * Save a new image for the given signup ID.

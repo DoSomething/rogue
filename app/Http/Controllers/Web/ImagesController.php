@@ -2,13 +2,9 @@
 
 namespace Rogue\Http\Controllers\Web;
 
-use Storage;
 use Rogue\Models\Post;
-use Rogue\Services\Fastly;
 use Illuminate\Http\Request;
 use League\Glide\ServerFactory;
-use Rogue\Services\ImageStorage;
-use Intervention\Image\Facades\Image;
 use Rogue\Http\Controllers\Controller;
 use League\Flysystem\Memory\MemoryAdapter;
 use League\Flysystem\Filesystem as Flysystem;
@@ -29,11 +25,9 @@ class ImagesController extends Controller
      *
      * @param Filesystem $filesystem
      */
-    public function __construct(Filesystem $filesystem, ImageStorage $storage, Fastly $fastly)
+    public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
-        $this->storage = $storage;
-        $this->fastly = $fastly;
 
         $this->middleware('throttle:60');
     }
@@ -66,32 +60,5 @@ class ImagesController extends Controller
         $response->headers->set('Surrogate-Key', 'post-'.$post->id);
 
         return $response;
-    }
-
-    /**
-     * Edits and overwrites an image based on given request parameters.
-     *
-     * @param  Post $post
-     * @param  Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Post $post, Request $request)
-    {
-        $this->validate($request, [
-            'rotate' => 'required|int',
-        ]);
-
-        $image = Storage::get($post->getMediaPath());
-
-        $angle = (int) -$request->input('rotate');
-        $rotatedImage = Image::make($image)->rotate($angle);
-
-        $this->storage->edit($post, $rotatedImage);
-        $this->fastly->purge($post);
-
-        return response()->json([
-            'url' => $post->getMediaUrl(),
-            'original_image_url' => $post->url,
-        ]);
     }
 }
