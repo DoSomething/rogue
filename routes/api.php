@@ -38,6 +38,9 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
     // tag
     $this->post('posts/{post}/tags', 'TagsController@store');
 
+    // images
+    $this->post('posts/{post}/rotate', 'RotationController@update');
+
     // events
     $this->get('events', 'EventsController@index');
 
