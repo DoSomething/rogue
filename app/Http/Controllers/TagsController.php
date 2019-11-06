@@ -51,10 +51,10 @@ class TagsController extends ApiController
             'tag_name' => 'required|string',
         ]);
 
-        // If a tag slug is sent in, change to the tag name.
+        // If a tag slug is sent in (dashed or lowercase), change to the tag name.
         // @TODO: This controller/model should really deal in slugs...
         $tag = $request->tag_name;
-        if (str_contains($tag, '-')) {
+        if (str_contains($tag, '-') || ctype_lower($tag)) {
             $tag = ucwords(str_replace('-', ' ', $tag));
         }
 
