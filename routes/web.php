@@ -42,6 +42,9 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     // Users
     Route::view('users', 'app')->name('users.index');
     Route::view('users/{id}', 'app')->name('users.show');
+
+    // Posts
+    Route::view('posts/{id}', 'app')->name('posts.show');
 });
 
 // Images
