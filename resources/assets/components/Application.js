@@ -4,6 +4,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 
 import { env } from '../helpers';
 import graphql from '../graphql';
+import ShowPost from './ShowPost';
 import UserIndex from './UserIndex';
 import UserOverview from './UserOverview';
 import CampaignIndex from './CampaignIndex';
@@ -23,6 +24,9 @@ const Application = () => {
           </Route>
           <Route path="/users/:id">
             <UserOverview />
+          </Route>
+          <Route path="/posts/:id">
+            <ShowPost />
           </Route>
         </Switch>
       </Router>
