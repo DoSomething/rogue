@@ -8,6 +8,7 @@ import Quantity from './Quantity';
 import PostTile from './PostTile';
 import TextBlock from './TextBlock';
 import PostCard from './utilities/PostCard';
+import DeleteButton from './utilities/DeleteButton';
 import { AllTagButtons, TagButtonFragment } from './utilities/TagButton';
 import MetaInformation from './MetaInformation';
 import {
@@ -30,6 +31,7 @@ export const ReviewablePostFragment = gql`
     createdAt
     source
     location(format: HUMAN_FORMAT)
+    deleted
 
     actionDetails {
       name
@@ -60,6 +62,18 @@ export const ReviewablePostFragment = gql`
 `;
 
 const ReviewablePost = ({ post }) => {
+  // If we have a 'deleted' flag, it means that we've deleted this
+  // post since first viewing it & cannot make any further changes.
+  if (post.deleted) {
+    return (
+      <div className="post container__row">
+        <p className="text-sm text-gray text-center italic">
+          This post (#{post.id}) has been deleted.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="post container__row">
       <div className="container__block -third">
@@ -111,6 +125,13 @@ const ReviewablePost = ({ post }) => {
             </li>
             <li>
               <RejectButton post={post} />
+            </li>
+          </ul>
+        </div>
+        <div className="container__row">
+          <ul className="form-actions -inline">
+            <li>
+              <DeleteButton post={post} />
             </li>
           </ul>
         </div>
