@@ -5,6 +5,7 @@ $forge-path: '~@dosomething/forge/assets/';
 
 // Fix 'button' styling in Forge's modal container:
 .modal-close-button {
+  background-color: transparent;
   border: 0;
 }
 
