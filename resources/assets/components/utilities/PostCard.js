@@ -2,6 +2,8 @@ import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
+import LazyImage from './LazyImage';
+
 const ROTATE_POST_MUTATION = gql`
   mutation RotatePostMutation($id: Int!) {
     rotatePost(id: $id) {
@@ -25,7 +27,7 @@ export const PostCard = ({ post }) => {
   return (
     <>
       {post.type == 'photo' ? (
-        <img className="post-tile" alt="post image" src={url} />
+        <LazyImage className="post-tile" alt="post image" src={url} />
       ) : (
         <div className="post-tile -fallback" />
       )}

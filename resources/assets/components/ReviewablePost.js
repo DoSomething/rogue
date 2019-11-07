@@ -1,15 +1,17 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import classNames from 'classnames';
+import usePortal from 'react-useportal';
 import { Link } from 'react-router-dom';
 import { parse, format } from 'date-fns';
 
 import Quantity from './Quantity';
 import PostTile from './PostTile';
 import TextBlock from './TextBlock';
+import Modal from './utilities/Modal';
 import PostCard from './utilities/PostCard';
 import DeleteButton from './utilities/DeleteButton';
 import { AllTagButtons, TagButtonFragment } from './utilities/TagButton';
+import QuantityForm, { QuantityFormFragment } from './utilities/QuantityForm';
 import MetaInformation from './MetaInformation';
 import {
   AcceptButton,
@@ -24,6 +26,7 @@ export const ReviewablePostFragment = gql`
   fragment ReviewablePost on Post {
     ...ReviewButton
     ...TagButton
+    ...QuantityForm
     quantity
     text
     type
@@ -58,10 +61,15 @@ export const ReviewablePostFragment = gql`
 
   ${ReviewButtonFragment}
   ${TagButtonFragment}
+  ${QuantityFormFragment}
   ${UserInformationFragment}
 `;
 
 const ReviewablePost = ({ post }) => {
+  var { openPortal, closePortal, isOpen, Portal } = usePortal({
+    bindTo: document.getElementById('modal-portal'),
+  });
+
   // If we have a 'deleted' flag, it means that we've deleted this
   // post since first viewing it & cannot make any further changes.
   if (post.deleted) {
@@ -99,7 +107,19 @@ const ReviewablePost = ({ post }) => {
             />
           ) : null}
 
-          {/* TODO: Need to re-implement the 'edit quantity' modal. */}
+          <div className="container -padded">
+            <button className="button -tertiary" onClick={openPortal}>
+              Edit Quantity
+            </button>
+
+            {isOpen ? (
+              <Portal>
+                <Modal onClose={closePortal}>
+                  <QuantityForm post={post} />
+                </Modal>
+              </Portal>
+            ) : null}
+          </div>
 
           <div className="container -padded">
             <TextBlock

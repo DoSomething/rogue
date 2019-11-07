@@ -8,9 +8,9 @@ const Quantity = props => (
     </div>
     <div className="figure__body">
       {props.noun && props.verb ? (
-        <h4 className="reportback-noun-verb">
+        <strong>
           {props.noun} {props.verb}
-        </h4>
+        </strong>
       ) : null}
     </div>
   </div>

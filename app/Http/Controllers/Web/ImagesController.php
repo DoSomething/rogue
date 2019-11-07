@@ -58,10 +58,13 @@ class ImagesController extends Controller
 
         $response = $server->getImageResponse($post->getMediaPath(), $request->all());
 
-        // We want these to be cached in Fastly, but not in the user's browser, so we'll
-        // override 'Cache-Control' to use 's-max-age'. We can then use the 'Surrogate-Key'
-        // header to clear Fastly's cache if an image is rotated/deleted:
+        // We want these to be cached in Fastly, but not in the user's browser, since
+        // otherwise rotations/deletions won't take effect until the user clears their cache:
         $response->headers->set('Cache-Control', 's-max-age=31536000, public');
+        $response->headers->remove('Expires');
+
+        // We can then use the 'Surrogate-Key' to easily clear this from
+        // Fastly's cache if the post's image is modified later on:
         $response->headers->set('Surrogate-Key', 'post-'.$post->id);
 
         return $response;
