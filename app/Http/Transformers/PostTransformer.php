@@ -52,6 +52,7 @@ class PostTransformer extends TransformerAbstract
             'location_name' => $post->location_name,
             'created_at' => $post->created_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
+            'cursor' => $post->getCursor(),
         ];
 
         // If this post is for an anonymous action (and viewer is not owner/staff), hide the user ID.

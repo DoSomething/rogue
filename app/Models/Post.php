@@ -5,6 +5,7 @@ namespace Rogue\Models;
 use Hashids\Hashids;
 use Rogue\Services\GraphQL;
 use Rogue\Events\PostTagged;
+use Rogue\Models\Traits\HasCursor;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +13,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasCursor;
+
     /**
      * The attributes that should be mutated to dates.
      *
@@ -56,6 +58,16 @@ class Post extends Model
      * @var array
      */
     public static $indexes = ['id', 'signup_id', 'campaign_id', 'type', 'action', 'action_id', 'northstar_id', 'status', 'created_at', 'source', 'location'];
+
+    /**
+     * Attributes that can be sorted by.
+     *
+     * This array is manually maintained. It does not necessarily mean that
+     * any of these are actual indexes on the database... but they should be!
+     *
+     * @var array
+     */
+    public static $sortable = ['created_at'];
 
     /**
      * The tags prefixed with 'good' that will send a post to Slack.

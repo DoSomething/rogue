@@ -70,8 +70,7 @@ class PostsController extends ApiController
      */
     public function index(Request $request)
     {
-        $query = $this->newQuery(Post::class)
-            ->orderBy('created_at', 'desc');
+        $query = $this->newQuery(Post::class);
 
         if (has_include($request, 'signup')) {
             // Eagerly load the `signup` relationship.
@@ -95,6 +94,22 @@ class PostsController extends ApiController
         // If the northstar_id param is passed, only allow admins, staff, or owner to see anonymous posts.
         if (array_has($filters, 'northstar_id')) {
             $query = $query->withoutAnonymousPosts();
+        }
+
+        // This endpoint always returns posts in reverse chronological order. We'll
+        // therefore "force" the query string so that we can use it in `getCursor`.
+        // @TODO: There must be a more elegant way of doing this...
+        $query->orderBy('created_at', 'desc')
+            ->orderBy('id', 'asc');
+
+        $request->query->set('orderBy', 'created_at,desc');
+
+        // Experimental: Allow paginating by cursor (e.g. `?cursor[after]=OTAxNg==`):
+        if ($cursor = array_get($request->query('cursor'), 'after')) {
+            $query->whereAfterCursor($cursor);
+
+            // Using 'cursor' implies cursor pagination:
+            $this->useCursorPagination = true;
         }
 
         return $this->paginatedCollection($query, $request);
