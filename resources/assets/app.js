@@ -8,7 +8,6 @@ import mountContainer from './utilities/MountContainer';
 
 import Signup from './components/Signup';
 import Application from './components/Application';
-import CampaignInbox from './components/CampaignInbox';
 import CampaignSingle from './components/CampaignSingle';
 import CampaignIdSingle from './components/CampaignIdSingle';
 
@@ -23,7 +22,6 @@ ready(() => {
 
   // For "legacy" pages that render using our custom helpers:
   mountContainer({
-    CampaignInbox,
     CampaignIdSingle,
     CampaignSingle,
     Signup,
