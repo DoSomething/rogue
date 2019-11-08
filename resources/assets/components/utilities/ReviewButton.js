@@ -21,7 +21,7 @@ const REVIEW_POST_MUTATION = gql`
 `;
 
 const ReviewButton = ({ post, status, children }) => {
-  const [reviewPost] = useMutation(REVIEW_POST_MUTATION, {
+  const [reviewPost, { loading }] = useMutation(REVIEW_POST_MUTATION, {
     variables: {
       id: post.id,
       status: status,
@@ -34,6 +34,7 @@ const ReviewButton = ({ post, status, children }) => {
     <button
       className={classNames('button', '-outlined-button', statusClass, {
         'is-selected': post.status === status,
+        'is-loading': loading,
       })}
       onClick={reviewPost}
     >
