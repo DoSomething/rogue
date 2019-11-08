@@ -140,7 +140,7 @@ $factory->defineAs(User::class, 'admin', function () use ($factory) {
 $factory->define(Campaign::class, function (Generator $faker) {
     return [
         'internal_title' => title_case($faker->unique()->catchPhrase),
-        'cause' => $faker->randomElements(array_keys(Cause::all()), rand(1, 5)),
+        'cause' => $faker->randomElements(Cause::all(), rand(1, 5)),
         'impact_doc' => 'https://www.google.com/',
         // By default, we create an "open campaign".
         'start_date' => $faker->dateTimeBetween('-6 months', 'now'),
