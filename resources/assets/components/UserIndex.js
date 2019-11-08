@@ -4,7 +4,6 @@ import { useQuery } from '@apollo/react-hooks';
 import React, { useRef, useState } from 'react';
 
 import Empty from './Empty';
-import UserShell from './UserShell';
 
 const USER_SEARCH_QUERY = gql`
   query UserSearchQuery($term: String!) {
@@ -23,12 +22,20 @@ const USER_SEARCH_QUERY = gql`
  * @param {string} term
  */
 const SearchResults = ({ term }) => {
+  const title = 'Members';
+  const subtitle = 'User profiles &amp; signups...';
+
   const { loading, error, data } = useQuery(USER_SEARCH_QUERY, {
     variables: { term },
   });
 
-  if (loading) return <div className="spinner" />;
-  if (error) return <span>Error :(</span>;
+  if (loading) {
+    return <Shell title={title} subtitle={subtitle} loading />;
+  }
+
+  if (error) {
+    return <Shell title={title} subtitle={subtitle} error={error} />;
+  }
 
   if (data.users.length === 0) {
     return <Empty />;

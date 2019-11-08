@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import Chrome from './utilities/Chrome';
-import PagePlaceholder from './PagePlaceholder';
 import ReviewablePost, { ReviewablePostFragment } from './ReviewablePost';
 
 const SHOW_POST_QUERY = gql`
@@ -34,19 +33,13 @@ const ShowPost = () => {
     variables: { id: Number(id) },
   });
 
-  if (loading)
-    return (
-      <Chrome title={title} subtitle="...">
-        <PagePlaceholder />
-      </Chrome>
-    );
+  if (loading) {
+    return <Chrome title={title} loading />;
+  }
 
-  if (error)
-    return (
-      <Chrome title="Error" subtitle="oops!">
-        <div className="container__block">Error :(</div>
-      </Chrome>
-    );
+  if (error) {
+    return <Chrome error={error} />;
+  }
 
   if (!data.post)
     return (
