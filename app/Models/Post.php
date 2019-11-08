@@ -60,7 +60,7 @@ class Post extends Model
     public static $indexes = ['id', 'signup_id', 'campaign_id', 'type', 'action', 'action_id', 'northstar_id', 'status', 'created_at', 'source', 'location'];
 
     /**
-     * Attributes that can be sorted by.
+     * Attributes that we can sort by with the '?orderBy' query parameter.
      *
      * This array is manually maintained. It does not necessarily mean that
      * any of these are actual indexes on the database... but they should be!
