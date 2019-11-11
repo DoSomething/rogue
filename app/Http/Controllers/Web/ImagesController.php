@@ -65,7 +65,7 @@ class ImagesController extends Controller
 
         // But we want browsers to always re-validate before serving this image from local
         // cache, so that image rotations/deletions are respected immediately:
-        $response->headers->set('Cache-Control', 'no-cache');
+        $response->headers->set('Cache-Control', 'no-cache, public');
 
         return $response;
     }
