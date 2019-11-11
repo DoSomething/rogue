@@ -63,9 +63,9 @@ class ImagesController extends Controller
         $response->headers->set('Surrogate-Control', 'max-age=31536000');
         $response->headers->set('Surrogate-Key', 'post-'.$post->id);
 
-        // But we want browsers to always re-validate before serving this image from local
-        // cache, so that image rotations/deletions are respected immediately:
-        $response->headers->set('Cache-Control', 'no-cache, public');
+        // And we want browsers to cache but re-validate with us before returning cached content
+        // on a subsequent load, so that image rotations/deletions are respected immediately:
+        $response->headers->set('Cache-Control', 'max-age=31536000, must-revalidate, no-cache, public');
 
         return $response;
     }
