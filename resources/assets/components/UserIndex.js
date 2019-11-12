@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import React, { useRef, useState } from 'react';
 
 import Empty from './Empty';
-import UserShell from './UserShell';
+import Shell from './utilities/Shell';
 
 const USER_SEARCH_QUERY = gql`
   query UserSearchQuery($term: String!) {
@@ -27,8 +27,17 @@ const SearchResults = ({ term }) => {
     variables: { term },
   });
 
-  if (loading) return <div className="spinner" />;
-  if (error) return <span>Error :(</span>;
+  if (loading) {
+    return <div className="spinner" />;
+  }
+
+  if (error) {
+    return (
+      <p>
+        <strong>Error:</strong> {error}
+      </p>
+    );
+  }
 
   if (data.users.length === 0) {
     return <Empty />;
@@ -45,7 +54,7 @@ const SearchResults = ({ term }) => {
       </thead>
       <tbody>
         {data.users.map(user => (
-          <tr className="table__row">
+          <tr className="table__row" key={user.id}>
             <td className="table__cell">
               <Link to={`/users/${user.id}`}>{user.displayName}</Link>
             </td>
@@ -73,7 +82,7 @@ const UserIndex = () => {
   };
 
   return (
-    <UserShell>
+    <Shell title="Members" subtitle="User profiles &amp; signups...">
       <div className="container__block">
         <form onSubmit={onSubmit} className="form-actions -inline">
           <li>
@@ -102,7 +111,7 @@ const UserIndex = () => {
           </p>
         )}
       </div>
-    </UserShell>
+    </Shell>
   );
 };
 

@@ -4,10 +4,9 @@ import { map } from 'lodash';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
-import UserShell from '../UserShell';
 import SignupCard from '../SignupCard';
+import Shell from '../utilities/Shell';
 import MetaInformation from '../MetaInformation';
-import PagePlaceholder from '../PagePlaceholder';
 import UserInformation, {
   UserInformationFragment,
 } from '../Users/UserInformation';
@@ -45,23 +44,24 @@ const USER_OVERVIEW_QUERY = gql`
 const UserOverview = () => {
   const { id } = useParams();
 
+  const title = 'Members';
+  const subtitle = 'User profiles & signups...';
   const { loading, error, data } = useQuery(USER_OVERVIEW_QUERY, {
     variables: { id },
   });
 
-  if (loading)
-    return (
-      <UserShell>
-        <PagePlaceholder />
-      </UserShell>
-    );
+  if (loading) {
+    return <Shell title={title} subtitle={subtitle} loading />;
+  }
 
-  if (error) return <UserShell>Error :(</UserShell>;
+  if (error) {
+    return <Shell title={title} subtitle={subtitle} error={error} />;
+  }
 
   const { user, signups } = data;
 
   return (
-    <UserShell>
+    <Shell title={title} subtitle={subtitle}>
       <div className="container__block">
         <h2 className="heading -emphasized -padded">
           <span>User Info</span>
@@ -88,7 +88,7 @@ const UserOverview = () => {
           return <SignupCard key={signup.id} signup={signup} />;
         })}
       </div>
-    </UserShell>
+    </Shell>
   );
 };
 

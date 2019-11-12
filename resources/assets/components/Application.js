@@ -7,6 +7,7 @@ import graphql from '../graphql';
 import ShowPost from './ShowPost';
 import UserIndex from './UserIndex';
 import UserOverview from './UserOverview';
+import CampaignInbox from './CampaignInbox';
 import CampaignIndex from './CampaignIndex';
 
 const Application = () => {
@@ -18,6 +19,9 @@ const Application = () => {
         <Switch>
           <Route path="/campaigns" exact>
             <CampaignIndex />
+          </Route>
+          <Route path="/campaigns/:id/inbox">
+            <CampaignInbox />
           </Route>
           <Route path="/users" exact>
             <UserIndex />

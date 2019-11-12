@@ -1,5 +1,6 @@
 import { get } from 'lodash';
 import gql from 'graphql-tag';
+import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -125,7 +126,7 @@ const CampaignsTable = ({ isOpen, filter }) => {
               </td>
               <td className="table__cell">{node.pendingCount || 0}</td>
               <td className="table__cell">
-                <a href={`/campaigns/${node.id}/inbox`}>review</a>
+                <Link to={`/campaigns/${node.id}/inbox`}>review</Link>
               </td>
               <td className="table__cell">
                 <a href={`/campaign-ids/${node.id}`}>edit</a>
