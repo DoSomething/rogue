@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import SignupCard from '../SignupCard';
-import Chrome from '../utilities/Chrome';
+import Shell from '../utilities/Shell';
 import MetaInformation from '../MetaInformation';
 import UserInformation, {
   UserInformationFragment,
@@ -51,17 +51,17 @@ const UserOverview = () => {
   });
 
   if (loading) {
-    return <Chrome title={title} subtitle={subtitle} loading />;
+    return <Shell title={title} subtitle={subtitle} loading />;
   }
 
   if (error) {
-    return <Chrome title={title} subtitle={subtitle} error={error} />;
+    return <Shell title={title} subtitle={subtitle} error={error} />;
   }
 
   const { user, signups } = data;
 
   return (
-    <Chrome title={title} subtitle={subtitle}>
+    <Shell title={title} subtitle={subtitle}>
       <div className="container__block">
         <h2 className="heading -emphasized -padded">
           <span>User Info</span>
@@ -88,7 +88,7 @@ const UserOverview = () => {
           return <SignupCard key={signup.id} signup={signup} />;
         })}
       </div>
-    </Chrome>
+    </Shell>
   );
 };
 

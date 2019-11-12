@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import Empty from './Empty';
-import Chrome from './utilities/Chrome';
+import Shell from './utilities/Shell';
 import { updateQuery } from '../helpers';
 import ReviewablePost, { ReviewablePostFragment } from './ReviewablePost';
 
@@ -48,7 +48,7 @@ const ShowCampaign = () => {
   });
 
   if (error) {
-    return <Chrome error={error} />;
+    return <Shell error={error} />;
   }
 
   const posts = get(data, 'posts.edges', []);
@@ -63,19 +63,19 @@ const ShowCampaign = () => {
 
   if (posts.length == 0) {
     return loading ? (
-      <Chrome title={title} subtitle={subtitle} loading />
+      <Shell title={title} subtitle={subtitle} loading />
     ) : (
-      <Chrome title={title} subtitle={subtitle}>
+      <Shell title={title} subtitle={subtitle}>
         <Empty
           header="There are no new posts!"
           copy="Great job, there are no new posts to review!"
         />
-      </Chrome>
+      </Shell>
     );
   }
 
   return (
-    <Chrome title={title} subtitle={subtitle}>
+    <Shell title={title} subtitle={subtitle}>
       {posts.map(edge => (
         <ReviewablePost key={edge.cursor} post={edge.node} />
       ))}
@@ -97,7 +97,7 @@ const ShowCampaign = () => {
           <p className="footnote margin-horizontal-auto">...and that's all!</p>
         )}
       </div>
-    </Chrome>
+    </Shell>
   );
 };
 

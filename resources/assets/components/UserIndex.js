@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import React, { useRef, useState } from 'react';
 
 import Empty from './Empty';
+import Shell from './utilities/Shell';
 
 const USER_SEARCH_QUERY = gql`
   query UserSearchQuery($term: String!) {

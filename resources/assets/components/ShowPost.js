@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
-import Chrome from './utilities/Chrome';
+import Shell from './utilities/Shell';
 import ReviewablePost, { ReviewablePostFragment } from './ReviewablePost';
 
 const SHOW_POST_QUERY = gql`
@@ -34,27 +34,27 @@ const ShowPost = () => {
   });
 
   if (loading) {
-    return <Chrome title={title} loading />;
+    return <Shell title={title} loading />;
   }
 
   if (error) {
-    return <Chrome error={error} />;
+    return <Shell error={error} />;
   }
 
   if (!data.post)
     return (
-      <Chrome title={title} subtitle="Not found!">
+      <Shell title={title} subtitle="Not found!">
         <div className="container__block">
           We couldn't find that post. Maybe it was deleted?
         </div>
-      </Chrome>
+      </Shell>
     );
 
   const { post } = data;
   const subtitle = `${post.user.displayName} / ${post.campaign.internalTitle}`;
 
   return (
-    <Chrome title={title} subtitle={subtitle}>
+    <Shell title={title} subtitle={subtitle}>
       <ReviewablePost post={post} />
       <ul className="form-actions margin-vertical">
         <li>
@@ -66,7 +66,7 @@ const ShowPost = () => {
           </a>
         </li>
       </ul>
-    </Chrome>
+    </Shell>
   );
 };
 
