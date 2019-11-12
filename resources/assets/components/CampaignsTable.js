@@ -126,7 +126,7 @@ const CampaignsTable = ({ isOpen, filter }) => {
               </td>
               <td className="table__cell">{node.pendingCount || 0}</td>
               <td className="table__cell">
-                <Link to={`/campaigns/${node.id}/inbox`}>review</Link>
+                <Link to={`/campaigns/${node.id}/pending`}>review</Link>
               </td>
               <td className="table__cell">
                 <a href={`/campaign-ids/${node.id}`}>edit</a>
