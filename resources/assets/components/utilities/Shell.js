@@ -18,7 +18,7 @@ const Shell = ({ title, subtitle, children, error, loading }) => {
   if (error) {
     return (
       <BaseShell title="Oops!" subtitle="Something went wrong...">
-        <strong>Error:</strong> {error}
+        <div className="placeholder flex-center-xy">{error.toString()}</div>
       </BaseShell>
     );
   }
