@@ -62,15 +62,12 @@ const ReviewablePostGallery = ({ campaignId, status }) => {
 
   if (posts.length == 0) {
     return loading ? (
-      <div className="placeholder flex-center-xy">
+      <div className="h-content flex-center-xy">
         <div className="spinner" />
       </div>
     ) : (
-      <div className="margin-vertical">
-        <Empty
-          header="There are no new posts!"
-          copy="Great job, there are no new posts to review!"
-        />
+      <div className="h-content flex-center-xy">
+        <Empty copy="No posts match those filters!" />
       </div>
     );
   }

@@ -26,7 +26,7 @@ const Shell = ({ title, subtitle, children, error, loading }) => {
   if (loading) {
     return (
       <BaseShell title={title || 'Loading...'} subtitle={subtitle || '...'}>
-        <div className="placeholder flex-center-xy">
+        <div className="h-content flex-center-xy">
           <div className="spinner" />
         </div>
       </BaseShell>

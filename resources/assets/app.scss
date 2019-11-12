@@ -77,11 +77,9 @@ button.delete {
   font-weight: $weight-normal;
 }
 
-.placeholder {
+// Tailwind-style helper to fill viewport height, minus header.
+.h-content {
   width: 100%;
-  color: $light-gray;
-
-  // This should fill the viewport, minus the header height:
   min-height: calc(100vh - 267px);
 }
 
