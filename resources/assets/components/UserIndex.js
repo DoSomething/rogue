@@ -23,19 +23,20 @@ const USER_SEARCH_QUERY = gql`
  * @param {string} term
  */
 const SearchResults = ({ term }) => {
-  const title = 'Members';
-  const subtitle = 'User profiles &amp; signups...';
-
   const { loading, error, data } = useQuery(USER_SEARCH_QUERY, {
     variables: { term },
   });
 
   if (loading) {
-    return <Shell title={title} subtitle={subtitle} loading />;
+    return <div className="spinner" />;
   }
 
   if (error) {
-    return <Shell title={title} subtitle={subtitle} error={error} />;
+    return (
+      <p>
+        <strong>Error:</strong> {error}
+      </p>
+    );
   }
 
   if (data.users.length === 0) {
@@ -53,7 +54,7 @@ const SearchResults = ({ term }) => {
       </thead>
       <tbody>
         {data.users.map(user => (
-          <tr className="table__row">
+          <tr className="table__row" key={user.id}>
             <td className="table__cell">
               <Link to={`/users/${user.id}`}>{user.displayName}</Link>
             </td>
@@ -81,7 +82,7 @@ const UserIndex = () => {
   };
 
   return (
-    <UserShell>
+    <Shell title="Members" subtitle="User profiles &amp; signups...">
       <div className="container__block">
         <form onSubmit={onSubmit} className="form-actions -inline">
           <li>
@@ -110,7 +111,7 @@ const UserIndex = () => {
           </p>
         )}
       </div>
-    </UserShell>
+    </Shell>
   );
 };
 
