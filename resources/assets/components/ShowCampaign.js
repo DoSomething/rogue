@@ -49,6 +49,12 @@ const ShowCampaign = () => {
           <h4>Filter by tag...</h4>
           <Select values={TAGS} value={tag} onChange={setTag} />
         </div>
+
+        <div className="container__block -third form-actions -inline text-right pt-heading">
+          <a className="button -tertiary" href={`/campaign-ids/${id}`}>
+            Edit Campaign &amp; Actions
+          </a>
+        </div>
       </div>
       <ReviewablePostGallery
         campaignId={id}

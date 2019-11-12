@@ -83,6 +83,13 @@ button.delete {
   min-height: calc(100vh - 267px);
 }
 
+// Tailwind-style helper to pad the top of an element as if a
+// heading was there (for example, to align heading-less content
+// with other elements in a grid):
+.pt-heading {
+  padding-top: $font-regular + 4px !important;
+}
+
 .flex-center-xy {
   display: flex;
   justify-content: center;
