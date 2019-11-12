@@ -1,13 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import { env } from '../helpers';
 import graphql from '../graphql';
 import ShowPost from './ShowPost';
 import UserIndex from './UserIndex';
+import ShowCampaign from './ShowCampaign';
 import UserOverview from './UserOverview';
-import CampaignInbox from './CampaignInbox';
 import CampaignIndex from './CampaignIndex';
 
 const Application = () => {
@@ -15,13 +15,15 @@ const Application = () => {
 
   return (
     <ApolloProvider client={graphql(endpoint)}>
-      <Router>
+      <BrowserRouter>
         <Switch>
           <Route path="/campaigns" exact>
             <CampaignIndex />
           </Route>
-          <Route path="/campaigns/:id/inbox">
-            <CampaignInbox />
+          <Redirect from="/campaigns/:id" exact to="/campaigns/:id/accepted" />
+          <Redirect from="/campaigns/:id/inbox" to="/campaigns/:id/pending" />
+          <Route path="/campaigns/:id/:status">
+            <ShowCampaign />
           </Route>
           <Route path="/users" exact>
             <UserIndex />
@@ -33,7 +35,7 @@ const Application = () => {
             <ShowPost />
           </Route>
         </Switch>
-      </Router>
+      </BrowserRouter>
     </ApolloProvider>
   );
 };

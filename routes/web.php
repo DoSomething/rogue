@@ -35,7 +35,8 @@ $router->get('signups/{id}', 'SignupsController@show')->name('signups.show');
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     // Campaigns
     Route::view('campaigns', 'app')->name('campaigns.index');
-    Route::view('campaigns/{id}/inbox', 'app');
+    Route::view('campaigns/{id}', 'app');
+    Route::view('campaigns/{id}/{status}', 'app');
 
     // Users
     Route::view('users', 'app')->name('users.index');

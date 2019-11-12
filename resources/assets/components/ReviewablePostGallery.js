@@ -40,9 +40,9 @@ const REVIEWABLE_POSTS_QUERY = gql`
   ${ReviewablePostFragment}
 `;
 
-const ReviewablePostGallery = ({ campaignId, status }) => {
+const ReviewablePostGallery = ({ campaignId, status, tags }) => {
   const { loading, error, data, fetchMore } = useQuery(REVIEWABLE_POSTS_QUERY, {
-    variables: { campaignId, status },
+    variables: { campaignId, status, tags },
     notifyOnNetworkStatusChange: true,
   });
 
