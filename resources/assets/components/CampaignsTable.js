@@ -119,10 +119,10 @@ const CampaignsTable = ({ isOpen, filter }) => {
           {campaigns.map(({ node, cursor }) => (
             <tr className="table__row" key={cursor}>
               <td className="table__cell">
-                <a href={`/campaigns/${node.id}`}>
+                <Link to={`/campaigns/${node.id}/accepted`}>
                   {node.internalTitle}{' '}
                   <code className="footnote">({node.id})</code>
-                </a>
+                </Link>
               </td>
               <td className="table__cell">{node.pendingCount || 0}</td>
               <td className="table__cell">
