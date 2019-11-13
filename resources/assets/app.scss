@@ -91,7 +91,9 @@ $accepted-green: #80e85d;
 .table {
   display: table;
   width: 100%;
-  border-collapse: collapse;
+  border: 1px solid $light-gray;
+  border-radius: $sm-border-radius;
+  border-collapse: separate;
   width: 100%;
   overflow-x: auto;
 
@@ -102,16 +104,12 @@ $accepted-green: #80e85d;
     text-align: left;
   }
 
-  tbody {
-    border: 1px solid $light-gray;
-  }
-
-  tr {
-    background: #efefef;
-  }
-
-  tr:nth-of-type(odd) {
+  tbody tr {
     background: $white;
+  }
+
+  tbody tr:nth-of-type(odd) {
+    background: #efefef;
   }
 
   td {
