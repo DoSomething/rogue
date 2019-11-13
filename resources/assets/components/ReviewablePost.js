@@ -175,7 +175,7 @@ const ReviewablePost = ({ post }) => {
           <MetaInformation
             title="Post Information"
             details={{
-              ID: post.id,
+              ID: <Link to={`/posts/${post.id}`}>{post.id}</Link>,
               Campaign: (
                 <a href={`/campaign-ids/${post.campaign.id}`}>
                   {post.campaign.internalTitle}
