@@ -9,9 +9,6 @@ import './campaignidsingle.scss';
 
 import Action from '../Action';
 import PagingButtons from '../PagingButtons';
-import UploaderModal from '../UploaderModal';
-import ModalContainer from '../ModalContainer';
-// import CreateActionModal from '../CreateActionModal';
 
 class CampaignIdSingle extends React.Component {
   constructor(props) {

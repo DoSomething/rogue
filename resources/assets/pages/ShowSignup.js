@@ -5,14 +5,14 @@ import { parse, format } from 'date-fns';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
-import TextBlock from './TextBlock';
-import Shell from './utilities/Shell';
-import MetaInformation from './MetaInformation';
-import ReviewablePostGallery from './ReviewablePostGallery';
-import DeleteSignupButton from './utilities/DeleteSignupButton';
+import TextBlock from '../components/utilities/TextBlock';
+import Shell from '../components/utilities/Shell';
+import MetaInformation from '../components/utilities/MetaInformation';
+import ReviewablePostGallery from '../components/ReviewablePostGallery';
+import DeleteSignupButton from '../components/DeleteSignupButton';
 import UserInformation, {
   UserInformationFragment,
-} from './Users/UserInformation';
+} from '../components/utilities/UserInformation';
 
 const SHOW_SIGNUP_QUERY = gql`
   query ShowCampaignQuery($id: Int!) {

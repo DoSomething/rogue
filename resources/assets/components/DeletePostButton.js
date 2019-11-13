@@ -11,7 +11,7 @@ const DELETE_POST_MUTATION = gql`
   }
 `;
 
-const DeleteButton = ({ post }) => {
+const DeletePostButton = ({ post }) => {
   const [deletePost] = useMutation(DELETE_POST_MUTATION, {
     variables: {
       id: post.id,
@@ -33,4 +33,4 @@ const DeleteButton = ({ post }) => {
   );
 };
 
-export default DeleteButton;
+export default DeletePostButton;

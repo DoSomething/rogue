@@ -5,24 +5,24 @@ import usePortal from 'react-useportal';
 import { Link } from 'react-router-dom';
 import { parse, format } from 'date-fns';
 
-import Quantity from './Quantity';
+import Quantity from './utilities/Quantity';
 import PostTile from './PostTile';
 import { TAGS } from '../helpers';
-import TextBlock from './TextBlock';
+import TextBlock from './utilities/TextBlock';
 import Modal from './utilities/Modal';
 import PostCard from './utilities/PostCard';
-import DeleteButton from './utilities/DeleteButton';
-import TagButton, { TagButtonFragment } from './utilities/TagButton';
-import QuantityForm, { QuantityFormFragment } from './utilities/QuantityForm';
-import MetaInformation from './MetaInformation';
+import DeletePostButton from './DeletePostButton';
+import TagButton, { TagButtonFragment } from './TagButton';
+import QuantityForm, { QuantityFormFragment } from './QuantityForm';
+import MetaInformation from './utilities/MetaInformation';
 import {
   AcceptButton,
   RejectButton,
   ReviewButtonFragment,
-} from './utilities/ReviewButton';
+} from './ReviewButton';
 import UserInformation, {
   UserInformationFragment,
-} from './Users/UserInformation';
+} from './utilities/UserInformation';
 
 export const ReviewablePostFragment = gql`
   fragment ReviewablePost on Post {
@@ -154,7 +154,7 @@ const ReviewablePost = ({ post }) => {
         <div className="container__row">
           <ul className="form-actions -inline">
             <li>
-              <DeleteButton post={post} />
+              <DeletePostButton post={post} />
             </li>
           </ul>
         </div>

@@ -6,8 +6,7 @@ import ReactDom from 'react-dom';
 import { ready } from './helpers';
 import mountContainer from './utilities/MountContainer';
 
-import Signup from './components/Signup';
-import Application from './components/Application';
+import Application from './Application';
 import CampaignIdSingle from './components/CampaignIdSingle';
 
 // Display environment badge on local, dev, or QA:
@@ -22,6 +21,5 @@ ready(() => {
   // For "legacy" pages that render using our custom helpers:
   mountContainer({
     CampaignIdSingle,
-    Signup,
   });
 });
