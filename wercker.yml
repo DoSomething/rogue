@@ -1,46 +1,47 @@
 box: dosomething/ds-docker-php:7.2
 
 build:
-    steps:
-      - script:
-          name: start mysql
-          code: |-
-            chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
-            sudo service mysql start
-      - script:
-          name: configure environment
-          code: |-
-            mysql -u homestead -psecret -e "CREATE DATABASE rogue_test;"
-            cp .env.example .env
-      - leipert/composer-install@0.9.1
-      - wercker/npm-install
-      - script:
-          name: build front-end assets
-          code: npm run build
-      - script:
-          name: run phpunit test suite
-          code: |-
-            php artisan key:generate
-            vendor/bin/phpunit
-      - script:
-          name: run jest/eslint test suite
-          code: npm run test:ci
-      - script:
-          name: run dusk test suite
-          code: |-
-            cp .env.dusk.ci .env # switch to our dusk config
-            chmod +x vendor/laravel/dusk/bin/chromedriver-linux
-            ./vendor/laravel/dusk/bin/chromedriver-linux 2>&1 &
-            php artisan gateway:key
-            php artisan serve 2>&1 &
-            sleep 5 # wait for artisan server to start up
-            php artisan dusk
-      - script:
-          name: discover production packages
-          code: |-
-            rm .env # reset APP_ENV=production
-            composer install --no-dev
-            php artisan package:discover
+  steps:
+    - script:
+        name: start mysql
+        code: |-
+          chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
+          sudo service mysql start
+    - script:
+        name: configure environment
+        code: |-
+          mysql -u homestead -psecret -e "CREATE DATABASE rogue_test;"
+          cp .env.example .env
+    - leipert/composer-install@0.9.1
+    - wercker/npm-install
+    - script:
+        name: build front-end assets
+        code: npm run build
+    - script:
+        name: run phpunit test suite
+        code: |-
+          php artisan key:generate
+          vendor/bin/phpunit
+    # We don't have any frontend tests, so we've disabled this step:
+    # - script:
+    #     name: run jest/eslint test suite
+    #     code: npm run test:ci
+    - script:
+        name: run dusk test suite
+        code: |-
+          cp .env.dusk.ci .env # switch to our dusk config
+          chmod +x vendor/laravel/dusk/bin/chromedriver-linux
+          ./vendor/laravel/dusk/bin/chromedriver-linux 2>&1 &
+          php artisan gateway:key
+          php artisan serve 2>&1 &
+          sleep 5 # wait for artisan server to start up
+          php artisan dusk
+    - script:
+        name: discover production packages
+        code: |-
+          rm .env # reset APP_ENV=production
+          composer install --no-dev
+          php artisan package:discover
 
 deploy:
   # steps:
