@@ -49,6 +49,7 @@ export const ReviewablePostFragment = gql`
       internalTitle
     }
 
+    signupId
     signup {
       id
       whyParticipated
@@ -100,7 +101,7 @@ const ReviewablePost = ({ post }) => {
       </div>
 
       <div className="container__block -third">
-        <UserInformation user={post.user} linkSignup={post.signup.id}>
+        <UserInformation user={post.user} linkSignup={post.signupId}>
           {post.quantity ? (
             <Quantity
               quantity={post.quantity}
@@ -133,7 +134,7 @@ const ReviewablePost = ({ post }) => {
           <div className="container">
             <TextBlock
               title="Why Statement"
-              content={post.signup.whyParticipated}
+              content={post.signup ? post.signup.whyParticipated : 'N/A'}
             />
           </div>
         </UserInformation>
@@ -194,9 +195,9 @@ const ReviewablePost = ({ post }) => {
           <MetaInformation
             title="Signup Information"
             details={{
-              ID: <a href={`/signups/${post.signup.id}`}>{post.signup.id}</a>,
+              ID: <a href={`/signups/${post.signupId}`}>{post.signupId}</a>,
               User: <Link to={`/users/${post.user.id}`}>{post.user.id}</Link>,
-              Source: post.signup.source,
+              Source: post.signup ? post.signup.source : '–',
             }}
           />
         </div>
