@@ -240,7 +240,7 @@ $accepted-green: #80e85d;
 
 // Tailwind helpers:
 .mb-4 {
-  margin-bottom: $base-spacing;
+  margin-bottom: $base-spacing !important;
 }
 
 .my-4 {
