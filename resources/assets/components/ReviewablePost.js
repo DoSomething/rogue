@@ -49,6 +49,7 @@ export const ReviewablePostFragment = gql`
       internalTitle
     }
 
+    signupId
     signup {
       id
       whyParticipated
@@ -76,7 +77,7 @@ const ReviewablePost = ({ post }) => {
   // post since first viewing it & cannot make any further changes.
   if (post.deleted) {
     return (
-      <div className="post container__row">
+      <div className="border-solid border-gray-300 border-b-2 py-4 my-4">
         <p className="text-sm text-gray text-center italic">
           This post (#{post.id}) has been deleted.
         </p>
@@ -85,7 +86,7 @@ const ReviewablePost = ({ post }) => {
   }
 
   return (
-    <div className="post container__row">
+    <div className="border-solid border-gray-300 border-b-2 py-4 my-4 clearfix">
       <div className="container__block -third">
         <PostCard post={post} />
         <ul className="gallery -duo">
@@ -100,7 +101,7 @@ const ReviewablePost = ({ post }) => {
       </div>
 
       <div className="container__block -third">
-        <UserInformation user={post.user} linkSignup={post.signup.id}>
+        <UserInformation user={post.user} linkSignup={post.signupId}>
           {post.quantity ? (
             <Quantity
               quantity={post.quantity}
@@ -133,7 +134,7 @@ const ReviewablePost = ({ post }) => {
           <div className="container">
             <TextBlock
               title="Why Statement"
-              content={post.signup.whyParticipated}
+              content={post.signup ? post.signup.whyParticipated : 'N/A'}
             />
           </div>
         </UserInformation>
@@ -194,9 +195,9 @@ const ReviewablePost = ({ post }) => {
           <MetaInformation
             title="Signup Information"
             details={{
-              ID: <a href={`/signups/${post.signup.id}`}>{post.signup.id}</a>,
+              ID: <a href={`/signups/${post.signupId}`}>{post.signupId}</a>,
               User: <Link to={`/users/${post.user.id}`}>{post.user.id}</Link>,
-              Source: post.signup.source,
+              Source: post.signup ? post.signup.source : '–',
             }}
           />
         </div>

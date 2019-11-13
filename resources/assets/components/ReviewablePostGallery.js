@@ -12,12 +12,14 @@ import ReviewablePost, { ReviewablePostFragment } from './ReviewablePost';
 const REVIEWABLE_POSTS_QUERY = gql`
   query ReviewablePostsQuery(
     $campaignId: String
+    $signupId: String
     $status: String
     $tags: [String]
     $cursor: String
   ) {
     posts: paginatedPosts(
       campaignId: $campaignId
+      signupId: $signupId
       status: $status
       tags: $tags
       after: $cursor
@@ -40,9 +42,9 @@ const REVIEWABLE_POSTS_QUERY = gql`
   ${ReviewablePostFragment}
 `;
 
-const ReviewablePostGallery = ({ campaignId, status, tags }) => {
+const ReviewablePostGallery = ({ campaignId, signupId, status, tags }) => {
   const { loading, error, data, fetchMore } = useQuery(REVIEWABLE_POSTS_QUERY, {
-    variables: { campaignId, status, tags },
+    variables: { campaignId, signupId, status, tags },
     notifyOnNetworkStatusChange: true,
   });
 

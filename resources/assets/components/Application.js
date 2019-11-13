@@ -6,6 +6,7 @@ import { env } from '../helpers';
 import graphql from '../graphql';
 import ShowPost from './ShowPost';
 import UserIndex from './UserIndex';
+import ShowSignup from './ShowSignup';
 import ShowCampaign from './ShowCampaign';
 import UserOverview from './UserOverview';
 import CampaignIndex from './CampaignIndex';
@@ -33,6 +34,9 @@ const Application = () => {
           </Route>
           <Route path="/posts/:id">
             <ShowPost />
+          </Route>
+          <Route path="/signups/:id">
+            <ShowSignup />
           </Route>
         </Switch>
       </BrowserRouter>

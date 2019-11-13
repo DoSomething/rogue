@@ -12,8 +12,6 @@ import { camelCaseKeys } from '../../helpers';
 import MetaInformation from '../MetaInformation';
 import UserInformation from '../Users/UserInformation';
 
-import './post.scss';
-
 class Post extends React.Component {
   constructor(props) {
     super(props);

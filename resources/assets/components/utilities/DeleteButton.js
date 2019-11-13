@@ -27,7 +27,7 @@ const DeleteButton = ({ post }) => {
   };
 
   return (
-    <button className="button delete -tertiary" onClick={handleClick}>
+    <button className="button -tertiary text-red" onClick={handleClick}>
       Delete
     </button>
   );

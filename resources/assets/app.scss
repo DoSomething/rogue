@@ -45,6 +45,10 @@ button.delete {
   border-radius: 50%;
 }
 
+.spinner.-small {
+  background-size: 20px;
+}
+
 .pagination {
   text-align: center;
 
@@ -112,6 +116,10 @@ button.delete {
   color: $dark-gray !important;
 }
 
+.text-red {
+  color: $error-color !important;
+}
+
 .text-sm {
   font-style: italic !important;
 }
@@ -124,4 +132,58 @@ button.delete {
 .margin-horizontal-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.button.-rotate {
+  padding: 0;
+
+  &:before {
+    content: '';
+    background: transparent url('./images/rotate_spinner.svg');
+    background-size: cover;
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    margin-right: 8px;
+    margin-top: 8px;
+  }
+}
+
+// Tailwind helpers:
+.mb-4 {
+  margin-bottom: $base-spacing;
+}
+
+.my-4 {
+  margin-top: $base-spacing;
+  margin-bottom: $base-spacing;
+}
+
+.py-4 {
+  margin-top: $base-spacing;
+  margin-bottom: $base-spacing;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.border-solid {
+  border-style: solid;
+}
+
+.border-gray-300 {
+  border-color: $light-gray;
+}
+
+.border-b-2 {
+  border-bottom-width: 2px;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
 }
