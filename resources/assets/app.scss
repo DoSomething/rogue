@@ -28,6 +28,36 @@ button.delete {
   padding: 0px;
 }
 
+// Table styles:
+.table {
+  display: table;
+  width: 100%;
+  border: 1px solid $light-gray;
+  border-radius: $sm-border-radius;
+  border-collapse: separate; // Needed to display border radius on table.
+  width: 100%;
+  overflow-x: auto;
+
+  thead {
+    background: $white;
+    color: $purple;
+    font-weight: $weight-bold;
+    text-align: left;
+  }
+
+  tr {
+    background: $white;
+  }
+
+  tr:nth-of-type(odd) {
+    background: #efefef;
+  }
+
+  td {
+    padding: ($base-spacing / 4) ($base-spacing / 2);
+  }
+}
+
 .quantity {
   border: 3px solid #4e2b63;
   padding: 4px 12px;

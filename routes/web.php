@@ -17,9 +17,6 @@ $router->view('faq', 'pages.faq');
 $router->get('login', 'AuthController@getLogin');
 $router->get('logout', 'AuthController@getLogout');
 
-// Campaigns
-$router->get('campaigns/{id}', 'CampaignsController@show')->name('campaigns.show');
-
 // Create, update, delete campaigns via Rogue.
 // @TODO: Merge into CampaignsController, above.
 $router->resource('campaign-ids', 'CampaignIdsController');
