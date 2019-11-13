@@ -5,7 +5,7 @@ const path = require('path');
 // Configure Webpack using `@dosomething/webpack-config`.
 module.exports = configure({
   entry: {
-    app: './resources/assets/app.js',
+    app: './resources/assets/bootstrap.js',
   },
 
   output: {

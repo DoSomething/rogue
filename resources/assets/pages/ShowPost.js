@@ -3,8 +3,10 @@ import gql from 'graphql-tag';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
-import Shell from './utilities/Shell';
-import ReviewablePost, { ReviewablePostFragment } from './ReviewablePost';
+import Shell from '../components/utilities/Shell';
+import ReviewablePost, {
+  ReviewablePostFragment,
+} from '../components/ReviewablePost';
 
 const SHOW_POST_QUERY = gql`
   query ShowPostQuery($id: Int!) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import Shell from './utilities/Shell';
-import CampaignsTable from './CampaignsTable';
+import Shell from '../components/utilities/Shell';
+import CampaignsTable from '../components/CampaignsTable';
 
 const CampaignIndex = () => {
   const [showClosed, setShowClosed] = useState(false);

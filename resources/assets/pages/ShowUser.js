@@ -4,15 +4,15 @@ import { map } from 'lodash';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
-import SignupCard from '../SignupCard';
-import Shell from '../utilities/Shell';
-import MetaInformation from '../MetaInformation';
+import SignupCard from '../components/SignupCard';
+import Shell from '../components/utilities/Shell';
+import MetaInformation from '../components/utilities/MetaInformation';
 import UserInformation, {
   UserInformationFragment,
-} from '../Users/UserInformation';
+} from '../components/utilities/UserInformation';
 
-const USER_OVERVIEW_QUERY = gql`
-  query UserOverviewQuery($id: String!) {
+const SHOW_USER_QUERY = gql`
+  query ShowUserQuery($id: String!) {
     user(id: $id) {
       ...UserInformation
       permalink
@@ -41,12 +41,12 @@ const USER_OVERVIEW_QUERY = gql`
   ${UserInformationFragment}
 `;
 
-const UserOverview = () => {
+const ShowUser = () => {
   const { id } = useParams();
 
   const title = 'Members';
   const subtitle = 'User profiles & signups...';
-  const { loading, error, data } = useQuery(USER_OVERVIEW_QUERY, {
+  const { loading, error, data } = useQuery(SHOW_USER_QUERY, {
     variables: { id },
   });
 
@@ -92,4 +92,4 @@ const UserOverview = () => {
   );
 };
 
-export default UserOverview;
+export default ShowUser;

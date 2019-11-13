@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
-import Shell from './utilities/Shell';
-import Select from './utilities/Select';
+import Shell from '../components/utilities/Shell';
+import Select from '../components/utilities/Select';
 import { STATUSES, TAGS } from '../helpers';
-import ReviewablePostGallery from './ReviewablePostGallery';
+import ReviewablePostGallery from '../components/ReviewablePostGallery';
 
 const SHOW_CAMPAIGN_QUERY = gql`
   query ShowCampaignQuery($id: Int!) {
