@@ -56,7 +56,7 @@ const UserName = ({ user, link }) => {
 const UserInformation = ({ user, linkSignup, children }) => (
   <div>
     {!isEmpty(user) ? (
-      <div className="container -padded">
+      <div className="mb-4">
         <h2 className="heading">
           <UserName
             user={user}

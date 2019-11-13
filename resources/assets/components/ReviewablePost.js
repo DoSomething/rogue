@@ -76,7 +76,7 @@ const ReviewablePost = ({ post }) => {
   // post since first viewing it & cannot make any further changes.
   if (post.deleted) {
     return (
-      <div className="post container__row">
+      <div className="border-solid border-gray-300 border-b-2 py-4 my-4">
         <p className="text-sm text-gray text-center italic">
           This post (#{post.id}) has been deleted.
         </p>
@@ -85,7 +85,7 @@ const ReviewablePost = ({ post }) => {
   }
 
   return (
-    <div className="post container__row">
+    <div className="border-solid border-gray-300 border-b-2 py-4 my-4 clearfix">
       <div className="container__block -third">
         <PostCard post={post} />
         <ul className="gallery -duo">

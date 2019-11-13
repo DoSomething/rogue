@@ -33,17 +33,17 @@ export const PostCard = ({ post }) => {
       )}
 
       {post.type === 'photo' ? (
-        <div className="admin-tools">
-          <div className="admin-tools__links">
+        <div className="clearfix">
+          <div className="float-left">
             <a href={`/originals/${post.id}`} target="_blank">
               Original Photo
             </a>
           </div>
-          <div className="admin-tools__rotate">
+          <div className="float-right">
             {loading ? (
-              <div className="spinner" />
+              <div className="spinner -small" />
             ) : (
-              <a className="button -tertiary rotate" onClick={rotatePost} />
+              <a className="button -tertiary -rotate" onClick={rotatePost} />
             )}
           </div>
         </div>
