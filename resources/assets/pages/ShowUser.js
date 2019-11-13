@@ -62,19 +62,19 @@ const ShowUser = () => {
 
   return (
     <Shell title={title} subtitle={subtitle}>
-      <div className="container__block">
-        <h2 className="heading -emphasized -padded">
+      <div className="container__block -half">
+        <h2 className="heading -emphasized -padded mb-4">
           <span>User Info</span>
         </h2>
-      </div>
-
-      <div className="container__block -half">
         <UserInformation user={user}>
           <MetaInformation
-            title="Meta"
             details={{
-              Source: user.source,
-              'Northstar ID': <a href={user.permalink}>{user.id}</a>,
+              ID: (
+                <span>
+                  {user.id} <a href={user.permalink}>(view full profile)</a>
+                </span>
+              ),
+              'Registration Source': user.source,
             }}
           />
         </UserInformation>
