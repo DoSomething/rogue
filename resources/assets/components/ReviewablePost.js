@@ -182,7 +182,9 @@ const ReviewablePost = ({ post }) => {
                 </a>
               ),
               Action: (
-                <a href={`/campaign-ids/${post.campaign.id}#actions`}></a>
+                <a href={`/campaign-ids/${post.campaign.id}#actions`}>
+                  {post.actionDetails.name}
+                </a>
               ),
               Type: post.type,
               Source: post.source,
