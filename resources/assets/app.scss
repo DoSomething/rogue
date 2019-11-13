@@ -1,4 +1,5 @@
 $forge-path: '~@dosomething/forge/assets/';
+$accepted-green: #80e85d;
 
 // Import Forge.
 @import '~@dosomething/forge/scss/forge';
@@ -24,17 +25,73 @@ $forge-path: '~@dosomething/forge/assets/';
   word-wrap: break-word;
 }
 
-button.delete {
-  padding: 0px;
+// Outlined button:
+.button.-outlined-button {
+  background: $white;
+  color: $light-gray;
+  border: 3px solid $light-gray;
+  padding: 14px !important; // Fix alignment bug in Forge.
+  text-transform: none;
+
+  &.-accepted {
+    &:hover {
+      background: lighten($accepted-green, $color-tint);
+      border-color: lighten($accepted-green, $color-tint);
+      color: $white;
+    }
+
+    &:active,
+    &:focus,
+    &.is-selected {
+      background: darken($accepted-green, $color-tint);
+      border-color: darken($accepted-green, $color-tint);
+      color: $white;
+    }
+  }
+
+  &.-rejected {
+    &:hover {
+      background: lighten($error-color, $color-tint);
+      border-color: lighten($error-color, $color-tint);
+      color: $white;
+    }
+
+    &:active,
+    &:focus,
+    &.is-selected {
+      background: darken($error-color, $color-tint);
+      border-color: darken($error-color, $color-tint);
+      color: $white;
+    }
+  }
+}
+
+// Tag buttons:
+.tag {
+  background: $white;
+  color: $med-gray;
+  font-size: $font-small;
+  border: 1px solid $light-gray;
+  margin: 10px 10px 0 0;
+  border-radius: 5px;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover,
+  &.is-active {
+    background: $blue;
+    border-color: $blue;
+    color: $white;
+  }
 }
 
 // Table styles:
 .table {
   display: table;
   width: 100%;
-  border: 1px solid $light-gray;
-  border-radius: $sm-border-radius;
-  border-collapse: separate; // Needed to display border radius on table.
+  border-collapse: collapse;
   width: 100%;
   overflow-x: auto;
 
@@ -45,12 +102,16 @@ button.delete {
     text-align: left;
   }
 
+  tbody {
+    border: 1px solid $light-gray;
+  }
+
   tr {
-    background: $white;
+    background: #efefef;
   }
 
   tr:nth-of-type(odd) {
-    background: #efefef;
+    background: $white;
   }
 
   td {
