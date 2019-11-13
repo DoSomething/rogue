@@ -28,9 +28,6 @@ $router->get('campaign-ids/{id}/actions/create', 'ActionsController@create');
 // Actions
 $router->resource('actions', 'ActionsController');
 
-// Signups
-$router->get('signups/{id}', 'SignupsController@show')->name('signups.show');
-
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     // Campaigns
@@ -44,6 +41,9 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
 
     // Posts
     Route::view('posts/{id}', 'app')->name('posts.show');
+
+    // Signups
+    Route::view('signups/{id}', 'app');
 });
 
 // Images
