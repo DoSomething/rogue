@@ -9,15 +9,17 @@ import Shell from './utilities/Shell';
 import { updateQuery } from '../helpers';
 import ReviewablePost, { ReviewablePostFragment } from './ReviewablePost';
 
-const CAMPAIGN_INBOX_QUERY = gql`
-  query CampaignInboxQuery($id: String!, $intId: Int!, $cursor: String) {
-    campaign(id: $intId) {
-      internalTitle
-    }
-
+const REVIEWABLE_POSTS_QUERY = gql`
+  query ReviewablePostsQuery(
+    $campaignId: String
+    $status: String
+    $tags: [String]
+    $cursor: String
+  ) {
     posts: paginatedPosts(
-      campaignId: $id
-      status: "pending"
+      campaignId: $campaignId
+      status: $status
+      tags: $tags
       after: $cursor
       first: 10
     ) {
@@ -38,12 +40,9 @@ const CAMPAIGN_INBOX_QUERY = gql`
   ${ReviewablePostFragment}
 `;
 
-const ShowCampaign = () => {
-  const { id } = useParams();
-  const title = `Campaign Inbox`;
-
-  const { loading, error, data, fetchMore } = useQuery(CAMPAIGN_INBOX_QUERY, {
-    variables: { id, intId: Number(id) },
+const ReviewablePostGallery = ({ campaignId, status, tags }) => {
+  const { loading, error, data, fetchMore } = useQuery(REVIEWABLE_POSTS_QUERY, {
+    variables: { campaignId, status, tags },
     notifyOnNetworkStatusChange: true,
   });
 
@@ -52,8 +51,8 @@ const ShowCampaign = () => {
   }
 
   const posts = get(data, 'posts.edges', []);
-  const subtitle = get(data, 'campaign.internalTitle', 'Loading...');
   const { endCursor, hasNextPage } = get(data, 'posts.pageInfo', {});
+
   const handleViewMore = () => {
     fetchMore({
       variables: { cursor: endCursor },
@@ -63,19 +62,18 @@ const ShowCampaign = () => {
 
   if (posts.length == 0) {
     return loading ? (
-      <Shell title={title} subtitle={subtitle} loading />
+      <div className="h-content flex-center-xy">
+        <div className="spinner" />
+      </div>
     ) : (
-      <Shell title={title} subtitle={subtitle}>
-        <Empty
-          header="There are no new posts!"
-          copy="Great job, there are no new posts to review!"
-        />
-      </Shell>
+      <div className="h-content flex-center-xy">
+        <Empty copy="No posts match those filters!" />
+      </div>
     );
   }
 
   return (
-    <Shell title={title} subtitle={subtitle}>
+    <>
       {posts.map(edge => (
         <ReviewablePost key={edge.cursor} post={edge.node} />
       ))}
@@ -97,8 +95,8 @@ const ShowCampaign = () => {
           <p className="footnote margin-horizontal-auto">...and that's all!</p>
         )}
       </div>
-    </Shell>
+    </>
   );
 };
 
-export default ShowCampaign;
+export default ReviewablePostGallery;

@@ -77,12 +77,17 @@ button.delete {
   font-weight: $weight-normal;
 }
 
-.placeholder {
+// Tailwind-style helper to fill viewport height, minus header.
+.h-content {
   width: 100%;
-  color: $light-gray;
-
-  // This should fill the viewport, minus the header height:
   min-height: calc(100vh - 267px);
+}
+
+// Tailwind-style helper to pad the top of an element as if a
+// heading was there (for example, to align heading-less content
+// with other elements in a grid):
+.pt-heading {
+  padding-top: $font-regular + 4px !important;
 }
 
 .flex-center-xy {

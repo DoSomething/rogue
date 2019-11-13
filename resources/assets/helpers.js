@@ -11,6 +11,33 @@ import {
 } from 'lodash';
 
 /**
+ * Valid statuses for posts, and their human-friendly labels.
+ */
+export const STATUSES = {
+  accepted: 'Accepted',
+  rejected: 'Rejected',
+  pending: 'Pending',
+};
+
+/**
+ * Valid tags for posts, and their human-friendly labels.
+ */
+export const TAGS = {
+  'good-submission': 'Good Submission',
+  'good-quote': 'Good Quote',
+  'good-for-brand': 'Good For Brand',
+  'good-for-sponsor': 'Good For Sponsor',
+  'group-photo': 'Group Photo',
+  'hide-in-gallery': 'Hide In Gallery 👻',
+  irrelevant: 'Irrelevant',
+  inappropriate: 'Inappropriate',
+  'unrealistic-quantity': 'Unrealistic Quantity',
+  test: 'Test',
+  'incomplete-action': 'Incomplete Action',
+  bulk: 'Bulk',
+};
+
+/**
  * Wait until the DOM is ready.
  *
  * @param {Function} fn
