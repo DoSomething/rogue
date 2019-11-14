@@ -25,6 +25,12 @@ $accepted-green: #80e85d;
   word-wrap: break-word;
 }
 
+// Attached button:
+.button.-attached {
+  width: 100%;
+  border-radius: 0;
+}
+
 // Outlined button:
 .button.-outlined-button {
   background: $white;
@@ -117,6 +123,53 @@ $accepted-green: #80e85d;
   }
 }
 
+// Modal:
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 100%;
+  z-index: 9999;
+  background: rgba(#000, 0.5);
+
+  @include media($tablet) {
+    padding: 72px;
+  }
+}
+
+.modal {
+  position: relative;
+  background: #fff;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.75);
+  width: auto;
+  word-wrap: break-word;
+  overflow: hidden;
+  z-index: 1050;
+
+  @include media($tablet) {
+    max-width: 600px;
+    min-height: 0;
+    margin: 0 auto;
+  }
+}
+
+.modal-close-button {
+  position: absolute;
+  top: $base-spacing / 2;
+  right: $base-spacing;
+  font-size: 36px;
+  font-weight: bold;
+  color: $light-gray;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    color: $med-gray;
+  }
+}
+
+// Quantity component:
 .quantity {
   border: 3px solid #4e2b63;
   padding: 4px 12px;
