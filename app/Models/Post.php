@@ -275,7 +275,8 @@ class Post extends Model
         $campaign_cause = optional($this->signup->campaign)->getAttributes()['cause'];
 
         // Fetch Campaign Website information via GraphQL.
-        $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
+        // $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
+        $campaignWebsite = ['title' => null, 'slug' => null];
 
         // The associated Action for this post.
         $action = $this->actionModel;
@@ -526,5 +527,19 @@ class Post extends Model
         }
 
         return false;
+    }
+
+    /**
+     * Get the number of posts for the given campaign and status.
+     *
+     * @return int
+     */
+    public static function getPostCount(Campaign $campaign, string $status)
+    {
+        return (new Post)->newModelQuery()
+            ->where('campaign_id', $campaign->id)
+            ->where('status', $status)
+            ->whereReviewable()
+            ->count();
     }
 }

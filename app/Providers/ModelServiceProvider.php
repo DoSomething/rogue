@@ -52,6 +52,10 @@ class ModelServiceProvider extends ServiceProvider
 
         // When Reviews are saved create an event for them.
         Review::saved(function ($review) {
+            info('review', ['campaign' => $review->post->campaign_id]);
+            // Update the "counter cache" on this campaign:
+            $review->post->campaign->refreshCounts();
+
             $review->events()->create([
                 'content' => $review->toJson(),
                 'user' => $review->admin_northstar_id,
