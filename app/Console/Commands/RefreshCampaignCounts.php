@@ -12,7 +12,7 @@ class RefreshCampaignCounts extends Command
      *
      * @var string
      */
-    protected $signature = 'campaign:refresh-counts';
+    protected $signature = 'rogue:refresh-counts';
 
     /**
      * The console command description.
