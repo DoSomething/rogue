@@ -54,7 +54,7 @@ trait HasCursor
                 $query->where($column, $operator, $sortCursor);
                 $query->orWhere([
                     [$column, '=', $sortCursor],
-                    ['id', '>', $id]
+                    ['id', '>', $id],
                 ]);
 
                 // @TODO: This gets a lot more complicated if the sorted column can have nulls...
