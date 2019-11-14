@@ -44,7 +44,7 @@ class Campaign extends Model
      *
      * @var array
      */
-    public static $sortable = ['id', 'pending_count'];
+    public static $sortable = ['id', 'accepted_count', 'pending_count'];
 
     /**
      * Get the signups associated with this campaign.
