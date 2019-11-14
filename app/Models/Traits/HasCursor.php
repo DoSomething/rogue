@@ -38,20 +38,29 @@ trait HasCursor
         $sortCursor = isset($cursor[1]) ? $cursor[1] : null;
 
         $orderBy = request()->query('orderBy');
+
+        // If we're sorting by anything other than ID, things get a lil' tricky. First,
+        // we'll extract the sorted column & direction from the `?orderBy` query string:
         if ($orderBy && $orderBy !== 'id,asc' && $sortCursor) {
-            // If we're sorting by a column, things get a lil' tricky:
             [ $column, $direction ] = explode(',', $orderBy, 2);
             $operator = $direction === 'asc' ? '>' : '<';
 
-            // First, check that we're allowed to sort by this column:
+            // Then, we'll check that we're allowed to sort by this column (to prevent
+            // someone from using a cursor to sort by an unindexed or sensitive field):
             if (in_array($column, self::$sortable)) {
-                // We'll check if there are any posts "after" the sorted column,
-                // or "equal" to it but with a higher ID (since that's our
-                // stable secondary sort).
+                // There are two ways an item might be found "after" this cursor:
+                //   1. It has a value in the sorted column that is "after" the cursor.
                 $query->where($column, $operator, $sortCursor)
+                //   2. It has the same "sorted" value, but a higher ID (secondary sort).
                     ->orWhere(function ($query) use ($column, $sortCursor, $id) {
-                        $query->where($column, '=', $sortCursor)
-                            ->where('id', '>', $id);
+                        // If the sorted cursor is null, we need to use a `WHERE NULL`
+                        // query, since MySQL's `WHERE =` won't compare with `NULL`.
+                        $query->where(function ($query) use ($column, $sortCursor) {
+                            $query->where($column, '=', $sortCursor)
+                                ->orWhereNull($column);
+                        });
+
+                        $query->where('id', '>', $id);
                     });
             }
         } else {
