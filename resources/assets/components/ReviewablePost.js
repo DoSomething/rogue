@@ -111,19 +111,21 @@ const ReviewablePost = ({ post }) => {
             />
           ) : null}
 
-          <div className="container -padded">
-            <button className="button -tertiary" onClick={openPortal}>
-              Edit Quantity
-            </button>
+          {post.quantity ? (
+            <div className="container -padded">
+              <button className="button -tertiary" onClick={openPortal}>
+                Edit Quantity
+              </button>
 
-            {isOpen ? (
-              <Portal>
-                <Modal onClose={closePortal}>
-                  <QuantityForm post={post} />
-                </Modal>
-              </Portal>
-            ) : null}
-          </div>
+              {isOpen ? (
+                <Portal>
+                  <Modal onClose={closePortal}>
+                    <QuantityForm post={post} />
+                  </Modal>
+                </Portal>
+              ) : null}
+            </div>
+          ) : null}
 
           <div className="container -padded">
             <TextBlock
