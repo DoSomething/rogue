@@ -44,7 +44,7 @@ class Campaign extends Model
      *
      * @var array
      */
-    public static $sortable = ['id', 'pending_count'];
+    public static $sortable = ['id', 'accepted_count', 'pending_count'];
 
     /**
      * Get the signups associated with this campaign.
@@ -68,6 +68,17 @@ class Campaign extends Model
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Run a quick 'COUNT(*)' query to get the count of pending and accepted
+     * posts for this campaign (so we can use this efficiently later).
+     */
+    public function refreshCounts()
+    {
+        $this->pending_count = Post::getPostCount($this, 'pending');
+        $this->accepted_count = Post::getPostCount($this, 'accepted');
+        $this->save();
     }
 
     /**
@@ -96,21 +107,6 @@ class Campaign extends Model
                 $query->whereNotNull('end_date')
                     ->whereDate('end_date', '<', $today);
             });
-    }
-
-    /**
-     * Attach count of pending posts to a query.
-     */
-    public function scopeWithPendingPostCount($query)
-    {
-        // Get a "pure" query, without eager loads/counts:
-        $posts = (new Post)->newModelQuery();
-
-        $counts = $posts->selectRaw('campaign_id, count(*) as pending_count')
-                ->whereReviewable()->where('status', 'pending')
-                ->groupBy('campaign_id');
-
-        return $query->leftJoinSub($counts, 'counts', 'campaigns.id', '=', 'counts.campaign_id');
     }
 
     /**

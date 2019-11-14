@@ -527,4 +527,18 @@ class Post extends Model
 
         return false;
     }
+
+    /**
+     * Get the number of posts for the given campaign and status.
+     *
+     * @return int
+     */
+    public static function getPostCount(Campaign $campaign, string $status)
+    {
+        return (new self)->newModelQuery()
+            ->where('campaign_id', $campaign->id)
+            ->where('status', $status)
+            ->whereReviewable()
+            ->count();
+    }
 }
