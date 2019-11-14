@@ -275,8 +275,7 @@ class Post extends Model
         $campaign_cause = optional($this->signup->campaign)->getAttributes()['cause'];
 
         // Fetch Campaign Website information via GraphQL.
-        // $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
-        $campaignWebsite = ['title' => null, 'slug' => null];
+        $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
 
         // The associated Action for this post.
         $action = $this->actionModel;
