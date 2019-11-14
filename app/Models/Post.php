@@ -536,7 +536,7 @@ class Post extends Model
      */
     public static function getPostCount(Campaign $campaign, string $status)
     {
-        return (new Post)->newModelQuery()
+        return (new self)->newModelQuery()
             ->where('campaign_id', $campaign->id)
             ->where('status', $status)
             ->whereReviewable()
