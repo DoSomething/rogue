@@ -125,6 +125,9 @@ class CampaignTest extends Testcase
         $four = $this->createCampaignWithPosts(4);
         $five = $this->createCampaignWithPosts(5);
 
+        // We need these counter caches for this to work properly:
+        $this->artisan('campaign:refresh-counts');
+
         // First, let's get the three campaigns with the most pending posts:
         $endpoint = 'api/v3/campaigns?orderBy=pending_count,desc&limit=3';
         $response = $this->withAdminAccessToken()->getJson($endpoint);
