@@ -50,26 +50,14 @@ trait HasCursor
             if (in_array($column, self::$sortable)) {
                 // There are two ways an item might be found "after" this cursor:
                 //   1. It has a value in the sorted column that is "after" the cursor.
-                $query->where(function ($query) use ($column, $operator, $sortCursor) {
-                    $query->where($column, $operator, $sortCursor);
-
-                    // If we're sorting in 'desc' order, this might be null!
-                    if ($operator === '<') {
-                        $query->orWhereNull();
-                    }
-                })
                 //   2. It has the same "sorted" value, but a higher ID (secondary sort).
-                    ->orWhere(function ($query) use ($column, $sortCursor, $id) {
-                        // If the sorted cursor is null, we need to use a `WHERE NULL`
-                        // query, since MySQL's `WHERE =` won't compare with `NULL`.
-                        if (is_null($sortCursor)) {
-                            $query->whereNull($column);
-                        } else {
-                            $query->where($column, '=', $sortCursor);
-                        }
+                $query->where($column, $operator, $sortCursor);
+                $query->orWhere([
+                    [$column, '=', $sortCursor],
+                    ['id', '>', $id]
+                ]);
 
-                        $query->where('id', '>', $id);
-                    });
+                // @TODO: This gets a lot more complicated if the sorted column can have nulls...
             }
         } else {
             // Otherwise, treat as a plain ID cursor... easy!
