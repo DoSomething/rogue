@@ -55,10 +55,11 @@ trait HasCursor
                     ->orWhere(function ($query) use ($column, $sortCursor, $id) {
                         // If the sorted cursor is null, we need to use a `WHERE NULL`
                         // query, since MySQL's `WHERE =` won't compare with `NULL`.
-                        $query->where(function ($query) use ($column, $sortCursor) {
-                            $query->where($column, '=', $sortCursor)
-                                ->orWhereNull($column);
-                        });
+                        if (is_null($sortCursor)) {
+                            $query->whereNull($column);
+                        } else {
+                            $query->where($column, '=', $sortCursor);
+                        }
 
                         $query->where('id', '>', $id);
                     });
