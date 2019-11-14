@@ -50,7 +50,14 @@ trait HasCursor
             if (in_array($column, self::$sortable)) {
                 // There are two ways an item might be found "after" this cursor:
                 //   1. It has a value in the sorted column that is "after" the cursor.
-                $query->where($column, $operator, $sortCursor)
+                $query->where(function ($query) use ($column, $operator, $sortCursor) {
+                    $query->where($column, $operator, $sortCursor);
+
+                    // If we're sorting in 'desc' order, this might be null!
+                    if ($operator === '<') {
+                        $query->orWhereNull();
+                    }
+                })
                 //   2. It has the same "sorted" value, but a higher ID (secondary sort).
                     ->orWhere(function ($query) use ($column, $sortCursor, $id) {
                         // If the sorted cursor is null, we need to use a `WHERE NULL`
@@ -58,8 +65,7 @@ trait HasCursor
                         if (is_null($sortCursor)) {
                             $query->whereNull($column);
                         } else {
-                            $query->where($column, '=', $sortCursor)
-                                ->orWhereNull($column);
+                            $query->where($column, '=', $sortCursor);
                         }
 
                         $query->where('id', '>', $id);
