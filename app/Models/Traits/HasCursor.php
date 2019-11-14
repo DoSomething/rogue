@@ -58,7 +58,8 @@ trait HasCursor
                         if (is_null($sortCursor)) {
                             $query->whereNull($column);
                         } else {
-                            $query->where($column, '=', $sortCursor);
+                            $query->where($column, '=', $sortCursor)
+                                ->orWhereNull($column);
                         }
 
                         $query->where('id', '>', $id);
