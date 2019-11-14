@@ -8,6 +8,7 @@ import { parse, format } from 'date-fns';
 import Quantity from './utilities/Quantity';
 import PostTile from './PostTile';
 import { TAGS } from '../helpers';
+import HelpLink from './utilities/HelpLink';
 import TextBlock from './utilities/TextBlock';
 import Modal from './utilities/Modal';
 import PostCard from './utilities/PostCard';
@@ -161,10 +162,7 @@ const ReviewablePost = ({ post }) => {
         {post.status !== 'PENDING' ? (
           <div className="container__row">
             <h4>
-              Tags
-              <a className="footnote" href="/faq#tags" target="_blank">
-                (see definitions)
-              </a>
+              Tags <HelpLink to="/faq#tags" title="Tag definitions" />
             </h4>
             {map(TAGS, (label, id) => (
               <TagButton key={id} tag={id} label={label} post={post} />
