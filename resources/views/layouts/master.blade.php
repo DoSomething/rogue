@@ -8,7 +8,7 @@
 
         <title>Rogue</title>
 
-        <link rel="icon" type="image/png" href="http://twooter.biz/Gifs/tonguecat.png">
+        <link rel="apple-touch-icon-precomposed" href="/assets/images/apple-touch-icon-precomposed.png">
         <link rel="stylesheet" href="{{ elixir('app.css', 'dist') }}">
     </head>
 
