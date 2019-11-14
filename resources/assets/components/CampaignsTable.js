@@ -108,27 +108,27 @@ const CampaignsTable = ({ isOpen, filter }) => {
     <>
       <table className="table">
         <thead>
-          <tr className="table__header">
-            <td className="table__cell">Campaign</td>
-            <td className="table__cell">Pending</td>
-            <td className="table__cell"></td>
-            <td className="table__cell"></td>
+          <tr>
+            <td>Campaign</td>
+            <td>Pending</td>
+            <td></td>
+            <td></td>
           </tr>
         </thead>
         <tbody>
           {campaigns.map(({ node, cursor }) => (
-            <tr className="table__row" key={cursor}>
-              <td className="table__cell">
+            <tr key={cursor}>
+              <td>
                 <Link to={`/campaigns/${node.id}/accepted`}>
                   {node.internalTitle}{' '}
                   <code className="footnote">({node.id})</code>
                 </Link>
               </td>
-              <td className="table__cell">{node.pendingCount || 0}</td>
-              <td className="table__cell">
+              <td>{node.pendingCount || 0}</td>
+              <td>
                 <Link to={`/campaigns/${node.id}/pending`}>review</Link>
               </td>
-              <td className="table__cell">
+              <td>
                 <a href={`/campaign-ids/${node.id}`}>edit</a>
               </td>
             </tr>

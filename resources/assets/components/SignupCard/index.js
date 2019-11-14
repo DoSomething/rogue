@@ -1,5 +1,6 @@
 import React from 'react';
 import PostTile from '../PostTile';
+import { Link } from 'react-router-dom';
 
 import './signup-card.scss';
 
@@ -17,7 +18,7 @@ const SignupCard = ({ signup }) => {
 
   return (
     <article className="container__row signup-card">
-      <a href={`/signups/${signup.id}`}>
+      <Link to={`/signups/${signup.id}`}>
         <div className="container__block -half">
           <div className="container__row">
             <h2 className="heading">
@@ -58,7 +59,7 @@ const SignupCard = ({ signup }) => {
             </div>
           ) : null}
         </div>
-      </a>
+      </Link>
     </article>
   );
 };

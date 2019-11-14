@@ -8,6 +8,7 @@ import { parse, format } from 'date-fns';
 import Quantity from './utilities/Quantity';
 import PostTile from './PostTile';
 import { TAGS } from '../helpers';
+import HelpLink from './utilities/HelpLink';
 import TextBlock from './utilities/TextBlock';
 import Modal from './utilities/Modal';
 import PostCard from './utilities/PostCard';
@@ -110,19 +111,21 @@ const ReviewablePost = ({ post }) => {
             />
           ) : null}
 
-          <div className="container -padded">
-            <button className="button -tertiary" onClick={openPortal}>
-              Edit Quantity
-            </button>
+          {post.quantity ? (
+            <div className="container -padded">
+              <button className="button -tertiary" onClick={openPortal}>
+                Edit Quantity
+              </button>
 
-            {isOpen ? (
-              <Portal>
-                <Modal onClose={closePortal}>
-                  <QuantityForm post={post} />
-                </Modal>
-              </Portal>
-            ) : null}
-          </div>
+              {isOpen ? (
+                <Portal>
+                  <Modal onClose={closePortal}>
+                    <QuantityForm post={post} />
+                  </Modal>
+                </Portal>
+              ) : null}
+            </div>
+          ) : null}
 
           <div className="container -padded">
             <TextBlock
@@ -161,10 +164,7 @@ const ReviewablePost = ({ post }) => {
         {post.status !== 'PENDING' ? (
           <div className="container__row">
             <h4>
-              Tags
-              <a className="footnote" href="/faq#tags" target="_blank">
-                (see definitions)
-              </a>
+              Tags <HelpLink to="/faq#tags" title="Tag definitions" />
             </h4>
             {map(TAGS, (label, id) => (
               <TagButton key={id} tag={id} label={label} post={post} />
@@ -175,14 +175,16 @@ const ReviewablePost = ({ post }) => {
           <MetaInformation
             title="Post Information"
             details={{
-              ID: post.id,
+              ID: <Link to={`/posts/${post.id}`}>{post.id}</Link>,
               Campaign: (
                 <a href={`/campaign-ids/${post.campaign.id}`}>
                   {post.campaign.internalTitle}
                 </a>
               ),
               Action: (
-                <a href={`/campaign-ids/${post.campaign.id}#actions`}></a>
+                <a href={`/campaign-ids/${post.campaign.id}#actions`}>
+                  {post.actionDetails.name}
+                </a>
               ),
               Type: post.type,
               Source: post.source,

@@ -31,6 +31,7 @@ const SHOW_SIGNUP_QUERY = gql`
       }
 
       campaign {
+        id
         internalTitle
       }
     }

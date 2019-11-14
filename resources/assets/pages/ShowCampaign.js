@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
+import { STATUSES, TAGS } from '../helpers';
 import Shell from '../components/utilities/Shell';
 import Select from '../components/utilities/Select';
-import { STATUSES, TAGS } from '../helpers';
+import HelpLink from '../components/utilities/HelpLink';
 import ReviewablePostGallery from '../components/ReviewablePostGallery';
 
 const SHOW_CAMPAIGN_QUERY = gql`
@@ -46,7 +47,9 @@ const ShowCampaign = () => {
         </div>
 
         <div className="container__block -third">
-          <h4>Filter by tag...</h4>
+          <h4>
+            Filter by tag... <HelpLink to="/faq#tags" title="Tag definitions" />
+          </h4>
           <Select values={TAGS} value={tag} onChange={setTag} />
         </div>
 

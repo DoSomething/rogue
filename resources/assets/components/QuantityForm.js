@@ -61,7 +61,7 @@ const QuantityForm = ({ post }) => {
       </div>
 
       <button
-        className={classNames('button -history', { 'is-loading': loading })}
+        className={classNames('button -attached', { 'is-loading': loading })}
         disabled={!isInteger(newQuantity)}
         onClick={handleSubmit}
       >

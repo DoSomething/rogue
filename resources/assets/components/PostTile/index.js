@@ -1,22 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { getImageUrlFromProp } from '../../helpers';
 
 import './post-tile.scss';
 
 const PostTile = ({ post }) => {
-  const url = post.media ? getImageUrlFromProp(post, 'edited') : post.url;
   const altText = `Post #${post.id}`;
 
-  if (!url) {
+  if (!post.url) {
     return <div className="post-tile -fallback" />;
   }
 
-  return <img className="post-tile" alt={altText} src={url} />;
-};
-
-PostTile.propTypes = {
-  post: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  return <img className="post-tile" alt={altText} src={post.url} />;
 };
 
 export default PostTile;

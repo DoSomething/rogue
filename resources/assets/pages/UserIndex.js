@@ -46,20 +46,22 @@ const SearchResults = ({ term }) => {
   return (
     <table className="table">
       <thead>
-        <tr className="table__header">
-          <td className="table__cell">Name</td>
-          <td className="table__cell">Email</td>
-          <td className="table__cell">Mobile</td>
+        <tr>
+          <td>Name</td>
+          <td>Email</td>
+          <td>Mobile</td>
         </tr>
       </thead>
       <tbody>
         {data.users.map(user => (
-          <tr className="table__row" key={user.id}>
-            <td className="table__cell">
-              <Link to={`/users/${user.id}`}>{user.displayName}</Link>
+          <tr key={user.id}>
+            <td>
+              <Link to={`/users/${user.id}`}>
+                {user.displayName || 'A Doer'}
+              </Link>
             </td>
-            <td className="table__cell">{user.emailPreview}</td>
-            <td className="table__cell">{user.mobilePreview}</td>
+            <td>{user.emailPreview}</td>
+            <td>{user.mobilePreview}</td>
           </tr>
         ))}
       </tbody>
