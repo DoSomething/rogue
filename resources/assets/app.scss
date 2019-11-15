@@ -291,7 +291,32 @@ $accepted-green: #80e85d;
   }
 }
 
+// Arrow helpers:
+.arrow-up:after,
+.arrow-down:after {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.arrow-up:after {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 6px solid $med-gray;
+}
+
+.arrow-down:after {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid $med-gray;
+}
+
 // Tailwind helpers:
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
 .mb-4 {
   margin-bottom: $base-spacing !important;
 }
