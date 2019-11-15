@@ -1,17 +1,22 @@
 import { get } from 'lodash';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
-import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import React, { useState, useEffect } from 'react';
 
 import Empty from './Empty';
 import { updateQuery } from '../helpers';
+import OrderableHeading from './utilities/OrderableHeading';
 
 const CAMPAIGNS_QUERY = gql`
-  query CampaignsIndexQuery($isOpen: Boolean!, $cursor: String) {
+  query CampaignsIndexQuery(
+    $isOpen: Boolean!
+    $orderBy: String!
+    $cursor: String
+  ) {
     campaigns: paginatedCampaigns(
       isOpen: $isOpen
-      orderBy: "pending_count,desc"
+      orderBy: $orderBy
       after: $cursor
       first: 80
     ) {
@@ -73,8 +78,10 @@ const filterCampaigns = (data, filter) => {
  * @param {String} filter
  */
 const CampaignsTable = ({ isOpen, filter }) => {
+  const [orderBy, setOrderBy] = useState('pending_count,desc');
+
   const { error, loading, data, fetchMore } = useQuery(CAMPAIGNS_QUERY, {
-    variables: { isOpen },
+    variables: { isOpen, orderBy },
     notifyOnNetworkStatusChange: true,
   });
 
@@ -110,9 +117,24 @@ const CampaignsTable = ({ isOpen, filter }) => {
       <table className="table">
         <thead>
           <tr>
-            <td>Campaign</td>
-            <td>Pending</td>
-            <td>Accepted</td>
+            <OrderableHeading
+              column="id"
+              label="Campaign ID"
+              orderBy={orderBy}
+              onChange={setOrderBy}
+            />
+            <OrderableHeading
+              column="pending_count"
+              label="Pending"
+              orderBy={orderBy}
+              onChange={setOrderBy}
+            />
+            <OrderableHeading
+              column="accepted_count"
+              label="Accepted"
+              orderBy={orderBy}
+              onChange={setOrderBy}
+            />
             <td></td>
             <td></td>
           </tr>
