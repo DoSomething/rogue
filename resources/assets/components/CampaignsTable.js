@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 
 import Empty from './Empty';
 import { updateQuery } from '../helpers';
-import OrderableHeading from './utilities/OrderableHeading';
+import SortableHeading from './utilities/SortableHeading';
 
 const CAMPAIGNS_QUERY = gql`
   query CampaignsIndexQuery(
@@ -117,19 +117,19 @@ const CampaignsTable = ({ isOpen, filter }) => {
       <table className="table">
         <thead>
           <tr>
-            <OrderableHeading
+            <SortableHeading
               column="id"
               label="Campaign ID"
               orderBy={orderBy}
               onChange={setOrderBy}
             />
-            <OrderableHeading
+            <SortableHeading
               column="pending_count"
               label="Pending"
               orderBy={orderBy}
               onChange={setOrderBy}
             />
-            <OrderableHeading
+            <SortableHeading
               column="accepted_count"
               label="Accepted"
               orderBy={orderBy}

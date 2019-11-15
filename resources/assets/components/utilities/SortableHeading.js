@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const OrderableHeading = ({ column, orderBy, onChange, label }) => {
+const SortableHeading = ({ column, orderBy, onChange, label }) => {
   const [currentColumn, direction] = orderBy.split(',', 2);
 
   // Determine if we should show an "arrow" indicator:
@@ -25,4 +25,4 @@ const OrderableHeading = ({ column, orderBy, onChange, label }) => {
   );
 };
 
-export default OrderableHeading;
+export default SortableHeading;
