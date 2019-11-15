@@ -41,7 +41,7 @@ trait HasCursor
 
         // If we're sorting by anything other than ID, things get a lil' tricky. First,
         // we'll extract the sorted column & direction from the `?orderBy` query string:
-        if ($orderBy && $orderBy !== 'id,asc' && $sortCursor) {
+        if ($orderBy && $orderBy !== 'id,asc' && ! is_null($sortCursor)) {
             [ $column, $direction ] = explode(',', $orderBy, 2);
             $operator = $direction === 'asc' ? '>' : '<';
 
