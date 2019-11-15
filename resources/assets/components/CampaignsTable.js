@@ -13,7 +13,7 @@ const CAMPAIGNS_QUERY = gql`
       isOpen: $isOpen
       orderBy: "pending_count,desc"
       after: $cursor
-      first: 15
+      first: 80
     ) {
       edges {
         cursor
@@ -21,6 +21,7 @@ const CAMPAIGNS_QUERY = gql`
           id
           internalTitle
           pendingCount
+          acceptedCount
           causes {
             name
           }
@@ -111,6 +112,7 @@ const CampaignsTable = ({ isOpen, filter }) => {
           <tr>
             <td>Campaign</td>
             <td>Pending</td>
+            <td>Accepted</td>
             <td></td>
             <td></td>
           </tr>
@@ -124,7 +126,8 @@ const CampaignsTable = ({ isOpen, filter }) => {
                   <code className="footnote">({node.id})</code>
                 </Link>
               </td>
-              <td>{node.pendingCount || 0}</td>
+              <td>{node.pendingCount}</td>
+              <td>{node.acceptedCount}</td>
               <td>
                 <Link to={`/campaigns/${node.id}/pending`}>review</Link>
               </td>
@@ -137,14 +140,14 @@ const CampaignsTable = ({ isOpen, filter }) => {
         <tfoot className="form-actions">
           {loading ? (
             <tr>
-              <td colSpan="4">
+              <td colSpan="5">
                 <div className="spinner margin-horizontal-auto margin-vertical" />
               </td>
             </tr>
           ) : null}
           {hasNextPage ? (
             <tr>
-              <td colSpan="4">
+              <td colSpan="5">
                 <button
                   className="button -tertiary"
                   onClick={handleViewMore}

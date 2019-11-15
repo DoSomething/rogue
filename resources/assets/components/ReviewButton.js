@@ -26,6 +26,16 @@ const ReviewButton = ({ post, status, children }) => {
       id: post.id,
       status: status,
     },
+    // We'll optimistically update the interface with the given status
+    // before waiting for the full network round-trip. Snappy!
+    optimisticResponse: {
+      __typename: 'Mutation',
+      reviewPost: {
+        __typename: 'Post',
+        id: post.id,
+        status: status,
+      },
+    },
   });
 
   const statusClass = `-${status.toLowerCase()}`;

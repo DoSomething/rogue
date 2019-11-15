@@ -66,17 +66,8 @@ class CampaignsController extends ApiController
      * @param  \Rogue\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Request $request)
+    public function show(Campaign $campaign, Request $request)
     {
-        $query = $this->newQuery(Campaign::class);
-
-        $includePendingCount = str_contains($request->query('include'), 'pending_count');
-        if ($includePendingCount && is_staff_user()) {
-            $query->withPendingPostCount();
-        }
-
-        $campaign = $query->findOrFail($id);
-
         return $this->item($campaign);
     }
 }
