@@ -13,7 +13,7 @@ const CAMPAIGNS_QUERY = gql`
       isOpen: $isOpen
       orderBy: "pending_count,desc"
       after: $cursor
-      first: 15
+      first: 80
     ) {
       edges {
         cursor
