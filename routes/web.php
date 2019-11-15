@@ -40,7 +40,7 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::view('posts/{id}', 'app')->name('posts.show');
 
     // Signups
-    Route::view('signups/{id}', 'app');
+    Route::view('signups/{id}', 'app')->name('signups.show');
 });
 
 // Images
