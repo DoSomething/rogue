@@ -96,6 +96,7 @@ class PostRepository
             'text' => isset($data['text']) ? $data['text'] : null,
             'location' => isset($data['location']) ? $data['location'] : null,
             'postal_code' => isset($data['postal_code']) ? $data['postal_code'] : null,
+            'school_id' => isset($data['school_id']) ? $data['school_id'] : null,
             'source' => token()->client(),
             'source_details' => isset($data['source_details']) ? $data['source_details'] : null,
             'details' => isset($data['details']) ? $data['details'] : null,

@@ -41,6 +41,7 @@ class PostTest extends TestCase
                 'status',
                 'details',
                 'location',
+                'school_id',
                 'source',
                 'remote_addr',
                 'created_at',
@@ -63,6 +64,7 @@ class PostTest extends TestCase
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
         $location = 'US-'.$this->faker->stateAbbr();
+        $school_id = $this->faker->word;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Create an action to refer to.
@@ -83,6 +85,7 @@ class PostTest extends TestCase
             'why_participated' => $why_participated,
             'text'             => $text,
             'location'         => $location,
+            'school_id'        => $school_id,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
         ]);
@@ -105,6 +108,7 @@ class PostTest extends TestCase
             'action_id' => $action->id,
             'status' => 'pending',
             'location' => $location,
+            'school_id' => $school_id,
             'quantity' => $quantity,
             'details' => json_encode($details),
         ]);
@@ -294,10 +298,11 @@ class PostTest extends TestCase
             'campaign_id' => 'dog', // This should be a numeric ID.
             'signup_id' => $signup->id, // This one is okay.
             'location' => 'the world', // This should be an ISO-3166-2 code.
+            'school_id' => 234, // This should be a string.
             // and we've omitted the required 'type' and 'action' fields!
         ]);
 
-        $response->assertJsonValidationErrors(['campaign_id', 'location', 'type', 'action']);
+        $response->assertJsonValidationErrors(['campaign_id', 'location', 'type', 'action', 'school_id']);
     }
 
     /**
@@ -1190,7 +1195,7 @@ class PostTest extends TestCase
     /**
      * Test for updating a post successfully.
      *
-     * PATCH /api/v3/posts/186
+     * PATCH /api/v3/posts/:id
      * @return void
      */
     public function testUpdatingAPhotoPost()
@@ -1204,28 +1209,29 @@ class PostTest extends TestCase
             'text' => 'new caption',
             'quantity' => 8,
             'status' => 'accepted',
+            'school_id' => '200426',
         ]);
 
         $response->assertStatus(200);
 
-        // Make sure that the posts's new status and text gets persisted in the database.
+        // Make sure that the post's new status, text, and school_id gets persisted in the database.
         $this->assertEquals($post->fresh()->text, 'new caption');
         $this->assertEquals($post->fresh()->quantity, 8);
+        $this->assertEquals($post->fresh()->school_id, '200426');
 
         // Make sure the signup's quantity gets updated.
         $this->assertEquals($signup->fresh()->quantity, 8);
     }
 
     /**
-     * Test for updating a post successfully.
+     * Test for updating a post with invalid status.
      *
-     * PATCH /api/v3/posts/186
+     * PATCH /api/v3/posts/:id
      * @return void
      */
-    public function testUpdatingAPhotoWithBadStatus()
+    public function testUpdatingAPhotoWithInvalidStatus()
     {
         $post = factory(Post::class)->create();
-        $signup = $post->signup;
 
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
@@ -1239,9 +1245,28 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test for updating a post with invalid school_id.
+     *
+     * PATCH /api/v3/posts/:id
+     * @return void
+     */
+    public function testUpdatingAPhotoWithInvalidSchoolId()
+    {
+        $post = factory(Post::class)->create();
+
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
+            'school_id' => 8,
+        ]);
+
+        $response->assertJsonValidationErrors(['school_id']);
+    }
+
+    /**
      * Test for updating a post without activity scope.
      *
-     * PATCH /api/v3/posts/186
+     * PATCH /api/v3/posts/:id
      * @return void
      */
     public function testUpdatingAPostWithoutActivityScope()
@@ -1262,7 +1287,7 @@ class PostTest extends TestCase
     /**
      * Test validation for updating a post.
      *
-     * PATCH /api/v3/posts/195
+     * PATCH /api/v3/posts/:id
      * @return void
      */
     public function testValidationUpdatingAPost()
@@ -1279,7 +1304,7 @@ class PostTest extends TestCase
 
     /**
      * Test that a user can update their own post, but can't
-     * change it's review status.
+     * change its review status.
      *
      * @return void
      */

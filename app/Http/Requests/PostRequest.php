@@ -42,6 +42,7 @@ class PostRequest extends Request
             'text' => 'nullable|string|max:500',
             'location' => 'nullable|iso3166',
             'postal_code' => 'nullable|max:10',
+            'school_id' => 'nullable|string|max:255',
             'quantity' => 'nullable|integer',
             'file' => 'image|dimensions:min_width='.$minImageSize['width'].',min_height='.$minImageSize['height'].',max_width='.$maxImageSize['width'].',max_height='.$maxImageSize['height'],
             'status' => $this->getStatusRules($this->type),
@@ -62,6 +63,7 @@ class PostRequest extends Request
             'location' => 'nullable|iso3166',
             'quantity' => 'nullable|integer',
             'status' => $this->getStatusRules($this->post->type),
+            'school_id' => 'nullable|string|max:255',
         ];
     }
 
