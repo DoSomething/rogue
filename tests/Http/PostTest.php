@@ -1190,7 +1190,7 @@ class PostTest extends TestCase
     /**
      * Test for updating a post successfully.
      *
-     * PATCH /api/v3/posts/186
+     * PATCH /api/v3/posts/:id
      * @return void
      */
     public function testUpdatingAPhotoPost()
@@ -1204,7 +1204,7 @@ class PostTest extends TestCase
             'text' => 'new caption',
             'quantity' => 8,
             'status' => 'accepted',
-            'school_id' => '200426'
+            'school_id' => '200426',
         ]);
 
         $response->assertStatus(200);
@@ -1261,7 +1261,7 @@ class PostTest extends TestCase
     /**
      * Test for updating a post without activity scope.
      *
-     * PATCH /api/v3/posts/186
+     * PATCH /api/v3/posts/:id
      * @return void
      */
     public function testUpdatingAPostWithoutActivityScope()
@@ -1282,7 +1282,7 @@ class PostTest extends TestCase
     /**
      * Test validation for updating a post.
      *
-     * PATCH /api/v3/posts/195
+     * PATCH /api/v3/posts/:id
      * @return void
      */
     public function testValidationUpdatingAPost()
@@ -1299,7 +1299,7 @@ class PostTest extends TestCase
 
     /**
      * Test that a user can update their own post, but can't
-     * change it's review status.
+     * change its review status.
      *
      * @return void
      */
