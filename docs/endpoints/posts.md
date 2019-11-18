@@ -91,6 +91,7 @@ Example Response:
             "status": "accepted",
             "location": "US-NY",
             "location_name": "New York",
+            "school_id": null,
             "created_at": "2016-11-30T21:21:24+00:00",
             "updated_at": "2017-08-02T14:11:26+00:00"
         },
@@ -114,6 +115,7 @@ Example Response:
             "status": "accepted",
             "location": "US-NY",
             "location_name": "New York",
+            "school_id": null,
             "created_at": "2016-02-10T16:19:25+00:00",
             "updated_at": "2017-08-02T14:11:35+00:00"
             "action_details": {
@@ -179,6 +181,7 @@ Example Response:
     "status": "accepted",
     "location": "US-NY",
     "location_name": "New York",
+    "school_id": "3600052",
     "created_at": "2019-01-23T19:42:07+00:00",
     "updated_at": "2019-01-23T19:42:07+00:00"
     "action_details": {
@@ -232,6 +235,8 @@ Optional params:
   Option to set status upon creation if admin uploads post for user.
 - **location** (string).
   The The ISO 3166-2 region code this was submitted from, e.g. `US-NY`.
+- **school_id** (string).
+  The school ID this post should be associated with.
 - **details** (json).
   A JSON field to store extra details about a post.
 - **dont_send_to_blink** (boolean).
@@ -270,6 +275,7 @@ Example Response:
     "status": "pending",
     "location": "US-NY",
     "location_name": "New York",
+    "school_id": "3600052",
     "created_at": "2018-12-06T21:44:15+00:00",
     "updated_at": "2018-12-06T21:44:15+00:00",
     "tags": [],

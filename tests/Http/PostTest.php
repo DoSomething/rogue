@@ -1204,13 +1204,15 @@ class PostTest extends TestCase
             'text' => 'new caption',
             'quantity' => 8,
             'status' => 'accepted',
+            'school_id' => '200426'
         ]);
 
         $response->assertStatus(200);
 
-        // Make sure that the posts's new status and text gets persisted in the database.
+        // Make sure that the post's new status, text, and school_id gets persisted in the database.
         $this->assertEquals($post->fresh()->text, 'new caption');
         $this->assertEquals($post->fresh()->quantity, 8);
+        $this->assertEquals($post->fresh()->school_id, '200426');
 
         // Make sure the signup's quantity gets updated.
         $this->assertEquals($signup->fresh()->quantity, 8);
