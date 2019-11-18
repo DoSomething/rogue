@@ -41,6 +41,7 @@ class PostTest extends TestCase
                 'status',
                 'details',
                 'location',
+                'school_id',
                 'source',
                 'remote_addr',
                 'created_at',
@@ -63,6 +64,7 @@ class PostTest extends TestCase
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
         $location = 'US-'.$this->faker->stateAbbr();
+        $school_id =  $this->faker->word;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Create an action to refer to.
@@ -83,6 +85,7 @@ class PostTest extends TestCase
             'why_participated' => $why_participated,
             'text'             => $text,
             'location'         => $location,
+            'school_id'        => $school_id,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
         ]);
@@ -105,6 +108,7 @@ class PostTest extends TestCase
             'action_id' => $action->id,
             'status' => 'pending',
             'location' => $location,
+            'school_id' => $school_id,
             'quantity' => $quantity,
             'details' => json_encode($details),
         ]);
@@ -294,10 +298,11 @@ class PostTest extends TestCase
             'campaign_id' => 'dog', // This should be a numeric ID.
             'signup_id' => $signup->id, // This one is okay.
             'location' => 'the world', // This should be an ISO-3166-2 code.
+            'school_id' => 234, // This should be a string.
             // and we've omitted the required 'type' and 'action' fields!
         ]);
 
-        $response->assertJsonValidationErrors(['campaign_id', 'location', 'type', 'action']);
+        $response->assertJsonValidationErrors(['campaign_id', 'location', 'type', 'action', 'school_id']);
     }
 
     /**
