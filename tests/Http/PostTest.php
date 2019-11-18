@@ -64,7 +64,7 @@ class PostTest extends TestCase
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
         $location = 'US-'.$this->faker->stateAbbr();
-        $school_id =  $this->faker->word;
+        $school_id = $this->faker->word;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Create an action to refer to.
