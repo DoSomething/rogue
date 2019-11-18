@@ -1219,15 +1219,14 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test for updating a post successfully.
+     * Test for updating a post with invalid status.
      *
-     * PATCH /api/v3/posts/186
+     * PATCH /api/v3/posts/:id
      * @return void
      */
-    public function testUpdatingAPhotoWithBadStatus()
+    public function testUpdatingAPhotoWithInvalidStatus()
     {
         $post = factory(Post::class)->create();
-        $signup = $post->signup;
 
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
@@ -1238,6 +1237,25 @@ class PostTest extends TestCase
         ]);
 
         $response->assertJsonValidationErrors(['status']);
+    }
+
+    /**
+     * Test for updating a post with invalid school_id.
+     *
+     * PATCH /api/v3/posts/:id
+     * @return void
+     */
+    public function testUpdatingAPhotoWithInvalidSchoolId()
+    {
+        $post = factory(Post::class)->create();
+
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
+            'school_id' => 8,
+        ]);
+
+        $response->assertJsonValidationErrors(['school_id']);
     }
 
     /**
