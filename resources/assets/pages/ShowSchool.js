@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import Shell from '../components/utilities/Shell';
@@ -19,7 +19,6 @@ const SHOW_SCHOOL_QUERY = gql`
 
 const ShowSchool = () => {
   const { id } = useParams();
-  const history = useHistory();
 
   const { loading, error, data } = useQuery(SHOW_SCHOOL_QUERY, {
     variables: { id },
