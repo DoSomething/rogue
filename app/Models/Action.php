@@ -18,6 +18,7 @@ class Action extends Model
         'anonymous' => 'boolean',
         'online' => 'boolean',
         'quiz' => 'boolean',
+        'collect_school_id' => 'boolean',
     ];
 
     /**
@@ -27,7 +28,7 @@ class Action extends Model
      */
     protected $fillable = [
         'name', 'campaign_id', 'post_type', 'action_type', 'time_commitment', 'callpower_campaign_id',
-        'reportback', 'civic_action', 'scholarship_entry', 'anonymous', 'online', 'quiz', 'noun', 'verb',
+        'reportback', 'civic_action', 'scholarship_entry', 'anonymous', 'online', 'quiz', 'noun', 'verb', 'collect_school_id',
     ];
 
     /**

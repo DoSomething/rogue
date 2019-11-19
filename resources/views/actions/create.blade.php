@@ -54,6 +54,7 @@
                         @include('forms.option', ['name' => 'anonymous', 'label' => 'Anonymous'])
                         @include('forms.option', ['name' => 'online', 'label' => 'Online Action'])
                         @include('forms.option', ['name' => 'quiz', 'label' => 'Quiz Action'])
+                        @include('forms.option', ['name' => 'collect_school_id', 'label' => 'Collect School ID'])
                     </div>
 
                     <ul class="form-actions -inline -padded">

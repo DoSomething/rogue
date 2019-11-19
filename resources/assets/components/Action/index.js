@@ -116,6 +116,18 @@ class Action extends React.Component {
             </li>
           </ul>
         </div>
+        <div className="container__row">
+          <ul>
+            <li>
+              <h4>COLLECT SCHOOL ID</h4>
+              {action.collect_school_id === true ? (
+                <p className="yes">Yes</p>
+              ) : (
+                <p className="no">No</p>
+              )}
+            </li>
+          </ul>
+        </div>
         {campaign.is_open && !isAdmin ? null : (
           <div className="container__row">
             <a
