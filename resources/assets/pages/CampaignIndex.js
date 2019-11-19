@@ -49,6 +49,12 @@ const CampaignIndex = ({ isOpen }) => {
           <p>These campaigns are no longer accepting new submissions.</p>
         </div>
       )}
+      <div className="container__block text-center text-sm fade-in-up">
+        <mark>
+          <strong>New!</strong> You can now click table headings to sort this
+          list. Click again to sort in the opposite direction.
+        </mark>
+      </div>
       <div className="container__block">
         {/*  We keep two separate CampaignTable's so these can maintain independent state. */}
         {isOpen ? (

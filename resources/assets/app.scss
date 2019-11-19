@@ -317,6 +317,10 @@ $accepted-green: #80e85d;
 }
 
 // Tailwind helpers:
+.text-center {
+  text-align: center !important;
+}
+
 .underline {
   text-decoration: underline !important;
 }
