@@ -20,7 +20,7 @@ jobs:
       - run: cp .env.example .env
       - run: sudo composer self-update
       # Install PHP extensions required by Laravel.
-      - run: sudo docker-php-ext-install bcmath pdo_mysql
+      - run: sudo docker-php-ext-install bcmath pdo_mysql gettext
       # Install Composer & npm dependencies (using cache if found).
       - restore_cache:
           keys:
