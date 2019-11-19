@@ -313,6 +313,10 @@ $accepted-green: #80e85d;
 }
 
 // Tailwind helpers:
+.hover\:underline:hover {
+  text-decoration: underline !important;
+}
+
 .cursor-pointer {
   cursor: pointer !important;
 }
