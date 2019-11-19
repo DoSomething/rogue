@@ -19,12 +19,14 @@ jobs:
       # If we can, we'll load these from cache (based on the lockfile).
       - checkout
       - run: cp .env.example .env
-      - run:
-          name: install linux dependencies
-          command: sudo apt-get update && sudo apt-get install libpng-dev libjpeg-dev
       - run: sudo composer self-update
-      # Install PHP extensions required by Laravel.
-      - run: sudo docker-php-ext-install bcmath pdo_mysql gettext gd
+      - run:
+          name: install linux & php dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install libpng-dev libjpeg-dev
+            sudo docker-php-ext-configure gd --with-jpeg-dir=/usr/include/
+            sudo docker-php-ext-install bcmath pdo_mysql gettext gd exif
       # Install Composer & npm dependencies (using cache if found).
       - restore_cache:
           keys:
