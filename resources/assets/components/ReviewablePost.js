@@ -196,7 +196,11 @@ const ReviewablePost = ({ post }) => {
               Source: post.source,
               Location: post.location,
               Submitted: format(parse(post.createdAt), 'M/D/YYYY h:m:s'),
-              School: post.school ? post.school.name : '-',
+              School: post.school ? (
+                <Link to={`/schools/${post.schoolId}`}>{post.school.name}</Link>
+              ) : (
+                '-'
+              ),
             }}
           />
         </div>

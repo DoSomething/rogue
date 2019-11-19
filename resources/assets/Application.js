@@ -8,6 +8,7 @@ import ShowPost from './pages/ShowPost';
 import ShowUser from './pages/ShowUser';
 import UserIndex from './pages/UserIndex';
 import ShowSignup from './pages/ShowSignup';
+import ShowSchool from './pages/ShowSchool';
 import ShowCampaign from './pages/ShowCampaign';
 import CampaignIndex from './pages/CampaignIndex';
 
@@ -37,6 +38,9 @@ const Application = () => {
           </Route>
           <Route path="/signups/:id">
             <ShowSignup />
+          </Route>
+          <Route path="/schools/:id">
+            <ShowSchool />
           </Route>
         </Switch>
       </BrowserRouter>

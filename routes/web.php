@@ -39,6 +39,9 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     // Posts
     Route::view('posts/{id}', 'app')->name('posts.show');
 
+    // Schools
+    Route::view('schools/{id}', 'app')->name('schools.show');
+
     // Signups
     Route::view('signups/{id}', 'app')->name('signups.show');
 });
