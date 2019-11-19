@@ -50,6 +50,12 @@ export const ReviewablePostFragment = gql`
       internalTitle
     }
 
+    schoolId
+    school {
+      id
+      name
+    }
+
     signupId
     signup {
       id
@@ -190,6 +196,11 @@ const ReviewablePost = ({ post }) => {
               Source: post.source,
               Location: post.location,
               Submitted: format(parse(post.createdAt), 'M/D/YYYY h:m:s'),
+              School: post.school ? (
+                <Link to={`/schools/${post.schoolId}`}>{post.schoolId}</Link>
+              ) : (
+                '-'
+              ),
             }}
           />
         </div>
