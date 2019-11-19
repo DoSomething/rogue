@@ -19,7 +19,6 @@ const SHOW_SCHOOL_QUERY = gql`
 
 const ShowSchool = () => {
   const { id } = useParams();
-  console.log('school id', id);
   const history = useHistory();
 
   const { loading, error, data } = useQuery(SHOW_SCHOOL_QUERY, {
