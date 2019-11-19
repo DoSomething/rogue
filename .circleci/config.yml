@@ -8,6 +8,7 @@ jobs:
   build:
     docker:
       - image: circleci/php:7.3-node-browsers
+      - image: circleci/redis:4.0.14
       - image: circleci/mariadb:10.3
         environment:
           MYSQL_DATABASE: rogue_test
