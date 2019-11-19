@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import Shell from '../components/utilities/Shell';
 import CampaignsTable from '../components/CampaignsTable';
 
-const CampaignIndex = () => {
-  const [showClosed, setShowClosed] = useState(false);
+const CampaignIndex = ({ isOpen }) => {
   const [filter, setFilter] = useState('');
 
   return (
@@ -22,33 +22,41 @@ const CampaignIndex = () => {
           New Campaign
         </a>
       </div>
-      <div className="container__block">
-        <h3>Open Campaigns</h3>
-        <p>These campaigns are currently accepting new submissions.</p>
-      </div>
-      <div className="container__block">
-        <CampaignsTable isOpen={true} filter={filter} />
-      </div>
-      {showClosed ? (
-        <>
-          <div className="container__block">
-            <h3>Closed Campaigns</h3>
-            <p>These campaigns are no longer accepting new submissions.</p>
-          </div>
-          <div className="container__block">
-            <CampaignsTable isOpen={false} filter={filter} />
-          </div>
-        </>
+      {isOpen ? (
+        <div className="container__block">
+          <h3>
+            Open Campaigns{' '}
+            <span className="text-gray-500">
+              {' / '}
+              <Link to="/campaigns/closed" className="text-gray-500 underline">
+                Closed Campaigns
+              </Link>
+            </span>
+          </h3>
+          <p>These campaigns are currently accepting new submissions.</p>
+        </div>
       ) : (
-        <div className="container__block form-actions">
-          <button
-            className="button -tertiary"
-            onClick={() => setShowClosed(true)}
-          >
-            show closed campaigns
-          </button>
+        <div className="container__block">
+          <h3>
+            <span className="text-gray-500">
+              <Link to="/campaigns" className="text-gray-500 underline">
+                Open Campaigns
+              </Link>
+              {' / '}
+            </span>
+            Closed Campaigns
+          </h3>
+          <p>These campaigns are no longer accepting new submissions.</p>
         </div>
       )}
+      <div className="container__block">
+        {/*  We keep two separate CampaignTable's so these can maintain independent state. */}
+        {isOpen ? (
+          <CampaignsTable isOpen={true} filter={filter} />
+        ) : (
+          <CampaignsTable isOpen={false} filter={filter} />
+        )}
+      </div>
     </Shell>
   );
 };
