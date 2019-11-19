@@ -18,6 +18,9 @@ jobs:
       # If we can, we'll load these from cache (based on the lockfile).
       - checkout
       - run: cp .env.example .env
+      - run:
+          name: install linux dependencies
+          command: sudo apt-get update && sudo apt-get install libpng-dev
       - run: sudo composer self-update
       # Install PHP extensions required by Laravel.
       - run: sudo docker-php-ext-install bcmath pdo_mysql gettext gd
