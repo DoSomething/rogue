@@ -99,7 +99,7 @@ const CampaignsTable = ({ isOpen, filter }) => {
 
   // If we're filtering results & can load more, do so automatically:
   useEffect(() => {
-    if (filter !== '' && hasNextPage) {
+    if (filter !== '' && !loading && hasNextPage) {
       handleViewMore();
     }
   }, [filter, endCursor]);
