@@ -44,6 +44,10 @@ class ImagesController extends Controller
     {
         $post = Post::findByHashOrFail($hash);
 
+        if ($post->type !== 'photo') {
+            throw new ModelNotFoundException;
+        }
+
         $server = ServerFactory::create([
             'response' => new LaravelResponseFactory($request),
             'cache' => new Flysystem(new MemoryAdapter()),
