@@ -19,9 +19,8 @@ $router->get('logout', 'AuthController@getLogout');
 
 // Create, update, delete campaigns via Rogue.
 // @TODO: Merge into CampaignsController, above.
-$router->resource('campaign-ids', 'CampaignIdsController', ['except' => ['index']]);
+$router->resource('campaign-ids', 'CampaignIdsController');
 $router->get('campaign-ids/{id}/actions/create', 'ActionsController@create');
-$router->redirect('campaign-ids', 'campaigns/');
 
 // Actions
 $router->resource('actions', 'ActionsController');

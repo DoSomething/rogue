@@ -30,6 +30,16 @@ class CampaignIdsController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @param \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request) {
+        return redirect('campaigns/');
+    }
+
+    /**
      * Create a new campaign.
      */
     public function create()
