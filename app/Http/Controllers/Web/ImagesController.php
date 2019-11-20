@@ -10,6 +10,7 @@ use League\Flysystem\Memory\MemoryAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use League\Glide\Responses\LaravelResponseFactory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ImagesController extends Controller
 {
@@ -41,7 +42,11 @@ class ImagesController extends Controller
      */
     public function show(string $hash, Request $request)
     {
-        $post = Post::fromHash($hash);
+        $post = Post::findByHashOrFail($hash);
+
+        if ($post->type !== 'photo') {
+            throw new ModelNotFoundException;
+        }
 
         $server = ServerFactory::create([
             'response' => new LaravelResponseFactory($request),
