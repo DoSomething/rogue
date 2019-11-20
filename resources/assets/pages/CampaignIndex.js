@@ -56,12 +56,7 @@ const CampaignIndex = ({ isOpen }) => {
         </mark>
       </div>
       <div className="container__block">
-        {/*  We keep two separate CampaignTable's so these can maintain independent state. */}
-        {isOpen ? (
-          <CampaignsTable isOpen={true} filter={filter} />
-        ) : (
-          <CampaignsTable isOpen={false} filter={filter} />
-        )}
+        <CampaignsTable isOpen={isOpen} filter={filter} />
       </div>
     </Shell>
   );
