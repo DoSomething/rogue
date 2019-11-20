@@ -20,7 +20,10 @@ const Application = () => {
       <BrowserRouter>
         <Switch>
           <Route path="/campaigns" exact>
-            <CampaignIndex />
+            <CampaignIndex isOpen={true} />
+          </Route>
+          <Route path="/campaigns/closed" exact>
+            <CampaignIndex isOpen={false} />
           </Route>
           <Redirect from="/campaigns/:id" exact to="/campaigns/:id/accepted" />
           <Redirect from="/campaigns/:id/inbox" to="/campaigns/:id/pending" />

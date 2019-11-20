@@ -17,7 +17,7 @@ const SortableHeading = ({ column, orderBy, onChange, label }) => {
 
   return (
     <td
-      className="cursor-pointer"
+      className="cursor-pointer hover:underline"
       onClick={() => onChange(`${column},${newDirection}`)}
     >
       <span className={sortClass}>{label}</span>

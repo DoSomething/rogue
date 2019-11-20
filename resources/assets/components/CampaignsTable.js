@@ -97,9 +97,9 @@ const CampaignsTable = ({ isOpen, filter }) => {
     });
   };
 
-  // If we've filtered all results & can load more, do so automatically:
+  // If we're filtering results & can load more, do so automatically:
   useEffect(() => {
-    if (noFilteredResults && hasNextPage) {
+    if (filter !== '' && hasNextPage) {
       handleViewMore();
     }
   }, [filter, endCursor]);

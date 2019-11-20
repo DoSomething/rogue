@@ -258,11 +258,15 @@ $accepted-green: #80e85d;
   color: $dark-gray !important;
 }
 
+.text-gray-500 {
+  color: $med-gray !important;
+}
+
 .text-red {
   color: $error-color !important;
 }
 
-.text-sm {
+.text-italic {
   font-style: italic !important;
 }
 
@@ -313,6 +317,18 @@ $accepted-green: #80e85d;
 }
 
 // Tailwind helpers:
+.text-center {
+  text-align: center !important;
+}
+
+.underline {
+  text-decoration: underline !important;
+}
+
+.hover\:underline:hover {
+  text-decoration: underline !important;
+}
+
 .cursor-pointer {
   cursor: pointer !important;
 }
