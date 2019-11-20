@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Post extends Model
 {
@@ -82,7 +83,7 @@ class Post extends Model
      * @param string $hash
      * @return Post
      */
-    public static function fromHash($hash)
+    public static function findByHashOrFail($hash)
     {
         $result = app(Hashids::class)->decode($hash);
 
