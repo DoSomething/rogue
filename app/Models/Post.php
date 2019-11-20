@@ -87,7 +87,7 @@ class Post extends Model
         $result = app(Hashids::class)->decode($hash);
 
         if (empty($result)) {
-            return null;
+            throw new ModelNotFoundException;
         }
 
         return self::findOrFail($result[0]);
