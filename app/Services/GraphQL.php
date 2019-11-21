@@ -54,4 +54,28 @@ class GraphQL
 
         return $this->query($query, $variables)['campaignWebsiteByCampaignId'];
     }
+
+    /**
+     * Query for a School by ID.
+     *
+     * @param  $schoolId String
+     * @return array
+     */
+    public function getSchoolById($schoolId)
+    {
+        info('getSchoolById '.$schoolId);
+
+        $query = '
+        query GetSchoolById($schoolId: String!) {
+          school(id: $schoolId) {
+            name
+          }
+        }';
+
+        $variables = [
+            'schoolId' => $schoolId,
+        ];
+
+        return $this->query($query, $variables)['school'];
+    }
 }
