@@ -60,16 +60,8 @@ class PostModelTest extends TestCase
      */
     public function testBlinkPayload()
     {
-        factory(Signup::class, 5)->create()
-            ->each(function ($signup) {
-                $signup->posts()->saveMany(factory(Post::class, 'accepted', 3)->create());
-            });
-
-        // Grab any old post.
-        $post = Signup::all()->first()->posts->first();
-
+        $post = factory(Post::class)->create();
         $result = $post->toBlinkPayload();
-        info('test payload', $result);
 
         $this->assertEquals($result['school_name'], 'San Dimas High School');
     }
