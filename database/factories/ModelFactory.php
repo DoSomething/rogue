@@ -50,6 +50,7 @@ $factory->define(Post::class, function (Generator $faker) {
         'url' => $url,
         'text' => $faker->sentence(),
         'location' => 'US-'.$faker->stateAbbr(),
+        'school_id' => $faker->word(),
         'source' => 'phpunit',
         'status' => 'pending',
         'quantity' => $faker->randomNumber(2),
@@ -80,6 +81,7 @@ $factory->defineAs(Post::class, 'text', function (Generator $faker) {
         'northstar_id' => $this->faker->northstar_id,
         'text' => $faker->sentence(),
         'location' => 'US-'.$faker->stateAbbr(),
+        'school_id' => $faker->word(),
         'source' => 'phpunit',
         'status' => 'pending',
     ];

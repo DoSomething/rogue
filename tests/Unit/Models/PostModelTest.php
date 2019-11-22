@@ -52,4 +52,25 @@ class PostModelTest extends TestCase
         $this->assertCount(3, $post->siblings);
         $this->assertEquals($post->signup_id, $post->siblings[0]->signup_id);
     }
+
+    /**
+     * Test expected payload for Blink.
+     *
+     * @return void
+     */
+    public function testBlinkPayload()
+    {
+        factory(Signup::class, 5)->create()
+            ->each(function ($signup) {
+                $signup->posts()->saveMany(factory(Post::class, 'accepted', 3)->create());
+            });
+
+        // Grab any old post.
+        $post = Signup::all()->first()->posts->first();
+
+        $result = $post->toBlinkPayload();
+        info('test payload', $result);
+
+        $this->assertEquals($result['school_name'], 'San Dimas High School');
+    }
 }
