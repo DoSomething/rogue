@@ -52,4 +52,19 @@ class PostModelTest extends TestCase
         $this->assertCount(3, $post->siblings);
         $this->assertEquals($post->signup_id, $post->siblings[0]->signup_id);
     }
+
+    /**
+     * Test expected payload for Blink.
+     *
+     * @return void
+     */
+    public function testBlinkPayload()
+    {
+        $post = factory(Post::class)->create();
+        $result = $post->toBlinkPayload();
+
+        $this->assertEquals($result['campaign_slug'], 'test-example-campaign');
+        $this->assertEquals($result['campaign_title'], 'Test Example Campaign');
+        $this->assertEquals($result['school_name'], 'San Dimas High School');
+    }
 }

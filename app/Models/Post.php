@@ -278,6 +278,11 @@ class Post extends Model
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
 
+        // Fetch School information via GraphQL.
+        if ($this->school_id) {
+            $school = app(GraphQL::class)->getSchoolById($this->school_id);
+        }
+
         // The associated Action for this post.
         $action = $this->actionModel;
 
@@ -310,6 +315,7 @@ class Post extends Model
             'source_details' => $this->source_details,
             'details' => $this->details,
             'school_id' => $this->school_id,
+            'school_name' => isset($school) ? $school['name'] : null,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
             'deleted_at' => $this->deleted_at ? $this->deleted_at->toIso8601String() : null,
