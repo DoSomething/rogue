@@ -63,6 +63,8 @@ class PostModelTest extends TestCase
         $post = factory(Post::class)->create();
         $result = $post->toBlinkPayload();
 
+        $this->assertEquals($result['campaign_slug'], 'test-example-campaign');
+        $this->assertEquals($result['campaign_title'], 'Test Example Campaign');
         $this->assertEquals($result['school_name'], 'San Dimas High School');
     }
 }

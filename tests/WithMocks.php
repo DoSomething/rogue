@@ -51,7 +51,10 @@ trait WithMocks
 
         // GraphQL Mock
         $this->graphqlMock = $this->mock(GraphQL::class);
-        $this->graphqlMock->shouldReceive('getCampaignWebsiteByCampaignId')->andReturn(null);
+        $this->graphqlMock->shouldReceive('getCampaignWebsiteByCampaignId')->andReturn([
+            'title' => 'Test Example Campaign',
+            'slug' => 'test-example-campaign',
+        ]);
         $this->graphqlMock->shouldReceive('getSchoolById')->andReturn([
             'name' => 'San Dimas High School',
         ]);
