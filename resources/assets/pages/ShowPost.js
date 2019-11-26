@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
+import NotFound from './NotFound';
 import Shell from '../components/utilities/Shell';
 import ReviewablePost, {
   ReviewablePostFragment,
@@ -43,14 +44,7 @@ const ShowPost = () => {
     return <Shell error={error} />;
   }
 
-  if (!data.post)
-    return (
-      <Shell title={title} subtitle="Not found!">
-        <div className="container__block">
-          We couldn't find that post. Maybe it was deleted?
-        </div>
-      </Shell>
-    );
+  if (!data.post) return <NotFound title={title} type="post" />;
 
   const { post } = data;
   const subtitle = `${post.user.displayName} / ${post.campaign.internalTitle}`;

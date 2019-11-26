@@ -32,6 +32,16 @@ class ActionsController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function show(Request $request)
+    {
+        return response()->view('app', ['actions.show']);
+    }
+
+    /**
      * Create a new action.
      */
     public function create($campaignId)
@@ -111,7 +121,7 @@ class ActionsController extends Controller
         // Log that an action was updated.
         info('action_updated', ['id' => $action->id]);
 
-        return redirect()->route('campaign-ids.show', $action->campaign_id);
+        return redirect()->route('actions.show', $action->id);
     }
 
     /**

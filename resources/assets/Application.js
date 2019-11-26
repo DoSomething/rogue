@@ -7,6 +7,7 @@ import graphql from './graphql';
 import ShowPost from './pages/ShowPost';
 import ShowUser from './pages/ShowUser';
 import UserIndex from './pages/UserIndex';
+import ShowAction from './pages/ShowAction';
 import ShowSignup from './pages/ShowSignup';
 import ShowSchool from './pages/ShowSchool';
 import ShowCampaign from './pages/ShowCampaign';
@@ -19,6 +20,9 @@ const Application = () => {
     <ApolloProvider client={graphql(endpoint)}>
       <BrowserRouter>
         <Switch>
+          <Route path="/actions/:id">
+            <ShowAction />
+          </Route>
           <Route path="/campaigns" exact>
             <CampaignIndex isOpen={true} />
           </Route>

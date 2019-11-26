@@ -15,13 +15,17 @@ class Action extends React.Component {
 
     return (
       <div className="container__action">
-        <div className="container__row">
-          <h2>{action.name}</h2>
-        </div>
+        {!this.props.isPermalink ? (
+          <div className="container__row">
+            <h2>
+              <a href={`/actions/${action.id}`}>{action.name}</a>
+            </h2>
+          </div>
+        ) : null}
         <div className="container__row">
           <ul>
             <li>
-              <h4>ID</h4>
+              <h4>ACTION ID</h4>
               <p>{action.id}</p>
             </li>
             {action.post_type === 'phone-call' ? (
@@ -137,12 +141,14 @@ class Action extends React.Component {
               Edit Action
             </a>
 
-            <button
-              className="button delete -tertiary"
-              onClick={e => this.props.deleteAction(action.id, e)}
-            >
-              Delete Action
-            </button>
+            {!this.props.isPermalink ? (
+              <button
+                className="button delete -tertiary"
+                onClick={e => this.props.deleteAction(action.id, e)}
+              >
+                Delete Action
+              </button>
+            ) : null}
           </div>
         )}
       </div>
@@ -152,6 +158,11 @@ class Action extends React.Component {
 
 Action.propTypes = {
   action: PropTypes.object.isRequired,
+  permalink: PropTypes.bool,
+};
+
+Action.defaultProps = {
+  permalink: false,
 };
 
 export default Action;
