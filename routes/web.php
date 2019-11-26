@@ -23,10 +23,14 @@ $router->resource('campaign-ids', 'CampaignIdsController');
 $router->get('campaign-ids/{id}/actions/create', 'ActionsController@create');
 
 // Actions
-$router->resource('actions', 'ActionsController');
+$router->get('actions/{id}/edit', 'ActionsController@edit');
+$router->post('actions/{id}/edit', 'ActionsController@update');
 
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
+    // Actions
+    Route::view('actions/{id}', 'app')->name('actions.show');
+
     // Campaigns
     Route::view('campaigns', 'app')->name('campaigns.index');
     Route::view('campaigns/{id}', 'app');
