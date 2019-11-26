@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
+import NotFound from './NotFound';
 import Action from '../components/Action';
 import Shell from '../components/utilities/Shell';
 import MetaInformation from '../components/utilities/MetaInformation';
@@ -19,6 +20,7 @@ const SHOW_ACTION_QUERY = gql`
 
 const ShowAction = () => {
   const { id } = useParams();
+  const title = `Action #${id}`;
 
   const { loading, error, data } = useQuery(SHOW_ACTION_QUERY, {
     variables: { id: Number(id) },
@@ -29,7 +31,11 @@ const ShowAction = () => {
   }
 
   if (loading) {
-    return <Shell title="Action" loading />;
+    return <Shell title={title} loading />;
+  }
+
+  if (!data.action) {
+    return <NotFound title={title} type="action" />;
   }
 
   const { campaignId, name } = data.action;
