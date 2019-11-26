@@ -35,13 +35,15 @@ const ShowAction = () => {
   const { campaignId, name } = data.action;
 
   return (
-    <Shell
-      title={name}
-      subtitle={
-        <a href={`/campaign-ids/${campaignId}`}>{`Campaign ${campaignId}`}</a>
-      }
-    >
+    <Shell title={name}>
       <Action action={data.action} campaign={{ id: campaignId }} isPermalink />
+      <ul className="form-actions margin-vertical">
+        <li>
+          <a className="button -tertiary" href={`/campaign-ids/${campaignId}`}>
+            View all Actions for Campaign {campaignId}
+          </a>
+        </li>
+      </ul>
     </Shell>
   );
 };
