@@ -31,6 +31,18 @@ class ActionsController extends Controller
         ];
     }
 
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function show($id, Request $request)
+    {
+        return response()->view('app', ['actions.show']);
+    }
+
     /**
      * Create a new action.
      */
