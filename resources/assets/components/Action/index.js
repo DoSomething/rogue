@@ -17,13 +17,15 @@ class Action extends React.Component {
       <div className="container__action">
         {!this.props.isPermalink ? (
           <div className="container__row">
-            <h2>{action.name}</h2>
+            <h2>
+              <a href={`/actions/${action.id}`}>{action.name}</a>
+            </h2>
           </div>
         ) : null}
         <div className="container__row">
           <ul>
             <li>
-              <h4>ID</h4>
+              <h4>ACTION ID</h4>
               <p>{action.id}</p>
             </li>
             {action.post_type === 'phone-call' ? (

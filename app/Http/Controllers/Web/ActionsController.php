@@ -121,7 +121,7 @@ class ActionsController extends Controller
         // Log that an action was updated.
         info('action_updated', ['id' => $action->id]);
 
-        return redirect()->route('campaign-ids.show', $action->campaign_id);
+        return redirect()->route('actions.show', $action->id);
     }
 
     /**

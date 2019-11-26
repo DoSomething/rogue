@@ -2,12 +2,14 @@
 
 @section('main_content')
 
-    @include('layouts.header', ['header' => 'Edit an Action'])
+    @include('layouts.header', ['header' => 'Edit Action'])
 
     <div class="container -padded">
         <div class="wrapper">
             <div class="container__block -narrow">
-                <h1>Edit {{ $action->name }}</h1>
+                <h1>
+                    <a href="/actions/{{ $action->id }}">{{ $action->name }}</a>
+                </h1>
 
                 <form method="POST" action="{{ route('actions.update', $action->id) }}">
                     {{ csrf_field()}}
