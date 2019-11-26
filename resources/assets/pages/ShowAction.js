@@ -41,7 +41,7 @@ const ShowAction = () => {
         <a href={`/campaign-ids/${campaignId}`}>{`Campaign ${campaignId}`}</a>
       }
     >
-      <Action action={data.action} campaign={{ id: campaignId }} />
+      <Action action={data.action} campaign={{ id: campaignId }} isPermalink />
     </Shell>
   );
 };

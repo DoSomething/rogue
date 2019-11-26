@@ -15,9 +15,11 @@ class Action extends React.Component {
 
     return (
       <div className="container__action">
-        <div className="container__row">
-          <h2>{action.name}</h2>
-        </div>
+        {!this.props.isPermalink ? (
+          <div className="container__row">
+            <h2>{action.name}</h2>
+          </div>
+        ) : null}
         <div className="container__row">
           <ul>
             <li>
@@ -137,12 +139,14 @@ class Action extends React.Component {
               Edit Action
             </a>
 
-            <button
-              className="button delete -tertiary"
-              onClick={e => this.props.deleteAction(action.id, e)}
-            >
-              Delete Action
-            </button>
+            {!this.props.isPermalink ? (
+              <button
+                className="button delete -tertiary"
+                onClick={e => this.props.deleteAction(action.id, e)}
+              >
+                Delete Action
+              </button>
+            ) : null}
           </div>
         )}
       </div>
@@ -152,6 +156,11 @@ class Action extends React.Component {
 
 Action.propTypes = {
   action: PropTypes.object.isRequired,
+  permalink: PropTypes.bool,
+};
+
+Action.defaultProps = {
+  permalink: false,
 };
 
 export default Action;
