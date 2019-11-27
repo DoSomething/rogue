@@ -22,7 +22,7 @@ class CampaignTest extends Testcase
         // Make sure the end date is after the start date.
         $firstCampaignEndDate = date('m/d/Y', strtotime('+3 months', strtotime($firstCampaignStartDate)));
 
-        $this->actingAsAdmin()->postJson('campaign-ids', [
+        $this->actingAsAdmin()->postJson('campaigns', [
             'internal_title' => $firstCampaignTitle,
             'cause' => ['animal-welfare'],
             'impact_doc' => 'https://www.google.com',
@@ -36,7 +36,7 @@ class CampaignTest extends Testcase
         ]);
 
         // Try to create a second campaign with the same title and make sure it doesn't duplicate.
-        $this->actingAsAdmin()->postJson('campaign-ids', [
+        $this->actingAsAdmin()->postJson('campaigns', [
             'internal_title' => $firstCampaignTitle,
         ]);
 
@@ -179,7 +179,7 @@ class CampaignTest extends Testcase
         $campaign = factory(Campaign::class)->create();
 
         // Update the title.
-        $response = $this->actingAsAdmin()->patch('campaign-ids/' . $campaign->id, [
+        $response = $this->actingAsAdmin()->patch('campaigns/' . $campaign->id, [
             'internal_title' => 'Updated Title',
             'impact_doc' => 'https://www.bing.com/',
             'cause' => ['lgbtq-rights'],
@@ -211,7 +211,7 @@ class CampaignTest extends Testcase
         $campaign = factory(Campaign::class)->create();
 
         // Delete the campaign.
-        $this->actingAsAdmin()->deleteJson('campaign-ids/' . $campaign->id);
+        $this->actingAsAdmin()->deleteJson('campaigns/' . $campaign->id);
 
         // Make sure the campaign is deleted.
         $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
