@@ -105,7 +105,12 @@ const CampaignsTable = ({ isOpen, filter }) => {
   }, [filter, endCursor]);
 
   if (error) {
-    return 'There was an error. :(';
+    return (
+      <div className="text-center">
+        <p>There was an error. :(</p>
+        <code>{JSON.stringify(error)}</code>
+      </div>
+    );
   }
 
   if (noFilteredResults && !hasNextPage) {
