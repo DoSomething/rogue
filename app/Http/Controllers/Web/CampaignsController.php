@@ -7,7 +7,6 @@ use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
-use Rogue\Http\Transformers\CampaignTransformer;
 
 class CampaignsController extends Controller
 {
