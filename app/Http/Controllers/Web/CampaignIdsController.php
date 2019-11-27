@@ -64,21 +64,17 @@ class CampaignIdsController extends Controller
         // Log that a campaign was created.
         info('campaign_created', ['id' => $campaign->id]);
 
-        return redirect()->route('campaign-ids.show', $campaign->id);
+        return redirect()->route('campaign.show', $campaign->id);
     }
 
     /**
-     * Show a specific campaign page and its actions.
+     * Display the specified resource.
      *
-     * @param  \Rogue\Models\Campaign  $campaign
+     * @return \Illuminate\View\View
      */
-    public function show(Campaign $campaign)
+    public function show(Request $request)
     {
-        return view('campaign-ids.show')
-            ->with('state', [
-                'campaign' => (new CampaignTransformer)->transform($campaign),
-            ]
-        );
+        return response()->view('app', ['campaigns.show']);
     }
 
     /**
@@ -111,7 +107,7 @@ class CampaignIdsController extends Controller
         // Log that a campaign was updated.
         info('campaign_updated', ['id' => $campaign->id]);
 
-        return redirect()->route('campaign-ids.show', $campaign);
+        return redirect()->route('campaigns.show', $campaign);
     }
 
     /**

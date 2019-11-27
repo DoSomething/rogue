@@ -25,11 +25,14 @@ $router->get('campaign-ids/{id}/actions/create', 'ActionsController@create');
 // Actions
 $router->resource('actions', 'ActionsController');
 
+// Actions
+$router->resource('campaigns', 'CampaignIdsController');
+
+
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     // Campaigns
     Route::view('campaigns', 'app')->name('campaigns.index');
-    Route::view('campaigns/{id}', 'app');
     Route::view('campaigns/{id}/{status}', 'app');
 
     // Users

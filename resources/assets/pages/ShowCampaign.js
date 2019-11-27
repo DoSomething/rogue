@@ -13,6 +13,9 @@ const SHOW_CAMPAIGN_QUERY = gql`
   query ShowCampaignQuery($id: Int!) {
     campaign(id: $id) {
       internalTitle
+      causes {
+        name
+      }
     }
   }
 `;
@@ -36,6 +39,17 @@ const ShowCampaign = () => {
 
   if (loading) {
     return <Shell title="Campaign" loading />;
+  }
+  if (!status) {
+    return (
+      <Shell title="Campaign" subtitle={data.campaign.internalTitle}>
+        <div className="container__row">
+          <div className="container__block">
+            Causes: {data.campaign.causes.map(cause => `${cause.name} `)}
+          </div>
+        </div>
+      </Shell>
+    );
   }
 
   return (
