@@ -18,7 +18,7 @@ const CampaignIndex = ({ isOpen }) => {
         />
       </div>
       <div className="container__block -half form-actions -inline text-right">
-        <a className="button -tertiary" href="/campaign-ids/create">
+        <a className="button -tertiary" href="/campaigns/create">
           New Campaign
         </a>
       </div>
