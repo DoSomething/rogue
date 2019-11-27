@@ -21,6 +21,7 @@ const SHOW_CAMPAIGN_ACTIONS_QUERY = gql`
       createdAt
       endDate
       id
+      impactDoc
       internalTitle
       startDate
       updatedAt
