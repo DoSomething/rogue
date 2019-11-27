@@ -10,19 +10,11 @@ import Campaign from '../components/Campaign/Campaign';
 import HelpLink from '../components/utilities/HelpLink';
 import ReviewablePostGallery from '../components/ReviewablePostGallery';
 
-const SHOW_CAMPAIGN_TITLE_QUERY = gql`
+const SHOW_CAMPAIGN_QUERY = gql`
   query ShowCampaignQuery($id: Int!) {
     campaign(id: $id) {
-      causes {
-        id
-        name
-      }
-      createdAt
-      endDate
       id
       internalTitle
-      startDate
-      updatedAt
     }
   }
 `;
@@ -36,7 +28,7 @@ const ShowCampaign = () => {
     history.replace(`/campaigns/${id}/${value}`);
   };
 
-  const { loading, error, data } = useQuery(SHOW_CAMPAIGN_TITLE_QUERY, {
+  const { loading, error, data } = useQuery(SHOW_CAMPAIGN_QUERY, {
     variables: { id: Number(id) },
   });
 
@@ -52,7 +44,7 @@ const ShowCampaign = () => {
     return (
       <Shell title="Campaign" subtitle={data.campaign.internalTitle}>
         <div className="container__row">
-          <Campaign campaign={data.campaign} />
+          <Campaign id={data.campaign.id} />
         </div>
       </Shell>
     );
