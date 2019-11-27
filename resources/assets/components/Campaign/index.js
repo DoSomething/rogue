@@ -10,7 +10,7 @@ import './campaignidsingle.scss';
 import Action from '../Action';
 import PagingButtons from '../PagingButtons';
 
-class CampaignIdSingle extends React.Component {
+class Campaign extends React.Component {
   constructor(props) {
     super(props);
 
@@ -209,7 +209,7 @@ class CampaignIdSingle extends React.Component {
         <div className="container__block -narrow">
           <a
             className="button -secondary"
-            href={`${campaign.id}/actions/create`}
+            href={`/campaigns/${campaign.id}/actions/create`}
           >
             Add Action
           </a>
@@ -219,12 +219,12 @@ class CampaignIdSingle extends React.Component {
   }
 }
 
-CampaignIdSingle.propTypes = {
+Campaign.propTypes = {
   campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   actions: PropTypes.array,
 };
 
-CampaignIdSingle.defaultProps = {
+Campaign.defaultProps = {
   actions: null,
 };
 

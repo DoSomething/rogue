@@ -17,17 +17,12 @@ $router->view('faq', 'pages.faq');
 $router->get('login', 'AuthController@getLogin');
 $router->get('logout', 'AuthController@getLogout');
 
-// Create, update, delete campaigns via Rogue.
-// @TODO: Merge into CampaignsController, above.
-$router->resource('campaign-ids', 'CampaignIdsController');
-$router->get('campaign-ids/{id}/actions/create', 'ActionsController@create');
-
 // Actions
 $router->resource('actions', 'ActionsController');
+$router->get('campaigns/{id}/actions/create', 'ActionsController@create');
 
-// Actions
-$router->resource('campaigns', 'CampaignIdsController');
-
+// Campaigns
+$router->resource('campaigns', 'CampaignsController');
 
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {

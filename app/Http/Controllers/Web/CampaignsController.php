@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
 use Rogue\Http\Transformers\CampaignTransformer;
 
-class CampaignIdsController extends Controller
+class CampaignsController extends Controller
 {
     /**
      * Create a controller instance.
@@ -37,7 +37,7 @@ class CampaignIdsController extends Controller
      */
     public function index(Request $request)
     {
-        return redirect('campaigns/');
+        return response()->view('app', ['campaigns.index']);
     }
 
     /**
@@ -45,7 +45,7 @@ class CampaignIdsController extends Controller
      */
     public function create()
     {
-        return view('campaign-ids.create')->with('causes', Cause::labels());
+        return view('campaigns.create')->with('causes', Cause::labels());
     }
 
     /**
@@ -84,7 +84,7 @@ class CampaignIdsController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        return view('campaign-ids.edit', [
+        return view('campaigns.edit', [
             'campaign' => $campaign,
             'causes' => Cause::labels(),
         ]);

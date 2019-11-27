@@ -6,16 +6,23 @@ import { useQuery } from '@apollo/react-hooks';
 import { STATUSES, TAGS } from '../helpers';
 import Shell from '../components/utilities/Shell';
 import Select from '../components/utilities/Select';
+import Campaign from '../components/Campaign/Campaign';
 import HelpLink from '../components/utilities/HelpLink';
 import ReviewablePostGallery from '../components/ReviewablePostGallery';
 
-const SHOW_CAMPAIGN_QUERY = gql`
+const SHOW_CAMPAIGN_TITLE_QUERY = gql`
   query ShowCampaignQuery($id: Int!) {
     campaign(id: $id) {
-      internalTitle
       causes {
+        id
         name
       }
+      createdAt
+      endDate
+      id
+      internalTitle
+      startDate
+      updatedAt
     }
   }
 `;
@@ -29,7 +36,7 @@ const ShowCampaign = () => {
     history.replace(`/campaigns/${id}/${value}`);
   };
 
-  const { loading, error, data } = useQuery(SHOW_CAMPAIGN_QUERY, {
+  const { loading, error, data } = useQuery(SHOW_CAMPAIGN_TITLE_QUERY, {
     variables: { id: Number(id) },
   });
 
@@ -40,13 +47,12 @@ const ShowCampaign = () => {
   if (loading) {
     return <Shell title="Campaign" loading />;
   }
+
   if (!status) {
     return (
       <Shell title="Campaign" subtitle={data.campaign.internalTitle}>
         <div className="container__row">
-          <div className="container__block">
-            Causes: {data.campaign.causes.map(cause => `${cause.name} `)}
-          </div>
+          <Campaign campaign={data.campaign} />
         </div>
       </Shell>
     );
@@ -68,8 +74,8 @@ const ShowCampaign = () => {
         </div>
 
         <div className="container__block -third form-actions -inline text-right pt-heading">
-          <a className="button -tertiary" href={`/campaign-ids/${id}`}>
-            Edit Campaign &amp; Actions
+          <a className="button -tertiary" href={`/campaigns/${id}`}>
+            View Campaign &amp; Actions
           </a>
         </div>
       </div>
