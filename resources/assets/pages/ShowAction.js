@@ -4,18 +4,17 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import NotFound from './NotFound';
-import Action from '../components/Action';
+import Action, { ActionFragment } from '../components/Action';
 import Shell from '../components/utilities/Shell';
 import MetaInformation from '../components/utilities/MetaInformation';
 
 const SHOW_ACTION_QUERY = gql`
   query ShowActionQuery($id: Int!) {
     action(id: $id) {
-      id
-      name
-      campaignId
+      ...ActionFragment
     }
   }
+  ${ActionFragment}
 `;
 
 const ShowAction = () => {
@@ -38,15 +37,15 @@ const ShowAction = () => {
     return <NotFound title={title} type="action" />;
   }
 
-  const { campaignId, name } = data.action;
+  const { campaign, name } = data.action;
 
   return (
-    <Shell title={name}>
-      <Action action={data.action} campaign={{ id: campaignId }} isPermalink />
+    <Shell title={title} subtitle={name}>
+      <Action action={data.action} campaign={{ id: campaign.id }} isPermalink />
       <ul className="form-actions margin-vertical">
         <li>
-          <a className="button -tertiary" href={`/campaign-ids/${campaignId}`}>
-            View all Actions for Campaign {campaignId}
+          <a className="button -tertiary" href={`/campaigns/${campaign.id}`}>
+            View all Actions for Campaign {campaign.internalTitle}
           </a>
         </li>
       </ul>

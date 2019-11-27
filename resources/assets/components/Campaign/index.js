@@ -192,7 +192,6 @@ class Campaign extends React.Component {
                   <Action
                     key={key}
                     action={action}
-                    campaign={campaign}
                     deleteAction={this.deleteAction}
                   />
                 );

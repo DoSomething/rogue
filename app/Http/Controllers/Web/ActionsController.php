@@ -83,7 +83,7 @@ class ActionsController extends Controller
             info('action_created', ['id' => $action->id]);
         }
 
-        return redirect()->route('campaign-ids.show', $request['campaign_id']);
+        return redirect()->route('actions.show', ['id' => $action->id]);
     }
 
     /**

@@ -1,8 +1,10 @@
 import gql from 'graphql-tag';
+import { map, isEmpty } from 'lodash';
 import React, { useState } from 'react';
 import { format, parse } from 'date-fns';
 import { useQuery } from '@apollo/react-hooks';
 
+import Action, { ActionFragment } from '../Action';
 import Shell from '../utilities/Shell';
 import TextBlock from '../utilities/TextBlock';
 
@@ -10,8 +12,7 @@ const SHOW_CAMPAIGN_ACTIONS_QUERY = gql`
   query ShowCampaignActionsQuery($id: Int!, $idString: String!) {
     campaign(id: $id) {
       actions {
-        id
-        name
+        ...ActionFragment
       }
       causes {
         id
@@ -28,6 +29,7 @@ const SHOW_CAMPAIGN_ACTIONS_QUERY = gql`
       slug
     }
   }
+  ${ActionFragment}
 `;
 
 const Campaign = ({ id }) => {
@@ -108,6 +110,11 @@ const Campaign = ({ id }) => {
           determine how it will be treated by Rogue. Use this Action ID in
           Contentful to link user submissions in Rogue.
         </p>
+        {!isEmpty(campaign.actions)
+          ? map(campaign.actions, (action, key) => {
+              return <Action key={key} action={action} />;
+            })
+          : null}
         <div className="container__block -narrow">
           <a
             className="button -secondary"
