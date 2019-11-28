@@ -41,7 +41,7 @@ const ShowAction = () => {
 
   return (
     <Shell title={title} subtitle={name}>
-      <Action action={data.action} campaign={{ id: campaign.id }} isPermalink />
+      <Action action={data.action} isPermalink />
       <ul className="form-actions margin-vertical">
         <li>
           <a className="button -tertiary" href={`/campaigns/${campaign.id}`}>

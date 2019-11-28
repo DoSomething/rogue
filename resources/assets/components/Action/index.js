@@ -169,4 +169,13 @@ export const Action = ({ action, deleteAction, isPermalink }) => {
   );
 };
 
+Action.propTypes = {
+  action: PropTypes.object.isRequired,
+  isPermalink: PropTypes.bool,
+};
+
+Action.defaultProps = {
+  isPermalink: false,
+};
+
 export default Action;
