@@ -30,6 +30,8 @@ const SHOW_CAMPAIGN_ACTIONS_QUERY = gql`
     }
     campaignWebsiteByCampaignId(campaignId: $idString) {
       slug
+      title
+      url
     }
   }
   ${ActionFragment}
@@ -48,7 +50,7 @@ const Campaign = ({ id }) => {
     return <TextBlock title="Loading actions..." />;
   }
 
-  const { campaign } = data;
+  const { campaign, campaignWebsiteByCampaignId } = data;
 
   return (
     <div className="container -padded">
@@ -69,6 +71,17 @@ const Campaign = ({ id }) => {
 
         <h4>Campaign ID</h4>
         <p>{campaign.id}</p>
+
+        <h4>URL</h4>
+        <p>
+          {campaignWebsiteByCampaignId ? (
+            <a href={campaignWebsiteByCampaignId.url} target="_blank">
+              {campaignWebsiteByCampaignId.title}
+            </a>
+          ) : (
+            '–'
+          )}
+        </p>
 
         <h4>Cause Area</h4>
         <p>
