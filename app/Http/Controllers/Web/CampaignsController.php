@@ -31,10 +31,9 @@ class CampaignsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         return response()->view('app', ['campaigns.index']);
     }
@@ -71,7 +70,7 @@ class CampaignsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show(Request $request)
+    public function show()
     {
         return response()->view('app', ['campaigns.show']);
     }

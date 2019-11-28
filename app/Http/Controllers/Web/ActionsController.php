@@ -36,7 +36,7 @@ class ActionsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show(Request $request)
+    public function show()
     {
         return response()->view('app', ['actions.show']);
     }
