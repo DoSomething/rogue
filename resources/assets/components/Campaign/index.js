@@ -1,210 +1,123 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import { map, isEmpty } from 'lodash';
+import React, { useState } from 'react';
 import { format, parse } from 'date-fns';
-import { keyBy } from 'lodash';
-import RogueClient from '../../utilities/RogueClient';
+import { useQuery } from '@apollo/react-hooks';
 
-import './campaignidsingle.scss';
+import Action, { ActionFragment } from '../Action';
+import Shell from '../utilities/Shell';
+import TextBlock from '../utilities/TextBlock';
 
-import Action from '../Action';
-import PagingButtons from '../PagingButtons';
+import './campaign.scss';
 
-class Campaign extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      actions: {},
-      displayCreateActionModal: false,
-    };
-
-    this.api = new RogueClient(window.location.origin, {
-      headers: {
-        Authorization: `Bearer ${window.AUTH.token}`,
-      },
-    });
-
-    this.deleteAction = this.deleteAction.bind(this);
-    this.getActionsByPaginatedLink = this.getActionsByPaginatedLink.bind(this);
-    // this.showCreateActionModal = this.showCreateActionModal.bind(this);
-    // this.hideCreateActionModal = this.hideCreateActionModal.bind(this);
-  }
-
-  componentDidMount() {
-    this.getActions(this.props.campaign.id);
-  }
-
-  // Gets campaign's actions.
-  getActions(campaignId) {
-    this.api
-      .get(`api/v3/actions`, {
-        filter: {
-          campaign_id: campaignId,
-        },
-      })
-      .then(json =>
-        this.setState({
-          actions: keyBy(json.data, 'id'),
-          nextPage: json.meta.pagination.links.next,
-          prevPage: json.meta.pagination.links.previous,
-        }),
-      );
-  }
-
-  // Make API call to paginated link to get next/previous batch of posts.
-  getActionsByPaginatedLink(url, event) {
-    event.preventDefault();
-
-    // Strip the url to get query parameters.
-    const splitEndpoint = url.split('/');
-    const path = splitEndpoint.slice(-1)[0];
-    const queryString = path.split('?')[1];
-
-    this.api.get('api/v3/actions', queryString).then(json =>
-      this.setState({
-        actions: keyBy(json.data, 'id'),
-        nextPage: json.meta.pagination.links.next,
-        prevPage: json.meta.pagination.links.previous,
-      }),
-    );
-  }
-
-  // Delete an action.
-  deleteAction(actionId, event) {
-    event.preventDefault();
-    const confirmed = confirm(
-      '🚨🔥🚨 Are you sure you want to delete this action? 🚨🔥🚨',
-    );
-
-    if (confirmed) {
-      // Make API request to Rogue to delete the action.
-      const response = this.api.delete(`actions/${actionId}`);
-
-      response.then(result => {
-        // Update the state
-        this.setState(previousState => {
-          const newState = { ...previousState };
-          // Remove the deleted action from the state
-          delete newState.actions[actionId];
-
-          // Return the new state
-          return newState;
-        });
-      });
+const SHOW_CAMPAIGN_ACTIONS_QUERY = gql`
+  query ShowCampaignActionsQuery($id: Int!, $idString: String!) {
+    campaign(id: $id) {
+      actions {
+        ...ActionFragment
+      }
+      causes {
+        id
+        name
+      }
+      createdAt
+      endDate
+      id
+      impactDoc
+      internalTitle
+      startDate
+      updatedAt
+    }
+    campaignWebsiteByCampaignId(campaignId: $idString) {
+      slug
     }
   }
+  ${ActionFragment}
+`;
 
-  // Open the create action modal
-  // showCreateActionModal(campaign, event) {
-  //   event.preventDefault();
+const Campaign = ({ id }) => {
+  const { loading, error, data } = useQuery(SHOW_CAMPAIGN_ACTIONS_QUERY, {
+    variables: { id, idString: `${id}` },
+  });
 
-  //   this.setState({
-  //     displayCreateActionModal: true,
-  //     campaign,
-  //   });
-  // }
+  if (error) {
+    return <TextBlock title="Error" content={JSON.stringify(error)} />;
+  }
 
-  // Close the create action modal
-  // hideCreateActionModal(event) {
-  //   if (event) {
-  //     event.preventDefault();
-  //   }
+  if (loading) {
+    return <TextBlock title="Loading actions..." />;
+  }
 
-  //   this.setState({
-  //     displayCreateActionModal: false,
-  //     campaign: null,
-  //   });
-  // }
+  const { campaign } = data;
 
-  render() {
-    const campaign = this.props.campaign;
-    const actions = this.state.actions;
+  return (
+    <div className="container -padded">
+      <div className="container__block -narrow -half">
+        <h3>Campaign Information</h3>
+      </div>
+      <div className="container__block -narrow -half">
+        <a
+          className="button -secondary"
+          href={`/campaigns/${campaign.id}/pending`}
+        >
+          Campaign Inbox
+        </a>
+      </div>
+      <div className="container__block -narrow">
+        <h4>Internal Campaign Name</h4>
+        <p>{campaign.internalTitle}</p>
 
-    return (
-      <div className="container -padded">
-        <div className="container__block -narrow -half">
-          <h3>Campaign Information</h3>
-        </div>
-        <div className="container__block -narrow -half">
-          <a
-            className="button -secondary"
-            href={`/campaigns/${campaign.id}/inbox`}
-          >
-            Campaign Inbox
-          </a>
-        </div>
-        <div className="container__block -narrow">
-          <h4>Internal Campaign Name</h4>
-          <p>{campaign.internal_title}</p>
+        <h4>Campaign ID</h4>
+        <p>{campaign.id}</p>
 
-          <h4>Campaign ID</h4>
-          <p>{campaign.id}</p>
+        <h4>Cause Area</h4>
+        <p>
+          {campaign.causes.length
+            ? campaign.causes.map(cause => cause.name).join(', ')
+            : '–'}
+        </p>
 
-          <h4>Cause Area</h4>
+        <h4>Proof of Impact</h4>
+        {campaign.impactDoc ? (
           <p>
-            {campaign.cause_names.length
-              ? campaign.cause_names.join(', ')
-              : '–'}
+            <a href={campaign.impactDoc} target="_blank">
+              {campaign.impactDoc}
+            </a>
           </p>
-
-          <h4>Proof of Impact</h4>
-          {campaign.impact_doc ? (
-            <p>
-              <a href={campaign.impact_doc} target="_blank">
-                {campaign.impact_doc}
-              </a>
-            </p>
-          ) : (
-            <p>–</p>
-          )}
-          <h4>Start Date</h4>
-          <p>{format(parse(campaign.start_date), 'MM/D/YYYY')}</p>
-          <h4>End Date</h4>
-          <p>
-            {campaign.end_date
-              ? format(parse(campaign.end_date), 'MM/D/YYYY')
-              : '–'}
-          </p>
-        </div>
-        <div className="container__block -narrow">
-          <a className="button" href={`/campaign-ids/${campaign.id}/edit`}>
-            Edit this campaign
-          </a>
-          <p className="footnote">
-            Last updated:{' '}
-            {format(parse(campaign.updated_at), 'MM/D/YYYY h:m:s')}
-            <br />
-            Created: {format(parse(campaign.created_at), 'M/D/YYYY h:m:s')}
-          </p>
-        </div>
-
-        <div id="actions" className="container__block -narrow">
-          <h3>Campaign Actions</h3>
-          <p>
-            Each action in your campaign requires a different set of metadata,
-            to determine how it will be treated by Rogue. Use this Action ID in
-            Contentful to link user submissions in Rogue.
-          </p>
-          {!isEmpty(actions)
-            ? map(actions, (action, key) => {
-                return (
-                  <Action
-                    key={key}
-                    action={action}
-                    deleteAction={this.deleteAction}
-                  />
-                );
-              })
-            : null}
-        </div>
-        <div className="container__block -narrow">
-          <PagingButtons
-            onPaginate={this.getActionsByPaginatedLink}
-            prev={this.state.prevPage}
-            next={this.state.nextPage}
-          />
-        </div>
+        ) : (
+          <p>–</p>
+        )}
+        <h4>Start Date</h4>
+        <p>{format(parse(campaign.startDate), 'MM/D/YYYY')}</p>
+        <h4>End Date</h4>
+        <p>
+          {campaign.end_date
+            ? format(parse(campaign.endDate), 'MM/D/YYYY')
+            : '–'}
+        </p>
+      </div>
+      <div className="container__block -narrow">
+        <a className="button" href={`/campaigns/${campaign.id}/edit`}>
+          Edit this campaign
+        </a>
+        <p className="footnote">
+          Last updated: {campaign.updatedAt}
+          <br />
+          Created: {campaign.createdAt}
+        </p>
+      </div>
+      <div id="actions" className="container__block -narrow">
+        <h3>Campaign Actions</h3>
+        <p>
+          Each action in your campaign requires a different set of metadata, to
+          determine how it will be treated by Rogue. Use this Action ID in
+          Contentful to link user submissions in Rogue.
+        </p>
+        {!isEmpty(campaign.actions)
+          ? map(campaign.actions, (action, key) => {
+              return <Action key={key} action={action} />;
+            })
+          : null}
         <div className="container__block -narrow">
           <a
             className="button -secondary"
@@ -214,17 +127,8 @@ class Campaign extends React.Component {
           </a>
         </div>
       </div>
-    );
-  }
-}
-
-Campaign.propTypes = {
-  campaign: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  actions: PropTypes.array,
+    </div>
+  );
 };
 
-Campaign.defaultProps = {
-  actions: null,
-};
-
-export default CampaignIdSingle;
+export default Campaign;

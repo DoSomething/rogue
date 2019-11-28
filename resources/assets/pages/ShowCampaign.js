@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { STATUSES, TAGS } from '../helpers';
 import Shell from '../components/utilities/Shell';
 import Select from '../components/utilities/Select';
-import Campaign from '../components/Campaign/Campaign';
+import Campaign from '../components/Campaign';
 import HelpLink from '../components/utilities/HelpLink';
 import ReviewablePostGallery from '../components/ReviewablePostGallery';
 

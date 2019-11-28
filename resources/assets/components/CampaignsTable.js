@@ -159,7 +159,7 @@ const CampaignsTable = ({ isOpen, filter }) => {
                 <Link to={`/campaigns/${node.id}/pending`}>review</Link>
               </td>
               <td>
-                <a href={`/campaign-ids/${node.id}`}>edit</a>
+                <a href={`/campaigns/${node.id}`}>edit</a>
               </td>
             </tr>
           ))}
