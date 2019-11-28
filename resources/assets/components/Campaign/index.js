@@ -30,7 +30,6 @@ const SHOW_CAMPAIGN_ACTIONS_QUERY = gql`
       updatedAt
     }
     campaignWebsiteByCampaignId(campaignId: $idString) {
-      slug
       title
       url
     }
@@ -72,7 +71,11 @@ const Campaign = ({ id }) => {
           window.location.href = `/campaigns/${id}`;
           alert(`Deleted Action ID ${action.id}`);
         })
-        .catch(error => alert(error.message));
+        .catch(error =>
+          alert(
+            `Cannot delete Action ID ${action.id}: ${JSON.stringify(error)}`,
+          ),
+        );
     }
   }
 
