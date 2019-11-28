@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 import Action, { ActionFragment } from '../Action';
 import Shell from '../utilities/Shell';
 import TextBlock from '../utilities/TextBlock';
+import RogueClient from '../../utilities/RogueClient';
 
 import './campaign.scss';
 
@@ -38,6 +39,12 @@ const SHOW_CAMPAIGN_ACTIONS_QUERY = gql`
 `;
 
 const Campaign = ({ id }) => {
+  const apiClient = new RogueClient(window.location.origin, {
+    headers: {
+      Authorization: `Bearer ${window.AUTH.token}`,
+    },
+  });
+
   const { loading, error, data } = useQuery(SHOW_CAMPAIGN_ACTIONS_QUERY, {
     variables: { id, idString: `${id}` },
   });
@@ -48,6 +55,25 @@ const Campaign = ({ id }) => {
 
   if (loading) {
     return <TextBlock title="Loading actions..." />;
+  }
+
+  function deleteAction(action, event) {
+    event.preventDefault();
+
+    const confirmed = confirm(
+      `🚨🔥🚨 Are you sure you want to delete Action ID ${action.id}? 🚨🔥🚨`,
+    );
+
+    if (confirmed) {
+      // Make API request to Rogue to delete the action.
+      apiClient
+        .delete(`actions/${action.id}`)
+        .then(() => {
+          window.location.href = `/campaigns/${id}`;
+          alert(`Deleted Action ID ${action.id}`);
+        })
+        .catch(error => alert(error.message));
+    }
   }
 
   const { campaign, campaignWebsiteByCampaignId } = data;
@@ -128,7 +154,9 @@ const Campaign = ({ id }) => {
         </p>
         {!isEmpty(campaign.actions)
           ? map(campaign.actions, (action, key) => {
-              return <Action key={key} action={action} />;
+              return (
+                <Action key={key} action={action} deleteAction={deleteAction} />
+              );
             })
           : null}
         <div className="container__block -narrow">

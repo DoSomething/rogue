@@ -2,8 +2,6 @@ import React from 'react';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
-import RogueClient from '../../utilities/RogueClient';
-
 import './action.scss';
 
 export const ActionFragment = gql`
@@ -30,30 +28,8 @@ export const ActionFragment = gql`
   }
 `;
 
-export const Action = ({ action, isPermalink }) => {
+export const Action = ({ action, deleteAction, isPermalink }) => {
   const isAdmin = window.AUTH.role == 'admin';
-
-  const apiClient = new RogueClient(window.location.origin, {
-    headers: {
-      Authorization: `Bearer ${window.AUTH.token}`,
-    },
-  });
-
-  function deleteAction(event) {
-    event.preventDefault();
-    const confirmed = confirm(
-      '🚨🔥🚨 Are you sure you want to delete this action? 🚨🔥🚨',
-    );
-
-    if (confirmed) {
-      // Make API request to Rogue to delete the action.
-      apiClient
-        .delete(`actions/${action.id}`)
-        .then(
-          result => (window.location.href = `/campaigns/${action.campaign.id}`),
-        );
-    }
-  }
 
   return (
     <div className="container__action">
@@ -179,9 +155,14 @@ export const Action = ({ action, isPermalink }) => {
           <a className="button -secondary" href={`/actions/${action.id}/edit`}>
             Edit Action
           </a>
-          <button className="button delete -tertiary" onClick={deleteAction}>
-            Delete Action
-          </button>
+          {deleteAction ? (
+            <button
+              className="button delete -tertiary"
+              onClick={event => deleteAction(action, event)}
+            >
+              Delete Action
+            </button>
+          ) : null}
         </div>
       )}
     </div>
