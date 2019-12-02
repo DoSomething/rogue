@@ -18,7 +18,7 @@ class ActionsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:admin,staff', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+        $this->middleware('role:admin,staff', ['only' => ['create', 'store', 'edit', 'update', 'destroy', 'show']]);
 
         $this->rules = [
             'name' => ['required', 'string'],
