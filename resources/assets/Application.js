@@ -29,7 +29,9 @@ const Application = () => {
           <Route path="/campaigns/closed" exact>
             <CampaignIndex isOpen={false} />
           </Route>
-          <Redirect from="/campaigns/:id" exact to="/campaigns/:id/accepted" />
+          <Route path="/campaigns/:id" exact>
+            <ShowCampaign />
+          </Route>
           <Redirect from="/campaigns/:id/inbox" to="/campaigns/:id/pending" />
           <Route path="/campaigns/:id/:status">
             <ShowCampaign />

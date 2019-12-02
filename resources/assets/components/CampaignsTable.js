@@ -105,7 +105,12 @@ const CampaignsTable = ({ isOpen, filter }) => {
   }, [filter, endCursor]);
 
   if (error) {
-    return 'There was an error. :(';
+    return (
+      <div className="text-center">
+        <p>There was an error. :(</p>
+        <code>{JSON.stringify(error)}</code>
+      </div>
+    );
   }
 
   if (noFilteredResults && !hasNextPage) {
@@ -154,7 +159,7 @@ const CampaignsTable = ({ isOpen, filter }) => {
                 <Link to={`/campaigns/${node.id}/pending`}>review</Link>
               </td>
               <td>
-                <a href={`/campaign-ids/${node.id}`}>edit</a>
+                <a href={`/campaigns/${node.id}`}>edit</a>
               </td>
             </tr>
           ))}

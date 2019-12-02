@@ -36,7 +36,7 @@ class ActionsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show(Request $request)
+    public function show()
     {
         return response()->view('app', ['actions.show']);
     }
@@ -83,7 +83,7 @@ class ActionsController extends Controller
             info('action_created', ['id' => $action->id]);
         }
 
-        return redirect()->route('campaign-ids.show', $request['campaign_id']);
+        return redirect()->route('actions.show', ['id' => $action->id]);
     }
 
     /**

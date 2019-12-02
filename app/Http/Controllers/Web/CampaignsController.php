@@ -7,9 +7,8 @@ use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
-use Rogue\Http\Transformers\CampaignTransformer;
 
-class CampaignIdsController extends Controller
+class CampaignsController extends Controller
 {
     /**
      * Create a controller instance.
@@ -32,12 +31,11 @@ class CampaignIdsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        return redirect('campaigns/');
+        return response()->view('app', ['campaigns.index']);
     }
 
     /**
@@ -45,7 +43,7 @@ class CampaignIdsController extends Controller
      */
     public function create()
     {
-        return view('campaign-ids.create')->with('causes', Cause::labels());
+        return view('campaigns.create')->with('causes', Cause::labels());
     }
 
     /**
@@ -64,21 +62,17 @@ class CampaignIdsController extends Controller
         // Log that a campaign was created.
         info('campaign_created', ['id' => $campaign->id]);
 
-        return redirect()->route('campaign-ids.show', $campaign->id);
+        return redirect()->route('campaigns.show', $campaign->id);
     }
 
     /**
-     * Show a specific campaign page and its actions.
+     * Display the specified resource.
      *
-     * @param  \Rogue\Models\Campaign  $campaign
+     * @return \Illuminate\View\View
      */
-    public function show(Campaign $campaign)
+    public function show()
     {
-        return view('campaign-ids.show')
-            ->with('state', [
-                'campaign' => (new CampaignTransformer)->transform($campaign),
-            ]
-        );
+        return response()->view('app', ['campaigns.show']);
     }
 
     /**
@@ -88,7 +82,7 @@ class CampaignIdsController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        return view('campaign-ids.edit', [
+        return view('campaigns.edit', [
             'campaign' => $campaign,
             'causes' => Cause::labels(),
         ]);
@@ -111,7 +105,7 @@ class CampaignIdsController extends Controller
         // Log that a campaign was updated.
         info('campaign_updated', ['id' => $campaign->id]);
 
-        return redirect()->route('campaign-ids.show', $campaign);
+        return redirect()->route('campaigns.show', $campaign);
     }
 
     /**

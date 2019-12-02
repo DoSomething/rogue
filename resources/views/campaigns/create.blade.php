@@ -10,7 +10,7 @@
                 <h1>Create Campaign ID</h1>
                 <p>Please reach out in the #dev-rogue channel for help creating a campaign ID for your campaign.</p>
                 <br>
-                <form method="post" enctype="application/x-www-form-urlencoded" action="{{ route('campaign-ids.store') }}">
+                <form method="post" enctype="application/x-www-form-urlencoded" action="{{ route('campaigns.store') }}">
                 {{ csrf_field()}}
 
                     <div class="form-item">

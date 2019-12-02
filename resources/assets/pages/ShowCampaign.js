@@ -6,12 +6,14 @@ import { useQuery } from '@apollo/react-hooks';
 import { STATUSES, TAGS } from '../helpers';
 import Shell from '../components/utilities/Shell';
 import Select from '../components/utilities/Select';
+import Campaign from '../components/Campaign';
 import HelpLink from '../components/utilities/HelpLink';
 import ReviewablePostGallery from '../components/ReviewablePostGallery';
 
 const SHOW_CAMPAIGN_QUERY = gql`
   query ShowCampaignQuery($id: Int!) {
     campaign(id: $id) {
+      id
       internalTitle
     }
   }
@@ -38,6 +40,16 @@ const ShowCampaign = () => {
     return <Shell title="Campaign" loading />;
   }
 
+  if (!status) {
+    return (
+      <Shell title="Campaign" subtitle={data.campaign.internalTitle}>
+        <div className="container__row">
+          <Campaign id={data.campaign.id} />
+        </div>
+      </Shell>
+    );
+  }
+
   return (
     <Shell title="Campaign" subtitle={data.campaign.internalTitle}>
       <div className="container__row">
@@ -54,8 +66,8 @@ const ShowCampaign = () => {
         </div>
 
         <div className="container__block -third form-actions -inline text-right pt-heading">
-          <a className="button -tertiary" href={`/campaign-ids/${id}`}>
-            Edit Campaign &amp; Actions
+          <a className="button -tertiary" href={`/campaigns/${id}`}>
+            View Campaign &amp; Actions
           </a>
         </div>
       </div>
