@@ -4,7 +4,6 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 import { ready } from './helpers';
-// import mountContainer from './utilities/MountContainer';
 
 import Application from './Application';
 
