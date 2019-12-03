@@ -555,10 +555,10 @@ class Post extends Model
      *
      * @return int
      */
-    public static function getAcceptedQuantitySum(Action $action, string $schoolId)
+    public static function getAcceptedQuantitySum(int $actionId, string $schoolId)
     {
         return (new self)->newModelQuery()
-            ->where('action_id', $action->id)
+            ->where('action_id', $actionId)
             ->where('school_id', $schoolId)
             ->where('status', 'accepted')
             ->sum('quantity');

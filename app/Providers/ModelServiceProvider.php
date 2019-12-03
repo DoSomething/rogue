@@ -62,10 +62,10 @@ class ModelServiceProvider extends ServiceProvider
             $schoolId = $review->post->school_id;
 
             if ($schoolId) {
-                $action = $review->post->action;
+                $actionId = $review->post->action_id;
                 ActionStat::updateOrCreate(
-                    ['action_id' => $action->id, 'school_id' => $schoolId],
-                    ['accepted_quantity' => Post::getAcceptedQuantitySum($action, $schoolId)]
+                    ['action_id' => $actionId, 'school_id' => $schoolId],
+                    ['accepted_quantity' => Post::getAcceptedQuantitySum($actionId, $schoolId)]
                 );
             }
 
