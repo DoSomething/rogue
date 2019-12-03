@@ -47,3 +47,6 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
 Route::post('images/{postId}', 'ImagesController@update');
 Route::get('originals/{post}', 'OriginalsController@show');
 
+// Redirects for old routes:
+Route::get('campaign-ids', 'CampaignsController@redirect');
+Route::get('campaign-ids/{id}', 'CampaignsController@redirect');

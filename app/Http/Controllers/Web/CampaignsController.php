@@ -102,4 +102,17 @@ class CampaignsController extends Controller
 
         // @TODO: redirect to campaign deleted page
     }
+
+    /**
+     * Handle redirects for old routes.
+     *
+     * @param string  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function redirect($id = '')
+    {
+        // We can't use Laravel's built-in Route::redirect here
+        // since it doesn't support redirecting with parameters:
+        return redirect('campaigns/' . $id);
+    }
 }
