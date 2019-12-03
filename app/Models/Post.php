@@ -549,4 +549,18 @@ class Post extends Model
             ->whereReviewable()
             ->count();
     }
+
+    /**
+     * Get the sum quantity of accepted posts with given action and school ID.
+     *
+     * @return int
+     */
+    public static function getAcceptedQuantitySum(Action $action, string $schoolId)
+    {
+        return (new self)->newModelQuery()
+            ->where('action_id', $action->id)
+            ->where('school_id', $schoolId)
+            ->where('status', 'accepted')
+            ->sum('quantity');
+    }
 }

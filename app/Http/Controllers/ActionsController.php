@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Action;
+use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Rogue\Http\Transformers\ActionTransformer;
 
@@ -45,5 +46,19 @@ class ActionsController extends ApiController
     public function show(Action $action)
     {
         return $this->item($action);
+    }
+
+    /**
+     * Display statistics for specified resource and given school ID.
+     *
+     * @param  \Rogue\Models\Action  $action
+     * @param  string  $schoolId
+     * @return \Illuminate\Http\Response
+     */
+    public function showSchoolStats(Action $action, string $schoolId)
+    {
+        return [
+            'quantity' => (int) Post::getAcceptedQuantitySum($action, $schoolId),
+        ];
     }
 }
