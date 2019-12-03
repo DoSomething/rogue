@@ -7,6 +7,7 @@ use Rogue\Models\Event;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
 use Rogue\Jobs\RejectPost;
+use Rogue\Models\ActionStat;
 use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider
@@ -53,8 +54,20 @@ class ModelServiceProvider extends ServiceProvider
         // When Reviews are saved create an event for them.
         Review::saved(function ($review) {
             info('review', ['campaign' => $review->post->campaign_id]);
+
             // Update the "counter cache" on this campaign:
             $review->post->campaign->refreshCounts();
+
+            // If this post is associated with school, update school's action stats.
+            $schoolId = $review->post->school_id;
+
+            if ($schoolId) {
+                $action = $review->post->action; 
+                ActionStat::updateOrCreate(
+                    ['action_id' => $action->id, 'school_id' => $schoolId],
+                    ['accepted_quantity' => Post::getAcceptedQuantitySum($action, $schoolId)]
+                );
+            }
 
             $review->events()->create([
                 'content' => $review->toJson(),

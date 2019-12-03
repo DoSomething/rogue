@@ -51,5 +51,7 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
     // actions
     $this->get('actions', 'ActionsController@index');
     $this->get('actions/{action}', 'ActionsController@show');
-    $this->get('actions/{action}/schools/{schoolId}', 'ActionsController@showSchoolStats');
+
+    // action stats
+    $this->get('action-stats', 'ActionStatsController@index');
 });

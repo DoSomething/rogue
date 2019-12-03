@@ -47,18 +47,4 @@ class ActionsController extends ApiController
     {
         return $this->item($action);
     }
-
-    /**
-     * Display statistics for specified resource and given school ID.
-     *
-     * @param  \Rogue\Models\Action  $action
-     * @param  string  $schoolId
-     * @return \Illuminate\Http\Response
-     */
-    public function showSchoolStats(Action $action, string $schoolId)
-    {
-        return [
-            'quantity' => (int) Post::getAcceptedQuantitySum($action, $schoolId),
-        ];
-    }
 }
