@@ -29,16 +29,6 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return response()->view('app', ['campaigns.index']);
-    }
-
-    /**
      * Create a new campaign.
      */
     public function create()
@@ -63,16 +53,6 @@ class CampaignsController extends Controller
         info('campaign_created', ['id' => $campaign->id]);
 
         return redirect()->route('campaigns.show', $campaign->id);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function show()
-    {
-        return response()->view('app', ['campaigns.show']);
     }
 
     /**
@@ -121,5 +101,18 @@ class CampaignsController extends Controller
         info('campaign_deleted', ['id' => $campaign->id]);
 
         // @TODO: redirect to campaign deleted page
+    }
+
+    /**
+     * Handle redirects for old routes.
+     *
+     * @param string  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function redirect($id = '')
+    {
+        // We can't use Laravel's built-in Route::redirect here
+        // since it doesn't support redirecting with parameters:
+        return redirect('campaigns/' . $id);
     }
 }

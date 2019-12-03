@@ -5,29 +5,28 @@
  * routes are loaded by the RouteServiceProvider within a group which
  * contains the "web" middleware group. Now create something great!
  *
- * @var \Illuminate\Routing\Router $router
  * @see \Rogue\Providers\RouteServiceProvider
  */
 
 // Homepage & FAQ
-$router->view('/', 'pages.home')->middleware('guest')->name('login');
-$router->view('faq', 'pages.faq');
+Route::view('/', 'pages.home')->middleware('guest')->name('login');
+Route::view('faq', 'pages.faq');
 
 // Authentication
-$router->get('login', 'AuthController@getLogin');
-$router->get('logout', 'AuthController@getLogout');
+Route::get('login', 'AuthController@getLogin');
+Route::get('logout', 'AuthController@getLogout');
 
-// Actions
-$router->resource('actions', 'ActionsController');
-$router->get('campaigns/{id}/actions/create', 'ActionsController@create');
-
-// Campaigns
-$router->resource('campaigns', 'CampaignsController');
+// Server-rendered routes:
+// @TODO: These should be updated to client-side routes!
+Route::resource('actions', 'ActionsController', ['except' => 'show']);
+Route::get('campaigns/{id}/actions/create', 'ActionsController@create');
+Route::resource('campaigns', 'CampaignsController', ['except' => ['index', 'show']]);
 
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     // Campaigns
-    Route::view('campaigns', 'app')->name('campaigns.index');
+    Route::view('campaigns', 'app');
+    Route::view('campaigns/{id}', 'app');
     Route::view('campaigns/{id}/{status}', 'app');
 
     // Users
@@ -44,6 +43,10 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::view('signups/{id}', 'app')->name('signups.show');
 });
 
-// Images
-$router->post('images/{postId}', 'ImagesController@update');
-$router->get('originals/{post}', 'OriginalsController@show');
+// Admin image routes:
+Route::post('images/{postId}', 'ImagesController@update');
+Route::get('originals/{post}', 'OriginalsController@show');
+
+// Redirects for old routes:
+Route::get('campaign-ids', 'CampaignsController@redirect');
+Route::get('campaign-ids/{id}', 'CampaignsController@redirect');
