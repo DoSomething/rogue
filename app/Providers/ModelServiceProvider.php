@@ -58,11 +58,11 @@ class ModelServiceProvider extends ServiceProvider
             // Update the "counter cache" on this campaign:
             $review->post->campaign->refreshCounts();
 
-            // If this post is associated with school, update school's action stats.
+            // If this post is associated with a school, update the school action stats.
             $schoolId = $review->post->school_id;
 
             if ($schoolId) {
-                $action = $review->post->action; 
+                $action = $review->post->action;
                 ActionStat::updateOrCreate(
                     ['action_id' => $action->id, 'school_id' => $schoolId],
                     ['accepted_quantity' => Post::getAcceptedQuantitySum($action, $schoolId)]

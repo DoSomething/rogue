@@ -2,7 +2,6 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Models\Post;
 use Rogue\Models\Action;
 use Illuminate\Http\Request;
 use Rogue\Http\Transformers\ActionTransformer;

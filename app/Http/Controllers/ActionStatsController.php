@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Models\ActionStat;
 use Illuminate\Http\Request;
+use Rogue\Models\ActionStat;
 use Rogue\Http\Transformers\ActionStatTransformer;
 
 class ActionStatsController extends ApiController
