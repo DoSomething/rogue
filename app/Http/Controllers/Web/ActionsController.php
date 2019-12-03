@@ -32,16 +32,6 @@ class ActionsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function show()
-    {
-        return response()->view('app', ['actions.show']);
-    }
-
-    /**
      * Create a new action.
      */
     public function create($campaignId)

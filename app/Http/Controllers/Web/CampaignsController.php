@@ -29,16 +29,6 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return response()->view('app', ['campaigns.index']);
-    }
-
-    /**
      * Create a new campaign.
      */
     public function create()
@@ -63,16 +53,6 @@ class CampaignsController extends Controller
         info('campaign_created', ['id' => $campaign->id]);
 
         return redirect()->route('campaigns.show', $campaign->id);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function show()
-    {
-        return response()->view('app', ['campaigns.show']);
     }
 
     /**
