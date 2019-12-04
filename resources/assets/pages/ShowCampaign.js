@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import { STATUSES, TAGS } from '../helpers';
+import NotFound from './NotFound';
 import Shell from '../components/utilities/Shell';
 import Select from '../components/utilities/Select';
 import Campaign from '../components/Campaign';
@@ -23,6 +24,7 @@ const ShowCampaign = () => {
   const { id, status } = useParams();
   const [tag, setTag] = useState('');
   const history = useHistory();
+  const title = `Campaign #${id}`;
 
   const setStatus = value => {
     history.replace(`/campaigns/${id}/${value}`);
@@ -37,12 +39,16 @@ const ShowCampaign = () => {
   }
 
   if (loading) {
-    return <Shell title="Campaign" loading />;
+    return <Shell title={title} loading />;
+  }
+
+  if (!data.campaign) {
+    return <NotFound title={title} type="campaign" />;
   }
 
   if (!status) {
     return (
-      <Shell title="Campaign" subtitle={data.campaign.internalTitle}>
+      <Shell title={title} subtitle={data.campaign.internalTitle}>
         <div className="container__row">
           <Campaign id={data.campaign.id} />
         </div>
@@ -51,7 +57,7 @@ const ShowCampaign = () => {
   }
 
   return (
-    <Shell title="Campaign" subtitle={data.campaign.internalTitle}>
+    <Shell title={title} subtitle={data.campaign.internalTitle}>
       <div className="container__row">
         <div className="container__block -third">
           <h4>Filter by status...</h4>
