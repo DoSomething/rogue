@@ -643,46 +643,6 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test for retrieving all signups as admin filtering by quantity (in ascending or descending order).
-     *
-     * GET /api/v3/signups?orderBy=quantity,desc
-     * GET /api/v3/signups?orderBy=quantity,asc
-     *
-     * @return void
-     */
-    public function testSignupsIndexAsAdminWithOrderByQuantityFilter()
-    {
-        // Create 5 signups with different quantities
-        $signups = factory(Signup::class, 5)->create();
-        $quantity = 1;
-
-        foreach ($signups as $signup) {
-            $signup->quantity = $quantity++;
-            $signup->save();
-        }
-
-        // Order results by descending quantity
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,desc');
-        $decodedResponse = $response->decodeResponseJson();
-
-        $response->assertStatus(200);
-
-        // Assert results are returned in descending order.
-        $this->assertEquals(5, $decodedResponse['data'][0]['quantity']);
-        $this->assertEquals(4, $decodedResponse['data'][1]['quantity']);
-
-        // Order results by ascending quantity
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,asc');
-        $decodedResponse = $response->decodeResponseJson();
-
-        $response->assertStatus(200);
-
-        // Assert results are returned in ascending order.
-        $this->assertEquals(1, $decodedResponse['data'][0]['quantity']);
-        $this->assertEquals(2, $decodedResponse['data'][1]['quantity']);
-    }
-
-    /**
      * Test for retrieving a specific signup as non-admin and non-owner.
      *
      * GET /api/v3/signups/:signup_id
@@ -881,46 +841,5 @@ class SignupTest extends TestCase
         $json = $response->json();
 
         $this->assertEquals('You don\'t have the correct role to update this signup!', $json['message']);
-    }
-
-    /**
-     * Test to make sure we are returning quantity correctly.
-     * Quantity is either summed total of quantity across all posts under a signup
-     * or quanttiy under signup if it is still on signup record.
-     *
-     * GET /signups
-     * @return void
-     */
-    public function testQuantityOnSignupIndex()
-    {
-        // Create a signup with a quantity.
-        $firstSignup = factory(Signup::class)->create();
-        $firstSignup->quantity = 8;
-        $firstSignup->save();
-
-        // Create another signup with three posts with quantities.
-        $secondSignup = factory(Signup::class)->create();
-
-        $posts = factory(Post::class, 3)->create(['signup_id' => $secondSignup->id]);
-
-        // Update the signup quantity to equal the sum of post quantities.
-        $secondSignup->quantity = $secondSignup->getQuantity();
-        $secondSignup->save();
-
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups');
-
-        $response->assertStatus(200);
-        $response->assertJson([
-            'data' => [
-                [
-                    'quantity' => 8,
-                    // ...
-                ],
-                [
-                    'quantity' => $secondSignup->quantity,
-                    // ...
-                ],
-            ],
-        ]);
     }
 }
