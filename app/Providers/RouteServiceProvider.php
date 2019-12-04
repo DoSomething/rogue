@@ -27,7 +27,6 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::model('post', \Rogue\Models\Post::class);
         Route::model('signup', \Rogue\Models\Signup::class);
-        Route::model('campaign_id', \Rogue\Models\Campaign::class);
     }
 
     /**
