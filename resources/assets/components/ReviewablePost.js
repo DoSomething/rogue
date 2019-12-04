@@ -60,6 +60,7 @@ export const ReviewablePostFragment = gql`
       source
     }
 
+    userId
     user {
       id
       ...UserInformation
@@ -105,7 +106,11 @@ const ReviewablePost = ({ post }) => {
       </div>
 
       <div className="container__block -third">
-        <UserInformation user={post.user} linkSignup={post.signupId}>
+        <UserInformation
+          user={post.user}
+          userId={post.userId}
+          linkSignup={post.signupId}
+        >
           {post.quantity ? (
             <Quantity
               quantity={post.quantity}
@@ -206,7 +211,7 @@ const ReviewablePost = ({ post }) => {
             title="Signup Information"
             details={{
               ID: <a href={`/signups/${post.signupId}`}>{post.signupId}</a>,
-              User: <Link to={`/users/${post.user.id}`}>{post.user.id}</Link>,
+              User: <Link to={`/users/${post.userId}`}>{post.userId}</Link>,
               Source: post.signup ? post.signup.source : '–',
             }}
           />
