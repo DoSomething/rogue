@@ -383,10 +383,6 @@ class Post extends Model
      */
     public function getQuantity()
     {
-        if (! config('features.v3QuantitySupport')) {
-            return $this->signup->getQuantity();
-        }
-
         return $this->quantity;
     }
 

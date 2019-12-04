@@ -203,20 +203,6 @@ class Signup extends Model
      */
     public function getQuantity()
     {
-        // @TODO - This is temporary. We have migrated data that has stored quanity in the
-        // quanity_pending column on the signup. However, since then we updated the business
-        // logic to store everything in the quanity column and not use the quanity_pending
-        // column at all. We only want to return what is in the quanity_pending column
-        // if is the only place quanity is stored.
-        if (! config('features.v3QuantitySupport')) {
-            if (! is_null($this->quantity_pending) && is_null($this->quantity)) {
-                return $this->quantity_pending;
-            }
-
-            return $this->quantity;
-        }
-
-        // If we are supporting quantity on posts then we can just return the summed quantity across all posts under the signup.
         return $this->posts()->sum('quantity');
     }
 
