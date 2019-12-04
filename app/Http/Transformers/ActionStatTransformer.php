@@ -10,16 +10,14 @@ class ActionStatTransformer extends TransformerAbstract
     /**
      * Transform resource data.
      *
-     * @param \Rogue\Models\Action $action
+     * @param \Rogue\Models\ActionStat $actionStat
      * @return array
      */
-    public function transform(ActionStat $stat)
+    public function transform(ActionStat $actionStat)
     {
-        return [
-            'id' => $stat->id,
-            'action_id' => $stat->action_id,
-            'school_id' => $stat->school_id,
-            'accepted_quantity' => $stat->accepted_quantity,
-        ];
+        $result = $actionStat;
+        unset($result->deleted_at);
+
+        return $result;
     }
 }
