@@ -6,6 +6,7 @@ use Rogue\Models\Post;
 use Rogue\Models\Action;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
+use Rogue\Models\ActionStat;
 use Rogue\Services\ImageStorage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Validation\ValidationException;
@@ -208,6 +209,14 @@ class PostRepository
         // Update the status on the Post.
         $post->status = $status;
         $post->save();
+
+        // If the Post has a school ID, update School's aggregate impact for the Action.
+        if ($post->school_id && $post->action_id) {
+            ActionStat::updateOrCreate(
+                ['action_id' => $post->action_id, 'school_id' => $post->school_id],
+                ['accepted_quantity' => Post::getAcceptedQuantitySum($post->action_id, $post->school_id)]
+            );
+        }
 
         return $post;
     }
