@@ -31,7 +31,7 @@ class Signup extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'campaign_id', 'quantity', 'quantity_pending', 'why_participated', 'source', 'source_details', 'details', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'northstar_id', 'campaign_id', 'why_participated', 'source', 'source_details', 'details', 'created_at', 'updated_at'];
 
     /**
      * Attributes that can be queried when filtering.
@@ -42,7 +42,7 @@ class Signup extends Model
      * @var array
      */
     public static $indexes = [
-        'campaign_id', 'updated_at', 'northstar_id', 'id', 'quantity', 'source',
+        'campaign_id', 'updated_at', 'northstar_id', 'id', 'source',
     ];
 
     /**
