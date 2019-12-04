@@ -40,6 +40,7 @@ export const ReviewablePostFragment = gql`
     deleted
 
     actionDetails {
+      id
       name
       noun
       verb
@@ -51,10 +52,6 @@ export const ReviewablePostFragment = gql`
     }
 
     schoolId
-    school {
-      id
-      name
-    }
 
     signupId
     signup {
@@ -183,12 +180,12 @@ const ReviewablePost = ({ post }) => {
             details={{
               ID: <Link to={`/posts/${post.id}`}>{post.id}</Link>,
               Campaign: (
-                <a href={`/campaign-ids/${post.campaign.id}`}>
+                <a href={`/campaigns/${post.campaign.id}`}>
                   {post.campaign.internalTitle}
                 </a>
               ),
               Action: (
-                <a href={`/campaign-ids/${post.campaign.id}#actions`}>
+                <a href={`/actions/${post.actionDetails.id}`}>
                   {post.actionDetails.name}
                 </a>
               ),
@@ -196,7 +193,7 @@ const ReviewablePost = ({ post }) => {
               Source: post.source,
               Location: post.location,
               Submitted: format(parse(post.createdAt), 'M/D/YYYY h:m:s'),
-              School: post.school ? (
+              School: post.schoolId ? (
                 <Link to={`/schools/${post.schoolId}`}>{post.schoolId}</Link>
               ) : (
                 '-'
