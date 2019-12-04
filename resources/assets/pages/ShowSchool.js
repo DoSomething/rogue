@@ -37,13 +37,16 @@ const ShowSchool = () => {
   if (!data.school) return <NotFound title={title} type="school" />;
 
   return (
-    <Shell
-      title={data.school.name}
-      subtitle={`${data.school.city}, ${data.school.state}`}
-    >
+    <Shell title={title} subtitle={data.school.name}>
       <div className="container__row">
         <div className="container__block -third">
-          <MetaInformation details={{ ID: id }} />
+          <MetaInformation
+            details={{
+              ID: id,
+              City: data.school.city,
+              State: data.school.state,
+            }}
+          />
         </div>
       </div>
     </Shell>
