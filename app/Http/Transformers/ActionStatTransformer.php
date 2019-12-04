@@ -15,9 +15,12 @@ class ActionStatTransformer extends TransformerAbstract
      */
     public function transform(ActionStat $actionStat)
     {
-        $result = $actionStat;
-        unset($result->deleted_at);
-
-        return $result;
+        return [
+            'action_id' => $actionStat->action_id,
+            'school_id' => $actionStat->school_id,
+            'accepted_quantity' => $actionStat->accepted_quantity,
+            'created_at' => $campaign->created_at->toIso8601String(),
+            'updated_at' => $campaign->updated_at->toIso8601String(),
+        ];
     }
 }

@@ -20,7 +20,6 @@ class CreateActionStatsTable extends Migration
             $table->string('school_id', 255)->index()->comment('The school id the stat is for.');
             $table->unsignedInteger('accepted_quantity')->comment('The sum of accepted post quantity for the school and action.');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
