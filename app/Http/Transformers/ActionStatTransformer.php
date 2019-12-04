@@ -19,8 +19,8 @@ class ActionStatTransformer extends TransformerAbstract
             'action_id' => $actionStat->action_id,
             'school_id' => $actionStat->school_id,
             'accepted_quantity' => $actionStat->accepted_quantity,
-            'created_at' => $campaign->created_at->toIso8601String(),
-            'updated_at' => $campaign->updated_at->toIso8601String(),
+            'created_at' => $actionStat->created_at->toIso8601String(),
+            'updated_at' => $actionStat->updated_at->toIso8601String(),
         ];
     }
 }
