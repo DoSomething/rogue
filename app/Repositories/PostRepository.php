@@ -131,7 +131,7 @@ class PostRepository
             $signup->why_participated = $data['why_participated'];
         }
 
-        $signup->quantity = $signup->posts->sum('quantity');
+        $signup->quantity = $signup->posts()->sum('quantity');
         $signup->save();
 
         return $post;
