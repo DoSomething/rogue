@@ -197,9 +197,7 @@ class Signup extends Model
     }
 
     /**
-     * Get either the quantity or quantity_pending for a signup.
-     * If the quantity lives on the signup's posts,
-     * return quantity as a summed total of quantity across all posts under a signup.
+     * Get the total quantity for this signup's posts.
      *
      * @return int
      */
@@ -210,7 +208,7 @@ class Signup extends Model
         // logic to store everything in the quanity column and not use the quanity_pending
         // column at all. We only want to return what is in the quanity_pending column
         // if is the only place quanity is stored.
-        if (! config('features.v3QuantitySupport') || $this->posts->isEmpty()) {
+        if (! config('features.v3QuantitySupport')) {
             if (! is_null($this->quantity_pending) && is_null($this->quantity)) {
                 return $this->quantity_pending;
             }
@@ -219,7 +217,7 @@ class Signup extends Model
         }
 
         // If we are supporting quantity on posts then we can just return the summed quantity across all posts under the signup.
-        return $this->posts->sum('quantity');
+        return $this->posts()->sum('quantity');
     }
 
     /**
