@@ -33,7 +33,7 @@ class ActionStatsController extends ApiController
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, ActionStat::$indexes);
 
-       // Allow ordering results:
+        // Allow ordering results:
         $orderBy = $request->query('orderBy');
         $query = $this->orderBy($query, $orderBy, ActionStat::$sortable);
 
