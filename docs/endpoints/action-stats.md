@@ -1,6 +1,6 @@
 ## Action Stats
 
-Action stats are used to store aggregate calculations for an action and a school. They are created or updated per action and school when a post for the action that contains a school ID is reviewed.
+Action stats are used to store aggregate calculations for an action and a school. They are created or updated per action and school when a post that contains a school ID is reviewed.
 
 ## Retrieve All Action Stats
 
@@ -11,8 +11,13 @@ GET /api/v3/action-stats
 ### Optional Query Parameters
 
 - **filter[column]** _(string)_
+
   - Filter results by column. Supported columns: `action_id`, `school_id`
-  - Use commas to filter by multiple values in a column, e.g. `/actions?filter[action_id]=121,122`
+  - Use commas to filter by multiple values in a column, e.g. `/action-stats?filter[action_id]=121,122`
+
+- **orderBy** _(string)_
+  - Order results by column. Supported columns: `id`, `accepted_quantity`
+  - e.g. `/action-stats?orderBy=accepted_quantity,desc`
 
 Example Response:
 
