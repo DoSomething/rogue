@@ -16,7 +16,6 @@ class AddCompoundIndexToActionStatsWithAcceptedQuantity extends Migration
         Schema::table('action_stats', function (Blueprint $table) {
             $table->index(['action_id', DB::raw('accepted_quantity desc')]);
         });
-
     }
 
     /**
