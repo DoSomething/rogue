@@ -197,6 +197,15 @@ class Signup extends Model
     }
 
     /**
+     * Calculate the total quantity for this signup.
+     */
+    public function refreshQuantity()
+    {
+        $this->quantity =  $this->posts()->sum('quantity');
+        $this->save();
+    }
+
+    /**
      * Get the quantity total associated with approved posts under this signup
      *
      * @return int

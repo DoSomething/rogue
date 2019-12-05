@@ -85,8 +85,7 @@ class EventTest extends TestCase
 
         // Create a post and associate it to the signup.
         $this->mockTime('8/3/2017 17:02:00');
-        $post = factory(Post::class)->create();
-        $post->signup()->associate($signup);
+        $post = factory(Post::class)->create(['signup_id' => $signup->id]);
 
         // And then later on, we'll update this post...
         $this->mockTime('8/4/2017 18:02:00');
