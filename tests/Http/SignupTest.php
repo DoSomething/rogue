@@ -667,35 +667,34 @@ class SignupTest extends TestCase
     }
 
     /**
-      * Test for retrieving all signups & ordering them.
-      *
-      * GET /api/v3/signups?orderBy=quantity,desc
-      * GET /api/v3/signups?orderBy=quantity,asc
-      *
-      * @return void
-      */
-     public function testSignupsIndexAsAdminWithOrderBy()
-     {
-         $signup = factory(Signup::class)->create(); // quantity=6
-         factory(Post::class, 3)->create(['signup_id' => $signup->id, 'quantity' => 2]);
+     * Test for retrieving all signups & ordering them.
+     *
+     * GET /api/v3/signups?orderBy=quantity,desc
+     * GET /api/v3/signups?orderBy=quantity,asc
+     * @return void
+     */
+    public function testSignupsIndexAsAdminWithOrderBy()
+    {
+        $signup = factory(Signup::class)->create(); // quantity=6
+        factory(Post::class, 3)->create(['signup_id' => $signup->id, 'quantity' => 2]);
 
-         $signup2 = factory(Signup::class)->create(); // quantity=12
-         factory(Post::class, 4)->create(['signup_id' => $signup2->id, 'quantity' => 3]);
+        $signup2 = factory(Signup::class)->create(); // quantity=12
+        factory(Post::class, 4)->create(['signup_id' => $signup2->id, 'quantity' => 3]);
 
-         // Order results by descending quantity
-         $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,desc');
+        // Order results by descending quantity
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,desc');
 
-         $response->assertSuccessful();
-         $this->seeJsonField($response, 'data.0.quantity', 12);
-         $this->seeJsonField($response, 'data.1.quantity', 6);
+        $response->assertSuccessful();
+        $this->seeJsonField($response, 'data.0.quantity', 12);
+        $this->seeJsonField($response, 'data.1.quantity', 6);
 
-         // Order results by ascending quantity
-         $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,asc');
+        // Order results by ascending quantity
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?orderBy=quantity,asc');
 
-         $response->assertSuccessful();
-         $this->seeJsonField($response, 'data.0.quantity', 6);
-         $this->seeJsonField($response, 'data.1.quantity', 12);
-     }
+        $response->assertSuccessful();
+        $this->seeJsonField($response, 'data.0.quantity', 6);
+        $this->seeJsonField($response, 'data.1.quantity', 12);
+    }
 
     /**
      * Test for retrieving a specific signup as admin.
