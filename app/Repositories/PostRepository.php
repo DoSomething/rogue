@@ -127,13 +127,10 @@ class PostRepository
 
         $post->save();
 
-        // Update the signup's total quantity and why_participated if sent.
+        // If a 'why_participated' is provided, set it on the signup:
         if (isset($data['why_participated'])) {
-            $signup->why_participated = $data['why_participated'];
+            $signup->update(['why_participated' => $data['why_participated']]);
         }
-
-        $signup->quantity = $signup->posts->sum('quantity');
-        $signup->save();
 
         return $post;
     }
@@ -149,13 +146,6 @@ class PostRepository
     public function update($post, $data)
     {
         $post->update($data);
-
-        // If the quantity was updated, update the total quantity on the signup.
-        if (isset($data['quantity'])) {
-            $signup = $post->signup;
-            $signup->quantity = $signup->posts->sum('quantity');
-            $signup->save();
-        }
 
         return $post;
     }

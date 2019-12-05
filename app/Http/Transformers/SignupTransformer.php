@@ -31,7 +31,7 @@ class SignupTransformer extends TransformerAbstract
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'campaign_run_id' => $signup->campaign_run_id,
-            'quantity' => $signup->getQuantity(),
+            'quantity' => $signup->quantity,
             'created_at' => $signup->created_at->toIso8601String(),
             'updated_at' => $signup->updated_at->toIso8601String(),
         ];

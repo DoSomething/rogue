@@ -39,8 +39,13 @@ class ModelServiceProvider extends ServiceProvider
             }
         });
 
-        // When Posts are saved create an event for them.
         Post::saved(function ($post) {
+            // If this post has a signup, update its quantity:
+            if ($post->signup) {
+                $post->signup->refreshQuantity();
+            }
+
+            // When Posts are saved create an event for them.
             $post->events()->create([
                 // @TODO: this should include the tags with the post
                 'content' => $post->toJson(),

@@ -31,7 +31,7 @@ class Signup extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'campaign_id', 'quantity', 'quantity_pending', 'why_participated', 'source', 'source_details', 'details', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'northstar_id', 'campaign_id', 'why_participated', 'source', 'source_details', 'details', 'created_at', 'updated_at'];
 
     /**
      * Attributes that can be queried when filtering.
@@ -182,7 +182,7 @@ class Signup extends Model
             'northstar_id' => $this->northstar_id,
             'campaign_id' => $this->campaign_id,
             'campaign_run_id' => $this->campaign_run_id,
-            'quantity' => $this->getQuantity(),
+            'quantity' => $this->quantity,
             'why_participated' => $this->why_participated,
             'signup_source' => $this->source,
             'details' => $this->details,
@@ -197,29 +197,12 @@ class Signup extends Model
     }
 
     /**
-     * Get either the quantity or quantity_pending for a signup.
-     * If the quantity lives on the signup's posts,
-     * return quantity as a summed total of quantity across all posts under a signup.
-     *
-     * @return int
+     * Calculate the total quantity for this signup.
      */
-    public function getQuantity()
+    public function refreshQuantity()
     {
-        // @TODO - This is temporary. We have migrated data that has stored quanity in the
-        // quanity_pending column on the signup. However, since then we updated the business
-        // logic to store everything in the quanity column and not use the quanity_pending
-        // column at all. We only want to return what is in the quanity_pending column
-        // if is the only place quanity is stored.
-        if (! config('features.v3QuantitySupport') || $this->posts->isEmpty()) {
-            if (! is_null($this->quantity_pending) && is_null($this->quantity)) {
-                return $this->quantity_pending;
-            }
-
-            return $this->quantity;
-        }
-
-        // If we are supporting quantity on posts then we can just return the summed quantity across all posts under the signup.
-        return $this->posts->sum('quantity');
+        $this->quantity = $this->posts()->sum('quantity');
+        $this->save();
     }
 
     /**
