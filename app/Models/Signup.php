@@ -201,7 +201,7 @@ class Signup extends Model
      */
     public function refreshQuantity()
     {
-        $this->quantity =  $this->posts()->sum('quantity');
+        $this->quantity = $this->posts()->sum('quantity');
         $this->save();
     }
 
