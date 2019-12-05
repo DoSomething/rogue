@@ -60,3 +60,11 @@ These endpoints use OAuth 2 to authenticate. [More information here](https://git
 | -------------------------------- | ------------------------------------------------------ |
 | `GET /api/v3/actions`            | [Get actions](actions.md#retrieve-all-actions)         |
 | `GET /api/v3/actions/:action_id` | [Get an action](actions.md#retrieve-a-specific-action) |
+
+#### Action Stats
+
+| Endpoint                   | Functionality                       |
+| -------------------------- | ----------------------------------- |
+| `GET /api/v3/action-stats` | [Get action stats](action-stats.md) |
+
+|

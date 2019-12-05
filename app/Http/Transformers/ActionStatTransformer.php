@@ -16,6 +16,7 @@ class ActionStatTransformer extends TransformerAbstract
     public function transform(ActionStat $actionStat)
     {
         return [
+            'id' => $actionStat->id,
             'action_id' => $actionStat->action_id,
             'school_id' => $actionStat->school_id,
             'accepted_quantity' => $actionStat->accepted_quantity,
