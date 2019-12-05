@@ -40,6 +40,7 @@ export const ReviewablePostFragment = gql`
     deleted
 
     actionDetails {
+      id
       name
       noun
       verb
@@ -51,10 +52,6 @@ export const ReviewablePostFragment = gql`
     }
 
     schoolId
-    school {
-      id
-      name
-    }
 
     signupId
     signup {
@@ -63,6 +60,7 @@ export const ReviewablePostFragment = gql`
       source
     }
 
+    userId
     user {
       id
       ...UserInformation
@@ -108,7 +106,11 @@ const ReviewablePost = ({ post }) => {
       </div>
 
       <div className="container__block -third">
-        <UserInformation user={post.user} linkSignup={post.signupId}>
+        <UserInformation
+          user={post.user}
+          userId={post.userId}
+          linkSignup={post.signupId}
+        >
           {post.quantity ? (
             <Quantity
               quantity={post.quantity}
@@ -183,12 +185,12 @@ const ReviewablePost = ({ post }) => {
             details={{
               ID: <Link to={`/posts/${post.id}`}>{post.id}</Link>,
               Campaign: (
-                <a href={`/campaign-ids/${post.campaign.id}`}>
+                <a href={`/campaigns/${post.campaign.id}`}>
                   {post.campaign.internalTitle}
                 </a>
               ),
               Action: (
-                <a href={`/campaign-ids/${post.campaign.id}#actions`}>
+                <a href={`/actions/${post.actionDetails.id}`}>
                   {post.actionDetails.name}
                 </a>
               ),
@@ -196,7 +198,7 @@ const ReviewablePost = ({ post }) => {
               Source: post.source,
               Location: post.location,
               Submitted: format(parse(post.createdAt), 'M/D/YYYY h:m:s'),
-              School: post.school ? (
+              School: post.schoolId ? (
                 <Link to={`/schools/${post.schoolId}`}>{post.schoolId}</Link>
               ) : (
                 '-'
@@ -209,7 +211,7 @@ const ReviewablePost = ({ post }) => {
             title="Signup Information"
             details={{
               ID: <a href={`/signups/${post.signupId}`}>{post.signupId}</a>,
-              User: <Link to={`/users/${post.user.id}`}>{post.user.id}</Link>,
+              User: <Link to={`/users/${post.userId}`}>{post.userId}</Link>,
               Source: post.signup ? post.signup.source : '–',
             }}
           />

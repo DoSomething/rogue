@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
+import NotFound from './NotFound';
 import Shell from '../components/utilities/Shell';
 import MetaInformation from '../components/utilities/MetaInformation';
 
@@ -19,6 +20,7 @@ const SHOW_SCHOOL_QUERY = gql`
 
 const ShowSchool = () => {
   const { id } = useParams();
+  const title = `School #${id}`;
 
   const { loading, error, data } = useQuery(SHOW_SCHOOL_QUERY, {
     variables: { id },
@@ -29,17 +31,22 @@ const ShowSchool = () => {
   }
 
   if (loading) {
-    return <Shell title="School" loading />;
+    return <Shell title={title} loading />;
   }
 
+  if (!data.school) return <NotFound title={title} type="school" />;
+
   return (
-    <Shell
-      title={data.school.name}
-      subtitle={`${data.school.city}, ${data.school.state}`}
-    >
+    <Shell title={title} subtitle={data.school.name}>
       <div className="container__row">
         <div className="container__block -third">
-          <MetaInformation details={{ ID: id }} />
+          <MetaInformation
+            details={{
+              ID: id,
+              City: data.school.city,
+              State: data.school.state,
+            }}
+          />
         </div>
       </div>
     </Shell>

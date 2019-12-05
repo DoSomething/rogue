@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
     $faker->addProvider(new FakerNorthstarId($faker));
+    $faker->addProvider(new FakerSchoolId($faker));
 
     $uploadPath = $faker->file(storage_path('fixtures'));
     $upload = new UploadedFile($uploadPath, basename($uploadPath), 'image/jpeg');
@@ -50,7 +51,8 @@ $factory->define(Post::class, function (Generator $faker) {
         'url' => $url,
         'text' => $faker->sentence(),
         'location' => 'US-'.$faker->stateAbbr(),
-        'school_id' => $faker->word(),
+        // @TODO: Only set school if the action is set to collect school ID.
+        'school_id' => $this->faker->school_id,
         'source' => 'phpunit',
         'status' => 'pending',
         'quantity' => $faker->randomNumber(2),
@@ -60,6 +62,7 @@ $factory->define(Post::class, function (Generator $faker) {
 // @TODO: These should all extend a photo-less "base" post, instead.
 $factory->defineAs(Post::class, 'text', function (Generator $faker) {
     $faker->addProvider(new FakerNorthstarId($faker));
+    $faker->addProvider(new FakerSchoolId($faker));
 
     return [
         'type' => 'text',
@@ -81,7 +84,8 @@ $factory->defineAs(Post::class, 'text', function (Generator $faker) {
         'northstar_id' => $this->faker->northstar_id,
         'text' => $faker->sentence(),
         'location' => 'US-'.$faker->stateAbbr(),
-        'school_id' => $faker->word(),
+        // @TODO: Only set school if the action is set to collect school ID.
+        'school_id' => $this->faker->school_Id,
         'source' => 'phpunit',
         'status' => 'pending',
     ];

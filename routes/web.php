@@ -24,14 +24,13 @@ Route::resource('campaigns', 'CampaignsController', ['except' => ['index', 'show
 
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
+    // Actions
+    Route::view('actions/{id}', 'app');
+
     // Campaigns
     Route::view('campaigns', 'app');
     Route::view('campaigns/{id}', 'app');
     Route::view('campaigns/{id}/{status}', 'app');
-
-    // Users
-    Route::view('users', 'app')->name('users.index');
-    Route::view('users/{id}', 'app')->name('users.show');
 
     // Posts
     Route::view('posts/{id}', 'app')->name('posts.show');
@@ -41,6 +40,10 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
 
     // Signups
     Route::view('signups/{id}', 'app')->name('signups.show');
+
+    // Users
+    Route::view('users', 'app')->name('users.index');
+    Route::view('users/{id}', 'app')->name('users.show');
 });
 
 // Admin image routes:

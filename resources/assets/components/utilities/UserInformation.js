@@ -53,7 +53,7 @@ const UserName = ({ user, link }) => {
   return <span>{displayName}</span>;
 };
 
-const UserInformation = ({ user, linkSignup, children }) => (
+const UserInformation = ({ user, userId, linkSignup, children }) => (
   <div>
     {!isEmpty(user) ? (
       <div className="mb-4">
@@ -81,8 +81,17 @@ const UserInformation = ({ user, linkSignup, children }) => (
           <UserLocation user={user} />
         </p>
       </div>
-    ) : null}
-
+    ) : (
+      <div className="mb-4">
+        <h2 className="heading">
+          {linkSignup ? (
+            <a href={`/signups/${linkSignup}`}>{userId}</a>
+          ) : (
+            <span>{userId}</span>
+          )}
+        </h2>
+      </div>
+    )}
     {children}
   </div>
 );
