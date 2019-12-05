@@ -338,7 +338,7 @@ class Post extends Model
             'type' => $this->type,
             'action' => $this->getActionName(),
             'action_id' => $this->action_id,
-            'quantity' => $this->getQuantity(),
+            'quantity' => $this->quantity,
             'why_participated' => $this->signup->why_participated,
             // Add cache-busting query string to urls to make sure we get the
             // most recent version of the image.
@@ -373,17 +373,6 @@ class Post extends Model
     public function getActionName()
     {
         return $this->actionModel ? $this->actionModel['name'] : $this->action;
-    }
-
-    /**
-     * If we are storing quanity on the post, return that!
-     * If the quantity is not on the post, return the quantity from the signup.
-     *
-     * @return int
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
     }
 
     /**

@@ -99,7 +99,7 @@ class SignupTest extends TestCase
         $response->assertJson([
             'data' => [
                 'campaign_id' => $signup->campaign_id,
-                'quantity' => $signup->getQuantity(),
+                'quantity' => $signup->quantity,
             ],
         ]);
     }

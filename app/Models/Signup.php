@@ -182,7 +182,7 @@ class Signup extends Model
             'northstar_id' => $this->northstar_id,
             'campaign_id' => $this->campaign_id,
             'campaign_run_id' => $this->campaign_run_id,
-            'quantity' => $this->getQuantity(),
+            'quantity' => $this->quantity,
             'why_participated' => $this->why_participated,
             'signup_source' => $this->source,
             'details' => $this->details,
@@ -194,16 +194,6 @@ class Signup extends Model
                 'type' => 'signup',
             ],
         ];
-    }
-
-    /**
-     * Get the total quantity for this signup's posts.
-     *
-     * @return int
-     */
-    public function getQuantity()
-    {
-        return $this->posts()->sum('quantity');
     }
 
     /**
