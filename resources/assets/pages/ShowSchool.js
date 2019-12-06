@@ -21,6 +21,10 @@ const SHOW_SCHOOL_QUERY = gql`
           name
           noun
           verb
+          campaign {
+            id
+            internalTitle
+          }
         }
         acceptedQuantity
         updatedAt
@@ -65,25 +69,33 @@ const ShowSchool = () => {
       </div>
       <div className="container__row">
         <div className="container__block">
-          <h2>Actions</h2>
+          <h3>Aggregate Impact</h3>
+          <p className="mb-4">
+            These totals are updated any time a Review is created for a Post
+            that is associated with this School.
+          </p>
           <table className="table">
             <thead>
               <tr>
                 <td>Action</td>
-                <td>Impact</td>
+                <td>Campaign</td>
+                <td className="text-center">Total Approved Quantity</td>
               </tr>
             </thead>
             <tbody>
               {schoolActionStats.map(item => (
                 <tr key={item.action.id}>
                   <td>
-                    <strong>
-                      <a href={`/actions/${item.action.id}`}>
-                        {item.action.name}
-                      </a>
-                    </strong>
+                    <a href={`/actions/${item.action.id}`}>
+                      {item.action.name}
+                    </a>
                   </td>
                   <td>
+                    <a href={`/campaigns/${item.action.campaign.id}`}>
+                      {item.action.campaign.internalTitle}
+                    </a>
+                  </td>
+                  <td className="text-center">
                     <strong>{item.acceptedQuantity}</strong> {item.action.noun}{' '}
                     {item.action.verb}
                     <div className="text-sm">

@@ -64,14 +64,18 @@ const ShowAction = () => {
       </ul>
       {schoolActionStats.length ? (
         <div className="mb-4">
-          <h2>Schools</h2>
+          <h3>School Leaderboard</h3>
+          <p className="mb-4">
+            These totals are updated any time a Review is created for a Post
+            that is associated with this Action and the User's School.
+          </p>
           <table className="table">
             <thead>
               <tr>
                 <td>School</td>
                 <td>Location</td>
-                <td className="capitalize">
-                  {noun} {verb}
+                <td className="text-center">
+                  Total approved {noun} {verb}
                 </td>
               </tr>
             </thead>
@@ -88,7 +92,7 @@ const ShowAction = () => {
                   <td>
                     {item.school.city}, {item.school.state}
                   </td>
-                  <td>
+                  <td className="text-center">
                     <strong>{item.acceptedQuantity}</strong>
                     <div className="text-sm">
                       Updated {format(parse(item.updatedAt), 'M/D/YYYY h:mm a')}
