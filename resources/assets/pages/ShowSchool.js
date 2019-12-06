@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
+import { parse, format } from 'date-fns';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -14,6 +15,16 @@ const SHOW_SCHOOL_QUERY = gql`
       name
       city
       state
+      schoolActionStats {
+        action {
+          id
+          name
+          noun
+          verb
+        }
+        acceptedQuantity
+        updatedAt
+      }
     }
   }
 `;
@@ -36,17 +47,53 @@ const ShowSchool = () => {
 
   if (!data.school) return <NotFound title={title} type="school" />;
 
+  const { city, name, schoolActionStats, state } = data.school;
+
   return (
-    <Shell title={title} subtitle={data.school.name}>
+    <Shell title={title} subtitle={name}>
       <div className="container__row">
-        <div className="container__block -third">
+        <div className="container__block">
           <MetaInformation
             details={{
               ID: id,
-              City: data.school.city,
-              State: data.school.state,
+              City: city,
+              State: state,
             }}
           />
+        </div>
+      </div>
+      <div className="container__row">
+        <div className="container__block">
+          <h2>Actions</h2>
+          <table className="table">
+            <thead>
+              <tr>
+                <td>Action</td>
+                <td>Impact</td>
+              </tr>
+            </thead>
+            <tbody>
+              {schoolActionStats.map(item => (
+                <tr key={item.action.id}>
+                  <td>
+                    <strong>
+                      <a href={`/actions/${item.action.id}`}>
+                        {item.action.name}
+                      </a>
+                    </strong>
+                  </td>
+                  <td>
+                    <strong>{item.acceptedQuantity}</strong> {item.action.noun}{' '}
+                    {item.action.verb}
+                    <div className="text-sm">
+                      Last reviewed{' '}
+                      {format(parse(item.updatedAt), 'M/D/YYYY h:mm:s')}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </Shell>

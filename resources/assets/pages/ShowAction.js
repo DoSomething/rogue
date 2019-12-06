@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
+import { parse, format } from 'date-fns';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -21,6 +22,7 @@ const SHOW_ACTION_QUERY = gql`
           state
         }
         acceptedQuantity
+        updatedAt
       }
     }
   }
@@ -65,7 +67,7 @@ const ShowAction = () => {
           <table className="table">
             <thead>
               <tr>
-                <td>School Name</td>
+                <td>School</td>
                 <td>Location</td>
                 <td className="capitalize">
                   {noun} {verb}
@@ -87,6 +89,10 @@ const ShowAction = () => {
                   </td>
                   <td>
                     <strong>{item.acceptedQuantity}</strong>
+                    <div className="text-sm">
+                      Last reviewed{' '}
+                      {format(parse(item.updatedAt), 'M/D/YYYY h:mm:s')}
+                    </div>
                   </td>
                 </tr>
               ))}
