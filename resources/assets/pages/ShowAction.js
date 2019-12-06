@@ -32,6 +32,7 @@ const SHOW_ACTION_QUERY = gql`
 const ShowAction = () => {
   const { id } = useParams();
   const title = `Action #${id}`;
+  document.title = title;
 
   const { loading, error, data } = useQuery(SHOW_ACTION_QUERY, {
     variables: { id: Number(id) },

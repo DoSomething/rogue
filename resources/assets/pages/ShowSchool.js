@@ -32,6 +32,7 @@ const SHOW_SCHOOL_QUERY = gql`
 const ShowSchool = () => {
   const { id } = useParams();
   const title = `School #${id}`;
+  document.title = title;
 
   const { loading, error, data } = useQuery(SHOW_SCHOOL_QUERY, {
     variables: { id },

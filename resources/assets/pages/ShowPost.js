@@ -31,6 +31,7 @@ const SHOW_POST_QUERY = gql`
 const ShowPost = () => {
   const { id } = useParams();
   const title = `Post #${id}`;
+  document.title = title;
 
   const { loading, error, data } = useQuery(SHOW_POST_QUERY, {
     variables: { id: Number(id) },
