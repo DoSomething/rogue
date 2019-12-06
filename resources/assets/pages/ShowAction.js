@@ -69,7 +69,7 @@ const ShowAction = () => {
               <tr>
                 <td>School Name</td>
                 <td>Location</td>
-                <td>
+                <td className="capitalize">
                   {noun} {verb}
                 </td>
               </tr>
