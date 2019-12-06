@@ -8,6 +8,7 @@ import NotFound from './NotFound';
 import Shell from '../components/utilities/Shell';
 import MetaInformation from '../components/utilities/MetaInformation';
 
+// @TODO: Add support for paging through schoolActionStats once more actions collect school.
 const SHOW_SCHOOL_QUERY = gql`
   query ShowSchoolQuery($id: String!) {
     school(id: $id) {

@@ -9,6 +9,7 @@ import Action, { ActionFragment } from '../components/Action';
 import Shell from '../components/utilities/Shell';
 import MetaInformation from '../components/utilities/MetaInformation';
 
+// @TODO: Add support for paging through schoolActionStats once posts with school get reviewed.
 const SHOW_ACTION_QUERY = gql`
   query ShowActionQuery($id: Int!) {
     action(id: $id) {
