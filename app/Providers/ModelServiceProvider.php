@@ -55,7 +55,7 @@ class ModelServiceProvider extends ServiceProvider
             ]);
         });
 
-        // When a Review is saved, create an event.
+        // When Reviews are saved create an event for them.
         Review::saved(function ($review) {
             info('review', ['campaign' => $review->post->campaign_id]);
 
