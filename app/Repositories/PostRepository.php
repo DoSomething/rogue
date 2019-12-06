@@ -175,7 +175,7 @@ class PostRepository
     }
 
     /**
-     * Updates a post's status after being reviewed and updates aggregate information.
+     * Creates a Review for the Post, then updates Post status and re-aggregates.
      *
      * @param array Post $post
      * @param string $status

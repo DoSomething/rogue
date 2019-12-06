@@ -21,6 +21,7 @@ class ReviewsTest extends TestCase
 
         // Create a post.
         $northstarId = $this->faker->northstar_id;
+
         $post = factory(Post::class)->create();
 
         $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/' . $post->id . '/reviews', [
@@ -31,12 +32,21 @@ class ReviewsTest extends TestCase
         $response->assertStatus(201);
         Bus::assertDispatched(SendReviewedPostToCustomerIo::class);
 
-        // Make sure the post status is updated & a review is created.
+
         $this->assertEquals('accepted', $post->fresh()->status);
         $this->assertDatabaseHas('reviews', [
             'admin_northstar_id' => $northstarId,
             'post_id' => $post->id,
             'comment' => 'testing',
+        ]);
+        $this->assertDatabaseHas('campaigns', [
+            'id' => $post->campaign->id,
+            'accepted_count' => 1,
+        ]);
+        $this->assertDatabaseHas('action_stats', [
+            'action_id' => $post->action_id,
+            'accepted_quantity' => $post->quantity,
+            'school_id' => $post->school_id,
         ]);
     }
 
