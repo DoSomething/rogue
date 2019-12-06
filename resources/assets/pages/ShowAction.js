@@ -12,6 +12,18 @@ const SHOW_ACTION_QUERY = gql`
   query ShowActionQuery($id: Int!) {
     action(id: $id) {
       ...ActionFragment
+      schoolActionStats {
+        id
+        schoolId
+        school {
+          id
+          name
+          city
+          state
+        }
+        acceptedQuantity
+        updatedAt
+      }
     }
   }
   ${ActionFragment}
@@ -37,7 +49,7 @@ const ShowAction = () => {
     return <NotFound title={title} type="action" />;
   }
 
-  const { campaign, name } = data.action;
+  const { campaign, name, noun, schoolActionStats, verb } = data.action;
 
   return (
     <Shell title={title} subtitle={name}>
@@ -49,6 +61,41 @@ const ShowAction = () => {
           </a>
         </li>
       </ul>
+      {schoolActionStats.length ? (
+        <div className="mb-4">
+          <h2>Schools</h2>
+          <table className="table">
+            <thead>
+              <tr>
+                <td>School Name</td>
+                <td>Location</td>
+                <td>
+                  {noun} {verb}
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              {schoolActionStats.map(item => (
+                <tr key={item.id}>
+                  <td>
+                    <strong>
+                      <a href={`/schools/${item.school.id}`}>
+                        {item.school.name}
+                      </a>
+                    </strong>
+                  </td>
+                  <td>
+                    {item.school.city}, {item.school.state}
+                  </td>
+                  <td>
+                    <strong>{item.acceptedQuantity}</strong>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : null}
     </Shell>
   );
 };
