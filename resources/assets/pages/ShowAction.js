@@ -13,7 +13,6 @@ const SHOW_ACTION_QUERY = gql`
     action(id: $id) {
       ...ActionFragment
       schoolActionStats {
-        id
         schoolId
         school {
           id
@@ -22,7 +21,6 @@ const SHOW_ACTION_QUERY = gql`
           state
         }
         acceptedQuantity
-        updatedAt
       }
     }
   }
@@ -76,7 +74,7 @@ const ShowAction = () => {
             </thead>
             <tbody>
               {schoolActionStats.map(item => (
-                <tr key={item.id}>
+                <tr key={item.school.id}>
                   <td>
                     <strong>
                       <a href={`/schools/${item.school.id}`}>
