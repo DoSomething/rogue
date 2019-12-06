@@ -80,7 +80,7 @@ const ShowSchool = () => {
               <tr>
                 <td>Action</td>
                 <td>Campaign</td>
-                <td className="text-center">Total Approved Quantity</td>
+                <td className="text-center">Total approved quantity</td>
               </tr>
             </thead>
             <tbody>
