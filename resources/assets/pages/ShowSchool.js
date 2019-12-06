@@ -87,7 +87,7 @@ const ShowSchool = () => {
                     {item.action.verb}
                     <div className="text-sm">
                       Last reviewed{' '}
-                      {format(parse(item.updatedAt), 'M/D/YYYY h:mm:s')}
+                      {format(parse(item.updatedAt), 'M/D/YYYY h:mm a')}
                     </div>
                   </td>
                 </tr>
