@@ -90,8 +90,7 @@ const ShowAction = () => {
                   <td>
                     <strong>{item.acceptedQuantity}</strong>
                     <div className="text-sm">
-                      Last reviewed{' '}
-                      {format(parse(item.updatedAt), 'M/D/YYYY h:mm a')}
+                      Updated {format(parse(item.updatedAt), 'M/D/YYYY h:mm a')}
                     </div>
                   </td>
                 </tr>
