@@ -4,10 +4,8 @@ namespace Rogue\Managers;
 
 use Rogue\Models\Post;
 use Rogue\Services\Fastly;
-use Rogue\Jobs\SendPostToQuasar;
 use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Repositories\PostRepository;
-use Rogue\Jobs\SendDeletedPostToQuasar;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
 
 class PostManager
@@ -59,8 +57,6 @@ class PostManager
             SendPostToCustomerIo::dispatch($post);
         }
 
-        SendPostToQuasar::dispatch($post);
-
         // Log that a post was created.
         info('post_created', ['id' => $post->id, 'signup_id' => $post->signup_id, 'post_created_source' => $post->source]);
 
@@ -86,8 +82,6 @@ class PostManager
             SendPostToCustomerIo::dispatch($post, $log);
         }
 
-        SendPostToQuasar::dispatch($post, $log);
-
         if ($log) {
             // Log that a post was updated.
             info('post_updated', ['id' => $post->id, 'signup_id' => $post->signup_id]);
@@ -107,7 +101,6 @@ class PostManager
     {
         $post = $this->repository->reviews($post, $data, $comment, $admin);
 
-        SendPostToQuasar::dispatch($post);
         SendReviewedPostToCustomerIo::dispatch($post);
 
         // Log that a post was reviewed.
@@ -131,8 +124,6 @@ class PostManager
         $trashed = $this->repository->destroy($post->id);
 
         $this->fastly->purge($post);
-
-        SendDeletedPostToQuasar::dispatch($post->id);
 
         info('post_deleted', ['id' => $post->id]);
 
