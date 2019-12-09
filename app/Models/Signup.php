@@ -171,32 +171,6 @@ class Signup extends Model
     }
 
     /**
-     * Transform the signup model for Quasar.
-     *
-     * @return array
-     */
-    public function toQuasarPayload()
-    {
-        return [
-            'signup_id' => $this->id,
-            'northstar_id' => $this->northstar_id,
-            'campaign_id' => $this->campaign_id,
-            'campaign_run_id' => $this->campaign_run_id,
-            'quantity' => $this->quantity,
-            'why_participated' => $this->why_participated,
-            'signup_source' => $this->source,
-            'details' => $this->details,
-            'source_details' => $this->source_details,
-            'created_at' => $this->created_at->toIso8601String(),
-            'updated_at' => $this->updated_at->toIso8601String(),
-            'meta' => [
-                'message_source' => 'rogue',
-                'type' => 'signup',
-            ],
-        ];
-    }
-
-    /**
      * Calculate the total quantity for this signup.
      */
     public function refreshQuantity()
