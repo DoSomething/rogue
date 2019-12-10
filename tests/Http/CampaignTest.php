@@ -28,7 +28,7 @@ class CampaignTest extends Testcase
             'impact_doc' => 'https://www.google.com',
             'start_date' => $firstCampaignStartDate,
             'end_date' => $firstCampaignEndDate,
-        ])->assertRedirect('/campaigns/9000');
+        ]);
 
         // Make sure the campaign is persisted.
         $this->assertDatabaseHas('campaigns', [
