@@ -10,33 +10,70 @@ use Rogue\Jobs\SendReviewedPostToCustomerIo;
 class ReviewsTest extends TestCase
 {
     /**
-     * Test that a POST request to /reviews updates the post's status.
+     * Test that a POST request to /reviews updates the post's status and agggregate data.
      *
      * POST /reviews
      * @return void
      */
-    public function testPostingASingleReview()
+    public function testPostingReviews()
     {
         Bus::fake();
 
         // Create a post.
         $northstarId = $this->faker->northstar_id;
-        $post = factory(Post::class)->create();
+        $schoolId = $this->faker->school_id;
 
-        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/' . $post->id . '/reviews', [
+        $firstPost = factory(Post::class)->create([
+            'school_id' => $schoolId,
+        ]);
+        $actionId = $firstPost->action_id;
+        $campaignId = $firstPost->campaign->id;
+
+        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/' . $firstPost->id . '/reviews', [
             'status' => 'accepted',
-            'comment' => 'testing',
+            'comment' => 'Testing 1st review',
         ]);
 
         $response->assertStatus(201);
         Bus::assertDispatched(SendReviewedPostToCustomerIo::class);
 
-        // Make sure the post status is updated & a review is created.
-        $this->assertEquals('accepted', $post->fresh()->status);
+        $this->assertEquals('accepted', $firstPost->fresh()->status);
         $this->assertDatabaseHas('reviews', [
             'admin_northstar_id' => $northstarId,
-            'post_id' => $post->id,
-            'comment' => 'testing',
+            'post_id' => $firstPost->id,
+            'comment' => 'Testing 1st review',
+        ]);
+        $this->assertDatabaseHas('campaigns', [
+            'id' => $campaignId,
+            'accepted_count' => 1,
+            'pending_count' => 0,
+        ]);
+        $this->assertDatabaseHas('action_stats', [
+            'action_id' => $actionId,
+            'accepted_quantity' => $firstPost->quantity,
+            'school_id' => $schoolId,
+        ]);
+
+        $secondPost = factory(Post::class)->create([
+            'action_id' => $actionId,
+            'campaign_id' => $campaignId,
+            'school_id' => $schoolId,
+        ]);
+
+        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/' . $secondPost->id . '/reviews', [
+            'status' => 'accepted',
+            'comment' => 'Testing 2nd review',
+        ]);
+
+        $this->assertDatabaseHas('campaigns', [
+            'id' => $campaignId,
+            'accepted_count' => 2,
+            'pending_count' => 0,
+        ]);
+        $this->assertDatabaseHas('action_stats', [
+            'action_id' => $actionId,
+            'accepted_quantity' => $firstPost->quantity + $secondPost->quantity,
+            'school_id' => $schoolId,
         ]);
     }
 

@@ -175,7 +175,7 @@ class PostRepository
     }
 
     /**
-     * Updates a post's status after being reviewed.
+     * Creates a Review for the Post, then updates Post status and re-aggregates.
      *
      * @param array Post $post
      * @param string $status
@@ -200,7 +200,10 @@ class PostRepository
         $post->status = $status;
         $post->save();
 
-        // If the Post has a school ID, update School's aggregate impact for the Action.
+        // Update the "counter cache" on the Post Campaign:
+        $post->campaign->refreshCounts();
+
+        // If the Post has a School ID, upsert an ActionStat.
         if ($post->school_id && $post->action_id) {
             ActionStat::updateOrCreate(
                 ['action_id' => $post->action_id, 'school_id' => $post->school_id],
