@@ -33,7 +33,7 @@ class ActionTest extends TestCase
             'anonymous' => false,
             'noun' => 'things',
             'verb' => 'done',
-        ]);
+        ])->assertRedirect('/actions/1');
 
         // Make sure the action is persisted.
         $this->assertDatabaseHas('actions', [
