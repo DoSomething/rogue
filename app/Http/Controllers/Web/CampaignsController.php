@@ -52,7 +52,7 @@ class CampaignsController extends Controller
         // Log that a campaign was created.
         info('campaign_created', ['id' => $campaign->id]);
 
-        return redirect()->route('campaigns.show', $campaign->id);
+        return $this->redirect($campaign->id);
     }
 
     /**
@@ -85,7 +85,7 @@ class CampaignsController extends Controller
         // Log that a campaign was updated.
         info('campaign_updated', ['id' => $campaign->id]);
 
-        return redirect()->route('campaigns.show', $campaign);
+        return $this->redirect($campaign->id);
     }
 
     /**

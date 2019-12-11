@@ -73,7 +73,7 @@ class ActionsController extends Controller
             info('action_created', ['id' => $action->id]);
         }
 
-        return redirect()->route('actions.show', ['id' => $action->id]);
+        return redirect('actions/' . $action->id);
     }
 
     /**
@@ -111,7 +111,7 @@ class ActionsController extends Controller
         // Log that an action was updated.
         info('action_updated', ['id' => $action->id]);
 
-        return redirect()->route('actions.show', $action->id);
+        return redirect('actions/' . $action->id);
     }
 
     /**
