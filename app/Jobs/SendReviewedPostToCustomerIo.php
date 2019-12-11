@@ -40,7 +40,7 @@ class SendReviewedPostToCustomerIo implements ShouldQueue
         // Format the payload
         $payload = $this->post->toBlinkPayload();
 
-        // Send to Quasar
+        // Send to Customer.io
         $shouldSendToCIO = config('features.blink');
 
         if ($shouldSendToCIO) {

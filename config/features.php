@@ -13,6 +13,4 @@ return [
     */
 
     'blink' => env('DS_ENABLE_BLINK'),
-
-    'pushToQuasar' => env('DS_ENABLE_PUSH_TO_QUASAR'),
 ];

@@ -47,7 +47,6 @@ class TagPosts extends Command
         if ($posts) {
             foreach ($posts as $post) {
                 $this->info('Tagging post_id: '.$post->id.' as '.$tag->tag_slug);
-                // @TODO - Send to quasar when tagged.
                 $post->tag($tag->tag_name);
             }
         }

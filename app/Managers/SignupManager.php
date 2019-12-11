@@ -2,10 +2,8 @@
 
 namespace Rogue\Managers;
 
-use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Jobs\SendSignupToCustomerIo;
 use Rogue\Repositories\SignupRepository;
-use Rogue\Jobs\SendDeletedSignupToQuasar;
 
 class SignupManager
 {
@@ -47,9 +45,6 @@ class SignupManager
             SendSignupToCustomerIo::dispatch($signup);
         }
 
-        // Dispatch job to send signup to Quasar
-        SendSignupToQuasar::dispatch($signup);
-
         // Log that a signup was created.
         info('signup_created', ['id' => $signup->id, 'signup_created_source' => $signup->source]);
 
@@ -67,9 +62,6 @@ class SignupManager
     public function update($signup, $data, $log = true)
     {
         $signup = $this->signup->update($signup, $data);
-
-        // Dispatch job to send signup to Quasar
-        SendSignupToQuasar::dispatch($signup, $log);
 
         if ($log) {
             // Log that a signup was updated.
@@ -93,9 +85,6 @@ class SignupManager
             info('signup_deleted', [
                 'id' => $signupId,
             ]);
-
-            // Dispatch job to send post to Quasar
-            SendDeletedSignupToQuasar::dispatch($signupId);
         }
 
         return $trashed;

@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use League\Csv\Reader;
 use Rogue\Models\Signup;
 use Illuminate\Console\Command;
-use Rogue\Jobs\SendSignupToQuasar;
 use Rogue\Jobs\SendSignupToCustomerIo;
 
 class ImportSignupsCommand extends Command
@@ -79,7 +78,6 @@ class ImportSignupsCommand extends Command
                 }
 
                 // Business Logic
-                SendSignupToQuasar::dispatch($signup);
                 SendSignupToCustomerIo::dispatch($signup);
             } else {
                 if ($existing_signup->id % $logfreq == 0) {
