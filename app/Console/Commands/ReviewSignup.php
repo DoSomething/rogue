@@ -48,7 +48,7 @@ class ReviewSignup extends Command
      */
     public function handle()
     {
-        $signup = Signup::findOrFail($this->argument('signup'));
+        $signup = Signup::withTrashed()->findOrFail($this->argument('signup'));
         $status = $this->argument('status');
         $posts = $signup->posts;
         $admin = $this->option('admin');
