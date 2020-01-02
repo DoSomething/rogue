@@ -133,7 +133,7 @@ const Campaign = ({ id }) => {
         <p>{format(parse(campaign.startDate), 'MM/D/YYYY')}</p>
         <h4>End Date</h4>
         <p>
-          {campaign.end_date
+          {campaign.endDate
             ? format(parse(campaign.endDate), 'MM/D/YYYY')
             : '–'}
         </p>
