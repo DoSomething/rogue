@@ -5,11 +5,15 @@ Retrieve all event data.
 ```
 GET /api/v3/events
 ```
+
 ### Optional Query Parameters
+
 - **filter[signup_id]** _(integer)_
+
   - Filter results by the given `signup_id`
-  
+
 Example Response:
+
 ```
 {
   "data": [

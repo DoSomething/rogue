@@ -12,9 +12,9 @@ class ActionStat extends Model
      * @var array
      */
     protected $fillable = [
-         'accepted_quantity',
-         'action_id',
-         'school_id',
+        'accepted_quantity',
+        'action_id',
+        'school_id',
     ];
 
     /**

@@ -207,7 +207,7 @@ class SignupTest extends TestCase
     {
         $northstarId = $this->faker->northstar_id;
         $signups = factory(Signup::class, 10)->create([
-           'northstar_id' => $northstarId,
+            'northstar_id' => $northstarId,
         ]);
 
         $response = $this->withAccessToken($northstarId)->getJson('api/v3/signups');
@@ -592,8 +592,8 @@ class SignupTest extends TestCase
 
         // Create two signups
         factory(Signup::class, 2)->create([
-           'northstar_id' => $northstarId,
-           'campaign_id' => $campaignId,
+            'northstar_id' => $northstarId,
+            'campaign_id' => $campaignId,
         ]);
 
         // Create three more signups with different northstar_id & campaign_id
@@ -601,8 +601,8 @@ class SignupTest extends TestCase
         $secondCampaignId = str_random(22);
 
         factory(Signup::class, 3)->create([
-           'northstar_id' => $secondNorthstarId,
-           'campaign_id' => $secondCampaignId,
+            'northstar_id' => $secondNorthstarId,
+            'campaign_id' => $secondCampaignId,
         ]);
 
         // Filter by northstar_id

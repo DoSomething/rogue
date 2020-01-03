@@ -41,13 +41,13 @@ trait WithMocks
         $this->northstarMock->shouldReceive('refreshIfExpired')->andReturnSelf();
         $this->northstarMock->shouldReceive('getUser')->andReturnUsing(function ($id) {
             return new NorthstarUser([
-                    'id' => $id,
-                    'first_name' => $this->faker->firstName,
-                    'last_name' => $this->faker->lastName,
-                    'birthdate' => $this->faker->date,
-                    'email' => $this->faker->email,
-                    'mobile' => $this->faker->phoneNumber,
-                ]);
+                'id' => $id,
+                'first_name' => $this->faker->firstName,
+                'last_name' => $this->faker->lastName,
+                'birthdate' => $this->faker->date,
+                'email' => $this->faker->email,
+                'mobile' => $this->faker->phoneNumber,
+            ]);
         });
 
         // GraphQL Mock
