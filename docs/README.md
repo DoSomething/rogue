@@ -2,10 +2,6 @@
 
 This is **Rogue**, the DoSomething.org user activity service. Rogue is built using [Laravel 5.5](https://laravel.com/docs/5.5) and [React](http://reactjs.com).
 
-### Documentation
-
-https://dosomething.gitbook.io/rogue-documentation
-
 ### Security Vulnerabilities
 
 We take security very seriously. Any vulnerabilities in Rogue should be reported to [security@dosomething.org](mailto:security@dosomething.org), and will be promptly addressed. Thank you for taking the time to responsibly disclose any issues you find.
