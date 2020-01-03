@@ -3,12 +3,13 @@
 namespace Rogue\Models;
 
 use Rogue\Services\GraphQL;
+use Rogue\Models\Traits\HasCursor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Signup extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasCursor;
 
     /**
      * The attributes that should be cast to native types.
@@ -42,6 +43,20 @@ class Signup extends Model
      * @var array
      */
     public static $indexes = [
+        'campaign_id', 'updated_at', 'northstar_id', 'id', 'quantity', 'source',
+    ];
+
+    /**
+     * Attributes that we can sort by with the '?orderBy' query parameter. These
+     * should not contain any sensitive or private data (as they'll be encoded
+     * in cursors).
+     *
+     * This array is manually maintained. It does not necessarily mean that
+     * any of these are actual indexes on the database... but they should be!
+     *
+     * @var array
+     */
+    public static $sortable = [
         'campaign_id', 'updated_at', 'northstar_id', 'id', 'quantity', 'source',
     ];
 

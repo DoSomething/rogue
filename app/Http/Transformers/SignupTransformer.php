@@ -34,6 +34,7 @@ class SignupTransformer extends TransformerAbstract
             'quantity' => $signup->quantity,
             'created_at' => $signup->created_at->toIso8601String(),
             'updated_at' => $signup->updated_at->toIso8601String(),
+            'cursor' => $signup->getCursor(),
         ];
 
         if (Gate::allows('viewAll', $signup)) {
