@@ -4,8 +4,8 @@ import { map } from 'lodash';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
-import SignupCard from '../components/SignupCard';
 import Shell from '../components/utilities/Shell';
+import SignupGallery from '../components/SignupGallery';
 import MetaInformation from '../components/utilities/MetaInformation';
 import UserInformation, {
   UserInformationFragment,
@@ -17,24 +17,6 @@ const SHOW_USER_QUERY = gql`
       ...UserInformation
       permalink
       source
-    }
-
-    signups(userId: $id, orderBy: "created_at,desc") {
-      id
-      quantity
-      whyParticipated
-
-      campaign {
-        id
-        internalTitle
-        startDate
-      }
-
-      posts {
-        id
-        type
-        url(w: 200, h: 200)
-      }
     }
   }
 
@@ -58,7 +40,7 @@ const ShowUser = () => {
     return <Shell title={title} subtitle={subtitle} error={error} />;
   }
 
-  const { user, signups } = data;
+  const { user } = data;
 
   return (
     <Shell title={title} subtitle={subtitle}>
@@ -84,9 +66,7 @@ const ShowUser = () => {
         <h2 className="heading -emphasized -padded">
           <span>Campaigns</span>
         </h2>
-        {map(signups, signup => {
-          return <SignupCard key={signup.id} signup={signup} />;
-        })}
+        <SignupGallery userId={id} />
       </div>
     </Shell>
   );
