@@ -96,7 +96,7 @@ function getNorthstarId($request)
  *
  * @return bool
  */
-function is_staff_user() : bool
+function is_staff_user(): bool
 {
     // If this is a machine client, then it's de-facto an admin:
     if (token()->exists() && ! token()->id()) {
@@ -112,7 +112,7 @@ function is_staff_user() : bool
  *
  * @return bool
  */
-function is_owner($resource) : bool
+function is_owner($resource): bool
 {
     return auth()->id() === $resource->northstar_id;
 }

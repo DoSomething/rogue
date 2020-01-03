@@ -30,7 +30,7 @@ class Fastly extends RestApiClient
     /**
      * Purge any cached content for the given post.
      */
-    public function purge(Post $post) : void
+    public function purge(Post $post): void
     {
         $this->purgeKey('post-' . $post->id);
     }
@@ -40,7 +40,7 @@ class Fastly extends RestApiClient
      *
      * @param $cacheKey String
      */
-    protected function purgeKey($cacheKey) : void
+    protected function purgeKey($cacheKey): void
     {
         if (! $this->service) {
             return;
