@@ -4,6 +4,7 @@ import { map } from 'lodash';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
+import NotFound from './NotFound';
 import Shell from '../components/utilities/Shell';
 import SignupGallery from '../components/SignupGallery';
 import MetaInformation from '../components/utilities/MetaInformation';
@@ -38,6 +39,10 @@ const ShowUser = () => {
 
   if (error) {
     return <Shell title={title} subtitle={subtitle} error={error} />;
+  }
+
+  if (!data.user) {
+    return <NotFound title={title} type="user" />;
   }
 
   const { user } = data;
