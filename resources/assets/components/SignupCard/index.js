@@ -1,10 +1,32 @@
 import React from 'react';
-import PostTile from '../PostTile';
+import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
+
+import PostTile from '../PostTile';
 
 import './signup-card.scss';
 
 const POST_GALLERY_SIZE = 4;
+
+export const SignupCardFragment = gql`
+  fragment SignupCardFragment on Signup {
+    id
+    quantity
+    whyParticipated
+
+    campaign {
+      id
+      internalTitle
+      startDate
+    }
+
+    posts {
+      id
+      type
+      url(w: 200, h: 200)
+    }
+  }
+`;
 
 const SignupCard = ({ signup }) => {
   const campaign = signup.campaign || {};
