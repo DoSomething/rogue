@@ -66,7 +66,7 @@ const ShowUser = () => {
         <h2 className="heading -emphasized -padded">
           <span>Campaigns</span>
         </h2>
-        <SignupGallery userId={id} />
+        <SignupGallery userId={user.id} />
       </div>
     </Shell>
   );
