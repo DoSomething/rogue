@@ -165,7 +165,7 @@ class Campaign extends Model
             return null;
         }
         $date = (new Carbon($value))->format('Y-m-d');
-
+        //explicitly setting our timezone to EST to account for accurate end dates displayed on Phoenix
         return new Carbon($date, 'America/New_York');
     }
 
@@ -189,7 +189,7 @@ class Campaign extends Model
             return null;
         }
         $date = (new Carbon($value))->format('Y-m-d');
-
+        //explicitly setting our timezone to EST to account for accurate end dates displayed on Phoenix
         return new Carbon($date, 'America/New_York');
     }
 
