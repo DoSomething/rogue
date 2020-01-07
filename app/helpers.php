@@ -137,3 +137,10 @@ function has_include($request, $include)
 
     return false;
 }
+
+function formatDateAttribute($value, $timezone) 
+{
+    $date = (new Carbon($value))->format('Y-m-d');
+
+     return new Carbon($date, $timezone);
+}
