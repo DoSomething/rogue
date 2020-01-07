@@ -194,7 +194,7 @@ class CampaignTest extends Testcase
             'data' => [
                 'internal_title' => 'Updated Title',
                 'cause' => ['lgbtq-rights'],
-                'start_date' => '2018-01-01T00:00:00+00:00',
+                'start_date' => '2018-01-01T00:00:00-05:00',
             ],
         ]);
     }
