@@ -157,12 +157,11 @@ class Campaign extends Model
 
     /**
      * Accessor for getting the start_date field.
-     *
      */
     public function getStartDateAttribute()
     {
         $value = $this->attributes['start_date'];
-        if (!$value) {
+        if (! $value) {
             return null;
         }
         $date = (new Carbon($value))->format('Y-m-d');
@@ -182,12 +181,11 @@ class Campaign extends Model
 
     /**
      * Accessor for getting the end_date field.
-     *
      */
     public function getEndDateAttribute()
     {
         $value = $this->attributes['end_date'];
-        if (!$value) {
+        if (! $value) {
             return null;
         }
         $date = (new Carbon($value))->format('Y-m-d');
