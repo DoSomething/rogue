@@ -2,6 +2,7 @@
 
 namespace Rogue\Models;
 
+use Carbon\Carbon;
 use Rogue\Types\Cause;
 use Rogue\Models\Traits\HasCursor;
 use Illuminate\Database\Eloquent\Model;
@@ -155,6 +156,20 @@ class Campaign extends Model
     }
 
     /**
+     * Accessor for getting the start_date field.
+     */
+    public function getStartDateAttribute()
+    {
+        $value = $this->attributes['start_date'];
+        if (! $value) {
+            return null;
+        }
+        $date = (new Carbon($value))->format('Y-m-d');
+        //explicitly setting our timezone to EST to account for accurate end dates displayed on Phoenix
+        return new Carbon($date, 'America/New_York');
+    }
+
+    /**
      * Mutator for setting the start_date field.
      *
      * @param string|Carbon $value
@@ -162,6 +177,20 @@ class Campaign extends Model
     public function setStartDateAttribute($value)
     {
         $this->setArbitraryDateString('start_date', $value);
+    }
+
+    /**
+     * Accessor for getting the end_date field.
+     */
+    public function getEndDateAttribute()
+    {
+        $value = $this->attributes['end_date'];
+        if (! $value) {
+            return null;
+        }
+        $date = (new Carbon($value))->format('Y-m-d');
+        //explicitly setting our timezone to EST to account for accurate end dates displayed on Phoenix
+        return new Carbon($date, 'America/New_York');
     }
 
     /**

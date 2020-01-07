@@ -149,15 +149,15 @@ $factory->define(Campaign::class, function (Generator $faker) {
         'cause' => $faker->randomElements(Cause::all(), rand(1, 5)),
         'impact_doc' => 'https://www.google.com/',
         // By default, we create an "open campaign".
-        'start_date' => $faker->dateTimeBetween('-6 months', 'now'),
-        'end_date' => $faker->dateTimeBetween('+1 months', '+6 months'),
+        'start_date' => $faker->dateTimeBetween('-6 months', 'now')->setTime(0, 0),
+        'end_date' => $faker->dateTimeBetween('+1 months', '+6 months')->setTime(0, 0),
     ];
 });
 
 $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($factory) {
     return array_merge($factory->raw(Campaign::class), [
-        'start_date' => $faker->dateTimeBetween('-12 months', '-6 months'),
-        'end_date' => $faker->dateTimeBetween('-3 months', 'yesterday'),
+        'start_date' => $faker->dateTimeBetween('-12 months', '-6 months')->setTime(0, 0),
+        'end_date' => $faker->dateTimeBetween('-3 months', 'yesterday')->setTime(0, 0),
     ]);
 });
 
