@@ -140,7 +140,7 @@ function has_include($request, $include)
 
 /**
  * Converts a date to a specific format and timezone
- * 
+ *
  * @param $value
  * @param $timezone str
  */
