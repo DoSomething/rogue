@@ -138,6 +138,12 @@ function has_include($request, $include)
     return false;
 }
 
+/**
+ * Converts a date to a specific format and timezone
+ * 
+ * @param $value
+ * @param $timezone str
+ */
 function convert_to_date($value, $timezone = 'UTC')
 {
     $date = (new Carbon($value))->format('Y-m-d');
