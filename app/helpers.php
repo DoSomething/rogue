@@ -138,7 +138,7 @@ function has_include($request, $include)
     return false;
 }
 
-function formatDateAttribute($value, $timezone = 'UTC')
+function convert_to_date($value, $timezone = 'UTC')
 {
     $date = (new Carbon($value))->format('Y-m-d');
 

@@ -165,7 +165,7 @@ class Campaign extends Model
             return null;
         }
         //explicitly setting our timezone to EST to account for accurate end dates displayed on Phoenix
-        return formatDateAttribute($value, 'America/New_York');
+        return convert_to_date($value, 'America/New_York');
     }
 
     /**
@@ -188,7 +188,7 @@ class Campaign extends Model
             return null;
         }
         //explicitly setting our timezone to EST to account for accurate end dates displayed on Phoenix
-        return formatDateAttribute($value, 'America/New_York');
+        return convert_to_date($value, 'America/New_York');
     }
 
     /**
