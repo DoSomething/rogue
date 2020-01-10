@@ -4,9 +4,7 @@
   "scripts": {
     "postdeploy": "php artisan migrate:refresh --seed"
   },
-  "addons": [
-    "papertrail"
-  ],
+  "addons": ["papertrail"],
   "buildpacks": [
     {
       "url": "heroku/php"
@@ -49,7 +47,6 @@
       "required": true
     },
     "DS_ENABLE_BLINK": "false",
-    "DS_ENABLE_V3_QUANTITY_SUPPORT": "false",
     "LOG_REQUEST_DETAILS": {
       "required": true
     },
