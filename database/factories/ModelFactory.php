@@ -47,56 +47,61 @@ $factory->define(Post::class, function (Generator $faker) {
                 'campaign_id' => $attributes['campaign_id'],
             ])->id;
         },
+        'quantity' => $faker->randomNumber(2),
         'northstar_id' => $this->faker->northstar_id,
-        'url' => $url,
         'text' => $faker->sentence(),
+        'type' => 'photo',
         'location' => 'US-'.$faker->stateAbbr(),
         // @TODO: Only set school if the action is set to collect school ID.
         'school_id' => $this->faker->school_id,
         'source' => 'phpunit',
-        'status' => 'pending',
-        'quantity' => $faker->randomNumber(2),
+        'url' => $url,
     ];
 });
 
-// @TODO: These should all extend a photo-less "base" post, instead.
-$factory->defineAs(Post::class, 'text', function (Generator $faker) {
-    $faker->addProvider(new FakerNorthstarId($faker));
-    $faker->addProvider(new FakerSchoolId($faker));
+$factory->defineAs(Post::class, 'photo-accepted', function () use ($factory) {
+    return array_merge($factory->raw(Post::class), [
+        'status' => 'accepted',
+    ]);
+});
 
-    return [
+$factory->defineAs(Post::class, 'photo-pending',  function () use ($factory) {
+    return array_merge($factory->raw(Post::class), [
+        'status' => 'pending',
+    ]);
+});
+
+$factory->defineAs(Post::class, 'photo-rejected', function () use ($factory) {
+    return array_merge($factory->raw(Post::class), [
+        'status' => 'rejected',
+    ]);
+});
+
+$factory->defineAs(Post::class, 'text-accepted', function () use ($factory) {
+    return array_merge($factory->raw(Post::class), [
+        'quantity' =>0,
+        'status' => 'accepted',
         'type' => 'text',
-        'campaign_id' => function () {
-            return factory(Campaign::class)->create()->id;
-        },
-        'signup_id' => function (array $attributes) {
-            // If a 'signup_id' is not provided, create one for the same Campaign & Northstar ID.
-            return factory(Signup::class)->create([
-                'campaign_id' => $attributes['campaign_id'],
-                'northstar_id' => $attributes['northstar_id'],
-            ])->id;
-        },
-        'action_id' => function (array $attributes) {
-            return factory(Action::class)->create([
-                'campaign_id' => $attributes['campaign_id'],
-            ])->id;
-        },
-        'northstar_id' => $this->faker->northstar_id,
-        'text' => $faker->sentence(),
-        'location' => 'US-'.$faker->stateAbbr(),
-        // @TODO: Only set school if the action is set to collect school ID.
-        'school_id' => $this->faker->school_Id,
-        'source' => 'phpunit',
+        'url' => null,
+    ]);
+});
+
+$factory->defineAs(Post::class, 'text-pending', function () use ($factory) {
+    return array_merge($factory->raw(Post::class), [
+        'quantity' => 0,
         'status' => 'pending',
-    ];
+        'type' => 'text',
+        'url' => null,     
+    ]);
 });
 
-$factory->defineAs(Post::class, 'accepted', function () use ($factory) {
-    return array_merge($factory->raw(Post::class), ['status' => 'accepted']);
-});
-
-$factory->defineAs(Post::class, 'rejected', function () use ($factory) {
-    return array_merge($factory->raw(Post::class), ['status' => 'rejected']);
+$factory->defineAs(Post::class, 'text-rejected', function () use ($factory) {
+    return array_merge($factory->raw(Post::class), [
+        'quantity' => 0,
+        'status' => 'rejected',
+        'type' => 'text',
+        'url' => null,
+    ]);
 });
 
 // Signup Factory

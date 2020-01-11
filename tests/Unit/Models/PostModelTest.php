@@ -41,7 +41,7 @@ class PostModelTest extends TestCase
     {
         factory(Signup::class, 5)->create()
             ->each(function ($signup) {
-                $signup->posts()->saveMany(factory(Post::class, 'accepted', 3)->create());
+                $signup->posts()->saveMany(factory(Post::class, 'photo-accepted', 3)->create());
             });
 
         // Grab any old post.

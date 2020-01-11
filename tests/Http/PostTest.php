@@ -757,8 +757,8 @@ class PostTest extends TestCase
     public function testPostsIndexAsNonAdminNonOwner()
     {
         // Anonymous requests should only see accepted posts.
-        factory(Post::class, 'accepted', 10)->create();
-        factory(Post::class, 'rejected', 5)->create();
+        factory(Post::class, 'photo-accepted', 10)->create();
+        factory(Post::class, 'photo-rejected', 5)->create();
 
         $response = $this->getJson('api/v3/posts');
 
@@ -808,13 +808,13 @@ class PostTest extends TestCase
     {
         // Create an accepted post.
         $this->mockTime('8/3/2017 14:00:00');
-        $regularPost = factory(Post::class, 'accepted')->create([
+        $regularPost = factory(Post::class, 'photo-accepted')->create([
             'northstar_id' => $this->faker->unique()->northstar_id,
         ]);
 
         // And then later, create an anonymous post from another user.
         $this->mockTime('8/3/2017 17:30:00');
-        $anonymousPost = factory(Post::class, 'accepted')->create([
+        $anonymousPost = factory(Post::class, 'photo-accepted')->create([
             'northstar_id' => $this->faker->unique()->northstar_id,
         ]);
         $anonymousPost->actionModel->anonymous = 1;
@@ -875,9 +875,9 @@ class PostTest extends TestCase
     public function testPostsIndexAsNonAdminNonOwnerHiddenPosts()
     {
         // Anonymous requests should only see posts that are not tagged with "Hide In Gallery."
-        factory(Post::class, 'accepted', 10)->create();
+        factory(Post::class, 'photo-accepted', 10)->create();
 
-        $hiddenPost = factory(Post::class, 'accepted')->create();
+        $hiddenPost = factory(Post::class, 'photo-accepted')->create();
         $hiddenPost->tag('Hide In Gallery');
 
         $response = $this->getJson('api/v3/posts');
@@ -896,8 +896,8 @@ class PostTest extends TestCase
     public function testPostsIndexAsAdmin()
     {
         // Admins should see all posts.
-        factory(Post::class, 'accepted', 10)->create();
-        factory(Post::class, 'rejected', 5)->create();
+        factory(Post::class, 'photo-accepted', 10)->create();
+        factory(Post::class, 'photo-rejected', 5)->create();
 
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
 
@@ -951,9 +951,9 @@ class PostTest extends TestCase
     public function testPostsIndexAsAdminHiddenPosts()
     {
         // Admins should see all posts.
-        factory(Post::class, 'accepted', 10)->create();
+        factory(Post::class, 'photo-accepted', 10)->create();
 
-        $hiddenPost = factory(Post::class, 'accepted')->create();
+        $hiddenPost = factory(Post::class, 'photo-accepted')->create();
         $hiddenPost->tag('Hide In Gallery');
 
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
@@ -971,11 +971,11 @@ class PostTest extends TestCase
     public function testPostsIndexAsOwner()
     {
         $userId = $this->faker->unique()->northstar_id;
-        factory(Post::class, 2)->create(['northstar_id' => $userId]);
-        factory(Post::class, 'rejected', 1)->create(['northstar_id' => $userId]);
+        factory(Post::class, 'photo-pending', 2)->create(['northstar_id' => $userId]);
+        factory(Post::class, 'photo-rejected', 1)->create(['northstar_id' => $userId]);
 
         $otherId = $this->faker->unique()->northstar_id;
-        factory(Post::class, 'rejected', 4)->create(['northstar_id' => $otherId]);
+        factory(Post::class, 'photo-rejected', 4)->create(['northstar_id' => $otherId]);
 
         // Owners should be able to see their own posts of any status, but
         // not pending or rejected posts from other users.
@@ -1034,15 +1034,15 @@ class PostTest extends TestCase
         $ownerId = $this->faker->unique()->northstar_id;
 
         // Create posts and associate to this $ownerId.
-        $posts = factory(Post::class, 'accepted', 2)->create(['northstar_id' => $ownerId]);
+        $posts = factory(Post::class, 'photo-accepted', 2)->create(['northstar_id' => $ownerId]);
 
         // Create a hidden post from the same $ownerId.
-        $hiddenPost = factory(Post::class, 'accepted')->create(['northstar_id' => $ownerId]);
+        $hiddenPost = factory(Post::class, 'photo-accepted')->create(['northstar_id' => $ownerId]);
         $hiddenPost->tag('Hide In Gallery');
         $hiddenPost->save();
 
         // Create anothter hidden post by different user.
-        $secondHiddenPost = factory(Post::class, 'accepted')->create([
+        $secondHiddenPost = factory(Post::class, 'photo-accepted')->create([
             'northstar_id' => $this->faker->unique()->northstar_id,
         ]);
         $secondHiddenPost->tag('Hide In Gallery');
@@ -1069,13 +1069,13 @@ class PostTest extends TestCase
         $response->assertStatus(403);
 
         // Anon user should not be able to see a rejected post if it doesn't belong to them and if they're not an admin.
-        $post = factory(Post::class, 'rejected')->create();
+        $post = factory(Post::class, 'photo-rejected')->create();
         $response = $this->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(403);
 
         // Anon user is able to see an accepted post even if it doesn't belong to them and if they're not an admin.
-        $post = factory(Post::class, 'accepted')->create();
+        $post = factory(Post::class, 'photo-accepted')->create();
         $response = $this->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
@@ -1172,7 +1172,7 @@ class PostTest extends TestCase
     public function testPostShowWithReactions()
     {
         $viewer = $this->randomUserId();
-        $post = factory(Post::class, 'accepted')->create();
+        $post = factory(Post::class, 'photo-accepted')->create();
 
         // Create two reactions for this post!
         Reaction::withTrashed()->firstOrCreate(['northstar_id' => $viewer, 'post_id' => $post->id]);

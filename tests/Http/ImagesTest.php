@@ -15,7 +15,7 @@ class ImagesTest extends TestCase
     public function testImagesThrottle()
     {
         // Make a post to view
-        $posts = factory(Post::class, 10)->create();
+        $posts = factory(Post::class, 'photo-accepted', 10)->create();
 
         // View the post 60 times (using 3 different versions)
         for ($i = 0; $i < 5; $i++) {
