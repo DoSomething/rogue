@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
                         'northstar_id' => $signup->northstar_id,
                     ]));
 
-                    $signup->posts()->saveMany(factory(Post::class, 'photo-pending' rand(2, 4))->create([
+                    $signup->posts()->saveMany(factory(Post::class, 'photo-pending', rand(2, 4))->create([
                         'action_id' => $photoAction->id,
                         'signup_id' => $signup->id,
                         'campaign_id' => $signup->campaign_id,
