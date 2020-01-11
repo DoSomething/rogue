@@ -65,7 +65,7 @@ $factory->defineAs(Post::class, 'photo-accepted', function () use ($factory) {
     ]);
 });
 
-$factory->defineAs(Post::class, 'photo-pending',  function () use ($factory) {
+$factory->defineAs(Post::class, 'photo-pending', function () use ($factory) {
     return array_merge($factory->raw(Post::class), [
         'status' => 'pending',
     ]);
@@ -79,7 +79,7 @@ $factory->defineAs(Post::class, 'photo-rejected', function () use ($factory) {
 
 $factory->defineAs(Post::class, 'text-accepted', function () use ($factory) {
     return array_merge($factory->raw(Post::class), [
-        'quantity' =>0,
+        'quantity' => 0,
         'status' => 'accepted',
         'type' => 'text',
         'url' => null,
@@ -91,7 +91,7 @@ $factory->defineAs(Post::class, 'text-pending', function () use ($factory) {
         'quantity' => 0,
         'status' => 'pending',
         'type' => 'text',
-        'url' => null,     
+        'url' => null,
     ]);
 });
 
