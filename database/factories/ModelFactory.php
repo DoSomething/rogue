@@ -22,6 +22,24 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @see https://laravel.com/docs/5.5/database-testing#writing-factories
  */
 
+// Action Factory
+$factory->define(Action::class, function (Generator $faker) {
+    return [
+        'name' => $this->faker->slug(),
+        'campaign_id' => factory(Campaign::class)->create()->id,
+        'post_type' => 'photo',
+        'action_type' => $this->faker->randomElement(ActionType::all()),
+        'time_commitment' => $this->faker->randomElement(TimeCommitment::all()),
+        'reportback' => true,
+        'civic_action' => true,
+        'scholarship_entry' => true,
+        'anonymous' => false,
+        'noun' => 'things',
+        'verb' => 'done',
+        'collect_school_id' => true,
+    ];
+});
+
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
     $faker->addProvider(new FakerNorthstarId($faker));
@@ -52,8 +70,12 @@ $factory->define(Post::class, function (Generator $faker) {
         'text' => $faker->sentence(),
         'type' => 'photo',
         'location' => 'US-'.$faker->stateAbbr(),
-        // @TODO: Only set school if the action is set to collect school ID.
-        'school_id' => $this->faker->school_id,
+        /**
+         * Although our action models are set to collect school, not all users will create posts
+         * on behalf of their school (because they don't have a school_id set on their
+         * Northstar profile).
+         */
+        'school_id' => rand(0, 1) ? $this->faker->school_id : null,
         'source' => 'phpunit',
         'url' => $url,
     ];
@@ -153,7 +175,7 @@ $factory->define(Campaign::class, function (Generator $faker) {
         'internal_title' => title_case($faker->unique()->catchPhrase),
         'cause' => $faker->randomElements(Cause::all(), rand(1, 5)),
         'impact_doc' => 'https://www.google.com/',
-        // By default, we create an "open campaign".
+        // By default, we create an "open" campaign.
         'start_date' => $faker->dateTimeBetween('-6 months', 'now')->setTime(0, 0),
         'end_date' => $faker->dateTimeBetween('+1 months', '+6 months')->setTime(0, 0),
     ];
@@ -164,25 +186,4 @@ $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($
         'start_date' => $faker->dateTimeBetween('-12 months', '-6 months')->setTime(0, 0),
         'end_date' => $faker->dateTimeBetween('-3 months', 'yesterday')->setTime(0, 0),
     ]);
-});
-
-// Action Factory
-$factory->define(Action::class, function (Generator $faker) {
-    return [
-        'name' => $faker->randomElement([
-            'default', 'action-1', 'action-page', 'sms', 'august-2018-turbovote',
-            'december-2018-turbovote', 'july-2018-turbovote', 'june-2018-turbovote',
-            'may-2018-rockthevote', 'november-2018-turbovote',
-        ]),
-        'campaign_id' => factory(Campaign::class)->create()->id,
-        'post_type' => 'photo',
-        'action_type' => $this->faker->randomElement(ActionType::all()),
-        'time_commitment' => $this->faker->randomElement(TimeCommitment::all()),
-        'reportback' => true,
-        'civic_action' => true,
-        'scholarship_entry' => true,
-        'anonymous' => false,
-        'noun' => 'things',
-        'verb' => 'done',
-    ];
 });

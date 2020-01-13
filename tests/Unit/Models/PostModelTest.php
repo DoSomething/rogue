@@ -60,7 +60,9 @@ class PostModelTest extends TestCase
      */
     public function testBlinkPayload()
     {
-        $post = factory(Post::class)->create();
+        $post = factory(Post::class)->create([
+            'school_id' => 'Example School ID',
+        ]);
         $result = $post->toBlinkPayload();
 
         $this->assertEquals($result['campaign_slug'], 'test-example-campaign');
