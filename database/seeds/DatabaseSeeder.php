@@ -17,9 +17,14 @@ class DatabaseSeeder extends Seeder
     {
         // Create 10 campaigns with signups & posts.
         factory(Campaign::class, 10)->create()->each(function (Campaign $campaign) {
-            // Add a "default" action so this functions as expected in the "dev" environment.
-            $photoAction = factory(Action::class)->create(['post_type' => 'photo', 'campaign_id' => $campaign->id, 'name' => 'default']);
-            $textAction = factory(Action::class)->create(['post_type' => 'text', 'campaign_id' => $campaign->id, 'name' => 'default']);
+            $photoAction = factory(Action::class)->create([
+                'post_type' => 'photo',
+                'campaign_id' => $campaign->id,
+            ]);
+            $textAction = factory(Action::class)->create([
+                'post_type' => 'text',
+                'campaign_id' => $campaign->id,
+            ]);
 
             // Create 10-20 signups with one accepted photo post & some pending photo and text posts.
             factory(Signup::class, rand(10, 20))->create(['campaign_id' => $campaign->id])
