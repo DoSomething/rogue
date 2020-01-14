@@ -10,8 +10,6 @@ use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
 use Rogue\Types\ActionType;
 use Rogue\Types\TimeCommitment;
-use Rogue\Services\ImageStorage;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Here you may define all of your model factories. Model factories give
@@ -25,7 +23,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 // Action Factory
 $factory->define(Action::class, function (Generator $faker) {
     return [
-        'name' => $this->faker->slug(),
+        'name' => title_case($this->faker->unique()->words(3, true)), 
         'campaign_id' => factory(Campaign::class)->create()->id,
         'post_type' => 'photo',
         'action_type' => $this->faker->randomElement(ActionType::all()),
@@ -43,11 +41,8 @@ $factory->define(Action::class, function (Generator $faker) {
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
     $faker->addProvider(new FakerNorthstarId($faker));
+    $faker->addProvider(new FakerPostUrl($faker));
     $faker->addProvider(new FakerSchoolId($faker));
-
-    $uploadPath = $faker->file(storage_path('fixtures'));
-    $upload = new UploadedFile($uploadPath, basename($uploadPath), 'image/jpeg');
-    $url = app(ImageStorage::class)->put($faker->unique()->randomNumber(5), $upload);
 
     return [
         'campaign_id' => function () {
@@ -65,10 +60,8 @@ $factory->define(Post::class, function (Generator $faker) {
                 'campaign_id' => $attributes['campaign_id'],
             ])->id;
         },
-        'quantity' => $faker->randomNumber(2),
         'northstar_id' => $this->faker->northstar_id,
         'text' => $faker->sentence(),
-        'type' => 'photo',
         'location' => 'US-'.$faker->stateAbbr(),
         /**
          * Although our action models are set to collect school, not all users will create posts
@@ -77,34 +70,44 @@ $factory->define(Post::class, function (Generator $faker) {
          */
         'school_id' => rand(0, 1) ? $this->faker->school_id : null,
         'source' => 'phpunit',
-        'url' => $url,
     ];
 });
 
-$factory->defineAs(Post::class, 'photo-accepted', function () use ($factory) {
+/**
+ * Photo post factory states.
+ */
+$factory->defineAs(Post::class, 'photo-accepted', function (Generator $faker) use ($factory) {
     return array_merge($factory->raw(Post::class), [
+        'quantity' => $faker->randomNumber(2),
         'status' => 'accepted',
+        'url' => $faker->post_url,
     ]);
 });
 
-$factory->defineAs(Post::class, 'photo-pending', function () use ($factory) {
+$factory->defineAs(Post::class, 'photo-pending', function (Generator $faker) use ($factory) {
     return array_merge($factory->raw(Post::class), [
+        'quantity' => $faker->randomNumber(2),
         'status' => 'pending',
+        'url' => $faker->post_url,
     ]);
 });
 
-$factory->defineAs(Post::class, 'photo-rejected', function () use ($factory) {
+$factory->defineAs(Post::class, 'photo-rejected', function (Generator $faker) use ($factory) {
     return array_merge($factory->raw(Post::class), [
+        'quantity' => $faker->randomNumber(2),
         'status' => 'rejected',
+        'url' => $faker->post_url,
     ]);
 });
 
+/**
+ * Text post factory states.
+ */
 $factory->defineAs(Post::class, 'text-accepted', function () use ($factory) {
     return array_merge($factory->raw(Post::class), [
         'quantity' => 0,
         'status' => 'accepted',
         'type' => 'text',
-        'url' => null,
     ]);
 });
 
@@ -113,7 +116,6 @@ $factory->defineAs(Post::class, 'text-pending', function () use ($factory) {
         'quantity' => 0,
         'status' => 'pending',
         'type' => 'text',
-        'url' => null,
     ]);
 });
 
@@ -122,7 +124,6 @@ $factory->defineAs(Post::class, 'text-rejected', function () use ($factory) {
         'quantity' => 0,
         'status' => 'rejected',
         'type' => 'text',
-        'url' => null,
     ]);
 });
 
