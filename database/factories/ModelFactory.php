@@ -23,7 +23,7 @@ use Rogue\Types\TimeCommitment;
 // Action Factory
 $factory->define(Action::class, function (Generator $faker) {
     return [
-        'name' => title_case($this->faker->unique()->words(3, true)), 
+        'name' => title_case($this->faker->unique()->words(3, true)),
         'campaign_id' => factory(Campaign::class)->create()->id,
         'post_type' => 'photo',
         'action_type' => $this->faker->randomElement(ActionType::all()),
@@ -105,7 +105,6 @@ $factory->defineAs(Post::class, 'photo-rejected', function (Generator $faker) us
  */
 $factory->defineAs(Post::class, 'text-accepted', function () use ($factory) {
     return array_merge($factory->raw(Post::class), [
-        'quantity' => 0,
         'status' => 'accepted',
         'type' => 'text',
     ]);
@@ -113,7 +112,6 @@ $factory->defineAs(Post::class, 'text-accepted', function () use ($factory) {
 
 $factory->defineAs(Post::class, 'text-pending', function () use ($factory) {
     return array_merge($factory->raw(Post::class), [
-        'quantity' => 0,
         'status' => 'pending',
         'type' => 'text',
     ]);
@@ -121,7 +119,6 @@ $factory->defineAs(Post::class, 'text-pending', function () use ($factory) {
 
 $factory->defineAs(Post::class, 'text-rejected', function () use ($factory) {
     return array_merge($factory->raw(Post::class), [
-        'quantity' => 0,
         'status' => 'rejected',
         'type' => 'text',
     ]);
