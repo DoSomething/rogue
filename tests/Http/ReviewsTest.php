@@ -23,7 +23,7 @@ class ReviewsTest extends TestCase
         $northstarId = $this->faker->northstar_id;
         $schoolId = $this->faker->school_id;
 
-        $firstPost = factory(Post::class, 'photo-pending')->create([
+        $firstPost = factory(Post::class)->states('photo', 'pending')->create([
             'school_id' => $schoolId,
         ]);
         $actionId = $firstPost->action_id;
@@ -54,7 +54,7 @@ class ReviewsTest extends TestCase
             'school_id' => $schoolId,
         ]);
 
-        $secondPost = factory(Post::class, 'photo-pending')->create([
+        $secondPost = factory(Post::class)->states('photo', 'pending')->create([
             'action_id' => $actionId,
             'campaign_id' => $campaignId,
             'school_id' => $schoolId,

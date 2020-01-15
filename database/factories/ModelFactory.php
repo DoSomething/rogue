@@ -76,7 +76,7 @@ $factory->define(Post::class, function (Generator $faker) {
 /**
  * Post type factory states.
  */
-$factory->state(Post::class, 'photo', function (Generator $faker) use ($factory) {
+$factory->state(Post::class, 'photo', function (Generator $faker) {
     return [
         'type' => 'photo',
         'quantity' => $faker->randomNumber(2),
@@ -84,32 +84,24 @@ $factory->state(Post::class, 'photo', function (Generator $faker) use ($factory)
     ];
 });
 
-$factory->state(Post::class, 'text', function () use ($factory) {
-    return [
-        'type' => 'text',
-    ];
-});
+$factory->state(Post::class, 'text', [
+    'type' => 'text',
+]);
 
 /**
  * Post status factory states.
  */
-$factory->state(Post::class, 'accepted', function (Generator $faker) use ($factory) {
-    return [
-        'status' => 'pending',
-    ];
-});
+$factory->state(Post::class, 'accepted', [
+    'status' => 'accepted',
+]);
 
-$factory->state(Post::class, 'pending', function (Generator $faker) use ($factory) {
-    return [
-        'status' => 'pending',
-    ];
-});
+$factory->state(Post::class, 'pending', [
+    'status' => 'pending',
+]);
 
-$factory->state(Post::class, 'rejected', function (Generator $faker) use ($factory) {
-    return [
-        'status' => 'rejected',
-    ];
-});
+$factory->state(Post::class, 'rejected', [
+    'status' => 'rejected',
+]);
 
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {

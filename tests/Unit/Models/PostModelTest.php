@@ -41,7 +41,7 @@ class PostModelTest extends TestCase
     {
         factory(Signup::class, 5)->create()
             ->each(function ($signup) {
-                $signup->posts()->saveMany(factory(Post::class, 'photo-accepted', 3)->create());
+                $signup->posts()->saveMany(factory(Post::class, 3)->states('photo', 'accepted')->create());
             });
 
         // Grab any old post.
@@ -65,8 +65,16 @@ class PostModelTest extends TestCase
         ]);
         $result = $post->toBlinkPayload();
 
+        // Test expected data was retrieved from GraphQL.
         $this->assertEquals($result['campaign_slug'], 'test-example-campaign');
         $this->assertEquals($result['campaign_title'], 'Test Example Campaign');
         $this->assertEquals($result['school_name'], 'San Dimas High School');
+
+        $post = factory(Post::class)->create([
+            'school_id' => null,
+        ]);
+        $result = $post->toBlinkPayload();
+
+        $this->assertEquals($result['school_name'], null);
     }
 }
