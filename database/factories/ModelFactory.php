@@ -68,7 +68,7 @@ $factory->define(Post::class, function (Generator $faker) {
          * on behalf of their school (because they don't have a school_id set on their
          * Northstar profile).
          */
-        'school_id' => rand(0, 1) ? $this->faker->school_id : null,
+        'school_id' => $this->faker->optional()->school_id,
         'source' => 'phpunit',
     ];
 });
