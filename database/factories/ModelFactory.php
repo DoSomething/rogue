@@ -10,8 +10,6 @@ use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
 use Rogue\Types\ActionType;
 use Rogue\Types\TimeCommitment;
-use Rogue\Services\ImageStorage;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Here you may define all of your model factories. Model factories give
@@ -22,14 +20,29 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @see https://laravel.com/docs/5.5/database-testing#writing-factories
  */
 
+// Action Factory
+$factory->define(Action::class, function (Generator $faker) {
+    return [
+        'name' => title_case($this->faker->unique()->words(3, true)),
+        'campaign_id' => factory(Campaign::class)->create()->id,
+        'post_type' => 'photo',
+        'action_type' => $this->faker->randomElement(ActionType::all()),
+        'time_commitment' => $this->faker->randomElement(TimeCommitment::all()),
+        'reportback' => true,
+        'civic_action' => true,
+        'scholarship_entry' => true,
+        'anonymous' => false,
+        'noun' => 'things',
+        'verb' => 'done',
+        'collect_school_id' => true,
+    ];
+});
+
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
     $faker->addProvider(new FakerNorthstarId($faker));
+    $faker->addProvider(new FakerPostUrl($faker));
     $faker->addProvider(new FakerSchoolId($faker));
-
-    $uploadPath = $faker->file(storage_path('fixtures'));
-    $upload = new UploadedFile($uploadPath, basename($uploadPath), 'image/jpeg');
-    $url = app(ImageStorage::class)->put($faker->unique()->randomNumber(5), $upload);
 
     return [
         'campaign_id' => function () {
@@ -48,56 +61,47 @@ $factory->define(Post::class, function (Generator $faker) {
             ])->id;
         },
         'northstar_id' => $this->faker->northstar_id,
-        'url' => $url,
         'text' => $faker->sentence(),
         'location' => 'US-'.$faker->stateAbbr(),
-        // @TODO: Only set school if the action is set to collect school ID.
-        'school_id' => $this->faker->school_id,
+        /**
+         * Although our action models are set to collect school, not all users will create posts
+         * on behalf of their school (because they don't have a school_id set on their
+         * Northstar profile).
+         */
+        'school_id' => $this->faker->optional()->school_id,
         'source' => 'phpunit',
-        'status' => 'pending',
+    ];
+});
+
+/**
+ * Post type factory states.
+ */
+$factory->state(Post::class, 'photo', function (Generator $faker) {
+    return [
+        'type' => 'photo',
         'quantity' => $faker->randomNumber(2),
+        'url' => $faker->post_url,
     ];
 });
 
-// @TODO: These should all extend a photo-less "base" post, instead.
-$factory->defineAs(Post::class, 'text', function (Generator $faker) {
-    $faker->addProvider(new FakerNorthstarId($faker));
-    $faker->addProvider(new FakerSchoolId($faker));
+$factory->state(Post::class, 'text', [
+    'type' => 'text',
+]);
 
-    return [
-        'type' => 'text',
-        'campaign_id' => function () {
-            return factory(Campaign::class)->create()->id;
-        },
-        'signup_id' => function (array $attributes) {
-            // If a 'signup_id' is not provided, create one for the same Campaign & Northstar ID.
-            return factory(Signup::class)->create([
-                'campaign_id' => $attributes['campaign_id'],
-                'northstar_id' => $attributes['northstar_id'],
-            ])->id;
-        },
-        'action_id' => function (array $attributes) {
-            return factory(Action::class)->create([
-                'campaign_id' => $attributes['campaign_id'],
-            ])->id;
-        },
-        'northstar_id' => $this->faker->northstar_id,
-        'text' => $faker->sentence(),
-        'location' => 'US-'.$faker->stateAbbr(),
-        // @TODO: Only set school if the action is set to collect school ID.
-        'school_id' => $this->faker->school_Id,
-        'source' => 'phpunit',
-        'status' => 'pending',
-    ];
-});
+/**
+ * Post status factory states.
+ */
+$factory->state(Post::class, 'accepted', [
+    'status' => 'accepted',
+]);
 
-$factory->defineAs(Post::class, 'accepted', function () use ($factory) {
-    return array_merge($factory->raw(Post::class), ['status' => 'accepted']);
-});
+$factory->state(Post::class, 'pending', [
+    'status' => 'pending',
+]);
 
-$factory->defineAs(Post::class, 'rejected', function () use ($factory) {
-    return array_merge($factory->raw(Post::class), ['status' => 'rejected']);
-});
+$factory->state(Post::class, 'rejected', [
+    'status' => 'rejected',
+]);
 
 // Signup Factory
 $factory->define(Signup::class, function (Generator $faker) {
@@ -148,7 +152,7 @@ $factory->define(Campaign::class, function (Generator $faker) {
         'internal_title' => title_case($faker->unique()->catchPhrase),
         'cause' => $faker->randomElements(Cause::all(), rand(1, 5)),
         'impact_doc' => 'https://www.google.com/',
-        // By default, we create an "open campaign".
+        // By default, we create an "open" campaign.
         'start_date' => $faker->dateTimeBetween('-6 months', 'now')->setTime(0, 0),
         'end_date' => $faker->dateTimeBetween('+1 months', '+6 months')->setTime(0, 0),
     ];
@@ -159,25 +163,4 @@ $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($
         'start_date' => $faker->dateTimeBetween('-12 months', '-6 months')->setTime(0, 0),
         'end_date' => $faker->dateTimeBetween('-3 months', 'yesterday')->setTime(0, 0),
     ]);
-});
-
-// Action Factory
-$factory->define(Action::class, function (Generator $faker) {
-    return [
-        'name' => $faker->randomElement([
-            'default', 'action-1', 'action-page', 'sms', 'august-2018-turbovote',
-            'december-2018-turbovote', 'july-2018-turbovote', 'june-2018-turbovote',
-            'may-2018-rockthevote', 'november-2018-turbovote',
-        ]),
-        'campaign_id' => factory(Campaign::class)->create()->id,
-        'post_type' => 'photo',
-        'action_type' => $this->faker->randomElement(ActionType::all()),
-        'time_commitment' => $this->faker->randomElement(TimeCommitment::all()),
-        'reportback' => true,
-        'civic_action' => true,
-        'scholarship_entry' => true,
-        'anonymous' => false,
-        'noun' => 'things',
-        'verb' => 'done',
-    ];
 });

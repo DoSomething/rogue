@@ -118,7 +118,7 @@ class EventTest extends TestCase
      */
     public function testDeletingPostViaApiEvent()
     {
-        $post = factory(Post::class)->create();
+        $post = factory(Post::class)->states('photo', 'accepted')->create();
 
         // Delete the post via the API.
         $this->mockTime('8/4/2017 18:02:00');
