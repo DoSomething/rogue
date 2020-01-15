@@ -74,54 +74,41 @@ $factory->define(Post::class, function (Generator $faker) {
 });
 
 /**
- * Photo post factory states.
+ * Post type factory states.
  */
-$factory->defineAs(Post::class, 'photo-accepted', function (Generator $faker) use ($factory) {
-    return array_merge($factory->raw(Post::class), [
+$factory->state(Post::class, 'photo', function (Generator $faker) use ($factory) {
+    return [
+        'type' => 'photo',
         'quantity' => $faker->randomNumber(2),
-        'status' => 'accepted',
         'url' => $faker->post_url,
-    ]);
+    ];
 });
 
-$factory->defineAs(Post::class, 'photo-pending', function (Generator $faker) use ($factory) {
-    return array_merge($factory->raw(Post::class), [
-        'quantity' => $faker->randomNumber(2),
-        'status' => 'pending',
-        'url' => $faker->post_url,
-    ]);
-});
-
-$factory->defineAs(Post::class, 'photo-rejected', function (Generator $faker) use ($factory) {
-    return array_merge($factory->raw(Post::class), [
-        'quantity' => $faker->randomNumber(2),
-        'status' => 'rejected',
-        'url' => $faker->post_url,
-    ]);
+$factory->state(Post::class, 'text', function () use ($factory) {
+    return [
+        'type' => 'text',
+    ];
 });
 
 /**
- * Text post factory states.
+ * Post status factory states.
  */
-$factory->defineAs(Post::class, 'text-accepted', function () use ($factory) {
-    return array_merge($factory->raw(Post::class), [
-        'status' => 'accepted',
-        'type' => 'text',
-    ]);
-});
-
-$factory->defineAs(Post::class, 'text-pending', function () use ($factory) {
-    return array_merge($factory->raw(Post::class), [
+$factory->state(Post::class, 'accepted', function (Generator $faker) use ($factory) {
+    return [
         'status' => 'pending',
-        'type' => 'text',
-    ]);
+    ];
 });
 
-$factory->defineAs(Post::class, 'text-rejected', function () use ($factory) {
-    return array_merge($factory->raw(Post::class), [
+$factory->state(Post::class, 'pending', function (Generator $faker) use ($factory) {
+    return [
+        'status' => 'pending',
+    ];
+});
+
+$factory->state(Post::class, 'rejected', function (Generator $faker) use ($factory) {
+    return [
         'status' => 'rejected',
-        'type' => 'text',
-    ]);
+    ];
 });
 
 // Signup Factory
