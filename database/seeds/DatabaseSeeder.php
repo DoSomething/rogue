@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
                      * If this accepted photo post has a school, add its quantity to a running total
                      * of the school's approved quantity, that we'll use to create an ActionStat.
                      */
-                    if (isset($schoolId) && !isset($approvedQuantityBySchoolId[$schoolId])) {
+                    if (isset($schoolId) && ! isset($approvedQuantityBySchoolId[$schoolId])) {
                         $approvedQuantityBySchoolId[$schoolId] = $acceptedPhotoPost->quantity;
                     } elseif (isset($schoolId)) {
                         $approvedQuantityBySchoolId[$schoolId] += $acceptedPhotoPost->quantity;
@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
 
                     $schoolId = $acceptedPhotoPost->school_id;
 
-                    if (isset($schoolId) && !isset($approvedQuantityBySchoolId[$schoolId])) {
+                    if (isset($schoolId) && ! isset($approvedQuantityBySchoolId[$schoolId])) {
                         $approvedQuantityBySchoolId[$schoolId] = $acceptedPhotoPost->quantity;
                     } elseif (isset($schoolId)) {
                         $approvedQuantityBySchoolId[$schoolId] += $acceptedPhotoPost->quantity;
