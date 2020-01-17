@@ -50,11 +50,11 @@ return [
 
         'sqs' => [
             'driver' => 'sqs',
-            'key' => env('SQS_ACCESS_KEY_ID'),
-            'secret' => env('SQS_SECRET_ACCESS_KEY'),
+            'key' => env('AWS_ACCESS_KEY'),
+            'secret' => env('AWS_SECRET_KEY'),
             'prefix' => env('SQS_PREFIX'),
             'queue' => env('SQS_DEFAULT_QUEUE'),
-            'region' => 'us-east-1',
+            'region' => env('AWS_REGION', 'us-east-1'),
         ],
 
         'redis' => [
