@@ -57,10 +57,10 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => env('S3_KEY'),
-            'secret' => env('S3_SECRET'),
-            'region' => 'us-east-1',
-            'bucket' => env('S3_BUCKET', 'ds-rogue-qa'),
+            'key' => env('AWS_ACCESS_KEY'),
+            'secret' => env('AWS_SECRET_KEY'),
+            'region' => env('AWS_REGION', 'us-east-1'),
+            'bucket' => env('S3_BUCKET'),
             'base_url' => 'https://s3-external-1.amazonaws.com',
             'public_url' => env('S3_URL'),
         ],

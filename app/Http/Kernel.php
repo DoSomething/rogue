@@ -57,7 +57,6 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guard' => \DoSomething\Gateway\Server\Middleware\SetGuard::class,
         'scopes' => \DoSomething\Gateway\Server\Middleware\RequireScope::class,
-        'legacy-auth' => \Rogue\Http\Middleware\AuthenticateWithApiKey::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Rogue\Http\Middleware\RedirectIfAuthenticated::class,
