@@ -9,6 +9,7 @@ use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
 use Rogue\Types\ActionType;
+use Rogue\Models\ActionStat;
 use Rogue\Types\TimeCommitment;
 
 /**
@@ -35,6 +36,17 @@ $factory->define(Action::class, function (Generator $faker) {
         'noun' => 'things',
         'verb' => 'done',
         'collect_school_id' => true,
+    ];
+});
+
+// ActionStat Factory
+$factory->define(ActionStat::class, function (Generator $faker) {
+    $faker->addProvider(new FakerSchoolId($faker));
+
+    return [
+        'school_id' => $this->faker->school_id,
+        'action_id' => factory(Action::class)->create()->id,
+        'accepted_quantity' => $faker->randomNumber(3),
     ];
 });
 
