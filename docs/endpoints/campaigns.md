@@ -1,7 +1,5 @@
 ## Campaigns
 
-These endpoints require the role `admin` or `staff` to use.
-
 ## Retrieve All Campaigns (created in Rogue)
 
 ```
