@@ -3,8 +3,8 @@
 namespace Tests\Http;
 
 use Tests\TestCase;
-use Rogue\Types\Cause;
 use Rogue\Models\Post;
+use Rogue\Types\Cause;
 use Rogue\Models\Campaign;
 
 class CampaignTest extends Testcase
@@ -113,13 +113,13 @@ class CampaignTest extends Testcase
         // Let's test against pairs of three causes each so that we have a first, last, and middle cause
         // (ensuring we're testing our filtering logic against surrounding commas).
         $campaignWithFirstThreeCauses = factory(Campaign::class, 1)->create([
-            'cause' => array_slice($causes, 0 , 3),
+            'cause' => array_slice($causes, 0, 3),
         ]);
         $campaignWithLastThreeCauses = factory(Campaign::class, 1)->create([
             'cause' => array_slice($causes, -3),
         ]);
 
-        foreach(array_slice($causes, 0, 3) as $index => $cause) {
+        foreach (array_slice($causes, 0, 3) as $index => $cause) {
             $response = $this->getJson('api/v3/campaigns?filter[has_cause]='.$cause);
             $decodedResponse = $response->decodeResponseJson();
 
