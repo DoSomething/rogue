@@ -14,7 +14,7 @@ class AddContentfulCampaignIDToCampaignTable extends Migration
     public function up()
     {
         Schema::table('campaigns', function (Blueprint $table) {
-            $table->string('contentful_campaign_id')->nullable->comment('Add the related contentful campaign id when applicable.');
+            $table->string('contentful_campaign_id')->after('id')->nullable()->comment('Add the related contentful campaign id when applicable.');
         });
     }
 
