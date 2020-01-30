@@ -4,6 +4,7 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
+use Rogue\Http\Requests\CampaignRequest;
 use Rogue\Http\Transformers\CampaignTransformer;
 
 class CampaignsController extends ApiController
@@ -68,6 +69,24 @@ class CampaignsController extends ApiController
      */
     public function show(Campaign $campaign, Request $request)
     {
+        return $this->item($campaign);
+    }
+
+    /**
+     * Updates a specific campaign
+     * PATCH /api/campaigns/:id
+     *
+     * @param CampaignRequest $request
+     * @param  \Rogue\Models\Campaign  $campaign
+     * @return \Illuminate\Http\Response
+     */
+    public function update(CampaignRequest $request, Campaign $campaign)
+    {
+        // Only allow an admin/staff to update.
+        $this->authorize('update', $campaign);
+
+        $this->campaigns->update($campaign, $request->validated());
+
         return $this->item($campaign);
     }
 }
