@@ -13,7 +13,7 @@ class AddContentfulCampaignIDToCampaignTable extends Migration
      */
     public function up()
     {
-        Schema::table('campaigns', function(Blueprint $table) {
+        Schema::table('campaigns', function (Blueprint $table) {
             $table->string('contentful_campaign_id')->nullable->comment('Add the related contentful campaign id when applicable.');
         });
     }
@@ -25,7 +25,7 @@ class AddContentfulCampaignIDToCampaignTable extends Migration
      */
     public function down()
     {
-        Schema::table('campaigns', function(Blueprint $table) {
+        Schema::table('campaigns', function (Blueprint $table) {
             $table->dropColumn('contentful_campaign_id');
         });
     }
