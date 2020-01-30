@@ -72,3 +72,26 @@ Example Response:
     }
 }
 ```
+
+## Update A Specific Campaign
+
+```
+PUT /api/v3/campaigns/:campaign_id
+```
+
+Example Response:
+
+```
+{
+    "data": {
+        "id": 9000,
+        "contentfulCampaignId": "###",
+        "internal_title": "Test Campaign",
+        "start_date": "2001-03-13T00:00:00+00:00",
+        "end_date": "2001-06-13T00:00:00+00:00",
+        "is_open": false,
+        "created_at": "2018-12-05T16:24:05+00:00",
+        "updated_at": "2018-12-05T16:24:05+00:00"
+    }
+}
+```

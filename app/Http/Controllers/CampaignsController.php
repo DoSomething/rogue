@@ -78,7 +78,7 @@ class CampaignsController extends ApiController
      *
      * @param CampaignRequest $request
      * @param  \Rogue\Models\Campaign  $campaign
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(CampaignRequest $request, Campaign $campaign)
     {
