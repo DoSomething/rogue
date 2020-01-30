@@ -111,6 +111,7 @@ class Campaign extends Model
     }
 
     /**
+<<<<<<< HEAD
      * Scope a query to only include campaigns with an associated Contentful 'Website' entry.
      */
     public function scopeWhereHasWebsite($query)
@@ -124,6 +125,17 @@ class Campaign extends Model
     public function scopeWhereDoesNotHaveWebsite($query)
     {
         return $query->whereNull('contentful_campaign_id');
+    }
+
+    /**
+     * Scope a query to only include campaigns containing specified cause within
+     * "cause" field.
+     */
+    public function scopeWhereHasCause($query, $cause)
+    {
+        // Regex matches on comma separated words to ensure precise match excepting first
+        // and last words (matching on only a following or preceding comma).
+        return $query->where('cause', 'regexp', '(^|,)'.$cause.'(,|$)');
     }
 
     /**
