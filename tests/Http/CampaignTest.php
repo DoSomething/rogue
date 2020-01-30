@@ -3,6 +3,7 @@
 namespace Tests\Http;
 
 use Tests\TestCase;
+use Rogue\Types\Cause;
 use Rogue\Models\Post;
 use Rogue\Models\Campaign;
 
@@ -103,6 +104,28 @@ class CampaignTest extends Testcase
         $response = $this->getJson('api/v3/campaigns?filter[has_website]=false');
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(3, $decodedResponse['meta']['pagination']['count']);
+    }
+
+    public function testCauseFilteredCampaignIndex()
+    {
+        $causes = Cause::all();
+
+        // Let's test against pairs of three causes each so that we have a first, last, and middle cause
+        // (ensuring we're testing our filtering logic against surrounding commas).
+        $campaignWithFirstThreeCauses = factory(Campaign::class, 1)->create([
+            'cause' => array_slice($causes, 0 , 3),
+        ]);
+        $campaignWithLastThreeCauses = factory(Campaign::class, 1)->create([
+            'cause' => array_slice($causes, -3),
+        ]);
+
+        foreach(array_slice($causes, 0, 3) as $index => $cause) {
+            $response = $this->getJson('api/v3/campaigns?filter[has_cause]='.$cause);
+            $decodedResponse = $response->decodeResponseJson();
+
+            $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
+            $this->assertEquals($campaignWithFirstThreeCauses->first()['id'], $decodedResponse['data'][0]['id']);
+        }
     }
 
     /**
