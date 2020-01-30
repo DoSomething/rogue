@@ -2,7 +2,6 @@
 
 namespace Rogue\Http\Requests;
 
-
 class CampaignRequest extends Request
 {
     /**
