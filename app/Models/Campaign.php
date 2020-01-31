@@ -133,9 +133,12 @@ class Campaign extends Model
      */
     public function scopeWhereHasCause($query, $cause)
     {
+        // Sanitize the input to prevent melicious regex pattern injection:
+        $sanitizedCause = preg_replace("/[^\w-]/", '', $cause);
+
         // Regex matches on comma separated words to ensure precise match excepting first
         // and last words (matching on only a following or preceding comma).
-        return $query->where('cause', 'regexp', '(^|,)'.$cause.'(,|$)');
+        return $query->where('cause', 'regexp', '(^|,)'.$sanitizedCause.'(,|$)');
     }
 
     /**
