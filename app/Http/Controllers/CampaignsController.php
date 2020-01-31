@@ -4,7 +4,6 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Rogue\Http\Transformers\CampaignTransformer;
 
 class CampaignsController extends ApiController
