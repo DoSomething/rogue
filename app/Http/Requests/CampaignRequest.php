@@ -38,7 +38,7 @@ class CampaignRequest extends Request
     private function patchRules()
     {
         return [
-            'contentfulCampaignId' => 'nullable|string|max:255',
+            'contentful_campaign_id' => 'nullable|string|max:255',
         ];
     }
 }

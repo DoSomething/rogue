@@ -85,7 +85,7 @@ class CampaignsController extends ApiController
         // Only allow an admin/staff to update.
         $this->authorize('update', $campaign);
 
-        $this->campaigns->update($campaign, $request->validated());
+        $campaign->update($request->validated());
 
         return $this->item($campaign);
     }
