@@ -136,8 +136,8 @@ class Campaign extends Model
         // Sanitize the input to prevent melicious regex pattern injection:
         $sanitizedCause = preg_replace("/[^\w-]/", '', $cause);
 
-        // Regex matches on comma separated words to ensure precise match excepting first
-        // and last words (matching on only a following or preceding comma).
+        // Regex tests for complete match against one of the comma separated causes.
+        // (https://regex101.com/r/RaDXos/5).
         return $query->where('cause', 'regexp', '(^|,)'.$sanitizedCause.'(,|$)');
     }
 
