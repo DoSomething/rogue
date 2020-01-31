@@ -4,7 +4,7 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Campaign;
 use Illuminate\Http\Request;
-use Rogue\Http\Requests\CampaignRequest;
+use Illuminate\Validation\Rule;
 use Rogue\Http\Transformers\CampaignTransformer;
 
 class CampaignsController extends ApiController
@@ -20,6 +20,10 @@ class CampaignsController extends ApiController
     public function __construct()
     {
         $this->transformer = new CampaignTransformer;
+
+        $this->rules = [
+            'contentful_campaign_id' => ['nullable', 'string', 'max:255'],
+        ];
     }
 
     /**
@@ -76,16 +80,20 @@ class CampaignsController extends ApiController
      * Updates a specific campaign
      * PATCH /api/campaigns/:id
      *
-     * @param CampaignRequest $request
+     * @param Request $request
      * @param  \Rogue\Models\Campaign  $campaign
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(CampaignRequest $request, Campaign $campaign)
+    public function update(Request $request, Campaign $campaign)
     {
         // Only allow an admin/staff to update.
         $this->authorize('update', $campaign);
 
-        $campaign->update($request->validated());
+        $values = $this->validate($request, [
+            'contentful_campaign_id' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $campaign->update($values);
 
         return $this->item($campaign);
     }
