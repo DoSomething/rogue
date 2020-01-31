@@ -85,7 +85,7 @@ Example Response:
 {
     "data": {
         "id": 9000,
-        "contentfulCampaignId": "###",
+        "contentful_campaign_id": "123456",
         "internal_title": "Test Campaign",
         "start_date": "2001-03-13T00:00:00+00:00",
         "end_date": "2001-06-13T00:00:00+00:00",
