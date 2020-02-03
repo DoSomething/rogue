@@ -84,6 +84,28 @@ class CampaignTest extends Testcase
     }
 
     /**
+     * Test that we can filter campaigns with an associated Contentful 'Website' entry.
+     *
+     * GET /api/v3/campaigns
+     * @return void
+     */
+    public function testWebsiteFilteredCampaignIndex()
+    {
+        factory(Campaign::class, 5)->create([
+            'contentful_campaign_id' => '123',
+        ]);
+        factory(Campaign::class, 3)->create();
+
+        $response = $this->getJson('api/v3/campaigns?filter[has_website]=true');
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals(5, $decodedResponse['meta']['pagination']['count']);
+
+        $response = $this->getJson('api/v3/campaigns?filter[has_website]=false');
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals(3, $decodedResponse['meta']['pagination']['count']);
+    }
+
+    /**
      * Test that we can use cursor pagination.
      *
      * GET /api/v3/campaigns
