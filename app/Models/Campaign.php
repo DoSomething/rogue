@@ -121,7 +121,7 @@ class Campaign extends Model
     /**
      * Scope a query to only include campaigns without an associated Contentful 'Website' entry.
      */
-    public function scopeWhereDoesntHaveWebsite($query)
+    public function scopeWhereDoesNotHaveWebsite($query)
     {
         return $query->whereNull('contentful_campaign_id');
     }

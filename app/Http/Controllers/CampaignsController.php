@@ -54,7 +54,7 @@ class CampaignsController extends ApiController
             if (filter_var($filters['has_website'], FILTER_VALIDATE_BOOLEAN)) {
                 $query->whereHasWebsite();
             } else {
-                $query->whereDoesntHaveWebsite();
+                $query->whereDoesNotHaveWebsite();
             }
         }
 
