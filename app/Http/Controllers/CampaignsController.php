@@ -49,6 +49,15 @@ class CampaignsController extends ApiController
             }
         }
 
+        // Apply scope for the has_website filter:
+        if (isset($filters['has_website'])) {
+            if (filter_var($filters['has_website'], FILTER_VALIDATE_BOOLEAN)) {
+                $query->whereHasWebsite();
+            } else {
+                $query->whereDoesntHaveWebsite();
+            }
+        }
+
         // Experimental: Allow paginating by cursor (e.g. `?cursor[after]=OTAxNg==`):
         if ($cursor = array_get($request->query('cursor'), 'after')) {
             $query->whereAfterCursor($cursor);
