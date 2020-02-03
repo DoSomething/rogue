@@ -4,6 +4,7 @@ namespace Rogue\Models;
 
 use Carbon\Carbon;
 use Rogue\Types\Cause;
+use Illuminate\Support\Str;
 use Rogue\Models\Traits\HasCursor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -134,7 +135,7 @@ class Campaign extends Model
     public function scopeWhereHasCause($query, $cause)
     {
         // Sanitize the input to prevent melicious regex pattern injection:
-        $sanitizedCause = preg_replace("/[^\w-]/", '', $cause);
+        $sanitizedCause = Str::slug($cause);
 
         // Regex matches on comma separated words to ensure precise match.
         // Accounts for first and last words only having a comma on one side.
