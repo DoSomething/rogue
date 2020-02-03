@@ -225,6 +225,11 @@ class CampaignTest extends Testcase
                 'contentful_campaign_id' => '123456',
             ],
         ]);
+
+        $this->assertDatabaseHas('campaigns', [
+            'id' => $campaign->id,
+            'contentful_campaign_id' => '123456',
+        ]);
     }
 
     /**
