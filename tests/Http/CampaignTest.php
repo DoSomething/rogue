@@ -217,7 +217,7 @@ class CampaignTest extends Testcase
 
         // Make sure the campaign update is persisted.
         $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
-        
+
         $response->assertStatus(200);
 
         $response->assertJson([
