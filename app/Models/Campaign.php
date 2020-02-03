@@ -111,6 +111,22 @@ class Campaign extends Model
     }
 
     /**
+     * Scope a query to only include campaigns with an associated Contentful 'Website' entry.
+     */
+    public function scopeWhereHasWebsite($query)
+    {
+        return $query->whereNotNull('contentful_campaign_id');
+    }
+
+    /**
+     * Scope a query to only include campaigns without an associated Contentful 'Website' entry.
+     */
+    public function scopeWhereDoesNotHaveWebsite($query)
+    {
+        return $query->whereNull('contentful_campaign_id');
+    }
+
+    /**
      * Should we accept new signups & posts for this campaign?
      *
      * @return bool
