@@ -200,6 +200,59 @@ class CampaignTest extends Testcase
     }
 
     /**
+     * Test for updating a campaign successfully with contentful campaign id.
+     *
+     * PATCH /api/v3/campaigns/:campaign_id
+     * @return void
+     */
+    public function testUpdatingACampaignWithContentfulId()
+    {
+        // Create a campaign to update.
+        $campaign = factory(Campaign::class)->create();
+
+        // Update the contentful campaign id.
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
+            'contentful_campaign_id' => '123456',
+        ]);
+
+        // Make sure the campaign update is persisted.
+        $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
+
+        $response->assertStatus(200);
+
+        $response->assertJson([
+            'data' => [
+                'contentful_campaign_id' => '123456',
+            ],
+        ]);
+
+        $this->assertDatabaseHas('campaigns', [
+            'id' => $campaign->id,
+            'contentful_campaign_id' => '123456',
+        ]);
+    }
+
+    /**
+     * Test for updating a campaign with invalid status.
+     *
+     * PATCH /api/v3/campaigns/:campaign_id
+     * @return void
+     */
+    public function testUpdatingACampaignWithInvalidStatus()
+    {
+        // Create a campaign to update.
+        $campaign = factory(Campaign::class)->create();
+
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
+            'contentful_campaign_id' => 123456, // This should be a string
+        ]);
+
+        $response->assertStatus(422);
+
+        $response->assertJsonValidationErrors(['contentful_campaign_id']);
+    }
+
+    /**
      * Test that a DELETE request to /campaigns/:campaign_id deletes a campaign.
      *
      * DELETE /campaigns/:campaign_id
