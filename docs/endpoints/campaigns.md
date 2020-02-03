@@ -11,8 +11,9 @@ GET /api/v3/campaigns
 ### Optional Query Parameters
 
 - **filter[column]** _(string)_
-  - Filter results by the given column: `id`, `is_open`
+  - Filter results by the given column: `id`, `is_open`, `has_website`
   - You can filter by more than one value for the ID column, e.g. `/campaigns?filter[id]=121,122`
+  - Set the `has_website` filter to `true` (`filter[has_website]=true`) to yield campaign with their `contentful_campaign_id` field populated. Filter for campaigns _without_ the field set with `filter[has_website]=false`.
 
 Example Response:
 
