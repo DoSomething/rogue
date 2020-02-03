@@ -25,7 +25,7 @@ class Campaign extends Model
      *
      * @var array
      */
-    protected $fillable = ['internal_title', 'cause', 'impact_doc', 'start_date', 'end_date'];
+    protected $fillable = ['internal_title', 'cause', 'impact_doc', 'start_date', 'end_date', 'contentful_campaign_id'];
 
     /**
      * Attributes that can be queried when filtering.
@@ -45,7 +45,7 @@ class Campaign extends Model
      *
      * @var array
      */
-    public static $sortable = ['id', 'accepted_count', 'pending_count'];
+    public static $sortable = ['id', 'accepted_count', 'pending_count', 'start_date'];
 
     /**
      * Get the signups associated with this campaign.

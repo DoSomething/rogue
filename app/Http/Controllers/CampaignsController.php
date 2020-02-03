@@ -19,6 +19,10 @@ class CampaignsController extends ApiController
     public function __construct()
     {
         $this->transformer = new CampaignTransformer;
+
+        $this->rules = [
+            'contentful_campaign_id' => ['nullable', 'string', 'max:255'],
+        ];
     }
 
     /**
@@ -68,6 +72,27 @@ class CampaignsController extends ApiController
      */
     public function show(Campaign $campaign, Request $request)
     {
+        return $this->item($campaign);
+    }
+
+    /**
+     * Updates a specific campaign
+     * PATCH /api/campaigns/:id
+     *
+     * @param Request $request
+     * @param  \Rogue\Models\Campaign  $campaign
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, Campaign $campaign)
+    {
+        $this->authorize('update', $campaign);
+
+        $values = $this->validate($request, [
+            'contentful_campaign_id' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $campaign->update($values);
+
         return $this->item($campaign);
     }
 }

@@ -17,6 +17,7 @@ class CampaignTransformer extends TransformerAbstract
     {
         return [
             'id' => $campaign->id,
+            'contentful_campaign_id' => $campaign->contentful_campaign_id,
             'internal_title' => $campaign->internal_title,
             'start_date' => $campaign->start_date->toIso8601String(),
             'end_date' => optional($campaign->end_date)->toIso8601String(),
