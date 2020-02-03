@@ -79,6 +79,17 @@ Example Response:
 PUT /api/v3/campaigns/:campaign_id
 ```
 
+- **contentful_campaign_id**: (string)
+  The campaign id from contentful where this campaign is being used.
+
+Example request body:
+
+```
+{
+  "contentful_campaign_id": "123456"
+}
+```
+
 Example Response:
 
 ```

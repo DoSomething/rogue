@@ -85,7 +85,6 @@ class CampaignsController extends ApiController
      */
     public function update(Request $request, Campaign $campaign)
     {
-        // Only allow an admin/staff to update.
         $this->authorize('update', $campaign);
 
         $values = $this->validate($request, [
