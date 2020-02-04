@@ -112,7 +112,6 @@ class Campaign extends Model
     }
 
     /**
-<<<<<<< HEAD
      * Scope a query to only include campaigns with an associated Contentful 'Website' entry.
      */
     public function scopeWhereHasWebsite($query)
