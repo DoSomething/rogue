@@ -128,18 +128,21 @@ class Campaign extends Model
     }
 
     /**
-     * Scope a query to only include campaigns containing specified cause within
-     * "cause" field.
+     * Scope a query to only include campaigns containing specified causes.
      */
-    public function scopeWhereHasCause($query, $cause)
+    public function scopeWhereHasCauses($query, $causes)
     {
-        // Sanitize the input to prevent melicious regex pattern injection:
-        $sanitizedCause = Str::slug($cause);
+        // Sanitize the inputted causes against our internal cause list.
+        $inputCauses = explode(',', $causes);
+        $sanitizedInputCauses = array_intersect(Cause::all(), $inputCauses);
 
-        // Regex matches on comma separated words to ensure precise match.
+        // Merge cause list separated by the regex "or" operator to filter by multiple causes.
+        $causesRegex = implode('|', $sanitizedInputCauses);
+
+        // Regex matches on comma separated words to ensure precise match for each cause.
         // Accounts for first and last words only having a comma on one side.
-        // (https://regex101.com/r/RaDXos/5).
-        return $query->where('cause', 'regexp', '(^|,)'.$sanitizedCause.'(,|$)');
+        // (https://regex101.com/r/RaDXos/6).
+        return $query->where('cause', 'regexp', '(^|,)'.$causesRegex.'(,|$)');
     }
 
     /**
