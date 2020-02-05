@@ -133,12 +133,10 @@ class CampaignTest extends Testcase
         $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
         $this->assertEquals($campaignWithFirstThreeCauses->first()['id'], $decodedResponse['data'][0]['id']);
 
-
         // Test that invalid causes are rejected by the filter:
         $response = $this->getJson('api/v3/campaigns?filter[causes]=this-is-not-a-cause,nor-this!');
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(0, $decodedResponse['meta']['pagination']['count']);
-
     }
 
     /**

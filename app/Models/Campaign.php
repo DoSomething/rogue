@@ -4,7 +4,6 @@ namespace Rogue\Models;
 
 use Carbon\Carbon;
 use Rogue\Types\Cause;
-use Illuminate\Support\Str;
 use Rogue\Models\Traits\HasCursor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
