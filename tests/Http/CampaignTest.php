@@ -127,11 +127,18 @@ class CampaignTest extends Testcase
             $this->assertEquals($campaignWithFirstThreeCauses->first()['id'], $decodedResponse['data'][0]['id']);
         }
 
-        // Test that regex patterns and special characters are discounted in filter:
-        $response = $this->getJson('api/v3/campaigns?filter[has_cause]='.'+?!'.$causes[0].':)*.');
+        // Test that we can filter by multiple causes.
+        $response = $this->getJson('api/v3/campaigns?filter[has_cause]='.implode(',', array_slice($causes, 0, 3)));
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
         $this->assertEquals($campaignWithFirstThreeCauses->first()['id'], $decodedResponse['data'][0]['id']);
+
+
+        // Test that invalid causes are rejected by the filter:
+        $response = $this->getJson('api/v3/campaigns?filter[has_cause]=this-is-not-a-cause,nor-this!');
+        $decodedResponse = $response->decodeResponseJson();
+        $this->assertEquals(0, $decodedResponse['meta']['pagination']['count']);
+
     }
 
     /**
