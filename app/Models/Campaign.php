@@ -129,7 +129,7 @@ class Campaign extends Model
     /**
      * Scope a query to only include campaigns containing specified causes.
      */
-    public function scopeWhereCauses($query, $causes)
+    public function scopeWithCauses($query, $causes)
     {
         // Sanitize the inputted causes against our internal cause list.
         $inputCauses = explode(',', $causes);
