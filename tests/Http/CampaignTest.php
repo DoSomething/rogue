@@ -120,7 +120,7 @@ class CampaignTest extends Testcase
         ]);
 
         foreach (array_slice($causes, 0, 3) as $index => $cause) {
-            $response = $this->getJson('api/v3/campaigns?filter[causes]='.$cause);
+            $response = $this->getJson('api/v3/campaigns?filter[cause]='.$cause);
             $decodedResponse = $response->decodeResponseJson();
 
             $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
@@ -128,13 +128,13 @@ class CampaignTest extends Testcase
         }
 
         // Test that we can filter by multiple causes.
-        $response = $this->getJson('api/v3/campaigns?filter[causes]='.implode(',', array_slice($causes, 0, 3)));
+        $response = $this->getJson('api/v3/campaigns?filter[cause]='.implode(',', array_slice($causes, 0, 3)));
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
         $this->assertEquals($campaignWithFirstThreeCauses->first()['id'], $decodedResponse['data'][0]['id']);
 
         // Test that invalid causes are rejected by the filter:
-        $response = $this->getJson('api/v3/campaigns?filter[causes]=this-is-not-a-cause,nor-this!');
+        $response = $this->getJson('api/v3/campaigns?filter[cause]=this-is-not-a-cause,nor-this!');
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(0, $decodedResponse['meta']['pagination']['count']);
     }
