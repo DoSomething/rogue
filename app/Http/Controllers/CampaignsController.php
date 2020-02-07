@@ -58,6 +58,11 @@ class CampaignsController extends ApiController
             }
         }
 
+        // Apply scope for campaigns including specified causes:
+        if (isset($filters['cause'])) {
+            $query->withCauses($filters['cause']);
+        }
+
         // Experimental: Allow paginating by cursor (e.g. `?cursor[after]=OTAxNg==`):
         if ($cursor = array_get($request->query('cursor'), 'after')) {
             $query->whereAfterCursor($cursor);
