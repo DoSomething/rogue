@@ -11,8 +11,8 @@ class UsersTest extends TestCase
     /** @test */
     public function it_should_check_authorization()
     {
-        $response = $this->withUserAccessToken()->delete('/api/v3/users/5d3630a0fdce2742ff6c64d4');
-        $response->assertStatus(401);
+        $response = $this->withStandardAccessToken()->deleteJson('/api/v3/users/5d3630a0fdce2742ff6c64d4');
+        $response->assertStatus(403);
     }
 
     /** @test */
@@ -22,7 +22,7 @@ class UsersTest extends TestCase
         $post1 = factory(Post::class)->create(['northstar_id' => '5d3630a0fdce2742ff6c64d4', 'details' => '{"hello": "world"}'])->first();
         $post2 = factory(Post::class)->create(['northstar_id' => '5d3630a0fdce2742ff6c64d4'])->first();
 
-        $response = $this->withAdminAccessToken()->delete('/api/v3/users/5d3630a0fdce2742ff6c64d4');
+        $response = $this->withAdminAccessToken()->deleteJson('/api/v3/users/5d3630a0fdce2742ff6c64d4');
         $response->assertSuccessful();
 
         // The command should remove signups & posts for this user:
