@@ -1,36 +1,41 @@
 <?php
 
-namespace Tests\Console;
+namespace Tests\Http;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 
-class DeleteUsersCommandTest extends TestCase
+class UsersTest extends TestCase
 {
+    /** @test */
+    public function it_should_check_authorization()
+    {
+        $response = $this->withStandardAccessToken()->deleteJson('/api/v3/users/5d3630a0fdce2742ff6c64d4');
+        $response->assertStatus(403);
+    }
+
     /** @test */
     public function it_should_delete_users()
     {
         // Create the signups & posts we're going to destroy:
         $post1 = factory(Post::class)->create(['northstar_id' => '5d3630a0fdce2742ff6c64d4', 'details' => '{"hello": "world"}'])->first();
-        $post2 = factory(Post::class)->create(['northstar_id' => '5d3630a0fdce2742ff6c64d5'])->first();
-        $post3 = factory(Post::class)->create(['northstar_id' => '5d3630a0fdce2742ff6c64d5'])->first();
+        $post2 = factory(Post::class)->create(['northstar_id' => '5d3630a0fdce2742ff6c64d4'])->first();
 
-        // Run the 'rogue:delete' command on the 'example-delete-input.csv' file:
-        $this->artisan('rogue:delete', ['input' => 'tests/Console/example-delete-input.csv']);
+        $response = $this->withAdminAccessToken()->deleteJson('/api/v3/users/5d3630a0fdce2742ff6c64d4');
+        $response->assertSuccessful();
 
-        // The command should remove signups & posts for those users:
+        // The command should remove signups & posts for this user:
         $this->assertAnonymized($post1);
         $this->assertAnonymized($post2);
-        $this->assertAnonymized($post3);
     }
 
     /**
-     * Assert that the given model has been anonymized.
+     * Assert that the given post & it's signup have been anonymized.
      *
-     * @param User $user
+     * @param Post $post
      */
-    protected function assertAnonymized($post)
+    protected function assertAnonymized(Post $post)
     {
         // The post and its signup should be soft deleted, and fields that may
         // contain personally-identifiable information should be erased:

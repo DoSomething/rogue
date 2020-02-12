@@ -55,4 +55,7 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
 
     // action stats
     $this->get('action-stats', 'ActionStatsController@index');
+
+    // users
+    $this->delete('users/{id}', 'UsersController@destroy');
 });

@@ -67,4 +67,8 @@ These endpoints use OAuth 2 to authenticate. [More information here](https://git
 | -------------------------- | ----------------------------------- |
 | `GET /api/v3/action-stats` | [Get action stats](action-stats.md) |
 
-|
+#### Users
+
+| Endpoint                        | Functionality                        |
+| ------------------------------- | ------------------------------------ |
+| `DELETE /api/v3/users/:user_id` | [Delete a user's activity](users.md) |
