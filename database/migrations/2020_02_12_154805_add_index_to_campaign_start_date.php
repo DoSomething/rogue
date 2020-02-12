@@ -13,7 +13,7 @@ class AddIndexToCampaignStartDate extends Migration
      */
     public function up()
     {
-        Schema::table('campaigns', function(Blueprint $table) {
+        Schema::table('campaigns', function (Blueprint $table) {
             $table->index('start_date');
         });
     }
@@ -25,7 +25,7 @@ class AddIndexToCampaignStartDate extends Migration
      */
     public function down()
     {
-        Schema::table('campaigns', function(Blueprint $table) {
+        Schema::table('campaigns', function (Blueprint $table) {
             $table->dropIndex('start_date');
         });
     }
