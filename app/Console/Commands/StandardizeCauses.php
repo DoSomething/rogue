@@ -43,7 +43,7 @@ class StandardizeCauses extends Command
         // Grab every campaign that has a cause set
         $campaignsWithCause = Campaign::whereNotNull('cause')->get();
 
-        foreach($campaignsWithCause as $campaign) {
+        foreach ($campaignsWithCause as $campaign) {
             $this->info('Updating campaign '.$campaign->id);
 
             $oldCause = $campaign->getOriginal('cause');
