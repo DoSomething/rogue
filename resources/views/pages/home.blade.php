@@ -14,7 +14,7 @@
                 <a href="/login" class="button">Log In</a>
                 <br>
                 <div class="container__block">
-                    <p>Unauthorized? Please contact #team-product in Slack for admin access.</p>
+                    <p>Unauthorized? Please contact #help-product in Slack for admin access.</p>
                 </div>
             </div>
         </div>
