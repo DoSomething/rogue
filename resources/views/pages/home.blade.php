@@ -8,7 +8,7 @@
         <div class="wrapper">
             <div class="container__block -narrow">
                 <p>
-                    Welcome to <strong>Rogue</strong>, our one source of truth for all things user activity. Logging in will allow you to review and search for reportbacks.
+                    Welcome to <strong>Rogue</strong>, our one source of truth for all things user activity. Logging in will give you access to member submissions and campaign/action IDs.
                 </p>
                 <br>
                 <a href="/login" class="button">Log In</a>
