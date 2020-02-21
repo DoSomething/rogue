@@ -84,7 +84,7 @@
                     <li><a href="https://github.com/DoSomething/rogue/wiki" target="_blank">Rogue Technical Documentation</a></li>
                 </ul>
 
-                <p>Got questions that aren't answered here or in the documentation linked above? Please ask in the #team-product channel!</p>
+                <p>Got questions that aren't answered here or in the documentation linked above? Please ask in the #help-product channel!</p>
             </div>
         </div>
     </div>
