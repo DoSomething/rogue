@@ -46,17 +46,20 @@ class StandardizeCauses extends Command
         foreach ($campaignsWithCause as $campaign) {
             $this->info('Updating campaign '.$campaign->id);
 
-            $oldCause = $campaign->getOriginal('cause');
-            $this->info('--From:'.$oldCause);
+            // Grab the old causes
+            $oldCauses = $campaign->cause;
+            $this->info('--From:'.implode(',',$oldCauses));
 
-            // Make the causes lowercase and replaces spaces with hyphens
-            $newCause = str_replace(' ', '-', strtolower($oldCause));
-            $this->info('--To:'.$newCause);
+            // Trim whitespace, make the causes lowercase, and replaces spaces with hyphens
+            // Add cleaned up causes to a new array
+            $newCauses = [];
+            foreach ($oldCauses as $oldCause) {
+                array_push($newCauses, str_replace(' ', '-', strtolower(trim($oldCause))));
+            }
+            $this->info('--To:'.implode(',',$newCauses));
 
-            // Re-format the new cause string as the array that our mutator expects
-            $newCause = explode(',', $newCause);
-            $campaign->cause = $newCause;
-
+            // Set and save the clean causes
+            $campaign->cause = $newCauses;
             $campaign->save();
 
             $this->info('--✔ Successfully updated!');
