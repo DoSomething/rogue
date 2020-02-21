@@ -48,7 +48,7 @@ class StandardizeCauses extends Command
 
             // Grab the old causes
             $oldCauses = $campaign->cause;
-            $this->info('--From:'.implode(',',$oldCauses));
+            $this->info('--From:'.implode(',', $oldCauses));
 
             // Trim whitespace, make the causes lowercase, and replaces spaces with hyphens
             // Add cleaned up causes to a new array
@@ -56,7 +56,7 @@ class StandardizeCauses extends Command
             foreach ($oldCauses as $oldCause) {
                 array_push($newCauses, str_replace(' ', '-', strtolower(trim($oldCause))));
             }
-            $this->info('--To:'.implode(',',$newCauses));
+            $this->info('--To:'.implode(',', $newCauses));
 
             // Set and save the clean causes
             $campaign->cause = $newCauses;
