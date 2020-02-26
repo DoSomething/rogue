@@ -25,6 +25,17 @@
                     </div>
 
                     <div class="form-item">
+                        <label class="field-label">Contentful Campaign ID</label>
+                        <input type="text" name="contentful_campaign_id" class="text-field"
+                            @if (old('contentful_campaign_id'))
+                                value="{{ old('contentful_campaign_id') }}"
+                            @else
+                                value="{{ $campaign->contentful_campaign_id }}"
+                            @endif
+                        >
+                    </div>
+
+                    <div class="form-item">
                         <label class="field-label">Cause Area <em>(choose between 1-5)</em></label>
                         <div class="columns-2">
                             @foreach($causes as $cause => $name)

@@ -20,6 +20,7 @@ class CampaignsController extends Controller
 
         $this->rules = [
             'internal_title' => ['required', 'string'],
+            'contentful_campaign_id' => ['nullable', 'string', 'max:255'],
             'cause' => ['required', 'array', 'between:1,5'],
             'cause.*' => ['string', Rule::in(Cause::all())],
             'impact_doc' => ['required', 'url'],
