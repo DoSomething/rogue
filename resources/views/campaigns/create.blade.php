@@ -8,7 +8,7 @@
         <div class="wrapper">
             <div class="container__block -narrow">
                 <h1>Create Campaign ID</h1>
-                <p>Please reach out in the #dev-rogue channel for help creating a campaign ID for your campaign.</p>
+                <p>Please reach out in the #help-product channel for help creating a campaign ID for your campaign.</p>
                 <br>
                 <form method="post" enctype="application/x-www-form-urlencoded" action="{{ route('campaigns.store') }}">
                 {{ csrf_field()}}
