@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="form-item">
-                        <label class="field-label">Contentful Campaign ID</label>
+                        <label class="field-label">Contentful Campaign ID <em>(optional)</em></label>
                         <input type="text" name="contentful_campaign_id" class="text-field"
                             @if (old('contentful_campaign_id'))
                                 value="{{ old('contentful_campaign_id') }}"
