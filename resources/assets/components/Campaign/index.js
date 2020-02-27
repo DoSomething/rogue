@@ -24,6 +24,7 @@ const SHOW_CAMPAIGN_ACTIONS_QUERY = gql`
       createdAt
       endDate
       id
+      contentfulCampaignId
       impactDoc
       internalTitle
       startDate
@@ -100,6 +101,13 @@ const Campaign = ({ id }) => {
 
         <h4>Campaign ID</h4>
         <p>{campaign.id}</p>
+
+        <h4>Contentful Campaign ID</h4>
+        {campaign.contentfulCampaignId ? (
+          <p>{campaign.contentfulCampaignId}</p>
+        ) : (
+          <p>–</p>
+        )}
 
         <h4>URL</h4>
         <p>
