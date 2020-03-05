@@ -19,6 +19,7 @@ class Action extends Model
         'online' => 'boolean',
         'quiz' => 'boolean',
         'collect_school_id' => 'boolean',
+        'volunteer_credit' => 'boolean',
     ];
 
     /**
