@@ -33,6 +33,7 @@ class ActionTransformer extends TransformerAbstract
             'civic_action' => $action->civic_action,
             'scholarship_entry' => $action->scholarship_entry,
             'collect_school_id' => $action->collect_school_id,
+            'volunteer_credit' => $action->volunteer_credit,
             'anonymous' => $action->anonymous,
             'online' => $action->online,
             'quiz' => $action->quiz,
