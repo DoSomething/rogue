@@ -108,6 +108,22 @@ function is_staff_user(): bool
 }
 
 /**
+ * Determines if the user is an admin.
+ *
+ * @return bool
+ */
+function is_admin_user(): bool
+{
+    // If this is a machine client, then it's de-facto an admin:
+    if (token()->exists() && ! token()->id()) {
+        return true;
+    }
+
+    // Otherwise, do we have a (web or OAuth) user? If so, are they an admin?
+    return auth()->user() && in_array(auth()->user()->role, ['admin']);
+}
+
+/**
  * Determine if the user owns the given resource.
  *
  * @return bool
