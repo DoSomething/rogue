@@ -148,6 +148,15 @@ export const Action = ({ action, deleteAction, isPermalink }) => {
               <p className="no">No</p>
             )}
           </li>
+          {/*@TODO: Add volunteerCredit field to gql fragmant above once it's added to the graphql schema */}
+          <li>
+            <h4>VOLUNTEER CREDIT</h4>
+            {action.volunteerCredit === true ? (
+              <p className="yes">Yes</p>
+            ) : (
+              <p className="no">No</p>
+            )}
+          </li>
         </ul>
       </div>
       {action.campaign && action.campaign.isOpen && !isAdmin ? null : (
