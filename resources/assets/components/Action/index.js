@@ -23,6 +23,7 @@ export const ActionFragment = gql`
     postType
     reportback
     scholarshipEntry
+    volunteerCredit
     timeCommitmentLabel
     verb
   }
@@ -148,7 +149,6 @@ export const Action = ({ action, deleteAction, isPermalink }) => {
               <p className="no">No</p>
             )}
           </li>
-          {/*@TODO: Add volunteerCredit field to gql fragmant above once it's added to the graphql schema */}
           <li>
             <h4>VOLUNTEER CREDIT</h4>
             {action.volunteerCredit === true ? (
