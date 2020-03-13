@@ -34,8 +34,8 @@ If the post's action is marked as "anonymous", the `northstar_id` field will onl
   - The northstar_id to filter the response by.
   - e.g. `/posts?filter[northstar_id]=47asdf23abc`
 - **filter[status]** _(string)_
-  - The status to filter the response by.
-  - e.g. `/posts?filter[status]=accepted`
+  - The status(es) to filter the response by.
+  - e.g. `/posts?filter[status]=accepted,pending`
 - **filter[type]** _(string)_
   - The type to filter the response by.
   - e.g. `/posts?filter[type]=photo,voter-reg`

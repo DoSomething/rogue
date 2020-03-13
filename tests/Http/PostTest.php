@@ -962,6 +962,31 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test for retrieving posts as admin filtered by status.
+     *
+     * GET /api/v3/posts
+     * @return void
+     */
+    public function testPostsIndexFilteredByStatusAsAdmin()
+    {
+        factory(Post::class, 1)->states('photo', 'accepted')->create();
+        factory(Post::class, 5)->states('photo', 'pending')->create();
+        factory(Post::class, 7)->states('photo', 'rejected')->create();
+
+        // Admins should see posts filtered by pending status.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/posts?filter[status]=pending');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(5, 'data');
+
+        // Admins should be able to filter by multiple statuses and see pending and rejected posts.
+        $response = $this->withAdminAccessToken()->getJson('api/v3/posts?filter[status]=pending,rejected');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(12, 'data');
+    }
+
+    /**
      * Test for retrieving all posts as owner.
      * Owners should see tags, source, and remote_addr.
      *
