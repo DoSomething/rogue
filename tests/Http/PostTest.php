@@ -987,6 +987,33 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test for retrieving posts filtered by the volunteer_credit value of the associated action.
+     *
+     * GET /api/v3/posts
+     * @return void
+     */
+    public function testPostsIndexFilteredByVolunteerCredit()
+    {
+        $action = factory(Action::class)->create([
+            'volunteer_credit' => true,
+        ]);
+        // Posts qualifying for volunteer credit:
+        factory(Post::class, 4)->states('photo', 'accepted')->create([
+            'action_id' => $action->id,
+        ]);
+        // Posts not qualifying for volunteer credit:
+        factory(Post::class, 7)->states('photo', 'accepted')->create();
+
+        $response = $this->getJson('api/v3/posts?filter[volunteer_credit]=true');
+        $response->assertSuccessful();
+        $response->assertJsonCount(4, 'data');
+
+        $response = $this->getJson('api/v3/posts?filter[volunteer_credit]=false');
+        $response->assertSuccessful();
+        $response->assertJsonCount(7, 'data');
+    }
+
+    /**
      * Test for retrieving all posts as owner.
      * Owners should see tags, source, and remote_addr.
      *
