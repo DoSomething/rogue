@@ -61,6 +61,9 @@ If the post's action is marked as "anonymous", the `northstar_id` field will onl
 - **filter[location]** _(string)_
   - The location to filter the response by.
   - e.g. `/posts?filter[location]=US-NY`
+- **filter[volunteer_credit]** _(boolean)_
+  - Filter for posts (un)qualified for volunteer credit (where the associated action's volunteer_credit field is true/false.)
+  - e.g. `/posts?filter[volunteer_credit]=true`
 - **include** _(string)_
   - Include additional related records in the response: `signup`, `siblings`
   - e.g. `/posts?include=signup,siblings`

@@ -36,6 +36,7 @@ $factory->define(Action::class, function (Generator $faker) {
         'noun' => 'things',
         'verb' => 'done',
         'collect_school_id' => true,
+        'volunteer_credit' => false,
     ];
 });
 

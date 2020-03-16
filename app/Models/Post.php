@@ -400,6 +400,28 @@ class Post extends Model
     }
 
     /**
+     * Returns posts which qualify for volunteer credit.
+     * (The associated Action's volunteer credit field is set to true).
+     */
+    public function scopeWithVolunteerCredit($query, $volunteerCreditValue)
+    {
+        return $query->whereHas('actionModel', function ($query) use ($volunteerCreditValue) {
+            $query->where('volunteer_credit', true);
+        });
+    }
+
+    /**
+     * Returns posts which do not qualify for volunteer credit.
+     * (The associated Action's volunteer credit field is set to false).
+     */
+    public function scopeWithoutVolunteerCredit($query, $volunteerCreditValue)
+    {
+        return $query->whereHas('actionModel', function ($query) use ($volunteerCreditValue) {
+            $query->where('volunteer_credit', false);
+        });
+    }
+
+    /**
      * Returns posts that are reviewable.
      */
     public function scopeWhereReviewable($query)
