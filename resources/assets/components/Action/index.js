@@ -23,6 +23,7 @@ export const ActionFragment = gql`
     postType
     reportback
     scholarshipEntry
+    volunteerCredit
     timeCommitmentLabel
     verb
   }
@@ -143,6 +144,14 @@ export const Action = ({ action, deleteAction, isPermalink }) => {
           <li>
             <h4>COLLECT SCHOOL ID</h4>
             {action.collectSchoolId === true ? (
+              <p className="yes">Yes</p>
+            ) : (
+              <p className="no">No</p>
+            )}
+          </li>
+          <li>
+            <h4>VOLUNTEER CREDIT</h4>
+            {action.volunteerCredit === true ? (
               <p className="yes">Yes</p>
             ) : (
               <p className="no">No</p>

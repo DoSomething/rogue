@@ -41,6 +41,7 @@ class ActionsController extends Controller
             'actionTypes' => ActionType::labels(),
             'timeCommitments' => TimeCommitment::labels(),
             'campaignId' => (int) $campaignId,
+            'isAdminUser' => is_admin_user(),
         ]);
     }
 
@@ -89,6 +90,7 @@ class ActionsController extends Controller
             'postTypes' => PostType::labels(),
             'actionTypes' => ActionType::labels(),
             'timeCommitments' => TimeCommitment::labels(),
+            'isAdminUser' => is_admin_user(),
         ]);
     }
 

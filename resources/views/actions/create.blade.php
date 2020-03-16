@@ -51,6 +51,9 @@
                         @include('forms.option', ['name' => 'reportback', 'label' => 'Reportback'])
                         @include('forms.option', ['name' => 'civic_action', 'label' => 'Civic Action'])
                         @include('forms.option', ['name' => 'scholarship_entry', 'label' => 'Scholarship Entry'])
+                        @if ($isAdminUser)
+                            @include('forms.option', ['name' => 'volunteer_credit', 'label' => 'Volunteer Credit'])
+                        @endif
                         @include('forms.option', ['name' => 'anonymous', 'label' => 'Anonymous'])
                         @include('forms.option', ['name' => 'online', 'label' => 'Online Action'])
                         @include('forms.option', ['name' => 'quiz', 'label' => 'Quiz Action'])

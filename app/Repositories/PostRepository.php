@@ -106,7 +106,7 @@ class PostRepository
         // If this is a share-social type post, auto-accept.
         $post->status = $post->type === 'share-social' ? 'accepted' : 'pending';
 
-        $isAdminOrStaff = auth()->user() && in_array(auth()->user()->role, ['admin', 'staff']);
+        $isAdminOrStaff = is_staff_user();
 
         $hasAdminScope = in_array('admin', token()->scopes());
 
