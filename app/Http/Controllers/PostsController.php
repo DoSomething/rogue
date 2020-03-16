@@ -91,6 +91,14 @@ class PostsController extends ApiController
             $query = $query->withTag($filters['tag']);
         }
 
+        if (array_has($filters, 'volunteer_credit')) {
+            if (filter_var($filters['volunteer_credit'], FILTER_VALIDATE_BOOLEAN)) {
+                $query = $query->withVolunteerCredit($filters['volunteer_credit']);
+            } else {
+                $query = $query->withoutVolunteerCredit($filters['volunteer_credit']);
+            }
+        }
+
         // If the northstar_id param is passed, only allow admins, staff, or owner to see anonymous posts.
         if (array_has($filters, 'northstar_id')) {
             $query = $query->withoutAnonymousPosts();
