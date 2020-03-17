@@ -56,7 +56,7 @@
                         @include('forms.option', ['name' => 'civic_action', 'label' => 'Civic Action', 'value' => $action->civic_action])
                         @include('forms.option', ['name' => 'scholarship_entry', 'label' => 'Scholarship Entry', 'value' => $action->scholarship_entry])
                         @if ($isAdminUser)
-                            @include('forms.option', ['name' => 'volunteer_credit', 'label' => 'Volunteer Credit'])
+                            @include('forms.option', ['name' => 'volunteer_credit', 'label' => 'Volunteer Credit', 'value' => $action->volunteer_credit])
                         @endif
                         @include('forms.option', ['name' => 'anonymous', 'label' => 'Anonymous', 'value' => $action->anonymous])
                         @include('forms.option', ['name' => 'online', 'label' => 'Online Action', 'value' => $action->online])
