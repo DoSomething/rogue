@@ -66,6 +66,7 @@ class PostTest extends TestCase
         $location = 'US-'.$this->faker->stateAbbr();
         $school_id = $this->faker->word;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
+        $referrerUserId = $this->faker->northstar_id;
 
         // Create an action to refer to.
         $action = factory(Action::class)->create(['campaign_id' => $campaignId]);
@@ -88,6 +89,7 @@ class PostTest extends TestCase
             'school_id'        => $school_id,
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
+            'referrer_user_id' => $referrerUserId,
         ]);
 
         $response->assertStatus(201);
@@ -98,6 +100,7 @@ class PostTest extends TestCase
             'campaign_id' => $campaignId,
             'northstar_id' => $northstarId,
             'why_participated' => $why_participated,
+            'referrer_user_id' => $referrerUserId,
         ]);
 
         $this->assertDatabaseHas('posts', [
@@ -111,6 +114,7 @@ class PostTest extends TestCase
             'school_id' => $school_id,
             'quantity' => $quantity,
             'details' => json_encode($details),
+            'referrer_user_id' => $referrerUserId,
         ]);
     }
 

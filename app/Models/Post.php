@@ -48,7 +48,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'type', 'action', 'action_id', 'details', 'quantity', 'url', 'text', 'status', 'source', 'source_details', 'location', 'postal_code', 'school_id'];
+    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'type', 'action', 'action_id', 'details', 'quantity', 'url', 'text', 'status', 'source', 'source_details', 'location', 'postal_code', 'school_id', 'referrer_user_id'];
 
     /**
      * Attributes that can be queried when filtering.
@@ -58,7 +58,7 @@ class Post extends Model
      *
      * @var array
      */
-    public static $indexes = ['id', 'signup_id', 'campaign_id', 'type', 'action', 'action_id', 'northstar_id', 'status', 'created_at', 'source', 'location'];
+    public static $indexes = ['id', 'signup_id', 'campaign_id', 'type', 'action', 'action_id', 'northstar_id', 'status', 'created_at', 'source', 'location', 'referrer_user_id'];
 
     /**
      * Attributes that we can sort by with the '?orderBy' query parameter.
@@ -314,6 +314,7 @@ class Post extends Model
             'source' => $this->source,
             'source_details' => $this->source_details,
             'details' => $this->details,
+            'referrer_user_id' => $this->referrer_user_id,
             'school_id' => $this->school_id,
             'school_name' => isset($school) ? $school['name'] : null,
             'created_at' => $this->created_at->toIso8601String(),

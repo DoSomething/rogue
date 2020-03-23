@@ -32,7 +32,7 @@ class Signup extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'northstar_id', 'campaign_id', 'why_participated', 'source', 'source_details', 'details', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'northstar_id', 'campaign_id', 'why_participated', 'source', 'source_details', 'details', 'created_at', 'updated_at', 'referrer_user_id'];
 
     /**
      * Attributes that can be queried when filtering.
@@ -43,7 +43,7 @@ class Signup extends Model
      * @var array
      */
     public static $indexes = [
-        'campaign_id', 'updated_at', 'northstar_id', 'id', 'quantity', 'source',
+        'campaign_id', 'updated_at', 'northstar_id', 'id', 'quantity', 'source', 'referrer_user_id',
     ];
 
     /**
@@ -180,6 +180,7 @@ class Signup extends Model
             'why_participated' => $this->why_participated,
             'source' => $this->source,
             'source_details' => $this->source_details,
+            'referrer_user_id' => $this->referrer_user_id,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
