@@ -95,6 +95,7 @@ Example Response:
             "location": "US-NY",
             "location_name": "New York",
             "school_id": null,
+            "referrer_user_id": null,
             "created_at": "2016-11-30T21:21:24+00:00",
             "updated_at": "2017-08-02T14:11:26+00:00"
         },
@@ -119,6 +120,7 @@ Example Response:
             "location": "US-NY",
             "location_name": "New York",
             "school_id": null,
+            "referrer_user_id": null,
             "created_at": "2016-02-10T16:19:25+00:00",
             "updated_at": "2017-08-02T14:11:35+00:00"
             "action_details": {
@@ -185,6 +187,7 @@ Example Response:
     "location": "US-NY",
     "location_name": "New York",
     "school_id": "3600052",
+    "referrer_user_id": null,
     "created_at": "2019-01-23T19:42:07+00:00",
     "updated_at": "2019-01-23T19:42:07+00:00"
     "action_details": {
@@ -242,6 +245,8 @@ Optional params:
   The school ID this post should be associated with.
 - **details** (json).
   A JSON field to store extra details about a post.
+- **referrer_user_id** (string).
+  The referring User ID that this post should be associated with.
 - **dont_send_to_blink** (boolean).
   If included and true, the data for this Post will not be sent to Blink.
 - **created_at** (timestamp).
@@ -279,6 +284,7 @@ Example Response:
     "location": "US-NY",
     "location_name": "New York",
     "school_id": "3600052",
+    "referrer_user_id": "559442cca59dbfca578b4bed",
     "created_at": "2018-12-06T21:44:15+00:00",
     "updated_at": "2018-12-06T21:44:15+00:00",
     "tags": [],
@@ -299,6 +305,7 @@ Example Response:
         "source": "dev-oauth",
         "source_details": null,
         "details": null,
+        "referrer_user_id: "559442cca59dbfca578b4bed",
         "user": {
           "data": {
               "first_name": "Santa",

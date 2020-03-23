@@ -20,6 +20,8 @@ POST /api/v3/signups
   The source of the signup.
 - **details**: (string) optional
   Details to be added to the "details" column on the signup, such as signed up to receive affiliate messaging.
+- **referrer_user_id** (string).
+  The referring User ID that this signup should be associated with.
 - **dont_send_to_blink** (boolean) optional.
   If included and true, the data for this Signup will not be sent to Blink.
 - **created_at**: (string) optional.
@@ -42,6 +44,7 @@ Example response:
         "why_participated": "to test",
         "source": null,
         "details": null,
+        "referrer_user_id": "559442cca59dbfca578b4bed"
     }
 }
 ```
@@ -95,6 +98,7 @@ Example Response:
       "why_participated": "Eos architecto et quibusdam quasi.",
       "source": "phoenix-web",
       "details": null,
+      "referrer_user_id" : null,
     },
     {
       "id": 2,
@@ -107,6 +111,7 @@ Example Response:
       "why_participated": "Non nobis ab asperiores fuga.",
       "source": "phoenix-web",
       "details": null,
+      "referrer_user_id" : null,
     },
   ],
   "meta": {
