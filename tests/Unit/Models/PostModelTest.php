@@ -76,5 +76,14 @@ class PostModelTest extends TestCase
         $result = $post->toBlinkPayload();
 
         $this->assertEquals($result['school_name'], null);
+        $this->assertEquals($result['referrer_user_id'], null);
+
+        $referrerUserId = $this->faker->northstar_id;
+        $post = factory(Post::class)->create([
+            'referrer_user_id' => $referrerUserId,
+        ]);
+        $result = $post->toBlinkPayload();
+
+        $this->assertEquals($result['referrer_user_id'], $referrerUserId);
     }
 }

@@ -66,6 +66,7 @@ class PostTransformer extends TransformerAbstract
             $response['source_details'] = $post->source_details;
             $response['remote_addr'] = '0.0.0.0';
             $response['details'] = $post->details;
+            $response['referrer_user_id'] = $post->referrer_user_id;
             $response['school_id'] = $post->school_id;
         }
 
