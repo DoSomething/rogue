@@ -83,6 +83,7 @@ $factory->define(Post::class, function (Generator $faker) {
          */
         'school_id' => $this->faker->optional()->school_id,
         'source' => 'phpunit',
+        'referrer_user_id' => $this->faker->optional()->northstar_id,
     ];
 });
 
