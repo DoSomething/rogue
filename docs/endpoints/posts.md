@@ -30,9 +30,9 @@ If the post's action is marked as "anonymous", the `northstar_id` field will onl
 - **filter[campaign_id]** _(integer)_
   - The campaign ID to filter the response by.
   - e.g. `/posts?filter[campaign_id]=47`
-- **filter[northstar_id]** _(integer)_
+- **filter[northstar_id]** _(string)_
   - The northstar_id to filter the response by.
-  - e.g. `/posts?filter[northstar_id]=47asdf23abc`
+  - e.g. `/posts?filter[northstar_id]=5554eac1a59dbf117e8b4567`
 - **filter[status]** _(string)_
   - The status(es) to filter the response by.
   - e.g. `/posts?filter[status]=accepted,pending`
@@ -58,6 +58,9 @@ If the post's action is marked as "anonymous", the `northstar_id` field will onl
 - **filter[source]** _(string)_
   - The source(s) to filter the response by.
   - e.g. `/posts?filter[source]=sms`
+- **filter[referrer_user_id]** _(string)_
+  - The referrer_user_id to filter the response by.
+  - e.g. `/posts?filter[referrer_user_id]=581ba6dd7f43c26c6d2349d3`
 - **filter[location]** _(string)_
   - The location to filter the response by.
   - e.g. `/posts?filter[location]=US-NY`
