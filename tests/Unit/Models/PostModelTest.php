@@ -72,6 +72,7 @@ class PostModelTest extends TestCase
 
         $post = factory(Post::class)->create([
             'school_id' => null,
+            'referrer_user_id' => null,
         ]);
         $result = $post->toBlinkPayload();
 
