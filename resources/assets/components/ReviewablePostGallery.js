@@ -6,14 +6,14 @@ import { useQuery } from '@apollo/react-hooks';
 
 import Empty from './Empty';
 import Shell from './utilities/Shell';
-import { updateQuery } from '../helpers';
+import { updateQuery, withoutNulls } from '../helpers';
 import ReviewablePost, { ReviewablePostFragment } from './ReviewablePost';
 
 const REVIEWABLE_POSTS_QUERY = gql`
   query ReviewablePostsQuery(
     $campaignId: String
     $signupId: String
-    $status: String
+    $status: [ReviewStatus]
     $tags: [String]
     $cursor: String
   ) {
@@ -44,7 +44,12 @@ const REVIEWABLE_POSTS_QUERY = gql`
 
 const ReviewablePostGallery = ({ campaignId, signupId, status, tags }) => {
   const { loading, error, data, fetchMore } = useQuery(REVIEWABLE_POSTS_QUERY, {
-    variables: { campaignId, signupId, status, tags },
+    variables: withoutNulls({
+      campaignId,
+      signupId,
+      status: status ? [status.toUpperCase()] : null,
+      tags,
+    }),
     notifyOnNetworkStatusChange: true,
   });
 

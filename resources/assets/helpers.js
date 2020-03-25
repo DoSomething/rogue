@@ -1,6 +1,6 @@
 /* global document */
 
-import { isArray, mergeWith } from 'lodash';
+import { isArray, isNull, mergeWith, omitBy } from 'lodash';
 
 /**
  * Valid statuses for posts, and their human-friendly labels.
@@ -83,3 +83,13 @@ export const updateQuery = (previous, { fetchMoreResult }) => {
     }
   });
 };
+
+/**
+ * Remove items with null properties.
+ *
+ * @param  {Object} data
+ * @return {Object}
+ */
+export function withoutNulls(data) {
+  return omitBy(data, isNull);
+}
