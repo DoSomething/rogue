@@ -21,6 +21,7 @@ const SHOW_SIGNUP_QUERY = gql`
       whyParticipated
       source
       sourceDetails
+      referrerUserId
       createdAt
       deleted
 
@@ -88,6 +89,13 @@ const ShowCampaign = () => {
                     'Created At': format(
                       parse(signup.createdAt),
                       'M/D/YYYY h:m A',
+                    ),
+                    Referrer: signup.referrerUserId ? (
+                      <Link to={`/users/${signup.referrerUserId}`}>
+                        {signup.referrerUserId}
+                      </Link>
+                    ) : (
+                      '-'
                     ),
                   }}
                 />
