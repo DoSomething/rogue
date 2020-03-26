@@ -36,6 +36,7 @@ export const ReviewablePostFragment = gql`
     url
     createdAt
     source
+    referrerUserId
     location(format: HUMAN_FORMAT)
     deleted
 
@@ -198,6 +199,13 @@ const ReviewablePost = ({ post }) => {
               Source: post.source,
               Location: post.location,
               Submitted: format(parse(post.createdAt), 'M/D/YYYY h:m:s'),
+              Referrer: post.referrerUserId ? (
+                <Link to={`/users/${post.referrerUserId}`}>
+                  {post.referrerUserId}
+                </Link>
+              ) : (
+                '-'
+              ),
               School: post.schoolId ? (
                 <Link to={`/schools/${post.schoolId}`}>{post.schoolId}</Link>
               ) : (
