@@ -301,12 +301,42 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
             'campaign_id' => 'dog', // This should be a numeric ID.
             'signup_id' => $signup->id, // This one is okay.
-            'location' => 'the world', // This should be an ISO-3166-2 code.
             'school_id' => 234, // This should be a string.
             // and we've omitted the required 'type' and 'action' fields!
         ]);
 
-        $response->assertJsonValidationErrors(['campaign_id', 'location', 'type', 'action', 'school_id']);
+        $response->assertJsonValidationErrors(['campaign_id', 'type', 'action', 'school_id']);
+    }
+
+    /**
+     * We should silently discard bad location data.
+     *
+     * patch /api/v3/posts/195
+     * @return void
+     */
+    public function testHandleBorkedLocationData()
+    {
+        $signup = factory(Signup::class)->create();
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id,
+            'post_type' => 'text',
+        ]);
+
+        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
+            'action_id'        => $action->id,
+            'type'             => 'text',
+            'text'             => 'Lorem ipsum dolor sit amet.',
+            'location'         => 'Can\'t pin me down with your rules!!',
+        ]);
+
+        // We should save the post, but discard the bad location:
+        $response->assertSuccessful();
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'type' => 'text',
+            'text' => 'Lorem ipsum dolor sit amet.',
+            'location' => null,
+        ]);
     }
 
     /**

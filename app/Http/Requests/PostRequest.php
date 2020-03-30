@@ -40,7 +40,7 @@ class PostRequest extends Request
             'action_id' => 'required_without:action,campaign_id|integer|exists:actions,id',
             'why_participated' => 'nullable|string',
             'text' => 'nullable|string|max:500',
-            'location' => 'nullable|iso3166',
+            'location' => 'nullable|string',
             'postal_code' => 'nullable|max:10',
             'school_id' => 'nullable|string|max:255',
             'quantity' => 'nullable|integer',
@@ -60,7 +60,7 @@ class PostRequest extends Request
     {
         return [
             'text' => 'nullable|string|max:500',
-            'location' => 'nullable|iso3166',
+            'location' => 'nullable|string',
             'quantity' => 'nullable|integer',
             'status' => $this->getStatusRules($this->post->type),
             'school_id' => 'nullable|string|max:255',
