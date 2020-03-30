@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 import NotFound from './NotFound';
 import Shell from '../components/utilities/Shell';
 import SignupGallery from '../components/SignupGallery';
+import ReferralsTable from '../components/ReferralsTable';
 import MetaInformation from '../components/utilities/MetaInformation';
 import UserInformation, {
   UserInformationFragment,
@@ -24,7 +25,10 @@ const SHOW_USER_QUERY = gql`
   ${UserInformationFragment}
 `;
 
-const ShowUser = () => {
+/**
+ * @param string selectedTab
+ */
+const ShowUser = ({ selectedTab }) => {
   const { id } = useParams();
 
   const title = 'Members';
@@ -66,12 +70,24 @@ const ShowUser = () => {
           />
         </UserInformation>
       </div>
-
       <div className="container__block">
-        <h2 className="heading -emphasized -padded">
-          <span>Campaigns</span>
-        </h2>
-        <SignupGallery userId={user.id} />
+        {selectedTab === 'referrals' ? (
+          <React.Fragment>
+            <h2 className="heading -emphasized -padded">
+              <span>Referrals</span>
+            </h2>
+            <div className="container__block">
+              <ReferralsTable userId={user.id} />
+            </div>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <h2 className="heading -emphasized -padded">
+              <span>Campaigns</span>
+            </h2>
+            <SignupGallery userId={user.id} />
+          </React.Fragment>
+        )}
       </div>
     </Shell>
   );
