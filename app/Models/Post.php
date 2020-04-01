@@ -177,6 +177,27 @@ class Post extends Model
     }
 
     /**
+     * Mutator for the ISO-3166-2 'location' field.
+     *
+     * @return void
+     */
+    public function setLocationAttribute($value)
+    {
+        $isoCodes = new \Sokil\IsoCodes\IsoCodesFactory();
+        $subDivisions = $isoCodes->getSubdivisions();
+
+        // Check that the provided value is a valid ISO-3166-2 region
+        // code before saving it to the database. If not, discard.
+        if (empty($value) || is_null($subDivisions->getByCode($value))) {
+            $this->attributes['location'] = null;
+
+            return;
+        }
+
+        $this->attributes['location'] = $value;
+    }
+
+    /**
      * Get the location as a human-readable name.
      *
      * @return string
