@@ -44,5 +44,6 @@ export default uri => {
   return new ApolloClient({
     link: ApolloLink.from([errorLink, authLink, persistedLink, httpLink]),
     cache: new InMemoryCache(),
+    name: 'rogue',
   });
 };
