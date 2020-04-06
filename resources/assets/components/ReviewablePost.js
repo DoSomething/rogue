@@ -36,6 +36,7 @@ export const ReviewablePostFragment = gql`
     url
     createdAt
     source
+    details
     referrerUserId
     location(format: HUMAN_FORMAT)
     deleted
@@ -211,6 +212,7 @@ const ReviewablePost = ({ post }) => {
               ) : (
                 '-'
               ),
+              Details: post.details ? post.details : '-',
             }}
           />
         </div>
