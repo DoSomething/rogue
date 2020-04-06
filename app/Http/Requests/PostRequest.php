@@ -80,7 +80,9 @@ class PostRequest extends Request
                 $rule = 'in:pending,accepted,rejected';
                 break;
             case 'voter-reg':
-                $rule = 'in:pending,register-form,register-OVR,confirmed,ineligible,uncertain';
+                // Support new values and old values (until Chompy update is deployed)
+                // @see https://github.com/DoSomething/chompy/pull/153
+                $rule = 'in:pending,register-form,register-OVR,confirmed,ineligible,uncertain,rejected,under-18,step-1,step-2,step-3,step-4';
                 break;
             case 'phone-call':
                 $rule = 'in:accepted,incomplete';
