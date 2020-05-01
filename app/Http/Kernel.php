@@ -43,10 +43,6 @@ class Kernel extends HttpKernel
             // 'throttle:60,1',
             \Barryvdh\Cors\HandleCors::class,
         ],
-
-        'asset' => [
-            \Barryvdh\Cors\HandleCors::class,
-        ],
     ];
 
     /**
