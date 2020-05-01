@@ -45,7 +45,7 @@ class Kernel extends HttpKernel
         ],
 
         'asset' => [
-          \Barryvdh\Cors\HandleCors::class,
+            \Barryvdh\Cors\HandleCors::class,
         ],
     ];
 
