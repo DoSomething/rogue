@@ -463,16 +463,26 @@ class Post extends Model
     }
 
     /**
-     * Scope a query to only return posts if a user is an admin, staff, or is owner of post and the post's action is not anonymous.
+     * Scope a query to only return posts if one of these conditions is true:
+     * - authenticated user is a staffer
+     * - the post status is accepted
+     * - authenticated user is owner of post and the post's action is not anonymous
+     * - the post is type voter-reg and authenticated user is the referrer
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWhereVisible($query)
     {
-        if (! is_staff_user()) {
-            return $query->where('status', 'accepted')
-                         ->orWhere('northstar_id', auth()->id());
+        if (is_staff_user()) {
+            return;
         }
+
+        return $query->where('status', 'accepted')
+            ->orWhere('northstar_id', auth()->id())
+            ->orWhere(function ($query) {
+                $query->where('type', 'voter-reg')
+                    ->where('referrer_user_id', auth()->id());
+            });
     }
 
     /**
