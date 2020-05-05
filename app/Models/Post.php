@@ -481,6 +481,7 @@ class Post extends Model
             ->orWhere('northstar_id', auth()->id())
             ->orWhere(function ($query) {
                 $query->where('type', 'voter-reg')
+                    ->whereNotNull('referrer_user_id')
                     ->where('referrer_user_id', auth()->id());
             });
     }
