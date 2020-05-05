@@ -22,7 +22,6 @@
     "ext-gd": "*",
     "ext-exif": "*",
     "ext-bcmath": "*",
-    "barryvdh/laravel-cors": "^0.11.2",
     "fzaninotto/faker": "^1.6",
     "ext-newrelic": "*",
     "sokil/php-isocodes": "^3.0",
