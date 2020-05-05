@@ -467,7 +467,7 @@ class Post extends Model
      * - authenticated user is a staffer
      * - the post status is accepted
      * - authenticated user is owner of post
-     * - the post is type voter-reg and authenticated user is the referrer
+     * - the post is type voter-reg, status is register-*, and authenticated user is the referrer
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -480,9 +480,10 @@ class Post extends Model
         return $query->where('status', 'accepted')
             ->orWhere('northstar_id', auth()->id())
             ->orWhere(function ($query) {
-                $query->where('type', 'voter-reg')
-                    ->whereNotNull('referrer_user_id')
-                    ->where('referrer_user_id', auth()->id());
+                $query->whereNotNull('referrer_user_id')
+                    ->where('referrer_user_id', auth()->id())
+                    ->where('type', 'voter-reg')
+                    ->whereIn('status', ['register-form', 'register-OVR']);
             });
     }
 
