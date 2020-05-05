@@ -466,7 +466,7 @@ class Post extends Model
      * Scope a query to only return posts if one of these conditions is true:
      * - authenticated user is a staffer
      * - the post status is accepted
-     * - authenticated user is owner of post and the post's action is not anonymous
+     * - authenticated user is owner of post
      * - the post is type voter-reg and authenticated user is the referrer
      *
      * @return \Illuminate\Database\Eloquent\Builder
