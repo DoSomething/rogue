@@ -1151,8 +1151,8 @@ class PostTest extends TestCase
         $referrerUserId = $this->faker->unique()->northstar_id;
 
         // Add two completed voter reg referrals for our referrer, which should be visible to them.
-        factory(Post::class)->states('voter-reg', 'register-form')->create(['referrer_user_id' => $referrerUserId]);
-        factory(Post::class)->states('voter-reg', 'register-OVR')->create(['referrer_user_id' => $referrerUserId]);
+        $firstCompletedVoterRegReferral = factory(Post::class)->states('voter-reg', 'register-form')->create(['referrer_user_id' => $referrerUserId]);
+        $secondCompletedVoterRegReferral = factory(Post::class)->states('voter-reg', 'register-OVR')->create(['referrer_user_id' => $referrerUserId]);
 
         // Add a non-completed voter reg referral for our referrer, which shouldn't be visible.
         factory(Post::class)->states('voter-reg', 'step-1')->create(['referrer_user_id' => $referrerUserId]);
@@ -1169,6 +1169,14 @@ class PostTest extends TestCase
         $response = $this->withAccessToken($referrerUserId)->getJson('api/v3/posts');
         $response->assertStatus(200);
         $response->assertJsonCount(2, 'data');
+        $response->assertJsonFragment([
+            'id' => $firstCompletedVoterRegReferral->id,
+            'status' => 'register-form',
+        ]);
+        $response->assertJsonFragment([
+            'id' => $secondCompletedVoterRegReferral->id,
+            'status' => 'register-OVR',
+        ]);
     }
 
     /**
