@@ -1140,6 +1140,46 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test for retrieving voter registration posts as a referrer.
+     * A referrer should see all completed voter registrations that they have referred.
+     *
+     * GET /api/v3/posts
+     * @return void
+     */
+    public function testPostsIndexAsVoterRegistrationReferrer()
+    {
+        $referrerUserId = $this->faker->unique()->northstar_id;
+
+        // Add two completed voter reg referrals for our referrer, which should be visible to them.
+        $firstCompletedVoterRegReferral = factory(Post::class)->states('voter-reg', 'register-form')->create(['referrer_user_id' => $referrerUserId]);
+        $secondCompletedVoterRegReferral = factory(Post::class)->states('voter-reg', 'register-OVR')->create(['referrer_user_id' => $referrerUserId]);
+
+        // Add a non-completed voter reg referral for our referrer, which shouldn't be visible.
+        factory(Post::class)->states('voter-reg', 'step-1')->create(['referrer_user_id' => $referrerUserId]);
+
+        // Add a completed voter reg without a referrer, which shouldn't be visible.
+        factory(Post::class)->states('voter-reg', 'register-OVR')->create();
+
+        // Add a completed voter reg referral for a different referrer, which shouldn't be visible.
+        factory(Post::class)->states('voter-reg', 'register-form')->create(['referrer_user_id' => $this->faker->unique()->northstar_id]);
+
+        // Add a pending photo post, which shouldn't be visible.
+        factory(Post::class)->states('photo', 'pending')->create();
+
+        $response = $this->withAccessToken($referrerUserId)->getJson('api/v3/posts');
+        $response->assertStatus(200);
+        $response->assertJsonCount(2, 'data');
+        $response->assertJsonFragment([
+            'id' => $firstCompletedVoterRegReferral->id,
+            'status' => 'register-form',
+        ]);
+        $response->assertJsonFragment([
+            'id' => $secondCompletedVoterRegReferral->id,
+            'status' => 'register-OVR',
+        ]);
+    }
+
+    /**
      * Test for retrieving a specific post as non-admin and non-owner.
      * Non-admin and non-owners can't see other's unapproved or any rejected posts.
      *

@@ -102,6 +102,10 @@ $factory->state(Post::class, 'text', [
     'type' => 'text',
 ]);
 
+$factory->state(Post::class, 'voter-reg', [
+    'type' => 'voter-reg',
+]);
+
 /**
  * Post status factory states.
  */
@@ -115,6 +119,18 @@ $factory->state(Post::class, 'pending', [
 
 $factory->state(Post::class, 'rejected', [
     'status' => 'rejected',
+]);
+
+$factory->state(Post::class, 'step-1', [
+    'status' => 'step-1',
+]);
+
+$factory->state(Post::class, 'register-form', [
+    'status' => 'register-form',
+]);
+
+$factory->state(Post::class, 'register-OVR', [
+    'status' => 'register-OVR',
 ]);
 
 // Signup Factory
