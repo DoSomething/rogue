@@ -35,4 +35,20 @@ class ImagesTest extends TestCase
         $response = $this->getJson('images/' . $posts->random()->id);
         $response->assertStatus(429);
     }
+
+    /**
+     * Test for CORS header with in response to whitelist all domains.
+     *
+     * @return void
+     */
+    public function testCorsWhitelist()
+    {
+        // Make a post to view.
+        $posts = factory(Post::class, 1)->states('photo', 'accepted')->create();
+
+        $response = $this->getJson('images/' . $posts->random()->hash)->assertSuccessful(200);
+
+        // Get an Access-Control-Allow-Origin header with wildcard '*' in response.
+        $response->assertHeader('Access-Control-Allow-Origin', '*');
+    }
 }
