@@ -5,6 +5,7 @@ namespace Rogue\Managers;
 use Rogue\Models\Post;
 use Rogue\Services\Fastly;
 use Rogue\Jobs\SendPostToCustomerIo;
+use Rogue\Jobs\CreateCustomerIoEvent;
 use Rogue\Repositories\PostRepository;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
 
@@ -50,11 +51,15 @@ class PostManager
         $post = $this->repository->create($data, $signupId, $authenticatedUserRole);
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
-        $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+        $shouldSendToCustomerIo = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
 
         // Save the new post in Customer.io, via Blink.
-        if (config('features.blink') && $should_send_to_blink) {
+        if (config('features.blink') && $shouldSendToCustomerIo) {
             SendPostToCustomerIo::dispatch($post);
+        }
+
+        if ($post->referrer_user_id && $shouldSendToCustomerIo) {
+            CreateCustomerIoEvent::dispatch($post->referrer_user_id, 'referral_post_created', $post->getReferralPostEventPayload());
         }
 
         // Log that a post was created.
@@ -77,9 +82,14 @@ class PostManager
 
         // Save the new post in Customer.io, via Blink,
         // unless 'dont_send_to_blink' is TRUE.
-        $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
-        if (config('features.blink') && $should_send_to_blink) {
+        $shouldSendToCustomerIo = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+
+        if (config('features.blink') && $shouldSendToCustomerIo) {
             SendPostToCustomerIo::dispatch($post, $log);
+        }
+
+        if ($post->referrer_user_id && $shouldSendToCustomerIo) {
+            CreateCustomerIoEvent::dispatch($post->referrer_user_id, 'referral_post_updated', $post->getReferralPostEventPayload());
         }
 
         if ($log) {
