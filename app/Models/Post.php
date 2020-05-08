@@ -564,7 +564,8 @@ class Post extends Model
     /**
      * Gets event payload for a referral post, on behalf of the referrer user ID.
      */
-    public static function getReferralPostEventPayload() {
+    public static function getReferralPostEventPayload()
+    {
         $userId = $this->northstar_id;
         $user = app(GraphQL::class)->getUserById($this->northstar_id);
 
@@ -574,8 +575,9 @@ class Post extends Model
             'type' => $this->type,
             'status' => $this->status,
             'action_id' => $this->action_id,
+            // @TODO: Send referral count for this action?
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
-    }        
+    }
 }

@@ -2,7 +2,6 @@
 
 namespace Rogue\Jobs;
 
-use Rogue\Models\Post;
 use Illuminate\Bus\Queueable;
 use Rogue\Services\CustomerIo;
 use Illuminate\Queue\SerializesModels;
@@ -57,12 +56,12 @@ class CreateCustomerIoEvent implements ShouldQueue
     {
         // Rate limit Customer.io API requests to 10/s.
         $throttler = Redis::throttle('customerio')->allow(10)->every(1);
+
         $throttler->then(function () use ($customerIo) {
             $response = $customerIo->trackEvent($this->userId, $this->eventName, $this->eventData);
-   
+
             info("Sent {$this->userId} event to Customer.io for user {$this->userId}");
         }, function () {
-            // Could not obtain lock... release to the queue.
             return $this->release(10);
         });
     }
