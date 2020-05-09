@@ -83,7 +83,7 @@ class GraphQL
      * @param  $userId String
      * @return array
      */
-    public function getUserById($schoolId)
+    public function getUserById($userId)
     {
         $query = '
         query GetUserById($userId: String!) {

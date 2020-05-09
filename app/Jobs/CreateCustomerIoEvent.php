@@ -4,11 +4,11 @@ namespace Rogue\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Rogue\Services\CustomerIo;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-
 
 class CreateCustomerIoEvent implements ShouldQueue
 {
@@ -60,7 +60,7 @@ class CreateCustomerIoEvent implements ShouldQueue
         $throttler->then(function () use ($customerIo) {
             $response = $customerIo->trackEvent($this->userId, $this->eventName, $this->eventData);
 
-            info("Sent {$this->userId} event to Customer.io for user {$this->userId}");
+            info("Sent {$this->userId} event to Customer.io for user {$this->userId}", ['response' => $response]);
         }, function () {
             return $this->release(10);
         });

@@ -1,6 +1,6 @@
 <?php
 
-namespace Northstar\Services;
+namespace Rogue\Services;
 
 class CustomerIo
 {
