@@ -570,6 +570,7 @@ class Post extends Model
         $user = app(GraphQL::class)->getUserById($userId);
 
         return [
+            'id' => $this->id,
             'user_id' => $userId,
             'user_display_name' => isset($user) ? $user['displayName'] : null,
             'type' => $this->type,

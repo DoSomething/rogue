@@ -10,7 +10,9 @@ use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
 use Rogue\Services\Fastly;
+use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Blink;
+use Rogue\Services\CustomerIo;
 use Illuminate\Http\UploadedFile;
 
 class PostTest extends TestCase
@@ -75,6 +77,16 @@ class PostTest extends TestCase
         $this->mock(Blink::class)
             ->shouldReceive('userSignup')
             ->shouldReceive('userSignupPost');
+
+        // Mock the GraphQL API calls.
+        $this->mock(GraphQL::class)
+            ->shouldReceive('getUserById');
+
+        // Mock the Customer.io API calls.
+        $this->mock(CustomerIo::class)
+            ->shouldReceive('trackEvent');
+
+
 
         // Create the post!
         $response = $this->withAccessToken($northstarId)->json('POST', 'api/v3/posts', [
