@@ -86,8 +86,6 @@ class PostTest extends TestCase
         $this->mock(CustomerIo::class)
             ->shouldReceive('trackEvent');
 
-
-
         // Create the post!
         $response = $this->withAccessToken($northstarId)->json('POST', 'api/v3/posts', [
             'campaign_id'      => $campaignId,
