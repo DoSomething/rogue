@@ -65,11 +65,18 @@ return [
         'url' => env('SLACK_WEBHOOK_INTEGRATION_URL'),
     ],
 
+    'customerio' => [
+        'url' => env('CUSTOMER_IO_URL'),
+        'username' => env('CUSTOMER_IO_USERNAME'),
+        'password' => env('CUSTOMER_IO_PASSWORD'),
+    ],
+
     'fastly' => [
         'url' => 'https://api.fastly.com/',
         'key' => env('FASTLY_API_TOKEN'),
         'service_id' => env('FASTLY_SERVICE_ID'),
     ],
+
     'graphql' => [
         'url' => env('GRAPHQL_URL'),
     ],

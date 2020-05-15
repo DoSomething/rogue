@@ -560,4 +560,24 @@ class Post extends Model
             ->where('status', 'accepted')
             ->sum('quantity');
     }
+
+    /**
+     * Gets event payload for a referral post, on behalf of the referrer user ID.
+     */
+    public function getReferralPostEventPayload()
+    {
+        $userId = $this->northstar_id;
+        $user = app(GraphQL::class)->getUserById($userId);
+
+        return [
+            'id' => $this->id,
+            'user_id' => $userId,
+            'user_display_name' => isset($user) ? $user['displayName'] : null,
+            'type' => $this->type,
+            'status' => $this->status,
+            'action_id' => $this->action_id,
+            'created_at' => $this->created_at->toIso8601String(),
+            'updated_at' => $this->updated_at->toIso8601String(),
+        ];
+    }
 }

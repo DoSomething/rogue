@@ -10,7 +10,9 @@ use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
 use Rogue\Services\Fastly;
+use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Blink;
+use Rogue\Services\CustomerIo;
 use Illuminate\Http\UploadedFile;
 
 class PostTest extends TestCase
@@ -75,6 +77,14 @@ class PostTest extends TestCase
         $this->mock(Blink::class)
             ->shouldReceive('userSignup')
             ->shouldReceive('userSignupPost');
+
+        // Mock the GraphQL API calls.
+        $this->mock(GraphQL::class)
+            ->shouldReceive('getUserById');
+
+        // Mock the Customer.io API calls.
+        $this->mock(CustomerIo::class)
+            ->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAccessToken($northstarId)->json('POST', 'api/v3/posts', [
@@ -1347,6 +1357,29 @@ class PostTest extends TestCase
 
         // Make sure the signup's quantity gets updated.
         $this->assertEquals($signup->fresh()->quantity, 8);
+    }
+
+    /**
+     * Test that updating a referral post sends an event to Customer.io.
+     *
+     * PATCH /api/v3/posts/:id
+     * @return void
+     */
+    public function testUpdatingAReferralPost()
+    {
+        $post = factory(Post::class)->create([
+            'referrer_user_id' => $this->faker->northstar_id,
+            'type' => 'voter-reg',
+            'status' => 'step-1',
+        ]);
+
+        $this->mock(CustomerIo::class)
+          ->shouldReceive('trackEvent')
+          ->with($post->referrer_user_id, 'referral_post_updated', $post->getReferralPostEventPayload());
+
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
+            'status' => 'register-form',
+        ]);
     }
 
     /**

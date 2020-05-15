@@ -59,6 +59,9 @@ trait WithMocks
         $this->graphqlMock->shouldReceive('getSchoolById')->andReturn([
             'name' => 'San Dimas High School',
         ]);
+        $this->graphqlMock->shouldReceive('getUserById')->andReturn([
+            'displayName' => 'Daisy D.',
+        ]);
     }
 
     /**

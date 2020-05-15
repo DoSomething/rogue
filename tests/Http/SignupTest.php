@@ -590,7 +590,7 @@ class SignupTest extends TestCase
      */
     public function testSignupsIndexAsAdminWithFilters()
     {
-        $northstarId = $this->faker->northstar_id;
+        $northstarId = $this->faker->unique()->northstar_id;
         $campaignId = str_random(22);
 
         // Create two signups
