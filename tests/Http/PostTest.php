@@ -1360,6 +1360,29 @@ class PostTest extends TestCase
     }
 
     /**
+     * Test that updating a referral post sends an event to Customer.io.
+     *
+     * PATCH /api/v3/posts/:id
+     * @return void
+     */
+    public function testUpdatingAReferralPost()
+    {
+        $post = factory(Post::class)->create([
+            'referrer_user_id' => $this->faker->northstar_id,
+            'type' => 'voter-reg',
+            'status' => 'step-1',
+        ]);
+
+        $this->mock(CustomerIo::class)
+          ->shouldReceive('trackEvent')
+          ->with($post->referrer_user_id, 'referral_post_updated', $post->getReferralPostEventPayload());
+
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
+            'status' => 'register-form',
+        ]);
+    }
+
+    /**
      * Test for updating a post with invalid status.
      *
      * PATCH /api/v3/posts/:id
