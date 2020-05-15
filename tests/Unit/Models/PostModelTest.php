@@ -87,4 +87,30 @@ class PostModelTest extends TestCase
 
         $this->assertEquals($result['referrer_user_id'], $referrerUserId);
     }
+
+    /**
+     * Test expected payload for a referral post event.
+     *
+     * @return void
+     */
+    public function testGetReferralPostEventPayload()
+    {
+        $post = factory(Post::class)->create([
+            'northstar_id' =>  $this->faker->unique()->northstar_id,
+            'referrer_user_id' => $this->faker->unique()->northstar_id,
+        ]);
+
+        $result = $post->getReferralPostEventPayload();
+
+        $this->assertEquals($result['action_id'], $post->action_id);
+        $this->assertEquals($result['created_at'], $post->created_at->toIso8601String());
+        $this->assertEquals($result['id'], $post->id);
+        $this->assertEquals($result['status'], $post->status);
+        $this->assertEquals($result['type'], $post->type);
+        $this->assertEquals($result['updated_at'], $post->updated_at->toIso8601String());
+        $this->assertEquals($result['user_id'], $post->northstar_id);
+
+        // Test expected data was retrieved from GraphQL.
+        $this->assertEquals($result['user_display_name'], 'Daisy D.');
+    }
 }
