@@ -12,8 +12,8 @@ return [
     */
     'image' => [
         'min' => [
-            'height' => 400,
-            'width' => 400,
+            'height' => 50,
+            'width' => 50,
         ],
         'max' => [
             'height' => 4000,
