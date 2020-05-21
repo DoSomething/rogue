@@ -270,6 +270,11 @@ class Campaign extends Model
         $this->attributes[$attribute] = $this->fromDateTime($value);
     }
 
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
     public function toSearchableArray()
     {
         return Arr::except($this->toArray(), ['impact_doc']);
