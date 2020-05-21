@@ -4,6 +4,8 @@ namespace Rogue\Models;
 
 use Carbon\Carbon;
 use Rogue\Types\Cause;
+use Illuminate\Support\Arr;
+use Laravel\Scout\Searchable;
 use Rogue\Models\Traits\HasCursor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Campaign extends Model
 {
-    use SoftDeletes, HasCursor;
+    use HasCursor, Searchable, SoftDeletes;
 
     /**
      * The attributes that should be mutated to dates.
@@ -266,5 +268,15 @@ class Campaign extends Model
         }
 
         $this->attributes[$attribute] = $this->fromDateTime($value);
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return Arr::except($this->toArray(), ['impact_doc']);
     }
 }
