@@ -28,7 +28,8 @@
     "myclabs/php-enum": "^1.7",
     "softonic/graphql-client": "^1.2",
     "hashids/hashids": "^4.0",
-    "laravel/scout": "^7.2.1"
+    "laravel/scout": "^7.2.1",
+    "algolia/algoliasearch-client-php": "^2.6"
   },
   "require-dev": {
     "filp/whoops": "~2.0",
