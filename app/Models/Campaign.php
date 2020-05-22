@@ -277,6 +277,39 @@ class Campaign extends Model
      */
     public function toSearchableArray()
     {
-        return Arr::except($this->toArray(), ['impact_doc']);
+        $array = $this->toArray();
+
+        // Append data from Action model relationship.
+        $array['actions'] = $this->actions->map(function ($data) {
+            return Arr::only($data->toArray(), [
+                'action_type',
+                'anonymous',
+                'civic_action',
+                'name',
+                'noun',
+                'online',
+                'post_type',
+                'quiz',
+                'reportback',
+                'scholarship_entry',
+                'time_commitment',
+                'verb',
+                'volunteer_credit',
+            ]);
+        });
+
+        // Only send data we want to search against.
+        return Arr::only($array, [
+            'accepted_count',
+            'actions',
+            'contentful_campaign_id',
+            'cause',
+            'end_date',
+            'id',
+            'internal_title',
+            'pending_count',
+            'secondary_causes',
+            'start_date',
+        ]);
     }
 }

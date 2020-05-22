@@ -2,10 +2,13 @@
 
 namespace Rogue\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Action extends Model
 {
+    use Searchable;
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -31,6 +34,13 @@ class Action extends Model
         'name', 'campaign_id', 'post_type', 'action_type', 'time_commitment', 'callpower_campaign_id',
         'reportback', 'civic_action', 'scholarship_entry', 'anonymous', 'online', 'quiz', 'noun', 'verb', 'collect_school_id', 'volunteer_credit',
     ];
+
+    /**
+     * The relationships that should be touched on save.
+     *
+     * @var array
+     */
+    protected $touches = ['campaign'];
 
     /**
      * Attributes that can be queried when filtering.
