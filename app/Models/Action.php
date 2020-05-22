@@ -2,7 +2,6 @@
 
 namespace Rogue\Models;
 
-use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Action extends Model
