@@ -22,27 +22,5 @@ class GroupTypeTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertEquals(5, $decodedResponse['meta']['pagination']['count']);
-
-        foreach ($groupTypes as $groupType) {
-            $this->assertDatabaseHas('group_types', [
-                'name' => $groupType->name,
-            ]);
-        }
-    }
-
-    /**
-     * Test that the group_type name field is unique.
-     *
-     * @return void
-     */
-    public function testUniqueGroupTypeNameIndex()
-    {
-        $this->expectException(QueryException::class);
-
-        $groupType = factory(GroupType::class)->create();
-
-        factory(GroupType::class)->create([
-            'name' => $groupType->name,
-        ]);
     }
 }
