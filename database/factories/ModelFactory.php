@@ -198,6 +198,6 @@ $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($
 // Group Type Factory
 $factory->define(GroupType::class, function (Generator $faker) {
     return [
-        'name' => title_case($faker->unique()->catchPhrase),
+        'name' => title_case($faker->unique()->company),
     ];
 });
