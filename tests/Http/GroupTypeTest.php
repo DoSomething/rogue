@@ -16,12 +16,18 @@ class GroupTypeTest extends TestCase
     public function testGroupTypeIndex()
     {
         // Create five group types.
-        $first = factory(GroupType::class, 5)->create();
+        $groupTypes = factory(GroupType::class, 5)->create();
 
         $response = $this->getJson('api/v3/group-types');
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
         $this->assertEquals(5, $decodedResponse['meta']['pagination']['count']);
+
+        foreach ($groupTypes as $groupType) {
+            $this->assertDatabaseHas('group_types', [
+                'name' => $groupType->name,
+            ]);
+        }
     }
 }
