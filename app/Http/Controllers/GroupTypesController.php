@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Rogue\Models\GroupType;
+use Illuminate\Http\Request;
 use Rogue\Http\Transformers\GroupTypeTransformer;
 
 class GroupTypesController extends ApiController
