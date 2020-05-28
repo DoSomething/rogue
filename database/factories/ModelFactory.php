@@ -8,8 +8,8 @@ use Rogue\Models\Action;
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
-use Rogue\Types\ActionType;
 use Rogue\Models\GroupType;
+use Rogue\Types\ActionType;
 use Rogue\Models\ActionStat;
 use Rogue\Types\TimeCommitment;
 
