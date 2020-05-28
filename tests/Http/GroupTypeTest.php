@@ -4,7 +4,6 @@ namespace Tests\Http;
 
 use Tests\TestCase;
 use Rogue\Models\GroupType;
-use Illuminate\Database\QueryException;
 
 class GroupTypeTest extends TestCase
 {
