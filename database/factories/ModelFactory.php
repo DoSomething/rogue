@@ -8,6 +8,7 @@ use Rogue\Models\Action;
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
+use Rogue\Models\GroupType;
 use Rogue\Types\ActionType;
 use Rogue\Models\ActionStat;
 use Rogue\Types\TimeCommitment;
@@ -192,4 +193,11 @@ $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($
         'start_date' => $faker->dateTimeBetween('-12 months', '-6 months')->setTime(0, 0),
         'end_date' => $faker->dateTimeBetween('-3 months', 'yesterday')->setTime(0, 0),
     ]);
+});
+
+// Group Type Factory
+$factory->define(GroupType::class, function (Generator $faker) {
+    return [
+        'name' => title_case($faker->unique()->company),
+    ];
 });
