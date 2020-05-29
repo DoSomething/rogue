@@ -2,7 +2,7 @@
 
 Group types will be used as a lookup table for the upcoming Groups resource.
 
-## Retrieve All Group Types
+### Index
 
 ```
 GET /api/v3/group-types
@@ -38,4 +38,23 @@ Example Response:
       ]
     }
   }
+```
+
+### Show
+
+```
+GET /api/v3/group-types/:group_type_id
+```
+
+Example Response:
+
+```
+{
+  "data": {
+    "id": 1,
+    "name": "March For Our Lives",
+    "created_at": "2019-12-04T21:28:26+00:00",
+    "updated_at": "2019-12-04T22:33:03+00:00"
+  };
+}
 ```
