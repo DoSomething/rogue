@@ -12,6 +12,7 @@ import ShowSignup from './pages/ShowSignup';
 import ShowSchool from './pages/ShowSchool';
 import ShowCampaign from './pages/ShowCampaign';
 import CampaignIndex from './pages/CampaignIndex';
+import GroupTypeIndex from './pages/GroupTypeIndex';
 
 const Application = () => {
   const endpoint = env('GRAPHQL_URL');
@@ -35,6 +36,9 @@ const Application = () => {
           <Redirect from="/campaigns/:id/inbox" to="/campaigns/:id/pending" />
           <Route path="/campaigns/:id/:status">
             <ShowCampaign />
+          </Route>
+          <Route path="/group-types" exact>
+            <GroupTypeIndex />
           </Route>
           <Route path="/users" exact>
             <UserIndex />
