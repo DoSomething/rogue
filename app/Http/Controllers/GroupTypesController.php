@@ -32,4 +32,15 @@ class GroupTypesController extends ApiController
 
         return $this->paginatedCollection($query, $request);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Rogue\Models\GroupType  $groupType
+     * @return \Illuminate\Http\Response
+     */
+    public function show(GroupType $groupType)
+    {
+        return $this->item($groupType);
+    }
 }

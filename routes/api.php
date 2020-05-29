@@ -58,6 +58,7 @@ $router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function (
 
     // group types
     $this->get('group-types', 'GroupTypesController@index');
+    $this->get('group-types/{groupType}', 'GroupTypesController@show');
 
     // users
     $this->delete('users/{id}', 'UsersController@destroy');

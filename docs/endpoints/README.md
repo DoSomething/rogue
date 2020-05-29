@@ -69,9 +69,10 @@ These endpoints use OAuth 2 to authenticate. [More information here](https://git
 
 #### Group Types
 
-| Endpoint                  | Functionality                     |
-| ------------------------- | --------------------------------- |
-| `GET /api/v3/group-types` | [Get group types](group-types.md) |
+| Endpoint                                 | Functionality                           |
+| ---------------------------------------- | --------------------------------------- |
+| `GET /api/v3/group-types`                | [Get group types](group-types.md#index) |
+| `GET /api/v3/group-types/:group_type_id` | [Get a group type](group-types.md#show) |
 
 #### Users
 
