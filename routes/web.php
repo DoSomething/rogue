@@ -34,6 +34,7 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
 
     // Group Types
     Route::view('group-types', 'app');
+    Route::view('group-types/{id}', 'app');
 
     // Posts
     Route::view('posts/{id}', 'app')->name('posts.show');
