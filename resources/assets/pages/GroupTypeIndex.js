@@ -16,7 +16,7 @@ const GROUP_TYPE_INDEX_QUERY = gql`
 `;
 
 const GroupTypeIndex = () => {
-  const title = 'Group types';
+  const title = 'Groups';
   const { loading, error, data } = useQuery(GROUP_TYPE_INDEX_QUERY);
 
   document.title = title;
@@ -39,11 +39,17 @@ const GroupTypeIndex = () => {
 
   return (
     <Shell title={title}>
+      <div className="container__block -half"></div>
+      <div className="container__block -half form-actions -inline text-right">
+        <a className="button -tertiary" href="/group-types/create">
+          New Group Type
+        </a>
+      </div>
       <div className="container__block">
         <table className="table">
           <thead>
             <tr>
-              <td>Name</td>
+              <td>Type</td>
             </tr>
           </thead>
           <tbody>

@@ -19,7 +19,7 @@ const SHOW_GROUP_TYPE_QUERY = gql`
 
 const ShowGroupType = () => {
   const { id } = useParams();
-  const title = `Group type #${id}`;
+  const title = `Group Type #${id}`;
   document.title = title;
 
   const { loading, error, data } = useQuery(SHOW_GROUP_TYPE_QUERY, {
@@ -40,14 +40,20 @@ const ShowGroupType = () => {
 
   return (
     <Shell title={title} subtitle={name}>
-      <div className="container__row">
-        <div className="container__block">
-          <MetaInformation
-            details={{
-              Created: createdAt,
-            }}
-          />
-        </div>
+      <div className="container__block -half">
+        <MetaInformation
+          details={{
+            Created: createdAt,
+          }}
+        />
+      </div>
+      <div className="container__block -half form-actions -inline text-right">
+        <a
+          className="button -tertiary"
+          href={`/group-types/${id}/groups/create`}
+        >
+          New Group
+        </a>
       </div>
       <div className="container__row">
         <div className="container__block">
@@ -55,6 +61,13 @@ const ShowGroupType = () => {
           <Empty />
         </div>
       </div>
+      <ul className="form-actions margin-vertical">
+        <li>
+          <a className="button -tertiary" href={`/group-types`}>
+            View all Group Types
+          </a>
+        </li>
+      </ul>
     </Shell>
   );
 };
