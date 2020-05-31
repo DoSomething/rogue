@@ -37,14 +37,14 @@ class GroupTypesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, $this->rules);
+        //$this->validate($request, $this->rules);
 
         $groupType = GroupType::create($request->all());
 
         // Log that a group type was created.
         info('group_type', ['id' => $groupType->id]);
 
-        return redirect('group-types/' . $gruopType->id);
+        return redirect('group-types/' . $groupType->id);
     }
 
     /**
@@ -68,7 +68,6 @@ class GroupTypesController extends Controller
      */
     public function update(GroupType $groupType, Request $request)
     {
-  
         $this->validate($request, $this->rules);
 
         $groupType->update($request->all());
