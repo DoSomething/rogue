@@ -16,10 +16,6 @@ class GroupTypesController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
-
-        $this->rules = [
-            'name' => ['required', 'string', 'unique'],
-        ];
     }
 
     /**
@@ -37,7 +33,9 @@ class GroupTypesController extends Controller
      */
     public function store(Request $request)
     {
-        //$this->validate($request, $this->rules);
+        $request->validate([
+            'name' => 'required|unique:group_types',
+        ]);
 
         $groupType = GroupType::create($request->all());
 
