@@ -32,6 +32,10 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::view('campaigns/{id}', 'app');
     Route::view('campaigns/{id}/{status}', 'app');
 
+    // Group Types
+    Route::view('group-types', 'app');
+    Route::view('group-types/{id}', 'app');
+
     // Posts
     Route::view('posts/{id}', 'app')->name('posts.show');
 
