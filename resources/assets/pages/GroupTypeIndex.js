@@ -16,7 +16,7 @@ const GROUP_TYPE_INDEX_QUERY = gql`
 `;
 
 const GroupTypeIndex = () => {
-  const title = 'Groups';
+  const title = 'Group Types';
   const { loading, error, data } = useQuery(GROUP_TYPE_INDEX_QUERY);
 
   document.title = title;
@@ -49,7 +49,7 @@ const GroupTypeIndex = () => {
         <table className="table">
           <thead>
             <tr>
-              <td>Type</td>
+              <td>Group Type ID</td>
             </tr>
           </thead>
           <tbody>

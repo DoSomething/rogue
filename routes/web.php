@@ -16,15 +16,13 @@ Route::view('faq', 'pages.faq');
 Route::get('login', 'AuthController@getLogin');
 Route::get('logout', 'AuthController@getLogout');
 
-/**
- * Server-rendered routes.
- * TODO: These should be updated to client-side routes once GraphQL migrations are added.
- */
+// Server-rendered routes:
+// @TODO: These should be updated to client-side routes!
 
 // Actions
 Route::resource('actions', 'ActionsController', ['except' => 'show']);
-// Campaigns
 Route::get('campaigns/{id}/actions/create', 'ActionsController@create');
+// Campaigns
 Route::resource('campaigns', 'CampaignsController', ['except' => ['index', 'show']]);
 // Group Types
 Route::get('group-types/{id}/groups/create', 'GroupsController@create');

@@ -176,6 +176,10 @@ $factory->defineAs(User::class, 'admin', function () use ($factory) {
     return array_merge($factory->raw(User::class), ['role' => 'admin']);
 });
 
+$factory->defineAs(User::class, 'staff', function () use ($factory) {
+    return array_merge($factory->raw(User::class), ['role' => 'staff']);
+});
+
 // Campaign Factory
 $factory->define(Campaign::class, function (Generator $faker) {
     return [

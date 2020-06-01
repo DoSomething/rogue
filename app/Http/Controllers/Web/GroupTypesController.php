@@ -4,7 +4,6 @@ namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Models\GroupType;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
 
 class GroupTypesController extends Controller
@@ -51,7 +50,6 @@ class GroupTypesController extends Controller
      * Edit an existing action.
      *
      * @param  \Rogue\Models\GroupType  $groupType
-     * @param  $campaignId
      */
     public function edit(GroupType $groupType)
     {

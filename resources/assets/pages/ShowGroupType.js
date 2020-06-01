@@ -38,15 +38,17 @@ const ShowGroupType = () => {
 
   const { createdAt, name } = data.groupType;
 
+  /**
+   * Note: Eventually, we'll link to `/group-types/${id}/groups/create` to create new groups for the
+   * current group type.
+   */
+
   return (
     <Shell title={title} subtitle={name}>
       <div className="container__block -half"></div>
       <div className="container__block -half form-actions -inline text-right">
         <div className="container__block -narrow">
-          <a
-            className="button -secondary"
-            href={`/group-types/${id}/groups/create`}
-          >
+          <a className="button -secondary" href="#">
             Add Group
           </a>
         </div>
