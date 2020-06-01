@@ -40,28 +40,28 @@ const ShowGroupType = () => {
 
   return (
     <Shell title={title} subtitle={name}>
-      <div className="container__block -half">
-        <MetaInformation
-          details={{
-            Created: createdAt,
-          }}
-        />
-      </div>
+      <div className="container__block -half"></div>
       <div className="container__block -half form-actions -inline text-right">
-        <a
-          className="button -tertiary"
-          href={`/group-types/${id}/groups/create`}
-        >
-          New Group
-        </a>
+        <div className="container__block -narrow">
+          <a
+            className="button -secondary"
+            href={`/group-types/${id}/groups/create`}
+          >
+            Add Group
+          </a>
+        </div>
       </div>
       <div className="container__row">
         <div className="container__block">
-          <h3>Groups</h3>
           <Empty />
         </div>
       </div>
       <ul className="form-actions margin-vertical">
+        <li>
+          <a className="button -tertiary" href={`/group-types/${id}/edit`}>
+            Edit Group Type #{id}
+          </a>
+        </li>
         <li>
           <a className="button -tertiary" href={`/group-types`}>
             View all Group Types
