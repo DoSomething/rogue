@@ -45,16 +45,25 @@ const ShowGroupType = () => {
 
   return (
     <Shell title={title} subtitle={name}>
-      <div className="container__block -half"></div>
-      <div className="container__block -half form-actions -inline text-right">
-        <div className="container__block -narrow">
-          <a className="button -secondary" href="#">
-            Add Group
-          </a>
+      <div className="container__row">
+        <div className="container__block -half">
+          <MetaInformation
+            details={{
+              Campaigns: '--',
+            }}
+          />
+        </div>
+        <div className="container__block -half form-actions -inline text-right">
+          <div className="container__block -narrow">
+            <a className="button -secondary" href="#">
+              Add Group
+            </a>
+          </div>
         </div>
       </div>
       <div className="container__row">
         <div className="container__block">
+          <h3>Groups</h3>
           <Empty />
         </div>
       </div>
