@@ -18,14 +18,9 @@ Route::get('logout', 'AuthController@getLogout');
 
 // Server-rendered routes:
 // @TODO: These should be updated to client-side routes!
-
-// Actions
 Route::resource('actions', 'ActionsController', ['except' => 'show']);
 Route::get('campaigns/{id}/actions/create', 'ActionsController@create');
-// Campaigns
 Route::resource('campaigns', 'CampaignsController', ['except' => ['index', 'show']]);
-// Group Types
-Route::get('group-types/{id}/groups/create', 'GroupsController@create');
 Route::resource('group-types', 'GroupTypesController', ['except' => ['index', 'show']]);
 
 // Client-side routes:
