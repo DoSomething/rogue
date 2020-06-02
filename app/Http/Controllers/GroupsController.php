@@ -30,6 +30,9 @@ class GroupsController extends ApiController
     {
         $query = $this->newQuery(Group::class);
 
+        $filters = $request->query('filter');
+        $query = $this->filter($query, $filters, Group::$indexes);
+
         return $this->paginatedCollection($query, $request);
     }
 
