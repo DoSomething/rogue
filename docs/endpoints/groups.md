@@ -1,9 +1,9 @@
-## Group Types
+## Groups
 
 ### Index
 
 ```
-GET /api/v3/group-types
+GET /api/v3/groups
 ```
 
 Example Response:
@@ -12,14 +12,18 @@ Example Response:
 {
   "data": [
     {
-      "id": 1,
-      "name": "March For Our Lives",
+      "id": 12,
+      "group_type_id": 1,
+      "name": "New York",
+      "goal": 200,
       "created_at": "2019-12-04T21:28:26+00:00",
       "updated_at": "2019-12-04T22:33:03+00:00"
     },
     {
-      "id": 2,
-      "name": "College Board",
+      "id": 23,
+      "group_type_id": 1,
+      "name": "San Francisco",
+      "goal": null,
       "created_at": "2019-12-04T22:05:29+00:00",
       "updated_at": "2019-12-04T22:05:29+00:00"
     }
@@ -41,7 +45,7 @@ Example Response:
 ### Show
 
 ```
-GET /api/v3/group-types/:group_type_id
+GET /api/v3/groups/:group_id
 ```
 
 Example Response:
@@ -49,8 +53,10 @@ Example Response:
 ```
 {
   "data": {
-    "id": 1,
-    "name": "March For Our Lives",
+    "id": 12,
+    "group_type_id": 1,
+    "name": "New York",
+    "goal": 200,
     "created_at": "2019-12-04T21:28:26+00:00",
     "updated_at": "2019-12-04T22:33:03+00:00"
   };
