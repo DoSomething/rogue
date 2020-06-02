@@ -14,7 +14,7 @@ class GroupTypeTest extends TestCase
         // Verify redirected to new resource.
         $this->actingAsAdmin()
             ->postJson('group-types', ['name' => $name])
-            ->assertRedirect('group-types/1');
+            ->assertStatus(302);
 
         $this->assertDatabaseHas('group_types', [
             'name' => $name,
