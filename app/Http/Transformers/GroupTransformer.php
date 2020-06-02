@@ -19,6 +19,7 @@ class GroupTransformer extends TransformerAbstract
             'id' => $group->id,
             'group_type_id' => $group->group_type_id,
             'name' => $group->name,
+            'goal' => $group->goal,
             'created_at' => $group->created_at->toIso8601String(),
             'updated_at' => $group->updated_at->toIso8601String(),
         ];

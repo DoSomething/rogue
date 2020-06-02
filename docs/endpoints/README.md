@@ -67,6 +67,13 @@ These endpoints use OAuth 2 to authenticate. [More information here](https://git
 | -------------------------- | ----------------------------------- |
 | `GET /api/v3/action-stats` | [Get action stats](action-stats.md) |
 
+#### Groups
+
+| Endpoint                       | Functionality                 |
+| ------------------------------ | ----------------------------- |
+| `GET /api/v3/groups`           | [Get groups](groups.md#index) |
+| `GET /api/v3/groups/:group_id` | [Get a group](groups.md#show) |
+
 #### Group Types
 
 | Endpoint                                 | Functionality                           |
