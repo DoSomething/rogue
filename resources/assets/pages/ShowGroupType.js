@@ -87,7 +87,7 @@ const ShowGroupType = () => {
           )}
           <div className="container__block -narrow">
             <a
-              className="button -secondary"
+              className="button -primary"
               href={`/group-types/${id}/groups/create`}
             >
               Add Group
