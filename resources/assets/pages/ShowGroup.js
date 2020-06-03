@@ -11,7 +11,7 @@ import MetaInformation from '../components/utilities/MetaInformation';
 const SHOW_GROUP_QUERY = gql`
   query ShowGroupQuery($id: Int!) {
     group(id: $id) {
-      createdAt
+      goal
       groupTypeId
       name
     }
@@ -37,7 +37,7 @@ const ShowGroup = () => {
 
   if (!data.group) return <NotFound title={title} type="group" />;
 
-  const { createdAt, groupTypeId, name } = data.group;
+  const { goal, groupTypeId, name } = data.group;
 
   return (
     <Shell title={title} subtitle={name}>
@@ -45,16 +45,14 @@ const ShowGroup = () => {
         <div className="container__block -half">
           <MetaInformation
             details={{
-              Created: createdAt,
+              Goal: goal || '--',
             }}
           />
         </div>
         <div className="container__block -half form-actions -inline text-right">
-          <div className="container__block -narrow">
-            <a className="button -tertiary" href={`/groups/${id}/edit`}>
-              Edit Group
-            </a>
-          </div>
+          <a className="button -tertiary" href={`/groups/${id}/edit`}>
+            Edit Group
+          </a>
         </div>
       </div>
       <div className="container__row">

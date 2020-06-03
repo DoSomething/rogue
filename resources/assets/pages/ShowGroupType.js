@@ -16,6 +16,7 @@ const SHOW_GROUP_TYPE_QUERY = gql`
     }
     groups(groupTypeId: $id) {
       id
+      goal
       name
     }
   }
@@ -65,6 +66,7 @@ const ShowGroupType = () => {
               <thead>
                 <tr>
                   <td>Group ID</td>
+                  <td>Goal</td>
                 </tr>
               </thead>
               <tbody>
@@ -75,6 +77,7 @@ const ShowGroupType = () => {
                         {group.name} ({group.id})
                       </a>
                     </td>
+                    <td>{group.goal || '--'}</td>
                   </tr>
                 ))}
               </tbody>
