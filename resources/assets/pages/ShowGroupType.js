@@ -53,14 +53,9 @@ const ShowGroupType = () => {
           />
         </div>
         <div className="container__block -half form-actions -inline text-right">
-          <div className="container__block -narrow">
-            <a
-              className="button -secondary"
-              href={`/group-types/${id}/groups/create`}
-            >
-              Add Group
-            </a>
-          </div>
+          <a className="button -tertiary" href={`/group-types/${id}/edit`}>
+            Edit Group Type #{id}
+          </a>
         </div>
       </div>
       <div className="container__row">
@@ -87,14 +82,17 @@ const ShowGroupType = () => {
           ) : (
             <Empty />
           )}
+          <div className="container__block -narrow">
+            <a
+              className="button -secondary"
+              href={`/group-types/${id}/groups/create`}
+            >
+              Add Group
+            </a>
+          </div>
         </div>
       </div>
       <ul className="form-actions margin-vertical">
-        <li>
-          <a className="button -tertiary" href={`/group-types/${id}/edit`}>
-            Edit Group Type #{id}
-          </a>
-        </li>
         <li>
           <a className="button -tertiary" href={`/group-types`}>
             View all Group Types
