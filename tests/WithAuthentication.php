@@ -17,4 +17,16 @@ trait WithAuthentication
 
         return $this->actingAs($user);
     }
+
+    /**
+     * Create a staffer & log them in to the application.
+     *
+     * @return $this
+     */
+    public function actingAsStaff()
+    {
+        $user = factory(User::class, 'staff')->create();
+
+        return $this->actingAs($user);
+    }
 }

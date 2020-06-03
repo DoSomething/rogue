@@ -21,6 +21,7 @@ Route::get('logout', 'AuthController@getLogout');
 Route::resource('actions', 'ActionsController', ['except' => 'show']);
 Route::get('campaigns/{id}/actions/create', 'ActionsController@create');
 Route::resource('campaigns', 'CampaignsController', ['except' => ['index', 'show']]);
+Route::resource('group-types', 'GroupTypesController', ['except' => ['index', 'show']]);
 
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
