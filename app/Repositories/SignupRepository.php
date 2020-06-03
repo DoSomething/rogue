@@ -26,6 +26,7 @@ class SignupRepository
         $signup->source_details = isset($data['source_details']) ? $data['source_details'] : null;
         $signup->details = isset($data['details']) ? $data['details'] : null;
         $signup->referrer_user_id = isset($data['referrer_user_id']) ? $data['referrer_user_id'] : null;
+        $signup->group_id = isset($data['group_id']) ? $data['group_id'] : null;
         $signup->save();
 
         return $signup;
