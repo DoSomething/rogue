@@ -27,7 +27,7 @@ class Campaign extends Model
      *
      * @var array
      */
-    protected $fillable = ['internal_title', 'cause', 'impact_doc', 'start_date', 'end_date', 'contentful_campaign_id'];
+    protected $fillable = ['internal_title', 'cause', 'impact_doc', 'start_date', 'end_date', 'contentful_campaign_id', 'group_type_id'];
 
     /**
      * Attributes that can be queried when filtering.
