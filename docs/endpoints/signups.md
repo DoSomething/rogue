@@ -20,7 +20,7 @@ POST /api/v3/signups
   The source of the signup.
 - **details**: (string) optional
   Details to be added to the "details" column on the signup, such as signed up to receive affiliate messaging.
-- **referrer_user_id** :(string) optional.
+- **referrer_user_id**: (string) optional.
   The referring User ID that this signup should be associated with.
 - **group_id**: (int) optional.
   The Group ID that this signup should be associated with.
@@ -70,7 +70,7 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
   - You can also use include parameters to only return posts by type.
   - e.g. To only return text and photo posts: `api/v3/signups?include=posts:type(text|photo)`
 - **filter[column]** _(string)_
-  - Filter results by the given column: `northstar_id`, `campaign_id`, `source`, `group_id`
+  - Filter results by a column: `id`, `northstar_id`, `campaign_id`, `source`, `referrer_user_id`, `group_id`
   - You can filter by more than one column, e.g. `/signups?filter[id]=4&filter[campaign_id]=5`
   - You can filter by more than one value for a column, e.g. `/signups?filter[campaign_id]=121,122`
 - **orderBy** _(string)_
