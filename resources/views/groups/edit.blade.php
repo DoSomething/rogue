@@ -2,21 +2,26 @@
 
 @section('main_content')
 
-    @include('layouts.header', ['header' => 'Edit Group Type'])
+    @include('layouts.header', ['header' => 'Edit Group'])
 
     <div class="container -padded">
         <div class="wrapper">
             <div class="container__block -narrow">
                 <h1>
-                    <a href="/group-types/{{ $groupType->id }}">{{ $groupType->name }}</a>
+                    <a href="/groups/{{ $group->id }}">{{ $group->name }}</a>
                 </h1>
-                <form method="POST" action="{{ route('group-types.update', $groupType->id) }}">
+                <form method="POST" action="{{ route('groups.update', $group->id) }}">
                     {{ csrf_field()}}
                     {{ method_field('PATCH') }}
 
                     <div class="form-item">
                         <label class="field-label">Name</label>
-                        @include('forms.text', ['name' => 'name', 'placeholder' => 'e.g. March For Our Lives, DoSomething Clubs', 'value' => $groupType->name])
+                        @include('forms.text', ['name' => 'name', 'placeholder' => 'e.g. NYC Chapter', 'value' => $group->name])
+                    </div>
+
+                    <div class="form-item">
+                        <label class="field-label">Goal</label>
+                        @include('forms.text', ['name' => 'goal', 'placeholder' => 'e.g. 200 (optional)', 'value' => $group->goal])
                     </div>
 
                     <ul class="form-actions -inline -padded">
