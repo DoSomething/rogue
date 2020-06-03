@@ -9,7 +9,7 @@ POST /api/v3/signups
 ```
 
 - **campaign_id**: (int|string) required without action_id.
-  The drupal node id of the campaign the user is signing up for.
+  The ID of the campaign the user is signing up for.
 - **action_id**: (int) required without campaign_id.
   The action ID of the action that the user's post is associated with.
 - **northstar_id**: (int) optional.
