@@ -19,7 +19,7 @@ class GroupsController extends Controller
         // @TODO: We should validate that name field is unique within the group type.
         $this->rules = [
             'name' => 'required',
-            'goal' => 'nullable|integer'
+            'goal' => 'nullable|integer',
         ];
     }
 
