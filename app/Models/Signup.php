@@ -56,8 +56,8 @@ class Signup extends Model
      */
     public static $indexes = [
         'campaign_id',
-        'id',
         'group_id',
+        'id',
         'quantity',
         'northstar_id',
         'referrer_user_id',

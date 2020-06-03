@@ -70,7 +70,15 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
   - You can also use include parameters to only return posts by type.
   - e.g. To only return text and photo posts: `api/v3/signups?include=posts:type(text|photo)`
 - **filter[column]** _(string)_
-  - Filter results by a column: `id`, `northstar_id`, `campaign_id`, `source`, `referrer_user_id`, `group_id`
+  - Filter results by a column. Available columns:
+    - `campaign_id`
+    - `group_id`
+    - `id`
+    - `quantity`
+    - `northstar_id`
+    - `referrer_user_id`
+    - `source`
+    - `updated_at`
   - You can filter by more than one column, e.g. `/signups?filter[id]=4&filter[campaign_id]=5`
   - You can filter by more than one value for a column, e.g. `/signups?filter[campaign_id]=121,122`
 - **orderBy** _(string)_
