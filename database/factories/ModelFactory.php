@@ -4,6 +4,7 @@ use Faker\Generator;
 use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Types\Cause;
+use Rogue\Models\Group;
 use Rogue\Models\Action;
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
@@ -202,6 +203,16 @@ $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($
 // Group Type Factory
 $factory->define(GroupType::class, function (Generator $faker) {
     return [
+        'name' => title_case($faker->unique()->company),
+    ];
+});
+
+// Group Factory
+$factory->define(Group::class, function (Generator $faker) {
+    return [
+        'group_type_id' => function () {
+            return factory(GroupType::class)->create()->id;
+        },
         'name' => title_case($faker->unique()->company),
     ];
 });

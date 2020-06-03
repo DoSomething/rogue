@@ -5,6 +5,7 @@ namespace Tests\Http;
 use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\User;
+use Rogue\Models\Group;
 use Rogue\Models\Signup;
 use DoSomething\Gateway\Blink;
 
@@ -41,6 +42,7 @@ class SignupTest extends TestCase
                 'source' => 'phpunit',
                 'why_participated' => null,
                 'referrer_user_id' => $referrerUserId,
+                'group_id' => null,
             ],
         ]);
 
@@ -50,6 +52,44 @@ class SignupTest extends TestCase
             'campaign_id' => $campaignId,
             'quantity' => null,
             'details' => 'affiliate-messaging',
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /signups creates a new signup with group_id if passed.
+     *
+     * POST /api/v3/signups
+     * @return void
+     */
+    public function testCreatingASignupWithGroupId()
+    {
+        $northstarId = $this->faker->northstar_id;
+        $campaignId = $this->faker->randomNumber(4);
+        $group = factory(Group::class)->create();
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignup');
+
+        $response = $this->withAccessToken($northstarId)->postJson('api/v3/signups', [
+            'campaign_id' => $campaignId,
+            'group_id' => $group->id,
+        ]);
+
+        // Make sure we get the 201 Created response
+        $response->assertStatus(201);
+        $response->assertJson([
+            'data' => [
+                'northstar_id' => $northstarId,
+                'campaign_id' => $campaignId,
+                'group_id' => $group->id,
+            ],
+        ]);
+
+        // Make sure the signup is persisted.
+        $this->assertDatabaseHas('signups', [
+            'northstar_id' => $northstarId,
+            'campaign_id' => $campaignId,
+            'group_id' => $group->id,
         ]);
     }
 
