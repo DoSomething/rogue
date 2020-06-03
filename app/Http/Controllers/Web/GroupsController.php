@@ -16,8 +16,10 @@ class GroupsController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
 
+        // @TODO: We should validate that name field is unique within the group type.
         $this->rules = [
-            'name' => 'required|unique:groups,group_type_id',
+            'name' => 'required',
+            'goal' => 'nullable|integer'
         ];
     }
 
