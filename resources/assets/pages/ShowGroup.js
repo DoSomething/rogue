@@ -8,21 +8,22 @@ import Empty from '../components/Empty';
 import Shell from '../components/utilities/Shell';
 import MetaInformation from '../components/utilities/MetaInformation';
 
-const SHOW_GROUP_TYPE_QUERY = gql`
-  query ShowGroupTypeQuery($id: Int!) {
-    groupType(id: $id) {
+const SHOW_GROUP_QUERY = gql`
+  query ShowGroupQuery($id: Int!) {
+    group(id: $id) {
       createdAt
+      groupTypeId
       name
     }
   }
 `;
 
-const ShowGroupType = () => {
+const ShowGroup = () => {
   const { id } = useParams();
-  const title = `Group Type #${id}`;
+  const title = `Group #${id}`;
   document.title = title;
 
-  const { loading, error, data } = useQuery(SHOW_GROUP_TYPE_QUERY, {
+  const { loading, error, data } = useQuery(SHOW_GROUP_QUERY, {
     variables: { id: Number(id) },
   });
 
@@ -34,9 +35,9 @@ const ShowGroupType = () => {
     return <Shell title={title} loading />;
   }
 
-  if (!data.groupType) return <NotFound title={title} type="group type" />;
+  if (!data.group) return <NotFound title={title} type="group" />;
 
-  const { createdAt, name } = data.groupType;
+  const { createdAt, groupTypeId, name } = data.group;
 
   return (
     <Shell title={title} subtitle={name}>
@@ -44,36 +45,28 @@ const ShowGroupType = () => {
         <div className="container__block -half">
           <MetaInformation
             details={{
-              Campaigns: '--',
+              Created: createdAt,
             }}
           />
         </div>
         <div className="container__block -half form-actions -inline text-right">
           <div className="container__block -narrow">
-            <a
-              className="button -secondary"
-              href={`/group-types/${id}/groups/create`}
-            >
-              Add Group
+            <a className="button -tertiary" href={`/groups/${id}/edit`}>
+              Edit Group
             </a>
           </div>
         </div>
       </div>
       <div className="container__row">
         <div className="container__block">
-          <h3>Groups</h3>
+          <h3>Signups</h3>
           <Empty />
         </div>
       </div>
       <ul className="form-actions margin-vertical">
         <li>
-          <a className="button -tertiary" href={`/group-types/${id}/edit`}>
-            Edit Group Type #{id}
-          </a>
-        </li>
-        <li>
-          <a className="button -tertiary" href={`/group-types`}>
-            View all Group Types
+          <a className="button -tertiary" href={`/group-types/${groupTypeId}`}>
+            View all Groups for Group Type #{groupTypeId}
           </a>
         </li>
       </ul>
@@ -81,4 +74,4 @@ const ShowGroupType = () => {
   );
 };
 
-export default ShowGroupType;
+export default ShowGroup;
