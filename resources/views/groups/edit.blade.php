@@ -16,12 +16,12 @@
 
                     <div class="form-item">
                         <label class="field-label">Name</label>
-                        @include('forms.text', ['name' => 'name', 'placeholder' => 'e.g. NYC Chapter', 'value' => $group->name])
+                        @include('forms.text', ['name' => 'name', 'placeholder' => 'Group name, e.g. NYC Chapter', 'value' => $group->name])
                     </div>
 
                     <div class="form-item">
                         <label class="field-label">Goal</label>
-                        @include('forms.text', ['name' => 'goal', 'placeholder' => 'e.g. 200 (optional)', 'value' => $group->goal])
+                        @include('forms.text', ['name' => 'goal', 'placeholder' => 'Optional group goal, e.g. 200', 'value' => $group->goal])
                     </div>
 
                     <ul class="form-actions -inline -padded">
