@@ -7,6 +7,7 @@ import graphql from './graphql';
 import ShowPost from './pages/ShowPost';
 import ShowUser from './pages/ShowUser';
 import UserIndex from './pages/UserIndex';
+import ShowGroup from './pages/ShowGroup';
 import ShowAction from './pages/ShowAction';
 import ShowSignup from './pages/ShowSignup';
 import ShowSchool from './pages/ShowSchool';
@@ -43,6 +44,9 @@ const Application = () => {
           </Route>
           <Route path="/group-types/:id">
             <ShowGroupType />
+          </Route>
+          <Route path="/groups/:id">
+            <ShowGroup />
           </Route>
           <Route path="/users" exact>
             <UserIndex />

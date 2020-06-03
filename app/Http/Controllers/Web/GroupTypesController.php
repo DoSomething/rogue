@@ -66,6 +66,8 @@ class GroupTypesController extends Controller
      */
     public function update(GroupType $groupType, Request $request)
     {
+        // @TODO: Override unique rule.
+        // @see https://github.com/DoSomething/rogue/pull/1030#discussion_r434628475
         $this->validate($request, $this->rules);
 
         $groupType->update($request->all());

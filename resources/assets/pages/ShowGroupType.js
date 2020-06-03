@@ -14,6 +14,11 @@ const SHOW_GROUP_TYPE_QUERY = gql`
       createdAt
       name
     }
+    groups(groupTypeId: $id) {
+      id
+      goal
+      name
+    }
   }
 `;
 
@@ -38,11 +43,6 @@ const ShowGroupType = () => {
 
   const { createdAt, name } = data.groupType;
 
-  /**
-   * Note: Eventually, we'll link to `/group-types/${id}/groups/create` to create new groups for the
-   * current group type.
-   */
-
   return (
     <Shell title={title} subtitle={name}>
       <div className="container__row">
@@ -54,25 +54,48 @@ const ShowGroupType = () => {
           />
         </div>
         <div className="container__block -half form-actions -inline text-right">
+          <a className="button -tertiary" href={`/group-types/${id}/edit`}>
+            Edit Group Type #{id}
+          </a>
+        </div>
+      </div>
+      <div className="container__row">
+        <div className="container__block">
+          {data.groups ? (
+            <table className="table">
+              <thead>
+                <tr>
+                  <td>Group ID</td>
+                  <td>Goal</td>
+                </tr>
+              </thead>
+              <tbody>
+                {data.groups.map(group => (
+                  <tr>
+                    <td>
+                      <a href={`/groups/${group.id}`}>
+                        {group.name} ({group.id})
+                      </a>
+                    </td>
+                    <td>{group.goal || '--'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <Empty />
+          )}
           <div className="container__block -narrow">
-            <a className="button -secondary" href="#">
+            <a
+              className="button -primary"
+              href={`/group-types/${id}/groups/create`}
+            >
               Add Group
             </a>
           </div>
         </div>
       </div>
-      <div className="container__row">
-        <div className="container__block">
-          <h3>Groups</h3>
-          <Empty />
-        </div>
-      </div>
       <ul className="form-actions margin-vertical">
-        <li>
-          <a className="button -tertiary" href={`/group-types/${id}/edit`}>
-            Edit Group Type #{id}
-          </a>
-        </li>
         <li>
           <a className="button -tertiary" href={`/group-types`}>
             View all Group Types
