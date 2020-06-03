@@ -18,7 +18,6 @@ class GroupsController extends Controller
 
         $this->rules = [
             'name' => 'required|unique:groups,group_type_id',
-            'goal' => 'integer',
         ];
     }
 
