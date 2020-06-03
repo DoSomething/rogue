@@ -22,8 +22,8 @@ Route::resource('actions', 'ActionsController', ['except' => 'show']);
 Route::get('campaigns/{id}/actions/create', 'ActionsController@create');
 Route::resource('campaigns', 'CampaignsController', ['except' => ['index', 'show']]);
 Route::resource('group-types', 'GroupTypesController', ['except' => ['index', 'show']]);
-Route::resource('groups', 'GroupsController', ['except' => 'show']);
 Route::get('group-types/{id}/groups/create', 'GroupsController@create');
+Route::resource('groups', 'GroupsController', ['except' => 'show']);
 
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
