@@ -14,6 +14,10 @@ const SHOW_GROUP_TYPE_QUERY = gql`
       createdAt
       name
     }
+    groups(groupTypeId: $id) {
+      id
+      name
+    }
   }
 `;
 
@@ -61,8 +65,28 @@ const ShowGroupType = () => {
       </div>
       <div className="container__row">
         <div className="container__block">
-          <h3>Groups</h3>
-          <Empty />
+          {data.groups ? (
+            <table className="table">
+              <thead>
+                <tr>
+                  <td>Group ID</td>
+                </tr>
+              </thead>
+              <tbody>
+                {data.groups.map(group => (
+                  <tr>
+                    <td>
+                      <a href={`/groups/${group.id}`}>
+                        {group.name} ({group.id})
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <Empty />
+          )}
         </div>
       </div>
       <ul className="form-actions margin-vertical">

@@ -12,7 +12,7 @@
 
                     <div class="form-item">
                         <label class="field-label">Name</label>
-                        @include('forms.text', ['name' => 'name', 'placeholder' => 'NYC Chapter'])
+                        @include('forms.text', ['name' => 'name', 'placeholder' => 'Enter group name'])
                     </div>
 
                     <ul class="form-actions -inline -padded">
