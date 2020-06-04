@@ -27,7 +27,7 @@ class CampaignsController extends Controller
             'impact_doc' => ['required', 'url'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date', 'after:start_date'],
-            'group_type_id' => ['nullable', 'integer']
+            'group_type_id' => ['nullable', 'integer'],
         ];
     }
 
@@ -68,7 +68,7 @@ class CampaignsController extends Controller
         return view('campaigns.edit', [
             'campaign' => $campaign,
             'causes' => Cause::labels(),
-            'group_types' => GroupType::all()
+            'group_types' => GroupType::all(),
         ]);
     }
 
