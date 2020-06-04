@@ -1,11 +1,11 @@
 <div class="select">
     <select name="{{ $name }}">
-        <option value="" {{ ! old($name) && ! isset($value) ? 'selected' : '' }} disabled>{{ $placeholder or '–' }}</option>
+        <option value="" {{ ! old($value) && empty($value) ? 'selected' : '' }} disabled>{{ $value or '–' }}</option>
         @foreach($options as $option)
-            @if (old($name))
-                <option value="{{ $option->id}}" {{ old($name) === $option->name ? 'selected': '' }}>{{ $option->name }}</option>
+            @if (old($value))
+                <option value="{{ $option->id}}" {{ old($value) === $option->id? 'selected': '' }}>{{ $option->name }}</option>
             @else
-                <option value="{{ $option->id }}" {{ isset($value) && $value === $option->id ? 'selected': '' }}>{{ $option->name  }}</option>
+                <option value="{{ $option->id }}" {{ empty($value) && $value === $option->id ? 'selected': '' }}>{{ $option->name  }}</option>
             @endif
         @endforeach
     </select>
