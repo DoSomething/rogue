@@ -12,7 +12,10 @@ const SHOW_GROUP_QUERY = gql`
   query ShowGroupQuery($id: Int!) {
     group(id: $id) {
       goal
-      groupTypeId
+      groupType {
+        id
+        name
+      }
       name
     }
   }
@@ -37,10 +40,10 @@ const ShowGroup = () => {
 
   if (!data.group) return <NotFound title={title} type="group" />;
 
-  const { goal, groupTypeId, name } = data.group;
+  const { goal, groupType, name } = data.group;
 
   return (
-    <Shell title={title} subtitle={name}>
+    <Shell title={title} subtitle={`${name} (${groupType.name})`}>
       <div className="container__row">
         <div className="container__block -half">
           <MetaInformation
@@ -63,8 +66,8 @@ const ShowGroup = () => {
       </div>
       <ul className="form-actions margin-vertical">
         <li>
-          <a className="button -tertiary" href={`/group-types/${groupTypeId}`}>
-            View all Groups for Group Type #{groupTypeId}
+          <a className="button -tertiary" href={`/group-types/${groupType.id}`}>
+            View all {groupType.name} Groups
           </a>
         </li>
       </ul>
