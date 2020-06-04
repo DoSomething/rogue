@@ -25,6 +25,15 @@
                             <input type="text" name="contentful_campaign_id" class="text-field" value="{{ old('contentful_campaign_id') }}">
                             <p class="footnote"><em>If you are creating a campaign and want it to show up on <a href="https://www.dosomething.org/us/campaigns">Explore Campaigns</a> or under “Campaigns” on Cause Hub pages [<a href="https://www.dosomething.org/us/causes/education">example</a>] you must fill this in. <a href="https://user-images.githubusercontent.com/2658867/75452147-bb652080-593f-11ea-8338-188feecad0bd.png">Here’s how you can find the Contentful ID.</a></em></p>
                         </div>
+
+                        <div class="form-item">
+                            <label class="field-label">Group Type<em>(optional)</em>
+                                <select name="group_type_id">
+                                    <option value={{}}>
+                                    </option>                          
+                                </select>
+                            </label>
+                        </div>
                     @endif
 
                     <div class="form-item">
