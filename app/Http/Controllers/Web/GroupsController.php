@@ -4,6 +4,7 @@ namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
 
 class GroupsController extends Controller
@@ -16,7 +17,6 @@ class GroupsController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin,staff');
 
-        // @TODO: We should validate that name field is unique within the group type.
         $this->rules = [
             'name' => 'required',
             'goal' => 'nullable|integer',
@@ -38,7 +38,9 @@ class GroupsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->rules);
+        $values = $this->validate($request, array_merge_recursive($this->rules, [
+            'name' => [Rule::unique('groups')->where('group_type_id', $request->group_type_id)],
+        ]));
 
         $group = Group::create($request->all());
 
