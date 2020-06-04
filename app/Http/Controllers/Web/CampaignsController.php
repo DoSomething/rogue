@@ -68,6 +68,7 @@ class CampaignsController extends Controller
         return view('campaigns.edit', [
             'campaign' => $campaign,
             'causes' => Cause::labels(),
+            'group_types' => GroupType::all()
         ]);
     }
 
