@@ -67,7 +67,6 @@ class SignupTest extends TestCase
         $campaignId = $this->faker->randomNumber(4);
         $group = factory(Group::class)->create();
 
-        // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
 
         $response = $this->withAccessToken($northstarId)->postJson('api/v3/signups', [
@@ -75,7 +74,6 @@ class SignupTest extends TestCase
             'group_id' => $group->id,
         ]);
 
-        // Make sure we get the 201 Created response
         $response->assertStatus(201);
         $response->assertJson([
             'data' => [
@@ -83,13 +81,6 @@ class SignupTest extends TestCase
                 'campaign_id' => $campaignId,
                 'group_id' => $group->id,
             ],
-        ]);
-
-        // Make sure the signup is persisted.
-        $this->assertDatabaseHas('signups', [
-            'northstar_id' => $northstarId,
-            'campaign_id' => $campaignId,
-            'group_id' => $group->id,
         ]);
     }
 
