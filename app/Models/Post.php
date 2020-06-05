@@ -48,7 +48,27 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'signup_id', 'campaign_id', 'northstar_id', 'type', 'action', 'action_id', 'details', 'quantity', 'url', 'text', 'status', 'source', 'source_details', 'location', 'postal_code', 'school_id', 'referrer_user_id'];
+    protected $fillable = [
+        'action',
+        'action_id',
+        'campaign_id',
+        'details',
+        'group_id',
+        'id',
+        'location',
+        'postal_code',
+        'quantity',
+        'northstar_id',
+        'referrer_user_id',
+        'school_id',
+        'signup_id',
+        'source',
+        'source_details',
+        'status',
+        'text',
+        'type',
+        'url',
+    ];
 
     /**
      * Attributes that can be queried when filtering.
