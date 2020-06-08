@@ -65,10 +65,6 @@ class CampaignsController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        $group_type_labels = GroupType::all()->map(function ($groupType) {
-            return [$groupType->id => $groupType->name];
-        })->flatten();
-
         return view('campaigns.edit', [
             'campaign' => $campaign,
             'causes' => Cause::labels(),
