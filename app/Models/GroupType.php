@@ -25,18 +25,15 @@ class GroupType extends Model
 
     /**
      * Creates an array of grouptype labels, where the key is the id and the value is the grouptype name.
-     * 
+     *
      * @return array
      * 
      */
     public static function labels()
     {
-        $result = [];
-
-        foreach(GroupType::all() as $groupType) {
+        return self::all()->reduce(function ($result, $groupType) {
             $result[$groupType->id] = $groupType->name;
-        }
-
-        return $result;
+            return $result;
+        }, []);
     }
 }
