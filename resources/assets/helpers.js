@@ -74,7 +74,7 @@ export function env(key) {
  * @return {String}
  */
 export function formatDateTime(dateTimeString) {
-  return format(parse(dateTimeString), 'M/D/YYYY h:m A');
+  return format(parse(dateTimeString), 'M/D/YYYY h:mm A');
 }
 
 /**
