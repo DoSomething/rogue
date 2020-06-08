@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import NotFound from './NotFound';
 import Empty from '../components/Empty';
+import { formatDateTime } from '../helpers';
 import Shell from '../components/utilities/Shell';
 import MetaInformation from '../components/utilities/MetaInformation';
 
@@ -94,7 +95,7 @@ const ShowGroup = () => {
                       {signup.campaign.internalTitle}
                     </a>
                   </td>
-                  <td>{signup.createdAt}</td>
+                  <td>{formatDateTime(signup.createdAt)}</td>
                 </tr>
               ))}
             </table>
