@@ -36,7 +36,7 @@ class CampaignsController extends Controller
      */
     public function create()
     {
-        $group_type_labels = GroupType::all()->map(function($groupType) {
+        $group_type_labels = GroupType::all()->map(function ($groupType) {
             return [$groupType->id => $groupType->name];
         })->flatten();
         return view('campaigns.create')->with('causes', Cause::labels())->with('group_types', $group_type_labels);
@@ -68,7 +68,7 @@ class CampaignsController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        $group_type_labels = GroupType::all()->map(function($groupType) {
+        $group_type_labels = GroupType::all()->map(function ($groupType) {
             return [$groupType->id => $groupType->name];
         })->flatten();
 
