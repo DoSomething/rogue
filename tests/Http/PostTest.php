@@ -5,6 +5,7 @@ namespace Tests\Http;
 use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\User;
+use Rogue\Models\Group;
 use Rogue\Models\Action;
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
@@ -69,6 +70,7 @@ class PostTest extends TestCase
         $school_id = $this->faker->word;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
         $referrerUserId = $this->faker->northstar_id;
+        $groupId = factory(Group::class)->create()->id;
 
         // Create an action to refer to.
         $action = factory(Action::class)->create(['campaign_id' => $campaignId]);
@@ -100,6 +102,7 @@ class PostTest extends TestCase
             'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
             'details'          => json_encode($details),
             'referrer_user_id' => $referrerUserId,
+            'group_id'         => $groupId,
         ]);
 
         $response->assertStatus(201);
@@ -111,6 +114,7 @@ class PostTest extends TestCase
             'northstar_id' => $northstarId,
             'why_participated' => $why_participated,
             'referrer_user_id' => $referrerUserId,
+            'group_id' => $groupId,
         ]);
 
         $this->assertDatabaseHas('posts', [
@@ -125,6 +129,7 @@ class PostTest extends TestCase
             'quantity' => $quantity,
             'details' => json_encode($details),
             'referrer_user_id' => $referrerUserId,
+            'group_id' => $groupId,
         ]);
     }
 

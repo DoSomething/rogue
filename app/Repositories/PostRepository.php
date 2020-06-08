@@ -102,6 +102,7 @@ class PostRepository
             'source_details' => isset($data['source_details']) ? $data['source_details'] : null,
             'details' => isset($data['details']) ? $data['details'] : null,
             'referrer_user_id' => isset($data['referrer_user_id']) ? $data['referrer_user_id'] : null,
+            'group_id' => isset($data['group_id']) ? $data['group_id'] : null,
         ]);
 
         // If this is a share-social type post, auto-accept.
