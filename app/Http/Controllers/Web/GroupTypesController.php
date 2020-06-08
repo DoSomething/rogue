@@ -4,6 +4,7 @@ namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Models\GroupType;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
 
 class GroupTypesController extends Controller
@@ -17,7 +18,7 @@ class GroupTypesController extends Controller
         $this->middleware('role:admin');
 
         $this->rules = [
-            'name' => 'required|unique:group_types',
+            'name' => 'required',
         ];
     }
 
@@ -36,9 +37,11 @@ class GroupTypesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->rules);
+        $values = $this->validate($request, array_merge_recursive($this->rules, [
+            'name' => [Rule::unique('group_types')],
+        ]));
 
-        $groupType = GroupType::create($request->all());
+        $groupType = GroupType::create($values);
 
         // Log that a group type was created.
         info('group_type', ['id' => $groupType->id]);
@@ -66,11 +69,11 @@ class GroupTypesController extends Controller
      */
     public function update(GroupType $groupType, Request $request)
     {
-        // @TODO: Override unique rule.
-        // @see https://github.com/DoSomething/rogue/pull/1030#discussion_r434628475
-        $this->validate($request, $this->rules);
+        $values = $this->validate($request, array_merge_recursive($this->rules, [
+            'name' => [Rule::unique('group_types')->ignore($groupType->id)],
+        ]));
 
-        $groupType->update($request->all());
+        $groupType->update($values);
 
         // Log that a group type was updated.
         info('group_type_updated', ['id' => $groupType->id]);
