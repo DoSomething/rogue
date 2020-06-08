@@ -32,7 +32,6 @@ class GroupType extends Model
     {
         return self::all()->reduce(function ($result, $groupType) {
             $result[$groupType->id] = $groupType->name;
-
             return $result;
         }, []);
     }
