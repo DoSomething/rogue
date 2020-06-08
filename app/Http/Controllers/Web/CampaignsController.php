@@ -4,6 +4,7 @@ namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Types\Cause;
 use Rogue\Models\Campaign;
+use Rogue\Models\GroupType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
@@ -26,6 +27,7 @@ class CampaignsController extends Controller
             'impact_doc' => ['required', 'url'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date', 'after:start_date'],
+            'group_type_id' => ['nullable', 'integer'],
         ];
     }
 
@@ -34,7 +36,7 @@ class CampaignsController extends Controller
      */
     public function create()
     {
-        return view('campaigns.create')->with('causes', Cause::labels());
+        return view('campaigns.create')->with('causes', Cause::labels())->with('group_types', GroupType::labels());
     }
 
     /**
@@ -66,6 +68,7 @@ class CampaignsController extends Controller
         return view('campaigns.edit', [
             'campaign' => $campaign,
             'causes' => Cause::labels(),
+            'group_types' => GroupType::labels(),
         ]);
     }
 
