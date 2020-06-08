@@ -8,6 +8,7 @@ import Empty from '../components/Empty';
 import Shell from '../components/utilities/Shell';
 import MetaInformation from '../components/utilities/MetaInformation';
 
+// @TODO: Paginate through signups.
 const SHOW_GROUP_QUERY = gql`
   query ShowGroupQuery($id: Int!) {
     group(id: $id) {
@@ -17,6 +18,15 @@ const SHOW_GROUP_QUERY = gql`
         name
       }
       name
+    }
+    signups(groupId: $id) {
+      id
+      userId
+      campaign {
+        id
+        internalTitle
+      }
+      createdAt
     }
   }
 `;
@@ -61,7 +71,36 @@ const ShowGroup = () => {
       <div className="container__row">
         <div className="container__block">
           <h3>Signups</h3>
-          <Empty />
+          {data.signups.length ? (
+            <table className="table">
+              <thead>
+                <tr>
+                  <td>ID</td>
+                  <td>User</td>
+                  <td>Campaign</td>
+                  <td>Created</td>
+                </tr>
+              </thead>
+              {data.signups.map(signup => (
+                <tr>
+                  <td>
+                    <a href={`/signups/${signup.id}`}>{signup.id}</a>
+                  </td>
+                  <td>
+                    <a href={`/users/${signup.userId}`}>{signup.userId}</a>
+                  </td>
+                  <td>
+                    <a href={`/campaigns/${signup.campaign.id}`}>
+                      {signup.campaign.internalTitle}
+                    </a>
+                  </td>
+                  <td>{signup.createdAt}</td>
+                </tr>
+              ))}
+            </table>
+          ) : (
+            <Empty />
+          )}
         </div>
       </div>
       <ul className="form-actions margin-vertical">
