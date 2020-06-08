@@ -36,11 +36,7 @@ class CampaignsController extends Controller
      */
     public function create()
     {
-        $group_type_labels = GroupType::all()->map(function ($groupType) {
-            return [$groupType->id => $groupType->name];
-        })->flatten();
-
-        return view('campaigns.create')->with('causes', Cause::labels())->with('group_types', $group_type_labels);
+        return view('campaigns.create')->with('causes', Cause::labels())->with('group_types', GroupType::labels());
     }
 
     /**
@@ -69,14 +65,10 @@ class CampaignsController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        $group_type_labels = GroupType::all()->map(function ($groupType) {
-            return [$groupType->id => $groupType->name];
-        })->flatten();
-
         return view('campaigns.edit', [
             'campaign' => $campaign,
             'causes' => Cause::labels(),
-            'group_types' => $group_type_labels,
+            'group_types' => GroupType::labels(),
         ]);
     }
 

@@ -22,4 +22,21 @@ class GroupType extends Model
             $builder->orderBy('name', 'asc');
         });
     }
+
+    /**
+     * Creates an array of grouptype labels, where the key is the id and the value is the grouptype name.
+     * 
+     * @return array
+     * 
+     */
+    public static function labels()
+    {
+        $result = [];
+
+        foreach(GroupType::all() as $groupType) {
+            $result[$groupType->id] = $groupType->name;
+        }
+
+        return $result;
+    }
 }
