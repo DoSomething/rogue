@@ -29,6 +29,7 @@ class CampaignTest extends Testcase
             'impact_doc' => 'https://www.google.com',
             'start_date' => $firstCampaignStartDate,
             'end_date' => $firstCampaignEndDate,
+            'group_type_id' => 2,
         ]);
 
         // Make sure the campaign is persisted.
@@ -289,6 +290,39 @@ class CampaignTest extends Testcase
     }
 
     /**
+     * Test for updating a campaign successfully with a group type id.
+     *
+     * PATCH /api/v3/campaigns/:campaign_id
+     * @return void
+     */
+    public function testUpdatingACampaignWithGroupTypeId()
+    {
+        // Create a campaign to update.
+        $campaign = factory(Campaign::class)->create();
+
+        // Update the group type id.
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
+            'group_type_id' => '1',
+        ]);
+
+        // Make sure the campaign update is persisted.
+        $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
+
+        $response->assertStatus(200);
+
+        $response->assertJson([
+            'data' => [
+                'group_type_id' => '1',
+            ],
+        ]);
+
+        $this->assertDatabaseHas('campaigns', [
+            'id' => $campaign->id,
+            'group_type_id' => '1',
+        ]);
+    }
+
+    /**
      * Test for updating a campaign with invalid status.
      *
      * PATCH /api/v3/campaigns/:campaign_id
@@ -306,6 +340,26 @@ class CampaignTest extends Testcase
         $response->assertStatus(422);
 
         $response->assertJsonValidationErrors(['contentful_campaign_id']);
+    }
+
+    /**
+     * Test for updating a campaign with invalid status.
+     *
+     * PATCH /api/v3/campaigns/:campaign_id
+     * @return void
+     */
+    public function testUpdatingACampaignWithInvalidStatusWithGroupTypeId()
+    {
+        // Create a campaign to update.
+        $campaign = factory(Campaign::class)->create();
+
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
+            'group_type_id' => "4", // This should be an integer
+        ]);
+
+        $response->assertStatus(422);
+
+        $response->assertJsonValidationErrors(['group_type_id']);
     }
 
     /**
