@@ -30,6 +30,7 @@ class CampaignTransformer extends TransformerAbstract
             'created_at' => $campaign->created_at->toIso8601String(),
             'updated_at' => $campaign->updated_at->toIso8601String(),
             'cursor' => $campaign->getCursor(),
+            'group_type_id' => $campaign->group_type_id,
         ];
     }
 }
