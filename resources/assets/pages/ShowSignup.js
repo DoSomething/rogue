@@ -18,6 +18,7 @@ const SHOW_SIGNUP_QUERY = gql`
   query ShowCampaignQuery($id: Int!) {
     signup(id: $id) {
       id
+      groupId
       whyParticipated
       source
       sourceDetails
@@ -93,6 +94,13 @@ const ShowCampaign = () => {
                     Referrer: signup.referrerUserId ? (
                       <Link to={`/users/${signup.referrerUserId}`}>
                         {signup.referrerUserId}
+                      </Link>
+                    ) : (
+                      '-'
+                    ),
+                    Group: signup.groupId ? (
+                      <Link to={`/groups/${signup.groupId}`}>
+                        {signup.groupId}
                       </Link>
                     ) : (
                       '-'
