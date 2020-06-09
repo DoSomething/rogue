@@ -1165,18 +1165,16 @@ class PostTest extends TestCase
     {
         $referrerUserId = $this->faker->unique()->northstar_id;
 
-        // Add two completed voter reg referrals for our referrer, which should be visible to them.
-        $firstCompletedVoterRegReferral = factory(Post::class)->states('voter-reg', 'register-form')->create(['referrer_user_id' => $referrerUserId]);
-        $secondCompletedVoterRegReferral = factory(Post::class)->states('voter-reg', 'register-OVR')->create(['referrer_user_id' => $referrerUserId]);
+        // A referrer can see all of their voter registration referrals.
+        $firstVoterRegReferral = factory(Post::class)->states('voter-reg', 'register-form')->create(['referrer_user_id' => $referrerUserId]);
+        $secondVoterRegReferral = factory(Post::class)->states('voter-reg', 'rejected')->create(['referrer_user_id' => $referrerUserId]);
+        $thirdVoterRegReferral = factory(Post::class)->states('voter-reg', 'step-1')->create(['referrer_user_id' => $referrerUserId]);
 
-        // Add a non-completed voter reg referral for our referrer, which should be visible.
-        factory(Post::class)->states('voter-reg', 'step-1')->create(['referrer_user_id' => $referrerUserId]);
+        // Add a completed voter reg without a referrer, which is public because it's completed.
+        $publicVoterRegPost = factory(Post::class)->states('voter-reg', 'register-OVR')->create();
 
-        // Add a completed voter reg without a referrer, which should be visible.
-        factory(Post::class)->states('voter-reg', 'register-OVR')->create();
-
-        // Add pending referrals for a different referrer, which shouldn't be visible.
-        factory(Post::class)->states('photo', 'pending')->create(['referrer_user_id' => $this->faker->unique()->northstar_id]);
+        // Add non-completed voter referrals for a different referrer, which shouldn't be visible.
+        factory(Post::class)->states('voter-reg', 'step-1')->create(['referrer_user_id' => $this->faker->unique()->northstar_id]);
 
         // Add a pending photo post, which shouldn't be visible.
         factory(Post::class)->states('photo', 'pending')->create();
@@ -1185,11 +1183,19 @@ class PostTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonCount(4, 'data');
         $response->assertJsonFragment([
-            'id' => $firstCompletedVoterRegReferral->id,
+            'id' => $firstVoterRegReferral->id,
             'status' => 'register-form',
         ]);
         $response->assertJsonFragment([
-            'id' => $secondCompletedVoterRegReferral->id,
+            'id' => $secondVoterRegReferral->id,
+            'status' => 'rejected',
+        ]);
+        $response->assertJsonFragment([
+            'id' => $thirdVoterRegReferral->id,
+            'status' => 'step-1',
+        ]);
+        $response->assertJsonFragment([
+            'id' => $publicVoterRegPost->id,
             'status' => 'register-OVR',
         ]);
     }
