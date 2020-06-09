@@ -78,7 +78,21 @@ class Post extends Model
      *
      * @var array
      */
-    public static $indexes = ['id', 'signup_id', 'campaign_id', 'type', 'action', 'action_id', 'northstar_id', 'status', 'created_at', 'source', 'location', 'referrer_user_id'];
+    public static $indexes = [
+        'action',
+        'action_id',
+        'campaign_id',
+        'created_at',
+        'group_id',
+        'id',
+        'location',
+        'northstar_id',
+        'referrer_user_id',
+        'signup_id',
+        'source',
+        'status',
+        'type',
+    ];
 
     /**
      * Attributes that we can sort by with the '?orderBy' query parameter.
@@ -497,13 +511,12 @@ class Post extends Model
             return;
         }
 
-        return $query->where('status', 'accepted')
+        return $query->whereIn('status', ['accepted', 'register-form', 'register-OVR'])
             ->orWhere('northstar_id', auth()->id())
             ->orWhere(function ($query) {
                 $query->whereNotNull('referrer_user_id')
                     ->where('referrer_user_id', auth()->id())
-                    ->where('type', 'voter-reg')
-                    ->whereIn('status', ['register-form', 'register-OVR']);
+                    ->where('type', 'voter-reg');
             });
     }
 

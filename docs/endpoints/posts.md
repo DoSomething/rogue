@@ -2,6 +2,16 @@
 
 All `v3 /posts` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
 
+Only admins and post owners will have `tags`, `source`, `remote_addr` (which will be `0.0.0.0` for all posts in compliance with GDPR), and hidden posts (posts that are tagged 'Hide In Gallery') returned in the response.
+
+Anonymous requests will only return posts with status `accepted`, `register-form`, or `register-OVR`.
+
+Logged-in users can additionally see any of their own posts with any status, and any voter-reg post (with any status) that they have referred.
+
+Staff can see all posts.
+
+If the post's action is marked as "anonymous", the `northstar_id` field will only be returned for the owner.
+
 ## Retrieve All Posts
 
 ```
@@ -9,12 +19,6 @@ GET /api/v3/posts
 ```
 
 Posts are returned in reverse chronological order.
-
-Only admins and post owners will have `tags`, `source`, `remote_addr` (which will be `0.0.0.0` for all posts in compliance with GDPR), and hidden posts (posts that are tagged 'Hide In Gallery') returned in the response.
-
-Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
-
-If the post's action is marked as "anonymous", the `northstar_id` field will only be returned for the owner.
 
 ### Optional Query Parameters
 
@@ -30,6 +34,9 @@ If the post's action is marked as "anonymous", the `northstar_id` field will onl
 - **filter[campaign_id]** _(integer)_
   - The campaign ID to filter the response by.
   - e.g. `/posts?filter[campaign_id]=47`
+- **filter[group_id]** _(integer)_
+  - The group ID to filter the response by.
+  - e.g. `/posts?filter[group_id]=11`
 - **filter[northstar_id]** _(string)_
   - The northstar_id to filter the response by.
   - e.g. `/posts?filter[northstar_id]=5554eac1a59dbf117e8b4567`
@@ -99,6 +106,7 @@ Example Response:
             "location_name": "New York",
             "school_id": null,
             "referrer_user_id": null,
+            "group_id": null,
             "created_at": "2016-11-30T21:21:24+00:00",
             "updated_at": "2017-08-02T14:11:26+00:00"
         },
@@ -124,6 +132,7 @@ Example Response:
             "location_name": "New York",
             "school_id": null,
             "referrer_user_id": null,
+            "group_id": null,
             "created_at": "2016-02-10T16:19:25+00:00",
             "updated_at": "2017-08-02T14:11:35+00:00"
             "action_details": {
@@ -161,10 +170,6 @@ Example Response:
 GET /api/v3/posts/:post_id
 ```
 
-Only admins and post owners will have `tags`, `source`, and `remote_addr` (which will be `0.0.0.0` for all posts in compliance with GDPR)returned in the response.
-
-Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
-
 Example Response:
 
 ```
@@ -191,6 +196,7 @@ Example Response:
     "location_name": "New York",
     "school_id": "3600052",
     "referrer_user_id": null,
+    "group_id": null,
     "created_at": "2019-01-23T19:42:07+00:00",
     "updated_at": "2019-01-23T19:42:07+00:00"
     "action_details": {
@@ -250,6 +256,8 @@ Optional params:
   A JSON field to store extra details about a post.
 - **referrer_user_id** (string).
   The referring User ID that this post should be associated with.
+- **group_id** (int).
+  The Group ID that this post should be associated with.
 - **dont_send_to_blink** (boolean).
   If included and true, the data for this Post will not be sent to Blink.
 - **created_at** (timestamp).
