@@ -2,6 +2,16 @@
 
 All `v3 /posts` endpoints require the `activity` scope. `Create`/`update`/`delete` endpoints also require the `write` scope.
 
+Only admins and post owners will have `tags`, `source`, `remote_addr` (which will be `0.0.0.0` for all posts in compliance with GDPR), and hidden posts (posts that are tagged 'Hide In Gallery') returned in the response.
+
+Anonymous requests will only return posts with status `accepted`, `register-form`, or `register-OVR`.
+
+Logged-in users can additionally see any of their own posts with any status, and any voter-reg post (with any status) that they have referred.
+
+Staff can see all posts.
+
+If the post's action is marked as "anonymous", the `northstar_id` field will only be returned for the owner.
+
 ## Retrieve All Posts
 
 ```
@@ -9,16 +19,6 @@ GET /api/v3/posts
 ```
 
 Posts are returned in reverse chronological order.
-
-Only admins and post owners will have `tags`, `source`, `remote_addr` (which will be `0.0.0.0` for all posts in compliance with GDPR), and hidden posts (posts that are tagged 'Hide In Gallery') returned in the response.
-
-Anonymous requests will only return posts with status `accepted`, `register-form`, or `register-OVR`.
-
-Logged-in users can additionally see any of their own pending or rejected posts and any voter-reg post (of any status) that they have referred.
-
-Staff can see all posts.
-
-If the post's action is marked as "anonymous", the `northstar_id` field will only be returned for the owner.
 
 ### Optional Query Parameters
 
@@ -169,10 +169,6 @@ Example Response:
 ```
 GET /api/v3/posts/:post_id
 ```
-
-Only admins and post owners will have `tags`, `source`, and `remote_addr` (which will be `0.0.0.0` for all posts in compliance with GDPR)returned in the response.
-
-Anonymous requests will only return accepted posts. Logged-in users can see accepted posts & any of their own pending or rejected posts. Staff can see anything!
 
 Example Response:
 
