@@ -302,7 +302,7 @@ class CampaignTest extends Testcase
 
         // Update the group type id.
         $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
-            'group_type_id' => '1',
+            'group_type_id' => 1,
         ]);
 
         // Make sure the campaign update is persisted.
@@ -312,13 +312,13 @@ class CampaignTest extends Testcase
 
         $response->assertJson([
             'data' => [
-                'group_type_id' => '1',
+                'group_type_id' => 1,
             ],
         ]);
 
         $this->assertDatabaseHas('campaigns', [
             'id' => $campaign->id,
-            'group_type_id' => '1',
+            'group_type_id' => 1,
         ]);
     }
 
