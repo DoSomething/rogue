@@ -1,5 +1,6 @@
 /* global document */
 
+import { parse, format } from 'date-fns';
 import { isArray, isNull, mergeWith, omitBy } from 'lodash';
 
 /**
@@ -66,6 +67,14 @@ export function modifiers(...names) {
  */
 export function env(key) {
   return (window.ENV || {})[key];
+}
+
+/**
+ * @param {String} dateTimeString
+ * @return {String}
+ */
+export function formatDateTime(dateTimeString) {
+  return format(parse(dateTimeString), 'M/D/YYYY h:mm A');
 }
 
 /**

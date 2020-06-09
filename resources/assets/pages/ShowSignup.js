@@ -1,12 +1,12 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
-import { parse, format } from 'date-fns';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
-import TextBlock from '../components/utilities/TextBlock';
+import { formatDateTime } from '../helpers';
 import Shell from '../components/utilities/Shell';
+import TextBlock from '../components/utilities/TextBlock';
 import MetaInformation from '../components/utilities/MetaInformation';
 import ReviewablePostGallery from '../components/ReviewablePostGallery';
 import DeleteSignupButton from '../components/DeleteSignupButton';
@@ -18,6 +18,7 @@ const SHOW_SIGNUP_QUERY = gql`
   query ShowCampaignQuery($id: Int!) {
     signup(id: $id) {
       id
+      groupId
       whyParticipated
       source
       sourceDetails
@@ -82,17 +83,23 @@ const ShowCampaign = () => {
                       <span>
                         {signup.source}{' '}
                         {signup.sourceDetails ? (
-                          <span class="footnote">({signup.sourceDetails})</span>
+                          <span className="footnote">
+                            ({signup.sourceDetails})
+                          </span>
                         ) : null}
                       </span>
                     ),
-                    'Created At': format(
-                      parse(signup.createdAt),
-                      'M/D/YYYY h:m A',
-                    ),
+                    'Created At': formatDateTime(signup.createdAt),
                     Referrer: signup.referrerUserId ? (
                       <Link to={`/users/${signup.referrerUserId}`}>
                         {signup.referrerUserId}
+                      </Link>
+                    ) : (
+                      '-'
+                    ),
+                    Group: signup.groupId ? (
+                      <Link to={`/groups/${signup.groupId}`}>
+                        {signup.groupId}
                       </Link>
                     ) : (
                       '-'

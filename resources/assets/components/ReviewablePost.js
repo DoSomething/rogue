@@ -3,15 +3,14 @@ import { map } from 'lodash';
 import gql from 'graphql-tag';
 import usePortal from 'react-useportal';
 import { Link } from 'react-router-dom';
-import { parse, format } from 'date-fns';
 
 import Quantity from './utilities/Quantity';
 import PostTile from './PostTile';
-import { TAGS } from '../helpers';
 import HelpLink from './utilities/HelpLink';
 import TextBlock from './utilities/TextBlock';
 import Modal from './utilities/Modal';
 import PostCard from './utilities/PostCard';
+import { formatDateTime, TAGS } from '../helpers';
 import DeletePostButton from './DeletePostButton';
 import TagButton, { TagButtonFragment } from './TagButton';
 import QuantityForm, { QuantityFormFragment } from './QuantityForm';
@@ -199,7 +198,7 @@ const ReviewablePost = ({ post }) => {
               Type: post.type,
               Source: post.source,
               Location: post.location,
-              Submitted: format(parse(post.createdAt), 'M/D/YYYY h:m:s'),
+              Submitted: formatDateTime(post.createdAt),
               Referrer: post.referrerUserId ? (
                 <Link to={`/users/${post.referrerUserId}`}>
                   {post.referrerUserId}
