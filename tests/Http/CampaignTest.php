@@ -302,7 +302,7 @@ class CampaignTest extends Testcase
     {
         // Create a campaign to update.
         $campaign = factory(Campaign::class)->create();
-        
+
         // Create a GroupType
         $groupType = factory(GroupType::class)->create();
 
@@ -360,7 +360,7 @@ class CampaignTest extends Testcase
         $campaign = factory(Campaign::class)->create();
 
         $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
-            'group_type_id' => "four", // This should be an integer
+            'group_type_id' => 'four', // This should be an integer
         ]);
 
         $response->assertStatus(422);
