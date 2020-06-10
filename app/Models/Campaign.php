@@ -37,7 +37,7 @@ class Campaign extends Model
      *
      * @var array
      */
-    public static $indexes = ['id'];
+    public static $indexes = ['id', 'group_type_id'];
 
     /**
      * Attributes that can be sorted by.
