@@ -20,7 +20,7 @@ const SHOW_GROUP_QUERY = gql`
       }
       name
     }
-    signups(groupId: $id) {
+    signups(groupId: $id, count: 50) {
       id
       userId
       campaign {
@@ -33,6 +33,7 @@ const SHOW_GROUP_QUERY = gql`
       groupId: $id
       type: "voter-reg"
       status: [REGISTER_FORM, REGISTER_OVR]
+      count: 50
     ) {
       id
       user {
