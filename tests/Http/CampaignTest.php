@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Types\Cause;
 use Rogue\Models\Campaign;
+use Rogue\Models\GroupType;
 
 class CampaignTest extends Testcase
 {
@@ -22,6 +23,8 @@ class CampaignTest extends Testcase
         $firstCampaignStartDate = $this->faker->date($format = 'm/d/Y');
         // Make sure the end date is after the start date.
         $firstCampaignEndDate = date('m/d/Y', strtotime('+3 months', strtotime($firstCampaignStartDate)));
+        // Create a GroupType
+        $groupType = factory(GroupType::class)->create();
 
         $this->actingAsAdmin()->postJson('campaigns', [
             'internal_title' => $firstCampaignTitle,
@@ -29,6 +32,7 @@ class CampaignTest extends Testcase
             'impact_doc' => 'https://www.google.com',
             'start_date' => $firstCampaignStartDate,
             'end_date' => $firstCampaignEndDate,
+            'group_type_id' => $groupType->id,
         ]);
 
         // Make sure the campaign is persisted.
@@ -289,6 +293,42 @@ class CampaignTest extends Testcase
     }
 
     /**
+     * Test for updating a campaign successfully with a group type id.
+     *
+     * PATCH /api/v3/campaigns/:campaign_id
+     * @return void
+     */
+    public function testUpdatingACampaignWithGroupTypeId()
+    {
+        // Create a campaign to update.
+        $campaign = factory(Campaign::class)->create();
+
+        // Create a GroupType
+        $groupType = factory(GroupType::class)->create();
+
+        // Update the group type id.
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
+            'group_type_id' => $groupType->id,
+        ]);
+
+        // Make sure the campaign update is persisted.
+        $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
+
+        $response->assertStatus(200);
+
+        $response->assertJson([
+            'data' => [
+                'group_type_id' => $groupType->id,
+            ],
+        ]);
+
+        $this->assertDatabaseHas('campaigns', [
+            'id' => $campaign->id,
+            'group_type_id' => $groupType->id,
+        ]);
+    }
+
+    /**
      * Test for updating a campaign with invalid status.
      *
      * PATCH /api/v3/campaigns/:campaign_id
@@ -306,6 +346,26 @@ class CampaignTest extends Testcase
         $response->assertStatus(422);
 
         $response->assertJsonValidationErrors(['contentful_campaign_id']);
+    }
+
+    /**
+     * Test for updating a campaign with invalid status.
+     *
+     * PATCH /api/v3/campaigns/:campaign_id
+     * @return void
+     */
+    public function testUpdatingACampaignWithInvalidStatusWithGroupTypeId()
+    {
+        // Create a campaign to update.
+        $campaign = factory(Campaign::class)->create();
+
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
+            'group_type_id' => 'four', // This should be an integer
+        ]);
+
+        $response->assertStatus(422);
+
+        $response->assertJsonValidationErrors(['group_type_id']);
     }
 
     /**
