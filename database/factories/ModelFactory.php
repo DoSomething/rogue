@@ -190,6 +190,9 @@ $factory->define(Campaign::class, function (Generator $faker) {
         // By default, we create an "open" campaign.
         'start_date' => $faker->dateTimeBetween('-6 months', 'now')->setTime(0, 0),
         'end_date' => $faker->dateTimeBetween('+1 months', '+6 months')->setTime(0, 0),
+        'group_type_id' => function () {
+            return factory(GroupType::class)->create()->id;
+        },
     ];
 });
 

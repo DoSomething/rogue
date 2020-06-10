@@ -22,6 +22,7 @@ class CampaignsController extends ApiController
 
         $this->rules = [
             'contentful_campaign_id' => ['nullable', 'string', 'max:255'],
+            'group_type_id' => ['nullable', 'integer'],
         ];
     }
 
@@ -103,6 +104,8 @@ class CampaignsController extends ApiController
 
         $values = $this->validate($request, [
             'contentful_campaign_id' => ['nullable', 'string', 'max:255'],
+            'group_type_id' => ['nullable', 'integer'],
+
         ]);
 
         $campaign->update($values);

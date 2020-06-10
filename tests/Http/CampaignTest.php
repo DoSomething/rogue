@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Types\Cause;
 use Rogue\Models\Campaign;
+use Rogue\Models\GroupType;
 
 class CampaignTest extends Testcase
 {
@@ -22,6 +23,8 @@ class CampaignTest extends Testcase
         $firstCampaignStartDate = $this->faker->date($format = 'm/d/Y');
         // Make sure the end date is after the start date.
         $firstCampaignEndDate = date('m/d/Y', strtotime('+3 months', strtotime($firstCampaignStartDate)));
+        // Create a GroupType
+        $groupType = factory(GroupType::class)->create();
 
         $this->actingAsAdmin()->postJson('campaigns', [
             'internal_title' => $firstCampaignTitle,
@@ -29,7 +32,7 @@ class CampaignTest extends Testcase
             'impact_doc' => 'https://www.google.com',
             'start_date' => $firstCampaignStartDate,
             'end_date' => $firstCampaignEndDate,
-            'group_type_id' => 2,
+            'group_type_id' => $groupType->id,
         ]);
 
         // Make sure the campaign is persisted.
@@ -299,10 +302,13 @@ class CampaignTest extends Testcase
     {
         // Create a campaign to update.
         $campaign = factory(Campaign::class)->create();
+        
+        // Create a GroupType
+        $groupType = factory(GroupType::class)->create();
 
         // Update the group type id.
         $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
-            'group_type_id' => 1,
+            'group_type_id' => $groupType->id,
         ]);
 
         // Make sure the campaign update is persisted.
@@ -312,13 +318,13 @@ class CampaignTest extends Testcase
 
         $response->assertJson([
             'data' => [
-                'group_type_id' => 1,
+                'group_type_id' => $groupType->id,
             ],
         ]);
 
         $this->assertDatabaseHas('campaigns', [
             'id' => $campaign->id,
-            'group_type_id' => 1,
+            'group_type_id' => $groupType->id,
         ]);
     }
 
@@ -354,7 +360,7 @@ class CampaignTest extends Testcase
         $campaign = factory(Campaign::class)->create();
 
         $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
-            'group_type_id' => "4", // This should be an integer
+            'group_type_id' => "four", // This should be an integer
         ]);
 
         $response->assertStatus(422);
