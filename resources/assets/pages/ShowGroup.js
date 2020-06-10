@@ -20,7 +20,7 @@ const SHOW_GROUP_QUERY = gql`
       }
       name
     }
-    signups(groupId: $id) {
+    signups(groupId: $id, count: 50) {
       id
       userId
       campaign {
@@ -28,6 +28,17 @@ const SHOW_GROUP_QUERY = gql`
         internalTitle
       }
       createdAt
+    }
+    posts(
+      groupId: $id
+      type: "voter-reg"
+      status: [REGISTER_FORM, REGISTER_OVR]
+      count: 50
+    ) {
+      id
+      user {
+        displayName
+      }
     }
   }
 `;
@@ -59,7 +70,8 @@ const ShowGroup = () => {
         <div className="container__block -half">
           <MetaInformation
             details={{
-              Goal: goal || '--',
+              'Voter Registrations Goal': goal || '--',
+              'Voter Registrations Completed': data.posts.length,
             }}
           />
         </div>
@@ -92,7 +104,7 @@ const ShowGroup = () => {
                   </td>
                   <td>
                     <a href={`/campaigns/${signup.campaign.id}`}>
-                      {signup.campaign.internalTitle}
+                      {signup.campaign.internalTitle} ({signup.campaign.id})
                     </a>
                   </td>
                   <td>{formatDateTime(signup.createdAt)}</td>

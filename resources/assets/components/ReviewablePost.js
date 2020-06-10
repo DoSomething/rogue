@@ -36,7 +36,9 @@ export const ReviewablePostFragment = gql`
     createdAt
     source
     details
+    groupId
     referrerUserId
+    schoolId
     location(format: HUMAN_FORMAT)
     deleted
 
@@ -51,8 +53,6 @@ export const ReviewablePostFragment = gql`
       id
       internalTitle
     }
-
-    schoolId
 
     signupId
     signup {
@@ -203,6 +203,11 @@ const ReviewablePost = ({ post }) => {
                 <Link to={`/users/${post.referrerUserId}`}>
                   {post.referrerUserId}
                 </Link>
+              ) : (
+                '-'
+              ),
+              Group: post.groupId ? (
+                <Link to={`/groups/${post.groupId}`}>{post.groupId}</Link>
               ) : (
                 '-'
               ),
