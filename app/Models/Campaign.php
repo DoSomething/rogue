@@ -298,6 +298,11 @@ class Campaign extends Model
             ]);
         });
 
+        // Transform dates into UNIX timestamps:
+        foreach ($this->dates as $date) {
+            $array[$date] = optional($this->{$date})->timestamp;
+        }
+
         // Only send data we want to search against.
         return Arr::only($array, [
             'accepted_count',
