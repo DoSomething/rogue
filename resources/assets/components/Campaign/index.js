@@ -29,6 +29,7 @@ const SHOW_CAMPAIGN_ACTIONS_QUERY = gql`
       internalTitle
       startDate
       updatedAt
+      groupTypeId
     }
     campaignWebsiteByCampaignId(campaignId: $idString) {
       title
@@ -109,6 +110,14 @@ const Campaign = ({ id }) => {
           <p>–</p>
         )}
 
+        <h4>Campaign Group Type ID</h4>
+        {campaign.contentfulCampaignId ? (
+          <a href={`/group-types/${groupTypeId}`} target="_blank">
+            Group Type Id{campaign.groupTypeId}
+          </a>
+        ) : (
+          <p>–</p>
+        )}
         <h4>URL</h4>
         <p>
           {campaignWebsiteByCampaignId ? (
