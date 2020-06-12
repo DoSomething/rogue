@@ -16,6 +16,7 @@ const SHOW_CAMPAIGN_QUERY = gql`
     campaign(id: $id) {
       id
       internalTitle
+      groupTypeId
     }
   }
 `;
@@ -75,6 +76,9 @@ const ShowCampaign = () => {
         <div className="container__block -third form-actions -inline text-right pt-heading">
           <a className="button -tertiary" href={`/campaigns/${id}`}>
             View Campaign &amp; Actions
+          </a>
+          <a className="button -tertiary" href={`/group-types/${groupTypeId}`}>
+            View Group Types &amp; Actions
           </a>
         </div>
       </div>
