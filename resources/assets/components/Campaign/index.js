@@ -111,10 +111,8 @@ const Campaign = ({ id }) => {
         )}
 
         <h4>Campaign Group Type ID</h4>
-        {campaign.contentfulCampaignId ? (
-          <a href={`/group-types/${groupTypeId}`} target="_blank">
-            Group Type Id{campaign.groupTypeId}
-          </a>
+        {campaign.groupTypeId ? (
+          <a href={`/group-types/${groupTypeId}`}>{campaign.groupTypeId}</a>
         ) : (
           <p>–</p>
         )}
