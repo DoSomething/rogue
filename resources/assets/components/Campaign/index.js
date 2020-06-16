@@ -112,7 +112,7 @@ const Campaign = ({ id }) => {
 
         <h4>Campaign Group Type ID</h4>
         {campaign.groupTypeId ? (
-          <a href={`/group-types/${groupTypeId}`}>{campaign.groupTypeId}</a>
+          <a href={`/group-types/${campaign.groupTypeId}`}>{campaign.groupTypeId}</a>
         ) : (
           <p>–</p>
         )}
