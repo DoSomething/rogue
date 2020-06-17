@@ -19,6 +19,14 @@ const SHOW_GROUP_TYPE_QUERY = gql`
       goal
       name
     }
+    paginatedCampaigns(groupTypeId: $id) {
+      edges {
+        node {
+          id
+          internalTitle
+        }
+      }
+    }
   }
 `;
 
@@ -42,6 +50,7 @@ const ShowGroupType = () => {
   if (!data.groupType) return <NotFound title={title} type="group type" />;
 
   const { createdAt, name } = data.groupType;
+  const campaigns = data.paginatedCampaigns.edges;
 
   return (
     <Shell title={title} subtitle={name}>
@@ -49,7 +58,13 @@ const ShowGroupType = () => {
         <div className="container__block -half">
           <MetaInformation
             details={{
-              Campaigns: '--',
+              Campaigns: campaigns.length
+                ? campaigns.map(item => (
+                    <a key={item.node.id} href={`/campaigns/${item.node.id}`}>
+                      {item.node.internalTitle}
+                    </a>
+                  ))
+                : '--',
             }}
           />
         </div>
@@ -71,7 +86,7 @@ const ShowGroupType = () => {
               </thead>
               <tbody>
                 {data.groups.map(group => (
-                  <tr>
+                  <tr key={group.id}>
                     <td>
                       <a href={`/groups/${group.id}`}>
                         {group.name} ({group.id})
