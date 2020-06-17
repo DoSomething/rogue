@@ -7,6 +7,7 @@ import NotFound from './NotFound';
 import Empty from '../components/Empty';
 import Shell from '../components/utilities/Shell';
 import MetaInformation from '../components/utilities/MetaInformation';
+import GroupTypeCampaignList from '../components/GroupTypeCampaignList';
 
 const SHOW_GROUP_TYPE_QUERY = gql`
   query ShowGroupTypeQuery($id: Int!) {
@@ -49,7 +50,7 @@ const ShowGroupType = () => {
         <div className="container__block -half">
           <MetaInformation
             details={{
-              Campaigns: '--',
+              Campaigns: <GroupTypeCampaignList groupTypeId={Number(id)} />,
             }}
           />
         </div>
@@ -71,7 +72,7 @@ const ShowGroupType = () => {
               </thead>
               <tbody>
                 {data.groups.map(group => (
-                  <tr>
+                  <tr key={group.id}>
                     <td>
                       <a href={`/groups/${group.id}`}>
                         {group.name} ({group.id})
