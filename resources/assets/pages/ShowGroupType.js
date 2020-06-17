@@ -7,6 +7,7 @@ import NotFound from './NotFound';
 import Empty from '../components/Empty';
 import Shell from '../components/utilities/Shell';
 import MetaInformation from '../components/utilities/MetaInformation';
+import GroupTypeCampaignList from '../components/GroupTypeCampaignList';
 
 const SHOW_GROUP_TYPE_QUERY = gql`
   query ShowGroupTypeQuery($id: Int!) {
@@ -18,14 +19,6 @@ const SHOW_GROUP_TYPE_QUERY = gql`
       id
       goal
       name
-    }
-    paginatedCampaigns(groupTypeId: $id) {
-      edges {
-        node {
-          id
-          internalTitle
-        }
-      }
     }
   }
 `;
@@ -50,7 +43,6 @@ const ShowGroupType = () => {
   if (!data.groupType) return <NotFound title={title} type="group type" />;
 
   const { createdAt, name } = data.groupType;
-  const campaigns = data.paginatedCampaigns.edges;
 
   return (
     <Shell title={title} subtitle={name}>
@@ -58,13 +50,7 @@ const ShowGroupType = () => {
         <div className="container__block -half">
           <MetaInformation
             details={{
-              Campaigns: campaigns.length
-                ? campaigns.map(item => (
-                    <a key={item.node.id} href={`/campaigns/${item.node.id}`}>
-                      {item.node.internalTitle}
-                    </a>
-                  ))
-                : '--',
+              Campaigns: <GroupTypeCampaignList groupTypeId={Number(id)} />,
             }}
           />
         </div>
