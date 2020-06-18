@@ -33,6 +33,10 @@ class GroupsController extends ApiController
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Group::$indexes);
 
+        if (isset($filters['name'])) {
+            $query->where('name', 'REGEXP', $filters['name']);
+        }
+
         return $this->paginatedCollection($query, $request);
     }
 
