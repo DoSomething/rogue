@@ -16,40 +16,23 @@ class GroupTest extends TestCase
     public function testGroupTypeIndex()
     {
         $groupType = factory(GroupType::class)->create();
-        $groupTypeId = $groupType->id;
+        $groupNames = [
+            'Chicago',
+            'New Jersey',
+            'New York',
+            'Newfoundland',
+            'Philadelphia',
+            'San Diego',
+            'San Francisco',
+            'Santeria',
+        ];
 
-        factory(Group::class)->create([
-            'group_type_id' => $groupTypeId,
-            'name' => 'Chicago',
-        ]);
-        factory(Group::class)->create([
-            'group_type_id' => $groupTypeId,
-            'name' => 'New Jersey',
-        ]);
-        factory(Group::class)->create([
-            'group_type_id' => $groupTypeId,
-            'name' => 'New York',
-        ]);
-        factory(Group::class)->create([
-            'group_type_id' => $groupTypeId,
-            'name' => 'Newfoundland',
-        ]);
-        factory(Group::class)->create([
-            'group_type_id' => $groupTypeId,
-            'name' => 'Philadelphia',
-        ]);
-        factory(Group::class)->create([
-            'group_type_id' => $groupTypeId,
-            'name' => 'San Diego',
-        ]);
-        factory(Group::class)->create([
-            'group_type_id' => $groupTypeId,
-            'name' => 'San Francisco',
-        ]);
-        factory(Group::class)->create([
-            'group_type_id' => $groupTypeId,
-            'name' => 'Sangria',
-        ]);
+        foreach ($groupNames as $groupName) {
+            factory(Group::class)->create([
+                'group_type_id' => $groupType->id,
+                'name' => $groupName,
+            ]);
+        }
 
         $response = $this->getJson('api/v3/groups');
         $decodedResponse = $response->decodeResponseJson();
@@ -63,7 +46,7 @@ class GroupTest extends TestCase
         $response->assertStatus(200);
         $this->assertEquals(3, $decodedResponse['meta']['pagination']['count']);
 
-        $response = $this->getJson('api/v3/groups?filter[name]=new');
+        $response = $this->getJson('api/v3/groups?filter[name]=san');
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
