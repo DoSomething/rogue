@@ -17,14 +17,12 @@ class GroupTest extends TestCase
     {
         $groupType = factory(GroupType::class)->create();
         $groupNames = [
-            'Chicago',
-            'New Jersey',
-            'New York',
-            'Newfoundland',
-            'Philadelphia',
-            'San Diego',
-            'San Francisco',
-            'Santeria',
+            'Batman Begins',
+            'Bipartisan',
+            'Brave New World',
+            'If I Never Knew You',
+            'San Dimas High School',
+            'Santa Claus',
         ];
 
         foreach ($groupNames as $groupName) {
@@ -38,13 +36,13 @@ class GroupTest extends TestCase
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
-        $this->assertEquals(8, $decodedResponse['meta']['pagination']['count']);
+        $this->assertEquals(6, $decodedResponse['meta']['pagination']['count']);
 
         $response = $this->getJson('api/v3/groups?filter[name]=new');
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
-        $this->assertEquals(3, $decodedResponse['meta']['pagination']['count']);
+        $this->assertEquals(2, $decodedResponse['meta']['pagination']['count']);
 
         $response = $this->getJson('api/v3/groups?filter[name]=san');
         $decodedResponse = $response->decodeResponseJson();
