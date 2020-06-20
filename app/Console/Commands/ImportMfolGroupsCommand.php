@@ -60,9 +60,8 @@ class ImportMfolGroupsCommand extends Command
         $groupType = GroupType::firstOrCreate([
             'name' => 'March For Our Lives',
         ]);
-        $groupTypeId = $groupType->id;
 
-        info('rogue:mfol-groups-import: Beginning import for group type id ' . $groupTypeId .'...');
+        info('rogue:mfol-groups-import: Beginning import for group type id ' . $groupType->id .'.');
 
         foreach ($csv->getRecords() as $record) {
             $name = $record['Chapter'];
