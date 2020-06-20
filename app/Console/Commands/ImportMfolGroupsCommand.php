@@ -4,6 +4,7 @@ namespace Rogue\Console\Commands;
 
 use League\Csv\Reader;
 use Rogue\Models\Group;
+use Rogue\Models\GroupType;
 use Illuminate\Console\Command;
 
 class ImportMfolGroupsCommand extends Command
@@ -56,14 +57,19 @@ class ImportMfolGroupsCommand extends Command
         $numImported = 0;
         $numFailed = 0;
 
-        info('rogue:mfol-groups-import: Beginning import...');
+        $groupType = GroupType::firstOrCreate([
+            'name' => 'March For Our Lives',
+        ]);
+        $groupTypeId = $groupType->id;
+
+        info('rogue:mfol-groups-import: Beginning import for group type id ' . $groupTypeId .'...');
 
         foreach ($csv->getRecords() as $record) {
             $name = $record['Chapter'];
 
             try {
                 $group = Group::firstOrCreate([
-                    'group_type_id' => 1,
+                    'group_type_id' => $groupType->id,
                     'name' => $name,
                 ]);
 
