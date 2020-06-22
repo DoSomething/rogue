@@ -304,7 +304,7 @@ class Campaign extends Model
         }
 
         // If a campaign doesn't have an end date, we'll set a far-future one in
-        // Algolia to allow filtering. More context: <...>
+        // Algolia to allow filtering. More context: <https://git.io/JfxTA>
         if (empty($array['end_date'])) {
             $array['end_date'] = 2147483647; // January 19th 2038
         }
