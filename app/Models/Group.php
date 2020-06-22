@@ -22,7 +22,7 @@ class Group extends Model
      *
      * @var array
      */
-    public static $indexes = ['id', 'group_type_id', 'name'];
+    public static $indexes = ['id', 'group_type_id'];
 
     protected static function boot()
     {

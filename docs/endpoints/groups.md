@@ -6,6 +6,20 @@
 GET /api/v3/groups
 ```
 
+### Optional Query Parameters
+
+- **filter[id]** _(integer)_
+
+  - Filter results by Group ID or ID's.
+
+- **filter[group_type_id]** _(integer)_
+
+  - Filter results by Group Type ID or ID's.
+
+- **filter[name]** _(string)_
+
+  - Filter results by names that include the given filter, e.g. `filter[name]=New`.
+
 Example Response:
 
 ```
