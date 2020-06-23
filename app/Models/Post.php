@@ -361,6 +361,7 @@ class Post extends Model
             'quiz' => $action['quiz'],
             'online' => $action['online'],
             'time_commitment' => $action['time_commitment'],
+            'volunteer_credit' => $action['volunteer_credit'],
             'url' => $this->getMediaUrl(),
             'caption' => $this->text,
             'text' => $this->text,
