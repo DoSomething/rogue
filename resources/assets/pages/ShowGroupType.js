@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import NotFound from './NotFound';
 import Empty from '../components/Empty';
 import Shell from '../components/utilities/Shell';
+import GroupsTable from '../components/GroupsTable';
 import MetaInformation from '../components/utilities/MetaInformation';
 import GroupTypeCampaignList from '../components/GroupTypeCampaignList';
 
@@ -13,11 +14,6 @@ const SHOW_GROUP_TYPE_QUERY = gql`
   query ShowGroupTypeQuery($id: Int!) {
     groupType(id: $id) {
       createdAt
-      name
-    }
-    groups(groupTypeId: $id) {
-      id
-      goal
       name
     }
   }
@@ -62,30 +58,7 @@ const ShowGroupType = () => {
       </div>
       <div className="container__row">
         <div className="container__block">
-          {data.groups ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <td>Group ID</td>
-                  <td>Goal</td>
-                </tr>
-              </thead>
-              <tbody>
-                {data.groups.map(group => (
-                  <tr key={group.id}>
-                    <td>
-                      <a href={`/groups/${group.id}`}>
-                        {group.name} ({group.id})
-                      </a>
-                    </td>
-                    <td>{group.goal || '--'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <Empty />
-          )}
+          <GroupsTable groupTypeId={Number(id)} />
           <div className="container__block -narrow">
             <a
               className="button -primary"
