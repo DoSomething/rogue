@@ -30,6 +30,10 @@ const SHOW_CAMPAIGN_ACTIONS_QUERY = gql`
       startDate
       updatedAt
       groupTypeId
+      groupType {
+        id
+        name
+      }
     }
     campaignWebsiteByCampaignId(campaignId: $idString) {
       title
@@ -110,12 +114,17 @@ const Campaign = ({ id }) => {
           <p>–</p>
         )}
 
-        <h4>Campaign Group Type ID</h4>
-        {campaign.groupTypeId ? (
-          <a href={`/group-types/${campaign.groupTypeId}`}>{campaign.groupTypeId}</a>
-        ) : (
-          <p>–</p>
-        )}
+        <h4>Group Type</h4>
+        <p>
+          {campaign.groupType ? (
+            <a href={`/group-types/${campaign.groupType.id}`}>
+              {campaign.groupType.name}
+            </a>
+          ) : (
+            '–'
+          )}
+        </p>
+
         <h4>URL</h4>
         <p>
           {campaignWebsiteByCampaignId ? (
