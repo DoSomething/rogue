@@ -21,7 +21,7 @@ const GroupTypeCampaignList = ({ groupTypeId }) => {
   });
 
   if (loading) {
-    return <>...</>;
+    return <div className="spinner" />;
   }
 
   if (error) {

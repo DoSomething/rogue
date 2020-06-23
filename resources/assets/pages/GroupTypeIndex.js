@@ -57,7 +57,8 @@ const GroupTypeIndex = () => {
               <tr key={groupType.id}>
                 <td>
                   <Link to={`/group-types/${groupType.id}`}>
-                    {groupType.name} ({groupType.id})
+                    {groupType.name}{' '}
+                    <code className="footnote">({groupType.id})</code>
                   </Link>
                 </td>
               </tr>

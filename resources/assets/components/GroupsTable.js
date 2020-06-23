@@ -9,7 +9,11 @@ import { updateQuery } from '../helpers';
 
 const GROUPS_QUERY = gql`
   query GroupsIndexQuery($groupTypeId: Int!, $cursor: String) {
-    groups: paginatedGroups(groupTypeId: $groupTypeId, after: $cursor) {
+    groups: paginatedGroups(
+      groupTypeId: $groupTypeId
+      after: $cursor
+      first: 50
+    ) {
       edges {
         cursor
         node {
@@ -38,11 +42,7 @@ const GroupsTable = ({ groupTypeId }) => {
     notifyOnNetworkStatusChange: true,
   });
 
-  if (loading) {
-    return <div className="spinner margin-horizontal-auto margin-vertical" />;
-  }
-
-  const groups = data.groups.edges;
+  const groups = data ? data.groups.edges : [];
   const noResults = groups.length === 0 && !loading;
   const { endCursor, hasNextPage } = get(data, 'groups.pageInfo', {});
 
