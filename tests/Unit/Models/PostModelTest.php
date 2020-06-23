@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
+use Rogue\Models\Action;
 use Rogue\Models\Signup;
 
 class PostModelTest extends TestCase
@@ -60,7 +61,12 @@ class PostModelTest extends TestCase
      */
     public function testBlinkPayload()
     {
+        $action = factory(Action::class)->create([
+            'volunteer_credit' => true,
+        ]);
+
         $post = factory(Post::class)->create([
+            'action_id' => $action->id,
             'school_id' => 'Example School ID',
         ]);
         $result = $post->toBlinkPayload();
@@ -69,6 +75,9 @@ class PostModelTest extends TestCase
         $this->assertEquals($result['campaign_slug'], 'test-example-campaign');
         $this->assertEquals($result['campaign_title'], 'Test Example Campaign');
         $this->assertEquals($result['school_name'], 'San Dimas High School');
+
+        // Test expected post->action attributes were added to the Blink payload.
+        $this->assertEquals($result['volunteer_credit'], $action->volunteer_credit);
 
         $post = factory(Post::class)->create([
             'school_id' => null,
