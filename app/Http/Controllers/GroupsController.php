@@ -37,6 +37,18 @@ class GroupsController extends ApiController
             $query->where('name', 'REGEXP', $filters['name']);
         }
 
+        // This endpoint always returns groups in alphabetical order by name. We'll
+        // therefore "force" the query string so that we can use it in `getCursor`.
+        // @TODO: There must be a more elegant way of doing this...
+        $query->orderBy('name', 'asc');
+
+        $request->query->set('orderBy', 'name,asc');
+
+        if ($cursor = array_get($request->query('cursor'), 'after')) {
+            $query->whereAfterCursor($cursor);
+            $this->useCursorPagination = true;
+        }
+
         return $this->paginatedCollection($query, $request);
     }
 

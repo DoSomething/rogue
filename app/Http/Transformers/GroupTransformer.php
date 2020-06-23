@@ -22,6 +22,7 @@ class GroupTransformer extends TransformerAbstract
             'goal' => $group->goal,
             'created_at' => $group->created_at->toIso8601String(),
             'updated_at' => $group->updated_at->toIso8601String(),
+            'cursor' => $group->getCursor(),
         ];
     }
 }
