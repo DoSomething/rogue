@@ -64,7 +64,7 @@ const GroupsTable = ({ groupTypeId }) => {
   }
 
   if (noResults && !hasNextPage) {
-    return <Empty />;
+    return <Empty copy="No groups have been added for this group type." />;
   }
 
   return (
