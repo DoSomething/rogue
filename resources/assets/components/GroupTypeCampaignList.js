@@ -33,13 +33,13 @@ const GroupTypeCampaignList = ({ groupTypeId }) => {
   }
 
   return (
-    <>
+    <ul>
       {data.paginatedCampaigns.edges.map(item => (
-        <a key={item.node.id} href={`/campaigns/${item.node.id}`}>
-          {item.node.internalTitle}
-        </a>
+        <li key={item.node.id}>
+          <a href={`/campaigns/${item.node.id}`}>{item.node.internalTitle}</a>
+        </li>
       ))}
-    </>
+    </ul>
   );
 };
 
