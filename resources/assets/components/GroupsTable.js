@@ -91,14 +91,14 @@ const GroupsTable = ({ groupTypeId }) => {
         <tfoot className="form-actions">
           {loading ? (
             <tr>
-              <td colSpan="5">
+              <td colSpan="2">
                 <div className="spinner margin-horizontal-auto margin-vertical" />
               </td>
             </tr>
           ) : null}
           {hasNextPage ? (
             <tr>
-              <td colSpan="5">
+              <td colSpan="2">
                 <button
                   className="button -tertiary"
                   onClick={handleViewMore}
