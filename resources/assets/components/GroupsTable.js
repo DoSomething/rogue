@@ -47,7 +47,6 @@ const GroupsTable = ({ filter, groupTypeId }) => {
   const noResults = groups.length === 0 && !loading;
   const { endCursor, hasNextPage } = get(data, 'groups.pageInfo', {});
 
-  // We can use this function to load more results:
   const handleViewMore = () => {
     fetchMore({
       variables: { cursor: endCursor },
@@ -91,7 +90,7 @@ const GroupsTable = ({ filter, groupTypeId }) => {
               <td>
                 <EntityLabel id={node.id} name={node.name} path="groups" />
               </td>
-              <td>{node.goal || '--'}</td>
+              <td>{node.goal || '-'}</td>
             </tr>
           ))}
         </tbody>
