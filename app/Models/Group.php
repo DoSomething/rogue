@@ -14,7 +14,14 @@ class Group extends Model
      *
      * @var array
      */
-    protected $fillable = ['goal', 'group_type_id', 'name'];
+    protected $fillable = [
+        'city',
+        'external_id',
+        'goal',
+        'group_type_id',
+        'name',
+        'state',
+    ];
 
     /**
      * Attributes that can be queried when filtering.
@@ -24,7 +31,7 @@ class Group extends Model
      *
      * @var array
      */
-    public static $indexes = ['id', 'group_type_id'];
+    public static $indexes = ['external_id', 'id', 'group_type_id', 'state'];
 
     /**
      * Attributes that we can sort by with the '?orderBy' query parameter.
