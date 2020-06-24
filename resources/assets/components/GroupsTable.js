@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import React, { useState, useEffect } from 'react';
 
 import Empty from './Empty';
+import EntityLabel from './utilities/EntityLabel';
 import { updateQuery } from '../helpers';
 
 const GROUPS_QUERY = gql`
@@ -90,7 +91,7 @@ const GroupsTable = ({ filter, groupTypeId }) => {
             <tr key={cursor}>
               <td>
                 <Link to={`/groups/${node.id}`}>
-                  {node.name} <code className="footnote">({node.id})</code>
+                  <EntityLabel name={node.name} id={node.id} />
                 </Link>
               </td>
               <td>{node.goal || '--'}</td>
