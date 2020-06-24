@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import Empty from '../components/Empty';
 import Shell from '../components/utilities/Shell';
+import EntityLabel from '../components/utilities/EntityLabel';
 
 const GROUP_TYPE_INDEX_QUERY = gql`
   query GroupTypeIndexQuery {
@@ -57,8 +58,7 @@ const GroupTypeIndex = () => {
               <tr key={groupType.id}>
                 <td>
                   <Link to={`/group-types/${groupType.id}`}>
-                    {groupType.name}{' '}
-                    <code className="footnote">({groupType.id})</code>
+                    <EntityLabel name={groupType.name} id={groupType.id} />
                   </Link>
                 </td>
               </tr>
