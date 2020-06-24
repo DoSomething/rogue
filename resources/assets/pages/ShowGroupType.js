@@ -20,6 +20,7 @@ const SHOW_GROUP_TYPE_QUERY = gql`
 `;
 
 const ShowGroupType = () => {
+  const [filter, setFilter] = useState('');
   const { id } = useParams();
   const title = `Group Type #${id}`;
   document.title = title;
@@ -49,6 +50,12 @@ const ShowGroupType = () => {
               Campaigns: <GroupTypeCampaignList groupTypeId={Number(id)} />,
             }}
           />
+          <input
+            type="text"
+            className="text-field -search"
+            placeholder="Filter by group name..."
+            onChange={event => setFilter(event.target.value)}
+          />
         </div>
         <div className="container__block -half form-actions -inline text-right">
           <a className="button -tertiary" href={`/group-types/${id}/edit`}>
@@ -58,7 +65,7 @@ const ShowGroupType = () => {
       </div>
       <div className="container__row">
         <div className="container__block">
-          <GroupsTable groupTypeId={Number(id)} />
+          <GroupsTable filter={filter} groupTypeId={Number(id)} />
           <div className="container__block -narrow">
             <a
               className="button -primary"

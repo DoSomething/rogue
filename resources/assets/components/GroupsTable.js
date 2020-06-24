@@ -8,11 +8,12 @@ import Empty from './Empty';
 import { updateQuery } from '../helpers';
 
 const GROUPS_QUERY = gql`
-  query GroupsIndexQuery($groupTypeId: Int!, $cursor: String) {
+  query GroupsIndexQuery($filter: String, $groupTypeId: Int!, $cursor: String) {
     groups: paginatedGroups(
-      groupTypeId: $groupTypeId
       after: $cursor
       first: 50
+      groupTypeId: $groupTypeId
+      name: $filter
     ) {
       edges {
         cursor
@@ -33,12 +34,12 @@ const GROUPS_QUERY = gql`
 /**
  * This component handles fetching & paginating a list of groups by group type ID.
  *
- * @param {Number} groupTypeId
  * @param {String} filter
+ * @param {Number} groupTypeId
  */
-const GroupsTable = ({ groupTypeId }) => {
+const GroupsTable = ({ filter, groupTypeId }) => {
   const { error, loading, data, fetchMore } = useQuery(GROUPS_QUERY, {
-    variables: { groupTypeId },
+    variables: { filter, groupTypeId },
     notifyOnNetworkStatusChange: true,
   });
 
@@ -64,7 +65,15 @@ const GroupsTable = ({ groupTypeId }) => {
   }
 
   if (noResults && !hasNextPage) {
-    return <Empty copy="No groups have been added for this group type." />;
+    return (
+      <Empty
+        copy={
+          filter
+            ? `Could not find any groups with name containing "${filter}".`
+            : 'No groups have been added to this group type.'
+        }
+      />
+    );
   }
 
   return (
