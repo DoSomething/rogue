@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import NotFound from './NotFound';
@@ -98,20 +98,21 @@ const ShowGroup = () => {
                 {data.signups.map(signup => (
                   <tr key={signup.id}>
                     <td>
-                      <a href={`/signups/${signup.id}`}>
+                      <Link to={`/signups/${signup.id}`}>
                         {formatDateTime(signup.createdAt)}
-                      </a>
+                      </Link>
                     </td>
                     <td>
-                      <a href={`/users/${signup.userId}`}>{signup.userId}</a>
+                      <Link to={`/users/${signup.userId}`}>
+                        {signup.userId}
+                      </Link>
                     </td>
                     <td>
-                      <a href={`/campaigns/${signup.campaign.id}`}>
-                        <EntityLabel
-                          id={signup.campaign.id}
-                          name={signup.campaign.internalTitle}
-                        />
-                      </a>
+                      <EntityLabel
+                        id={signup.campaign.id}
+                        name={signup.campaign.internalTitle}
+                        path="campaigns"
+                      />
                     </td>
                   </tr>
                 ))}

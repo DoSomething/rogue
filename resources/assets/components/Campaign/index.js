@@ -118,12 +118,11 @@ const Campaign = ({ id }) => {
         <h4>Group Type</h4>
         <p>
           {campaign.groupType ? (
-            <a href={`/group-types/${campaign.groupType.id}`}>
-              <EntityLabel
-                id={campaign.groupType.id}
-                name={campaign.groupType.name}
-              />
-            </a>
+            <EntityLabel
+              id={campaign.groupType.id}
+              name={campaign.groupType.name}
+              path="group-types"
+            />
           ) : (
             '–'
           )}
