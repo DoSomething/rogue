@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 import Action, { ActionFragment } from '../Action';
 import Shell from '../utilities/Shell';
 import TextBlock from '../utilities/TextBlock';
+import EntityLabel from '../utilities/EntityLabel';
 import RogueClient from '../../utilities/RogueClient';
 
 import './campaign.scss';
@@ -118,7 +119,10 @@ const Campaign = ({ id }) => {
         <p>
           {campaign.groupType ? (
             <a href={`/group-types/${campaign.groupType.id}`}>
-              {campaign.groupType.name}
+              <EntityLabel
+                id={campaign.groupType.id}
+                name={campaign.groupType.name}
+              />
             </a>
           ) : (
             '–'
