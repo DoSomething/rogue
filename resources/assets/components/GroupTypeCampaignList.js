@@ -30,8 +30,8 @@ const GroupTypeCampaignList = ({ groupTypeId }) => {
     return <>{JSON.stringify(error)}</>;
   }
 
-  if (!data.paginatedCampaigns || !data.paginatedCampaigns.edges) {
-    return <>--</>;
+  if (!data.paginatedCampaigns.edges.length) {
+    return <p>–</p>;
   }
 
   return (
