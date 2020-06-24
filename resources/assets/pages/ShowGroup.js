@@ -7,28 +7,20 @@ import NotFound from './NotFound';
 import Empty from '../components/Empty';
 import { formatDateTime } from '../helpers';
 import Shell from '../components/utilities/Shell';
+import SignupsTable from '../components/SignupsTable';
 import EntityLabel from '../components/utilities/EntityLabel';
 import MetaInformation from '../components/utilities/MetaInformation';
 
-// @TODO: Paginate through signups.
 const SHOW_GROUP_QUERY = gql`
   query ShowGroupQuery($id: Int!) {
     group(id: $id) {
+      id
       goal
       groupType {
         id
         name
       }
       name
-    }
-    signups(groupId: $id, count: 50) {
-      id
-      userId
-      campaign {
-        id
-        internalTitle
-      }
-      createdAt
     }
     posts(
       groupId: $id
@@ -84,43 +76,7 @@ const ShowGroup = () => {
       </div>
       <div className="container__row">
         <div className="container__block">
-          <h3>Signups</h3>
-          {data.signups.length ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <td>Created</td>
-                  <td>User</td>
-                  <td>Campaign</td>
-                </tr>
-              </thead>
-              <tbody>
-                {data.signups.map(signup => (
-                  <tr key={signup.id}>
-                    <td>
-                      <Link to={`/signups/${signup.id}`}>
-                        {formatDateTime(signup.createdAt)}
-                      </Link>
-                    </td>
-                    <td>
-                      <Link to={`/users/${signup.userId}`}>
-                        {signup.userId}
-                      </Link>
-                    </td>
-                    <td>
-                      <EntityLabel
-                        id={signup.campaign.id}
-                        name={signup.campaign.internalTitle}
-                        path="campaigns"
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <Empty copy="No members have signed up for this group yet." />
-          )}
+          <SignupsTable groupId={data.group.id} />
         </div>
       </div>
       <ul className="form-actions margin-vertical">
