@@ -26,6 +26,7 @@ const SHOW_SIGNUP_QUERY = gql`
       createdAt
       deleted
 
+      userId
       user {
         id
         displayName
@@ -61,7 +62,9 @@ const ShowCampaign = () => {
   const { signup } = data;
   const exists = signup && !signup.deleted;
   const subtitle = exists
-    ? `${signup.user.displayName} / ${signup.campaign.internalTitle}`
+    ? `${signup.user ? signup.user.displayName : signup.userId} / ${
+        signup.campaign.internalTitle
+      }`
     : 'Not found.';
 
   return (
@@ -75,8 +78,8 @@ const ShowCampaign = () => {
                 <MetaInformation
                   details={{
                     'User ID': (
-                      <Link to={`/users/${signup.user.id}`}>
-                        {signup.user.id}
+                      <Link to={`/users/${signup.userId}`}>
+                        {signup.userId}
                       </Link>
                     ),
                     Source: (
