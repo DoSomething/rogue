@@ -38,9 +38,11 @@ const GroupTypeCampaignList = ({ groupTypeId }) => {
     <ul>
       {data.paginatedCampaigns.edges.map(item => (
         <li key={item.node.id}>
-          <a href={`/campaigns/${item.node.id}`}>
-            <EntityLabel name={item.node.internalTitle} id={item.node.id} />
-          </a>
+          <EntityLabel
+            id={item.node.id}
+            name={item.node.internalTitle}
+            path="campaigns"
+          />
         </li>
       ))}
     </ul>

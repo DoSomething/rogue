@@ -1,6 +1,5 @@
 import { get } from 'lodash';
 import gql from 'graphql-tag';
-import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import React, { useState, useEffect } from 'react';
 
@@ -90,9 +89,7 @@ const GroupsTable = ({ filter, groupTypeId }) => {
           {groups.map(({ node, cursor }) => (
             <tr key={cursor}>
               <td>
-                <Link to={`/groups/${node.id}`}>
-                  <EntityLabel name={node.name} id={node.id} />
-                </Link>
+                <EntityLabel id={node.id} name={node.name} path="groups" />
               </td>
               <td>{node.goal || '--'}</td>
             </tr>

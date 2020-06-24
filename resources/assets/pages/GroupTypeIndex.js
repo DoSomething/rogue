@@ -57,9 +57,11 @@ const GroupTypeIndex = () => {
             {data.groupTypes.map(groupType => (
               <tr key={groupType.id}>
                 <td>
-                  <Link to={`/group-types/${groupType.id}`}>
-                    <EntityLabel name={groupType.name} id={groupType.id} />
-                  </Link>
+                  <EntityLabel
+                    id={groupType.id}
+                    name={groupType.name}
+                    path="group-types"
+                  />
                 </td>
               </tr>
             ))}
