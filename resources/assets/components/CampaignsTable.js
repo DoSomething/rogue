@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 
 import Empty from './Empty';
 import { updateQuery } from '../helpers';
+import EntityLabel from './utilities/EntityLabel';
 import SortableHeading from './utilities/SortableHeading';
 
 const CAMPAIGNS_QUERY = gql`
@@ -149,8 +150,7 @@ const CampaignsTable = ({ isOpen, filter }) => {
             <tr key={cursor}>
               <td>
                 <Link to={`/campaigns/${node.id}/accepted`}>
-                  {node.internalTitle}{' '}
-                  <code className="footnote">({node.id})</code>
+                  <EntityLabel name={node.internalTitle} id={node.id} />
                 </Link>
               </td>
               <td>{node.pendingCount}</td>

@@ -2,6 +2,8 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
+import EntityLabel from './utilities/EntityLabel';
+
 const GROUP_TYPE_CAMPAIGN_LIST_QUERY = gql`
   query GroupTypeCampaignListQuery($groupTypeId: Int!) {
     paginatedCampaigns(groupTypeId: $groupTypeId) {
@@ -36,7 +38,9 @@ const GroupTypeCampaignList = ({ groupTypeId }) => {
     <ul>
       {data.paginatedCampaigns.edges.map(item => (
         <li key={item.node.id}>
-          <a href={`/campaigns/${item.node.id}`}>{item.node.internalTitle}</a>
+          <a href={`/campaigns/${item.node.id}`}>
+            <EntityLabel name={item.node.internalTitle} id={item.node.id} />
+          </a>
         </li>
       ))}
     </ul>
