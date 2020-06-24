@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 import Action, { ActionFragment } from '../Action';
 import Shell from '../utilities/Shell';
 import TextBlock from '../utilities/TextBlock';
+import EntityLabel from '../utilities/EntityLabel';
 import RogueClient from '../../utilities/RogueClient';
 
 import './campaign.scss';
@@ -30,6 +31,10 @@ const SHOW_CAMPAIGN_ACTIONS_QUERY = gql`
       startDate
       updatedAt
       groupTypeId
+      groupType {
+        id
+        name
+      }
     }
     campaignWebsiteByCampaignId(campaignId: $idString) {
       title
@@ -110,12 +115,19 @@ const Campaign = ({ id }) => {
           <p>–</p>
         )}
 
-        <h4>Campaign Group Type ID</h4>
-        {campaign.groupTypeId ? (
-          <a href={`/group-types/${campaign.groupTypeId}`}>{campaign.groupTypeId}</a>
-        ) : (
-          <p>–</p>
-        )}
+        <h4>Group Type</h4>
+        <p>
+          {campaign.groupType ? (
+            <EntityLabel
+              id={campaign.groupType.id}
+              name={campaign.groupType.name}
+              path="group-types"
+            />
+          ) : (
+            '–'
+          )}
+        </p>
+
         <h4>URL</h4>
         <p>
           {campaignWebsiteByCampaignId ? (

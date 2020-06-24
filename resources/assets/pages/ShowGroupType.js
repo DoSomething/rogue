@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import NotFound from './NotFound';
 import Empty from '../components/Empty';
 import Shell from '../components/utilities/Shell';
+import GroupsTable from '../components/GroupsTable';
 import MetaInformation from '../components/utilities/MetaInformation';
 import GroupTypeCampaignList from '../components/GroupTypeCampaignList';
 
@@ -15,15 +16,11 @@ const SHOW_GROUP_TYPE_QUERY = gql`
       createdAt
       name
     }
-    groups(groupTypeId: $id) {
-      id
-      goal
-      name
-    }
   }
 `;
 
 const ShowGroupType = () => {
+  const [filter, setFilter] = useState('');
   const { id } = useParams();
   const title = `Group Type #${id}`;
   document.title = title;
@@ -53,6 +50,12 @@ const ShowGroupType = () => {
               Campaigns: <GroupTypeCampaignList groupTypeId={Number(id)} />,
             }}
           />
+          <input
+            type="text"
+            className="text-field -search"
+            placeholder="Filter by group name..."
+            onChange={event => setFilter(event.target.value)}
+          />
         </div>
         <div className="container__block -half form-actions -inline text-right">
           <a className="button -tertiary" href={`/group-types/${id}/edit`}>
@@ -62,30 +65,7 @@ const ShowGroupType = () => {
       </div>
       <div className="container__row">
         <div className="container__block">
-          {data.groups ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <td>Group ID</td>
-                  <td>Goal</td>
-                </tr>
-              </thead>
-              <tbody>
-                {data.groups.map(group => (
-                  <tr key={group.id}>
-                    <td>
-                      <a href={`/groups/${group.id}`}>
-                        {group.name} ({group.id})
-                      </a>
-                    </td>
-                    <td>{group.goal || '--'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <Empty />
-          )}
+          <GroupsTable filter={filter} groupTypeId={Number(id)} />
           <div className="container__block -narrow">
             <a
               className="button -primary"

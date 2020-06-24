@@ -1,12 +1,13 @@
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import NotFound from './NotFound';
 import Empty from '../components/Empty';
 import { formatDateTime } from '../helpers';
 import Shell from '../components/utilities/Shell';
+import EntityLabel from '../components/utilities/EntityLabel';
 import MetaInformation from '../components/utilities/MetaInformation';
 
 // @TODO: Paginate through signups.
@@ -77,7 +78,7 @@ const ShowGroup = () => {
         </div>
         <div className="container__block -half form-actions -inline text-right">
           <a className="button -tertiary" href={`/groups/${id}/edit`}>
-            Edit Group
+            Edit Group #{id}
           </a>
         </div>
       </div>
@@ -88,31 +89,37 @@ const ShowGroup = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <td>ID</td>
+                  <td>Created</td>
                   <td>User</td>
                   <td>Campaign</td>
-                  <td>Created</td>
                 </tr>
               </thead>
-              {data.signups.map(signup => (
-                <tr>
-                  <td>
-                    <a href={`/signups/${signup.id}`}>{signup.id}</a>
-                  </td>
-                  <td>
-                    <a href={`/users/${signup.userId}`}>{signup.userId}</a>
-                  </td>
-                  <td>
-                    <a href={`/campaigns/${signup.campaign.id}`}>
-                      {signup.campaign.internalTitle} ({signup.campaign.id})
-                    </a>
-                  </td>
-                  <td>{formatDateTime(signup.createdAt)}</td>
-                </tr>
-              ))}
+              <tbody>
+                {data.signups.map(signup => (
+                  <tr key={signup.id}>
+                    <td>
+                      <Link to={`/signups/${signup.id}`}>
+                        {formatDateTime(signup.createdAt)}
+                      </Link>
+                    </td>
+                    <td>
+                      <Link to={`/users/${signup.userId}`}>
+                        {signup.userId}
+                      </Link>
+                    </td>
+                    <td>
+                      <EntityLabel
+                        id={signup.campaign.id}
+                        name={signup.campaign.internalTitle}
+                        path="campaigns"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           ) : (
-            <Empty />
+            <Empty copy="No members have signed up for this group yet." />
           )}
         </div>
       </div>
