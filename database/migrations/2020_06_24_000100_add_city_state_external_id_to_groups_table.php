@@ -32,10 +32,8 @@ class addCityStateExternalIdToGroupsTable extends Migration
     {
         Schema::table('groups', function (Blueprint $table) {
             $table->dropIndex(['group_type_id', 'state']);
-            $table->dropIndex(['group_type_id', 'name', 'city', 'state']);
-            $table->dropColumn('external_id');
-            $table->dropColumn('city');
-            $table->dropColumn('state');
+            $table->dropUnique(['group_type_id', 'name', 'city', 'state']);
+            $table->dropColumn(['external_id', 'city', 'state']);
             $table->unique(['group_type_id', 'name']);
         });
     }
