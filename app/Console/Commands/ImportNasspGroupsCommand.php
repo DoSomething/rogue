@@ -44,7 +44,7 @@ class ImportNasspGroupsCommand extends Command
     {
         $result = trim($value);
 
-        return $result == 'NULL' ? null : $value;
+        return $result == 'NULL' ? null : $result;
     }
 
     /**
