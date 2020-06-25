@@ -76,12 +76,15 @@ class ImportNasspGroupsCommand extends Command
 
         $nhsGroupType = GroupType::firstOrCreate([
             'name' => 'National Honor Society',
+            'filter_by_state' => true,
         ]);
         $njhsGroupType = GroupType::firstOrCreate([
             'name' => 'National Junior Honor Society',
+            'filter_by_state' => true,
         ]);
         $nascGroupType = GroupType::firstOrCreate([
             'name' => 'National Student Council',
+            'filter_by_state' => true,
         ]);
 
         info('rogue:nassp-groups-import: Beginning import...');

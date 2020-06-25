@@ -8,11 +8,20 @@ use Illuminate\Database\Eloquent\Builder;
 class GroupType extends Model
 {
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'filter_by_state' => 'boolean',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['filter_by_state', 'name'];
 
     protected static function boot()
     {

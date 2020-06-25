@@ -19,6 +19,11 @@
                         @include('forms.text', ['name' => 'name', 'placeholder' => 'e.g. March For Our Lives, DoSomething Clubs', 'value' => $groupType->name])
                     </div>
 
+                    <div class="form-item">
+                        <label class="field-label">Group Finder</label>
+                        @include('forms.option', ['name' => 'filter_by_state', 'label' => 'Filter by state', 'value' => $groupType->filter_by_state])
+                    </div>
+
                     <ul class="form-actions -inline -padded">
                         <li><input type="submit" class="button" value="Update"></li>
                     </ul>
