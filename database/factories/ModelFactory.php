@@ -204,6 +204,7 @@ $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($
 $factory->define(GroupType::class, function (Generator $faker) {
     return [
         'name' => title_case($faker->unique()->company),
+        'filter_by_state' => false,
     ];
 });
 
