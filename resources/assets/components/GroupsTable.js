@@ -21,6 +21,8 @@ const GROUPS_QUERY = gql`
           id
           name
           goal
+          city
+          state
         }
       }
       pageInfo {
@@ -81,6 +83,7 @@ const GroupsTable = ({ filter, groupTypeId }) => {
         <thead>
           <tr>
             <td>Group ID</td>
+            <td>Location</td>
             <td>Goal</td>
           </tr>
         </thead>
@@ -90,6 +93,7 @@ const GroupsTable = ({ filter, groupTypeId }) => {
               <td>
                 <EntityLabel id={node.id} name={node.name} path="groups" />
               </td>
+              <td>{node.city ? `${node.city}, ${node.state}` : null}</td>
               <td>{node.goal || '-'}</td>
             </tr>
           ))}
@@ -97,14 +101,14 @@ const GroupsTable = ({ filter, groupTypeId }) => {
         <tfoot className="form-actions">
           {loading ? (
             <tr>
-              <td colSpan="2">
+              <td colSpan="3">
                 <div className="spinner margin-horizontal-auto margin-vertical" />
               </td>
             </tr>
           ) : null}
           {hasNextPage ? (
             <tr>
-              <td colSpan="2">
+              <td colSpan="3">
                 <button
                   className="button -tertiary"
                   onClick={handleViewMore}
