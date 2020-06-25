@@ -35,6 +35,8 @@ class ImportNasspGroupsCommand extends Command
     }
 
     /**
+     * Returns a trimmed CSV value, or null if equal to the string "NULL".
+     *
      * @param string
      * @return string
      */
@@ -52,6 +54,8 @@ class ImportNasspGroupsCommand extends Command
      */
     public function handle()
     {
+        // Sample CSV path: https://gist.githubusercontent.com/aaronschachter/a407e9882ebe01520644cc9c257c8ec9/raw/8c837c52cfe22866ba4b49f2cf2f12336ca297d8/groups.csv
+
         $path = $this->argument('path');
 
         info('rogue:nassp-groups-import: Loading csv from ' . $path);
