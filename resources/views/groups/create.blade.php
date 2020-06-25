@@ -23,6 +23,21 @@
                         @include('forms.text', ['name' => 'goal', 'placeholder' => 'Optional group goal, e.g. 200'])
                     </div>
 
+                    <div class="form-item">
+                        <label class="field-label">City</label>
+                        @include('forms.text', ['name' => 'city', 'placeholder' => ' e.g. San Antonio'])
+                    </div>
+
+                    <div class="form-item">
+                        <label class="field-label">State</label>
+                        @include('forms.text', ['name' => 'state', 'placeholder' => ' e.g. TX'])
+                    </div>
+
+                    <div class="form-item">
+                        <label class="field-label">External ID</label>
+                        @include('forms.text', ['name' => 'external_id', 'placeholder' => 'A unique ID used by the group'])
+                    </div>
+
                     <ul class="form-actions -inline -padded">
                         <li><input type="submit" class="button" value="Create Group"></li>
                     </ul>

@@ -8,17 +8,25 @@ GET /api/v3/groups
 
 ### Optional Query Parameters
 
-- **filter[id]** _(integer)_
+- **filter[external_id]** _(string)_
 
-  - Filter results by Group ID or ID's.
+  - Filter results by given external_id, e.g. `filter[external_id]=390494901451`.
 
 - **filter[group_type_id]** _(integer)_
 
   - Filter results by Group Type ID or ID's.
 
+- **filter[id]** _(integer)_
+
+  - Filter results by Group ID or ID's.
+
 - **filter[name]** _(string)_
 
   - Filter results by names that include the given filter, e.g. `filter[name]=New`.
+
+- **filter[state]** _(string)_
+
+  - Filter results by given state, e.g. `filter[state]=SC`.
 
 Example Response:
 
@@ -28,15 +36,21 @@ Example Response:
     {
       "id": 12,
       "group_type_id": 1,
-      "name": "New York",
-      "goal": 200,
+      "name": "A C Flora High School",
+      "external_id": "390494901451",
+      "city": "Charleston",
+      "state": "SC",
+      "goal": 150,
       "created_at": "2019-12-04T21:28:26+00:00",
       "updated_at": "2019-12-04T22:33:03+00:00"
     },
     {
       "id": 23,
       "group_type_id": 1,
-      "name": "San Francisco",
+      "name": "Afton Central School",
+      "external_id": null,
+      "city": "Afton",
+      "state": "NY",
       "goal": null,
       "created_at": "2019-12-04T22:05:29+00:00",
       "updated_at": "2019-12-04T22:05:29+00:00"
@@ -69,8 +83,11 @@ Example Response:
   "data": {
     "id": 12,
     "group_type_id": 1,
-    "name": "New York",
-    "goal": 200,
+    "name": "A C Flora High School",
+    "external_id": "390494901451",
+    "city": "Charleston",
+    "state": "SC",
+    "goal": 150,
     "created_at": "2019-12-04T21:28:26+00:00",
     "updated_at": "2019-12-04T22:33:03+00:00"
   };
