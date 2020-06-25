@@ -2,6 +2,7 @@
 
 namespace Rogue\Console\Commands;
 
+use Exception;
 use League\Csv\Reader;
 use Rogue\Models\Group;
 use Rogue\Models\GroupType;
