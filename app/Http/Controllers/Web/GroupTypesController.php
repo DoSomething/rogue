@@ -40,6 +40,8 @@ class GroupTypesController extends Controller
         $values = $this->validate($request, array_merge_recursive($this->rules, [
             'name' => [Rule::unique('group_types')],
         ]));
+        // @see ActionsController->fillInOmittedCheckboxes
+        $values['filter_by_state'] = $request->has('filter_by_state');
 
         $groupType = GroupType::create($values);
 
@@ -72,6 +74,8 @@ class GroupTypesController extends Controller
         $values = $this->validate($request, array_merge_recursive($this->rules, [
             'name' => [Rule::unique('group_types')->ignore($groupType->id)],
         ]));
+        // @see ActionsController->fillInOmittedCheckboxes
+        $values['filter_by_state'] = $request->has('filter_by_state');
 
         $groupType->update($values);
 
