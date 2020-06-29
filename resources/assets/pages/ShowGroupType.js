@@ -58,13 +58,18 @@ const ShowGroupType = () => {
           />
 
           {filterByState ? (
-            <select onChange={event => setGroupState(event.target.value)}>
-              <option value={null}>--Select State--</option>
+            <div className="mb-4">
+              <select
+                className="text-field"
+                onChange={event => setGroupState(event.target.value)}
+              >
+                <option value={null}>-- Select State --</option>
 
-              {usaStateOptions.map(state => (
-                <option value={state.abbreviation}>{state.name}</option>
-              ))}
-            </select>
+                {usaStateOptions.map(state => (
+                  <option value={state.abbreviation}>{state.name}</option>
+                ))}
+              </select>
+            </div>
           ) : null}
 
           <input
