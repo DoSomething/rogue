@@ -54,7 +54,7 @@ class ImportNasspGroupsCommand extends Command
      */
     public function handle()
     {
-        // Sample CSV path: https://gist.githubusercontent.com/aaronschachter/a407e9882ebe01520644cc9c257c8ec9/raw/8c837c52cfe22866ba4b49f2cf2f12336ca297d8/groups.csv
+        // Sample CSV path: https://gist.githubusercontent.com/aaronschachter/9cd40a703a43e22077e78e12e011a7de/raw/1d689400d64f461d51dce0e99d2b16334c36b10e/nassp.csv
 
         $path = $this->argument('path');
 
@@ -86,6 +86,10 @@ class ImportNasspGroupsCommand extends Command
             'name' => 'National Student Council',
             'filter_by_state' => true,
         ]);
+        $nasspGroupType = GroupType::firstOrCreate([
+            'name' => 'National Association of Secondary School Principals',
+            'filter_by_state' => true,
+        ]);
 
         info('rogue:nassp-groups-import: Beginning import...');
 
@@ -93,10 +97,10 @@ class ImportNasspGroupsCommand extends Command
          * Without specifying these column names, this command fails with error:
          * "The header record must be an empty or a flat array with unique string value."
          */
-        $records = $csv->getRecords(['LABEL NAME', 'NHS', 'NJHS', 'NASC', 'NASSP', 'ADDRESS1', 'ADDRESS2', 'CITY', 'STATE', 'POSTAL', 'COUNTRY', 'NCES']);
+        $records = $csv->getRecords(['name', 'NHS', 'NJHS', 'NASC', 'NASSP', 'city', 'state', 'zip', 'universalid', 'ncescode', 'gsid']);
 
         foreach ($records as $record) {
-            $name = trim($record['LABEL NAME']);
+            $name = trim($record['name']);
 
             if (trim($record['NHS']) == 'NHS') {
                 $groupTypeId = $nhsGroupType->id;
@@ -104,21 +108,35 @@ class ImportNasspGroupsCommand extends Command
                 $groupTypeId = $njhsGroupType->id;
             } elseif (trim($record['NASC']) == 'NASC') {
                 $groupTypeId = $nascGroupType->id;
-            } else {
-                $numSkipped++;
-
-                info('rogue:nassp-groups-import: Skipped - no group type match for ' .$name . '.');
-
-                continue;
             }
 
             try {
-                $group = Group::firstOrCreate([
-                    'group_type_id' => $groupTypeId,
+                $city = $this->sanitize($record['city']);
+                $state = $this->sanitize($record['state']);
+                $schoolId = $this->sanitize($record['universalid']);
+
+                if ($groupTypeId) {
+                    $group = Group::firstOrCreate([
+                        'group_type_id' => $groupTypeId,
+                        'name' => $name,
+                        'city' => $city,
+                        'state' => $state,
+                        // @TODO: Save as school_id instead of external_id
+                        'external_id' => $schoolId,
+                    ]);
+
+                    $numImported++;
+
+                    info('rogue:nassp-groups-import: Imported group', ['id' => $group->id, 'name' => $group->name]);
+                }
+
+                $nasspGroup = Group::firstOrCreate([
+                    'group_type_id' => $nasspGroupType->id,
                     'name' => $name,
-                    'city' => $this->sanitize($record['CITY']),
-                    'state' => $this->sanitize($record['STATE']),
-                    'external_id' => $this->sanitize($record['NCES']),
+                    'city' => $city,
+                    'state' => $state,
+                    // @TODO: Save as school_id instead of external_id
+                    'external_id' => $schoolId,
                 ]);
 
                 $numImported++;
