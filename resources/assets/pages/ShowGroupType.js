@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { UsaStates } from 'usa-states';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
@@ -14,13 +15,18 @@ const SHOW_GROUP_TYPE_QUERY = gql`
   query ShowGroupTypeQuery($id: Int!) {
     groupType(id: $id) {
       createdAt
+      filterByState
       name
     }
   }
 `;
 
+const usaStateOptions = new UsaStates().states;
+
 const ShowGroupType = () => {
   const [filter, setFilter] = useState('');
+  const [groupState, setGroupState] = useState(null);
+
   const { id } = useParams();
   const title = `Group Type #${id}`;
   document.title = title;
@@ -39,7 +45,7 @@ const ShowGroupType = () => {
 
   if (!data.groupType) return <NotFound title={title} type="group type" />;
 
-  const { createdAt, name } = data.groupType;
+  const { createdAt, filterByState, name } = data.groupType;
 
   return (
     <Shell title={title} subtitle={name}>
@@ -50,6 +56,22 @@ const ShowGroupType = () => {
               Campaigns: <GroupTypeCampaignList groupTypeId={Number(id)} />,
             }}
           />
+
+          {filterByState ? (
+            <div className="mb-4">
+              <select
+                className="text-field"
+                onChange={event => setGroupState(event.target.value)}
+              >
+                <option value={null}>-- Select State --</option>
+
+                {usaStateOptions.map(state => (
+                  <option value={state.abbreviation}>{state.name}</option>
+                ))}
+              </select>
+            </div>
+          ) : null}
+
           <input
             type="text"
             className="text-field -search"
@@ -65,7 +87,12 @@ const ShowGroupType = () => {
       </div>
       <div className="container__row">
         <div className="container__block">
-          <GroupsTable filter={filter} groupTypeId={Number(id)} />
+          <GroupsTable
+            filter={filter}
+            groupState={groupState}
+            groupTypeId={Number(id)}
+          />
+
           <div className="container__block -narrow">
             <a
               className="button -primary"

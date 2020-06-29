@@ -8,12 +8,18 @@ import EntityLabel from './utilities/EntityLabel';
 import { updateQuery } from '../helpers';
 
 const GROUPS_QUERY = gql`
-  query GroupsIndexQuery($filter: String, $groupTypeId: Int!, $cursor: String) {
+  query GroupsIndexQuery(
+    $filter: String
+    $groupTypeId: Int!
+    $state: String
+    $cursor: String
+  ) {
     groups: paginatedGroups(
       after: $cursor
       first: 50
       groupTypeId: $groupTypeId
       name: $filter
+      state: $state
     ) {
       edges {
         cursor
@@ -34,14 +40,21 @@ const GROUPS_QUERY = gql`
 `;
 
 /**
- * This component handles fetching & paginating a list of groups by group type ID.
+ * This component handles fetching & paginating a list of groups in a group type ID.
  *
  * @param {String} filter
+ * @param {String} groupState
  * @param {Number} groupTypeId
  */
-const GroupsTable = ({ filter, groupTypeId }) => {
+const GroupsTable = ({ filter, groupState, groupTypeId }) => {
+  const variables = { filter, groupTypeId };
+
+  if (groupState) {
+    variables.state = groupState;
+  }
+
   const { error, loading, data, fetchMore } = useQuery(GROUPS_QUERY, {
-    variables: { filter, groupTypeId },
+    variables,
     notifyOnNetworkStatusChange: true,
   });
 
