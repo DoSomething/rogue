@@ -121,8 +121,7 @@ class ImportNasspGroupsCommand extends Command
                         'name' => $name,
                         'city' => $city,
                         'state' => $state,
-                        // @TODO: Save as school_id instead of external_id
-                        'external_id' => $schoolId,
+                        'school_id' => $schoolId,
                     ]);
 
                     $numImported++;
@@ -135,8 +134,7 @@ class ImportNasspGroupsCommand extends Command
                     'name' => $name,
                     'city' => $city,
                     'state' => $state,
-                    // @TODO: Save as school_id instead of external_id
-                    'external_id' => $schoolId,
+                    'external_id' => $school_id,
                 ]);
 
                 $numImported++;
