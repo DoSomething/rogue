@@ -134,7 +134,7 @@ class ImportNasspGroupsCommand extends Command
                     'name' => $name,
                     'city' => $city,
                     'state' => $state,
-                    'external_id' => $school_id,
+                    'school_id' => $school_id,
                 ]);
 
                 $numImported++;
