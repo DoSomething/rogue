@@ -16,10 +16,10 @@ class Group extends Model
      */
     protected $fillable = [
         'city',
-        'external_id',
         'goal',
         'group_type_id',
         'name',
+        'school_id',
         'state',
     ];
 
@@ -31,7 +31,12 @@ class Group extends Model
      *
      * @var array
      */
-    public static $indexes = ['external_id', 'id', 'group_type_id', 'state'];
+    public static $indexes = [
+        'group_type_id',
+        'id',
+        'school_id',
+        'state',
+    ];
 
     /**
      * Attributes that we can sort by with the '?orderBy' query parameter.
