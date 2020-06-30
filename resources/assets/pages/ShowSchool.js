@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import NotFound from './NotFound';
 import Shell from '../components/utilities/Shell';
+import EntityLabel from '../components/utilities/EntityLabel';
 import MetaInformation from '../components/utilities/MetaInformation';
 
 // @TODO: Add support for paging through schoolActionStats once more actions collect school.
@@ -29,6 +30,14 @@ const SHOW_SCHOOL_QUERY = gql`
         }
         acceptedQuantity
         updatedAt
+      }
+    }
+    groups(schoolId: $id) {
+      id
+      groupTypeId
+      groupType {
+        id
+        name
       }
     }
   }
@@ -55,6 +64,22 @@ const ShowSchool = () => {
 
   const { city, name, schoolActionStats, state } = data.school;
 
+  const groupList = data.groups.length ? (
+    <ul>
+      {data.groups.map(group => (
+        <li key={group.id}>
+          <EntityLabel
+            id={group.id}
+            name={group.groupType.name}
+            path="groups"
+          />
+        </li>
+      ))}
+    </ul>
+  ) : (
+    '--'
+  );
+
   return (
     <Shell title={title} subtitle={name}>
       <div className="container__row">
@@ -64,6 +89,7 @@ const ShowSchool = () => {
               ID: id,
               City: city,
               State: state,
+              Groups: groupList,
             }}
           />
         </div>
