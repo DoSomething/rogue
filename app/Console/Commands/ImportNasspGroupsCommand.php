@@ -54,7 +54,7 @@ class ImportNasspGroupsCommand extends Command
      */
     public function handle()
     {
-        // Sample CSV path: https://gist.githubusercontent.com/aaronschachter/9cd40a703a43e22077e78e12e011a7de/raw/e5a119d8f2873e839473713c30a5d0b54aaacb7a/nassp.csv
+        // Sample CSV path: https://gist.githubusercontent.com/aaronschachter/cb7c2c75f15d67abea548bb586370dd7/raw/3cb12bb44e8d7b30436588c36c3a6280a501d1f4/nassp.csv
 
         $path = $this->argument('path');
 
