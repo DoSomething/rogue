@@ -50,7 +50,7 @@ Example Response:
       "name": "Afton Central School",
       "city": "Afton",
       "state": "NY",
-      "external_id": null,
+      "school_id": null,
       "goal": null,
       "created_at": "2019-12-04T22:05:29+00:00",
       "updated_at": "2019-12-04T22:05:29+00:00"
