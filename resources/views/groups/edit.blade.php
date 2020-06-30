@@ -35,8 +35,8 @@
                     </div>
 
                     <div class="form-item">
-                        <label class="field-label">External ID</label>
-                        @include('forms.text', ['name' => 'external_id', 'placeholder' => 'A unique ID used by the group', 'value' => $group->external_id])
+                        <label class="field-label">School ID</label>
+                        @include('forms.text', ['name' => 'school_id', 'placeholder' => 'The school universal ID associated with this group', 'value' => $group->school_id])
                     </div>
 
                     <ul class="form-actions -inline -padded">
