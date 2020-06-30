@@ -54,7 +54,7 @@ class ImportNasspGroupsCommand extends Command
      */
     public function handle()
     {
-        // Sample CSV path: https://gist.githubusercontent.com/aaronschachter/9cd40a703a43e22077e78e12e011a7de/raw/1d689400d64f461d51dce0e99d2b16334c36b10e/nassp.csv
+        // Sample CSV path: https://gist.githubusercontent.com/aaronschachter/9cd40a703a43e22077e78e12e011a7de/raw/e5a119d8f2873e839473713c30a5d0b54aaacb7a/nassp.csv
 
         $path = $this->argument('path');
 
@@ -93,21 +93,15 @@ class ImportNasspGroupsCommand extends Command
 
         info('rogue:nassp-groups-import: Beginning import...');
 
-        /**
-         * Without specifying these column names, this command fails with error:
-         * "The header record must be an empty or a flat array with unique string value."
-         */
-        $records = $csv->getRecords(['name', 'NHS', 'NJHS', 'NASC', 'NASSP', 'city', 'state', 'zip', 'universalid', 'ncescode', 'gsid']);
-
-        foreach ($records as $record) {
+        foreach ($csv->getRecords() as $record) {
             $groupTypeId = null;
             $name = trim($record['name']);
 
-            if (trim($record['NHS']) == 'NHS') {
+            if (trim($record['nhs']) == 'NHS') {
                 $groupTypeId = $nhsGroupType->id;
-            } elseif (trim($record['NJHS']) == 'NJHS') {
+            } elseif (trim($record['njhs']) == 'NJHS') {
                 $groupTypeId = $njhsGroupType->id;
-            } elseif (trim($record['NASC']) == 'NASC') {
+            } elseif (trim($record['nasc']) == 'NASC') {
                 $groupTypeId = $nascGroupType->id;
             }
 
