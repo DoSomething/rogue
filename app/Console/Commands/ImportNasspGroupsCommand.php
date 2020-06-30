@@ -100,6 +100,7 @@ class ImportNasspGroupsCommand extends Command
         $records = $csv->getRecords(['name', 'NHS', 'NJHS', 'NASC', 'NASSP', 'city', 'state', 'zip', 'universalid', 'ncescode', 'gsid']);
 
         foreach ($records as $record) {
+            $groupTypeId = null;
             $name = trim($record['name']);
 
             if (trim($record['NHS']) == 'NHS') {
@@ -126,7 +127,7 @@ class ImportNasspGroupsCommand extends Command
 
                     $numImported++;
 
-                    info('rogue:nassp-groups-import: Imported group', ['id' => $group->id, 'name' => $group->name]);
+                    info('rogue:nassp-groups-import: Imported group', ['id' => $group->id, 'group_type_id' => $groupTypeId, 'name' => $group->name]);
                 }
 
                 $nasspGroup = Group::firstOrCreate([
@@ -134,12 +135,12 @@ class ImportNasspGroupsCommand extends Command
                     'name' => $name,
                     'city' => $city,
                     'state' => $state,
-                    'school_id' => $school_id,
+                    'school_id' => $schoolId,
                 ]);
 
                 $numImported++;
 
-                info('rogue:nassp-groups-import: Imported group', ['id' => $group->id, 'name' => $group->name]);
+                info('rogue:nassp-groups-import: Imported group', ['id' => $nasspGroup->id, 'group_type_id' => $nasspGroupType->id, 'name' => $nasspGroup->name]);
             } catch (Exception $e) {
                 $numFailed++;
 
