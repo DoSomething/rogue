@@ -63,10 +63,14 @@ const ShowGroupType = () => {
                 className="text-field"
                 onChange={event => setGroupState(event.target.value)}
               >
-                <option value={null}>-- Select State --</option>
+                <option key="null" value={null}>
+                  -- Select State --
+                </option>
 
                 {usaStateOptions.map(state => (
-                  <option value={state.abbreviation}>{state.name}</option>
+                  <option key={state.abbreviation} value={state.abbreviation}>
+                    {state.name}
+                  </option>
                 ))}
               </select>
             </div>
