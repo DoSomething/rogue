@@ -15,12 +15,15 @@ const SHOW_GROUP_QUERY = gql`
   query ShowGroupQuery($id: Int!) {
     group(id: $id) {
       id
+      city
       goal
       groupType {
         id
         name
       }
       name
+      schoolId
+      state
     }
     posts(
       groupId: $id
@@ -55,7 +58,7 @@ const ShowGroup = () => {
 
   if (!data.group) return <NotFound title={title} type="group" />;
 
-  const { goal, groupType, name } = data.group;
+  const { city, goal, groupType, name, schoolId, state } = data.group;
 
   return (
     <Shell title={title} subtitle={`${name} (${groupType.name})`}>
@@ -65,6 +68,13 @@ const ShowGroup = () => {
             details={{
               'Voter Registrations Goal': goal || '--',
               'Voter Registrations Completed': data.posts.length,
+              City: city || '--',
+              State: state || '--',
+              School: schoolId ? (
+                <Link to={`/schools/${schoolId}`}>{schoolId}</Link>
+              ) : (
+                '--'
+              ),
             }}
           />
         </div>
