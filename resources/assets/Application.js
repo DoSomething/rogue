@@ -39,6 +39,9 @@ const Application = () => {
           <Route path="/campaigns/:id/:status">
             <ShowCampaign />
           </Route>
+          <Route path="/groups" exact>
+            <GroupTypeIndex />
+          </Route>
           <Route path="/group-types" exact>
             <GroupTypeIndex />
           </Route>
