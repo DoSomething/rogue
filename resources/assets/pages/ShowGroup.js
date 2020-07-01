@@ -25,17 +25,7 @@ const SHOW_GROUP_QUERY = gql`
       schoolId
       state
     }
-    posts(
-      groupId: $id
-      type: "voter-reg"
-      status: [REGISTER_FORM, REGISTER_OVR]
-      count: 50
-    ) {
-      id
-      user {
-        displayName
-      }
-    }
+    voterRegistrationsCountByGroupId(groupId: $id)
   }
 `;
 
@@ -67,7 +57,8 @@ const ShowGroup = () => {
           <MetaInformation
             details={{
               'Voter Registrations Goal': goal || '--',
-              'Voter Registrations Completed': data.posts.length,
+              'Voter Registrations Completed':
+                data.voterRegistrationsCountByGroupId,
               City: city || '--',
               State: state || '--',
               School: schoolId ? (
