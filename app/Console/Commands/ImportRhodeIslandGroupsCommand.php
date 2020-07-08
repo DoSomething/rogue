@@ -73,7 +73,7 @@ class ImportRhodeIslandGroupsCommand extends Command
             $name = $record['name'];
             $schoolId = $record['universalid'];
 
-            if (!$name) {
+            if (! $name) {
                 info('rogue:rhode-island-groups-import: Skipping row without name', ['school_id' => $schoolId]);
 
                 $numSkipped++;
