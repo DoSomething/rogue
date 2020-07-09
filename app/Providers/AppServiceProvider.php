@@ -4,8 +4,10 @@ namespace Rogue\Providers;
 
 use Closure;
 use Hashids\Hashids;
+use Rogue\Models\Post;
 use Rogue\Auth\CustomGate;
 use InvalidArgumentException;
+use Rogue\Observers\PostObserver;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Attach model observer(s):
+        Post::observe(PostObserver::class);
+
         $this->app->singleton(GateContract::class, function ($app) {
             return new CustomGate($app, function () use ($app) {
                 return call_user_func($app['auth']->userResolver());

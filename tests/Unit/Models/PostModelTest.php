@@ -4,11 +4,42 @@ namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use Rogue\Models\Post;
+use Rogue\Models\Group;
 use Rogue\Models\Action;
 use Rogue\Models\Signup;
 
 class PostModelTest extends TestCase
 {
+    /**
+     * Test that a post school_id is set when its group has a school_id.
+     *
+     * @return void
+     */
+    public function testSettingSchoolIdFromGroupId()
+    {
+        $action = factory(Action::class)->create();
+        $group = factory(Group::class)->create([
+            'school_id' =>  $this->faker->unique()->school_id,
+        ]);
+
+        $groupPostWithoutSchool = factory(Post::class)->states('voter-reg')->create([
+            'northstar_id' => $this->faker->northstar_id,
+            'action_id' => $action->id,
+            'group_id' => $group->id,
+        ]);
+
+        $this->assertEquals($groupPostWithoutSchool->school_id, $group->school_id);
+
+        $groupPostWithSchool = factory(Post::class)->states('voter-reg')->create([
+            'northstar_id' => $this->faker->northstar_id,
+            'action_id' => $action->id,
+            'group_id' => $group->id,
+            'school_id' => $this->faker->unique()->school_id,
+        ]);
+
+        $this->assertNotEquals($groupPostWithSchool->school_id, $group->school_id);
+    }
+
     /**
      * Test that a signup's updated_at updates when a post is updated.
      *
