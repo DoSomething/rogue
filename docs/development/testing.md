@@ -9,11 +9,6 @@ You may run unit tests locally using [PHPUnit](https://laravel.com/docs/5.5/http
     $ phpunit
     $ npm test
 
-And our functional test suite can be run with [Laravel Dusk](https://laravel.com/docs/5.5/dusk):
-
-    $ cp .env.dusk.local.example .env.dusk.local # and add any missing values!
-    $ dusk
-
 ### Performance testing
 
 Performance & debug information is available at [`/__clockwork`](http://rogue.test/__clockwork), or using the [Chrome Extension](https://chrome.google.com/webstore/detail/clockwork/dmggabnehkmmfmdffgajcflpdjlnoemp).
