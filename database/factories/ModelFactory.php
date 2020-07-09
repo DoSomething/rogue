@@ -78,12 +78,6 @@ $factory->define(Post::class, function (Generator $faker) {
         'northstar_id' => $this->faker->northstar_id,
         'text' => $faker->sentence(),
         'location' => 'US-'.$faker->stateAbbr(),
-        /**
-         * Although our action models are set to collect school, not all users will create posts
-         * on behalf of their school (because they don't have a school_id set on their
-         * Northstar profile).
-         */
-        'school_id' => $this->faker->optional()->school_id,
         'source' => 'phpunit',
     ];
 });
