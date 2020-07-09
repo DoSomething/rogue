@@ -351,6 +351,9 @@ class Post extends Model
         // The associated Action for this post.
         $action = $this->actionModel;
 
+        // The associated Group for this post.
+        $group = $this->group;
+
         return [
             'id' => $this->id,
             'signup_id' => $this->signup_id,
@@ -381,6 +384,8 @@ class Post extends Model
             'source_details' => $this->source_details,
             'details' => $this->details,
             'referrer_user_id' => $this->referrer_user_id,
+            'group_id' => $this->group_id,
+            'group_name' => isset($group) ? $group->name : null,
             'school_id' => $this->school_id,
             'school_name' => isset($school) ? $school['name'] : null,
             'created_at' => $this->created_at->toIso8601String(),
