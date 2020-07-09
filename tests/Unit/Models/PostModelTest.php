@@ -148,7 +148,9 @@ class PostModelTest extends TestCase
      */
     public function testGetReferralPostEventPayload()
     {
+        $group = factory(Group::class)->create();
         $post = factory(Post::class)->create([
+            'group_id' => $group->id,
             'northstar_id' =>  $this->faker->unique()->northstar_id,
             'referrer_user_id' => $this->faker->unique()->northstar_id,
         ]);
@@ -157,6 +159,10 @@ class PostModelTest extends TestCase
 
         $this->assertEquals($result['action_id'], $post->action_id);
         $this->assertEquals($result['created_at'], $post->created_at->toIso8601String());
+        $this->assertEquals($result['group_id'], $group->id);
+        $this->assertEquals($result['group_name'], $group->name);
+        $this->assertEquals($result['group_type_id'], $group->group_type_id);
+        $this->assertEquals($result['group_type_name'], $group->group_type->name);
         $this->assertEquals($result['id'], $post->id);
         $this->assertEquals($result['status'], $post->status);
         $this->assertEquals($result['type'], $post->type);

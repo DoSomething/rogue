@@ -618,7 +618,10 @@ class Post extends Model
     public function getReferralPostEventPayload()
     {
         $userId = $this->northstar_id;
+        // The associated user for this post.
         $user = app(GraphQL::class)->getUserById($userId);
+        // The associated Group for this post.
+        $group = $this->group;
 
         return [
             'id' => $this->id,
@@ -627,6 +630,10 @@ class Post extends Model
             'type' => $this->type,
             'status' => $this->status,
             'action_id' => $this->action_id,
+            'group_id' => $this->group_id,
+            'group_name' => isset($group) ? $group->name : null,
+            'group_type_id' => isset($group) ? $group->group_type_id : null,
+            'group_type_name' => isset($group) ? $group->group_type->name : null,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
