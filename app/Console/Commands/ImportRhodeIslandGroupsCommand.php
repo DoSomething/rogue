@@ -70,8 +70,8 @@ class ImportRhodeIslandGroupsCommand extends Command
         info('rogue:rhode-island-groups-import: Beginning import for group type id ' . $groupTypeId .'.');
 
         foreach ($csv->getRecords() as $record) {
-            $name = $record['name'];
-            $schoolId = $record['universalid'];
+            $name = trim($record['name']);
+            $schoolId = trim($record['universalid']);
 
             if (! $name) {
                 info('rogue:rhode-island-groups-import: Skipping row without name', ['school_id' => $schoolId]);
@@ -85,8 +85,8 @@ class ImportRhodeIslandGroupsCommand extends Command
                 $group = Group::firstOrCreate([
                     'group_type_id' => $groupTypeId,
                     'name' => $name,
-                    'city' => $record['city'],
-                    'state' => $record['state'],
+                    'city' => trim($record['city']),
+                    'state' => trim($record['state']),
                     'school_id' => $schoolId,
                 ]);
 
