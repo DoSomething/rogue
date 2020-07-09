@@ -1,6 +1,6 @@
 <div class="select">
     <select name="{{ $name }}">
-        <option value="" {{ ! old($name) && ! isset($value) ? 'selected' : '' }}>{{ $placeholder or '–' }}</option>
+        <option value="" {{ ! old($name) && ! isset($value) ? 'selected' : '' }} {{ ! isset($isOptional) ? 'disabled' : ''}}>{{ $placeholder or '–' }}</option>
         @foreach($options as $option => $label)
             @if (old($name))
                 <option value="{{ $option }}" {{ old($name) === $option ? 'selected': '' }}>{{ $label }}</option>
