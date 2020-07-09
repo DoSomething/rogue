@@ -253,6 +253,16 @@ class Post extends Model
     }
 
     /**
+     * Get the Group model associated with the group_id attribute.
+     *
+     * @return Rogue\Models\Group
+     */
+    public function getGroupAttribute()
+    {
+        return $this->group_id ? Group::find($this->group_id) : null;
+    }
+
+    /**
      * Create a hard-to-guess "hash" ID.
      *
      * @return string
