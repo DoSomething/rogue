@@ -171,6 +171,16 @@ class Signup extends Model
     }
 
     /**
+     * Get the Group model associated with the group_id attribute.
+     *
+     * @return Rogue\Models\Group
+     */
+    public function getGroupAttribute()
+    {
+        return $this->group_id ? Group::find($this->group_id) : null;
+    }
+
+    /**
      * Transform the signup model for Blink.
      *
      * @return array
@@ -187,6 +197,9 @@ class Signup extends Model
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
 
+        // The associated Group for this signup.
+        $group = $this->group;
+
         return [
             'id' => $this->id,
             'northstar_id' => $this->northstar_id,
@@ -200,6 +213,10 @@ class Signup extends Model
             'source' => $this->source,
             'source_details' => $this->source_details,
             'referrer_user_id' => $this->referrer_user_id,
+            'group_id' => $this->group_id,
+            'group_name' => isset($group) ? $group->name : null,
+            'group_type_id' => isset($group) ? $group->group_type_id : null,
+            'group_type_name' => isset($group) ? $group->group_type->name : null,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
