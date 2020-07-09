@@ -107,6 +107,8 @@ class PostModelTest extends TestCase
 
         $this->assertEquals($result['group_id'], $group->id);
         $this->assertEquals($result['group_name'], $group->name);
+        $this->assertEquals($result['group_type_id'], $group->group_type_id);
+        $this->assertEquals($result['group_type_name'], $group->group_type->name);
         $this->assertEquals($result['referrer_user_id'], $post->referrer_user_id);
         $this->assertEquals($result['school_id'], $post->school_id);
 
@@ -132,6 +134,8 @@ class PostModelTest extends TestCase
 
         $this->assertEquals($result['group_id'], null);
         $this->assertEquals($result['group_name'], null);
+        $this->assertEquals($result['group_type_id'], null);
+        $this->assertEquals($result['group_type_name'], null);
         $this->assertEquals($result['school_id'], null);
         $this->assertEquals($result['school_name'], null);
         $this->assertEquals($result['referrer_user_id'], null);

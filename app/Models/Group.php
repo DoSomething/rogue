@@ -47,4 +47,14 @@ class Group extends Model
      * @var array
      */
     public static $sortable = ['name'];
+
+    /**
+     * Get the Group Type model associated with the group_type_id attribute.
+     *
+     * @return Rogue\Models\GroupType
+     */
+    public function getGroupTypeAttribute()
+    {
+        return GroupType::find($this->group_type_id);
+    }
 }
