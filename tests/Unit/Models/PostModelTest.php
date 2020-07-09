@@ -10,7 +10,13 @@ use Rogue\Models\Signup;
 
 class PostModelTest extends TestCase
 {
-    public function testSettingSchoolIdFromGroupId() {
+    /**
+     * Test that a post school_id is set when its group has a school_id.
+     *
+     * @return void
+     */
+    public function testSettingSchoolIdFromGroupId()
+    {
         $action = factory(Action::class)->create();
         $group = factory(Group::class)->create([
             'school_id' =>  $this->faker->unique()->school_id,
