@@ -215,7 +215,7 @@ class Signup extends Model
             'referrer_user_id' => $this->referrer_user_id,
             'group_id' => $this->group_id,
             'group_name' => isset($group) ? $group->name : null,
-            'group_type_id' => isset($group) ? $group->group_type_id : null,
+            'group_type_id' => isset($group) ? $group->group_type->id : null,
             'group_type_name' => isset($group) ? $group->group_type->name : null,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
