@@ -98,6 +98,14 @@ class Signup extends Model
     }
 
     /**
+     * Get the group associated with this signup.
+     */
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    /**
      * Get the posts associated with this signup.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -187,6 +195,9 @@ class Signup extends Model
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
 
+        // The associated Group for this signup.
+        $group = $this->group;
+
         return [
             'id' => $this->id,
             'northstar_id' => $this->northstar_id,
@@ -200,6 +211,10 @@ class Signup extends Model
             'source' => $this->source,
             'source_details' => $this->source_details,
             'referrer_user_id' => $this->referrer_user_id,
+            'group_id' => $this->group_id,
+            'group_name' => isset($group) ? $group->name : null,
+            'group_type_id' => isset($group) ? $group->group_type->id : null,
+            'group_type_name' => isset($group) ? $group->group_type->name : null,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];

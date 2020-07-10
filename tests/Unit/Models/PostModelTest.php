@@ -95,12 +95,22 @@ class PostModelTest extends TestCase
         $action = factory(Action::class)->create([
             'volunteer_credit' => true,
         ]);
-
+        $group = factory(Group::class)->create();
         $post = factory(Post::class)->create([
             'action_id' => $action->id,
-            'school_id' => 'Example School ID',
+            'group_id' => $group->id,
+            'referrer_user_id' => $this->faker->northstar_id,
+            'school_id' => $this->faker->school_id,
         ]);
+
         $result = $post->toBlinkPayload();
+
+        $this->assertEquals($result['group_id'], $group->id);
+        $this->assertEquals($result['group_name'], $group->name);
+        $this->assertEquals($result['group_type_id'], $group->group_type_id);
+        $this->assertEquals($result['group_type_name'], $group->group_type->name);
+        $this->assertEquals($result['referrer_user_id'], $post->referrer_user_id);
+        $this->assertEquals($result['school_id'], $post->school_id);
 
         // Test expected data was retrieved from GraphQL.
         $this->assertEquals($result['campaign_slug'], 'test-example-campaign');
@@ -109,23 +119,26 @@ class PostModelTest extends TestCase
 
         // Test expected post->action attributes were added to the Blink payload.
         $this->assertEquals($result['volunteer_credit'], $action->volunteer_credit);
+    }
 
-        $post = factory(Post::class)->create([
-            'school_id' => null,
-            'referrer_user_id' => null,
-        ]);
+    /**
+     * Test expected payload when various attributes are not set.
+     *
+     * @return void
+     */
+    public function testBlinkPayloadForNullValues()
+    {
+        $post = factory(Post::class)->create();
+
         $result = $post->toBlinkPayload();
 
+        $this->assertEquals($result['group_id'], null);
+        $this->assertEquals($result['group_name'], null);
+        $this->assertEquals($result['group_type_id'], null);
+        $this->assertEquals($result['group_type_name'], null);
+        $this->assertEquals($result['school_id'], null);
         $this->assertEquals($result['school_name'], null);
         $this->assertEquals($result['referrer_user_id'], null);
-
-        $referrerUserId = $this->faker->northstar_id;
-        $post = factory(Post::class)->create([
-            'referrer_user_id' => $referrerUserId,
-        ]);
-        $result = $post->toBlinkPayload();
-
-        $this->assertEquals($result['referrer_user_id'], $referrerUserId);
     }
 
     /**
@@ -135,7 +148,9 @@ class PostModelTest extends TestCase
      */
     public function testGetReferralPostEventPayload()
     {
+        $group = factory(Group::class)->create();
         $post = factory(Post::class)->create([
+            'group_id' => $group->id,
             'northstar_id' =>  $this->faker->unique()->northstar_id,
             'referrer_user_id' => $this->faker->unique()->northstar_id,
         ]);
@@ -144,6 +159,10 @@ class PostModelTest extends TestCase
 
         $this->assertEquals($result['action_id'], $post->action_id);
         $this->assertEquals($result['created_at'], $post->created_at->toIso8601String());
+        $this->assertEquals($result['group_id'], $group->id);
+        $this->assertEquals($result['group_name'], $group->name);
+        $this->assertEquals($result['group_type_id'], $group->group_type->id);
+        $this->assertEquals($result['group_type_name'], $group->group_type->name);
         $this->assertEquals($result['id'], $post->id);
         $this->assertEquals($result['status'], $post->status);
         $this->assertEquals($result['type'], $post->type);

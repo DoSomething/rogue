@@ -33,6 +33,14 @@ class GroupType extends Model
     }
 
     /**
+     * Get the groups associated with this group type.
+     */
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
+    }
+
+    /**
      * Creates an array of grouptype labels, where the key is the id and the value is the grouptype name.
      *
      * @return array

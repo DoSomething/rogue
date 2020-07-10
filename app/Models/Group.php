@@ -47,4 +47,28 @@ class Group extends Model
      * @var array
      */
     public static $sortable = ['name'];
+
+    /**
+     * Get the group type associated with this group.
+     */
+    public function group_type()
+    {
+        return $this->belongsTo(GroupType::class);
+    }
+
+    /**
+     * Get the posts associated with this group.
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Get the signups associated with this group.
+     */
+    public function signups()
+    {
+        return $this->hasMany(Signup::class);
+    }
 }
