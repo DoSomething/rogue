@@ -98,6 +98,14 @@ class Signup extends Model
     }
 
     /**
+     * Get the group associated with this signup.
+     */
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    /**
      * Get the posts associated with this signup.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -168,16 +176,6 @@ class Signup extends Model
     public function scopeIncludePostStatusCounts($query)
     {
         return $query->withCount(['accepted', 'pending', 'rejected']);
-    }
-
-    /**
-     * Get the Group model associated with the group_id attribute.
-     *
-     * @return Rogue\Models\Group
-     */
-    public function getGroupAttribute()
-    {
-        return $this->group_id ? Group::find($this->group_id) : null;
     }
 
     /**

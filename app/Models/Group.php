@@ -55,4 +55,12 @@ class Group extends Model
     {
         return $this->belongsTo(GroupType::class);
     }
+
+    /**
+     * Get the signups associated with this group.
+     */
+    public function signups()
+    {
+        return $this->hasMany(Signup::class);
+    }
 }
