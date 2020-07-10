@@ -53,6 +53,6 @@ class Group extends Model
      */
     public function group_type()
     {
-        return $this->hasOne(GroupType::class, 'id');
+        return $this->belongsTo(GroupType::class);
     }
 }
