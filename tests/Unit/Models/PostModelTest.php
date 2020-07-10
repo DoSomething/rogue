@@ -161,7 +161,7 @@ class PostModelTest extends TestCase
         $this->assertEquals($result['created_at'], $post->created_at->toIso8601String());
         $this->assertEquals($result['group_id'], $group->id);
         $this->assertEquals($result['group_name'], $group->name);
-        $this->assertEquals($result['group_type_id'], $group->group_type_id);
+        $this->assertEquals($result['group_type_id'], $group->group_type->id);
         $this->assertEquals($result['group_type_name'], $group->group_type->name);
         $this->assertEquals($result['id'], $post->id);
         $this->assertEquals($result['status'], $post->status);
