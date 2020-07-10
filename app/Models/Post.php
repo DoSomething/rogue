@@ -145,6 +145,14 @@ class Post extends Model
     }
 
     /**
+     * Get the group associated with this signup.
+     */
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    /**
      * Each post belongs to a signup.
      */
     public function signup()

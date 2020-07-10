@@ -57,6 +57,14 @@ class Group extends Model
     }
 
     /**
+     * Get the posts associated with this group.
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
      * Get the signups associated with this group.
      */
     public function signups()
