@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-item">
                         <label class="field-label">Group Type <em>(optional)</em></label>
-                        @include('forms.select', ['options' => $group_types, 'name' => 'group_type_id', 'value' => $campaign->group_type_id ])
+                        @include('forms.select', ['options' => $group_types, 'name' => 'group_type_id', 'value' => $campaign->group_type_id, 'optional' => true])
                     </div>
                 @endif
 
