@@ -61,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
         }, 'The :attribute must be a valid ISO-3166-2 region code.');
 
         // Attach the user & request ID to context for all log messages.
-        Log::getMonolog()->pushProcessor(function ($record) {
+        Log::getLogger()->pushProcessor(function ($record) {
             $record['extra']['user_id'] = auth()->id();
             $record['extra']['client_id'] = token()->client();
             $record['extra']['request_id'] = request()->header('X-Request-Id');
