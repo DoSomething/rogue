@@ -349,10 +349,7 @@ class Post extends Model
         // The associated Action for this post.
         $action = $this->actionModel;
 
-        // The associated Group for this post.
-        $group = $this->group;
-
-        return [
+        return array_merge([
             'id' => $this->id,
             'signup_id' => $this->signup_id,
             'quantity' => $quantity,
@@ -382,16 +379,12 @@ class Post extends Model
             'source_details' => $this->source_details,
             'details' => $this->details,
             'referrer_user_id' => $this->referrer_user_id,
-            'group_id' => $this->group_id,
-            'group_name' => isset($group) ? $group->name : null,
-            'group_type_id' => isset($group) ? $group->group_type_id : null,
-            'group_type_name' => isset($group) ? $group->group_type->name : null,
             'school_id' => $this->school_id,
             'school_name' => isset($school) ? $school['name'] : null,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
             'deleted_at' => $this->deleted_at ? $this->deleted_at->toIso8601String() : null,
-        ];
+        ], Group::toBlinkPayload($this->group));
     }
 
     /**
@@ -618,22 +611,16 @@ class Post extends Model
         $userId = $this->northstar_id;
         // The associated user for this post.
         $user = app(GraphQL::class)->getUserById($userId);
-        // The associated Group for this post.
-        $group = $this->group;
 
-        return [
+        return array_merge([
             'id' => $this->id,
             'user_id' => $userId,
             'user_display_name' => isset($user) ? $user['displayName'] : null,
             'type' => $this->type,
             'status' => $this->status,
             'action_id' => $this->action_id,
-            'group_id' => $this->group_id,
-            'group_name' => isset($group) ? $group->name : null,
-            'group_type_id' => isset($group) ? $group->group_type->id : null,
-            'group_type_name' => isset($group) ? $group->group_type->name : null,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
-        ];
+        ], Group::toBlinkPayload($this->group));
     }
 }

@@ -71,4 +71,20 @@ class Group extends Model
     {
         return $this->hasMany(Signup::class);
     }
+
+    /**
+     * Returns Customer.io payload attributes for given group, if exists.
+     *
+     * @param Group $group
+     * @return array
+     */
+    public static function toBlinkPayload(?self $group)
+    {
+        return [
+            'group_id' => $group ? $group->id : null,
+            'group_name' => $group ? $group->name : null,
+            'group_type_id' => $group ? $group->group_type->id : null,
+            'group_type_name' => $group ? $group->group_type->name : null,
+        ];
+    }
 }
