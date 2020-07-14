@@ -28,39 +28,37 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Exception  $e
+     * @param  \Exception  $exceptionxception
      * @return void
      */
-    public function report(Exception $e)
+    public function report(Exception $exception)
     {
-        parent::report($e);
+        parent::report($exception);
     }
 
     /**
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $e
-     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
+     * @param  \Exception  $exception
+     * @return \Illuminate\Http\Response | \Symfony\Component\HttpFoundation\Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Exception $exception)
     {
         // If Intervention can't parse a file (corrupted or wrong type), return 422.
         // @TODO: Handle this with a validation rule on our v3 routes.
-        if ($e instanceof \Intervention\Image\Exception\NotReadableException) {
+        if ($exception instanceof \Intervention\Image\Exception\NotReadableException) {
             abort(422, 'Invalid image provided.');
         }
 
         // Re-cast specific exceptions or uniquely render them:
-        if ($e instanceof GlideNotFoundException) {
-            $e = new NotFoundHttpException('That image could not be found.');
-        } elseif ($e instanceof ModelNotFoundException) {
-            $e = new NotFoundHttpException('That resource could not be found.');
+        if ($exception instanceof GlideNotFoundException) {
+            $exception = new NotFoundHttpException('That image could not be found.');
+        } elseif ($exception instanceof ModelNotFoundException) {
+            $exception = new NotFoundHttpException('That resource could not be found.');
         }
 
-        return parent::render($request, $e);
+        return parent::render($request, $exception);
     }
 
     /**

@@ -77,10 +77,13 @@
     "ASHES_USERNAME": {
       "required": true
     },
-    "ROGUE_API_KEY": {
+    "AWS_S3_BUCKET": {
       "required": true
     },
-    "S3_BUCKET": {
+    "AWS_S3_URL": {
+      "required": true
+    },
+    "ROGUE_API_KEY": {
       "required": true
     },
     "S3_KEY": {
@@ -90,9 +93,6 @@
       "required": true
     },
     "S3_SECRET": {
-      "required": true
-    },
-    "S3_URL": {
       "required": true
     }
   }

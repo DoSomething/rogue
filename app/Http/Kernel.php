@@ -14,7 +14,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \Rogue\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Rogue\Http\Middleware\TrustProxies::class,
@@ -58,8 +58,10 @@ class Kernel extends HttpKernel
         'guard' => \DoSomething\Gateway\Server\Middleware\SetGuard::class,
         'scopes' => \DoSomething\Gateway\Server\Middleware\RequireScope::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Rogue\Http\Middleware\RedirectIfAuthenticated::class,
+        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'role' => \Rogue\Http\Middleware\CheckRole::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];

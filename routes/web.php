@@ -8,6 +8,15 @@
  * @see \Rogue\Providers\RouteServiceProvider
  */
 
+Route::get('campaigns', function () {
+    dd([
+        'public_path()' => public_path(),
+        'storage_path()' => storage_path(),
+        'public_path(\'storage\')' => public_path('storage'),
+        'storage_path(\'app/public\')' => storage_path('app/public'),
+    ]);
+});
+
 // Homepage & FAQ
 Route::view('/', 'pages.home')->middleware('guest')->name('login');
 Route::view('faq', 'pages.faq');
@@ -31,7 +40,7 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::view('actions/{id}', 'app');
 
     // Campaigns
-    Route::view('campaigns', 'app');
+    // Route::view('campaigns', 'app');
     Route::view('campaigns/{id}', 'app');
     Route::view('campaigns/{id}/{status}', 'app');
 
