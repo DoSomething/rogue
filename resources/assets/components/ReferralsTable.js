@@ -1,11 +1,11 @@
 import { get } from 'lodash';
 import gql from 'graphql-tag';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import React, { useState } from 'react';
-import { parse, format } from 'date-fns';
 
 import Empty from './Empty';
+import { formatDateTime } from '../helpers';
 
 const USER_REFERRALS_QUERY = gql`
   query UserReferralsQuery($userId: String) {
@@ -73,7 +73,7 @@ const ReferralsTable = ({ userId }) => {
             <tr key={post.id}>
               <td>
                 <Link to={`/posts/${post.id}`}>
-                  {format(parse(post.createdAt), 'M/D/YYYY h:m:s')}
+                  {formatDateTime(post.createdAt)}
                 </Link>
               </td>
               <td>
