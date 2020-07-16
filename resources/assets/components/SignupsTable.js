@@ -25,6 +25,11 @@ const SIGNUPS_TABLE_QUERY = gql`
             id
             internalTitle
           }
+          groupId
+          group {
+            id
+            name
+          }
           createdAt
         }
       }
@@ -86,7 +91,8 @@ const SignupsTable = ({ campaignId, groupId }) => {
           <tr>
             <td>Signup</td>
             <td>User</td>
-            <td>Campaign</td>
+            {campaignId ? null : <td>Campaign</td>}
+            {groupId ? null : <td>Group</td>}
           </tr>
         </thead>
         <tbody>
@@ -100,27 +106,41 @@ const SignupsTable = ({ campaignId, groupId }) => {
               <td>
                 <Link to={`/users/${node.userId}`}>{node.userId}</Link>
               </td>
-              <td>
-                <EntityLabel
-                  id={node.campaign.id}
-                  name={node.campaign.internalTitle}
-                  path="campaigns"
-                />
-              </td>
+              {campaignId ? null : (
+                <td>
+                  <EntityLabel
+                    id={node.campaign.id}
+                    name={node.campaign.internalTitle}
+                    path="campaigns"
+                  />
+                </td>
+              )}
+
+              {groupId ? null : (
+                <td>
+                  {node.groupId ? (
+                    <EntityLabel
+                      id={node.group.id}
+                      name={node.group.name}
+                      path="groups"
+                    />
+                  ) : null}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
         <tfoot className="form-actions">
           {loading ? (
             <tr>
-              <td colSpan="2">
+              <td colSpan="4">
                 <div className="spinner margin-horizontal-auto margin-vertical" />
               </td>
             </tr>
           ) : null}
           {hasNextPage ? (
             <tr>
-              <td colSpan="2">
+              <td colSpan="4">
                 <button
                   className="button -tertiary"
                   onClick={handleViewMore}
