@@ -151,6 +151,8 @@ class CampaignTest extends Testcase
      */
     public function testCampaignCursor()
     {
+        $this->withoutExceptionHandling();  // @REMOVE
+
         $campaigns = factory(Campaign::class, 5)->create();
 
         // First, let's get the three campaigns with the most pending posts:
