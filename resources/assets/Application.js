@@ -11,6 +11,7 @@ import ShowGroup from './pages/ShowGroup';
 import ShowAction from './pages/ShowAction';
 import ShowSignup from './pages/ShowSignup';
 import ShowSchool from './pages/ShowSchool';
+import SignupIndex from './pages/SignupIndex';
 import ShowCampaign from './pages/ShowCampaign';
 import ShowGroupType from './pages/ShowGroupType';
 import CampaignIndex from './pages/CampaignIndex';
@@ -62,6 +63,9 @@ const Application = () => {
           </Route>
           <Route path="/posts/:id">
             <ShowPost />
+          </Route>
+          <Route path="/signups" exact>
+            <SignupIndex />
           </Route>
           <Route path="/signups/:id">
             <ShowSignup />

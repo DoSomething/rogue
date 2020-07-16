@@ -34,6 +34,7 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::view('campaigns', 'app');
     Route::view('campaigns/{id}', 'app');
     Route::view('campaigns/{id}/{status}', 'app');
+    Route::view('campaigns/{id}/{status}', 'app');
 
     // Groups
     Route::view('groups', 'app');
@@ -50,6 +51,7 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::view('schools/{id}', 'app')->name('schools.show');
 
     // Signups
+    Route::view('signups', 'app');
     Route::view('signups/{id}', 'app')->name('signups.show');
 
     // Users
