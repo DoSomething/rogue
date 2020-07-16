@@ -58,7 +58,7 @@
     "environment-badge": "^1.2.1",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.19",
     "prop-types": "^15.6.2",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
