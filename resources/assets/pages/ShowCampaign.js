@@ -1,13 +1,14 @@
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
+import { Link, useParams, useHistory } from 'react-router-dom';
 
 import { STATUSES, TAGS } from '../helpers';
 import NotFound from './NotFound';
 import Shell from '../components/utilities/Shell';
 import Select from '../components/utilities/Select';
 import Campaign from '../components/Campaign';
+import SignupsTable from '../components/SignupsTable';
 import HelpLink from '../components/utilities/HelpLink';
 import ReviewablePostGallery from '../components/ReviewablePostGallery';
 
@@ -52,6 +53,23 @@ const ShowCampaign = () => {
       <Shell title={title} subtitle={data.campaign.internalTitle}>
         <div className="container__row">
           <Campaign id={data.campaign.id} />
+        </div>
+      </Shell>
+    );
+  }
+
+  if (status === 'signups') {
+    return (
+      <Shell title={title} subtitle={data.campaign.internalTitle}>
+        <div className="container__row">
+          <div className="container__block text-right pt-heading">
+            <Link className="button -tertiary" to={`/campaigns/${id}`}>
+              View Campaign &amp; Actions
+            </Link>
+          </div>
+        </div>
+        <div className="container__row">
+          <SignupsTable campaignId={id} />
         </div>
       </Shell>
     );
