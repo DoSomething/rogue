@@ -37,6 +37,9 @@ const Application = () => {
             <ShowCampaign />
           </Route>
           <Redirect from="/campaigns/:id/inbox" to="/campaigns/:id/pending" />
+          <Route path="/campaigns/:id/signups">
+            <SignupIndex />
+          </Route>
           <Route path="/campaigns/:id/:status">
             <ShowCampaign />
           </Route>
