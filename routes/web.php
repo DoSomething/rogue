@@ -34,7 +34,6 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::view('campaigns', 'app');
     Route::view('campaigns/{id}', 'app');
     Route::view('campaigns/{id}/{status}', 'app');
-    Route::view('campaigns/{id}/{status}', 'app');
 
     // Groups
     Route::view('groups', 'app');
