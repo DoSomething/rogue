@@ -1,5 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
+import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -11,10 +12,16 @@ const SignupIndex = () => {
   const title = 'Signups';
   document.title = title;
 
+  const query = queryString.parse(location.search);
+  const campaignId = query['campaign_id'];
+
   return (
-    <Shell title={title}>
+    <Shell
+      title={title}
+      subtitle={campaignId ? `Campaign #${campaignId}` : null}
+    >
       <div className="container__block">
-        <SignupsTable />
+        <SignupsTable campaignId={query['campaign_id']} />
       </div>
     </Shell>
   );

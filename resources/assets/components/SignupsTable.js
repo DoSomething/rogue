@@ -9,8 +9,13 @@ import EntityLabel from './utilities/EntityLabel';
 import { formatDateTime, updateQuery } from '../helpers';
 
 const SIGNUPS_TABLE_QUERY = gql`
-  query SignupsIndexQuery($groupId: Int, $cursor: String) {
-    signups: paginatedSignups(after: $cursor, first: 50, groupId: $groupId) {
+  query SignupsIndexQuery($campaignId: String, $groupId: Int, $cursor: String) {
+    signups: paginatedSignups(
+      after: $cursor
+      first: 50
+      campaignId: $campaignId
+      groupId: $groupId
+    ) {
       edges {
         cursor
         node {
@@ -36,9 +41,9 @@ const SIGNUPS_TABLE_QUERY = gql`
  *
  * @param {Number} groupId
  */
-const SignupsTable = ({ groupId }) => {
+const SignupsTable = ({ campaignId, groupId }) => {
   const { error, loading, data, fetchMore } = useQuery(SIGNUPS_TABLE_QUERY, {
-    variables: { groupId },
+    variables: { campaignId, groupId },
     notifyOnNetworkStatusChange: true,
   });
 
