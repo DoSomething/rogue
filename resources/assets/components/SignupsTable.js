@@ -67,6 +67,7 @@ const SignupsTable = ({ campaignId, groupId }) => {
     return (
       <div className="text-center">
         <p>There was an error. :(</p>
+
         <code>{JSON.stringify(error)}</code>
       </div>
     );
@@ -90,8 +91,11 @@ const SignupsTable = ({ campaignId, groupId }) => {
         <thead>
           <tr>
             <td>Signup</td>
+
             <td>User</td>
+
             {campaignId ? null : <td>Campaign</td>}
+
             {groupId ? null : <td>Group</td>}
           </tr>
         </thead>
@@ -103,9 +107,11 @@ const SignupsTable = ({ campaignId, groupId }) => {
                   {formatDateTime(node.createdAt)}
                 </Link>
               </td>
+
               <td>
                 <Link to={`/users/${node.userId}`}>{node.userId}</Link>
               </td>
+
               {campaignId ? null : (
                 <td>
                   <EntityLabel
