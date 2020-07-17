@@ -9,8 +9,13 @@ import EntityLabel from './utilities/EntityLabel';
 import { formatDateTime, updateQuery } from '../helpers';
 
 const SIGNUPS_TABLE_QUERY = gql`
-  query SignupsIndexQuery($groupId: Int, $cursor: String) {
-    signups: paginatedSignups(after: $cursor, first: 50, groupId: $groupId) {
+  query SignupsIndexQuery($campaignId: String, $groupId: Int, $cursor: String) {
+    signups: paginatedSignups(
+      after: $cursor
+      first: 50
+      campaignId: $campaignId
+      groupId: $groupId
+    ) {
       edges {
         cursor
         node {
@@ -19,6 +24,11 @@ const SIGNUPS_TABLE_QUERY = gql`
           campaign {
             id
             internalTitle
+          }
+          groupId
+          group {
+            id
+            name
           }
           createdAt
         }
@@ -36,9 +46,9 @@ const SIGNUPS_TABLE_QUERY = gql`
  *
  * @param {Number} groupId
  */
-const SignupsTable = ({ groupId }) => {
+const SignupsTable = ({ campaignId, groupId }) => {
   const { error, loading, data, fetchMore } = useQuery(SIGNUPS_TABLE_QUERY, {
-    variables: { groupId },
+    variables: { campaignId, groupId },
     notifyOnNetworkStatusChange: true,
   });
 
@@ -57,6 +67,7 @@ const SignupsTable = ({ groupId }) => {
     return (
       <div className="text-center">
         <p>There was an error. :(</p>
+
         <code>{JSON.stringify(error)}</code>
       </div>
     );
@@ -80,8 +91,12 @@ const SignupsTable = ({ groupId }) => {
         <thead>
           <tr>
             <td>Signup</td>
+
             <td>User</td>
-            <td>Campaign</td>
+
+            {campaignId ? null : <td>Campaign</td>}
+
+            {groupId ? null : <td>Group</td>}
           </tr>
         </thead>
         <tbody>
@@ -92,30 +107,46 @@ const SignupsTable = ({ groupId }) => {
                   {formatDateTime(node.createdAt)}
                 </Link>
               </td>
+
               <td>
                 <Link to={`/users/${node.userId}`}>{node.userId}</Link>
               </td>
-              <td>
-                <EntityLabel
-                  id={node.campaign.id}
-                  name={node.campaign.internalTitle}
-                  path="campaigns"
-                />
-              </td>
+
+              {campaignId ? null : (
+                <td>
+                  <EntityLabel
+                    id={node.campaign.id}
+                    name={node.campaign.internalTitle}
+                    path="campaigns"
+                  />
+                </td>
+              )}
+
+              {groupId ? null : (
+                <td>
+                  {node.groupId ? (
+                    <EntityLabel
+                      id={node.group.id}
+                      name={node.group.name}
+                      path="groups"
+                    />
+                  ) : null}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
         <tfoot className="form-actions">
           {loading ? (
             <tr>
-              <td colSpan="2">
+              <td colSpan={campaignId || groupId ? 3 : 4}>
                 <div className="spinner margin-horizontal-auto margin-vertical" />
               </td>
             </tr>
           ) : null}
           {hasNextPage ? (
             <tr>
-              <td colSpan="2">
+              <td colSpan={campaignId || groupId ? 3 : 4}>
                 <button
                   className="button -tertiary"
                   onClick={handleViewMore}
