@@ -7,9 +7,9 @@ import { useQuery } from '@apollo/react-hooks';
 import Empty from './Empty';
 import { formatDateTime } from '../helpers';
 
-const USER_REFERRALS_QUERY = gql`
-  query UserReferralsQuery($userId: String) {
-    posts(referrerUserId: $userId) {
+const POSTS_INDEX_QUERY = gql`
+  query PostsIndexQuery($referrerUserId: String) {
+    posts(referrerUserId: $referrerUserId) {
       id
       createdAt
       userId
@@ -20,13 +20,13 @@ const USER_REFERRALS_QUERY = gql`
 `;
 
 /**
- * This component handles fetches referrals for a given user, displaying only posts for now.
+ * This component handles fetching & paginating a list of posts.
  *
- * @param String userId
+ * @param {String} referrerUserId
  */
-const ReferralsTable = ({ userId }) => {
-  const { error, loading, data } = useQuery(USER_REFERRALS_QUERY, {
-    variables: { userId },
+const PostsTable = ({ referrerUserId }) => {
+  const { error, loading, data } = useQuery(POSTS_INDEX_QUERY, {
+    variables: { referrerUserId },
     notifyOnNetworkStatusChange: true,
   });
 
@@ -89,4 +89,4 @@ const ReferralsTable = ({ userId }) => {
   );
 };
 
-export default ReferralsTable;
+export default PostsTable;

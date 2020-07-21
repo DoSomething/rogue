@@ -5,9 +5,9 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import NotFound from './NotFound';
+import PostsTable from '../components/PostsTable';
 import Shell from '../components/utilities/Shell';
 import SignupGallery from '../components/SignupGallery';
-import ReferralsTable from '../components/ReferralsTable';
 import MetaInformation from '../components/utilities/MetaInformation';
 import UserInformation, {
   UserInformationFragment,
@@ -76,7 +76,7 @@ const ShowUser = ({ selectedTab }) => {
             <h2 className="heading -emphasized -padded mb-4">
               <span>Referral Posts</span>
             </h2>
-            <ReferralsTable userId={user.id} />
+            <PostsTable referrerUserId={user.id} />
           </React.Fragment>
         ) : (
           <React.Fragment>

@@ -44,6 +44,7 @@ const SIGNUPS_TABLE_QUERY = gql`
 /**
  * This component handles fetching & paginating a list of signups.
  *
+ * @param {String} campaignId
  * @param {Number} groupId
  */
 const SignupsTable = ({ campaignId, groupId }) => {
