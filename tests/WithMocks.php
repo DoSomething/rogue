@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use Mockery;
 use Carbon\Carbon;
 use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Northstar;
