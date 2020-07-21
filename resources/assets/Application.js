@@ -50,6 +50,9 @@ const Application = () => {
           <Route path="/group-types/:id">
             <ShowGroupType />
           </Route>
+          <Route path="/groups/:id/posts" exact>
+            <ShowGroup selectedTab="posts" />
+          </Route>
           <Route path="/groups/:id">
             <ShowGroup />
           </Route>

@@ -9,10 +9,17 @@ import EntityLabel from './utilities/EntityLabel';
 import { formatDateTime, updateQuery } from '../helpers';
 
 const POSTS_INDEX_QUERY = gql`
-  query PostsIndexQuery($referrerUserId: String, $cursor: String) {
+  query PostsIndexQuery(
+    $campaignId: String
+    $groupId: Int
+    $referrerUserId: String
+    $cursor: String
+  ) {
     posts: paginatedPosts(
       after: $cursor
       first: 50
+      campaignId: $campaignId
+      groupId: $groupId
       referrerUserId: $referrerUserId
     ) {
       edges {
@@ -45,6 +52,8 @@ const POSTS_INDEX_QUERY = gql`
 /**
  * This component handles fetching & paginating a list of posts.
  *
+ * @param {String} campaignId
+ * @param {Number} groupId
  * @param {String} referrerUserId
  */
 const PostsTable = ({ campaignId, groupId, referrerUserId }) => {
@@ -83,7 +92,7 @@ const PostsTable = ({ campaignId, groupId, referrerUserId }) => {
       <table className="table">
         <thead>
           <tr>
-            <td>Created</td>
+            <td>Post</td>
 
             <td>User</td>
 

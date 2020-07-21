@@ -38,6 +38,7 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     // Groups
     Route::view('groups', 'app');
     Route::view('groups/{id}', 'app');
+    Route::view('groups/{id}/posts', 'app');
 
     // Group Types
     Route::view('group-types', 'app');
