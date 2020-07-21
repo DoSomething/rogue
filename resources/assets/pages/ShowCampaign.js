@@ -8,6 +8,7 @@ import NotFound from './NotFound';
 import Shell from '../components/utilities/Shell';
 import Select from '../components/utilities/Select';
 import Campaign from '../components/Campaign';
+import PostsTable from '../components/PostsTable';
 import SignupsTable from '../components/SignupsTable';
 import HelpLink from '../components/utilities/HelpLink';
 import ReviewablePostGallery from '../components/ReviewablePostGallery';
@@ -58,7 +59,7 @@ const ShowCampaign = () => {
     );
   }
 
-  if (status === 'signups') {
+  if (status === 'signups' || status === 'posts') {
     return (
       <Shell title={title} subtitle={data.campaign.internalTitle}>
         <div className="container__row">
@@ -69,7 +70,11 @@ const ShowCampaign = () => {
           </div>
         </div>
         <div className="container__row">
-          <SignupsTable campaignId={id} />
+          {status === 'signups' ? (
+            <SignupsTable campaignId={id} />
+          ) : (
+            <PostsTable campaignId={id} />
+          )}
         </div>
       </Shell>
     );
