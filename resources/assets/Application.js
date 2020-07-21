@@ -59,6 +59,9 @@ const Application = () => {
           <Route path="/users" exact>
             <UserIndex />
           </Route>
+          <Route path="/users/:id/posts" exact>
+            <ShowUser selectedTab="posts" />
+          </Route>
           <Route path="/users/:id/referrals" exact>
             <ShowUser selectedTab="referrals" />
           </Route>

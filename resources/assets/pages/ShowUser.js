@@ -71,12 +71,18 @@ const ShowUser = ({ selectedTab }) => {
         </UserInformation>
       </div>
       <div className="container__block">
-        {selectedTab === 'referrals' ? (
+        {selectedTab ? (
           <React.Fragment>
             <h2 className="heading -emphasized -padded mb-4">
-              <span>Referral Posts</span>
+              <span>
+                {selectedTab === 'referrals' ? 'Referral Posts' : 'Posts'}
+              </span>
             </h2>
-            <PostsTable referrerUserId={user.id} />
+            {selectedTab === 'referrals' ? (
+              <PostsTable referrerUserId={user.id} />
+            ) : (
+              <PostsTable userId={user.id} />
+            )}
           </React.Fragment>
         ) : (
           <React.Fragment>

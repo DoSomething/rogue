@@ -13,6 +13,7 @@ const POSTS_INDEX_QUERY = gql`
     $campaignId: String
     $groupId: Int
     $referrerUserId: String
+    $userId: String
     $cursor: String
   ) {
     posts: paginatedPosts(
@@ -21,6 +22,7 @@ const POSTS_INDEX_QUERY = gql`
       campaignId: $campaignId
       groupId: $groupId
       referrerUserId: $referrerUserId
+      userId: $userId
     ) {
       edges {
         cursor
@@ -55,10 +57,11 @@ const POSTS_INDEX_QUERY = gql`
  * @param {String} campaignId
  * @param {Number} groupId
  * @param {String} referrerUserId
+ * @param {String} userId
  */
-const PostsTable = ({ campaignId, groupId, referrerUserId }) => {
+const PostsTable = ({ campaignId, groupId, referrerUserId, userId }) => {
   const { error, loading, data, fetchMore } = useQuery(POSTS_INDEX_QUERY, {
-    variables: { campaignId, groupId, referrerUserId },
+    variables: { campaignId, groupId, referrerUserId, userId },
     notifyOnNetworkStatusChange: true,
   });
 
@@ -94,7 +97,7 @@ const PostsTable = ({ campaignId, groupId, referrerUserId }) => {
           <tr>
             <td>Post</td>
 
-            <td>User</td>
+            {userId ? null : <td>User</td>}
 
             {campaignId ? null : <td>Campaign</td>}
 
@@ -114,9 +117,11 @@ const PostsTable = ({ campaignId, groupId, referrerUserId }) => {
                 </Link>
               </td>
 
-              <td>
-                <Link to={`/users/${node.userId}`}>{node.userId}</Link>
-              </td>
+              {userId ? null : (
+                <td>
+                  <Link to={`/users/${node.userId}`}>{node.userId}</Link>
+                </td>
+              )}
 
               {campaignId ? null : (
                 <td>
@@ -149,14 +154,14 @@ const PostsTable = ({ campaignId, groupId, referrerUserId }) => {
         <tfoot className="form-actions">
           {loading ? (
             <tr>
-              <td colSpan={campaignId || groupId ? 5 : 6}>
+              <td colSpan={campaignId || groupId || userId ? 5 : 6}>
                 <div className="spinner margin-horizontal-auto margin-vertical" />
               </td>
             </tr>
           ) : null}
           {hasNextPage ? (
             <tr>
-              <td colSpan={campaignId || groupId ? 5 : 6}>
+              <td colSpan={campaignId || groupId || userId ? 5 : 6}>
                 <button
                   className="button -tertiary"
                   onClick={handleViewMore}
