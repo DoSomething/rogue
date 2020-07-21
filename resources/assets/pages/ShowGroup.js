@@ -31,7 +31,7 @@ const SHOW_GROUP_QUERY = gql`
 `;
 
 /**
- * @param string selectedTab
+ * @param {String} selectedTab
  */
 const ShowGroup = ({ selectedTab }) => {
   const { id } = useParams();

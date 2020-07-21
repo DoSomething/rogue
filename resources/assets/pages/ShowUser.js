@@ -26,7 +26,7 @@ const SHOW_USER_QUERY = gql`
 `;
 
 /**
- * @param string selectedTab
+ * @param {String} selectedTab
  */
 const ShowUser = ({ selectedTab }) => {
   const { id } = useParams();
