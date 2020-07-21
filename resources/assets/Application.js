@@ -6,6 +6,7 @@ import { env } from './helpers';
 import graphql from './graphql';
 import ShowPost from './pages/ShowPost';
 import ShowUser from './pages/ShowUser';
+import PostIndex from './pages/PostIndex';
 import UserIndex from './pages/UserIndex';
 import ShowGroup from './pages/ShowGroup';
 import ShowAction from './pages/ShowAction';
@@ -60,6 +61,9 @@ const Application = () => {
           </Route>
           <Route path="/users/:id">
             <ShowUser />
+          </Route>
+          <Route path="/posts" exact>
+            <PostIndex />
           </Route>
           <Route path="/posts/:id">
             <ShowPost />

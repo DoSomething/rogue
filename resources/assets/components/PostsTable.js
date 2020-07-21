@@ -8,13 +8,26 @@ import Empty from './Empty';
 import { formatDateTime } from '../helpers';
 
 const POSTS_INDEX_QUERY = gql`
-  query PostsIndexQuery($referrerUserId: String) {
-    posts(referrerUserId: $referrerUserId) {
-      id
-      createdAt
-      userId
-      type
-      status
+  query PostsIndexQuery($referrerUserId: String, $cursor: String) {
+    posts: paginatedPosts(
+      after: $cursor
+      first: 50
+      referrerUserId: $referrerUserId
+    ) {
+      edges {
+        cursor
+        node {
+          id
+          createdAt
+          userId
+          type
+          status
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
     }
   }
 `;
@@ -47,12 +60,13 @@ const PostsTable = ({ referrerUserId }) => {
     );
   }
 
-  const { posts } = data;
+  const posts = data ? data.posts.edges : [];
+  console.log(posts);
 
   if (posts.length == 0) {
     return (
       <div className="h-content flex-center-xy">
-        <Empty copy="No referrals found for this user." />
+        <Empty copy="No posts found." />
       </div>
     );
   }
@@ -69,18 +83,18 @@ const PostsTable = ({ referrerUserId }) => {
           </tr>
         </thead>
         <tbody>
-          {data.posts.map(post => (
-            <tr key={post.id}>
+          {posts.map(({ node, cursor }) => (
+            <tr key={node.id}>
               <td>
-                <Link to={`/posts/${post.id}`}>
-                  {formatDateTime(post.createdAt)}
+                <Link to={`/posts/${node.id}`}>
+                  {formatDateTime(node.createdAt)}
                 </Link>
               </td>
               <td>
-                <Link to={`/users/${post.userId}`}>{post.userId}</Link>
+                <Link to={`/users/${node.userId}`}>{node.userId}</Link>
               </td>
-              <td>{post.type}</td>
-              <td>{post.status}</td>
+              <td>{node.type}</td>
+              <td>{node.status}</td>
             </tr>
           ))}
         </tbody>
