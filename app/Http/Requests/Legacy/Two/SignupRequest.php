@@ -25,6 +25,7 @@ class SignupRequest extends Request
     {
         return [
             'northstar_id' => 'required|string',
+            'referrer_user_id' => 'nullable|objectid',
             'campaign_id' => 'required|integer',
             'quantity' => 'int',
             'why_participated' => 'string',
