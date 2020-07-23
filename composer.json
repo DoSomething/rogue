@@ -1,45 +1,56 @@
 {
   "name": "dosomething/rogue",
-  "description": "The Laravel Framework.",
+  "description": "The DoSomething activity service.",
   "license": "MIT",
   "type": "project",
   "require": {
     "php": "~7.3.0",
-    "laravel/framework": "5.7.*",
+    "algolia/algoliasearch-client-php": "^2.6",
     "aws/aws-sdk-php-laravel": "^3.1",
+    "dfurnes/environmentalist": "0.0.2",
     "doctrine/dbal": "~2.5.13",
     "dosomething/gateway": "^2.2",
-    "fideloper/proxy": "^4.0",
-    "guzzlehttp/guzzle": "^6.2",
-    "intervention/image": "^2.3",
-    "league/flysystem-aws-s3-v3": "~1.0",
-    "league/flysystem-memory": "^1.0",
-    "league/fractal": "^0.13.0",
-    "league/glide-laravel": "^1.0",
-    "predis/predis": "~1.0",
-    "league/csv": "^9.0",
-    "dfurnes/environmentalist": "0.0.2",
     "ext-gd": "*",
     "ext-exif": "*",
     "ext-bcmath": "*",
     "ext-newrelic": "*",
-    "sokil/php-isocodes": "^3.0",
-    "myclabs/php-enum": "^1.7",
-    "softonic/graphql-client": "^1.2",
+    "fideloper/proxy": "^4.0",
+    "guzzlehttp/guzzle": "^6.2",
     "hashids/hashids": "^4.0",
+    "intervention/image": "^2.3",
+    "laravel/framework": "5.7.*",
     "laravel/scout": "^7.2.1",
-    "algolia/algoliasearch-client-php": "^2.6"
+    "league/csv": "^9.0",
+    "league/flysystem-aws-s3-v3": "~1.0",
+    "league/flysystem-memory": "^1.0",
+    "league/fractal": "^0.13.0",
+    "league/glide-laravel": "^1.0",
+    "myclabs/php-enum": "^1.7",
+    "predis/predis": "~1.0",
+    "softonic/graphql-client": "^1.2",
+    "sokil/php-isocodes": "^3.0"
   },
   "require-dev": {
+    "beyondcode/laravel-dump-server": "^1.0",
     "filp/whoops": "^2.0",
     "fzaninotto/faker": "^1.6",
+    "itsgoingd/clockwork": "^3.0",
     "laravel/tinker": "^1.0",
     "mockery/mockery": "^1.0",
     "nunomaduro/collision": "^2.0",
     "phpunit/phpunit": "^7.0",
     "symfony/css-selector": "3.1.*",
-    "symfony/dom-crawler": "3.1.*",
-    "itsgoingd/clockwork": "^3.0"
+    "symfony/dom-crawler": "3.1.*"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": []
+    }
   },
   "autoload": {
     "classmap": [
@@ -57,22 +68,17 @@
       "Tests\\": "tests/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "scripts": {
     "post-autoload-dump": [
       "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-      "@php artisan package:discover"
+      "@php artisan package:discover --ansi"
     ],
     "warmup": [
       "@php artisan gateway:key",
       "@php artisan route:cache",
       "@php artisan config:cache"
     ]
-  },
-  "config": {
-    "preferred-install": "dist",
-    "sort-packages": true,
-    "optimize-autoloader": true
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+  }
 }
