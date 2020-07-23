@@ -4,7 +4,6 @@ namespace Rogue\Providers;
 
 use Closure;
 use Hashids\Hashids;
-use Rogue\Auth\CustomGate;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
@@ -24,12 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->singleton(GateContract::class, function ($app) {
-            return new CustomGate($app, function () use ($app) {
-                return call_user_func($app['auth']->userResolver());
-            });
-        });
-
         $this->app->singleton(Hashids::class, function ($app) {
             return new Hashids(config('app.key'), 10);
         });
