@@ -2,6 +2,7 @@
 
 namespace Rogue\Policies;
 
+use Rogue\Models\User;
 use Rogue\Models\Post;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -28,7 +29,7 @@ class PostPolicy
      * @param  Rogue\Models\Post $post
      * @return bool
      */
-    public function show($user, Post $post)
+    public function show($user = null, Post $post)
     {
         if ($post->status !== 'accepted') {
             return is_staff_user() || is_owner($post);

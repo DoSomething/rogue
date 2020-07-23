@@ -175,12 +175,14 @@ class PostsController extends ApiController
         // Only allow an admin/staff or the user who owns the post to update.
         $this->authorize('update', $post);
 
+        $validatedRequest = $request->validated();
+
         // But don't allow user's to review their own posts.
         if (! Gate::allows('review', $post)) {
-            unset($request['status']);
+            unset($validatedRequest['status']);
         }
 
-        $this->posts->update($post, $request->validated());
+        $this->posts->update($post, $validatedRequest);
 
         return $this->item($post);
     }
