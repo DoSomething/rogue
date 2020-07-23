@@ -1,5 +1,7 @@
 <?php
 
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+
 use Faker\Generator;
 use Rogue\Models\Post;
 use Rogue\Models\User;
