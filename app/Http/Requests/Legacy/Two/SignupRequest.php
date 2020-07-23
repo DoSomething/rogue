@@ -24,7 +24,8 @@ class SignupRequest extends Request
     public function rules()
     {
         return [
-            'northstar_id' => 'required|string',
+            'northstar_id' => 'required|objectid',
+            'referrer_user_id' => 'nullable|objectid',
             'campaign_id' => 'required|integer',
             'quantity' => 'int',
             'why_participated' => 'string',

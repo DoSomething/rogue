@@ -34,6 +34,7 @@ class PostRequest extends Request
         return [
             'campaign_id' => 'required_without:action_id|integer',
             'northstar_id' => 'nullable|objectid',
+            'referrer_user_id' => 'nullable|objectid',
             'type' => ['required', 'string', Rule::in(PostType::all())],
             // @TODO: eventually, deprecate action in the payload and make action_id required when all systems have been updated.
             'action' => 'required_without:action_id|string',
