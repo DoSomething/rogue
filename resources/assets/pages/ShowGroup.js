@@ -7,6 +7,7 @@ import NotFound from './NotFound';
 import Empty from '../components/Empty';
 import { formatDateTime } from '../helpers';
 import Shell from '../components/utilities/Shell';
+import PostsTable from '../components/PostsTable';
 import SignupsTable from '../components/SignupsTable';
 import EntityLabel from '../components/utilities/EntityLabel';
 import MetaInformation from '../components/utilities/MetaInformation';
@@ -29,7 +30,10 @@ const SHOW_GROUP_QUERY = gql`
   }
 `;
 
-const ShowGroup = () => {
+/**
+ * @param {String} selectedTab
+ */
+const ShowGroup = ({ selectedTab }) => {
   const { id } = useParams();
   const title = `Group #${id}`;
   document.title = title;
@@ -77,7 +81,11 @@ const ShowGroup = () => {
       </div>
       <div className="container__row">
         <div className="container__block">
-          <SignupsTable groupId={data.group.id} />
+          {selectedTab === 'posts' ? (
+            <PostsTable groupId={data.group.id} />
+          ) : (
+            <SignupsTable groupId={data.group.id} />
+          )}
         </div>
       </div>
       <ul className="form-actions margin-vertical">

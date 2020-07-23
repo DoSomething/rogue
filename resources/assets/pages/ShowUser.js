@@ -5,9 +5,9 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import NotFound from './NotFound';
+import PostsTable from '../components/PostsTable';
 import Shell from '../components/utilities/Shell';
 import SignupGallery from '../components/SignupGallery';
-import ReferralsTable from '../components/ReferralsTable';
 import MetaInformation from '../components/utilities/MetaInformation';
 import UserInformation, {
   UserInformationFragment,
@@ -26,7 +26,7 @@ const SHOW_USER_QUERY = gql`
 `;
 
 /**
- * @param string selectedTab
+ * @param {String} selectedTab
  */
 const ShowUser = ({ selectedTab }) => {
   const { id } = useParams();
@@ -71,12 +71,18 @@ const ShowUser = ({ selectedTab }) => {
         </UserInformation>
       </div>
       <div className="container__block">
-        {selectedTab === 'referrals' ? (
+        {selectedTab ? (
           <React.Fragment>
             <h2 className="heading -emphasized -padded mb-4">
-              <span>Referral Posts</span>
+              <span>
+                {selectedTab === 'referrals' ? 'Referral Posts' : 'Posts'}
+              </span>
             </h2>
-            <ReferralsTable userId={user.id} />
+            {selectedTab === 'referrals' ? (
+              <PostsTable referrerUserId={user.id} />
+            ) : (
+              <PostsTable userId={user.id} />
+            )}
           </React.Fragment>
         ) : (
           <React.Fragment>
