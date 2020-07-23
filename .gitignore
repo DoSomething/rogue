@@ -1,15 +1,14 @@
+/node_modules
+/public/assets/**
+/public/dist
+/public/storage
+/storage/debugbar
+/vendor
+
 .DS_Store
 .env
 .phpunit.result.cache
 
-vendor
-node_modules
-storage/debugbar
-Homestead.yaml
 Homestead.json
-
-public/assets/**
-public/dist
-public/storage
-
+Homestead.yaml
 npm-debug.log

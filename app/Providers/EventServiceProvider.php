@@ -2,6 +2,8 @@
 
 namespace Rogue\Providers;
 
+use Rogue\Events\PostTagged;
+use Rogue\Listeners\SendTaggedNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -12,8 +14,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Rogue\Events\PostTagged' => [
-            'Rogue\Listeners\SendTaggedNotification',
+        PostTagged::class => [
+            SendTaggedNotification::class,
         ],
     ];
 

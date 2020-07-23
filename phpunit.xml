@@ -38,8 +38,8 @@
         <env name="DS_ENABLE_GLIDE" value="true"/>
         <env name="FILESYSTEM_DRIVER" value="public"/>
         <env name="MAIL_DRIVER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SCOUT_DRIVER" value="null"/>
         <env name="SESSION_DRIVER" value="array"/>
-        <env name="QUEUE_DRIVER" value="sync"/>
     </php>
 </phpunit>
