@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Group;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Rogue\Http\Transformers\GroupTransformer;
 
@@ -44,7 +45,7 @@ class GroupsController extends ApiController
 
         $request->query->set('orderBy', 'name,asc');
 
-        if ($cursor = array_get($request->query('cursor'), 'after')) {
+        if ($cursor = Arr::get($request->query('cursor'), 'after')) {
             $query->whereAfterCursor($cursor);
             $this->useCursorPagination = true;
         }
