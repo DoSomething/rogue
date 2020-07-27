@@ -7,7 +7,11 @@ use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Group;
 use Rogue\Models\Signup;
+<<<<<<< HEAD
 use Rogue\Services\GraphQL;
+=======
+use Illuminate\Support\Str;
+>>>>>>> cd60a80b... Updating support.
 use DoSomething\Gateway\Blink;
 use Rogue\Services\CustomerIo;
 
@@ -152,7 +156,7 @@ class SignupTest extends TestCase
     public function testCreatingASignupWithoutActivityScope()
     {
         $northstarId = $this->faker->northstar_id;
-        $campaignId = str_random(22);
+        $campaignId = Str::random(22);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
@@ -681,7 +685,7 @@ class SignupTest extends TestCase
     public function testSignupsIndexAsAdminWithFilters()
     {
         $northstarId = $this->faker->unique()->northstar_id;
-        $campaignId = str_random(22);
+        $campaignId = Str::random(22);
 
         // Create two signups
         factory(Signup::class, 2)->create([
@@ -691,7 +695,7 @@ class SignupTest extends TestCase
 
         // Create three more signups with different northstar_id & campaign_id
         $secondNorthstarId = $this->faker->unique()->northstar_id;
-        $secondCampaignId = str_random(22);
+        $secondCampaignId = Str::random(22);
 
         factory(Signup::class, 3)->create([
             'northstar_id' => $secondNorthstarId,

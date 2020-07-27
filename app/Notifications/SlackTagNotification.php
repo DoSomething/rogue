@@ -5,6 +5,8 @@ namespace Rogue\Notifications;
 use Rogue\Models\Tag;
 use Rogue\Models\Post;
 use Rogue\Services\GraphQL;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
@@ -97,10 +99,10 @@ class SlackTagNotification extends Notification
 
                 $attachment->title($userName . '\'s submission for "' . $this->post->campaign->internal_title . '"', $permalink)
                         ->fields([
-                            'Caption' => str_limit($this->post->text, 140),
-                            'Why Participated' => str_limit($this->post->signup->why_participated),
+                            'Caption' => Str::limit($this->post->text, 140),
+                            'Why Participated' => Str::limit($this->post->signup->why_participated),
                         ])
-                        ->color(array_random(['#FCD116', '#23b7fb', '#4e2b63']))
+                        ->color(Arr::random(['#FCD116', '#23b7fb', '#4e2b63']))
                         ->image($this->post->getMediaUrl());
             });
     }

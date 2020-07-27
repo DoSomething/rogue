@@ -11,6 +11,7 @@ use Rogue\Models\Action;
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
+use Illuminate\Support\Str;
 use Rogue\Models\GroupType;
 use Rogue\Types\ActionType;
 use Rogue\Models\ActionStat;
@@ -28,7 +29,7 @@ use Rogue\Types\TimeCommitment;
 // Action Factory
 $factory->define(Action::class, function (Generator $faker) {
     return [
-        'name' => title_case($this->faker->unique()->words(3, true)),
+        'name' => Str::title($this->faker->unique()->words(3, true)),
         'campaign_id' => factory(Campaign::class)->create()->id,
         'post_type' => 'photo',
         'action_type' => $this->faker->randomElement(ActionType::all()),
@@ -161,10 +162,10 @@ $factory->define(User::class, function (Generator $faker) {
 
     return [
         'northstar_id' => $faker->northstar_id,
-        'access_token' => str_random(1024),
-        'access_token_expiration' => str_random(11),
-        'refresh_token' => str_random(1024),
-        'remember_token' => str_random(10),
+        'access_token' => Str::random(1024),
+        'access_token_expiration' => Str::random(11),
+        'refresh_token' => Str::random(1024),
+        'remember_token' => Str::random(10),
         'role' => 'user',
     ];
 });
@@ -180,7 +181,7 @@ $factory->defineAs(User::class, 'staff', function () use ($factory) {
 // Campaign Factory
 $factory->define(Campaign::class, function (Generator $faker) {
     return [
-        'internal_title' => title_case($faker->unique()->catchPhrase),
+        'internal_title' => Str::title($faker->unique()->catchPhrase),
         'cause' => $faker->randomElements(Cause::all(), rand(1, 5)),
         'impact_doc' => 'https://www.google.com/',
         // By default, we create an "open" campaign.
@@ -199,7 +200,7 @@ $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($
 // Group Type Factory
 $factory->define(GroupType::class, function (Generator $faker) {
     return [
-        'name' => title_case($faker->unique()->company),
+        'name' => Str::title($faker->unique()->company),
         'filter_by_state' => false,
     ];
 });
@@ -210,6 +211,6 @@ $factory->define(Group::class, function (Generator $faker) {
         'group_type_id' => function () {
             return factory(GroupType::class)->create()->id;
         },
-        'name' => title_case($faker->unique()->company),
+        'name' => Str::title($faker->unique()->company),
     ];
 });

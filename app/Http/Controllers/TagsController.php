@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Rogue\Repositories\PostRepository;
 use Rogue\Http\Transformers\PostTransformer;
@@ -54,7 +55,7 @@ class TagsController extends ApiController
         // If a tag slug is sent in (dashed or lowercase), change to the tag name.
         // @TODO: This controller/model should really deal in slugs...
         $tag = $request->tag_name;
-        if (str_contains($tag, '-') || ctype_lower($tag)) {
+        if (Str::contains($tag, '-') || ctype_lower($tag)) {
             $tag = ucwords(str_replace('-', ' ', $tag));
         }
 

@@ -3,6 +3,7 @@
 namespace Rogue\Models;
 
 use Hashids\Hashids;
+use Illuminate\Support\Str;
 use Rogue\Services\GraphQL;
 use Rogue\Events\PostTagged;
 use Rogue\Models\Traits\HasCursor;
@@ -414,7 +415,7 @@ class Post extends Model
         // Only tag if the tag doesn't exist on the post yet.
         // Otherwise, an integrity constraint violation / duplicate entry error will be thrown.
         if (! $this->tagNames()->contains($tagName)) {
-            $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
+            $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => Str::slug($tagName, '-')]);
 
             $this->tags()->attach($tag);
 
