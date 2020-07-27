@@ -99,7 +99,7 @@ class DatabaseSeeder extends Seeder
 
             // Create 5-10 signups with rejected posts, from troublemakers!
             factory(Signup::class, rand(10, 20))->create(['campaign_id' => $campaign->id])
-                ->each(function (Signup $signup) use ($photoAction, $textAction) {
+                ->each(function (Signup $signup) use ($photoAction) {
                     $signup->posts()->save(factory(Post::class)->states('photo', 'rejected')->create([
                         'action_id' => $photoAction->id,
                         'signup_id' => $signup->id,
