@@ -49,7 +49,7 @@ $factory->define(ActionStat::class, function (Generator $faker) {
     return [
         'school_id' => $this->faker->school_id,
         'action_id' => factory(Action::class)->create()->id,
-        'accepted_quantity' => $faker->randomNumber(3),
+        'impact' => $faker->randomNumber(3),
     ];
 });
 

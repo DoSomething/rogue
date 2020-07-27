@@ -209,7 +209,7 @@ class PostRepository
         if ($post->school_id && $post->action_id) {
             ActionStat::updateOrCreate(
                 ['action_id' => $post->action_id, 'school_id' => $post->school_id],
-                ['accepted_quantity' => Post::getAcceptedQuantitySum($post->action_id, $post->school_id)]
+                ['impact' => Post::getAcceptedQuantitySum($post->action_id, $post->school_id)]
             );
         }
 

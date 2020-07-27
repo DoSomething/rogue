@@ -114,7 +114,7 @@ class DatabaseSeeder extends Seeder
             // Create action stats from the approved photo posts created for the photo action.
             foreach ($approvedQuantityBySchoolId as $schoolId => $total) {
                 factory(ActionStat::class)->create([
-                    'accepted_quantity' => $total,
+                    'impact' => $total,
                     'action_id' => $photoAction->id,
                     'school_id' => $schoolId,
                 ]);
