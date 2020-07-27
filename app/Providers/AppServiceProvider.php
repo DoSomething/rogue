@@ -4,10 +4,7 @@ namespace Rogue\Providers;
 
 use Closure;
 use Hashids\Hashids;
-<<<<<<< HEAD
 use Rogue\Models\Post;
-=======
->>>>>>> 2b294d04... Removing CustomGate now that framework supports Guest User Gates.
 use InvalidArgumentException;
 use Rogue\Observers\PostObserver;
 use Illuminate\Support\Facades\Log;
@@ -37,12 +34,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-<<<<<<< HEAD
         // Attach model observer(s):
         Post::observe(PostObserver::class);
 
-=======
->>>>>>> 2b294d04... Removing CustomGate now that framework supports Guest User Gates.
         $this->app->singleton(Hashids::class, function ($app) {
             return new Hashids(config('app.key'), 10);
         });

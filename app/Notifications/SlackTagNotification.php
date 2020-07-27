@@ -7,6 +7,8 @@ use Rogue\Models\Post;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Rogue\Services\GraphQL;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
