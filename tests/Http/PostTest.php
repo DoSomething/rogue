@@ -1629,8 +1629,6 @@ class PostTest extends TestCase
         ]);
     }
 
-
-
     /**
      * Test that when a post is created for a signup with a group_id
      * the group_id is saved to the post as well.
@@ -1677,7 +1675,5 @@ class PostTest extends TestCase
             'quantity' => $quantity,
         ]);
     }
-
-
 }
 
