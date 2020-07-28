@@ -64,6 +64,18 @@ trait WithMocks
         $this->graphqlMock->shouldReceive('getUserById')->andReturn([
             'displayName' => 'Daisy D.',
         ]);
+<<<<<<< HEAD
+=======
+
+        $this->graphqlMock->shouldReceive('getUserAndAdminReviewerById')->andReturn([
+            'user' => [
+                'displayName' => 'Braumhilda S.',
+            ],
+            'admin' => [
+                'displayName' => 'Puppet S.',
+            ],
+        ]);
+>>>>>>> 99c07468... StyleCI fixes.
     }
 
     /**
