@@ -9,7 +9,6 @@ use Rogue\Events\PostTagged;
 use Rogue\Models\Traits\HasCursor;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

@@ -2,7 +2,6 @@
 
 namespace Rogue\Policies;
 
-use Rogue\Models\User;
 use Rogue\Models\Post;
 use Illuminate\Auth\Access\HandlesAuthorization;
 

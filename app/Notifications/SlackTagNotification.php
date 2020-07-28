@@ -4,9 +4,9 @@ namespace Rogue\Notifications;
 
 use Rogue\Models\Tag;
 use Rogue\Models\Post;
-use Rogue\Services\GraphQL;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Rogue\Services\GraphQL;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
