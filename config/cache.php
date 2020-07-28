@@ -13,7 +13,8 @@ return [
     | using this caching library. This connection is used when another is
     | not explicitly specified when executing a given caching function.
     |
-    | Supported: "apc", "array", "database", "file", "memcached", "redis"
+    | Supported: "apc", "array", "database", "file",
+    |            "memcached", "redis", "dynamodb"
     |
     */
 
@@ -73,6 +74,15 @@ return [
         'redis' => [
             'driver' => 'redis',
             'connection' => 'cache',
+        ],
+
+        'dynamodb' => [
+            'driver' => 'dynamodb',
+            'key' => env('AWS_ACCESS_KEY'),
+            'secret' => env('AWS_SECRET_KEY'),
+            'region' => env('AWS_REGION', 'us-east-1'),
+            'table' => env('DYNAMODB_CACHE_TABLE', 'cache'),
+            'endpoint' => env('DYNAMODB_ENDPOINT'),
         ],
 
     ],
