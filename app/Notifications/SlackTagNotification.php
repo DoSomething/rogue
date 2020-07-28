@@ -74,7 +74,7 @@ class SlackTagNotification extends Notification
         // Get the user & admin reviewer's names for the notification.
         $data = app(GraphQL::class)->getUserAndAdminReviewerById(
             $this->post->northstar_id,
-            $this->adminId
+            $this->adminId,
         );
 
         $userName = $data['user']['displayName'];
