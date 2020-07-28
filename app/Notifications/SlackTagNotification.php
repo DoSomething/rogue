@@ -4,9 +4,9 @@ namespace Rogue\Notifications;
 
 use Rogue\Models\Tag;
 use Rogue\Models\Post;
-use Rogue\Services\GraphQL;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Rogue\Services\GraphQL;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
@@ -83,7 +83,7 @@ class SlackTagNotification extends Notification
         return (new SlackMessage)
             ->from('Rogue', ':tonguecat:')
             ->content($adminName . ' just tagged this post as "' . $this->tag->tag_name . '":')
-            ->attachment(function ($attachment) use ($userName, $adminName) {
+            ->attachment(function ($attachment) use ($userName) {
                 $permalink = route('signups.show', [$this->post->signup_id], true);
 
                 $attachment->title($userName . '\'s submission for "' . $this->post->campaign->internal_title . '"', $permalink)

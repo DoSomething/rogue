@@ -11,7 +11,6 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Query\Builder as QueryBuilder;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class AppServiceProvider extends ServiceProvider
