@@ -92,7 +92,7 @@ class SlackTagNotification extends Notification
         return (new SlackMessage)
             ->from('Rogue', ':tonguecat:')
             ->content($adminName . ' just tagged this post as "' . $this->tag->tag_name . '":')
-            ->attachment(function ($attachment) use ($userName, $adminName) {
+            ->attachment(function ($attachment) use ($userName) {
                 $permalink = route('signups.show', [$this->post->signup_id], true);
 
                 $attachment->title($userName . '\'s submission for "' . $this->post->campaign->internal_title . '"', $permalink)

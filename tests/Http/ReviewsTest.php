@@ -50,7 +50,7 @@ class ReviewsTest extends TestCase
         ]);
         $this->assertDatabaseHas('action_stats', [
             'action_id' => $actionId,
-            'accepted_quantity' => $firstPost->quantity,
+            'impact' => $firstPost->quantity,
             'school_id' => $schoolId,
         ]);
 
@@ -72,7 +72,7 @@ class ReviewsTest extends TestCase
         ]);
         $this->assertDatabaseHas('action_stats', [
             'action_id' => $actionId,
-            'accepted_quantity' => $firstPost->quantity + $secondPost->quantity,
+            'impact' => $firstPost->quantity + $secondPost->quantity,
             'school_id' => $schoolId,
         ]);
     }

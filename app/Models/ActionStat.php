@@ -12,8 +12,8 @@ class ActionStat extends Model
      * @var array
      */
     protected $fillable = [
-        'accepted_quantity',
         'action_id',
+        'impact',
         'school_id',
     ];
 
@@ -35,5 +35,5 @@ class ActionStat extends Model
      *
      * @var array
      */
-    public static $sortable = ['id', 'accepted_quantity'];
+    public static $sortable = ['id', 'impact'];
 }
