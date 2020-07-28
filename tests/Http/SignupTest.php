@@ -85,6 +85,58 @@ class SignupTest extends TestCase
     }
 
     /**
+     * Test that a POST request to /signups creates a new signup with referrer_user_id if passed.
+     *
+     * POST /api/v3/signups
+     * @return void
+     */
+    public function testCreatingASignupWithReferrerUserId()
+    {
+        $northstarId = $this->faker->northstar_id;
+        $referrerUserId = $this->faker->northstar_id;
+        $campaignId = $this->faker->randomNumber(4);
+
+        $this->mock(Blink::class)->shouldReceive('userSignup');
+
+        $response = $this->withAccessToken($northstarId)->postJson('api/v3/signups', [
+            'campaign_id' => $campaignId,
+            'referrer_user_id' => $referrerUserId,
+        ]);
+
+        $response->assertStatus(201);
+        $response->assertJson([
+            'data' => [
+                'northstar_id' => $northstarId,
+                'campaign_id' => $campaignId,
+                'referrer_user_id' => $referrerUserId,
+            ],
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /signups doesn't create' new signup with invalid referrer_user_id.
+     *
+     * POST /api/v3/signups
+     * @return void
+     */
+    public function testCreatingASignupWithInvalidReferrerUserId()
+    {
+        $northstarId = $this->faker->northstar_id;
+        $referrerUserId = 'hacker';
+        $campaignId = $this->faker->randomNumber(4);
+
+        $this->mock(Blink::class)->shouldReceive('userSignup');
+
+        $response = $this->withAccessToken($northstarId)->postJson('api/v3/signups', [
+            'campaign_id' => $campaignId,
+            'referrer_user_id' => $referrerUserId,
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['referrer_user_id']);
+    }
+
+    /**
      * Test that a POST request to /signups doesn't create a new signup without activity scope.
      *
      * POST /api/v3/signups
