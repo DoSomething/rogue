@@ -453,9 +453,9 @@ class Post extends Model
      * Returns posts which qualify for volunteer credit.
      * (The associated Action's volunteer credit field is set to true).
      */
-    public function scopeWithVolunteerCredit($query, $volunteerCreditValue)
+    public function scopeWithVolunteerCredit($query)
     {
-        return $query->whereHas('actionModel', function ($query) use ($volunteerCreditValue) {
+        return $query->whereHas('actionModel', function ($query) {
             $query->where('volunteer_credit', true);
         });
     }
@@ -464,9 +464,9 @@ class Post extends Model
      * Returns posts which do not qualify for volunteer credit.
      * (The associated Action's volunteer credit field is set to false).
      */
-    public function scopeWithoutVolunteerCredit($query, $volunteerCreditValue)
+    public function scopeWithoutVolunteerCredit($query)
     {
-        return $query->whereHas('actionModel', function ($query) use ($volunteerCreditValue) {
+        return $query->whereHas('actionModel', function ($query) {
             $query->where('volunteer_credit', false);
         });
     }

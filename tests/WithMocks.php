@@ -7,7 +7,6 @@ use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Northstar;
 use Illuminate\Support\Facades\Storage;
 use DoSomething\Gateway\Resources\NorthstarUser;
-use Illuminate\Notifications\Messages\SlackMessage;
 
 trait WithMocks
 {
@@ -68,10 +67,10 @@ trait WithMocks
 
         $this->graphqlMock->shouldReceive('getUserAndAdminReviewerById')->andReturn([
             'user' => [
-                'displayName' => 'Braumhilda S.'
+                'displayName' => 'Braumhilda S.',
             ],
             'admin' => [
-                'displayName' => 'Puppet S.'
+                'displayName' => 'Puppet S.',
             ],
         ]);
     }
