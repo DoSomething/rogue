@@ -18,13 +18,6 @@ class Post extends Model
     use SoftDeletes, HasCursor;
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
-
-    /**
      * Always load a user's own reaction,
      * if they're logged-in.
      */
