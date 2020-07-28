@@ -1487,8 +1487,6 @@ class PostTest extends TestCase
      */
     public function testNonStaffUpdatePost()
     {
-        $this->withoutExceptionHandling();
-
         $post = factory(Post::class)->create();
 
         $response = $this->withAccessToken($post->northstar_id)->patchJson('api/v3/posts/' . $post->id, [
