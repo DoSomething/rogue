@@ -58,10 +58,11 @@ class TagsTest extends TestCase
 
         // Apply the tag to the post
         $response = $this->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Submission',
+            'tag_name' => 'Group Photo',
         ]);
 
         $response->assertStatus(401);
+
         $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
@@ -78,7 +79,7 @@ class TagsTest extends TestCase
 
         // Apply the tag to the post
         $response = $this->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Submission',
+            'tag_name' => 'Group Photo',
         ]);
 
         $response->assertStatus(401);
@@ -134,7 +135,7 @@ class TagsTest extends TestCase
         $this->mockTime('10/21/2017 13:05:00');
 
         $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Submission',
+            'tag_name' => 'Group Photo',
         ]);
 
         $this->assertEquals('2017-10-21 13:05:00', $post->fresh()->updated_at);
