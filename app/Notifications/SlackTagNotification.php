@@ -11,17 +11,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
 
-const SLACK_NOTIFICATION_QUERY = '
-    query SlackNotificationQuery($userId: String!, $adminId: String!) {
-        user(id: $userId) {
-            displayName
-        }
-        admin: user(id: $adminId) {
-            displayName
-        }
-    }
-';
-
 class SlackTagNotification extends Notification
 {
     use Queueable;
@@ -82,11 +71,11 @@ class SlackTagNotification extends Notification
             return;
         }
 
-        // Get the user & reviewer's names for the notification:
-        $data = app(GraphQL::class)->query(SLACK_NOTIFICATION_QUERY, [
-            'userId' => $this->post->northstar_id,
-            'adminId' => $this->adminId,
-        ]);
+        // Get the user & admin reviewer's names for the notification.
+        $data = app(GraphQL::class)->getUserAndAdminReviewerById(
+            $this->post->northstar_id,
+            $this->adminId
+        );
 
         $userName = $data['user']['displayName'];
         $adminName = $data['admin']['displayName'];

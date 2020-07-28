@@ -7,6 +7,7 @@ use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Northstar;
 use Illuminate\Support\Facades\Storage;
 use DoSomething\Gateway\Resources\NorthstarUser;
+use Illuminate\Notifications\Messages\SlackMessage;
 
 trait WithMocks
 {
@@ -51,15 +52,27 @@ trait WithMocks
 
         // GraphQL Mock
         $this->graphqlMock = $this->mock(GraphQL::class);
+
         $this->graphqlMock->shouldReceive('getCampaignWebsiteByCampaignId')->andReturn([
             'title' => 'Test Example Campaign',
             'slug' => 'test-example-campaign',
         ]);
+
         $this->graphqlMock->shouldReceive('getSchoolById')->andReturn([
             'name' => 'San Dimas High School',
         ]);
+
         $this->graphqlMock->shouldReceive('getUserById')->andReturn([
             'displayName' => 'Daisy D.',
+        ]);
+
+        $this->graphqlMock->shouldReceive('getUserAndAdminReviewerById')->andReturn([
+            'user' => [
+                'displayName' => 'Braumhilda S.'
+            ],
+            'admin' => [
+                'displayName' => 'Puppet S.'
+            ],
         ]);
     }
 

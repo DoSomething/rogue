@@ -2,8 +2,8 @@
 
 namespace Rogue\Listeners;
 
-use Notification;
 use Rogue\Events\PostTagged;
+use Illuminate\Support\Facades\Notification;
 use Rogue\Notifications\SlackTagNotification;
 
 class SendTaggedNotification

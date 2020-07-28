@@ -3,7 +3,6 @@
 namespace Tests\Http;
 
 use Tests\TestCase;
-use Rogue\Models\Tag;
 use Rogue\Models\Post;
 
 class TagsTest extends TestCase
@@ -17,6 +16,9 @@ class TagsTest extends TestCase
      */
     public function testTaggingAndUntaggingAPost()
     {
+        // Supress sending Slack notifications for "good submission" tagging.
+        $this->withoutNotifications();
+
         // Create the models that we will be using
         $post = factory(Post::class)->create();
 
@@ -92,12 +94,14 @@ class TagsTest extends TestCase
     {
         // Create a post with tags.
         $post = factory(Post::class)->create();
-        $post->tag('Good Submission');
+
+        $post->tag('Group Photo');
         $post->tag('Tag To Delete');
+
         $post = $post->fresh();
 
         // Make sure both tags actually exist
-        $this->assertContains('Good Submission', $post->tagNames());
+        $this->assertContains('Group Photo', $post->tagNames());
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
@@ -107,8 +111,10 @@ class TagsTest extends TestCase
 
         // Make sure that the tag is deleted, but the other tag is still there
         $post = $post->fresh();
+
         $response->assertStatus(200);
-        $this->assertContains('Good Submission', $post->tagNames());
+
+        $this->assertContains('Group Photo', $post->tagNames());
         $this->assertNotContains('Tag To Delete', $post->tagNames());
 
         // @TODO: When we refactor events, make sure we created an event for the tag that was deleted.
