@@ -58,6 +58,7 @@ class SignupsController extends ApiController
             'campaign_id' => 'required_without:action_id|integer',
             'action_id' => 'required_without:campaign_id|integer',
             'why_participated' => 'string',
+            'referrer_user_id' => 'nullable|objectid',
         ]);
 
         $northstarId = getNorthstarId($request);
