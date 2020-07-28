@@ -4,11 +4,15 @@ namespace Rogue\Notifications;
 
 use Rogue\Models\Tag;
 use Rogue\Models\Post;
+<<<<<<< HEAD
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Rogue\Services\GraphQL;
+=======
+>>>>>>> 31d07f7c... StyleCI fixes.
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Rogue\Services\GraphQL;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
