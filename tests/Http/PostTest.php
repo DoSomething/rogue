@@ -82,7 +82,7 @@ class PostTest extends TestCase
 
         // Mock the GraphQL API calls.
         $this->mock(GraphQL::class)
-            ->shouldReceive('getUserById');
+            ->shouldReceive('getUserById', 'getCampaignWebsiteByCampaignId');
 
         // Mock the Customer.io API calls.
         $this->mock(CustomerIo::class)
