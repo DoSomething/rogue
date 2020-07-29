@@ -98,31 +98,4 @@ class GraphQL
 
         return $this->query($query, $variables)['user'];
     }
-
-    /**
-     * Query for a User and Admin post reviewer by their IDs.
-     *
-     * @param $userId  String
-     * @param $adminId String
-     * @return array
-     */
-    public function getUserAndAdminReviewerById($userId, $adminId)
-    {
-        $query = '
-        query SlackNotificationQuery($userId: String!, $adminId: String!) {
-            user(id: $userId) {
-                displayName
-            }
-            admin: user(id: $adminId) {
-                displayName
-            }
-        }';
-
-        $variables = [
-            'userId' => $userId,
-            'adminId' => $adminId,
-        ];
-
-        return $this->query($query, $variables);
-    }
 }
