@@ -41,5 +41,6 @@
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SCOUT_DRIVER" value="null"/>
         <server name="SESSION_DRIVER" value="array"/>
+        <server name="SLACK_WEBHOOK_INTEGRATION_URL" value=""/>
     </php>
 </phpunit>
