@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -114,13 +116,10 @@ return [
 
         'client' => env('REDIS_CLIENT', 'predis'),
 
-        'cluster' => false,
-
-        // Not sure if fine to replace cluster option above with this new options item added prior to 5.8.
-        // 'options' => [
-        //     'cluster' => env('REDIS_CLUSTER', 'predis'),
-        //     'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
-        // ],
+        'options' => [
+            'cluster' => env('REDIS_CLUSTER', 'predis'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+        ],
 
         'default' => [
             'url' => env('REDIS_URL'),
