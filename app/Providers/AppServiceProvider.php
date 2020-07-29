@@ -58,6 +58,8 @@ class AppServiceProvider extends ServiceProvider
         }, 'The :attribute must be a valid ISO-3166-2 region code.');
 
         // Attach the user & request ID to context for all log messages.
+        // @see https://git.io/JJzwG We may want to set this up using a
+        // Logging/ContextFormatter class like we do in Northstar.
         Log::getLogger()->pushProcessor(function ($record) {
             $record['extra']['user_id'] = auth()->id();
             $record['extra']['client_id'] = token()->client();
