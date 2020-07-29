@@ -7,11 +7,8 @@ use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Group;
 use Rogue\Models\Signup;
-<<<<<<< HEAD
 use Rogue\Services\GraphQL;
-=======
 use Illuminate\Support\Str;
->>>>>>> cd60a80b... Updating support.
 use DoSomething\Gateway\Blink;
 use Rogue\Services\CustomerIo;
 

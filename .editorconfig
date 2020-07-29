@@ -19,5 +19,9 @@ indent_size = 2
 [*.md]
 trim_trailing_whitespace = false
 
+<<<<<<< HEAD
 [*.{yml,yaml}]
+=======
+[*.yml]
+>>>>>>> bd96b84e... Upgrading Laravel Framework (#1071)
 indent_size = 2
