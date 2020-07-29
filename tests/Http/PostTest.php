@@ -1653,7 +1653,6 @@ class PostTest extends TestCase
             'northstar_id'     => $signup->northstar_id,
             'campaign_id'      => $signup->campaign_id,
             'type'             => $action->post_type,
-            'action'           => $action->name,
             'action_id'        => $action->id,
             'quantity'         => $quantity,
             'text'             => $text,
@@ -1668,6 +1667,53 @@ class PostTest extends TestCase
             'group_id' => $signup->group_id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
+            'type' => $action->post_type,
+            'action' => $action->name,
+            'action_id' => $action->id,
+            'status' => 'pending',
+            'quantity' => $quantity,
+        ]);
+    }
+
+    /**
+     * Test that when a post with a group_id is created and no signup exists yet
+     * the group_id on the post is not overwritten.
+     *
+     * @return void
+     */
+    public function testCreatingAPostWithGroupIdAndNoExistingSignup()
+    {
+        $groupId = factory(Group::class)->create()->id;
+
+        // Attributes for the post that we'll create
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $text = $this->faker->sentence;
+        $campaign_id = factory(Campaign::class)->create()->id;
+        $action = factory(Action::class)->create(['campaign_id' => $campaign_id]);
+        $northstar_id = $this->faker->northstar_id;
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAccessToken($northstar_id)->postJson('api/v3/posts', [
+            'northstar_id'     => $northstar_id,
+            'campaign_id'      => $campaign_id,
+            'type'             => $action->post_type,
+            'action_id'        => $action->id,
+            'quantity'         => $quantity,
+            'text'             => $text,
+            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'group_id'         => $groupId,
+        ]);
+
+        $response->assertStatus(201);
+        $this->assertPostStructure($response);
+
+        $this->assertDatabaseHas('posts', [
+            'group_id' => $groupId,
+            'northstar_id' => $northstar_id,
+            'campaign_id' => $campaign_id,
             'type' => $action->post_type,
             'action' => $action->name,
             'action_id' => $action->id,
