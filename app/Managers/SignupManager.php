@@ -2,6 +2,7 @@
 
 namespace Rogue\Managers;
 
+use Rogue\Jobs\CreateCustomerIoEvent;
 use Rogue\Jobs\SendSignupToCustomerIo;
 use Rogue\Repositories\SignupRepository;
 
@@ -43,6 +44,10 @@ class SignupManager
         // Save the new signup in Customer.io, via Blink.
         if (config('features.blink') && $shouldSendToCustomerIo) {
             SendSignupToCustomerIo::dispatch($signup);
+        }
+
+        if ($signup->referrer_user_id && $shouldSendToCustomerIo) {
+            CreateCustomerIoEvent::dispatch($signup->referrer_user_id, 'referral_signup_created', $signup->getReferralSignupEventPayload());
         }
 
         // Log that a signup was created.
