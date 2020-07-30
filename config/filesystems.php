@@ -37,7 +37,7 @@ return [
     | may even configure multiple disks of the same driver. Defaults have
     | been setup for each driver as an example of the required options.
     |
-    | Supported Drivers: "local", "ftp", "sftp", "s3", "rackspace"
+    | Supported Drivers: "local", "ftp", "sftp", "s3"
     |
     */
 
@@ -50,6 +50,7 @@ return [
 
         'public' => [
             'driver' => 'local',
+            // @TODO: should we change to storage_path('app/public')?
             'root' => public_path('storage'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
@@ -63,6 +64,8 @@ return [
             'bucket' => env('AWS_S3_BUCKET'),
             'base_url' => 'https://s3-external-1.amazonaws.com',
             'public_url' => env('AWS_S3_URL'),
+            // 'url' => env('AWS_URL'),
+            // 'endpoint' => env('AWS_ENDPOINT'),
         ],
 
     ],
