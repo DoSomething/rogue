@@ -24,17 +24,7 @@ class AddLocationToActionStatsAndGroupsTables extends Migration
             $table->index(['group_type_id', 'location']);
         });
 
-        // Execute SQL query to find all groups.
-        foreach (DB::table('groups')->select('id', 'state')->get() as $result) {
-            if (! $result->state) {
-                continue;
-            }
-
-            // Execute update query to populate location.
-            DB::table('groups')
-                ->where('id', $result->id)
-                ->update(['location' => 'US-' . $result->state]);
-        }
+        DB::statement("UPDATE groups SET location = CONCAT('US-', state) WHERE state IS NOT NULL");
     }
 
     /**
@@ -45,10 +35,12 @@ class AddLocationToActionStatsAndGroupsTables extends Migration
     public function down()
     {
         Schema::table('action_stats', function (Blueprint $table) {
+            $table->dropIndex(['action_id', 'location']);
             $table->dropColumn('location');
         });
 
         Schema::table('groups', function (Blueprint $table) {
+            $table->dropIndex(['group_type_id', 'location']);
             $table->dropColumn('location');
         });
     }
