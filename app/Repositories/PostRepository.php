@@ -205,14 +205,6 @@ class PostRepository
         // Update the "counter cache" on the Post Campaign:
         $post->campaign->refreshCounts();
 
-        // If the Post has a School ID, upsert an ActionStat.
-        if ($post->school_id && $post->action_id) {
-            ActionStat::updateOrCreate(
-                ['action_id' => $post->action_id, 'school_id' => $post->school_id],
-                ['impact' => Post::getAcceptedQuantitySum($post->action_id, $post->school_id)]
-            );
-        }
-
         return $post;
     }
 

@@ -5,7 +5,6 @@ namespace Rogue\Models;
 use Hashids\Hashids;
 use Rogue\Services\GraphQL;
 use Rogue\Events\PostTagged;
-use Rogue\Models\ActionStat;
 use Rogue\Models\Traits\HasCursor;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
@@ -597,22 +596,32 @@ class Post extends Model
      */
     public function updateOrCreateActionStats()
     {
-        // If this is a completed voter registration for a group with a school:
-        if ($this->type === 'voter-reg' && $this->group && $this->group->school_id && in_array($this->status, ['register-form', 'register-OVR'])) {
-            $schoolId = $this->group->school_id;
+        // We only store action stats for schools.
+        if (! $this->school_id) {
+            return;
+        }
 
+        if ($this->type === 'voter-reg' && in_array($this->status, self::getCompletedVoterRegStatuses())) {
+            
             // Find total number of completed voter reg posts for the school.
             $schoolCompletedVoterRegPostCount = (new self)->newModelQuery()
-                ->where('school_id', $schoolId)
+                ->where('school_id', $this->school_id)
                 ->where('type', 'voter-reg')
                 ->where('action_id', $this->action_id)
                 ->where('status', 'in', self::getCompletedVoterRegStatuses())
                 ->count();
 
             // Save to action stat.
-            ActionStat::updateOrCreate(
+            return ActionStat::updateOrCreate(
                 ['action_id' => $this->action_id, 'school_id' => $schoolId],
                 ['impact' => $schoolCompletedVoterRegPostCount]
+            );
+        }
+
+        if ($this->status === 'approved') {
+            return ActionStat::updateOrCreate(
+                ['action_id' => $this->action_id, 'school_id' => $this->school_id],
+                ['impact' => Post::getAcceptedQuantitySum($this->action_id, $this->school_id)]
             );
         }
     }
@@ -656,6 +665,6 @@ class Post extends Model
      * @return array
      */
     public static function getCompletedVoterRegStatuses() {
-
+        return ['register-form', 'register-OVR'];
     }
 }
