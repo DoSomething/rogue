@@ -25,4 +25,26 @@ class PostObserver
             $post->school_id = $group->school_id;
         }
     }
+
+    /**
+     * Handle the Post "created" event.
+     *
+     * @param  \Rogue\Models\Post  $post
+     * @return void
+     */
+    public function created(Post $post)
+    {
+        $post->updateOrCreateActionStats();
+    }
+
+    /**
+     * Handle the Post "updated" event.
+     *
+     * @param  \Rogue\Models\Post  $post
+     * @return void
+     */
+    public function updated(Post $post)
+    {
+        $post->updateOrCreateActionStats();
+    }
 }

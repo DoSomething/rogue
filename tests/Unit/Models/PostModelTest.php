@@ -172,4 +172,58 @@ class PostModelTest extends TestCase
         // Test expected data was retrieved from GraphQL.
         $this->assertEquals($result['user_display_name'], 'Daisy D.');
     }
+
+    /**
+     * Test action stats are populated for completed voter-reg posts.
+     *
+     * @return void
+     */
+    public function testVoterRegActionStats()
+    {
+        $actionId = factory(Action::class)->create()->id;
+        $schoolId = $this->faker->school_id;
+
+        factory(Post::class, 7)->states(['voter-reg', 'register-form'])->create([
+            'action_id' => $actionId,
+            'school_id' => $schoolId,
+        ]);
+
+        $this->assertDatabaseHas('action_stats', [
+            'action_id' => $actionId,
+            'impact' => 7,
+            'school_id' => $schoolId,
+        ]);
+
+        $post = factory(Post::class)->states(['voter-reg', 'step-1'])->create([
+            'action_id' => $actionId,
+            'school_id' => $schoolId,
+        ]);
+
+        // Verify impact wasn't updated.
+        $this->assertDatabaseHas('action_stats', [
+            'action_id' => $actionId,
+            'impact' => 7,
+            'school_id' => $schoolId,
+        ]);
+
+        $post->status = 'step-2';
+        $post->save();
+
+        // Verify impact still wasn't updated.
+        $this->assertDatabaseHas('action_stats', [
+            'action_id' => $actionId,
+            'impact' => 7,
+            'school_id' => $schoolId,
+        ]);
+
+        $post->status = 'register-OVR';
+        $post->save();
+
+        // Verify impact incremented when updated with completed status.
+        $this->assertDatabaseHas('action_stats', [
+            'action_id' => $actionId,
+            'impact' => 8,
+            'school_id' => $schoolId,
+        ]);
+    }
 }
