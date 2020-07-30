@@ -607,7 +607,7 @@ class Post extends Model
                 ->where('school_id', $this->school_id)
                 ->where('type', 'voter-reg')
                 ->where('action_id', $this->action_id)
-                ->where('status', 'in', self::getCompletedVoterRegStatuses())
+                ->whereIn('status', self::getCompletedVoterRegStatuses())
                 ->count();
 
             return ActionStat::updateOrCreate(
