@@ -18,6 +18,7 @@ class Group extends Model
         'city',
         'goal',
         'group_type_id',
+        'location',
         'name',
         'school_id',
         'state',
@@ -34,6 +35,7 @@ class Group extends Model
     public static $indexes = [
         'group_type_id',
         'id',
+        'location',
         'school_id',
         'state',
     ];

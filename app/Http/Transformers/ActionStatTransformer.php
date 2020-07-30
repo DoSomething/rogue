@@ -19,6 +19,7 @@ class ActionStatTransformer extends TransformerAbstract
             'id' => $actionStat->id,
             'action_id' => $actionStat->action_id,
             'school_id' => $actionStat->school_id,
+            'location' => $actionStat->location,
             'impact' => $actionStat->impact,
             'created_at' => $actionStat->created_at->toIso8601String(),
             'updated_at' => $actionStat->updated_at->toIso8601String(),

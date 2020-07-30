@@ -21,6 +21,7 @@ class GroupTransformer extends TransformerAbstract
             'name' => $group->name,
             'city' => $group->city,
             'state' => $group->state,
+            'location' => $group->location,
             'school_id' => $group->school_id,
             'goal' => $group->goal,
             'created_at' => $group->created_at->toIso8601String(),

@@ -15,17 +15,21 @@ class AddLocationToActionStatsAndGroupsTables extends Migration
     {
         Schema::table('action_stats', function (Blueprint $table) {
             $table->string('location', 6)->nullable()->after('school_id');
+            $table->index(['action_id', 'location']);
         });
 
         Schema::table('groups', function (Blueprint $table) {
+            // We'll deprecate the state column once all GraphQL queries are changed.
             $table->string('location', 6)->nullable()->after('state');
+            $table->index(['group_type_id', 'location']);
         });
 
         // Execute SQL query to find all groups.
-        foreach (DB::table('groups')->select('id','state')->get() as $result) {
+        foreach (DB::table('groups')->select('id', 'state')->get() as $result) {
             if (! $result->state) {
                 continue;
             }
+
             // Execute update query to populate location.
             DB::table('groups')
                 ->where('id', $result->id)

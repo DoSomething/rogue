@@ -12,7 +12,7 @@ GET /api/v3/action-stats
 
 - **filter[column]** _(string)_
 
-  - Filter results by column. Supported columns: `action_id`, `school_id`
+  - Filter results by column. Supported columns: `action_id`, `location`, `school_id`
   - Use commas to filter by multiple values in a column, e.g. `/action-stats?filter[action_id]=121,122`
 
 - **orderBy** _(string)_
@@ -28,6 +28,7 @@ Example Response:
       "id": 1,
       "action_id": 1,
       "school_id": "3401457",
+      "location": "US-SC",
       "impact": 37,
       "created_at": "2019-12-04T21:28:26+00:00",
       "updated_at": "2019-12-04T22:33:03+00:00"
@@ -36,6 +37,7 @@ Example Response:
       "id": 2,
       "action_id": 1,
       "school_id": "4802532",
+      "location": "US-NJ",
       "impact": 43,
       "created_at": "2019-12-04T22:05:29+00:00",
       "updated_at": "2019-12-04T22:05:29+00:00"
