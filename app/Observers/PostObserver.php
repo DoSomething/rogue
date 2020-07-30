@@ -4,7 +4,6 @@ namespace Rogue\Observers;
 
 use Rogue\Models\Post;
 use Rogue\Models\Group;
-use Rogue\Models\ActionStat;
 
 class PostObserver
 {
@@ -36,7 +35,6 @@ class PostObserver
     public function created(Post $post)
     {
         $post->updateOrCreateActionStats();
-
     }
 
     /**

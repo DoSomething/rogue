@@ -590,58 +590,51 @@ class Post extends Model
     }
 
     /**
-     * Updates or creates action stat if completed voter registration post for a school.
+     * Updates or creates an ActionStat for a completed post action if it belongs to a school.
      *
-     * @return int
+     * @return void
      */
     public function updateOrCreateActionStats()
     {
-        // We only store action stats for schools.
+        // We currently only save action stats for posts that belong to schools.
         if (! $this->school_id) {
             return;
         }
 
+        // If completed voter-reg post, update school impact as completed count for this action.
         if ($this->type === 'voter-reg' && in_array($this->status, self::getCompletedVoterRegStatuses())) {
-            
-            // Find total number of completed voter reg posts for the school.
-            $schoolCompletedVoterRegPostCount = (new self)->newModelQuery()
+            $impact = (new self)->newModelQuery()
                 ->where('school_id', $this->school_id)
                 ->where('type', 'voter-reg')
                 ->where('action_id', $this->action_id)
                 ->where('status', 'in', self::getCompletedVoterRegStatuses())
                 ->count();
 
-            // Save to action stat.
-            return ActionStat::updateOrCreate(
-                ['action_id' => $this->action_id, 'school_id' => $schoolId],
-                ['impact' => $schoolCompletedVoterRegPostCount]
-            );
-        }
-
-        if ($this->status === 'approved') {
             return ActionStat::updateOrCreate(
                 ['action_id' => $this->action_id, 'school_id' => $this->school_id],
-                ['impact' => Post::getAcceptedQuantitySum($this->action_id, $this->school_id)]
+                ['impact' => $impact]
             );
         }
-    }
 
-    /**
-     * Get the sum quantity of accepted posts with given action and school ID.
-     *
-     * @return int
-     */
-    public static function getAcceptedQuantitySum(int $actionId, string $schoolId)
-    {
-        return (new self)->newModelQuery()
-            ->where('action_id', $actionId)
-            ->where('school_id', $schoolId)
-            ->where('status', 'accepted')
-            ->sum('quantity');
+        // If approved photo post, update school impact as sum quantity for this action.
+        if ($this->type === 'photo' && $this->status === 'accepted') {
+            $impact = (new self)->newModelQuery()
+                ->where('action_id', $this->action_id)
+                ->where('school_id', $this->school_id)
+                ->where('status', 'accepted')
+                ->sum('quantity');
+
+            return ActionStat::updateOrCreate(
+                ['action_id' => $this->action_id, 'school_id' => $this->school_id],
+                ['impact' => $impact]
+            );
+        }
     }
 
     /**
      * Gets event payload for a referral post, on behalf of the referrer user ID.
+     *
+     * @return array
      */
     public function getReferralPostEventPayload()
     {
@@ -662,9 +655,12 @@ class Post extends Model
     }
 
     /**
+     * Returns all status values of completed voter registrations.
+     *
      * @return array
      */
-    public static function getCompletedVoterRegStatuses() {
+    public static function getCompletedVoterRegStatuses()
+    {
         return ['register-form', 'register-OVR'];
     }
 }

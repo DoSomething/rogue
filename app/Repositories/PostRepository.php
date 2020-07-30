@@ -6,7 +6,6 @@ use Rogue\Models\Post;
 use Rogue\Models\Action;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
-use Rogue\Models\ActionStat;
 use Rogue\Services\ImageStorage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Validation\ValidationException;
