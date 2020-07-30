@@ -606,7 +606,7 @@ class Post extends Model
          * group -- but there aren't any current school finder campaigns that would create posts
          * with a school and not a group.
          */
-        $location = $this->group->location;
+        $location = $this->group ? $this->group->location : null;
 
         // If completed voter-reg post, update school impact as completed count for this action.
         if ($this->type === 'voter-reg' && in_array($this->status, self::getCompletedVoterRegStatuses())) {
