@@ -520,7 +520,7 @@ class Post extends Model
             return;
         }
 
-        return $query->whereIn('status', ['accepted', 'register-form', 'register-OVR'])
+        return $query->whereIn('status', array_merge(['accepted'], self::getCompletedVoterRegStatuses()))
             ->orWhere('northstar_id', auth()->id())
             ->orWhere(function ($query) {
                 $query->whereNotNull('referrer_user_id')
@@ -655,7 +655,7 @@ class Post extends Model
     }
 
     /**
-     * Returns all status values of completed voter registrations.
+     * Returns all status values for completed voter registrations.
      *
      * @return array
      */

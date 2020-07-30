@@ -38,7 +38,7 @@ class PostObserver
     }
 
     /**
-     * Handle the Post "created" event.
+     * Handle the Post "updated" event.
      *
      * @param  \Rogue\Models\Post  $post
      * @return void
