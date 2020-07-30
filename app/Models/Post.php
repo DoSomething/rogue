@@ -5,6 +5,7 @@ namespace Rogue\Models;
 use Hashids\Hashids;
 use Rogue\Services\GraphQL;
 use Rogue\Events\PostTagged;
+use Rogue\Models\ActionStat;
 use Rogue\Models\Traits\HasCursor;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
@@ -590,6 +591,33 @@ class Post extends Model
     }
 
     /**
+     * Updates or creates action stat if completed voter registration post for a school.
+     *
+     * @return int
+     */
+    public function updateOrCreateActionStats()
+    {
+        // If this is a completed voter registration for a group with a school:
+        if ($this->type === 'voter-reg' && $this->group && $this->group->school_id && in_array($this->status, ['register-form', 'register-OVR'])) {
+            $schoolId = $this->group->school_id;
+
+            // Find total number of completed voter reg posts for the school.
+            $schoolCompletedVoterRegPostCount = (new self)->newModelQuery()
+                ->where('school_id', $schoolId)
+                ->where('type', 'voter-reg')
+                ->where('action_id', $this->action_id)
+                ->where('status', 'in', self::getCompletedVoterRegStatuses())
+                ->count();
+
+            // Save to action stat.
+            ActionStat::updateOrCreate(
+                ['action_id' => $this->action_id, 'school_id' => $schoolId],
+                ['impact' => $schoolCompletedVoterRegPostCount]
+            );
+        }
+    }
+
+    /**
      * Get the sum quantity of accepted posts with given action and school ID.
      *
      * @return int
@@ -622,5 +650,12 @@ class Post extends Model
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ], Group::toBlinkPayload($this->group));
+    }
+
+    /**
+     * @return array
+     */
+    public static function getCompletedVoterRegStatuses() {
+
     }
 }

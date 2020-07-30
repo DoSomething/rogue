@@ -4,6 +4,7 @@ namespace Rogue\Observers;
 
 use Rogue\Models\Post;
 use Rogue\Models\Group;
+use Rogue\Models\ActionStat;
 
 class PostObserver
 {
@@ -24,5 +25,28 @@ class PostObserver
         if ($post->group_id && (! $post->school_id) && $group = $post->group) {
             $post->school_id = $group->school_id;
         }
+    }
+
+    /**
+     * Handle the Post "created" event.
+     *
+     * @param  \Rogue\Models\Post  $post
+     * @return void
+     */
+    public function created(Post $post)
+    {
+        $post->updateOrCreateActionStats();
+
+    }
+
+    /**
+     * Handle the Post "created" event.
+     *
+     * @param  \Rogue\Models\Post  $post
+     * @return void
+     */
+    public function updated(Post $post)
+    {
+        $post->updateOrCreateActionStats();
     }
 }
