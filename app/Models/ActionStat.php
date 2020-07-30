@@ -14,6 +14,7 @@ class ActionStat extends Model
     protected $fillable = [
         'action_id',
         'impact',
+        'location',
         'school_id',
     ];
 
@@ -25,7 +26,7 @@ class ActionStat extends Model
      *
      * @var array
      */
-    public static $indexes = ['action_id', 'school_id'];
+    public static $indexes = ['action_id', 'location', 'school_id'];
 
     /**
      * Attributes that can be sorted by.
