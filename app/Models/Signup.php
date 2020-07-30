@@ -248,4 +248,25 @@ class Signup extends Model
             }
         }]);
     }
+
+    /**
+     * Gets event payload for a referral signup, on behalf of the referrer user ID.
+     */
+    public function getReferralSignupEventPayload()
+    {
+        $userId = $this->northstar_id;
+        $user = app(GraphQL::class)->getUserById($userId);
+
+        $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
+
+        return [
+            'id' => $this->id,
+            'user_id' => $userId,
+            'user_display_name' => isset($user) ? $user['displayName'] : null,
+            'campaign_id' => (string) $this->campaign_id,
+            'campaign_title' => $campaignWebsite['title'],
+            'created_at' => $this->created_at->toIso8601String(),
+            'updated_at' => $this->updated_at->toIso8601String(),
+        ];
+    }
 }

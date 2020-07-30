@@ -2,6 +2,7 @@
 
 namespace Rogue\Managers;
 
+use Rogue\Jobs\CreateCustomerIoEvent;
 use Rogue\Jobs\SendSignupToCustomerIo;
 use Rogue\Repositories\SignupRepository;
 
@@ -38,11 +39,15 @@ class SignupManager
         $signup = $this->signup->create($data, $northstarId, $campaignId);
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
-        $should_send_to_blink = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+        $shouldSendToCustomerIo = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
 
         // Save the new signup in Customer.io, via Blink.
-        if (config('features.blink') && $should_send_to_blink) {
+        if (config('features.blink') && $shouldSendToCustomerIo) {
             SendSignupToCustomerIo::dispatch($signup);
+        }
+
+        if ($signup->referrer_user_id && $shouldSendToCustomerIo) {
+            CreateCustomerIoEvent::dispatch($signup->referrer_user_id, 'referral_signup_created', $signup->getReferralSignupEventPayload());
         }
 
         // Log that a signup was created.

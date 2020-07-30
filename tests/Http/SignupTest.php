@@ -7,7 +7,9 @@ use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Group;
 use Rogue\Models\Signup;
+use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Blink;
+use Rogue\Services\CustomerIo;
 
 class SignupTest extends TestCase
 {
@@ -21,7 +23,6 @@ class SignupTest extends TestCase
     {
         $northstarId = $this->faker->northstar_id;
         $campaignId = $this->faker->randomNumber(4);
-        $referrerUserId = $this->faker->northstar_id;
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignup');
@@ -29,7 +30,6 @@ class SignupTest extends TestCase
         $response = $this->withAccessToken($northstarId)->postJson('api/v3/signups', [
             'campaign_id' => $campaignId,
             'details' => 'affiliate-messaging',
-            'referrer_user_id' => $referrerUserId,
         ]);
 
         // Make sure we get the 201 Created response
@@ -41,7 +41,6 @@ class SignupTest extends TestCase
                 'quantity' => null,
                 'source' => 'phpunit',
                 'why_participated' => null,
-                'referrer_user_id' => $referrerUserId,
                 'group_id' => null,
             ],
         ]);
@@ -97,6 +96,14 @@ class SignupTest extends TestCase
         $campaignId = $this->faker->randomNumber(4);
 
         $this->mock(Blink::class)->shouldReceive('userSignup');
+
+        // Mock the GraphQL API calls.
+        $this->mock(GraphQL::class)
+            ->shouldReceive('getUserById', 'getCampaignWebsiteByCampaignId');
+
+        // Mock the Customer.io API calls.
+        $this->mock(CustomerIo::class)
+            ->shouldReceive('trackEvent');
 
         $response = $this->withAccessToken($northstarId)->postJson('api/v3/signups', [
             'campaign_id' => $campaignId,
