@@ -192,19 +192,17 @@ class CampaignTest extends Testcase
         // First, let's get the three campaigns with the most pending posts:
         $endpoint = 'api/v3/campaigns?orderBy=pending_count,desc&limit=3';
         $response = $this->withAdminAccessToken()->getJson($endpoint);
-        $data = $response->json()['data'];
 
-        $this->assertArraySubset(['id' => $five->id, 'pending_count' => 5], $data[0]);
-        $this->assertArraySubset(['id' => $four->id, 'pending_count' => 4], $data[1]);
-        $this->assertArraySubset(['id' => $three->id, 'pending_count' => 3], $data[2]);
+        $response->assertJson(['data' =>[0 => ['id' => $five->id, 'pending_count' => 5]]]);
+        $response->assertJson(['data' =>[1 => ['id' => $four->id, 'pending_count' => 4]]]);
+        $response->assertJson(['data' =>[2 => ['id' => $three->id, 'pending_count' => 3]]]);
 
         // Then, we'll use the last post's cursor to fetch the remaining two:
         $lastCursor = $response->json()['data'][2]['cursor'];
         $response = $this->withAdminAccessToken()->getJson($endpoint . '&cursor[after]=' . $lastCursor);
-        $data = $response->json()['data'];
 
-        $this->assertArraySubset(['id' => $two->id, 'pending_count' => 2], $data[0]);
-        $this->assertArraySubset(['id' => $one->id, 'pending_count' => 1], $data[1]);
+        $response->assertJson(['data' =>[0 => ['id' => $two->id, 'pending_count' => 2]]]);
+        $response->assertJson(['data' =>[1 => ['id' => $one->id, 'pending_count' => 1]]]);
     }
 
     /**
