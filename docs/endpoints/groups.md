@@ -16,6 +16,10 @@ GET /api/v3/groups
 
   - Filter results by Group ID or ID's.
 
+- **filter[location]** _(string)_
+
+  - Filter results by given location, e.g. `filter[state]=US-SC`.
+
 - **filter[name]** _(string)_
 
   - Filter results by names that include the given filter, e.g. `filter[name]=New`.
@@ -24,7 +28,7 @@ GET /api/v3/groups
 
   - Filter results by given school_id, e.g. `filter[external_id]=13000419`.
 
-- **filter[state]** _(string)_
+- **filter[state]** _(string)_ -- Deprecated
 
   - Filter results by given state, e.g. `filter[state]=SC`.
 
@@ -39,6 +43,7 @@ Example Response:
       "name": "A C Flora High School",
       "city": "Charleston",
       "state": "SC",
+      "location": "US-SC",
       "school_id": "3600737",
       "goal": 150,
       "created_at": "2019-12-04T21:28:26+00:00",
@@ -50,6 +55,7 @@ Example Response:
       "name": "Afton Central School",
       "city": "Afton",
       "state": "NY",
+      "location": "US-NY",
       "school_id": null,
       "goal": null,
       "created_at": "2019-12-04T22:05:29+00:00",
@@ -86,6 +92,7 @@ Example Response:
     "name": "A C Flora High School",
     "city": "Charleston",
     "state": "SC",
+    "location": "US-SC",
     "school_id": "3600737",
     "goal": 150,
     "created_at": "2019-12-04T21:28:26+00:00",

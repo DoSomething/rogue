@@ -182,21 +182,28 @@ class PostModelTest extends TestCase
     {
         $actionId = factory(Action::class)->create()->id;
         $schoolId = $this->faker->school_id;
+        $location = 'US-FL';
+
+        $group = factory(Group::class)->create([
+            'location' => $location,
+            'school_id' => $schoolId,
+        ]);
 
         factory(Post::class, 7)->states(['voter-reg', 'register-form'])->create([
             'action_id' => $actionId,
-            'school_id' => $schoolId,
+            'group_id' => $group->id,
         ]);
 
         $this->assertDatabaseHas('action_stats', [
             'action_id' => $actionId,
             'impact' => 7,
             'school_id' => $schoolId,
+            'location' => $location,
         ]);
 
         $post = factory(Post::class)->states(['voter-reg', 'step-1'])->create([
             'action_id' => $actionId,
-            'school_id' => $schoolId,
+            'group_id' => $group->id,
         ]);
 
         // Verify impact wasn't updated.
@@ -204,6 +211,7 @@ class PostModelTest extends TestCase
             'action_id' => $actionId,
             'impact' => 7,
             'school_id' => $schoolId,
+            'location' => $location,
         ]);
 
         $post->status = 'step-2';
@@ -214,6 +222,7 @@ class PostModelTest extends TestCase
             'action_id' => $actionId,
             'impact' => 7,
             'school_id' => $schoolId,
+            'location' => $location,
         ]);
 
         $post->status = 'register-OVR';
@@ -224,6 +233,7 @@ class PostModelTest extends TestCase
             'action_id' => $actionId,
             'impact' => 8,
             'school_id' => $schoolId,
+            'location' => $location,
         ]);
     }
 }

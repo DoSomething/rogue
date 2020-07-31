@@ -601,6 +601,13 @@ class Post extends Model
             return;
         }
 
+        /**
+         * TODO: We can eventually query GraphQL for school location if we have a school but no
+         * group -- but there aren't any current school finder campaigns that would create posts
+         * with a school and not a group.
+         */
+        $location = $this->group ? $this->group->location : null;
+
         // If completed voter-reg post, update school impact as completed count for this action.
         if ($this->type === 'voter-reg' && in_array($this->status, self::getCompletedVoterRegStatuses())) {
             $impact = (new self)->newModelQuery()
@@ -612,7 +619,7 @@ class Post extends Model
 
             return ActionStat::updateOrCreate(
                 ['action_id' => $this->action_id, 'school_id' => $this->school_id],
-                ['impact' => $impact]
+                ['impact' => $impact, 'location' => $location]
             );
         }
 
@@ -626,7 +633,7 @@ class Post extends Model
 
             return ActionStat::updateOrCreate(
                 ['action_id' => $this->action_id, 'school_id' => $this->school_id],
-                ['impact' => $impact]
+                ['impact' => $impact, 'location' => $location]
             );
         }
     }
