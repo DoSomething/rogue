@@ -7,8 +7,8 @@ use Rogue\Models\Post;
 use Rogue\Models\User;
 use Rogue\Models\Group;
 use Rogue\Models\Signup;
-use Rogue\Services\GraphQL;
 use Illuminate\Support\Str;
+use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Blink;
 use Rogue\Services\CustomerIo;
 
