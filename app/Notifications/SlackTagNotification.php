@@ -4,15 +4,6 @@ namespace Rogue\Notifications;
 
 use Rogue\Models\Tag;
 use Rogue\Models\Post;
-<<<<<<< HEAD
-<<<<<<< HEAD
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Rogue\Services\GraphQL;
-=======
->>>>>>> 31d07f7c... StyleCI fixes.
-=======
->>>>>>> bd96b84e... Upgrading Laravel Framework (#1071)
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Rogue\Services\GraphQL;
