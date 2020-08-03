@@ -2,10 +2,13 @@
 
 namespace Rogue\Models;
 
+use Rogue\Models\Traits\HasCursor;
 use Illuminate\Database\Eloquent\Model;
 
 class ActionStat extends Model
 {
+    use HasCursor;
+
     /**
      * The attributes that are mass assignable.
      *

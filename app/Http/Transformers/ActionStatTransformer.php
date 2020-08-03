@@ -23,6 +23,7 @@ class ActionStatTransformer extends TransformerAbstract
             'impact' => $actionStat->impact,
             'created_at' => $actionStat->created_at->toIso8601String(),
             'updated_at' => $actionStat->updated_at->toIso8601String(),
+            'cursor' => $actionStat->getCursor(),
         ];
     }
 }
