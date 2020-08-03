@@ -37,6 +37,13 @@ class ActionStatsController extends ApiController
         $orderBy = $request->query('orderBy');
         $query = $this->orderBy($query, $orderBy, ActionStat::$sortable);
 
+        if ($cursor = array_get($request->query('cursor'), 'after')) {
+            $query->whereAfterCursor($cursor);
+
+            // Using 'cursor' implies cursor pagination:
+            $this->useCursorPagination = true;
+        }
+
         return $this->paginatedCollection($query, $request);
     }
 }
