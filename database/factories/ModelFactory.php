@@ -192,10 +192,18 @@ $factory->define(GroupType::class, function (Generator $faker) {
 
 // Group Factory
 $factory->define(Group::class, function (Generator $faker) {
+    $faker->addProvider(new FakerSchoolId($faker));
+
     return [
         'group_type_id' => function () {
             return factory(GroupType::class)->create()->id;
         },
         'name' => title_case($faker->unique()->company),
+    ];
+});
+
+$factory->state(Group::class, 'school', function (Generator $faker) {
+    return [
+        'school_id' => $faker->school_id,
     ];
 });

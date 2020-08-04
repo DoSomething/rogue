@@ -1,6 +1,7 @@
 <?php
 
 use Rogue\Models\Post;
+use Rogue\Models\Group;
 use Rogue\Models\Action;
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
@@ -29,11 +30,14 @@ class DatabaseSeeder extends Seeder
             // Create 10-20 signups with one accepted photo post & some pending photo and text posts.
             factory(Signup::class, rand(10, 20))->create(['campaign_id' => $campaign->id])
                 ->each(function (Signup $signup) use ($photoAction, $textAction) {
+                    $group = factory(Group::class)->states('school')->create();
+
                     $signup->posts()->save(factory(Post::class)->states('photo', 'accepted')->create([
                         'action_id' => $photoAction->id,
                         'signup_id' => $signup->id,
                         'campaign_id' => $signup->campaign_id,
                         'northstar_id' => $signup->northstar_id,
+                        'group_id' => $group->id,
                     ]));
 
                     $signup->posts()->saveMany(factory(Post::class, rand(2, 4))->states('photo', 'pending')->create([
@@ -41,6 +45,7 @@ class DatabaseSeeder extends Seeder
                         'signup_id' => $signup->id,
                         'campaign_id' => $signup->campaign_id,
                         'northstar_id' => $signup->northstar_id,
+                        'group_id' => $group->id,
                     ]));
 
                     $signup->posts()->saveMany(factory(Post::class, rand(2, 4))->states('text', 'pending')->create([
