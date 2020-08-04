@@ -11,7 +11,6 @@ use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
 use Rogue\Models\GroupType;
 use Rogue\Types\ActionType;
-use Rogue\Models\ActionStat;
 use Rogue\Types\TimeCommitment;
 
 /**
@@ -39,17 +38,6 @@ $factory->define(Action::class, function (Generator $faker) {
         'verb' => 'done',
         'collect_school_id' => true,
         'volunteer_credit' => false,
-    ];
-});
-
-// ActionStat Factory
-$factory->define(ActionStat::class, function (Generator $faker) {
-    $faker->addProvider(new FakerSchoolId($faker));
-
-    return [
-        'school_id' => $this->faker->school_id,
-        'action_id' => factory(Action::class)->create()->id,
-        'impact' => $faker->randomNumber(3),
     ];
 });
 
