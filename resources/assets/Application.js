@@ -17,6 +17,7 @@ import ShowCampaign from './pages/ShowCampaign';
 import ShowGroupType from './pages/ShowGroupType';
 import CampaignIndex from './pages/CampaignIndex';
 import GroupTypeIndex from './pages/GroupTypeIndex';
+import ActionStatIndex from './pages/ActionStatIndex';
 
 const Application = () => {
   const endpoint = env('GRAPHQL_URL');
@@ -25,6 +26,9 @@ const Application = () => {
     <ApolloProvider client={graphql(endpoint)}>
       <BrowserRouter>
         <Switch>
+          <Route path="/action-stats" exact>
+            <ActionStatIndex />
+          </Route>
           <Route path="/actions/:id">
             <ShowAction />
           </Route>

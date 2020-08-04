@@ -28,6 +28,9 @@ Route::resource('groups', 'GroupsController', ['except' => ['create', 'index', '
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     // Actions
+    Route::view('action-stats', 'app');
+
+    // Actions
     Route::view('actions/{id}', 'app');
 
     // Campaigns
