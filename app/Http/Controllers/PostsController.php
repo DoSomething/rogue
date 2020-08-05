@@ -4,6 +4,7 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Post;
 use Rogue\Models\Campaign;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Rogue\Managers\PostManager;
 use Rogue\Managers\SignupManager;
@@ -87,11 +88,11 @@ class PostsController extends ApiController
         $query = $query->withHiddenPosts();
 
         // If tag param is passed, only return posts that have that tag.
-        if (array_has($filters, 'tag')) {
+        if (Arr::has($filters, 'tag')) {
             $query = $query->withTag($filters['tag']);
         }
 
-        if (array_has($filters, 'volunteer_credit')) {
+        if (Arr::has($filters, 'volunteer_credit')) {
             if (filter_var($filters['volunteer_credit'], FILTER_VALIDATE_BOOLEAN)) {
                 $query = $query->withVolunteerCredit($filters['volunteer_credit']);
             } else {
@@ -100,7 +101,7 @@ class PostsController extends ApiController
         }
 
         // If the northstar_id param is passed, only allow admins, staff, or owner to see anonymous posts.
-        if (array_has($filters, 'northstar_id')) {
+        if (Arr::has($filters, 'northstar_id')) {
             $query = $query->withoutAnonymousPosts();
         }
 
@@ -113,7 +114,7 @@ class PostsController extends ApiController
         $request->query->set('orderBy', 'created_at,desc');
 
         // Experimental: Allow paginating by cursor (e.g. `?cursor[after]=OTAxNg==`):
-        if ($cursor = array_get($request->query('cursor'), 'after')) {
+        if ($cursor = Arr::get($request->query('cursor'), 'after')) {
             $query->whereAfterCursor($cursor);
 
             // Using 'cursor' implies cursor pagination:
@@ -175,12 +176,14 @@ class PostsController extends ApiController
         // Only allow an admin/staff or the user who owns the post to update.
         $this->authorize('update', $post);
 
+        $validatedRequest = $request->validated();
+
         // But don't allow user's to review their own posts.
         if (! Gate::allows('review', $post)) {
-            unset($request['status']);
+            unset($validatedRequest['status']);
         }
 
-        $this->posts->update($post, $request->validated());
+        $this->posts->update($post, $validatedRequest);
 
         return $this->item($post);
     }

@@ -5,7 +5,6 @@ namespace Rogue\Providers;
 use Closure;
 use Hashids\Hashids;
 use Rogue\Models\Post;
-use Rogue\Auth\CustomGate;
 use InvalidArgumentException;
 use Rogue\Observers\PostObserver;
 use Illuminate\Support\Facades\Log;
@@ -14,11 +13,20 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Query\Builder as QueryBuilder;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
     /**
      * Bootstrap any application services.
      *
@@ -28,12 +36,6 @@ class AppServiceProvider extends ServiceProvider
     {
         // Attach model observer(s):
         Post::observe(PostObserver::class);
-
-        $this->app->singleton(GateContract::class, function ($app) {
-            return new CustomGate($app, function () use ($app) {
-                return call_user_func($app['auth']->userResolver());
-            });
-        });
 
         $this->app->singleton(Hashids::class, function ($app) {
             return new Hashids(config('app.key'), 10);
@@ -61,7 +63,9 @@ class AppServiceProvider extends ServiceProvider
         }, 'The :attribute must be a valid ISO-3166-2 region code.');
 
         // Attach the user & request ID to context for all log messages.
-        Log::getMonolog()->pushProcessor(function ($record) {
+        // @see https://git.io/JJzwG We may want to set this up using a
+        // Logging/ContextFormatter class like we do in Northstar.
+        Log::getLogger()->pushProcessor(function ($record) {
             $record['extra']['user_id'] = auth()->id();
             $record['extra']['client_id'] = token()->client();
             $record['extra']['request_id'] = request()->header('X-Request-Id');
@@ -107,15 +111,5 @@ class AppServiceProvider extends ServiceProvider
                 );
             }
         });
-    }
-
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
     }
 }

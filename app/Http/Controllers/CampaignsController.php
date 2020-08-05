@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Campaign;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Rogue\Http\Transformers\CampaignTransformer;
 
@@ -65,7 +66,7 @@ class CampaignsController extends ApiController
         }
 
         // Experimental: Allow paginating by cursor (e.g. `?cursor[after]=OTAxNg==`):
-        if ($cursor = array_get($request->query('cursor'), 'after')) {
+        if ($cursor = Arr::get($request->query('cursor'), 'after')) {
             $query->whereAfterCursor($cursor);
 
             // Using 'cursor' implies cursor pagination:

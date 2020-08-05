@@ -1211,21 +1211,25 @@ class PostTest extends TestCase
     {
         // Anon user should not be able to see a pending post if it doesn't belong to them and if they're not an admin.
         $post = factory(Post::class)->create();
+
         $response = $this->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(403);
 
         // Anon user should not be able to see a rejected post if it doesn't belong to them and if they're not an admin.
         $post = factory(Post::class)->states('photo', 'rejected')->create();
+
         $response = $this->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(403);
 
         // Anon user is able to see an accepted post even if it doesn't belong to them and if they're not an admin.
         $post = factory(Post::class)->states('photo', 'accepted')->create();
+
         $response = $this->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
+
         $response->assertJsonStructure([
             'data' => [
                 'id',
@@ -1260,12 +1264,15 @@ class PostTest extends TestCase
     public function testPostShowAsAdmin()
     {
         $post = factory(Post::class)->create();
+
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(200);
+
         $this->assertPostStructure($response);
 
         $json = $response->json();
+
         $this->assertEquals($post->id, $json['data']['id']);
     }
 
@@ -1487,6 +1494,8 @@ class PostTest extends TestCase
             'location' => 'US-MA',
             'text' => 'new caption',
         ]);
+
+        $response->assertStatus(200);
 
         $response->assertJson([
             'data' => [

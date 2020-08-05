@@ -1,17 +1,15 @@
-/vendor
 /node_modules
+/public/assets/**
+/public/dist
 /public/storage
 /storage/debugbar
-Homestead.yaml
-Homestead.json
-.env
-.env.dusk.local
+/vendor
 
 .DS_Store
+.env
+.env.backup
+.phpunit.result.cache
 
-public/assets/**
-public/dist
-
+Homestead.json
+Homestead.yaml
 npm-debug.log
-
-/_book

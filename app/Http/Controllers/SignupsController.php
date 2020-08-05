@@ -4,6 +4,8 @@ namespace Rogue\Http\Controllers;
 
 use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Rogue\Managers\SignupManager;
 use Rogue\Http\Transformers\SignupTransformer;
@@ -93,7 +95,7 @@ class SignupsController extends ApiController
         $query = $this->filter($query, $filters, Signup::$indexes);
 
         // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
-        if (starts_with($request->query('include'), 'posts')) {
+        if (Str::startsWith($request->query('include'), 'posts')) {
             $types = (new \League\Fractal\Manager)
                 ->parseIncludes($request->query('include'))
                 ->getIncludeParams('posts');
@@ -107,7 +109,7 @@ class SignupsController extends ApiController
         $query = $this->orderBy($query, $orderBy, Signup::$sortable);
 
         // Experimental: Allow paginating by cursor (e.g. `?cursor[after]=OTAxNg==`):
-        if ($cursor = array_get($request->query('cursor'), 'after')) {
+        if ($cursor = Arr::get($request->query('cursor'), 'after')) {
             $query->whereAfterCursor($cursor);
 
             // Using 'cursor' implies cursor pagination:
@@ -128,7 +130,7 @@ class SignupsController extends ApiController
     public function show(Request $request, Signup $signup)
     {
         // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
-        if (starts_with($request->query('include'), 'posts')) {
+        if (Str::startsWith($request->query('include'), 'posts')) {
             $types = (new \League\Fractal\Manager)
                 ->parseIncludes($request->query('include'))
                 ->getIncludeParams('posts');

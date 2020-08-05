@@ -10,60 +10,60 @@
  */
 
 // Assets
-$router->get('images/{hash}', 'Web\ImagesController@show');
+Route::get('images/{hash}', 'Web\ImagesController@show');
 
 // v3 routes
-$router->group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function () {
+Route::group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function () {
     // signups
-    $this->post('signups', 'SignupsController@store');
-    $this->get('signups', 'SignupsController@index');
-    $this->get('signups/{signup}', 'SignupsController@show');
-    $this->patch('signups/{signup}', 'SignupsController@update');
-    $this->delete('signups/{signup}', 'SignupsController@destroy');
+    Route::post('signups', 'SignupsController@store');
+    Route::get('signups', 'SignupsController@index');
+    Route::get('signups/{signup}', 'SignupsController@show');
+    Route::patch('signups/{signup}', 'SignupsController@update');
+    Route::delete('signups/{signup}', 'SignupsController@destroy');
 
     // posts
-    $this->post('posts', 'PostsController@store');
-    $this->get('posts', 'PostsController@index');
-    $this->get('posts/{post}', 'PostsController@show');
-    $this->patch('posts/{post}', 'PostsController@update');
-    $this->delete('posts/{post}', 'PostsController@destroy');
+    Route::post('posts', 'PostsController@store');
+    Route::get('posts', 'PostsController@index');
+    Route::get('posts/{post}', 'PostsController@show');
+    Route::patch('posts/{post}', 'PostsController@update');
+    Route::delete('posts/{post}', 'PostsController@destroy');
 
     // reactions
-    $this->post('posts/{post}/reactions', 'ReactionController@store');
-    $this->get('posts/{post}/reactions', 'ReactionController@index');
+    Route::post('posts/{post}/reactions', 'ReactionController@store');
+    Route::get('posts/{post}/reactions', 'ReactionController@index');
 
     // reviews
-    $this->post('posts/{post}/reviews', 'ReviewsController@reviews');
+    Route::post('posts/{post}/reviews', 'ReviewsController@reviews');
 
     // tag
-    $this->post('posts/{post}/tags', 'TagsController@store');
+    Route::post('posts/{post}/tags', 'TagsController@store');
 
     // images
-    $this->post('posts/{post}/rotate', 'RotationController@update');
+    Route::post('posts/{post}/rotate', 'RotationController@update');
 
     // events
-    $this->get('events', 'EventsController@index');
+    Route::get('events', 'EventsController@index');
 
     // campaigns
-    $this->get('campaigns', 'CampaignsController@index');
-    $this->get('campaigns/{campaign}', 'CampaignsController@show');
-    $this->patch('campaigns/{campaign}', 'CampaignsController@update');
+    Route::get('campaigns', 'CampaignsController@index');
+    Route::get('campaigns/{campaign}', 'CampaignsController@show');
+    Route::patch('campaigns/{campaign}', 'CampaignsController@update');
 
     // actions
-    $this->get('actions', 'ActionsController@index');
-    $this->get('actions/{action}', 'ActionsController@show');
+    Route::get('actions', 'ActionsController@index');
+    Route::get('actions/{action}', 'ActionsController@show');
 
     // action stats
-    $this->get('action-stats', 'ActionStatsController@index');
+    Route::get('action-stats', 'ActionStatsController@index');
 
     // groups
-    $this->get('groups', 'GroupsController@index');
-    $this->get('groups/{group}', 'GroupsController@show');
+    Route::get('groups', 'GroupsController@index');
+    Route::get('groups/{group}', 'GroupsController@show');
 
     // group types
-    $this->get('group-types', 'GroupTypesController@index');
-    $this->get('group-types/{groupType}', 'GroupTypesController@show');
+    Route::get('group-types', 'GroupTypesController@index');
+    Route::get('group-types/{groupType}', 'GroupTypesController@show');
 
     // users
-    $this->delete('users/{id}', 'UsersController@destroy');
+    Route::delete('users/{id}', 'UsersController@destroy');
 });

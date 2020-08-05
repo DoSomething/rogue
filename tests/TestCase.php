@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Illuminate\Support\Arr;
 use PHPUnit\Framework\Assert;
 use DoSomething\Gateway\Testing\WithOAuthTokens;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,7 +25,7 @@ abstract class TestCase extends BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -43,11 +44,11 @@ abstract class TestCase extends BaseTestCase
     {
         $data = $response->decodeResponseJson();
 
-        if (! array_has($data, $key)) {
+        if (! Arr::has($data, $key)) {
             Assert::fail('Expected to find JSON response at '.$key);
         }
 
-        $actual = array_get($data, $key);
+        $actual = Arr::get($data, $key);
 
         if ($expected !== null && $actual !== $expected) {
             Assert::fail('Expected to find "'.$expected.'" in response at '.$key.', found: '.$actual);

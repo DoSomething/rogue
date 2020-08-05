@@ -3,25 +3,18 @@
 namespace Rogue\Models;
 
 use Hashids\Hashids;
+use Illuminate\Support\Str;
 use Rogue\Services\GraphQL;
 use Rogue\Events\PostTagged;
 use Rogue\Models\Traits\HasCursor;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Post extends Model
 {
     use SoftDeletes, HasCursor;
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
 
     /**
      * Always load a user's own reaction,
@@ -414,7 +407,7 @@ class Post extends Model
         // Only tag if the tag doesn't exist on the post yet.
         // Otherwise, an integrity constraint violation / duplicate entry error will be thrown.
         if (! $this->tagNames()->contains($tagName)) {
-            $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => str_slug($tagName, '-')]);
+            $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => Str::slug($tagName, '-')]);
 
             $this->tags()->attach($tag);
 

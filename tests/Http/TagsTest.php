@@ -3,7 +3,6 @@
 namespace Tests\Http;
 
 use Tests\TestCase;
-use Rogue\Models\Tag;
 use Rogue\Models\Post;
 
 class TagsTest extends TestCase
@@ -60,6 +59,7 @@ class TagsTest extends TestCase
         ]);
 
         $response->assertStatus(401);
+
         $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
     }
 
@@ -92,8 +92,10 @@ class TagsTest extends TestCase
     {
         // Create a post with tags.
         $post = factory(Post::class)->create();
+
         $post->tag('Good Submission');
         $post->tag('Tag To Delete');
+
         $post = $post->fresh();
 
         // Make sure both tags actually exist
@@ -107,7 +109,9 @@ class TagsTest extends TestCase
 
         // Make sure that the tag is deleted, but the other tag is still there
         $post = $post->fresh();
+
         $response->assertStatus(200);
+
         $this->assertContains('Good Submission', $post->tagNames());
         $this->assertNotContains('Tag To Delete', $post->tagNames());
 

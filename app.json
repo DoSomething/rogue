@@ -65,34 +65,7 @@
     "NORTHSTAR_URL": {
       "required": true
     },
-    "ASHES_API_VERSION": {
-      "required": true
-    },
-    "ASHES_PASSWORD": {
-      "required": true
-    },
-    "ASHES_URI": {
-      "required": true
-    },
-    "ASHES_USERNAME": {
-      "required": true
-    },
     "ROGUE_API_KEY": {
-      "required": true
-    },
-    "S3_BUCKET": {
-      "required": true
-    },
-    "S3_KEY": {
-      "required": true
-    },
-    "S3_REGION": {
-      "required": true
-    },
-    "S3_SECRET": {
-      "required": true
-    },
-    "S3_URL": {
       "required": true
     }
   }

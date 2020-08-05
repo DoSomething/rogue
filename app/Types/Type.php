@@ -3,6 +3,7 @@
 namespace Rogue\Types;
 
 use MyCLabs\Enum\Enum;
+use Illuminate\Support\Arr;
 
 abstract class Type extends Enum
 {
@@ -27,6 +28,6 @@ abstract class Type extends Enum
             throw new \InvalidArgumentException('This type does not have labels.');
         }
 
-        return array_get(static::labels(), $type);
+        return Arr::get(static::labels(), $type);
     }
 }

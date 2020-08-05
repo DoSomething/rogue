@@ -10,13 +10,6 @@ class Reaction extends Model
     use SoftDeletes;
 
     /**
-     * The attributes that should be mutated to date.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
-
-    /**
      * All of the relationships to be touched.
      *
      * @var array

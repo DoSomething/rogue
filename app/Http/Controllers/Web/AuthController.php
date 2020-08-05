@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers\Web;
 
+use Illuminate\Support\Arr;
 use Rogue\Http\Controllers\Controller;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -45,12 +46,12 @@ class AuthController extends Controller
         // Save the post-login redirect for when the user completes the flow: either to the intended
         // page (if logging in to view a page protected by the 'auth' middleware), or the previous
         // page (if the user clicked "Log In" in the top navigation).
-        if (! array_has($request->getQueryParams(), 'code')) {
+        if (! Arr::has($request->getQueryParams(), 'code')) {
             $intended = session()->pull('url.intended', url()->previous());
             session(['login.intended' => $intended]);
         }
 
-        $destination = array_get($request->getQueryParams(), 'destination');
+        $destination = Arr::get($request->getQueryParams(), 'destination');
         $url = session('login.intended', $this->redirectTo);
 
         return gateway('northstar')->authorize($request, $response, $url, $destination);

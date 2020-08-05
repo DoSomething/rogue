@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         bootstrap="bootstrap/autoload.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true">
     <testsuites>
       <testsuite name="Console">
         <directory suffix="Test.php">./tests/Console</directory>
@@ -30,14 +25,18 @@
         </whitelist>
     </filter>
     <php>
-        <env name="APP_ENV" value="testing"/>
-        <env name="CACHE_DRIVER" value="array"/>
-        <env name="DB_DATABASE" value="rogue_test"/>
-        <env name="DS_ENABLE_BLINK" value="false"/>
-        <env name="DS_ENABLE_GLIDE" value="true"/>
-        <env name="SCOUT_DRIVER" value="null"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="STORAGE_DRIVER" value="public"/>
-        <env name="QUEUE_DRIVER" value="sync"/>
+        <server name="APP_ENV" value="testing"/>
+        <server name="BCRYPT_ROUNDS" value="4"/>
+        <server name="CACHE_DRIVER" value="array"/>
+        <server name="DB_CONNECTION" value="mysql"/>
+        <server name="DB_DATABASE" value="rogue_test"/>
+        <server name="DS_ENABLE_BLINK" value="false"/>
+        <server name="DS_ENABLE_GLIDE" value="true"/>
+        <server name="FILESYSTEM_DRIVER" value="public"/>
+        <server name="MAIL_DRIVER" value="array"/>
+        <server name="QUEUE_CONNECTION" value="sync"/>
+        <server name="SCOUT_DRIVER" value="null"/>
+        <server name="SESSION_DRIVER" value="array"/>
+        <server name="SLACK_WEBHOOK_INTEGRATION_URL" value=""/>
     </php>
 </phpunit>

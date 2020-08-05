@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use Mockery;
 use Carbon\Carbon;
 use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Northstar;
@@ -52,13 +51,16 @@ trait WithMocks
 
         // GraphQL Mock
         $this->graphqlMock = $this->mock(GraphQL::class);
+
         $this->graphqlMock->shouldReceive('getCampaignWebsiteByCampaignId')->andReturn([
             'title' => 'Test Example Campaign',
             'slug' => 'test-example-campaign',
         ]);
+
         $this->graphqlMock->shouldReceive('getSchoolById')->andReturn([
             'name' => 'San Dimas High School',
         ]);
+
         $this->graphqlMock->shouldReceive('getUserById')->andReturn([
             'displayName' => 'Daisy D.',
         ]);
@@ -75,20 +77,5 @@ trait WithMocks
         Carbon::setTestNow((string) new Carbon($time));
 
         return Carbon::getTestNow();
-    }
-
-    /**
-     * Mock Container dependencies.
-     *
-     * @param string $class - Class to be mocked.
-     *
-     * @return \Mockery\MockInterface
-     */
-    public function mock($class)
-    {
-        $mock = Mockery::mock($class);
-        $this->app->instance($class, $mock);
-
-        return $mock;
     }
 }
