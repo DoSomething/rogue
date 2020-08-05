@@ -197,7 +197,7 @@ $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($
 $factory->state(Campaign::class, 'voter-registration', function (Generator $faker) {
     return [
         'cause' => [Cause::VOTER_REGISTRATION],
-        'internal_title' => 'Voter Registration ' . $faker->unique()->catchPhrase,
+        'internal_title' => 'Voter Registration ' . Str::title($faker->unique()->catchPhrase),
     ];
 });
 
