@@ -204,7 +204,7 @@ $factory->state(Campaign::class, 'voter-registration', function (Generator $fake
 // Group Type Factory
 $factory->define(GroupType::class, function (Generator $faker) {
     return [
-        'name' => 'National ' . title_case($faker->unique()->jobTitle) . ' Society',
+        'name' => 'National ' . Str::title($faker->unique()->jobTitle) . ' Society',
         'filter_by_state' => false,
     ];
 });
