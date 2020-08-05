@@ -62,7 +62,7 @@ return [
             'region' => env('AWS_S3_REGION', 'us-east-1'),
             'bucket' => env('AWS_S3_BUCKET'),
             'url' => env('AWS_S3_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
+            'endpoint' => env('AWS_S3_URL'),
         ],
 
     ],
