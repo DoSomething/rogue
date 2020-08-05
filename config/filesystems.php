@@ -50,7 +50,6 @@ return [
 
         'public' => [
             'driver' => 'local',
-            // @TODO: should we change to storage_path('app/public')?
             'root' => public_path('storage'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
