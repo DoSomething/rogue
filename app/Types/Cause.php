@@ -31,7 +31,7 @@ class Cause extends Type
     private const TECHNOLOGY = 'technology';
     private const SEXUAL_HARRASSMENT = 'sexual-harassment';
     private const VETERANS = 'veterans';
-    private const VOTER_REGISTRATION = 'voter-registration';
+    public const VOTER_REGISTRATION = 'voter-registration';
     private const WEEK_OF_ACTION = 'week-of-action';
     private const OTHER = 'other';
 

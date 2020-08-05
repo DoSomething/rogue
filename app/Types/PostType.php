@@ -6,7 +6,7 @@ class PostType extends Type
 {
     private const TEXT = 'text';
     private const PHOTO = 'photo';
-    private const VOTER_REG = 'voter-reg';
+    public const VOTER_REG = 'voter-reg';
     private const SHARE_SOCIAL = 'share-social';
     private const PHONE_CALL = 'phone-call';
     private const EMAIL = 'email';

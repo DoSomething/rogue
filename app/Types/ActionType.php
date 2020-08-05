@@ -4,7 +4,7 @@ namespace Rogue\Types;
 
 class ActionType extends Type
 {
-    private const ATTEND_EVENT = 'attend-event';
+    public const ATTEND_EVENT = 'attend-event';
     private const COLLECT_SOMETHING = 'collect-something';
     private const CONTACT_DECISIONMAKER = 'contact-decisionmaker';
     private const DONATE_SOMETHING = 'donate-something';
