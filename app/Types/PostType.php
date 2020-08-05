@@ -4,8 +4,8 @@ namespace Rogue\Types;
 
 class PostType extends Type
 {
-    private const TEXT = 'text';
-    private const PHOTO = 'photo';
+    public const TEXT = 'text';
+    public const PHOTO = 'photo';
     public const VOTER_REG = 'voter-reg';
     private const SHARE_SOCIAL = 'share-social';
     private const PHONE_CALL = 'phone-call';
