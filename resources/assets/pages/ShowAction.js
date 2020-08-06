@@ -69,7 +69,11 @@ const ShowAction = () => {
           </div>
         </div>
         <div className="container__block">
-          <ActionStatsTable actionId={data.action.id} location={location} />
+          <ActionStatsTable
+            actionId={data.action.id}
+            location={location}
+            orderBy="impact,desc"
+          />
         </div>
       </div>
     </Shell>
