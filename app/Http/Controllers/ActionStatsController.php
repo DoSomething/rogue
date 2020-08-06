@@ -2,6 +2,7 @@
 
 namespace Rogue\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Rogue\Models\ActionStat;
 use Rogue\Http\Transformers\ActionStatTransformer;
@@ -37,7 +38,7 @@ class ActionStatsController extends ApiController
         $orderBy = $request->query('orderBy');
         $query = $this->orderBy($query, $orderBy, ActionStat::$sortable);
 
-        if ($cursor = array_get($request->query('cursor'), 'after')) {
+        if ($cursor = Arr::get($request->query('cursor'), 'after')) {
             $query->whereAfterCursor($cursor);
 
             // Using 'cursor' implies cursor pagination:
