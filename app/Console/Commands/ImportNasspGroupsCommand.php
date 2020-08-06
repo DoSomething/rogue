@@ -107,7 +107,7 @@ class ImportNasspGroupsCommand extends Command
 
             try {
                 $city = $this->sanitize($record['city']);
-                $state = $this->sanitize($record['state']);
+                $location = 'US-' . $this->sanitize($record['state']);
                 $schoolId = $this->sanitize($record['universalid']);
 
                 if ($groupTypeId) {
@@ -115,7 +115,7 @@ class ImportNasspGroupsCommand extends Command
                         'group_type_id' => $groupTypeId,
                         'name' => $name,
                         'city' => $city,
-                        'state' => $state,
+                        'location' => $location,
                         'school_id' => $schoolId,
                     ]);
 
@@ -128,7 +128,7 @@ class ImportNasspGroupsCommand extends Command
                     'group_type_id' => $nasspGroupType->id,
                     'name' => $name,
                     'city' => $city,
-                    'state' => $state,
+                    'location' => $location,
                     'school_id' => $schoolId,
                 ]);
 
