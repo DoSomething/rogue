@@ -24,14 +24,14 @@ class ImportRhodeIslandGroupsCommandTest extends TestCase
             'name' => 'Veazie Street School',
             'group_type_id' => $groupTypeId,
             'city' => 'Providence',
-            'state' => 'RI',
+            'location' => 'US-RI',
             'school_id' => '4400192',
         ]);
         $this->assertDatabaseHas('groups', [
             'name' => 'Portsmouth High School',
             'group_type_id' => $groupTypeId,
             'city' => 'Portsmouth',
-            'state' => 'RI',
+            'location' => 'US-RI',
             'school_id' => '4400190',
         ]);
         // This row was a duplicate name/city/state with school_id 4400190.
