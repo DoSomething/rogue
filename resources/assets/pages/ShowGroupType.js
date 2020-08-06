@@ -6,7 +6,9 @@ import { useQuery } from '@apollo/react-hooks';
 
 import NotFound from './NotFound';
 import Empty from '../components/Empty';
+import { getLocations } from '../helpers';
 import Shell from '../components/utilities/Shell';
+import Select from '../components/utilities/Select';
 import GroupsTable from '../components/GroupsTable';
 import MetaInformation from '../components/utilities/MetaInformation';
 import GroupTypeCampaignList from '../components/GroupTypeCampaignList';
@@ -59,21 +61,11 @@ const ShowGroupType = () => {
 
           {filterByState ? (
             <div className="mb-4">
-              <select
-                className="text-field"
-                onChange={event => setGroupLocation(event.target.value)}
-              >
-                <option value={''}>-- Select State --</option>
-
-                {usaStateOptions.map(state => (
-                  <option
-                    key={state.abbreviation}
-                    value={`US-${state.abbreviation}`}
-                  >
-                    {state.name}
-                  </option>
-                ))}
-              </select>
+              <Select
+                value={groupLocation || ''}
+                values={getLocations()}
+                onChange={setGroupLocation}
+              />
             </div>
           ) : null}
 
