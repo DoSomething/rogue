@@ -25,7 +25,7 @@ const usaStateOptions = new UsaStates().states;
 
 const ShowGroupType = () => {
   const [filter, setFilter] = useState('');
-  const [groupState, setGroupState] = useState(null);
+  const [groupLocation, setGroupLocation] = useState(null);
 
   const { id } = useParams();
   const title = `Group Type #${id}`;
@@ -61,12 +61,15 @@ const ShowGroupType = () => {
             <div className="mb-4">
               <select
                 className="text-field"
-                onChange={event => setGroupState(event.target.value)}
+                onChange={event => setGroupLocation(event.target.value)}
               >
                 <option value={''}>-- Select State --</option>
 
                 {usaStateOptions.map(state => (
-                  <option key={state.abbreviation} value={state.abbreviation}>
+                  <option
+                    key={state.abbreviation}
+                    value={`US-${state.abbreviation}`}
+                  >
                     {state.name}
                   </option>
                 ))}
@@ -91,7 +94,7 @@ const ShowGroupType = () => {
         <div className="container__block">
           <GroupsTable
             filter={filter}
-            groupState={groupState}
+            groupLocation={groupLocation}
             groupTypeId={Number(id)}
           />
 
