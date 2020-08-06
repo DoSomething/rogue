@@ -18,6 +18,7 @@ class GroupTypeTransformer extends TransformerAbstract
         return [
             'id' => $groupType->id,
             'name' => $groupType->name,
+            'filter_by_location' => $groupType->filter_by_location,
             'filter_by_state' => $groupType->filter_by_state,
             'created_at' => $groupType->created_at->toIso8601String(),
             'updated_at' => $groupType->updated_at->toIso8601String(),
