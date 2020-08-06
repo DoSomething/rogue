@@ -28,7 +28,7 @@ const GROUPS_QUERY = gql`
           name
           goal
           city
-          state
+          location
         }
       }
       pageInfo {
@@ -49,8 +49,8 @@ const GROUPS_QUERY = gql`
 const GroupsTable = ({ filter, groupLocation, groupTypeId }) => {
   const variables = { filter, groupTypeId };
 
-  if (groupState) {
-    variables.state = groupState;
+  if (groupLocation) {
+    variables.location = groupLocation;
   }
 
   const { error, loading, data, fetchMore } = useQuery(GROUPS_QUERY, {
@@ -106,7 +106,7 @@ const GroupsTable = ({ filter, groupLocation, groupTypeId }) => {
               <td>
                 <EntityLabel id={node.id} name={node.name} path="groups" />
               </td>
-              <td>{node.city ? `${node.city}, ${node.state}` : null}</td>
+              <td>{node.city ? `${node.city}, ${node.location}` : null}</td>
               <td>{node.goal || '-'}</td>
             </tr>
           ))}
