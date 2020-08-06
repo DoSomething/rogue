@@ -87,18 +87,18 @@ $factory->define(Post::class, function (Generator $faker) {
  */
 $factory->state(Post::class, 'photo', function (Generator $faker) {
     return [
-        'type' => PostType::PHOTO(),
+        'type' => 'photo',
         'quantity' => $faker->randomNumber(2),
         'url' => $faker->post_url,
     ];
 });
 
 $factory->state(Post::class, 'text', [
-    'type' => PostType::TEXT(),
+    'type' => 'text',
 ]);
 
 $factory->state(Post::class, 'voter-reg', [
-    'type' => PostType::VOTER_REG(),
+    'type' =>  'voter-reg',
 ]);
 
 /**
