@@ -13,6 +13,8 @@ import GroupsTable from '../components/GroupsTable';
 import MetaInformation from '../components/utilities/MetaInformation';
 import GroupTypeCampaignList from '../components/GroupTypeCampaignList';
 
+// TODO: Use filterByLocation instead of filterByState once available in GraphQL.
+// @see https://github.com/DoSomething/graphql/pull/267
 const SHOW_GROUP_TYPE_QUERY = gql`
   query ShowGroupTypeQuery($id: Int!) {
     groupType(id: $id) {
