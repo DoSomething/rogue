@@ -7,9 +7,9 @@ import { useQuery } from '@apollo/react-hooks';
 import NotFound from './NotFound';
 import Shell from '../components/utilities/Shell';
 import EntityLabel from '../components/utilities/EntityLabel';
+import ActionStatsTable from '../components/ActionStatsTable';
 import MetaInformation from '../components/utilities/MetaInformation';
 
-// @TODO: Add support for paging through schoolActionStats once more actions collect school.
 const SHOW_SCHOOL_QUERY = gql`
   query ShowSchoolQuery($id: String!) {
     school(id: $id) {
@@ -17,20 +17,6 @@ const SHOW_SCHOOL_QUERY = gql`
       name
       city
       state
-      schoolActionStats {
-        action {
-          id
-          name
-          noun
-          verb
-          campaign {
-            id
-            internalTitle
-          }
-        }
-        acceptedQuantity
-        updatedAt
-      }
     }
     groups(schoolId: $id) {
       id
@@ -62,7 +48,7 @@ const ShowSchool = () => {
 
   if (!data.school) return <NotFound title={title} type="school" />;
 
-  const { city, name, schoolActionStats, state } = data.school;
+  const { city, name, state } = data.school;
 
   const groupList = data.groups.length ? (
     <ul>
@@ -96,43 +82,7 @@ const ShowSchool = () => {
       </div>
       <div className="container__row">
         <div className="container__block">
-          <h3>Aggregate Impact</h3>
-          <p className="mb-4">
-            These totals are updated any time a Review is created for a Post
-            that is associated with this School.
-          </p>
-          <table className="table">
-            <thead>
-              <tr>
-                <td>Action</td>
-                <td>Campaign</td>
-                <td className="text-center">Total approved quantity</td>
-              </tr>
-            </thead>
-            <tbody>
-              {schoolActionStats.map(item => (
-                <tr key={item.action.id}>
-                  <td>
-                    <a href={`/actions/${item.action.id}`}>
-                      {item.action.name}
-                    </a>
-                  </td>
-                  <td>
-                    <a href={`/campaigns/${item.action.campaign.id}`}>
-                      {item.action.campaign.internalTitle}
-                    </a>
-                  </td>
-                  <td className="text-center">
-                    <strong>{item.acceptedQuantity}</strong> {item.action.noun}{' '}
-                    {item.action.verb}
-                    <div className="text-sm">
-                      Updated {format(parse(item.updatedAt), 'M/D/YYYY h:mm a')}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ActionStatsTable schoolId={id} />
         </div>
       </div>
     </Shell>
