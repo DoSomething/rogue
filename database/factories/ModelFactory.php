@@ -9,6 +9,7 @@ use Rogue\Types\Cause;
 use Rogue\Models\Group;
 use Rogue\Models\Action;
 use Rogue\Models\Signup;
+use Rogue\Types\PostType;
 use Rogue\Models\Campaign;
 use Rogue\Models\Reaction;
 use Illuminate\Support\Str;
@@ -43,6 +44,14 @@ $factory->define(Action::class, function (Generator $faker) {
         'volunteer_credit' => false,
     ];
 });
+
+$factory->state(Action::class, 'voter-registration', [
+    'action_type' => ActionType::ATTEND_EVENT(),
+    'name' => 'VR-'.$this->faker->unique()->year.' Voter Registrations',
+    'noun' => 'registrations',
+    'post_type' => PostType::VOTER_REG(),
+    'verb' => 'completed',
+]);
 
 // Post Factory
 $factory->define(Post::class, function (Generator $faker) {
@@ -185,10 +194,17 @@ $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($
     ]);
 });
 
+$factory->state(Campaign::class, 'voter-registration', function (Generator $faker) {
+    return [
+        'cause' => [Cause::VOTER_REGISTRATION()],
+        'internal_title' => 'Voter Registration ' . Str::title($faker->unique()->catchPhrase),
+    ];
+});
+
 // Group Type Factory
 $factory->define(GroupType::class, function (Generator $faker) {
     return [
-        'name' => Str::title($faker->unique()->company),
+        'name' => 'National ' . Str::title($faker->unique()->jobTitle) . ' Society',
         'filter_by_state' => false,
     ];
 });
