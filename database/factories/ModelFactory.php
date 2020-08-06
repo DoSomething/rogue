@@ -46,10 +46,10 @@ $factory->define(Action::class, function (Generator $faker) {
 });
 
 $factory->state(Action::class, 'voter-registration', [
-    'action_type' => ActionType::ATTEND_EVENT,
+    'action_type' => ActionType::ATTEND_EVENT(),
     'name' => 'VR-'.$this->faker->unique()->year.' Voter Registrations',
     'noun' => 'registrations',
-    'post_type' => PostType::VOTER_REG,
+    'post_type' => PostType::VOTER_REG(),
     'verb' => 'completed',
 ]);
 
@@ -87,18 +87,18 @@ $factory->define(Post::class, function (Generator $faker) {
  */
 $factory->state(Post::class, 'photo', function (Generator $faker) {
     return [
-        'type' => PostType::PHOTO,
+        'type' => PostType::PHOTO(),
         'quantity' => $faker->randomNumber(2),
         'url' => $faker->post_url,
     ];
 });
 
 $factory->state(Post::class, 'text', [
-    'type' => PostType::TEXT,
+    'type' => PostType::TEXT(),
 ]);
 
 $factory->state(Post::class, 'voter-reg', [
-    'type' => PostType::VOTER_REG,
+    'type' => PostType::VOTER_REG(),
 ]);
 
 /**
@@ -196,7 +196,7 @@ $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($
 
 $factory->state(Campaign::class, 'voter-registration', function (Generator $faker) {
     return [
-        'cause' => [Cause::VOTER_REGISTRATION],
+        'cause' => [Cause::VOTER_REGISTRATION()],
         'internal_title' => 'Voter Registration ' . Str::title($faker->unique()->catchPhrase),
     ];
 });
