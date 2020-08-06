@@ -98,7 +98,7 @@ $factory->state(Post::class, 'text', [
 ]);
 
 $factory->state(Post::class, 'voter-reg', [
-    'type' =>  'voter-reg',
+    'type' => 'voter-reg',
 ]);
 
 /**
