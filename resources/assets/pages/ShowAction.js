@@ -5,7 +5,9 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import NotFound from './NotFound';
+import { getLocations } from '../helpers';
 import Shell from '../components/utilities/Shell';
+import Select from '../components/utilities/Select';
 import ActionStatsTable from '../components/ActionStatsTable';
 import Action, { ActionFragment } from '../components/Action';
 import MetaInformation from '../components/utilities/MetaInformation';
@@ -23,6 +25,8 @@ const ShowAction = () => {
   const { id } = useParams();
   const title = `Action #${id}`;
   document.title = title;
+
+  const [location, setLocation] = useState(null);
 
   const { loading, error, data } = useQuery(SHOW_ACTION_QUERY, {
     variables: { id: Number(id) },
@@ -55,8 +59,17 @@ const ShowAction = () => {
       </ul>
 
       <div className="container__row">
+        <div className="container__row">
+          <div className="container__block -half">
+            <Select
+              value={location || ''}
+              values={getLocations()}
+              onChange={setLocation}
+            />
+          </div>
+        </div>
         <div className="container__block">
-          <ActionStatsTable actionId={data.action.id} />
+          <ActionStatsTable actionId={data.action.id} location={location} />
         </div>
       </div>
     </Shell>
