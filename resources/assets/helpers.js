@@ -32,7 +32,9 @@ export const TAGS = {
 };
 
 /**
- * Valid locations and their readable names
+ * Returns map of ISO format of all US states, and their readable names.
+ *
+ * @return {Object}
  */
 export const getLocations = () => {
   const result = {};
