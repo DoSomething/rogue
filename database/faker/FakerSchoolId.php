@@ -11,6 +11,7 @@ class FakerSchoolId extends Base
      */
     public function school_id()
     {
+        // We use real school ID's so GraphQL queries that join on Schools don't break.
         $ids = file('database/faker/schools.txt');
 
         return trim($ids[array_rand($ids)]);
