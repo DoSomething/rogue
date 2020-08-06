@@ -106,9 +106,9 @@ class PostTagged extends Notification implements ShouldQueue
 
                 $attachment->title($userName . '\'s submission for "' . $this->post->campaign->internal_title . '"', $permalink)
                            ->fields([
-                                'Caption' => Str::limit($this->post->text, 140),
-                                'Why Participated' => Str::limit($this->post->signup->why_participated),
-                            ])
+                               'Caption' => Str::limit($this->post->text, 140),
+                               'Why Participated' => Str::limit($this->post->signup->why_participated),
+                           ])
                             ->color(Arr::random(['#fcd116', '#23b7fb', '#4e2b63']));
 
                 // Do not send images with local URL to Slack (ie: http://rogue.test/images/filename)
