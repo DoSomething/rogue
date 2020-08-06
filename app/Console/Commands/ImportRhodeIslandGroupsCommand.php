@@ -86,7 +86,7 @@ class ImportRhodeIslandGroupsCommand extends Command
                     'group_type_id' => $groupTypeId,
                     'name' => $name,
                     'city' => trim($record['city']),
-                    'location' => 'US-' . trim($record['state']),
+                    'location' => 'US-'.trim($record['state']),
                     'school_id' => $schoolId,
                 ]);
 
