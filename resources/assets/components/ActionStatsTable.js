@@ -161,6 +161,7 @@ const ActionStatsTable = ({ actionId, location, orderBy, schoolId }) => {
             );
           })}
         </tbody>
+
         <tfoot className="form-actions">
           {loading ? (
             <tr>
