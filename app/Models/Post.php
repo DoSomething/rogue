@@ -5,16 +5,17 @@ namespace Rogue\Models;
 use Hashids\Hashids;
 use Illuminate\Support\Str;
 use Rogue\Services\GraphQL;
-use Rogue\Events\PostTagged;
 use Rogue\Models\Traits\HasCursor;
+use Rogue\Notifications\PostTagged;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Post extends Model
 {
-    use SoftDeletes, HasCursor;
+    use HasCursor, Notifiable, SoftDeletes;
 
     /**
      * Always load a user's own reaction,
@@ -414,7 +415,11 @@ class Post extends Model
             // Update timestamps on the Post when adding a tag
             $this->touch();
 
-            event(new PostTagged($this, $tag));
+            info('post_tagged', ['id' => $this->id, 'tag' => $tag->tag_slug]);
+
+            if ((! $this->hasGoodTag()) && in_array($tag->tag_slug, $this->goodTags)) {
+                $this->notify(new PostTagged($this, $tag));
+            }
         }
 
         return $this;
@@ -662,5 +667,16 @@ class Post extends Model
     public static function getCompletedVoterRegStatuses()
     {
         return ['register-form', 'register-OVR'];
+    }
+
+    /**
+     * Route notifications for the Slack channel.
+     *
+     * @param \Illuminate\Notifications\Notification $notification
+     * @return string
+     */
+    public function routeNotificationForSlack($notification)
+    {
+        return config('services.slack.url');
     }
 }
