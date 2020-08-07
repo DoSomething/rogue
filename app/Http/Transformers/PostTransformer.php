@@ -3,8 +3,8 @@
 namespace Rogue\Http\Transformers;
 
 use Gate;
-use Rogue\Models\Post;
 use League\Fractal\TransformerAbstract;
+use Rogue\Models\Post;
 
 class PostTransformer extends TransformerAbstract
 {
@@ -13,7 +13,7 @@ class PostTransformer extends TransformerAbstract
     ];
 
     /**
-     * List of resources possible to include
+     * List of resources possible to include.
      *
      * @var array
      */

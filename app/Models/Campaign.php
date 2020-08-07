@@ -3,13 +3,13 @@
 namespace Rogue\Models;
 
 use Carbon\Carbon;
-use Rogue\Types\Cause;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Laravel\Scout\Searchable;
 use Rogue\Models\Traits\HasCursor;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Rogue\Types\Cause;
 
 class Campaign extends Model
 {

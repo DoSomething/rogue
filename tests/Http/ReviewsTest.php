@@ -2,10 +2,10 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
-use Rogue\Models\Post;
 use Illuminate\Support\Facades\Bus;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
+use Rogue\Models\Post;
+use Tests\TestCase;
 
 class ReviewsTest extends TestCase
 {
@@ -29,7 +29,7 @@ class ReviewsTest extends TestCase
         $actionId = $firstPost->action_id;
         $campaignId = $firstPost->campaign->id;
 
-        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/' . $firstPost->id . '/reviews', [
+        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/'.$firstPost->id.'/reviews', [
             'status' => 'accepted',
             'comment' => 'Testing 1st review',
         ]);
@@ -60,7 +60,7 @@ class ReviewsTest extends TestCase
             'school_id' => $schoolId,
         ]);
 
-        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/' . $secondPost->id . '/reviews', [
+        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/'.$secondPost->id.'/reviews', [
             'status' => 'accepted',
             'comment' => 'Testing 2nd review',
         ]);
@@ -91,7 +91,7 @@ class ReviewsTest extends TestCase
         $northstarId = $this->faker->northstar_id;
         $post = factory(Post::class)->create();
 
-        $response = $this->postJson('api/v3/posts/' . $post->id . '/reviews', [
+        $response = $this->postJson('api/v3/posts/'.$post->id.'/reviews', [
             'status' => 'accepted',
             'comment' => 'testing',
         ]);
@@ -110,7 +110,7 @@ class ReviewsTest extends TestCase
         // $northstarId = $this->faker->northstar_id;
         $post = factory(Post::class)->create();
 
-        $response = $this->postJson('api/v3/posts/' . $post->id . '/reviews', [
+        $response = $this->postJson('api/v3/posts/'.$post->id.'/reviews', [
             'status' => 'accepted',
         ]);
 
@@ -132,7 +132,7 @@ class ReviewsTest extends TestCase
 
         // Review the post.
         $northstarId = $this->faker->northstar_id;
-        $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/' . $post->id . '/reviews', [
+        $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/'.$post->id.'/reviews', [
             'status' => 'accepted',
         ]);
 

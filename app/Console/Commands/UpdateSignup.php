@@ -2,9 +2,9 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Signup;
 use Illuminate\Console\Command;
 use Rogue\Managers\SignupManager;
+use Rogue\Models\Signup;
 
 class UpdateSignup extends Command
 {

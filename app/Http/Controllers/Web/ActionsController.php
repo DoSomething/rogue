@@ -2,13 +2,13 @@
 
 namespace Rogue\Http\Controllers\Web;
 
-use Rogue\Models\Action;
-use Rogue\Types\PostType;
-use Rogue\Types\ActionType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Rogue\Types\TimeCommitment;
 use Rogue\Http\Controllers\Controller;
+use Rogue\Models\Action;
+use Rogue\Types\ActionType;
+use Rogue\Types\PostType;
+use Rogue\Types\TimeCommitment;
 
 class ActionsController extends Controller
 {
@@ -74,7 +74,7 @@ class ActionsController extends Controller
             info('action_created', ['id' => $action->id]);
         }
 
-        return redirect('actions/' . $action->id);
+        return redirect('actions/'.$action->id);
     }
 
     /**
@@ -113,7 +113,7 @@ class ActionsController extends Controller
         // Log that an action was updated.
         info('action_updated', ['id' => $action->id]);
 
-        return redirect('actions/' . $action->id);
+        return redirect('actions/'.$action->id);
     }
 
     /**

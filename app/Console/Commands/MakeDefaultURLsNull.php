@@ -2,8 +2,8 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Post;
 use Illuminate\Console\Command;
+use Rogue\Models\Post;
 
 class MakeDefaultURLsNull extends Command
 {
@@ -50,7 +50,7 @@ class MakeDefaultURLsNull extends Command
         $query->chunkById(100, function ($posts) use ($bar) {
             // Set all of the "default"s to null
             foreach ($posts as $post) {
-                info('rogue:nullurl: Nulling url for post ' . $post->id);
+                info('rogue:nullurl: Nulling url for post '.$post->id);
                 $post->url = null;
                 $post->save();
                 $bar->advance();

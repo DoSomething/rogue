@@ -3,10 +3,10 @@
 namespace Rogue\Console\Commands;
 
 use Exception;
+use Illuminate\Console\Command;
 use League\Csv\Reader;
 use Rogue\Models\Group;
 use Rogue\Models\GroupType;
-use Illuminate\Console\Command;
 
 class ImportMfolGroupsCommand extends Command
 {
@@ -43,7 +43,7 @@ class ImportMfolGroupsCommand extends Command
     {
         $path = $this->argument('path');
 
-        info('rogue:mfol-groups-import: Loading csv from ' . $path);
+        info('rogue:mfol-groups-import: Loading csv from '.$path);
 
         // Make a local copy of the CSV.
         $temp = tempnam(sys_get_temp_dir(), 'command_csv');
@@ -62,7 +62,7 @@ class ImportMfolGroupsCommand extends Command
             'name' => 'March For Our Lives',
         ]);
 
-        info('rogue:mfol-groups-import: Beginning import for group type id ' . $groupType->id .'.');
+        info('rogue:mfol-groups-import: Beginning import for group type id '.$groupType->id.'.');
 
         foreach ($csv->getRecords() as $record) {
             $name = $record['Chapter'];
@@ -79,10 +79,10 @@ class ImportMfolGroupsCommand extends Command
             } catch (Exception $e) {
                 $numFailed++;
 
-                info('Error importing group with ' .$name . ':' . $e->getMessage());
+                info('Error importing group with '.$name.':'.$e->getMessage());
             }
         }
 
-        info('rogue:mfol-groups-import: Import completed with ' . $numImported . ' imported and ' . $numFailed . ' failed.');
+        info('rogue:mfol-groups-import: Import completed with '.$numImported.' imported and '.$numFailed.' failed.');
     }
 }

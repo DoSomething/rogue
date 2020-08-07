@@ -3,10 +3,10 @@
 namespace Rogue\Console\Commands;
 
 use DB;
+use Illuminate\Console\Command;
+use Rogue\Models\Campaign;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
-use Rogue\Models\Campaign;
-use Illuminate\Console\Command;
 
 class UpdateSignupAndPostCampaignIds extends Command
 {
@@ -54,7 +54,7 @@ class UpdateSignupAndPostCampaignIds extends Command
 
         // Update each signup and the signup's post(s) in each campaign with new campaign id.
         foreach ($campaigns as $campaign) {
-            $this->line('rogue:updatesignupandpostcampaignids: Updating signups/posts under campaign id: ' . $campaign->id);
+            $this->line('rogue:updatesignupandpostcampaignids: Updating signups/posts under campaign id: '.$campaign->id);
 
             // Update the all the signups' campaign_id under this campaign to the new $campaign->id
             DB::table('signups')

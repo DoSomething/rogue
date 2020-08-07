@@ -2,9 +2,9 @@
 
 namespace Rogue\Console\Commands;
 
+use Illuminate\Console\Command;
 use League\Csv\Reader;
 use Rogue\Models\Action;
-use Illuminate\Console\Command;
 
 class ImportPrePostMetaDataActions extends Command
 {
@@ -41,7 +41,7 @@ class ImportPrePostMetaDataActions extends Command
     {
         // Make a local copy of the CSV
         $path = $this->argument('path');
-        $this->line('rogue:prepostmetadataactionsimport: Loading in csv from ' . $path);
+        $this->line('rogue:prepostmetadataactionsimport: Loading in csv from '.$path);
 
         $temp = tempnam(sys_get_temp_dir(), 'command_csv');
         file_put_contents($temp, fopen($this->argument('path'), 'r'));
@@ -52,7 +52,7 @@ class ImportPrePostMetaDataActions extends Command
         $backfill_actions = iterator_to_array($backfill_actions_csv->getRecords());
 
         // Import each backfill action
-        $this->line('rogue:prepostmetadataactionsimport: Loading in csv from ' . $path);
+        $this->line('rogue:prepostmetadataactionsimport: Loading in csv from '.$path);
 
         foreach ($backfill_actions as $backfill_action) {
             // See if the action exists
@@ -71,7 +71,7 @@ class ImportPrePostMetaDataActions extends Command
                     'verb' => $backfill_action['verb'],
                 ]);
 
-                $this->line('rogue:prepostmetadataactionsimport: Created action ' . $action->id);
+                $this->line('rogue:prepostmetadataactionsimport: Created action '.$action->id);
             }
         }
 

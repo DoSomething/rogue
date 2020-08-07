@@ -2,13 +2,13 @@
 
 namespace Rogue\Providers;
 
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Rogue\Models\Campaign;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
-use Rogue\Models\Campaign;
+use Rogue\Policies\CampaignPolicy;
 use Rogue\Policies\PostPolicy;
 use Rogue\Policies\SignupPolicy;
-use Rogue\Policies\CampaignPolicy;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {

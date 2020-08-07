@@ -2,15 +2,15 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
-use Rogue\Models\Post;
-use Rogue\Models\User;
-use Rogue\Models\Group;
-use Rogue\Models\Signup;
-use Illuminate\Support\Str;
-use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Blink;
+use Illuminate\Support\Str;
+use Rogue\Models\Group;
+use Rogue\Models\Post;
+use Rogue\Models\Signup;
+use Rogue\Models\User;
 use Rogue\Services\CustomerIo;
+use Rogue\Services\GraphQL;
+use Tests\TestCase;
 
 class SignupTest extends TestCase
 {
@@ -344,7 +344,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with annoymous user that no posts are returned.
-        $response = $this->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->getJson('api/v3/signups'.'?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -414,14 +414,14 @@ class SignupTest extends TestCase
         $pendingPost->signup()->associate($signup);
 
         // Test with annoymous user that no posts are returned when using the include params.
-        $response = $this->getJson('api/v3/signups' . '?include=posts:type(text|photo)');
+        $response = $this->getJson('api/v3/signups'.'?include=posts:type(text|photo)');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
         $this->assertEquals(true, empty($decodedResponse['data'][0]['posts']['data']));
 
         // Test with annoymous user that the voter reg post is returned since it is accepted.
-        $response = $this->getJson('api/v3/signups' . '?include=posts');
+        $response = $this->getJson('api/v3/signups'.'?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(false, empty($decodedResponse['data'][0]['posts']['data']));
@@ -501,7 +501,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with annoymous user that no posts are returned.
-        $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+        $response = $this->getJson('api/v3/signups/'.$signup->id.'?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -521,7 +521,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with admin that posts are returned.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/'.$signup->id.'?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -542,7 +542,7 @@ class SignupTest extends TestCase
         $signup = $post->signup;
 
         // Test with admin that posts are returned.
-        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups/'.$signup->id.'?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -573,14 +573,14 @@ class SignupTest extends TestCase
         $pendingPost->signup()->associate($signup);
 
         // Test with annoymous user that no posts are returned when using the include params.
-        $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts:type(text|photo)');
+        $response = $this->getJson('api/v3/signups/'.$signup->id.'?include=posts:type(text|photo)');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
         $this->assertEquals(true, empty($decodedResponse['data']['posts']['data']));
 
         // Test with annoymous user that the voter reg post is returned since it is accepted.
-        $response = $this->getJson('api/v3/signups/' . $signup->id . '?include=posts');
+        $response = $this->getJson('api/v3/signups/'.$signup->id.'?include=posts');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -604,13 +604,13 @@ class SignupTest extends TestCase
         factory(Post::class)->create(['type' => 'photo', 'signup_id' => $signup->id]);
 
         // Test with admin that only photo and text posts are returned.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id . '?include=posts:type(text|photo)');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/'.$signup->id.'?include=posts:type(text|photo)');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(2, count($decodedResponse['data']['posts']['data']));
 
         // Test with admin that only voter-reg posts are returned.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id . '?include=posts:type(voter-reg)');
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/'.$signup->id.'?include=posts:type(voter-reg)');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(3, count($decodedResponse['data']['posts']['data']));
@@ -634,14 +634,14 @@ class SignupTest extends TestCase
         $post->save();
 
         // Test with owner that voter reg post is returned.
-        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups/' . $signup->id . '?include=posts:type(voter-reg)');
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups/'.$signup->id.'?include=posts:type(voter-reg)');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
         $this->assertEquals(false, empty($decodedResponse['data']['posts']['data']));
 
         // Test with owner that no posts are returned (because it does not match include params).
-        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups/' . $signup->id . '?include=posts:type(text|photo)');
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/signups/'.$signup->id.'?include=posts:type(text|photo)');
         $response->assertStatus(200);
         $decodedResponse = $response->decodeResponseJson();
 
@@ -700,7 +700,7 @@ class SignupTest extends TestCase
         ]);
 
         // Filter by northstar_id
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[northstar_id]=' . $northstarId);
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[northstar_id]='.$northstarId);
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
@@ -709,7 +709,7 @@ class SignupTest extends TestCase
         $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
 
         // Filter by campaign_id
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_id]=' . $secondCampaignId);
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_id]='.$secondCampaignId);
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
@@ -718,7 +718,7 @@ class SignupTest extends TestCase
         $this->assertEquals(3, $decodedResponse['meta']['cursor']['count']);
 
         // Filter by campaign_id and northstar_id
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_id]=' . $campaignId . '&filter[northstar_id]=' . $northstarId);
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_id]='.$campaignId.'&filter[northstar_id]='.$northstarId);
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
@@ -727,7 +727,7 @@ class SignupTest extends TestCase
         $this->assertEquals(2, $decodedResponse['meta']['cursor']['count']);
 
         // Filter by multiple campaign_id
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_id]=' . $campaignId . ',' . $secondCampaignId);
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups?filter[campaign_id]='.$campaignId.','.$secondCampaignId);
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
@@ -745,7 +745,7 @@ class SignupTest extends TestCase
     public function testSignupShowAsNonAdminNonOwner()
     {
         $signup = factory(Signup::class)->create();
-        $response = $this->getJson('api/v3/signups/' . $signup->id);
+        $response = $this->getJson('api/v3/signups/'.$signup->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -799,7 +799,7 @@ class SignupTest extends TestCase
     public function testSignupShowAsAdmin()
     {
         $signup = factory(Signup::class)->create();
-        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAdminAccessToken()->getJson('api/v3/signups/'.$signup->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -826,7 +826,7 @@ class SignupTest extends TestCase
     public function testSignupShowAsOwner()
     {
         $signup = factory(Signup::class)->create();
-        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAccessToken($signup->northstar_id)->getJson('api/v3/signups/'.$signup->id);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -856,7 +856,7 @@ class SignupTest extends TestCase
         // Mock time of when the signup is soft deleted.
         $this->mockTime('8/3/2017 14:00:00');
 
-        $response = $this->withAdminAccessToken()->deleteJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAdminAccessToken()->deleteJson('api/v3/signups/'.$signup->id);
 
         $response->assertStatus(200);
 
@@ -865,7 +865,7 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test that a signup cannot be deleted without activity scope
+     * Test that a signup cannot be deleted without activity scope.
      *
      * @return void
      */
@@ -873,7 +873,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->deleteJson('api/v3/signups/' . $signup->id);
+        $response = $this->deleteJson('api/v3/signups/'.$signup->id);
 
         $response->assertStatus(401);
         $this->assertEquals($response->decodeResponseJson()['message'], 'Unauthenticated.');
@@ -888,7 +888,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->deleteJson('api/v3/signups/' . $signup->id);
+        $response = $this->deleteJson('api/v3/signups/'.$signup->id);
 
         $response->assertStatus(401);
     }
@@ -903,7 +903,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/signups/' . $signup->id, [
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/signups/'.$signup->id, [
             'why_participated'  => 'new why participated',
         ]);
 
@@ -923,7 +923,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->patchJson('api/v3/signups/' . $signup->id, [
+        $response = $this->patchJson('api/v3/signups/'.$signup->id, [
             'why_participated'  => 'new why participated',
         ]);
 
@@ -941,7 +941,7 @@ class SignupTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/signups/' . $signup->id);
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/signups/'.$signup->id);
 
         $response->assertStatus(422);
     }
@@ -956,7 +956,7 @@ class SignupTest extends TestCase
         $user = factory(User::class)->create();
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withAccessToken($user->id)->patchJson('api/v3/signups/' . $signup->id, [
+        $response = $this->withAccessToken($user->id)->patchJson('api/v3/signups/'.$signup->id, [
             'why_participated' => 'new why participated',
         ]);
 

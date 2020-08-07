@@ -3,21 +3,21 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use Faker\Generator;
-use Rogue\Models\Post;
-use Rogue\Models\User;
-use Rogue\Types\Cause;
-use Rogue\Models\Group;
-use Rogue\Models\Action;
-use Rogue\Models\Signup;
-use Rogue\Types\PostType;
-use Rogue\Models\Campaign;
-use Rogue\Models\Reaction;
 use Illuminate\Support\Str;
+use Rogue\Models\Action;
+use Rogue\Models\Campaign;
+use Rogue\Models\Group;
 use Rogue\Models\GroupType;
+use Rogue\Models\Post;
+use Rogue\Models\Reaction;
+use Rogue\Models\Signup;
+use Rogue\Models\User;
 use Rogue\Types\ActionType;
+use Rogue\Types\Cause;
+use Rogue\Types\PostType;
 use Rogue\Types\TimeCommitment;
 
-/**
+/*
  * Here you may define all of your model factories. Model factories give
  * you a convenient way to create models for testing and seeding your
  * database. Just tell the factory how a default model should look.
@@ -82,7 +82,7 @@ $factory->define(Post::class, function (Generator $faker) {
     ];
 });
 
-/**
+/*
  * Post type factory states.
  */
 $factory->state(Post::class, 'photo', function (Generator $faker) {
@@ -101,7 +101,7 @@ $factory->state(Post::class, 'voter-reg', [
     'type' => 'voter-reg',
 ]);
 
-/**
+/*
  * Post status factory states.
  */
 $factory->state(Post::class, 'accepted', [
@@ -197,14 +197,14 @@ $factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($
 $factory->state(Campaign::class, 'voter-registration', function (Generator $faker) {
     return [
         'cause' => [Cause::VOTER_REGISTRATION()],
-        'internal_title' => 'Voter Registration ' . Str::title($faker->unique()->catchPhrase),
+        'internal_title' => 'Voter Registration '.Str::title($faker->unique()->catchPhrase),
     ];
 });
 
 // Group Type Factory
 $factory->define(GroupType::class, function (Generator $faker) {
     return [
-        'name' => 'National ' . Str::title($faker->unique()->jobTitle) . ' Society',
+        'name' => 'National '.Str::title($faker->unique()->jobTitle).' Society',
         'filter_by_state' => false,
     ];
 });

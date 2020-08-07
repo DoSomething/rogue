@@ -2,8 +2,8 @@
 
 namespace Rogue\Models;
 
-use Rogue\Models\Traits\HasCursor;
 use Illuminate\Database\Eloquent\Model;
+use Rogue\Models\Traits\HasCursor;
 
 class Group extends Model
 {

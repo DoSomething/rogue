@@ -2,12 +2,12 @@
 
 namespace Rogue\Http\Controllers\Web;
 
-use Rogue\Types\Cause;
-use Rogue\Models\Campaign;
-use Rogue\Models\GroupType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
+use Rogue\Models\Campaign;
+use Rogue\Models\GroupType;
+use Rogue\Types\Cause;
 
 class CampaignsController extends Controller
 {
@@ -117,6 +117,6 @@ class CampaignsController extends Controller
     {
         // We can't use Laravel's built-in Route::redirect here
         // since it doesn't support redirecting with parameters:
-        return redirect('campaigns/' . $id);
+        return redirect('campaigns/'.$id);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
 use Rogue\Models\Group;
 use Rogue\Models\GroupType;
+use Tests\TestCase;
 
 class GroupTest extends TestCase
 {
@@ -63,7 +63,7 @@ class GroupTest extends TestCase
         // Create a specific group type to search for.
         $group = factory(Group::class)->create();
 
-        $response = $this->getJson('api/v3/groups/' . $group->id);
+        $response = $this->getJson('api/v3/groups/'.$group->id);
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);

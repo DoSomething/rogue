@@ -2,11 +2,11 @@
 
 namespace Rogue\Http\Controllers\Web;
 
-use Storage;
-use Rogue\Models\Post;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Rogue\Http\Controllers\Controller;
+use Rogue\Models\Post;
+use Storage;
 
 class OriginalsController extends Controller
 {

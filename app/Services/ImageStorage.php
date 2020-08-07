@@ -2,11 +2,11 @@
 
 namespace Rogue\Services;
 
-use Rogue\Models\Post;
-use Intervention\Image\Image;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\File\File;
 use Intervention\Image\Facades\Image as ImageManager;
+use Intervention\Image\Image;
+use Rogue\Models\Post;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -50,7 +50,7 @@ class ImageStorage
         }
 
         // Create a unique filename for this upload (since we don't know post ID yet).
-        $path = $this->base . $signupId . '-' . md5($contents) . '-' . time() . '.' . $extension;
+        $path = $this->base.$signupId.'-'.md5($contents).'-'.time().'.'.$extension;
 
         return $this->write($path, $contents);
     }

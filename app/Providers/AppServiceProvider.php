@@ -4,16 +4,16 @@ namespace Rogue\Providers;
 
 use Closure;
 use Hashids\Hashids;
-use Rogue\Models\Post;
-use InvalidArgumentException;
-use Rogue\Observers\PostObserver;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Query\Expression;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Query\Builder as QueryBuilder;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use InvalidArgumentException;
+use Rogue\Models\Post;
+use Rogue\Observers\PostObserver;
 
 class AppServiceProvider extends ServiceProvider
 {

@@ -2,11 +2,11 @@
 
 namespace Tests;
 
-use Illuminate\Support\Arr;
-use PHPUnit\Framework\Assert;
 use DoSomething\Gateway\Testing\WithOAuthTokens;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Arr;
+use PHPUnit\Framework\Assert;
 
 abstract class TestCase extends BaseTestCase
 {

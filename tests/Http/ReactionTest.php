@@ -2,10 +2,10 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
 use Rogue\Models\Post;
-use Rogue\Models\Signup;
 use Rogue\Models\Reaction;
+use Rogue\Models\Signup;
+use Tests\TestCase;
 
 class ReactionTest extends TestCase
 {
@@ -25,7 +25,7 @@ class ReactionTest extends TestCase
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/reactions', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/'.$post->id.'/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
@@ -39,7 +39,7 @@ class ReactionTest extends TestCase
         ]);
 
         // React (unlike) again to the same post with the same user.
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/reactions', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/'.$post->id.'/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
@@ -69,7 +69,7 @@ class ReactionTest extends TestCase
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
-        $response = $this->postJson('api/v3/posts/' . $post->id . '/reactions', [
+        $response = $this->postJson('api/v3/posts/'.$post->id.'/reactions', [
             'northstar_id' => $northstarId,
         ]);
 
@@ -88,7 +88,7 @@ class ReactionTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/reactions', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/'.$post->id.'/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -101,7 +101,7 @@ class ReactionTest extends TestCase
         ]);
 
         // A second user reacts to the same post..
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/reactions', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/'.$post->id.'/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -144,7 +144,7 @@ class ReactionTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $response = $this->postJson('api/v3/posts/' . $post->id . '/reactions', [
+        $response = $this->postJson('api/v3/posts/'.$post->id.'/reactions', [
             'northstar_id' => $this->faker->uuid,
         ]);
 
@@ -164,7 +164,7 @@ class ReactionTest extends TestCase
             factory(Reaction::class, 10)->make()
         );
 
-        $response = $this->getJson('api/v3/posts/' . $post->id . '/reactions');
+        $response = $this->getJson('api/v3/posts/'.$post->id.'/reactions');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([

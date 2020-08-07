@@ -2,9 +2,9 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Post;
 use Illuminate\Console\Command;
 use Rogue\Managers\PostManager;
+use Rogue\Models\Post;
 
 class ForceDeletePosts extends Command
 {

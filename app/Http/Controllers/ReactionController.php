@@ -2,10 +2,10 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Models\Post;
-use Rogue\Models\Reaction;
 use Illuminate\Http\Request;
 use Rogue\Http\Transformers\ReactionTransformer;
+use Rogue\Models\Post;
+use Rogue\Models\Reaction;
 
 class ReactionController extends ApiController
 {
@@ -73,7 +73,7 @@ class ReactionController extends ApiController
 
     /**
      * Returns all reactions for a post.
-     * GET /post/:post_id/reactions
+     * GET /post/:post_id/reactions.
      *
      * @param \Illuminate\Http\Request $request
      * @param \Rogue\Models\Post $post

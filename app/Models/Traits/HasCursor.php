@@ -20,11 +20,11 @@ trait HasCursor
 
             // Check that it's okay to expose this column in the cursor:
             if (in_array($column, self::$sortable)) {
-                $sortCursor = '.' . $this->{$column};
+                $sortCursor = '.'.$this->{$column};
             }
         }
 
-        return base64_encode($this->id . $sortCursor);
+        return base64_encode($this->id.$sortCursor);
     }
 
     /**

@@ -2,14 +2,14 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Models\Signup;
-use Rogue\Models\Campaign;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Rogue\Managers\SignupManager;
 use Rogue\Http\Transformers\SignupTransformer;
-use Illuminate\Auth\Access\AuthorizationException;
+use Rogue\Managers\SignupManager;
+use Rogue\Models\Campaign;
+use Rogue\Models\Signup;
 
 class SignupsController extends ApiController
 {
@@ -82,7 +82,7 @@ class SignupsController extends ApiController
 
     /**
      * Returns signups.
-     * GET /signups
+     * GET /signups.
      *
      * @param \Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
@@ -121,7 +121,7 @@ class SignupsController extends ApiController
 
     /**
      * Returns a specific signup.
-     * GET /signups/:id
+     * GET /signups/:id.
      *
      * @param \Illuminate\Http\Request $request
      * @param \Rogue\Models\Signup $signup
@@ -149,7 +149,7 @@ class SignupsController extends ApiController
 
     /**
      * Updates a specific signup.
-     * PATCH /signups/:id
+     * PATCH /signups/:id.
      *
      * @param \Illuminate\Http\Request $request
      * @param \Rogue\Models\Signup $signup
@@ -174,7 +174,7 @@ class SignupsController extends ApiController
 
     /**
      * Delete a signup.
-     * DELETE /signups/:id
+     * DELETE /signups/:id.
      *
      * @param \Rogue\Models\Signup $signup
      * @return \Illuminate\Http\JsonResponse

@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models;
 
-use Tests\TestCase;
 use Rogue\Models\Group;
 use Rogue\Models\Signup;
+use Tests\TestCase;
 
 class SignupModelTest extends TestCase
 {

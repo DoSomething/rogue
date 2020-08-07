@@ -2,10 +2,10 @@
 
 namespace Rogue\Models;
 
-use Rogue\Services\GraphQL;
-use Rogue\Models\Traits\HasCursor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rogue\Models\Traits\HasCursor;
+use Rogue\Services\GraphQL;
 
 class Signup extends Model
 {
@@ -152,7 +152,7 @@ class Signup extends Model
     }
 
     /**
-     * Scope a query to only include signups for a particular campaign
+     * Scope a query to only include signups for a particular campaign.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -216,7 +216,7 @@ class Signup extends Model
     }
 
     /**
-     * Get the quantity total associated with approved posts under this signup
+     * Get the quantity total associated with approved posts under this signup.
      *
      * @return int
      */
@@ -228,7 +228,7 @@ class Signup extends Model
     }
 
     /**
-     * Scope a query to only return signups if a user is an admin, staff, or is owner of signup and by type (optional)
+     * Scope a query to only return signups if a user is an admin, staff, or is owner of signup and by type (optional).
      *
      * @param array $types
      * @return \Illuminate\Database\Eloquent\Builder

@@ -2,11 +2,11 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Post;
-use Rogue\Models\Signup;
 use Illuminate\Console\Command;
 use Rogue\Managers\PostManager;
 use Rogue\Managers\SignupManager;
+use Rogue\Models\Post;
+use Rogue\Models\Signup;
 
 class UpdateSignupAndOrPostField extends Command
 {
@@ -76,7 +76,7 @@ class UpdateSignupAndOrPostField extends Command
             Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue, $logfreq, $log) {
                 foreach ($signups as $signup) {
                     if ($signup->id % $logfreq == 0) {
-                        info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for signup ' . $signup->id);
+                        info('rogue:updatefield: changing '.$targetField.' to '.$targetNewValue.' for signup '.$signup->id);
                     }
 
                     // Only log that signup was sent to Quasar if $log is TRUE in interest of space in Papertrail.
@@ -96,7 +96,7 @@ class UpdateSignupAndOrPostField extends Command
             Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue, $logfreq, $log) {
                 foreach ($posts as $post) {
                     if ($post->id % $logfreq == 0) {
-                        info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for post ' . $post->id);
+                        info('rogue:updatefield: changing '.$targetField.' to '.$targetNewValue.' for post '.$post->id);
                     }
 
                     // Only log that signup was sent to Quasar if $log is TRUE in interest of space in Papertrail.

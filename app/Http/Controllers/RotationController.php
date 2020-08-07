@@ -2,12 +2,12 @@
 
 namespace Rogue\Http\Controllers;
 
-use Storage;
+use Illuminate\Http\Request;
+use Rogue\Http\Transformers\PostTransformer;
 use Rogue\Models\Post;
 use Rogue\Services\Fastly;
-use Illuminate\Http\Request;
 use Rogue\Services\ImageStorage;
-use Rogue\Http\Transformers\PostTransformer;
+use Storage;
 
 class RotationController extends Controller
 {

@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Models;
 
-use Tests\TestCase;
-use Rogue\Models\Post;
-use Rogue\Models\Group;
 use Rogue\Models\Action;
+use Rogue\Models\Group;
+use Rogue\Models\Post;
 use Rogue\Models\Signup;
+use Tests\TestCase;
 
 class PostModelTest extends TestCase
 {

@@ -2,9 +2,9 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Post;
 use Illuminate\Console\Command;
 use Rogue\Managers\PostManager;
+use Rogue\Models\Post;
 
 class BulkReviewPosts extends Command
 {
@@ -71,7 +71,7 @@ class BulkReviewPosts extends Command
                 if ($posts->isNotEmpty()) {
                     foreach ($posts as $post) {
                         if ($post->id % $logfreq == 0) {
-                            info('rogue:bulkreviewposts: updating: ' . $post->id);
+                            info('rogue:bulkreviewposts: updating: '.$post->id);
                         }
 
                         // If the $log flag is included when the command is run, logging will occur in the Post Manager for each post.

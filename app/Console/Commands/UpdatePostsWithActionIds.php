@@ -3,8 +3,8 @@
 namespace Rogue\Console\Commands;
 
 use DB;
-use Rogue\Models\Action;
 use Illuminate\Console\Command;
+use Rogue\Models\Action;
 
 class UpdatePostsWithActionIds extends Command
 {
@@ -52,7 +52,7 @@ class UpdatePostsWithActionIds extends Command
                 ->where('type', $action->post_type)
                 ->update(['action_id' => $action->id]);
 
-            $this->line('rogue:updatepostswithactionids: Updated all posts action_ids that have action ' . $action->id);
+            $this->line('rogue:updatepostswithactionids: Updated all posts action_ids that have action '.$action->id);
         }
 
         // Tell everyone we're done!

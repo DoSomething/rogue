@@ -2,9 +2,9 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Post;
-use Rogue\Models\Campaign;
 use Illuminate\Console\Command;
+use Rogue\Models\Campaign;
+use Rogue\Models\Post;
 
 class RecountPostsCommand extends Command
 {

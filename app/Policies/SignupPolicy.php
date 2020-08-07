@@ -2,8 +2,8 @@
 
 namespace Rogue\Policies;
 
-use Rogue\Models\Signup;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Rogue\Models\Signup;
 
 class SignupPolicy
 {

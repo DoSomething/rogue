@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Transformers;
 
-use Rogue\Models\Campaign;
 use League\Fractal\TransformerAbstract;
+use Rogue\Models\Campaign;
 
 class CampaignTransformer extends TransformerAbstract
 {

@@ -2,10 +2,10 @@
 
 namespace Rogue\Http\Controllers\Web;
 
-use Rogue\Models\GroupType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
+use Rogue\Models\GroupType;
 
 class GroupTypesController extends Controller
 {
@@ -48,7 +48,7 @@ class GroupTypesController extends Controller
         // Log that a group type was created.
         info('group_type', ['id' => $groupType->id]);
 
-        return redirect('group-types/' . $groupType->id);
+        return redirect('group-types/'.$groupType->id);
     }
 
     /**
@@ -82,6 +82,6 @@ class GroupTypesController extends Controller
         // Log that a group type was updated.
         info('group_type_updated', ['id' => $groupType->id]);
 
-        return redirect('group-types/' . $groupType->id);
+        return redirect('group-types/'.$groupType->id);
     }
 }

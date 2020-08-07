@@ -3,10 +3,10 @@
 namespace Rogue\Console\Commands;
 
 use Carbon\Carbon;
-use League\Csv\Reader;
-use Rogue\Models\Signup;
 use Illuminate\Console\Command;
+use League\Csv\Reader;
 use Rogue\Jobs\SendSignupToCustomerIo;
+use Rogue\Models\Signup;
 
 class ImportSignupsCommand extends Command
 {
@@ -45,7 +45,7 @@ class ImportSignupsCommand extends Command
 
         // Make a local copy of the CSV
         $path = $this->argument('path');
-        info('rogue:signupimport: Loading in csv from ' . $path);
+        info('rogue:signupimport: Loading in csv from '.$path);
 
         $temp = tempnam(sys_get_temp_dir(), 'command_csv');
         file_put_contents($temp, fopen($this->argument('path'), 'r'));
@@ -74,14 +74,14 @@ class ImportSignupsCommand extends Command
                 ]);
 
                 if ($signup->id % $logfreq == 0) {
-                    info('rogue:signupimport: Created signup ' . $signup->id);
+                    info('rogue:signupimport: Created signup '.$signup->id);
                 }
 
                 // Business Logic
                 SendSignupToCustomerIo::dispatch($signup);
             } else {
                 if ($existing_signup->id % $logfreq == 0) {
-                    info('rogue:signupimport: Signup ' . $existing_signup->id . ' already exists! Moving on.');
+                    info('rogue:signupimport: Signup '.$existing_signup->id.' already exists! Moving on.');
                 }
             }
         }

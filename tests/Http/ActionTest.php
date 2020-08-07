@@ -2,9 +2,9 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
 use Rogue\Models\Action;
 use Rogue\Models\Campaign;
+use Tests\TestCase;
 
 class ActionTest extends TestCase
 {
@@ -94,7 +94,7 @@ class ActionTest extends TestCase
         // Create 1 specific action to search for.
         $action = factory(Action::class)->create();
 
-        $response = $this->getJson('api/v3/actions/' . $action->id);
+        $response = $this->getJson('api/v3/actions/'.$action->id);
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
@@ -113,7 +113,7 @@ class ActionTest extends TestCase
         $action = factory(Action::class)->create();
 
         // Update the name.
-        $response = $this->actingAsAdmin()->patchJson('actions/' . $action->id, [
+        $response = $this->actingAsAdmin()->patchJson('actions/'.$action->id, [
             'name' => 'Updated Name',
             'post_type' => $action->post_type,
             'action_type' => $action->action_type,
@@ -123,7 +123,7 @@ class ActionTest extends TestCase
         ]);
 
         // Make sure the action update is persisted.
-        $response = $this->getJson('api/v3/actions/' . $action->id);
+        $response = $this->getJson('api/v3/actions/'.$action->id);
         $response->assertJson([
             'data' => [
                 'name' => 'Updated Name',
@@ -143,10 +143,10 @@ class ActionTest extends TestCase
         $action = factory(Action::class)->create();
 
         // Delete the action.
-        $this->actingAsAdmin()->deleteJson('actions/' . $action->id);
+        $this->actingAsAdmin()->deleteJson('actions/'.$action->id);
 
         // Make sure the action is deleted.
-        $response = $this->getJson('api/v3/actions/' . $action->id);
+        $response = $this->getJson('api/v3/actions/'.$action->id);
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(404);

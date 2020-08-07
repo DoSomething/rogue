@@ -2,8 +2,8 @@
 
 namespace Rogue\Observers;
 
-use Rogue\Models\Post;
 use Rogue\Models\Group;
+use Rogue\Models\Post;
 
 class PostObserver
 {

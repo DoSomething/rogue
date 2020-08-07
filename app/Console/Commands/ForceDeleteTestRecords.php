@@ -2,9 +2,9 @@
 
 namespace Rogue\Console\Commands;
 
+use Illuminate\Console\Command;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
-use Illuminate\Console\Command;
 
 class ForceDeleteTestRecords extends Command
 {

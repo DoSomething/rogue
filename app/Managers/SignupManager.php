@@ -16,7 +16,7 @@ class SignupManager
     protected $signup;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param SignupRepository $signup
      * @param Blink $blink

@@ -2,15 +2,15 @@
 
 namespace Rogue\Notifications;
 
-use Rogue\Models\Tag;
-use Rogue\Models\Post;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Rogue\Services\GraphQL;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\SlackMessage;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Rogue\Models\Post;
+use Rogue\Models\Tag;
+use Rogue\Services\GraphQL;
 
 const USER_AND_REVIEWER_QUERY = '
     query UserAndReviewerQuery($userId: String!, $adminId: String!) {
@@ -99,12 +99,12 @@ class PostTagged extends Notification implements ShouldQueue
 
         return (new SlackMessage)
             ->from('Rogue', ':tonguecat:')
-            ->content($adminName.' just tagged this post as "'.$this->tag->tag_name . '":')
+            ->content($adminName.' just tagged this post as "'.$this->tag->tag_name.'":')
             ->attachment(function ($attachment) use ($userName) {
                 $permalink = route('signups.show', [$this->post->signup_id], true);
                 $image = $this->post->getMediaUrl();
 
-                $attachment->title($userName . '\'s submission for "' . $this->post->campaign->internal_title . '"', $permalink)
+                $attachment->title($userName.'\'s submission for "'.$this->post->campaign->internal_title.'"', $permalink)
                            ->fields([
                                'Caption' => Str::limit($this->post->text, 140),
                                'Why Participated' => Str::limit($this->post->signup->why_participated),

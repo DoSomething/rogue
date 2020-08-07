@@ -2,10 +2,10 @@
 
 namespace Rogue\Http\Controllers\Web;
 
-use Rogue\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
+use Rogue\Models\Group;
 
 class GroupsController extends Controller
 {
@@ -47,7 +47,7 @@ class GroupsController extends Controller
         // Log that a group was created.
         info('group', ['id' => $group->id]);
 
-        return redirect('groups/' . $group->id);
+        return redirect('groups/'.$group->id);
     }
 
     /**
@@ -77,6 +77,6 @@ class GroupsController extends Controller
         // Log that a group was updated.
         info('group_updated', ['id' => $group->id]);
 
-        return redirect('groups/' . $group->id);
+        return redirect('groups/'.$group->id);
     }
 }

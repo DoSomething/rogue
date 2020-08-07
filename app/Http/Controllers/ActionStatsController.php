@@ -2,10 +2,10 @@
 
 namespace Rogue\Http\Controllers;
 
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use Rogue\Models\ActionStat;
+use Illuminate\Support\Arr;
 use Rogue\Http\Transformers\ActionStatTransformer;
+use Rogue\Models\ActionStat;
 
 class ActionStatsController extends ApiController
 {

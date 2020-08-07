@@ -3,9 +3,9 @@
 namespace Rogue\Console\Commands;
 
 use DB;
-use Rogue\Models\Post;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Rogue\Models\Post;
 
 class PostCleanup extends Command
 {
@@ -51,12 +51,12 @@ class PostCleanup extends Command
             ->having('caption_count', '>', 1)
             ->get();
 
-        $this->info('There are ' . $postsByCaption->count() . ' posts with more than 1 of the same caption');
+        $this->info('There are '.$postsByCaption->count().' posts with more than 1 of the same caption');
 
         // Loop through all the posts that have the
         // same caption per signup and delete all but the most recent one.
         foreach ($postsByCaption as $postCaption) {
-            $this->info('Getting posts under signup ' . $postCaption->signup_id);
+            $this->info('Getting posts under signup '.$postCaption->signup_id);
 
             $userPosts = Post::where('signup_id', $postCaption->signup_id)
                 ->where('caption', $postCaption->caption)
@@ -68,14 +68,14 @@ class PostCleanup extends Command
 
             foreach ($userPosts as $post) {
                 if ($mostRecent->id !== $post->id) {
-                    $this->info('Deleting post ' . $post->id);
+                    $this->info('Deleting post '.$post->id);
 
                     Storage::delete($post->url);
 
                     // Force delete so we really get rid of extraneous records.
                     $post->forceDelete();
 
-                    $this->info('post ' . $post->id . ' deleted!');
+                    $this->info('post '.$post->id.' deleted!');
                 }
             }
         }

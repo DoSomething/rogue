@@ -2,8 +2,8 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
 use Rogue\Models\Post;
+use Tests\TestCase;
 
 class TagsTest extends TestCase
 {
@@ -20,7 +20,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/'.$post->id.'/tags', [
             'tag_name' => 'Good Submission',
         ]);
 
@@ -30,7 +30,7 @@ class TagsTest extends TestCase
         $this->assertContains('Good Submission', $post->tagNames());
 
         // Untag the post
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/'.$post->id.'/tags', [
             'tag_name' => 'Good Submission',
         ]);
 
@@ -54,7 +54,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $response = $this->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->postJson('api/v3/posts/'.$post->id.'/tags', [
             'tag_name' => 'Good Submission',
         ]);
 
@@ -75,7 +75,7 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $response = $this->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->postJson('api/v3/posts/'.$post->id.'/tags', [
             'tag_name' => 'Good Submission',
         ]);
 
@@ -83,7 +83,7 @@ class TagsTest extends TestCase
     }
 
     /**
-     * Test deleting one tag on a post only deletes that tag
+     * Test deleting one tag on a post only deletes that tag.
      *
      * POST /posts/:post_id/tag
      * @return void
@@ -103,7 +103,7 @@ class TagsTest extends TestCase
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/'.$post->id.'/tags', [
             'tag_name' => 'Tag To Delete',
         ]);
 
@@ -119,7 +119,7 @@ class TagsTest extends TestCase
     }
 
     /**
-     * Test post updated_at is updated when a new tag is applied to it
+     * Test post updated_at is updated when a new tag is applied to it.
      *
      * @return void
      */
@@ -131,7 +131,7 @@ class TagsTest extends TestCase
         // Later, apply the tag to the post
         $this->mockTime('10/21/2017 13:05:00');
 
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
+        $this->withAdminAccessToken()->postJson('api/v3/posts/'.$post->id.'/tags', [
             'tag_name' => 'Good Submission',
         ]);
 
@@ -139,7 +139,7 @@ class TagsTest extends TestCase
     }
 
     /**
-     * Test withoutTag scope
+     * Test withoutTag scope.
      *
      * @return void
      */
@@ -149,7 +149,7 @@ class TagsTest extends TestCase
         $posts = factory(Post::class, 20)->create();
 
         // Later, apply the tag to the post
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $posts->first()->id . '/tags', [
+        $this->withAdminAccessToken()->postJson('api/v3/posts/'.$posts->first()->id.'/tags', [
             'tag_name' => 'get-outta-here',
         ]);
 

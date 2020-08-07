@@ -2,9 +2,9 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
+use Tests\TestCase;
 
 class EventTest extends TestCase
 {
@@ -122,7 +122,7 @@ class EventTest extends TestCase
 
         // Delete the post via the API.
         $this->mockTime('8/4/2017 18:02:00');
-        $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id);
+        $this->withAdminAccessToken()->deleteJson('api/v3/posts/'.$post->id);
 
         // Make sure an event is created when the post is deleted.
         $this->assertDatabaseHas('events', [
@@ -201,7 +201,7 @@ class EventTest extends TestCase
         $secondSignup = factory(Signup::class)->create();
 
         // Hit events index with signup filter and make sure there are 2 events returned.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/events?filter[signup_id]=' . $signup->id);
+        $response = $this->withAdminAccessToken()->getJson('api/v3/events?filter[signup_id]='.$signup->id);
 
         $response->assertStatus(200);
 

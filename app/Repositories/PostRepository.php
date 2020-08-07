@@ -2,13 +2,13 @@
 
 namespace Rogue\Repositories;
 
-use Rogue\Models\Post;
+use Illuminate\Validation\ValidationException;
+use Intervention\Image\Facades\Image;
 use Rogue\Models\Action;
+use Rogue\Models\Post;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
 use Rogue\Services\ImageStorage;
-use Intervention\Image\Facades\Image;
-use Illuminate\Validation\ValidationException;
 
 class PostRepository
 {

@@ -2,8 +2,8 @@
 
 namespace Rogue\Console\Commands;
 
-use Illuminate\Console\Command;
 use DFurnes\Environmentalist\ConfiguresApplication;
+use Illuminate\Console\Command;
 
 class SetupCommand extends Command
 {
@@ -42,7 +42,7 @@ class SetupCommand extends Command
             $this->chooseEnvironmentVariable('NORTHSTAR_URL', 'Choose a Northstar environment', array_keys($environments));
 
             $this->instruction('You can get these environment variables from Aurora\'s "Clients" page:');
-            $this->instruction($environments[env('NORTHSTAR_URL')] . '/clients');
+            $this->instruction($environments[env('NORTHSTAR_URL')].'/clients');
 
             $this->setEnvironmentVariable('NORTHSTAR_AUTH_ID', 'Enter the OAuth Client ID for web sessions');
             $this->setEnvironmentVariable('NORTHSTAR_AUTH_SECRET', 'Enter the OAuth Client Secret for web sessions');

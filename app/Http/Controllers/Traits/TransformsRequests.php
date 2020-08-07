@@ -3,11 +3,11 @@
 namespace Rogue\Http\Controllers\Traits;
 
 use League\Fractal\Manager;
-use League\Fractal\Resource\Item;
 use League\Fractal\Pagination\Cursor;
-use League\Fractal\Serializer\DataArraySerializer;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection as FractalCollection;
+use League\Fractal\Resource\Item;
+use League\Fractal\Serializer\DataArraySerializer;
 
 trait TransformsRequests
 {

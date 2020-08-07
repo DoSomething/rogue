@@ -3,10 +3,10 @@
 namespace Rogue\Console\Commands;
 
 use Exception;
+use Illuminate\Console\Command;
 use League\Csv\Reader;
 use Rogue\Models\Group;
 use Rogue\Models\GroupType;
-use Illuminate\Console\Command;
 
 class ImportRhodeIslandGroupsCommand extends Command
 {
@@ -45,7 +45,7 @@ class ImportRhodeIslandGroupsCommand extends Command
 
         $path = $this->argument('path');
 
-        info('rogue:rhode-island-groups-import: Loading csv from ' . $path);
+        info('rogue:rhode-island-groups-import: Loading csv from '.$path);
 
         // Make a local copy of the CSV.
         $temp = tempnam(sys_get_temp_dir(), 'command_csv');
@@ -67,7 +67,7 @@ class ImportRhodeIslandGroupsCommand extends Command
         ]);
         $groupTypeId = $groupType->id;
 
-        info('rogue:rhode-island-groups-import: Beginning import for group type id ' . $groupTypeId .'.');
+        info('rogue:rhode-island-groups-import: Beginning import for group type id '.$groupTypeId.'.');
 
         foreach ($csv->getRecords() as $record) {
             $name = trim($record['name']);
@@ -96,10 +96,10 @@ class ImportRhodeIslandGroupsCommand extends Command
             } catch (Exception $e) {
                 $numFailed++;
 
-                info('rogue:rhode-island-groups-import: Error importing group with ' .$name . ':' . $e->getMessage());
+                info('rogue:rhode-island-groups-import: Error importing group with '.$name.':'.$e->getMessage());
             }
         }
 
-        info('rogue:rhode-island-import: Import completed with ' . $numImported . ' imported, ' . $numSkipped . ' skipped, and ' . $numFailed . ' failed.');
+        info('rogue:rhode-island-import: Import completed with '.$numImported.' imported, '.$numSkipped.' skipped, and '.$numFailed.' failed.');
     }
 }

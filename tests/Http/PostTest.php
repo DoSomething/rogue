@@ -2,24 +2,24 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
-use Rogue\Models\Post;
-use Rogue\Models\User;
-use Rogue\Models\Group;
+use DoSomething\Gateway\Blink;
+use Illuminate\Http\UploadedFile;
 use Rogue\Models\Action;
-use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
+use Rogue\Models\Group;
+use Rogue\Models\Post;
 use Rogue\Models\Reaction;
+use Rogue\Models\Signup;
+use Rogue\Models\User;
+use Rogue\Services\CustomerIo;
 use Rogue\Services\Fastly;
 use Rogue\Services\GraphQL;
-use DoSomething\Gateway\Blink;
-use Rogue\Services\CustomerIo;
-use Illuminate\Http\UploadedFile;
+use Tests\TestCase;
 
 class PostTest extends TestCase
 {
     /**
-     * Helper function to assert post structure
+     * Helper function to assert post structure.
      */
     public function assertPostStructure($response)
     {
@@ -752,7 +752,7 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test creating a post without sending an action_id
+     * Test creating a post without sending an action_id.
      *
      * @return void
      */
@@ -883,11 +883,11 @@ class PostTest extends TestCase
         $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
 
         // Hit the endpoint with filter[northstar_id] and no posts should be returned.
-        $response = $this->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response = $this->getJson('api/v3/posts?filter[northstar_id]='.$anonymousPost->northstar_id);
         $response->assertStatus(200);
         $this->assertEquals(0, $response->decodeResponseJson()['meta']['cursor']['count']);
 
-        $response = $this->withAccessToken($regularPost->northstar_id)->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response = $this->withAccessToken($regularPost->northstar_id)->getJson('api/v3/posts?filter[northstar_id]='.$anonymousPost->northstar_id);
         $response->assertStatus(200);
         $this->assertEquals(0, $response->decodeResponseJson()['meta']['cursor']['count']);
 
@@ -898,7 +898,7 @@ class PostTest extends TestCase
         $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
 
         // Hit the endpoint with filter[northstar_id] and should have same results as above.
-        $response = $this->withAccessToken($anonymousPost->northstar_id)->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response = $this->withAccessToken($anonymousPost->northstar_id)->getJson('api/v3/posts?filter[northstar_id]='.$anonymousPost->northstar_id);
         $response->assertStatus(200);
         $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
 
@@ -909,7 +909,7 @@ class PostTest extends TestCase
         $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
 
         // Hit the endpoint with filter[northstar_id] and should have same results as above.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response = $this->withAdminAccessToken()->getJson('api/v3/posts?filter[northstar_id]='.$anonymousPost->northstar_id);
         $response->assertStatus(200);
         $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
     }
@@ -1212,21 +1212,21 @@ class PostTest extends TestCase
         // Anon user should not be able to see a pending post if it doesn't belong to them and if they're not an admin.
         $post = factory(Post::class)->create();
 
-        $response = $this->getJson('api/v3/posts/' . $post->id);
+        $response = $this->getJson('api/v3/posts/'.$post->id);
 
         $response->assertStatus(403);
 
         // Anon user should not be able to see a rejected post if it doesn't belong to them and if they're not an admin.
         $post = factory(Post::class)->states('photo', 'rejected')->create();
 
-        $response = $this->getJson('api/v3/posts/' . $post->id);
+        $response = $this->getJson('api/v3/posts/'.$post->id);
 
         $response->assertStatus(403);
 
         // Anon user is able to see an accepted post even if it doesn't belong to them and if they're not an admin.
         $post = factory(Post::class)->states('photo', 'accepted')->create();
 
-        $response = $this->getJson('api/v3/posts/' . $post->id);
+        $response = $this->getJson('api/v3/posts/'.$post->id);
 
         $response->assertStatus(200);
 
@@ -1265,7 +1265,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withAdminAccessToken()->getJson('api/v3/posts/' . $post->id);
+        $response = $this->withAdminAccessToken()->getJson('api/v3/posts/'.$post->id);
 
         $response->assertStatus(200);
 
@@ -1285,7 +1285,7 @@ class PostTest extends TestCase
     public function testPostShowAsOwner()
     {
         $post = factory(Post::class)->create();
-        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/posts/' . $post->id);
+        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/posts/'.$post->id);
 
         $response->assertStatus(200);
         // $this->assertPostStructure($response);
@@ -1332,7 +1332,7 @@ class PostTest extends TestCase
         Reaction::withTrashed()->firstOrCreate(['northstar_id' => $viewer, 'post_id' => $post->id]);
         Reaction::withTrashed()->firstOrCreate(['northstar_id' => 'someone_else_lol', 'post_id' => $post->id]);
 
-        $response = $this->withAccessToken($viewer, 'user')->getJson('api/v3/posts/' . $post->id);
+        $response = $this->withAccessToken($viewer, 'user')->getJson('api/v3/posts/'.$post->id);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -1359,7 +1359,7 @@ class PostTest extends TestCase
 
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/'.$post->id, [
             'text' => 'new caption',
             'quantity' => 8,
             'status' => 'accepted',
@@ -1395,7 +1395,7 @@ class PostTest extends TestCase
           ->shouldReceive('trackEvent')
           ->with($post->referrer_user_id, 'referral_post_updated', $post->getReferralPostEventPayload());
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/'.$post->id, [
             'status' => 'register-form',
         ]);
     }
@@ -1412,7 +1412,7 @@ class PostTest extends TestCase
 
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/'.$post->id, [
             'text' => 'new caption',
             'quantity' => 8,
             'status' => 'register-form',
@@ -1433,7 +1433,7 @@ class PostTest extends TestCase
 
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/'.$post->id, [
             'school_id' => 8,
         ]);
 
@@ -1453,7 +1453,7 @@ class PostTest extends TestCase
 
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
-        $response = $this->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->patchJson('api/v3/posts/'.$post->id, [
             'text' => 'new caption',
             'quantity' => 8,
         ]);
@@ -1471,9 +1471,9 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/'.$post->id, [
             'quantity' => 'this is words not a number!',
-            'text' => 'a' . str_repeat('h', 512), // ahhh...hhhhh!
+            'text' => 'a'.str_repeat('h', 512), // ahhh...hhhhh!
         ]);
 
         $response->assertJsonValidationErrors(['quantity', 'text']);
@@ -1489,7 +1489,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withAccessToken($post->northstar_id)->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAccessToken($post->northstar_id)->patchJson('api/v3/posts/'.$post->id, [
             'status' => 'accepted',
             'location' => 'US-MA',
             'text' => 'new caption',
@@ -1518,7 +1518,7 @@ class PostTest extends TestCase
         $user = factory(User::class)->create();
         $post = factory(Post::class)->create();
 
-        $response = $this->withAccessToken($user->id)->patchJson('api/v3/posts/' . $post->id, [
+        $response = $this->withAccessToken($user->id)->patchJson('api/v3/posts/'.$post->id, [
             'status' => 'accepted',
             'text' => 'new caption',
         ]);
@@ -1545,7 +1545,7 @@ class PostTest extends TestCase
         // Mock the Fastly API calls.
         $this->mock(Fastly::class)->shouldReceive('purge');
 
-        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id);
+        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/'.$post->id);
 
         $response->assertStatus(200);
 
@@ -1562,7 +1562,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->deleteJson('api/v3/posts/' . $post->id);
+        $response = $this->deleteJson('api/v3/posts/'.$post->id);
 
         $response->assertStatus(401);
         $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
@@ -1577,13 +1577,13 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->deleteJson('api/v3/posts/' . $post->id);
+        $response = $this->deleteJson('api/v3/posts/'.$post->id);
 
         $response->assertStatus(401);
     }
 
     /**
-     * Test creating voter-reg post
+     * Test creating voter-reg post.
      *
      * @return void
      */

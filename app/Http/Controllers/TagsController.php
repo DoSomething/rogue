@@ -2,11 +2,11 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Models\Post;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Rogue\Repositories\PostRepository;
+use Illuminate\Support\Str;
 use Rogue\Http\Transformers\PostTransformer;
+use Rogue\Models\Post;
+use Rogue\Repositories\PostRepository;
 
 class TagsController extends ApiController
 {

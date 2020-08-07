@@ -3,10 +3,10 @@
 namespace Rogue\Console\Commands;
 
 use Exception;
+use Illuminate\Console\Command;
 use League\Csv\Reader;
 use Rogue\Models\Group;
 use Rogue\Models\GroupType;
-use Illuminate\Console\Command;
 
 class ImportNasspGroupsCommand extends Command
 {
@@ -58,7 +58,7 @@ class ImportNasspGroupsCommand extends Command
 
         $path = $this->argument('path');
 
-        info('rogue:nassp-groups-import: Loading csv from ' . $path);
+        info('rogue:nassp-groups-import: Loading csv from '.$path);
 
         // Make a local copy of the CSV.
         $temp = tempnam(sys_get_temp_dir(), 'command_csv');
@@ -138,10 +138,10 @@ class ImportNasspGroupsCommand extends Command
             } catch (Exception $e) {
                 $numFailed++;
 
-                info('rogue:nassp-groups-import: Error importing group with ' .$name . ':' . $e->getMessage());
+                info('rogue:nassp-groups-import: Error importing group with '.$name.':'.$e->getMessage());
             }
         }
 
-        info('rogue:nassp-groups-import: Import completed with ' . $numImported . ' imported, '. $numSkipped .' skipped, and ' . $numFailed . ' failed.');
+        info('rogue:nassp-groups-import: Import completed with '.$numImported.' imported, '.$numSkipped.' skipped, and '.$numFailed.' failed.');
     }
 }
