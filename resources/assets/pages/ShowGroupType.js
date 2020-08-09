@@ -13,13 +13,11 @@ import GroupsTable from '../components/GroupsTable';
 import MetaInformation from '../components/utilities/MetaInformation';
 import GroupTypeCampaignList from '../components/GroupTypeCampaignList';
 
-// TODO: Use filterByLocation instead of filterByState once available in GraphQL.
-// @see https://github.com/DoSomething/graphql/pull/267
 const SHOW_GROUP_TYPE_QUERY = gql`
   query ShowGroupTypeQuery($id: Int!) {
     groupType(id: $id) {
       createdAt
-      filterByState
+      filterByLocation
       name
     }
   }
@@ -49,7 +47,7 @@ const ShowGroupType = () => {
 
   if (!data.groupType) return <NotFound title={title} type="group type" />;
 
-  const { createdAt, filterByState, name } = data.groupType;
+  const { createdAt, filterByLocation, name } = data.groupType;
 
   return (
     <Shell title={title} subtitle={name}>
@@ -61,7 +59,7 @@ const ShowGroupType = () => {
             }}
           />
 
-          {filterByState ? (
+          {filterByLocation ? (
             <div className="mb-4">
               <Select
                 value={groupLocation || ''}
