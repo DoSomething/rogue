@@ -2,6 +2,7 @@
 
 namespace Rogue\Models;
 
+use Illuminate\Support\Arr;
 use Rogue\Services\GraphQL;
 use Rogue\Models\Traits\HasCursor;
 use Illuminate\Database\Eloquent\Model;
@@ -183,7 +184,7 @@ class Signup extends Model
 
         // Bypass Campaign->cause accessor method so the value isn't converted to an array
         // which Customer.io does not support.
-        $campaign_cause = optional($this->campaign)->getAttributes()['cause'];
+        $campaign_cause = Arr::get(optional($this->campaign)->getAttributes(), 'cause');
 
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
@@ -257,7 +258,7 @@ class Signup extends Model
             'user_id' => $userId,
             'user_display_name' => isset($user) ? $user['displayName'] : null,
             'campaign_id' => (string) $this->campaign_id,
-            'campaign_title' => $campaignWebsite['title'],
+            'campaign_title' => isset($campaignWebsite) ? $campaignWebsite['title'] : null,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
