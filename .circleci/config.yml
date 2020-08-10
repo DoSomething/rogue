@@ -25,7 +25,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install libpng-dev libjpeg-dev
-            sudo docker-php-ext-configure gd --with-jpeg-dir=/usr/include/
+            sudo docker-php-ext-configure gd --with-jpeg
             sudo docker-php-ext-install bcmath pdo_mysql gettext gd exif
       # Install Composer & npm dependencies (using cache if found).
       - restore_cache:
