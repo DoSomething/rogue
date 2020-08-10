@@ -12,6 +12,7 @@ const ACTION_STATS_QUERY = gql`
     $actionId: Int
     $schoolId: String
     $location: String
+    $orderBy: String
     $cursor: String
   ) {
     stats: paginatedSchoolActionStats(
@@ -19,6 +20,7 @@ const ACTION_STATS_QUERY = gql`
       first: 20
       actionId: $actionId
       location: $location
+      orderBy: $orderBy
       schoolId: $schoolId
     ) {
       edges {
@@ -26,6 +28,7 @@ const ACTION_STATS_QUERY = gql`
         node {
           id
           impact
+          location
           action {
             id
             name
@@ -37,7 +40,6 @@ const ACTION_STATS_QUERY = gql`
             id
             name
             city
-            state
           }
         }
       }
@@ -55,11 +57,19 @@ const ACTION_STATS_QUERY = gql`
  * @param {Number} actionId
  * @param {String} schoolId
  */
-const ActionStatsTable = ({ actionId, schoolId }) => {
+const ActionStatsTable = ({ actionId, location, orderBy, schoolId }) => {
   const variables = {};
 
   if (actionId) {
     assign(variables, { actionId });
+  }
+
+  if (location) {
+    assign(variables, { location });
+  }
+
+  if (orderBy) {
+    assign(variables, { orderBy });
   }
 
   if (schoolId) {
@@ -111,7 +121,7 @@ const ActionStatsTable = ({ actionId, schoolId }) => {
 
         <tbody>
           {stats.map(({ node, cursor }) => {
-            const { action, impact, school } = node;
+            const { action, impact, location, school } = node;
 
             return (
               <tr key={cursor}>
@@ -124,7 +134,7 @@ const ActionStatsTable = ({ actionId, schoolId }) => {
                     />
 
                     <div>
-                      {school.city ? `${school.city}, ${school.state}` : null}
+                      {school.city ? `${school.city}, ${location}` : null}
                     </div>
                   </td>
                 )}
@@ -151,6 +161,7 @@ const ActionStatsTable = ({ actionId, schoolId }) => {
             );
           })}
         </tbody>
+
         <tfoot className="form-actions">
           {loading ? (
             <tr>

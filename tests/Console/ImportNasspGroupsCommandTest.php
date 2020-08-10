@@ -46,14 +46,14 @@ class ImportNasspGroupsCommandTest extends TestCase
             'name' => $groupName,
             'group_type_id' => $nhsGroupTypeId,
             'city' => 'Bayard',
-            'state' => 'NM',
+            'location' => 'US-NM',
             'school_id' => '3500277',
         ]);
         $this->assertDatabaseHas('groups', [
             'name' => $groupName,
             'group_type_id' => $nasspGroupTypeId,
             'city' => 'Bayard',
-            'state' => 'NM',
+            'location' => 'US-NM',
             'school_id' => '3500277',
         ]);
         $this->assertDatabaseMissing('groups', [
@@ -72,21 +72,21 @@ class ImportNasspGroupsCommandTest extends TestCase
             'name' => $groupName,
             'group_type_id' => $nasspGroupTypeId,
             'city' => 'Scio',
-            'state' => 'NY',
+            'location' => 'US-NY',
             'school_id' => '3603585',
         ]);
         $this->assertDatabaseHas('groups', [
             'name' => $groupName,
             'group_type_id' => $nhsGroupTypeId,
             'city' => 'Scio',
-            'state' => 'NY',
+            'location' => 'US-NY',
             'school_id' => '3603585',
         ]);
         $this->assertDatabaseHas('groups', [
             'name' => $groupName,
             'group_type_id' => $njhsGroupTypeId,
             'city' => 'Scio',
-            'state' => 'NY',
+            'location' => 'US-NY',
             'school_id' => '3603585',
         ]);
         $this->assertDatabaseMissing('groups', [

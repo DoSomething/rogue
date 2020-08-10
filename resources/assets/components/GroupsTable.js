@@ -11,15 +11,15 @@ const GROUPS_QUERY = gql`
   query GroupsIndexQuery(
     $filter: String
     $groupTypeId: Int!
-    $state: String
+    $location: String
     $cursor: String
   ) {
     groups: paginatedGroups(
       after: $cursor
       first: 50
       groupTypeId: $groupTypeId
+      location: $location
       name: $filter
-      state: $state
     ) {
       edges {
         cursor
@@ -28,7 +28,7 @@ const GROUPS_QUERY = gql`
           name
           goal
           city
-          state
+          location
         }
       }
       pageInfo {
@@ -43,14 +43,14 @@ const GROUPS_QUERY = gql`
  * This component handles fetching & paginating a list of groups in a group type ID.
  *
  * @param {String} filter
- * @param {String} groupState
+ * @param {String} groupLocation
  * @param {Number} groupTypeId
  */
-const GroupsTable = ({ filter, groupState, groupTypeId }) => {
+const GroupsTable = ({ filter, groupLocation, groupTypeId }) => {
   const variables = { filter, groupTypeId };
 
-  if (groupState) {
-    variables.state = groupState;
+  if (groupLocation) {
+    variables.location = groupLocation;
   }
 
   const { error, loading, data, fetchMore } = useQuery(GROUPS_QUERY, {
@@ -106,7 +106,7 @@ const GroupsTable = ({ filter, groupState, groupTypeId }) => {
               <td>
                 <EntityLabel id={node.id} name={node.name} path="groups" />
               </td>
-              <td>{node.city ? `${node.city}, ${node.state}` : null}</td>
+              <td>{node.city ? `${node.city}, ${node.location}` : null}</td>
               <td>{node.goal || '-'}</td>
             </tr>
           ))}

@@ -1,5 +1,6 @@
 /* global document */
 
+import { UsaStates } from 'usa-states';
 import { parse, format } from 'date-fns';
 import { isArray, isNull, mergeWith, omitBy } from 'lodash';
 
@@ -28,6 +29,22 @@ export const TAGS = {
   test: 'Test',
   'incomplete-action': 'Incomplete Action',
   bulk: 'Bulk',
+};
+
+/**
+ * Returns map of ISO format of all US states, and their readable names.
+ *
+ * @return {Object}
+ */
+export const getLocations = () => {
+  const result = {};
+  const usaStateOptions = new UsaStates().states;
+
+  usaStateOptions.map(usaState => {
+    result[`US-${usaState.abbreviation}`] = usaState.name;
+  });
+
+  return result;
 };
 
 /**

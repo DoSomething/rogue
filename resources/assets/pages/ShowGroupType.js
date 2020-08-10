@@ -6,7 +6,9 @@ import { useQuery } from '@apollo/react-hooks';
 
 import NotFound from './NotFound';
 import Empty from '../components/Empty';
+import { getLocations } from '../helpers';
 import Shell from '../components/utilities/Shell';
+import Select from '../components/utilities/Select';
 import GroupsTable from '../components/GroupsTable';
 import MetaInformation from '../components/utilities/MetaInformation';
 import GroupTypeCampaignList from '../components/GroupTypeCampaignList';
@@ -15,7 +17,7 @@ const SHOW_GROUP_TYPE_QUERY = gql`
   query ShowGroupTypeQuery($id: Int!) {
     groupType(id: $id) {
       createdAt
-      filterByState
+      filterByLocation
       name
     }
   }
@@ -25,7 +27,7 @@ const usaStateOptions = new UsaStates().states;
 
 const ShowGroupType = () => {
   const [filter, setFilter] = useState('');
-  const [groupState, setGroupState] = useState(null);
+  const [groupLocation, setGroupLocation] = useState(null);
 
   const { id } = useParams();
   const title = `Group Type #${id}`;
@@ -45,7 +47,7 @@ const ShowGroupType = () => {
 
   if (!data.groupType) return <NotFound title={title} type="group type" />;
 
-  const { createdAt, filterByState, name } = data.groupType;
+  const { createdAt, filterByLocation, name } = data.groupType;
 
   return (
     <Shell title={title} subtitle={name}>
@@ -57,20 +59,13 @@ const ShowGroupType = () => {
             }}
           />
 
-          {filterByState ? (
+          {filterByLocation ? (
             <div className="mb-4">
-              <select
-                className="text-field"
-                onChange={event => setGroupState(event.target.value)}
-              >
-                <option value={''}>-- Select State --</option>
-
-                {usaStateOptions.map(state => (
-                  <option key={state.abbreviation} value={state.abbreviation}>
-                    {state.name}
-                  </option>
-                ))}
-              </select>
+              <Select
+                value={groupLocation || ''}
+                values={getLocations()}
+                onChange={setGroupLocation}
+              />
             </div>
           ) : null}
 
@@ -91,7 +86,7 @@ const ShowGroupType = () => {
         <div className="container__block">
           <GroupsTable
             filter={filter}
-            groupState={groupState}
+            groupLocation={groupLocation}
             groupTypeId={Number(id)}
           />
 
