@@ -9,7 +9,7 @@
     "test:ci": "jest",
     "heroku-postbuild": "npm run build",
     "lint": "eslint --fix --ext .js resources/assets",
-    "format": "prettier --write \"{docs,resources}/**/*.{js,md,scss,graphql}\""
+    "format": "prettier --write \"{docs,resources}/**/*.{js,md,scss,graphql}\" \"{app,config,database,resources,routes,tests}/**/*.php\" \"!resources/views/**\""
   },
   "husky": {
     "hooks": {
@@ -72,6 +72,7 @@
     "@dosomething/babel-preset": "^3.2.0",
     "@dosomething/eslint-config": "^5.0.1",
     "@dosomething/webpack-config": "^5.1.0",
+    "@prettier/plugin-php": "^0.14.3",
     "babel-jest": "^24.8.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
