@@ -8,28 +8,28 @@ All `v3 /signups` endpoints require the `activity` scope. `Create`/`update`/`del
 POST /api/v3/signups
 ```
 
-- **campaign_id**: (int|string) required without action_id.
-  The ID of the campaign the user is signing up for.
-- **action_id**: (int) required without campaign_id.
-  The action ID of the action that the user's post is associated with.
-- **northstar_id**: (int) optional.
-  The `northstar_id` of the user who the signup belongs to. This `northstar_id` will be used when acting `asClient`. Otherwise, if the request comes in acting `asUser`, it will ignore this and attribute the signup to the `northstar_id` from OAuth.
-- **why_participated**: (string) optional.
-  The reason why the user participated.
-- **source**: (string) optional (for migration purposes, there are signups on prod with no source).
-  The source of the signup.
-- **details**: (string) optional
-  Details to be added to the "details" column on the signup, such as signed up to receive affiliate messaging.
-- **referrer_user_id**: (string) optional.
-  The referring User ID that this signup should be associated with.
-- **group_id**: (int) optional.
-  The Group ID that this signup should be associated with.
-- **dont_send_to_blink** (boolean) optional.
-  If included and true, the data for this Signup will not be sent to Blink.
-- **created_at**: (string) optional.
-  `Y-m-d H:i:s` format. When the signup was created.
-- **updated_at**: (string) optional.
-  `Y-m-d H:i:s` format. When the signup was last updated.
+-   **campaign_id**: (int|string) required without action_id.
+    The ID of the campaign the user is signing up for.
+-   **action_id**: (int) required without campaign_id.
+    The action ID of the action that the user's post is associated with.
+-   **northstar_id**: (int) optional.
+    The `northstar_id` of the user who the signup belongs to. This `northstar_id` will be used when acting `asClient`. Otherwise, if the request comes in acting `asUser`, it will ignore this and attribute the signup to the `northstar_id` from OAuth.
+-   **why_participated**: (string) optional.
+    The reason why the user participated.
+-   **source**: (string) optional (for migration purposes, there are signups on prod with no source).
+    The source of the signup.
+-   **details**: (string) optional
+    Details to be added to the "details" column on the signup, such as signed up to receive affiliate messaging.
+-   **referrer_user_id**: (string) optional.
+    The referring User ID that this signup should be associated with.
+-   **group_id**: (int) optional.
+    The Group ID that this signup should be associated with.
+-   **dont_send_to_blink** (boolean) optional.
+    If included and true, the data for this Signup will not be sent to Blink.
+-   **created_at**: (string) optional.
+    `Y-m-d H:i:s` format. When the signup was created.
+-   **updated_at**: (string) optional.
+    `Y-m-d H:i:s` format. When the signup was last updated.
 
 Example response:
 
@@ -63,34 +63,34 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
 
 ### Optional Query Parameters
 
-- **include** _(string)_
-  - Include additional related records in the response: `posts`, `user`, `accepted_quantity`
-  - If using multiple include params, they must be comma-separated
-  - e.g. `/api/v3/signups/1?include=user,posts`
-  - You can also use include parameters to only return posts by type.
-  - e.g. To only return text and photo posts: `api/v3/signups?include=posts:type(text|photo)`
-- **filter[column]** _(string)_
-  - Filter results by a column. Available columns:
-    - `campaign_id`
-    - `group_id`
-    - `id`
-    - `quantity`
-    - `northstar_id`
-    - `referrer_user_id`
-    - `source`
-    - `updated_at`
-  - You can filter by more than one column, e.g. `/signups?filter[id]=4&filter[campaign_id]=5`
-  - You can filter by more than one value for a column, e.g. `/signups?filter[campaign_id]=121,122`
-- **orderBy** _(string)_
-  - Determines order the results are returned, based on the signups's index and direction.
-  - e.g. `/signups?orderBy=quantity,desc`
-  - e.g. `/signups?orderBy=quantity,asc`
-- **limit** _(default is 20)_
-  - Set the number of records to return in a single response.
-  - e.g. `/signups?limit=35`
-- **page** _(integer)_
-  - For pagination, specify page of signups to return in the response.
-  - e.g. `/signups?page=2`
+-   **include** _(string)_
+    -   Include additional related records in the response: `posts`, `user`, `accepted_quantity`
+    -   If using multiple include params, they must be comma-separated
+    -   e.g. `/api/v3/signups/1?include=user,posts`
+    -   You can also use include parameters to only return posts by type.
+    -   e.g. To only return text and photo posts: `api/v3/signups?include=posts:type(text|photo)`
+-   **filter[column]** _(string)_
+    -   Filter results by a column. Available columns:
+        -   `campaign_id`
+        -   `group_id`
+        -   `id`
+        -   `quantity`
+        -   `northstar_id`
+        -   `referrer_user_id`
+        -   `source`
+        -   `updated_at`
+    -   You can filter by more than one column, e.g. `/signups?filter[id]=4&filter[campaign_id]=5`
+    -   You can filter by more than one value for a column, e.g. `/signups?filter[campaign_id]=121,122`
+-   **orderBy** _(string)_
+    -   Determines order the results are returned, based on the signups's index and direction.
+    -   e.g. `/signups?orderBy=quantity,desc`
+    -   e.g. `/signups?orderBy=quantity,asc`
+-   **limit** _(default is 20)_
+    -   Set the number of records to return in a single response.
+    -   e.g. `/signups?limit=35`
+-   **page** _(integer)_
+    -   For pagination, specify page of signups to return in the response.
+    -   e.g. `/signups?page=2`
 
 Example Response:
 
@@ -153,12 +153,12 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
 
 ### Optional Query Parameters
 
-- **include** _(string)_
-  - Include additional related records in the response: `posts`, `user`
-  - If using multiple include params, they must be comma-separated
-  - e.g. `/api/v3/signups/1?include=user,posts`
-  - You can also use include parameters to only return posts by type.
-  - e.g. To only return text and photo posts: `api/v3/signups?include=posts:type(text|photo)`
+-   **include** _(string)_
+    -   Include additional related records in the response: `posts`, `user`
+    -   If using multiple include params, they must be comma-separated
+    -   e.g. `/api/v3/signups/1?include=user,posts`
+    -   You can also use include parameters to only return posts by type.
+    -   e.g. To only return text and photo posts: `api/v3/signups?include=posts:type(text|photo)`
 
 Example Response:
 
@@ -188,8 +188,8 @@ Example Response:
 PATCH /api/v3/signups/:signup_id
 ```
 
-- **why_participated**: (string) required.
-  The reason why the user participated.
+-   **why_participated**: (string) required.
+    The reason why the user participated.
 
 Example response:
 

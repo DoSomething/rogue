@@ -34,6 +34,6 @@ There are many ways of using these tools and customizing them for efficient use.
 
 There are a couple of other applications and sites that you will want access to for development. Please reach out to the developer team if you are having issues with accessing these tools.
 
-- The [Dosomething Team](https://dashboard.heroku.com/teams/dosomething/overview) on [Heroku](https://www.heroku.com/) (To access Rogue Apps, and more).
+-   The [Dosomething Team](https://dashboard.heroku.com/teams/dosomething/overview) on [Heroku](https://www.heroku.com/) (To access Rogue Apps, and more).
 
-- The [Dosomething Organization](https://app.wercker.com/dosomething) on [Wercker](https://app.wercker.com) (To access and re-trigger auto builds for _Pull Requests_).
+-   The [Dosomething Organization](https://app.wercker.com/dosomething) on [Wercker](https://app.wercker.com) (To access and re-trigger auto builds for _Pull Requests_).
