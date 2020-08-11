@@ -40,7 +40,7 @@ class CustomerIo
             $payload["data[$key]"] = $value;
         }
 
-        return $this->client->post('customers/'.$userId.'/events', [
+        return $this->client->post('customers/' . $userId . '/events', [
             'form_params' => $payload,
         ]);
     }

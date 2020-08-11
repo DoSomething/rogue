@@ -27,9 +27,17 @@ class DropFileIdFromReactions extends Migration
     public function down()
     {
         Schema::table('reactions', function (Blueprint $table) {
-            $table->integer('file_id')->index()->comment('The reportback_file.fid that this kudos applies to.');
+            $table
+                ->integer('file_id')
+                ->index()
+                ->comment(
+                    'The reportback_file.fid that this kudos applies to.',
+                );
 
-            $table->unique(['file_id', 'drupal_id', 'northstar_id', 'taxonomy_id'], 'file_drupal_ns_taxonomy_unique');
+            $table->unique(
+                ['file_id', 'drupal_id', 'northstar_id', 'taxonomy_id'],
+                'file_drupal_ns_taxonomy_unique',
+            );
         });
     }
 }

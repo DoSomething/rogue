@@ -113,14 +113,17 @@ class ActionTest extends TestCase
         $action = factory(Action::class)->create();
 
         // Update the name.
-        $response = $this->actingAsAdmin()->patchJson('actions/' . $action->id, [
-            'name' => 'Updated Name',
-            'post_type' => $action->post_type,
-            'action_type' => $action->action_type,
-            'time_commitment' => $action->time_commitment,
-            'noun' => $action->noun,
-            'verb' => $action->verb,
-        ]);
+        $response = $this->actingAsAdmin()->patchJson(
+            'actions/' . $action->id,
+            [
+                'name' => 'Updated Name',
+                'post_type' => $action->post_type,
+                'action_type' => $action->action_type,
+                'time_commitment' => $action->time_commitment,
+                'noun' => $action->noun,
+                'verb' => $action->verb,
+            ],
+        );
 
         // Make sure the action update is persisted.
         $response = $this->getJson('api/v3/actions/' . $action->id);
@@ -150,6 +153,9 @@ class ActionTest extends TestCase
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(404);
-        $this->assertEquals('That resource could not be found.', $decodedResponse['message']);
+        $this->assertEquals(
+            'That resource could not be found.',
+            $decodedResponse['message'],
+        );
     }
 }

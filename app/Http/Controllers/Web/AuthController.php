@@ -41,12 +41,14 @@ class AuthController extends Controller
      * @param ResponseInterface $response
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function getLogin(ServerRequestInterface $request, ResponseInterface $response)
-    {
+    public function getLogin(
+        ServerRequestInterface $request,
+        ResponseInterface $response
+    ) {
         // Save the post-login redirect for when the user completes the flow: either to the intended
         // page (if logging in to view a page protected by the 'auth' middleware), or the previous
         // page (if the user clicked "Log In" in the top navigation).
-        if (! Arr::has($request->getQueryParams(), 'code')) {
+        if (!Arr::has($request->getQueryParams(), 'code')) {
             $intended = session()->pull('url.intended', url()->previous());
             session(['login.intended' => $intended]);
         }
@@ -54,7 +56,12 @@ class AuthController extends Controller
         $destination = Arr::get($request->getQueryParams(), 'destination');
         $url = session('login.intended', $this->redirectTo);
 
-        return gateway('northstar')->authorize($request, $response, $url, $destination);
+        return gateway('northstar')->authorize(
+            $request,
+            $response,
+            $url,
+            $destination,
+        );
     }
 
     /**
@@ -65,6 +72,9 @@ class AuthController extends Controller
      */
     public function getLogout(ResponseInterface $response)
     {
-        return gateway('northstar')->logout($response, $this->redirectAfterLogout);
+        return gateway('northstar')->logout(
+            $response,
+            $this->redirectAfterLogout,
+        );
     }
 }

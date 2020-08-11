@@ -23,7 +23,10 @@ class CampaignTest extends Testcase
         $firstCampaignTitle = $this->faker->sentence;
         $firstCampaignStartDate = $this->faker->date($format = 'm/d/Y');
         // Make sure the end date is after the start date.
-        $firstCampaignEndDate = date('m/d/Y', strtotime('+3 months', strtotime($firstCampaignStartDate)));
+        $firstCampaignEndDate = date(
+            'm/d/Y',
+            strtotime('+3 months', strtotime($firstCampaignStartDate)),
+        );
         // Create a GroupType
         $groupType = factory(GroupType::class)->create();
 
@@ -106,7 +109,9 @@ class CampaignTest extends Testcase
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(5, $decodedResponse['meta']['pagination']['count']);
 
-        $response = $this->getJson('api/v3/campaigns?filter[has_website]=false');
+        $response = $this->getJson(
+            'api/v3/campaigns?filter[has_website]=false',
+        );
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(3, $decodedResponse['meta']['pagination']['count']);
     }
@@ -125,21 +130,37 @@ class CampaignTest extends Testcase
         ]);
 
         foreach (array_slice($causes, 0, 3) as $index => $cause) {
-            $response = $this->getJson('api/v3/campaigns?filter[cause]='.$cause);
+            $response = $this->getJson(
+                'api/v3/campaigns?filter[cause]=' . $cause,
+            );
             $decodedResponse = $response->decodeResponseJson();
 
-            $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
-            $this->assertEquals($campaignWithFirstThreeCauses->first()['id'], $decodedResponse['data'][0]['id']);
+            $this->assertEquals(
+                1,
+                $decodedResponse['meta']['pagination']['count'],
+            );
+            $this->assertEquals(
+                $campaignWithFirstThreeCauses->first()['id'],
+                $decodedResponse['data'][0]['id'],
+            );
         }
 
         // Test that we can filter by multiple causes.
-        $response = $this->getJson('api/v3/campaigns?filter[cause]='.implode(',', array_slice($causes, 0, 3)));
+        $response = $this->getJson(
+            'api/v3/campaigns?filter[cause]=' .
+                implode(',', array_slice($causes, 0, 3)),
+        );
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
-        $this->assertEquals($campaignWithFirstThreeCauses->first()['id'], $decodedResponse['data'][0]['id']);
+        $this->assertEquals(
+            $campaignWithFirstThreeCauses->first()['id'],
+            $decodedResponse['data'][0]['id'],
+        );
 
         // Test that invalid causes are rejected by the filter:
-        $response = $this->getJson('api/v3/campaigns?filter[cause]=this-is-not-a-cause,nor-this!');
+        $response = $this->getJson(
+            'api/v3/campaigns?filter[cause]=this-is-not-a-cause,nor-this!',
+        );
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(0, $decodedResponse['meta']['pagination']['count']);
     }
@@ -164,7 +185,9 @@ class CampaignTest extends Testcase
 
         // Then, we'll use the last post's cursor to fetch the remaining two:
         $lastCursor = $json['data'][2]['cursor'];
-        $response = $this->withAdminAccessToken()->getJson($endpoint . '&cursor[after]=' . $lastCursor);
+        $response = $this->withAdminAccessToken()->getJson(
+            $endpoint . '&cursor[after]=' . $lastCursor,
+        );
 
         $response->assertSuccessful();
         $json = $response->json();
@@ -193,16 +216,28 @@ class CampaignTest extends Testcase
         $endpoint = 'api/v3/campaigns?orderBy=pending_count,desc&limit=3';
         $response = $this->withAdminAccessToken()->getJson($endpoint);
 
-        $response->assertJson(['data' =>[0 => ['id' => $five->id, 'pending_count' => 5]]]);
-        $response->assertJson(['data' =>[1 => ['id' => $four->id, 'pending_count' => 4]]]);
-        $response->assertJson(['data' =>[2 => ['id' => $three->id, 'pending_count' => 3]]]);
+        $response->assertJson([
+            'data' => [0 => ['id' => $five->id, 'pending_count' => 5]],
+        ]);
+        $response->assertJson([
+            'data' => [1 => ['id' => $four->id, 'pending_count' => 4]],
+        ]);
+        $response->assertJson([
+            'data' => [2 => ['id' => $three->id, 'pending_count' => 3]],
+        ]);
 
         // Then, we'll use the last post's cursor to fetch the remaining two:
         $lastCursor = $response->json()['data'][2]['cursor'];
-        $response = $this->withAdminAccessToken()->getJson($endpoint . '&cursor[after]=' . $lastCursor);
+        $response = $this->withAdminAccessToken()->getJson(
+            $endpoint . '&cursor[after]=' . $lastCursor,
+        );
 
-        $response->assertJson(['data' =>[0 => ['id' => $two->id, 'pending_count' => 2]]]);
-        $response->assertJson(['data' =>[1 => ['id' => $one->id, 'pending_count' => 1]]]);
+        $response->assertJson([
+            'data' => [0 => ['id' => $two->id, 'pending_count' => 2]],
+        ]);
+        $response->assertJson([
+            'data' => [1 => ['id' => $one->id, 'pending_count' => 1]],
+        ]);
     }
 
     /**
@@ -238,12 +273,15 @@ class CampaignTest extends Testcase
         $campaign = factory(Campaign::class)->create();
 
         // Update the title.
-        $response = $this->actingAsAdmin()->patch('campaigns/' . $campaign->id, [
-            'internal_title' => 'Updated Title',
-            'impact_doc' => 'https://www.bing.com/',
-            'cause' => ['lgbtq-rights'],
-            'start_date' => '1/1/2018',
-        ]);
+        $response = $this->actingAsAdmin()->patch(
+            'campaigns/' . $campaign->id,
+            [
+                'internal_title' => 'Updated Title',
+                'impact_doc' => 'https://www.bing.com/',
+                'cause' => ['lgbtq-rights'],
+                'start_date' => '1/1/2018',
+            ],
+        );
 
         // Make sure the campaign update is persisted.
         $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
@@ -270,9 +308,12 @@ class CampaignTest extends Testcase
         $campaign = factory(Campaign::class)->create();
 
         // Update the contentful campaign id.
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
-            'contentful_campaign_id' => '123456',
-        ]);
+        $response = $this->withAdminAccessToken()->patchJson(
+            'api/v3/campaigns/' . $campaign->id,
+            [
+                'contentful_campaign_id' => '123456',
+            ],
+        );
 
         // Make sure the campaign update is persisted.
         $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
@@ -306,9 +347,12 @@ class CampaignTest extends Testcase
         $groupType = factory(GroupType::class)->create();
 
         // Update the group type id.
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
-            'group_type_id' => $groupType->id,
-        ]);
+        $response = $this->withAdminAccessToken()->patchJson(
+            'api/v3/campaigns/' . $campaign->id,
+            [
+                'group_type_id' => $groupType->id,
+            ],
+        );
 
         // Make sure the campaign update is persisted.
         $response = $this->getJson('api/v3/campaigns/' . $campaign->id);
@@ -338,9 +382,12 @@ class CampaignTest extends Testcase
         // Create a campaign to update.
         $campaign = factory(Campaign::class)->create();
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
-            'contentful_campaign_id' => 123456, // This should be a string
-        ]);
+        $response = $this->withAdminAccessToken()->patchJson(
+            'api/v3/campaigns/' . $campaign->id,
+            [
+                'contentful_campaign_id' => 123456, // This should be a string
+            ],
+        );
 
         $response->assertStatus(422);
 
@@ -358,9 +405,12 @@ class CampaignTest extends Testcase
         // Create a campaign to update.
         $campaign = factory(Campaign::class)->create();
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/campaigns/' . $campaign->id, [
-            'group_type_id' => 'four', // This should be an integer
-        ]);
+        $response = $this->withAdminAccessToken()->patchJson(
+            'api/v3/campaigns/' . $campaign->id,
+            [
+                'group_type_id' => 'four', // This should be an integer
+            ],
+        );
 
         $response->assertStatus(422);
 
@@ -386,7 +436,10 @@ class CampaignTest extends Testcase
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(404);
-        $this->assertEquals('That resource could not be found.', $decodedResponse['message']);
+        $this->assertEquals(
+            'That resource could not be found.',
+            $decodedResponse['message'],
+        );
     }
 
     /**

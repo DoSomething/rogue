@@ -15,8 +15,14 @@ class AddContentFieldsToPostsTable extends Migration
         Schema::table('posts', function (Blueprint $table) {
             $table->dropColumn('postable_id');
             $table->dropColumn('postable_type');
-            $table->string('url')->after('northstar_id')->comment('The url of the content');
-            $table->string('caption')->after('url')->nullable();
+            $table
+                ->string('url')
+                ->after('northstar_id')
+                ->comment('The url of the content');
+            $table
+                ->string('caption')
+                ->after('url')
+                ->nullable();
         });
     }
 

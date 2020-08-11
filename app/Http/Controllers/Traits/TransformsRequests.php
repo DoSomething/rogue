@@ -30,9 +30,16 @@ trait TransformsRequests
      * @param  null|object  $transformer
      * @return \Illuminate\Http\JsonResponse
      */
-    public function collection($data, $code = 200, $meta = [], $transformer = null)
-    {
-        $collection = new FractalCollection($data, $this->setTransformer($transformer));
+    public function collection(
+        $data,
+        $code = 200,
+        $meta = [],
+        $transformer = null
+    ) {
+        $collection = new FractalCollection(
+            $data,
+            $this->setTransformer($transformer),
+        );
 
         return $this->transform($collection, $code, $meta);
     }
@@ -47,8 +54,13 @@ trait TransformsRequests
      * @param  null|string $include
      * @return \Illuminate\Http\JsonResponse
      */
-    public function item($data, $code = 200, $meta = [], $transformer = null, $include = null)
-    {
+    public function item(
+        $data,
+        $code = 200,
+        $meta = [],
+        $transformer = null,
+        $include = null
+    ) {
         $item = new Item($data, $this->setTransformer($transformer));
 
         return $this->transform($item, $code, $meta, $include);
@@ -67,9 +79,9 @@ trait TransformsRequests
     {
         $data->setMeta($meta);
 
-        $manager = new Manager;
+        $manager = new Manager();
 
-        $manager->setSerializer(new DataArraySerializer);
+        $manager->setSerializer(new DataArraySerializer());
 
         if (isset($include)) {
             $manager->parseIncludes($include);
@@ -101,8 +113,13 @@ trait TransformsRequests
      * @param $query - Eloquent query
      * @return \Illuminate\Http\JsonResponse
      */
-    public function paginatedCollection($query, $request, $code = 200, $meta = [], $transformer = null)
-    {
+    public function paginatedCollection(
+        $query,
+        $request,
+        $code = 200,
+        $meta = [],
+        $transformer = null
+    ) {
         if (is_null($transformer)) {
             $transformer = $this->transformer;
         }
@@ -112,7 +129,9 @@ trait TransformsRequests
 
         // Is cursor pagination enabled for this route? (Or opted-in using
         // the `?pagination=cursor` query param?)
-        $fastMode = ! empty($this->useCursorPagination) || $request->query('pagination') === 'cursor';
+        $fastMode =
+            !empty($this->useCursorPagination) ||
+            $request->query('pagination') === 'cursor';
 
         if ($fastMode) {
             $paginator = $query->simplePaginate($pages);
@@ -123,7 +142,10 @@ trait TransformsRequests
         $queryParams = array_diff_key($request->query(), array_flip(['page']));
         $paginator->appends($queryParams);
 
-        $resource = new FractalCollection($paginator->getCollection(), $transformer);
+        $resource = new FractalCollection(
+            $paginator->getCollection(),
+            $transformer,
+        );
         $resource->setMeta($meta);
 
         // Attach the right paginator or cursor based on "speed".
@@ -132,7 +154,7 @@ trait TransformsRequests
                 $paginator->currentPage(),
                 $paginator->previousPageUrl(),
                 $paginator->nextPageUrl(),
-                $paginator->count()
+                $paginator->count(),
             );
             $resource->setCursor($cursor);
         } else {

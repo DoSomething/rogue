@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Search Engine
@@ -28,7 +27,7 @@ return [
     |
     */
 
-    'prefix' => env('SCOUT_PREFIX', config('app.env').'_'),
+    'prefix' => env('SCOUT_PREFIX', config('app.env') . '_'),
 
     /*
     |--------------------------------------------------------------------------
@@ -87,5 +86,4 @@ return [
         'id' => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
     ],
-
 ];

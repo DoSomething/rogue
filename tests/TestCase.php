@@ -10,8 +10,11 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, RefreshDatabase, WithMocks,
-        WithAuthentication, WithOAuthTokens;
+    use CreatesApplication,
+        RefreshDatabase,
+        WithMocks,
+        WithAuthentication,
+        WithOAuthTokens;
 
     /**
      * The base URL to use while testing the application.
@@ -44,14 +47,21 @@ abstract class TestCase extends BaseTestCase
     {
         $data = $response->decodeResponseJson();
 
-        if (! Arr::has($data, $key)) {
-            Assert::fail('Expected to find JSON response at '.$key);
+        if (!Arr::has($data, $key)) {
+            Assert::fail('Expected to find JSON response at ' . $key);
         }
 
         $actual = Arr::get($data, $key);
 
         if ($expected !== null && $actual !== $expected) {
-            Assert::fail('Expected to find "'.$expected.'" in response at '.$key.', found: '.$actual);
+            Assert::fail(
+                'Expected to find "' .
+                    $expected .
+                    '" in response at ' .
+                    $key .
+                    ', found: ' .
+                    $actual,
+            );
         }
 
         return $this;

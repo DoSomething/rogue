@@ -19,7 +19,7 @@ class CampaignsController extends ApiController
      */
     public function __construct()
     {
-        $this->transformer = new CampaignTransformer;
+        $this->transformer = new CampaignTransformer();
 
         $this->rules = [
             'contentful_campaign_id' => ['nullable', 'string', 'max:255'],
@@ -106,7 +106,6 @@ class CampaignsController extends ApiController
         $values = $this->validate($request, [
             'contentful_campaign_id' => ['nullable', 'string', 'max:255'],
             'group_type_id' => ['nullable', 'integer'],
-
         ]);
 
         $campaign->update($values);

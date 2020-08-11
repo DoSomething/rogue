@@ -19,7 +19,7 @@ class ActionStatsController extends ApiController
      */
     public function __construct()
     {
-        $this->transformer = new ActionStatTransformer;
+        $this->transformer = new ActionStatTransformer();
     }
 
     /**

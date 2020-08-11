@@ -25,9 +25,12 @@ class ReactionTest extends TestCase
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/reactions', [
-            'northstar_id' => $northstarId,
-        ]);
+        $response = $this->withAdminAccessToken()->postJson(
+            'api/v3/posts/' . $post->id . '/reactions',
+            [
+                'northstar_id' => $northstarId,
+            ],
+        );
 
         $response->assertStatus(200);
 
@@ -39,9 +42,12 @@ class ReactionTest extends TestCase
         ]);
 
         // React (unlike) again to the same post with the same user.
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/reactions', [
-            'northstar_id' => $northstarId,
-        ]);
+        $response = $this->withAdminAccessToken()->postJson(
+            'api/v3/posts/' . $post->id . '/reactions',
+            [
+                'northstar_id' => $northstarId,
+            ],
+        );
 
         // This should now be a 201 code because it was updated.
         // @TODO update this when we do an audit of status codes in Rogue.
@@ -69,12 +75,18 @@ class ReactionTest extends TestCase
         $northstarId = $this->faker->uuid;
 
         // Create a reaction.
-        $response = $this->postJson('api/v3/posts/' . $post->id . '/reactions', [
-            'northstar_id' => $northstarId,
-        ]);
+        $response = $this->postJson(
+            'api/v3/posts/' . $post->id . '/reactions',
+            [
+                'northstar_id' => $northstarId,
+            ],
+        );
 
         $response->assertStatus(401);
-        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
+        $this->assertEquals(
+            'Unauthenticated.',
+            $response->decodeResponseJson()['message'],
+        );
     }
 
     /**
@@ -88,9 +100,12 @@ class ReactionTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/reactions', [
-            'northstar_id' => $this->faker->uuid,
-        ]);
+        $response = $this->withAdminAccessToken()->postJson(
+            'api/v3/posts/' . $post->id . '/reactions',
+            [
+                'northstar_id' => $this->faker->uuid,
+            ],
+        );
 
         // Make sure this creates a reaction.
         $response->assertStatus(200);
@@ -101,9 +116,12 @@ class ReactionTest extends TestCase
         ]);
 
         // A second user reacts to the same post..
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/reactions', [
-            'northstar_id' => $this->faker->uuid,
-        ]);
+        $response = $this->withAdminAccessToken()->postJson(
+            'api/v3/posts/' . $post->id . '/reactions',
+            [
+                'northstar_id' => $this->faker->uuid,
+            ],
+        );
 
         // Make sure this creates a reaction and increases total_reaction count.
         $response->assertStatus(200);
@@ -144,9 +162,12 @@ class ReactionTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Create a reaction.
-        $response = $this->postJson('api/v3/posts/' . $post->id . '/reactions', [
-            'northstar_id' => $this->faker->uuid,
-        ]);
+        $response = $this->postJson(
+            'api/v3/posts/' . $post->id . '/reactions',
+            [
+                'northstar_id' => $this->faker->uuid,
+            ],
+        );
 
         $response->assertStatus(401);
     }
@@ -160,9 +181,7 @@ class ReactionTest extends TestCase
     public function testReactionsIndex()
     {
         $post = factory(Post::class)->create();
-        $post->reactions()->saveMany(
-            factory(Reaction::class, 10)->make()
-        );
+        $post->reactions()->saveMany(factory(Reaction::class, 10)->make());
 
         $response = $this->getJson('api/v3/posts/' . $post->id . '/reactions');
 

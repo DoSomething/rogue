@@ -15,10 +15,23 @@ class CreateActionStatsTable extends Migration
     {
         Schema::create('action_stats', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('action_id')->index()->comment('The action id the stat is for.');
-            $table->foreign('action_id')->references('id')->on('actions');
-            $table->string('school_id', 255)->index()->comment('The school id the stat is for.');
-            $table->unsignedInteger('accepted_quantity')->comment('The sum of accepted post quantity for the school and action.');
+            $table
+                ->unsignedInteger('action_id')
+                ->index()
+                ->comment('The action id the stat is for.');
+            $table
+                ->foreign('action_id')
+                ->references('id')
+                ->on('actions');
+            $table
+                ->string('school_id', 255)
+                ->index()
+                ->comment('The school id the stat is for.');
+            $table
+                ->unsignedInteger('accepted_quantity')
+                ->comment(
+                    'The sum of accepted post quantity for the school and action.',
+                );
             $table->timestamps();
         });
     }

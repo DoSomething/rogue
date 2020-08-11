@@ -26,7 +26,7 @@ class ReactionController extends ApiController
      */
     public function __construct()
     {
-        $this->transformer = new ReactionTransformer;
+        $this->transformer = new ReactionTransformer();
 
         $this->middleware('scopes:activity');
         $this->middleware('auth:api', ['only' => ['store']]);
@@ -45,7 +45,10 @@ class ReactionController extends ApiController
         $northstarId = getNorthstarId($request);
 
         // Check to see if the post has a reaction from this particular user with id of northstar_id. If not, create one.
-        $reaction = Reaction::withTrashed()->firstOrCreate(['northstar_id' => $northstarId, 'post_id' => $post->id]);
+        $reaction = Reaction::withTrashed()->firstOrCreate([
+            'northstar_id' => $northstarId,
+            'post_id' => $post->id,
+        ]);
 
         if ($reaction->wasRecentlyCreated || $reaction->trashed()) {
             // We're adding a new reaction in these cases.

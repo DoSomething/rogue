@@ -57,7 +57,15 @@ class UsersController extends Controller
             $post->delete();
         }
 
-        info('Deleted: ' . $id . '(' . $posts->count() . ' posts and ' . $signups->count() . ' signups)');
+        info(
+            'Deleted: ' .
+                $id .
+                '(' .
+                $posts->count() .
+                ' posts and ' .
+                $signups->count() .
+                ' signups)',
+        );
 
         return $this->respond('All signups & posts deleted.');
     }

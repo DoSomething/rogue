@@ -39,7 +39,10 @@ class SignupManager
         $signup = $this->signup->create($data, $northstarId, $campaignId);
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
-        $shouldSendToCustomerIo = ! (array_key_exists('dont_send_to_blink', $data) && $data['dont_send_to_blink']);
+        $shouldSendToCustomerIo = !(
+            array_key_exists('dont_send_to_blink', $data) &&
+            $data['dont_send_to_blink']
+        );
 
         // Save the new signup in Customer.io, via Blink.
         if (config('features.blink') && $shouldSendToCustomerIo) {
@@ -47,11 +50,18 @@ class SignupManager
         }
 
         if ($signup->referrer_user_id && $shouldSendToCustomerIo) {
-            CreateCustomerIoEvent::dispatch($signup->referrer_user_id, 'referral_signup_created', $signup->getReferralSignupEventPayload());
+            CreateCustomerIoEvent::dispatch(
+                $signup->referrer_user_id,
+                'referral_signup_created',
+                $signup->getReferralSignupEventPayload(),
+            );
         }
 
         // Log that a signup was created.
-        info('signup_created', ['id' => $signup->id, 'signup_created_source' => $signup->source]);
+        info('signup_created', [
+            'id' => $signup->id,
+            'signup_created_source' => $signup->source,
+        ]);
 
         return $signup;
     }

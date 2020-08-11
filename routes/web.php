@@ -9,7 +9,9 @@
  */
 
 // Homepage & FAQ
-Route::view('/', 'pages.home')->middleware('guest')->name('login');
+Route::view('/', 'pages.home')
+    ->middleware('guest')
+    ->name('login');
 Route::view('faq', 'pages.faq');
 
 // Authentication
@@ -20,10 +22,16 @@ Route::get('logout', 'AuthController@getLogout');
 // @TODO: These should be updated to client-side routes!
 Route::resource('actions', 'ActionsController', ['except' => 'show']);
 Route::get('campaigns/{id}/actions/create', 'ActionsController@create');
-Route::resource('campaigns', 'CampaignsController', ['except' => ['index', 'show']]);
-Route::resource('group-types', 'GroupTypesController', ['except' => ['index', 'show']]);
+Route::resource('campaigns', 'CampaignsController', [
+    'except' => ['index', 'show'],
+]);
+Route::resource('group-types', 'GroupTypesController', [
+    'except' => ['index', 'show'],
+]);
 Route::get('group-types/{id}/groups/create', 'GroupsController@create');
-Route::resource('groups', 'GroupsController', ['except' => ['create', 'index', 'show']]);
+Route::resource('groups', 'GroupsController', [
+    'except' => ['create', 'index', 'show'],
+]);
 
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {

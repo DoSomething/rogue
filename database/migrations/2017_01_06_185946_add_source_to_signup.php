@@ -13,7 +13,11 @@ class AddSourceToSignup extends Migration
     public function up()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->string('source')->nullable()->comment('Source of the signup creation.')->after('why_participated');
+            $table
+                ->string('source')
+                ->nullable()
+                ->comment('Source of the signup creation.')
+                ->after('why_participated');
         });
     }
 

@@ -14,7 +14,12 @@ class AddSourceDetailsColumnToSignupTable extends Migration
     public function up()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->text('source_details')->after('source')->comment('Extra details about the signup source, like referral source from url query string');
+            $table
+                ->text('source_details')
+                ->after('source')
+                ->comment(
+                    'Extra details about the signup source, like referral source from url query string',
+                );
         });
     }
 

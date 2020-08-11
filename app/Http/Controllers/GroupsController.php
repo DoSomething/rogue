@@ -19,7 +19,7 @@ class GroupsController extends ApiController
      */
     public function __construct()
     {
-        $this->transformer = new GroupTransformer;
+        $this->transformer = new GroupTransformer();
     }
 
     /**

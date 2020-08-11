@@ -14,23 +14,43 @@ class CascadeDeleteForiegnKeys extends Migration
     {
         Schema::table('signups', function (Blueprint $table) {
             $table->dropForeign('signups_event_id_foreign');
-            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table
+                ->foreign('event_id')
+                ->references('id')
+                ->on('events')
+                ->onDelete('cascade');
         });
 
         Schema::table('reviews', function ($table) {
             $table->dropForeign('reviews_event_id_foreign');
-            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table
+                ->foreign('event_id')
+                ->references('id')
+                ->on('events')
+                ->onDelete('cascade');
 
             $table->dropForeign('reviews_signup_id_foreign');
-            $table->foreign('signup_id')->references('id')->on('signups')->onDelete('cascade');
+            $table
+                ->foreign('signup_id')
+                ->references('id')
+                ->on('signups')
+                ->onDelete('cascade');
         });
 
         Schema::table('photos', function ($table) {
             $table->dropForeign('photos_event_id_foreign');
-            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table
+                ->foreign('event_id')
+                ->references('id')
+                ->on('events')
+                ->onDelete('cascade');
 
             $table->dropForeign('photos_signup_id_foreign');
-            $table->foreign('signup_id')->references('id')->on('signups')->onDelete('cascade');
+            $table
+                ->foreign('signup_id')
+                ->references('id')
+                ->on('signups')
+                ->onDelete('cascade');
         });
     }
 
@@ -43,23 +63,38 @@ class CascadeDeleteForiegnKeys extends Migration
     {
         Schema::table('signups', function (Blueprint $table) {
             $table->dropForeign('signups_event_id_foreign');
-            $table->foreign('event_id')->references('id')->on('events');
+            $table
+                ->foreign('event_id')
+                ->references('id')
+                ->on('events');
         });
 
         Schema::table('reviews', function ($table) {
             $table->dropForeign('reviews_event_id_foreign');
-            $table->foreign('event_id')->references('id')->on('events');
+            $table
+                ->foreign('event_id')
+                ->references('id')
+                ->on('events');
 
             $table->dropForeign('reviews_signup_id_foreign');
-            $table->foreign('signup_id')->references('id')->on('signups');
+            $table
+                ->foreign('signup_id')
+                ->references('id')
+                ->on('signups');
         });
 
         Schema::table('photos', function ($table) {
             $table->dropForeign('photos_event_id_foreign');
-            $table->foreign('event_id')->references('id')->on('events');
+            $table
+                ->foreign('event_id')
+                ->references('id')
+                ->on('events');
 
             $table->dropForeign('photos_signup_id_foreign');
-            $table->foreign('signup_id')->references('id')->on('signups');
+            $table
+                ->foreign('signup_id')
+                ->references('id')
+                ->on('signups');
         });
     }
 }

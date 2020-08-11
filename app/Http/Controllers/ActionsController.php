@@ -18,7 +18,7 @@ class ActionsController extends ApiController
      */
     public function __construct()
     {
-        $this->transformer = new ActionTransformer;
+        $this->transformer = new ActionTransformer();
     }
 
     /**

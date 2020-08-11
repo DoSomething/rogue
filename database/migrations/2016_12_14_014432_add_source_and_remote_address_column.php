@@ -13,8 +13,16 @@ class AddSourceAndRemoteAddressColumn extends Migration
     public function up()
     {
         Schema::table('photos', function (Blueprint $table) {
-            $table->string('source')->nullable()->comment('Source which reportback file was submitted from.');
-            $table->ipAddress('remote_addr')->nullable()->comment('The IP address of the user that submitted the file.');
+            $table
+                ->string('source')
+                ->nullable()
+                ->comment('Source which reportback file was submitted from.');
+            $table
+                ->ipAddress('remote_addr')
+                ->nullable()
+                ->comment(
+                    'The IP address of the user that submitted the file.',
+                );
         });
     }
 

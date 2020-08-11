@@ -47,7 +47,7 @@ $factory->define(Action::class, function (Generator $faker) {
 
 $factory->state(Action::class, 'voter-registration', [
     'action_type' => ActionType::ATTEND_EVENT(),
-    'name' => 'VR-'.$this->faker->unique()->year.' Voter Registrations',
+    'name' => 'VR-' . $this->faker->unique()->year . ' Voter Registrations',
     'noun' => 'registrations',
     'post_type' => PostType::VOTER_REG(),
     'verb' => 'completed',
@@ -77,7 +77,7 @@ $factory->define(Post::class, function (Generator $faker) {
         },
         'northstar_id' => $this->faker->northstar_id,
         'text' => $faker->sentence(),
-        'location' => 'US-'.$faker->stateAbbr(),
+        'location' => 'US-' . $faker->stateAbbr(),
         'source' => 'phpunit',
     ];
 });
@@ -139,7 +139,11 @@ $factory->define(Signup::class, function (Generator $faker) {
         },
         'why_participated' => $faker->sentence(),
         'source' => 'phpunit',
-        'details' => $faker->randomElement([null, 'fun-affiliate-stuff', 'i-say-the-tails']),
+        'details' => $faker->randomElement([
+            null,
+            'fun-affiliate-stuff',
+            'i-say-the-tails',
+        ]),
     ];
 });
 
@@ -182,29 +186,43 @@ $factory->define(Campaign::class, function (Generator $faker) {
         'cause' => $faker->randomElements(Cause::all(), rand(1, 5)),
         'impact_doc' => 'https://www.google.com/',
         // By default, we create an "open" campaign.
-        'start_date' => $faker->dateTimeBetween('-6 months', 'now')->setTime(0, 0),
-        'end_date' => $faker->dateTimeBetween('+1 months', '+6 months')->setTime(0, 0),
+        'start_date' => $faker
+            ->dateTimeBetween('-6 months', 'now')
+            ->setTime(0, 0),
+        'end_date' => $faker
+            ->dateTimeBetween('+1 months', '+6 months')
+            ->setTime(0, 0),
     ];
 });
 
-$factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use ($factory) {
+$factory->defineAs(Campaign::class, 'closed', function (Generator $faker) use (
+    $factory
+) {
     return array_merge($factory->raw(Campaign::class), [
-        'start_date' => $faker->dateTimeBetween('-12 months', '-6 months')->setTime(0, 0),
-        'end_date' => $faker->dateTimeBetween('-3 months', 'yesterday')->setTime(0, 0),
+        'start_date' => $faker
+            ->dateTimeBetween('-12 months', '-6 months')
+            ->setTime(0, 0),
+        'end_date' => $faker
+            ->dateTimeBetween('-3 months', 'yesterday')
+            ->setTime(0, 0),
     ]);
 });
 
-$factory->state(Campaign::class, 'voter-registration', function (Generator $faker) {
+$factory->state(Campaign::class, 'voter-registration', function (
+    Generator $faker
+) {
     return [
         'cause' => [Cause::VOTER_REGISTRATION()],
-        'internal_title' => 'Voter Registration ' . Str::title($faker->unique()->catchPhrase),
+        'internal_title' =>
+            'Voter Registration ' . Str::title($faker->unique()->catchPhrase),
     ];
 });
 
 // Group Type Factory
 $factory->define(GroupType::class, function (Generator $faker) {
     return [
-        'name' => 'National ' . Str::title($faker->unique()->jobTitle) . ' Society',
+        'name' =>
+            'National ' . Str::title($faker->unique()->jobTitle) . ' Society',
         'filter_by_location' => true,
         'filter_by_state' => true,
     ];

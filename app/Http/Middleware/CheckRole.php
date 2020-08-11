@@ -45,8 +45,10 @@ class CheckRole extends RequireRole
         }
 
         // Otherwise, check the local user.
-        if ($this->auth->guest() || ! $this->auth->user()->hasRole($roles)) {
-            throw new AuthorizationException('You don\'t have the correct role to do that!');
+        if ($this->auth->guest() || !$this->auth->user()->hasRole($roles)) {
+            throw new AuthorizationException(
+                'You don\'t have the correct role to do that!',
+            );
         }
 
         return $next($request);

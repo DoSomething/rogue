@@ -50,16 +50,23 @@ class PostsController extends ApiController
      * @param SignupManager $signups
      * @param PostTransformer $transformer
      */
-    public function __construct(PostManager $posts, SignupManager $signups, PostTransformer $transformer)
-    {
+    public function __construct(
+        PostManager $posts,
+        SignupManager $signups,
+        PostTransformer $transformer
+    ) {
         $this->posts = $posts;
         $this->signups = $signups;
         $this->transformer = $transformer;
 
         $this->middleware('scopes:activity');
-        $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('auth:api', [
+            'only' => ['store', 'update', 'destroy'],
+        ]);
         $this->middleware('role:admin,staff', ['only' => ['destroy']]);
-        $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('scopes:write', [
+            'only' => ['store', 'update', 'destroy'],
+        ]);
     }
 
     /**
@@ -93,10 +100,19 @@ class PostsController extends ApiController
         }
 
         if (Arr::has($filters, 'volunteer_credit')) {
-            if (filter_var($filters['volunteer_credit'], FILTER_VALIDATE_BOOLEAN)) {
-                $query = $query->withVolunteerCredit($filters['volunteer_credit']);
+            if (
+                filter_var(
+                    $filters['volunteer_credit'],
+                    FILTER_VALIDATE_BOOLEAN,
+                )
+            ) {
+                $query = $query->withVolunteerCredit(
+                    $filters['volunteer_credit'],
+                );
             } else {
-                $query = $query->withoutVolunteerCredit($filters['volunteer_credit']);
+                $query = $query->withoutVolunteerCredit(
+                    $filters['volunteer_credit'],
+                );
             }
         }
 
@@ -108,8 +124,7 @@ class PostsController extends ApiController
         // This endpoint always returns posts in reverse chronological order. We'll
         // therefore "force" the query string so that we can use it in `getCursor`.
         // @TODO: There must be a more elegant way of doing this...
-        $query->orderBy('created_at', 'desc')
-            ->orderBy('id', 'asc');
+        $query->orderBy('created_at', 'desc')->orderBy('id', 'asc');
 
         $request->query->set('orderBy', 'created_at,desc');
 
@@ -135,12 +150,18 @@ class PostsController extends ApiController
         $northstarId = getNorthstarId($request);
 
         // Get the campaign id from the request by campaign_id or action_id.
-        $campaignId = $request['campaign_id'] ? $request['campaign_id'] : Campaign::fromActionId($request['action_id'])->id;
+        $campaignId = $request['campaign_id']
+            ? $request['campaign_id']
+            : Campaign::fromActionId($request['action_id'])->id;
 
         $signup = $this->signups->get($northstarId, $campaignId);
 
-        if (! $signup) {
-            $signup = $this->signups->create($request->all(), $northstarId, $campaignId);
+        if (!$signup) {
+            $signup = $this->signups->create(
+                $request->all(),
+                $northstarId,
+                $campaignId,
+            );
         }
 
         $post = $this->posts->create($request->all(), $signup->id);
@@ -179,7 +200,7 @@ class PostsController extends ApiController
         $validatedRequest = $request->validated();
 
         // But don't allow user's to review their own posts.
-        if (! Gate::allows('review', $post)) {
+        if (!Gate::allows('review', $post)) {
             unset($validatedRequest['status']);
         }
 

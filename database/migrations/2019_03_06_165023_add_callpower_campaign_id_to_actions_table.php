@@ -14,7 +14,11 @@ class AddCallpowerCampaignIdToActionsTable extends Migration
     public function up()
     {
         Schema::table('actions', function (Blueprint $table) {
-            $table->integer('callpower_campaign_id')->nullable()->comment('CallPower campaign id.')->after('post_type');
+            $table
+                ->integer('callpower_campaign_id')
+                ->nullable()
+                ->comment('CallPower campaign id.')
+                ->after('post_type');
         });
     }
 

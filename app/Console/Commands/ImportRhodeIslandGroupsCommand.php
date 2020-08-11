@@ -67,14 +67,21 @@ class ImportRhodeIslandGroupsCommand extends Command
         ]);
         $groupTypeId = $groupType->id;
 
-        info('rogue:rhode-island-groups-import: Beginning import for group type id ' . $groupTypeId .'.');
+        info(
+            'rogue:rhode-island-groups-import: Beginning import for group type id ' .
+                $groupTypeId .
+                '.',
+        );
 
         foreach ($csv->getRecords() as $record) {
             $name = trim($record['name']);
             $schoolId = trim($record['universalid']);
 
-            if (! $name) {
-                info('rogue:rhode-island-groups-import: Skipping row without name', ['school_id' => $schoolId]);
+            if (!$name) {
+                info(
+                    'rogue:rhode-island-groups-import: Skipping row without name',
+                    ['school_id' => $schoolId],
+                );
 
                 $numSkipped++;
 
@@ -86,20 +93,36 @@ class ImportRhodeIslandGroupsCommand extends Command
                     'group_type_id' => $groupTypeId,
                     'name' => $name,
                     'city' => trim($record['city']),
-                    'location' => 'US-'.trim($record['state']),
+                    'location' => 'US-' . trim($record['state']),
                     'school_id' => $schoolId,
                 ]);
 
                 $numImported++;
 
-                info('rogue:rhode-island-groups-import: Imported group', ['id' => $group->id, 'name' => $group->name]);
+                info('rogue:rhode-island-groups-import: Imported group', [
+                    'id' => $group->id,
+                    'name' => $group->name,
+                ]);
             } catch (Exception $e) {
                 $numFailed++;
 
-                info('rogue:rhode-island-groups-import: Error importing group with ' .$name . ':' . $e->getMessage());
+                info(
+                    'rogue:rhode-island-groups-import: Error importing group with ' .
+                        $name .
+                        ':' .
+                        $e->getMessage(),
+                );
             }
         }
 
-        info('rogue:rhode-island-import: Import completed with ' . $numImported . ' imported, ' . $numSkipped . ' skipped, and ' . $numFailed . ' failed.');
+        info(
+            'rogue:rhode-island-import: Import completed with ' .
+                $numImported .
+                ' imported, ' .
+                $numSkipped .
+                ' skipped, and ' .
+                $numFailed .
+                ' failed.',
+        );
     }
 }

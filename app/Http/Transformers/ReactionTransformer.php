@@ -20,7 +20,9 @@ class ReactionTransformer extends TransformerAbstract
             'post_id' => (string) $reaction->post_id,
             'created_at' => $reaction->created_at->toIso8601String(),
             'updated_at' => $reaction->updated_at->toIso8601String(),
-            'deleted_at' => is_null($reaction->deleted_at) ? null : $reaction->deleted_at->toIso8601String(),
+            'deleted_at' => is_null($reaction->deleted_at)
+                ? null
+                : $reaction->deleted_at->toIso8601String(),
         ];
     }
 }

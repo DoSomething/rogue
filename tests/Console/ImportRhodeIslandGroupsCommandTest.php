@@ -9,7 +9,9 @@ class ImportRhodeIslandGroupsCommandTest extends TestCase
 {
     public function testImportingGroups()
     {
-        $this->artisan('rogue:rhode-island-groups-import', ['path' => 'tests/Console/example-rhode-island-groups.csv']);
+        $this->artisan('rogue:rhode-island-groups-import', [
+            'path' => 'tests/Console/example-rhode-island-groups.csv',
+        ]);
 
         $this->assertDatabaseHas('group_types', [
             'name' => 'Rhode Island',

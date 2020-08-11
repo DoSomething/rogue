@@ -27,9 +27,22 @@ class DropColumnsFromPhotosTable extends Migration
     public function down()
     {
         Schema::table('photos', function (Blueprint $table) {
-            $table->string('status')->nullable()->index()->default('pending')->after('caption');
-            $table->string('source')->nullable()->comment('Source which reportback file was submitted from.')->after('status');
-            $table->ipAddress('remote_addr')->nullable()->comment('The IP address of the user that submitted the file.')->after('source');
+            $table
+                ->string('status')
+                ->nullable()
+                ->index()
+                ->default('pending')
+                ->after('caption');
+            $table
+                ->string('source')
+                ->nullable()
+                ->comment('Source which reportback file was submitted from.')
+                ->after('status');
+            $table
+                ->ipAddress('remote_addr')
+                ->nullable()
+                ->comment('The IP address of the user that submitted the file.')
+                ->after('source');
         });
     }
 }

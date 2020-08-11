@@ -50,7 +50,9 @@ class ForceDeletePosts extends Command
      */
     public function handle()
     {
-        info('rogue:forceDeletePosts: Starting to force delete posts by type and source.');
+        info(
+            'rogue:forceDeletePosts: Starting to force delete posts by type and source.',
+        );
 
         Post::where('type', $this->argument('type'))
             ->where('source', $this->argument('source'))

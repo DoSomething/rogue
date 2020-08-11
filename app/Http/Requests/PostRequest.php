@@ -38,14 +38,23 @@ class PostRequest extends Request
             'type' => ['required', 'string', Rule::in(PostType::all())],
             // @TODO: eventually, deprecate action in the payload and make action_id required when all systems have been updated.
             'action' => 'required_without:action_id|string',
-            'action_id' => 'required_without:action,campaign_id|integer|exists:actions,id',
+            'action_id' =>
+                'required_without:action,campaign_id|integer|exists:actions,id',
             'why_participated' => 'nullable|string',
             'text' => 'nullable|string|max:500',
             'location' => 'nullable|string',
             'postal_code' => 'nullable|max:10',
             'school_id' => 'nullable|string|max:255',
             'quantity' => 'nullable|integer',
-            'file' => 'image|dimensions:min_width='.$minImageSize['width'].',min_height='.$minImageSize['height'].',max_width='.$maxImageSize['width'].',max_height='.$maxImageSize['height'],
+            'file' =>
+                'image|dimensions:min_width=' .
+                $minImageSize['width'] .
+                ',min_height=' .
+                $minImageSize['height'] .
+                ',max_width=' .
+                $maxImageSize['width'] .
+                ',max_height=' .
+                $maxImageSize['height'],
             'status' => $this->getStatusRules($this->type),
             'details' => 'json',
             'created_at' => 'date',
@@ -83,7 +92,8 @@ class PostRequest extends Request
             case 'voter-reg':
                 // Support new values and old values (until Chompy update is deployed)
                 // @see https://github.com/DoSomething/chompy/pull/153
-                $rule = 'in:pending,register-form,register-OVR,confirmed,ineligible,uncertain,rejected,under-18,step-1,step-2,step-3,step-4';
+                $rule =
+                    'in:pending,register-form,register-OVR,confirmed,ineligible,uncertain,rejected,under-18,step-1,step-2,step-3,step-4';
                 break;
             case 'phone-call':
                 $rule = 'in:accepted,incomplete';

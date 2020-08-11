@@ -14,8 +14,16 @@ class AddActionIdToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->unsignedInteger('action_id')->after('action')->index()->nullable()->comment('The action id the post has.');
-            $table->foreign('action_id')->references('id')->on('actions');
+            $table
+                ->unsignedInteger('action_id')
+                ->after('action')
+                ->index()
+                ->nullable()
+                ->comment('The action id the post has.');
+            $table
+                ->foreign('action_id')
+                ->references('id')
+                ->on('actions');
         });
     }
 

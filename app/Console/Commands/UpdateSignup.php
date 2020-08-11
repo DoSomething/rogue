@@ -51,19 +51,19 @@ class UpdateSignup extends Command
         $targetField = $this->option('target') ?? null;
         $targetValue = $this->option('targetValue') ?? null;
 
-        if (! $targetField) {
+        if (!$targetField) {
             $this->error('No target field specified.');
 
             return;
         }
 
-        if (! $targetValue) {
+        if (!$targetValue) {
             $this->error('No target value specified.');
 
             return;
         }
 
-        $query = (new Signup)->newQuery();
+        $query = (new Signup())->newQuery();
 
         if ($this->option('campaign')) {
             $query = $query->where('campaign_id', $this->option('campaign'));

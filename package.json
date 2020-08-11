@@ -21,6 +21,7 @@
     "npm": "6.x"
   },
   "prettier": {
+    "phpVersion": "7.3",
     "singleQuote": true,
     "trailingComma": "all"
   },

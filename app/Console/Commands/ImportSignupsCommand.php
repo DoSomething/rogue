@@ -65,12 +65,16 @@ class ImportSignupsCommand extends Command
             ])->first();
 
             // Create a signup if there isn't one already
-            if (! $existing_signup) {
+            if (!$existing_signup) {
                 $signup = Signup::create([
                     'northstar_id' => $missing_signup['northstar_id'],
                     'campaign_id' => $missing_signup['campaign_id'],
                     'source' => $missing_signup['source'],
-                    'created_at' => $missing_signup['signup_created_at_timestamp'] ? $missing_signup['signup_created_at_timestamp'] : Carbon::now(),
+                    'created_at' => $missing_signup[
+                        'signup_created_at_timestamp'
+                    ]
+                        ? $missing_signup['signup_created_at_timestamp']
+                        : Carbon::now(),
                 ]);
 
                 if ($signup->id % $logfreq == 0) {
@@ -81,7 +85,11 @@ class ImportSignupsCommand extends Command
                 SendSignupToCustomerIo::dispatch($signup);
             } else {
                 if ($existing_signup->id % $logfreq == 0) {
-                    info('rogue:signupimport: Signup ' . $existing_signup->id . ' already exists! Moving on.');
+                    info(
+                        'rogue:signupimport: Signup ' .
+                            $existing_signup->id .
+                            ' already exists! Moving on.',
+                    );
                 }
             }
         }

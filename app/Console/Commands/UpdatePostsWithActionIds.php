@@ -39,7 +39,9 @@ class UpdatePostsWithActionIds extends Command
      */
     public function handle()
     {
-        $this->line('rogue:updatepostswithactionids: Staring script to add action_ids to posts!');
+        $this->line(
+            'rogue:updatepostswithactionids: Staring script to add action_ids to posts!',
+        );
 
         // Grab all of the actions in the actions table.
         $actions = Action::all();
@@ -52,7 +54,10 @@ class UpdatePostsWithActionIds extends Command
                 ->where('type', $action->post_type)
                 ->update(['action_id' => $action->id]);
 
-            $this->line('rogue:updatepostswithactionids: Updated all posts action_ids that have action ' . $action->id);
+            $this->line(
+                'rogue:updatepostswithactionids: Updated all posts action_ids that have action ' .
+                    $action->id,
+            );
         }
 
         // Tell everyone we're done!

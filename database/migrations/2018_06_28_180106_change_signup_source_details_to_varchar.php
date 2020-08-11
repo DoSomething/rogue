@@ -14,7 +14,10 @@ class ChangeSignupSourceDetailsToVarchar extends Migration
     public function up()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->string('source_details')->nullable()->change();
+            $table
+                ->string('source_details')
+                ->nullable()
+                ->change();
         });
     }
 

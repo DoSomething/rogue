@@ -22,7 +22,7 @@ class Fastly extends RestApiClient
         parent::__construct(config('services.fastly.url'), [
             'headers' => [
                 'Fastly-Key' => config('services.fastly.key'),
-                'Accept'     => 'application/json',
+                'Accept' => 'application/json',
             ],
         ]);
     }
@@ -42,11 +42,13 @@ class Fastly extends RestApiClient
      */
     protected function purgeKey($cacheKey): void
     {
-        if (! $this->service) {
+        if (!$this->service) {
             return;
         }
 
-        $purgeResponse = $this->post('service/'.$this->service.'/purge/'.$cacheKey);
+        $purgeResponse = $this->post(
+            'service/' . $this->service . '/purge/' . $cacheKey,
+        );
         info('image_cache_purge_successful', ['response' => $purgeResponse]);
     }
 }

@@ -14,8 +14,14 @@ class AddGroupIdToPosts extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->unsignedInteger('group_id')->nullable()->after('referrer_user_id');
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table
+                ->unsignedInteger('group_id')
+                ->nullable()
+                ->after('referrer_user_id');
+            $table
+                ->foreign('group_id')
+                ->references('id')
+                ->on('groups');
         });
     }
 

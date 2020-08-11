@@ -23,9 +23,21 @@ class ActionsController extends Controller
         $this->rules = [
             'name' => ['required', 'string'],
             'post_type' => ['required', 'string', Rule::in(PostType::all())],
-            'action_type' => ['required', 'string', Rule::in(ActionType::all())],
-            'time_commitment' => ['required', 'string', Rule::in(TimeCommitment::all())],
-            'callpower_campaign_id' => ['nullable', 'required_if:post_type,phone-call', 'integer'],
+            'action_type' => [
+                'required',
+                'string',
+                Rule::in(ActionType::all()),
+            ],
+            'time_commitment' => [
+                'required',
+                'string',
+                Rule::in(TimeCommitment::all()),
+            ],
+            'callpower_campaign_id' => [
+                'nullable',
+                'required_if:post_type,phone-call',
+                'integer',
+            ],
             'noun' => ['required', 'string'],
             'verb' => ['required', 'string'],
         ];
@@ -54,10 +66,13 @@ class ActionsController extends Controller
     {
         $request = $this->fillInOmittedCheckboxes($request);
 
-        $this->validate($request, array_merge_recursive($this->rules, [
-            'campaign_id' => ['required', 'integer', 'exists:campaigns,id'],
-            'callpower_campaign_id' => [Rule::unique('actions')],
-        ]));
+        $this->validate(
+            $request,
+            array_merge_recursive($this->rules, [
+                'campaign_id' => ['required', 'integer', 'exists:campaigns,id'],
+                'callpower_campaign_id' => [Rule::unique('actions')],
+            ]),
+        );
 
         // Check to see if the action exists before creating one.
         // @TODO: Remove once we're no longer fetching by this combination of fields.
@@ -67,7 +82,7 @@ class ActionsController extends Controller
             'post_type' => $request['post_type'],
         ])->first();
 
-        if (! $action) {
+        if (!$action) {
             $action = Action::create($request->all());
 
             // Log that a action was created.
@@ -104,9 +119,14 @@ class ActionsController extends Controller
     {
         $request = $this->fillInOmittedCheckboxes($request);
 
-        $this->validate($request, array_merge_recursive($this->rules, [
-            'callpower_campaign_id' => [Rule::unique('actions')->ignore($action->id)],
-        ]));
+        $this->validate(
+            $request,
+            array_merge_recursive($this->rules, [
+                'callpower_campaign_id' => [
+                    Rule::unique('actions')->ignore($action->id),
+                ],
+            ]),
+        );
 
         $action->update($request->all());
 

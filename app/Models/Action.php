@@ -28,8 +28,22 @@ class Action extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'campaign_id', 'post_type', 'action_type', 'time_commitment', 'callpower_campaign_id',
-        'reportback', 'civic_action', 'scholarship_entry', 'anonymous', 'online', 'quiz', 'noun', 'verb', 'collect_school_id', 'volunteer_credit',
+        'name',
+        'campaign_id',
+        'post_type',
+        'action_type',
+        'time_commitment',
+        'callpower_campaign_id',
+        'reportback',
+        'civic_action',
+        'scholarship_entry',
+        'anonymous',
+        'online',
+        'quiz',
+        'noun',
+        'verb',
+        'collect_school_id',
+        'volunteer_credit',
     ];
 
     /**
@@ -56,7 +70,7 @@ class Action extends Model
      */
     public static function getBooleans()
     {
-        return array_keys(((new self)->casts), 'boolean');
+        return array_keys((new self())->casts, 'boolean');
     }
 
     /**

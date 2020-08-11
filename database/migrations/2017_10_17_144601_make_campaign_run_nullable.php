@@ -14,7 +14,10 @@ class MakeCampaignRunNullable extends Migration
     public function up()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->integer('campaign_run_id')->nullable()->change();
+            $table
+                ->integer('campaign_run_id')
+                ->nullable()
+                ->change();
         });
     }
 
@@ -26,7 +29,10 @@ class MakeCampaignRunNullable extends Migration
     public function down()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->integer('campaign_run_id')->nullable(false)->change();
+            $table
+                ->integer('campaign_run_id')
+                ->nullable(false)
+                ->change();
         });
     }
 }

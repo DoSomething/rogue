@@ -17,7 +17,11 @@ class AddPostalCodeToPosts extends Migration
             // This stores the postal code the post was submitted from, if in Australia, Canada (first 3 characters), France,
             // Germany, Italy, Spain, Switzerland, the United Kingdom (first 2-4 characters), or the United States.
             // See: https://docs.fastly.com/vcl/variables/client-geo-postal-code/
-            $table->string('postal_code', 10)->nullable()->after('location')->comment('The postal code this was submitted from.');
+            $table
+                ->string('postal_code', 10)
+                ->nullable()
+                ->after('location')
+                ->comment('The postal code this was submitted from.');
         });
     }
 

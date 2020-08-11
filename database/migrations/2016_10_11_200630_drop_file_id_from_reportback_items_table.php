@@ -25,7 +25,10 @@ class DropFileIdFromReportbackItemsTable extends Migration
     public function down()
     {
         Schema::table('reportback_items', function (Blueprint $table) {
-            $table->integer('file_id')->index()->unsigned();
+            $table
+                ->integer('file_id')
+                ->index()
+                ->unsigned();
         });
     }
 }

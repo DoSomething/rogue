@@ -8,19 +8,14 @@ use League\Fractal\TransformerAbstract;
 
 class PostTransformer extends TransformerAbstract
 {
-    protected $defaultIncludes = [
-        'action_details',
-    ];
+    protected $defaultIncludes = ['action_details'];
 
     /**
      * List of resources possible to include
      *
      * @var array
      */
-    protected $availableIncludes = [
-        'signup',
-        'siblings',
-    ];
+    protected $availableIncludes = ['signup', 'siblings'];
 
     /**
      * Transform resource data.
@@ -44,7 +39,7 @@ class PostTransformer extends TransformerAbstract
             ],
             'quantity' => $post->quantity,
             'reactions' => [
-                'reacted' => ! empty($post->reaction),
+                'reacted' => !empty($post->reaction),
                 'total' => $post->reactions_count,
             ],
             'status' => $post->status,
@@ -56,7 +51,7 @@ class PostTransformer extends TransformerAbstract
         ];
 
         // If this post is for an anonymous action (and viewer is not owner/staff), hide the user ID.
-        if (! $post->actionModel->anonymous || Gate::allows('viewAll', $post)) {
+        if (!$post->actionModel->anonymous || Gate::allows('viewAll', $post)) {
             $response['northstar_id'] = $post->northstar_id;
         }
 
@@ -82,11 +77,11 @@ class PostTransformer extends TransformerAbstract
      */
     public function includeSignup(Post $post)
     {
-        if (! $post->signup) {
+        if (!$post->signup) {
             return;
         }
 
-        $transformer = (new SignupTransformer)->setDefaultIncludes(['user']);
+        $transformer = (new SignupTransformer())->setDefaultIncludes(['user']);
 
         return $this->item($post->signup, $transformer);
     }
@@ -99,7 +94,7 @@ class PostTransformer extends TransformerAbstract
      */
     public function includeSiblings(Post $post)
     {
-        return $this->collection($post->siblings, new self);
+        return $this->collection($post->siblings, new self());
     }
 
     /**
@@ -110,6 +105,6 @@ class PostTransformer extends TransformerAbstract
      */
     public function includeActionDetails(Post $post)
     {
-        return $this->item($post->actionModel, new ActionTransformer);
+        return $this->item($post->actionModel, new ActionTransformer());
     }
 }

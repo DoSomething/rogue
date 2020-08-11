@@ -21,9 +21,7 @@ class Event extends Model
      *
      * @var array
      */
-    public static $indexes = [
-        'eventable_id',
-    ];
+    public static $indexes = ['eventable_id'];
 
     /**
      * The attributes that should be cast to native types.
@@ -41,7 +39,8 @@ class Event extends Model
 
     public function scopeForSignup($query, $id)
     {
-        return $query->where('eventable_type', 'Rogue\Models\Signup')
-                     ->where('eventable_id', $id);
+        return $query
+            ->where('eventable_type', 'Rogue\Models\Signup')
+            ->where('eventable_id', $id);
     }
 }

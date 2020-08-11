@@ -13,7 +13,11 @@ class MoveNorthstarIdColumnToPosts extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('northstar_id')->index()->after('signup_id')->comment('The users Northstar ID');
+            $table
+                ->string('northstar_id')
+                ->index()
+                ->after('signup_id')
+                ->comment('The users Northstar ID');
         });
     }
 

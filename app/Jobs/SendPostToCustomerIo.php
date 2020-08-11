@@ -52,7 +52,9 @@ class SendPostToCustomerIo implements ShouldQueue
             $blink->userSignupPost($payload);
 
             if ($this->log) {
-                logger()->info('Post ' . $payload['id'] . ' sent to Customer.io');
+                logger()->info(
+                    'Post ' . $payload['id'] . ' sent to Customer.io',
+                );
             }
         }
     }

@@ -27,7 +27,15 @@ class Campaign extends Model
      *
      * @var array
      */
-    protected $fillable = ['internal_title', 'cause', 'impact_doc', 'start_date', 'end_date', 'contentful_campaign_id', 'group_type_id'];
+    protected $fillable = [
+        'internal_title',
+        'cause',
+        'impact_doc',
+        'start_date',
+        'end_date',
+        'contentful_campaign_id',
+        'group_type_id',
+    ];
 
     /**
      * Attributes that can be queried when filtering.
@@ -47,7 +55,12 @@ class Campaign extends Model
      *
      * @var array
      */
-    public static $sortable = ['id', 'accepted_count', 'pending_count', 'start_date'];
+    public static $sortable = [
+        'id',
+        'accepted_count',
+        'pending_count',
+        'start_date',
+    ];
 
     /**
      * Get the signups associated with this campaign.
@@ -91,9 +104,11 @@ class Campaign extends Model
     {
         $today = now()->format('Y-m-d');
 
-        return $query->whereDate('start_date', '<=', $today)
+        return $query
+            ->whereDate('start_date', '<=', $today)
             ->where(function (Builder $query) use ($today) {
-                $query->whereNull('end_date')
+                $query
+                    ->whereNull('end_date')
                     ->orWhereDate('end_date', '>', $today);
             });
     }
@@ -105,9 +120,11 @@ class Campaign extends Model
     {
         $today = now()->format('Y-m-d');
 
-        return $query->whereDate('start_date', '>', $today)
+        return $query
+            ->whereDate('start_date', '>', $today)
             ->orWhere(function (Builder $query) use ($today) {
-                $query->whereNotNull('end_date')
+                $query
+                    ->whereNotNull('end_date')
                     ->whereDate('end_date', '<', $today);
             });
     }
@@ -143,7 +160,11 @@ class Campaign extends Model
         // Regex matches on comma separated words to ensure precise match for each cause.
         // Accounts for first and last words only having a comma on one side.
         // (https://regex101.com/r/RaDXos/6).
-        return $query->where('cause', 'regexp', '(^|,)'.$causesRegex.'(,|$)');
+        return $query->where(
+            'cause',
+            'regexp',
+            '(^|,)' . $causesRegex . '(,|$)',
+        );
     }
 
     /**
@@ -156,7 +177,7 @@ class Campaign extends Model
         $hasStarted = $this->start_date < now();
         $hasEnded = $this->end_date && $this->end_date < now();
 
-        return $hasStarted && ! $hasEnded;
+        return $hasStarted && !$hasEnded;
     }
 
     /**
@@ -166,7 +187,9 @@ class Campaign extends Model
      */
     public function getCauseNames()
     {
-        return array_values(array_intersect_key(Cause::labels(), array_flip($this->cause)));
+        return array_values(
+            array_intersect_key(Cause::labels(), array_flip($this->cause)),
+        );
     }
 
     /**
@@ -197,7 +220,7 @@ class Campaign extends Model
     public function getStartDateAttribute()
     {
         $value = $this->attributes['start_date'];
-        if (! $value) {
+        if (!$value) {
             return null;
         }
         //explicitly setting our timezone to EST to account for accurate end dates displayed on Phoenix
@@ -220,7 +243,7 @@ class Campaign extends Model
     public function getEndDateAttribute()
     {
         $value = $this->attributes['end_date'];
-        if (! $value) {
+        if (!$value) {
             return null;
         }
         //explicitly setting our timezone to EST to account for accurate end dates displayed on Phoenix

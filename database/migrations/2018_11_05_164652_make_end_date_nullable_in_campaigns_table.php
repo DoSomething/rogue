@@ -14,7 +14,10 @@ class MakeEndDateNullableInCampaignsTable extends Migration
     public function up()
     {
         Schema::table('campaigns', function (Blueprint $table) {
-            $table->dateTime('end_date')->nullable()->change();
+            $table
+                ->dateTime('end_date')
+                ->nullable()
+                ->change();
         });
     }
 
@@ -26,7 +29,10 @@ class MakeEndDateNullableInCampaignsTable extends Migration
     public function down()
     {
         Schema::table('campaigns', function (Blueprint $table) {
-            $table->dateTime('end_date')->nullable(false)->change();
+            $table
+                ->dateTime('end_date')
+                ->nullable(false)
+                ->change();
         });
     }
 }

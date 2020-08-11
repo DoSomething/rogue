@@ -11,10 +11,12 @@ class ChangeGoodPhotoToGoodSubmission extends Migration
      */
     public function up()
     {
-        $goodPhoto = DB::table('tags')->where(['tag_name' => 'Good Photo'])->update([
-            'tag_name' => 'Good Submission',
-            'tag_slug' => 'good-submission',
-        ]);
+        $goodPhoto = DB::table('tags')
+            ->where(['tag_name' => 'Good Photo'])
+            ->update([
+                'tag_name' => 'Good Submission',
+                'tag_slug' => 'good-submission',
+            ]);
     }
 
     /**
@@ -24,9 +26,11 @@ class ChangeGoodPhotoToGoodSubmission extends Migration
      */
     public function down()
     {
-        $goodPhoto = DB::table('tags')->where(['tag_name' => 'Good Submission'])->update([
-            'tag_name' => 'Good Photo',
-            'tag_slug' => 'good-photo',
-        ]);
+        $goodPhoto = DB::table('tags')
+            ->where(['tag_name' => 'Good Submission'])
+            ->update([
+                'tag_name' => 'Good Photo',
+                'tag_slug' => 'good-photo',
+            ]);
     }
 }

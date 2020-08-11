@@ -45,18 +45,26 @@ class PostCleanup extends Command
 
         // Grab all the posts we received on the given date and
         // group by the submissions having more than 1 of the same caption.
-        $postsByCaption = Post::select(DB::raw('signup_id, caption, COUNT(caption) as caption_count'))
+        $postsByCaption = Post::select(
+            DB::raw('signup_id, caption, COUNT(caption) as caption_count'),
+        )
             ->whereDate('created_at', $date)
             ->groupBy(['caption', 'signup_id'])
             ->having('caption_count', '>', 1)
             ->get();
 
-        $this->info('There are ' . $postsByCaption->count() . ' posts with more than 1 of the same caption');
+        $this->info(
+            'There are ' .
+                $postsByCaption->count() .
+                ' posts with more than 1 of the same caption',
+        );
 
         // Loop through all the posts that have the
         // same caption per signup and delete all but the most recent one.
         foreach ($postsByCaption as $postCaption) {
-            $this->info('Getting posts under signup ' . $postCaption->signup_id);
+            $this->info(
+                'Getting posts under signup ' . $postCaption->signup_id,
+            );
 
             $userPosts = Post::where('signup_id', $postCaption->signup_id)
                 ->where('caption', $postCaption->caption)

@@ -41,7 +41,9 @@ class ImportPrePostMetaDataActions extends Command
     {
         // Make a local copy of the CSV
         $path = $this->argument('path');
-        $this->line('rogue:prepostmetadataactionsimport: Loading in csv from ' . $path);
+        $this->line(
+            'rogue:prepostmetadataactionsimport: Loading in csv from ' . $path,
+        );
 
         $temp = tempnam(sys_get_temp_dir(), 'command_csv');
         file_put_contents($temp, fopen($this->argument('path'), 'r'));
@@ -49,29 +51,43 @@ class ImportPrePostMetaDataActions extends Command
         // Load the actions from the CSV
         $backfill_actions_csv = Reader::createFromPath($temp, 'r');
         $backfill_actions_csv->setHeaderOffset(0);
-        $backfill_actions = iterator_to_array($backfill_actions_csv->getRecords());
+        $backfill_actions = iterator_to_array(
+            $backfill_actions_csv->getRecords(),
+        );
 
         // Import each backfill action
-        $this->line('rogue:prepostmetadataactionsimport: Loading in csv from ' . $path);
+        $this->line(
+            'rogue:prepostmetadataactionsimport: Loading in csv from ' . $path,
+        );
 
         foreach ($backfill_actions as $backfill_action) {
             // See if the action exists
-            $existing_action = Action::where('campaign_id', $backfill_action['campaign_id'])->where('name', $backfill_action['action'])->where('post_type', $backfill_action['type'])->first();
+            $existing_action = Action::where(
+                'campaign_id',
+                $backfill_action['campaign_id'],
+            )
+                ->where('name', $backfill_action['action'])
+                ->where('post_type', $backfill_action['type'])
+                ->first();
 
             // Create the action if there isn't one already
-            if (! $existing_action) {
+            if (!$existing_action) {
                 $action = Action::create([
                     'name' => $backfill_action['action'],
                     'campaign_id' => $backfill_action['campaign_id'],
                     'post_type' => $backfill_action['type'],
                     'reportback' => $backfill_action['reportback'],
                     'civic_action' => $backfill_action['civic_action'],
-                    'scholarship_entry' => $backfill_action['scholarship_entry'],
+                    'scholarship_entry' =>
+                        $backfill_action['scholarship_entry'],
                     'noun' => $backfill_action['noun'],
                     'verb' => $backfill_action['verb'],
                 ]);
 
-                $this->line('rogue:prepostmetadataactionsimport: Created action ' . $action->id);
+                $this->line(
+                    'rogue:prepostmetadataactionsimport: Created action ' .
+                        $action->id,
+                );
             }
         }
 

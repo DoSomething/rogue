@@ -14,9 +14,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        PostTagged::class => [
-            SendTaggedNotification::class,
-        ],
+        PostTagged::class => [SendTaggedNotification::class],
     ];
 
     /**

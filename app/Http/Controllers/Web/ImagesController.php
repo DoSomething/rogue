@@ -45,7 +45,7 @@ class ImagesController extends Controller
         $post = Post::findByHashOrFail($hash);
 
         if ($post->type !== 'photo') {
-            throw new ModelNotFoundException;
+            throw new ModelNotFoundException();
         }
 
         $server = ServerFactory::create([
@@ -61,16 +61,22 @@ class ImagesController extends Controller
             ],
         ]);
 
-        $response = $server->getImageResponse($post->getMediaPath(), $request->all());
+        $response = $server->getImageResponse(
+            $post->getMediaPath(),
+            $request->all(),
+        );
 
         // We want these to be cached in Fastly to reduce load on our servers. We can then
         // use the 'Surrogate-Key' to easily clear this from Fastly's cache if modified:
         $response->headers->set('Surrogate-Control', 'max-age=31536000');
-        $response->headers->set('Surrogate-Key', 'post-'.$post->id);
+        $response->headers->set('Surrogate-Key', 'post-' . $post->id);
 
         // And we want browsers to cache but re-validate with us before returning cached content
         // on a subsequent load, so that image rotations/deletions are respected immediately:
-        $response->headers->set('Cache-Control', 'max-age=31536000, must-revalidate, no-cache, public');
+        $response->headers->set(
+            'Cache-Control',
+            'max-age=31536000, must-revalidate, no-cache, public',
+        );
 
         return $response;
     }

@@ -16,7 +16,7 @@ trait HasCursor
         // If we're ordering results, we need to include that column's
         // value in the cursor (so we can say "get me things after this"):
         if ($orderBy = request()->query('orderBy')) {
-            [ $column, $direction ] = explode(',', $orderBy, 2);
+            [$column, $direction] = explode(',', $orderBy, 2);
 
             // Check that it's okay to expose this column in the cursor:
             if (in_array($column, self::$sortable)) {
@@ -30,8 +30,11 @@ trait HasCursor
     /**
      * Scope a query to only include items after the given cursor.
      */
-    public function scopeWhereAfterCursor($query, $cursor, $defaultSort = 'id,desc')
-    {
+    public function scopeWhereAfterCursor(
+        $query,
+        $cursor,
+        $defaultSort = 'id,desc'
+    ) {
         $cursor = explode('.', base64_decode($cursor), 2);
 
         $id = $cursor[0];
@@ -41,8 +44,8 @@ trait HasCursor
 
         // If we're sorting by anything other than ID, things get a lil' tricky. First,
         // we'll extract the sorted column & direction from the `?orderBy` query string:
-        if ($orderBy && $orderBy !== 'id,asc' && ! is_null($sortCursor)) {
-            [ $column, $direction ] = explode(',', $orderBy, 2);
+        if ($orderBy && $orderBy !== 'id,asc' && !is_null($sortCursor)) {
+            [$column, $direction] = explode(',', $orderBy, 2);
             $operator = $direction === 'asc' ? '>' : '<';
 
             // Then, we'll check that we're allowed to sort by this column (to prevent

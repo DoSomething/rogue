@@ -35,12 +35,24 @@ class EventTransformer extends TransformerAbstract
             }
 
             // Cast values that should be integers to integers.
-            $integerValues = ['id', 'campaign_id', 'campaign_run_id', 'quantity', 'quantity_pending'];
+            $integerValues = [
+                'id',
+                'campaign_id',
+                'campaign_run_id',
+                'quantity',
+                'quantity_pending',
+            ];
 
             foreach ($integerValues as $integerValue) {
-                if (isset($content[$integerValue]) && $content[$integerValue] != 'null') {
+                if (
+                    isset($content[$integerValue]) &&
+                    $content[$integerValue] != 'null'
+                ) {
                     $content[$integerValue] = (int) $content[$integerValue];
-                } elseif (isset($content[$integerValue]) && $content[$integerValue] === 'null') {
+                } elseif (
+                    isset($content[$integerValue]) &&
+                    $content[$integerValue] === 'null'
+                ) {
                     // Return as null instead of a string.
                     $content[$integerValue] = null;
                 }

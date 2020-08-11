@@ -67,16 +67,26 @@ class BulkReviewPosts extends Command
             ->where('status', $this->argument('oldStatus'))
             ->where('type', $this->argument('type'))
             ->limit(10)
-            ->chunk(100, function ($posts) use ($logfreq, $log, $newStatus, $tags) {
+            ->chunk(100, function ($posts) use (
+                $logfreq,
+                $log,
+                $newStatus,
+                $tags
+            ) {
                 if ($posts->isNotEmpty()) {
                     foreach ($posts as $post) {
                         if ($post->id % $logfreq == 0) {
-                            info('rogue:bulkreviewposts: updating: ' . $post->id);
+                            info(
+                                'rogue:bulkreviewposts: updating: ' . $post->id,
+                            );
                         }
 
                         // If the $log flag is included when the command is run, logging will occur in the Post Manager for each post.
-                        $this->posts->update($post, ['status' => $newStatus], $log
-                    );
+                        $this->posts->update(
+                            $post,
+                            ['status' => $newStatus],
+                            $log,
+                        );
                         foreach ($tags as $tag) {
                             $post->tag($tag, $log);
                         }

@@ -31,7 +31,7 @@ class TagsController extends ApiController
     public function __construct(PostRepository $post)
     {
         $this->post = $post;
-        $this->transformer = new PostTransformer;
+        $this->transformer = new PostTransformer();
 
         $this->middleware('auth:api');
         $this->middleware('role:admin,staff');

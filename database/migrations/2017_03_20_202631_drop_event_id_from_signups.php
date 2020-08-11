@@ -27,8 +27,15 @@ class DropEventIdFromSignups extends Migration
     public function down()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->integer('event_id')->unsigned()->index()->comment('The event ID');
-            $table->foreign('event_id')->references('id')->on('events');
+            $table
+                ->integer('event_id')
+                ->unsigned()
+                ->index()
+                ->comment('The event ID');
+            $table
+                ->foreign('event_id')
+                ->references('id')
+                ->on('events');
         });
     }
 }

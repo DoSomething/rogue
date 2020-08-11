@@ -14,9 +14,7 @@ class SignupTransformer extends TransformerAbstract
      *
      * @var array
      */
-    protected $availableIncludes = [
-        'posts', 'user', 'accepted_quantity',
-    ];
+    protected $availableIncludes = ['posts', 'user', 'accepted_quantity'];
 
     /**
      * Transform resource data.
@@ -60,7 +58,7 @@ class SignupTransformer extends TransformerAbstract
         // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
         $post = $signup->visiblePosts;
 
-        return $this->collection($post, new PostTransformer);
+        return $this->collection($post, new PostTransformer());
     }
 
     /**
@@ -74,7 +72,10 @@ class SignupTransformer extends TransformerAbstract
         $registrar = app(Registrar::class);
         $northstar_id = $signup->northstar_id;
 
-        return $this->item($registrar->find($northstar_id), new UserTransformer);
+        return $this->item(
+            $registrar->find($northstar_id),
+            new UserTransformer(),
+        );
     }
 
     /**
@@ -85,6 +86,9 @@ class SignupTransformer extends TransformerAbstract
      */
     public function includeAcceptedQuantity(Signup $signup)
     {
-        return $this->item($signup->getAcceptedQuantity(), new AcceptedQuantityTransformer);
+        return $this->item(
+            $signup->getAcceptedQuantity(),
+            new AcceptedQuantityTransformer(),
+        );
     }
 }

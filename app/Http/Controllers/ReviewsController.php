@@ -30,7 +30,7 @@ class ReviewsController extends ApiController
     public function __construct(PostManager $post)
     {
         $this->post = $post;
-        $this->transformer = new PostTransformer;
+        $this->transformer = new PostTransformer();
 
         $this->middleware('auth:api');
         $this->middleware('role:admin,staff');
@@ -51,7 +51,11 @@ class ReviewsController extends ApiController
             'status' => 'in:pending,accepted,rejected',
         ]);
 
-        $reviewedPost = $this->post->review($post, $request['status'], $request['comment']);
+        $reviewedPost = $this->post->review(
+            $post,
+            $request['status'],
+            $request['comment'],
+        );
 
         return $this->item($reviewedPost, 201);
     }

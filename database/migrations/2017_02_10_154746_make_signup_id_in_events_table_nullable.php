@@ -13,7 +13,10 @@ class MakeSignupIdInEventsTableNullable extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->integer('signup_id')->nullable()->change();
+            $table
+                ->integer('signup_id')
+                ->nullable()
+                ->change();
         });
     }
 
@@ -25,7 +28,10 @@ class MakeSignupIdInEventsTableNullable extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->integer('signup_id')->nullable(false)->change();
+            $table
+                ->integer('signup_id')
+                ->nullable(false)
+                ->change();
         });
     }
 }
