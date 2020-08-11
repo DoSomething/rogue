@@ -48,7 +48,8 @@ class ImportGroupsCommand extends Command
      * @param string $key
      * @return string
      */
-    private function logInfo($message, $data = []) {
+    private function logInfo($message, $data = [])
+    {
         // Append the group type ID to the data if we have it set.
         $data = $this->groupTypeId ? array_merge(['group_type_id' => $this->groupTypeId], $data) : $data;
         info('rogue:groups-import: '.$message, $data ?: []);
@@ -61,7 +62,8 @@ class ImportGroupsCommand extends Command
      * @param string $key
      * @return string
      */
-    private function sanitizeValue($record, $key) {
+    private function sanitizeValue($record, $key)
+    {
         if (! isset($record[$key])) {
             return null;
         }
@@ -79,8 +81,8 @@ class ImportGroupsCommand extends Command
         $configKey = 'import.group_types.'.$this->argument('groupTypeConfigKey');
         $config = config($configKey);
 
-        if (!$config) {
-            $this->loginfo('Could not find config with key '.$configKey);
+        if (! $config) {
+            $this->loginfo('Could not find config for key '.$configKey);
 
             return;
         }
