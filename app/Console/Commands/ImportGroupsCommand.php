@@ -52,6 +52,7 @@ class ImportGroupsCommand extends Command
     {
         // Append the group type ID to the data if we have it set.
         $data = $this->groupTypeId ? array_merge(['group_type_id' => $this->groupTypeId], $data) : $data;
+
         info('rogue:groups-import: '.$message, $data ?: []);
     }
 
@@ -114,6 +115,7 @@ class ImportGroupsCommand extends Command
         foreach ($csv->getRecords() as $record) {
             $groupName = $this->sanitizeValue($record, 'name');
             $groupSchoolId = $this->sanitizeValue($record, 'universal_id');
+            $groupState = $this->sanitizeValue($record, 'state');
 
             if (! $groupName) {
                 $numSkipped++;
@@ -128,7 +130,9 @@ class ImportGroupsCommand extends Command
                     'group_type_id' => $this->groupTypeId,
                     'name' => $groupName,
                     'city' => $this->sanitizeValue($record, 'city'),
-                    'location' => isset($record['state']) ? 'US-'.trim($record['state']) : null,
+                    'location' => $groupState ? 'US-'.$groupState : null,
+                    // Eventually this field will be deprecated, but still used by Group Finder.
+                    'state' => $groupState,
                     'school_id' => $groupSchoolId,
                 ]);
 
