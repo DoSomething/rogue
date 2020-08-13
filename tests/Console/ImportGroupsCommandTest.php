@@ -5,18 +5,20 @@ namespace Tests\Console;
 use Tests\TestCase;
 use Rogue\Models\GroupType;
 
-class ImportRhodeIslandGroupsCommandTest extends TestCase
+class ImportGroupsCommandTest extends TestCase
 {
     public function testImportingGroups()
     {
-        $this->artisan('rogue:rhode-island-groups-import', ['path' => 'tests/Console/example-rhode-island-groups.csv']);
+        $name = 'Automated Test Group Type';
+
+        $this->artisan('rogue:groups-import', ['input' => 'tests/Console/example-groups.csv', '--name' => $name]);
 
         $this->assertDatabaseHas('group_types', [
-            'name' => 'Rhode Island',
-            'filter_by_state' => false,
+            'name' => $name,
+            'filter_by_location' => false,
         ]);
 
-        $groupType = GroupType::where('name', 'Rhode Island')->first();
+        $groupType = GroupType::where('name', $name)->first();
         $groupTypeId = $groupType->id;
 
         // Spot check groups were imported successfully.
