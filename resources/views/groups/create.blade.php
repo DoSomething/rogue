@@ -29,8 +29,8 @@
                     </div>
 
                     <div class="form-item">
-                        <label class="field-label">State</label>
-                        @include('forms.text', ['name' => 'state', 'placeholder' => ' e.g. TX'])
+                        <label class="field-label">State</Location>
+                        @include('forms.text', ['name' => 'location', 'placeholder' => ' e.g. US-TX'])
                     </div>
 
                     <div class="form-item">

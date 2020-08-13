@@ -24,7 +24,7 @@ const SHOW_GROUP_QUERY = gql`
       }
       name
       schoolId
-      state
+      location
     }
     voterRegistrationsCountByGroupId(groupId: $id)
   }
@@ -52,7 +52,7 @@ const ShowGroup = ({ selectedTab }) => {
 
   if (!data.group) return <NotFound title={title} type="group" />;
 
-  const { city, goal, groupType, name, schoolId, state } = data.group;
+  const { city, goal, groupType, name, schoolId, location } = data.group;
 
   return (
     <Shell title={title} subtitle={`${name} (${groupType.name})`}>
@@ -64,7 +64,7 @@ const ShowGroup = ({ selectedTab }) => {
               'Voter Registrations Completed':
                 data.voterRegistrationsCountByGroupId,
               City: city || '--',
-              State: state || '--',
+              Location: location || '--',
               School: schoolId ? (
                 <Link to={`/schools/${schoolId}`}>{schoolId}</Link>
               ) : (
