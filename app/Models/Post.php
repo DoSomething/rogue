@@ -375,7 +375,7 @@ class Post extends Model
             'details' => $this->details,
             'referrer_user_id' => $this->referrer_user_id,
             'school_id' => $this->school_id,
-            'school_name' => isset($school) ? $school['name'] : null,
+            'school_name' => Arr::get($school, 'name'),
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
             'deleted_at' => $this->deleted_at ? $this->deleted_at->toIso8601String() : null,
@@ -651,7 +651,7 @@ class Post extends Model
         return array_merge([
             'id' => $this->id,
             'user_id' => $userId,
-            'user_display_name' => isset($user) ? $user['displayName'] : null,
+            'user_display_name' => Arr::get($user, 'displayName'),
             'type' => $this->type,
             'status' => $this->status,
             'action_id' => $this->action_id,
