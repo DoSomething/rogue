@@ -34,7 +34,7 @@ class EventsController extends ApiController
 
         $query = $this->filter($query, $filters, Event::$indexes);
 
-        if ($filters['signup_id']) {
+        if ($filters && $filters['signup_id']) {
             $query = $query->forSignup($filters['signup_id'])->orderBy('created_at', 'desc');
         }
 
