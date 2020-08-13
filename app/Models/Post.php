@@ -375,7 +375,7 @@ class Post extends Model
             'details' => $this->details,
             'referrer_user_id' => $this->referrer_user_id,
             'school_id' => $this->school_id,
-            'school_name' => Arr::get($school, 'name'),
+            'school_name' => isset($school) ? Arr::get($school, 'name') : null,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
             'deleted_at' => $this->deleted_at ? $this->deleted_at->toIso8601String() : null,
