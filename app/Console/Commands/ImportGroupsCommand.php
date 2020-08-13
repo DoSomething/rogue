@@ -15,7 +15,6 @@ class ImportGroupsCommand extends Command
      *
      * @var string
      */
-
     protected $signature = 'rogue:groups-import {input=php://stdin} {--name=} {--filterByLocation}';
 
     /**

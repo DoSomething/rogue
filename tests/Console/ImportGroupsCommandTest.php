@@ -7,27 +7,19 @@ use Rogue\Models\GroupType;
 
 class ImportGroupsCommandTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        config(['import.group_types.test' => [
-            'filter_by_location' => true,
-            'name' => 'Automated Test Group Type',
-            'path' => 'tests/Console/example-groups.csv',
-        ]]);
-    }
 
     public function testImportingGroups()
     {
-        $this->artisan('rogue:groups-import', ['groupTypeConfigKey' => 'test']);
+        $name = 'Automated Test Group Type';
+
+        $this->artisan('rogue:groups-import', ['input' => 'tests/Console/example-groups.csv', '--name' => $name]);
 
         $this->assertDatabaseHas('group_types', [
-            'name' => 'Automated Test Group Type',
-            'filter_by_location' => true,
+            'name' => $name,
+            'filter_by_location' => false,
         ]);
 
-        $groupType = GroupType::where('name', 'Automated Test Group Type')->first();
+        $groupType = GroupType::where('name', $name)->first();
         $groupTypeId = $groupType->id;
 
         // Spot check groups were imported successfully.
