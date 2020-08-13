@@ -15,17 +15,18 @@ class ImportGroupsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'rogue:groups-import {groupTypeConfigKey}';
+
+    protected $signature = 'rogue:groups-import {input=php://stdin} {--name=} {--filterByLocation}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Creates or updates a group type and its groups from a CSV set in config.';
+    protected $description = 'Creates or updates a group type and its groups from a CSV.';
 
     /**
-     * The ID of the group type this command is being run for.
+     * The ID of the group type that will or does belong to the name option passed.
      *
      * @var int
      */
@@ -52,6 +53,7 @@ class ImportGroupsCommand extends Command
     {
         // Append the group type ID to the data if we have it set.
         $data = $this->groupTypeId ? array_merge(['group_type_id' => $this->groupTypeId], $data) : $data;
+
         info('rogue:groups-import: '.$message, $data ?: []);
     }
 
@@ -78,24 +80,16 @@ class ImportGroupsCommand extends Command
      */
     public function handle()
     {
-        $configKey = 'import.group_types.'.$this->argument('groupTypeConfigKey');
-        $config = config($configKey);
+        $groupTypeName = $this->option('name');
 
-        if (! $config) {
-            $this->loginfo('Could not find config for key '.$configKey);
+        if (! $groupTypeName) {
+            $this->logInfo('Please provide a name option.');
 
             return;
         }
 
-        $this->logInfo('Found group type config', $config);
-
-        // Make a local copy of the CSV.
-        $temp = tempnam(sys_get_temp_dir(), 'command_csv');
-
-        file_put_contents($temp, fopen($config['path'], 'r'));
-
-        // Load CSV contents.
-        $csv = Reader::createFromPath($temp, 'r');
+        $input = file_get_contents($this->argument('input'));
+        $csv = Reader::createFromString($input);
 
         $csv->setHeaderOffset(0);
 
@@ -104,9 +98,10 @@ class ImportGroupsCommand extends Command
         $numSkipped = 0;
 
         $groupType = GroupType::firstOrCreate([
-            'name' => $config['name'],
-            'filter_by_location' => $config['filter_by_location'],
+            'name' => $groupTypeName,
+            'filter_by_location' => $this->option('filterByLocation'),
         ]);
+
         $this->groupTypeId = $groupType->id;
 
         $this->logInfo('Beginning import');
