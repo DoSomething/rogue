@@ -7,7 +7,6 @@ use Rogue\Models\GroupType;
 
 class ImportGroupsCommandTest extends TestCase
 {
-
     public function testImportingGroups()
     {
         $name = 'Automated Test Group Type';
