@@ -3,6 +3,7 @@
 namespace Rogue\Models;
 
 use Hashids\Hashids;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Rogue\Services\GraphQL;
 use Rogue\Models\Traits\HasCursor;
@@ -350,8 +351,8 @@ class Post extends Model
             'why_participated' => $this->signup->why_participated,
             'campaign_id' => (string) $this->campaign_id,
             'campaign_run_id' => (string) $this->signup->campaign_run_id,
-            'campaign_title' => $campaignWebsite['title'],
-            'campaign_slug' => $campaignWebsite['slug'],
+            'campaign_title' => Arr::get($campaignWebsite, 'title'),
+            'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
             'campaign_cause' => $campaign_cause,
             'northstar_id' => $this->northstar_id,
             'type' => $this->type,
