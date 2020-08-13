@@ -18,13 +18,6 @@ class ImportGroupsCommandTest extends TestCase
         ]]);
     }
 
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        config(['import.group_types.test' => null]);
-    }
-
     public function testImportingGroups()
     {
         $this->artisan('rogue:groups-import', ['groupTypeConfigKey' => 'test']);
