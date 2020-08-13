@@ -256,9 +256,9 @@ class Signup extends Model
         return [
             'id' => $this->id,
             'user_id' => $userId,
-            'user_display_name' => isset($user) ? $user['displayName'] : null,
+            'user_display_name' => Arr::get($user, 'displayName'),
             'campaign_id' => (string) $this->campaign_id,
-            'campaign_title' => isset($campaignWebsite) ? $campaignWebsite['title'] : null,
+            'campaign_title' => Arr::get($campaignWebsite, 'title'),
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
