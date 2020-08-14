@@ -30,8 +30,8 @@
                     </div>
 
                     <div class="form-item">
-                        <label class="field-label">State</label>
-                        @include('forms.text', ['name' => 'state', 'placeholder' => ' e.g. TX', 'value' => $group->state])
+                        <label class="field-label">Location</label>
+                        @include('forms.text', ['name' => 'location', 'placeholder' => ' e.g. US-TX', 'value' => $group->location])
                     </div>
 
                     <div class="form-item">
