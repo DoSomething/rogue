@@ -19,11 +19,11 @@ class FakerSchoolId extends Base
 
         // We use real school ID's so GraphQL queries that join on Schools don't break.
         $reader = Reader::createFromPath('database/faker/schools.csv', 'r');
-        $reader->setHeaderOffset(0);
-        $records = $reader->getRecords();
 
-        foreach ($records as $record) {
-            array_push($this->schools, $record);
+        $reader->setHeaderOffset(0);
+
+        foreach ($reader->getRecords() as $school) {
+            array_push($this->schools, (object) $school);
         }
     }
 
@@ -34,9 +34,7 @@ class FakerSchoolId extends Base
      */
     public function school()
     {
-        $randomKey = array_rand($this->schools);
-
-        return (object) $this->schools[$randomKey];
+        return $this->schools[array_rand($this->schools)];
     }
 
     /**

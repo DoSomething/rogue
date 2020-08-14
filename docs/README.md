@@ -1,12 +1,16 @@
 # Rogue [![StyleCI](https://styleci.io/repos/64166359/shield?style=flat-rounded)](https://styleci.io/repos/64166359)
 
-This is **Rogue**, the DoSomething.org user activity service. Rogue is built using [Laravel 5.5](https://laravel.com/docs/5.5) and [React](http://reactjs.com).
+This is **Rogue**, the DoSomething.org user activity service. Rogue is built using [Laravel 6](https://laravel.com/docs/6.x) and [React](http://reactjs.com).
+
+-   [API Documentation](./endpoints)
 
 ### Getting Started
 
-To get started with development, follow the [installation](./development/installation.md) and [contributing](./development/contributing.md) documentation.
+To get started with development, check out our communal docs for installing [Homestead](https://github.com/DoSomething/communal-docs/tree/master/Homestead).
 
-To get started using the API, see our [API Documentation](./endpoints)
+After installation, run `php artisan db:seed` to create sample campaign and activity data.
+
+You can additionally seed your database with sample voter registration data by running `php artisan db:seed --class=VoterRegistrationSeeder`.
 
 ### Security Vulnerabilities
 
