@@ -36,7 +36,7 @@ class FakerSchoolId extends Base
     {
         $randomKey = array_rand($this->schools);
 
-        return $this->schools[$randomKey];
+        return (object) $this->schools[$randomKey];
     }
 
     /**
@@ -46,6 +46,6 @@ class FakerSchoolId extends Base
      */
     public function school_id()
     {
-        return $this->school()['school_id'];
+        return $this->school()->school_id;
     }
 }

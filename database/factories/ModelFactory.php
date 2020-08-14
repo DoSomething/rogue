@@ -225,7 +225,11 @@ $factory->define(Group::class, function (Generator $faker) {
 });
 
 $factory->state(Group::class, 'school', function (Generator $faker) {
+    $school = $faker->school;
+
     return [
-        'school_id' => $faker->school_id,
+        'city' => $school->city,
+        'location' => $school->location,
+        'school_id' => $school->school_id,
     ];
 });
