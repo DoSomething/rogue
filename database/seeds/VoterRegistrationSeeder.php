@@ -24,7 +24,7 @@ class VoterRegistrationSeeder extends Seeder
 
         $groupType = factory(GroupType::class)->create();
 
-        factory(Group::class, 100)->states('school')->create(['group_type_id' => $groupType->id])
+        factory(Group::class, 10)->states('school')->create(['group_type_id' => $groupType->id])
             ->each(function (Group $group) use ($action) {
                 // Create completed voter registrations for this group.
                 factory(Post::class, rand(1, 40))->states('voter-reg', 'register-form')->create([
