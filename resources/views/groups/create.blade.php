@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="form-item">
-                        <label class="field-label">State</Location>
+                        <label class="field-label">Location</label>
                         @include('forms.text', ['name' => 'location', 'placeholder' => ' e.g. US-TX'])
                     </div>
 
