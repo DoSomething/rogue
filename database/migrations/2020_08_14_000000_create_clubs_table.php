@@ -17,6 +17,7 @@ class CreateClubsTable extends Migration
             $table->increments('id');
             $table->string('name', 255)->index()->comment('The name of the club.');
             $table->string('leader_id')->unique()->comment('The Northstar ID of the club leader.');
+            $table->string('school_id', 255)->nullable()->comment('The school ID the club is associated with.');
             $table->timestamps();
         });
     }
