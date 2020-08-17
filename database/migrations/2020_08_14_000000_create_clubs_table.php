@@ -16,6 +16,7 @@ class CreateClubsTable extends Migration
         Schema::create('clubs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255)->index()->comment('The name of the club.');
+            $table->string('leader_id')->unique()->comment('The Northstar ID of the club leader.');
             $table->timestamps();
         });
     }
