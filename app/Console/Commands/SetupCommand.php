@@ -51,13 +51,12 @@ class SetupCommand extends Command
             $this->setEnvironmentVariable('NORTHSTAR_CLIENT_SECRET', 'Enter the OAuth Client Secret for machine requests');
         });
 
-        $this->line('Creating application key');
-        $this->call('key:generate');
+        $this->runArtisanCommand('key:generate', 'Creating application key');
 
-        $this->line('Fetching public key from Northstar');
-        $this->call('gateway:key');
+        $this->runArtisanCommand('gateway:key', 'Fetching public key from Northstar');
 
-        $this->line('Running database migrations');
-        $this->call('migrate');
+        $this->runArtisanCommand('migrate', 'Running database migrations');
+
+        $this->comment('Let\'s do this! ✨');
     }
 }
