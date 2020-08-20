@@ -28,8 +28,8 @@ When contributing to Rogue, follow these steps:
 
 For local development instuctions [see here](/docs/development/installation.md)
 
-### Guidelines
+### Contributing
 
-We follow [Laravel's code style](http://laravel.com/docs/5.5/contributions#coding-style) and automatically
-lint all pull requests with [StyleCI](https://styleci.io/repos/64166359). Be sure to configure
+We follow [Laravel's code style](https://laravel.com/docs/6.x/contributions#coding-style) and automatically
+format PHP code with [Prettier PHP](https://github.com/prettier/plugin-php). Be sure to configure
 [EditorConfig](http://editorconfig.org) to ensure you have proper indentation settings.
