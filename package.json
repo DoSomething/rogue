@@ -26,6 +26,7 @@
   },
   "prettier": {
     "singleQuote": true,
+    "phpVersion": "7.4",
     "trailingComma": "all"
   },
   "babel": {
