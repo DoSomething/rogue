@@ -28,7 +28,7 @@ When contributing to Rogue, follow these steps:
 
 For local development instuctions [see here](/docs/development/installation.md)
 
-### Contributing
+### Guidelines
 
 We follow [Laravel's code style](https://laravel.com/docs/6.x/contributions#coding-style) and automatically
 format PHP code with [Prettier PHP](https://github.com/prettier/plugin-php). Be sure to configure
