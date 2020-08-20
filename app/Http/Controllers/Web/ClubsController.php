@@ -18,7 +18,7 @@ class ClubsController extends Controller
 
         $this->rules = [
             'name' => 'required|string|max:255',
-            'leader_id' => 'required|objectid',
+            'leader_id' => 'required|objectid|unique:clubs',
             'city' => 'nullable|string',
             'location' => 'nullable|iso3166',
             'school_id' => 'nullable|string|max:255',
