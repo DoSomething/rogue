@@ -22,13 +22,13 @@ class ImagesTest extends TestCase
         // View the post 60 times (using 3 different versions)
         for ($i = 0; $i < 5; $i++) {
             $response = $this->getJson(
-                'images/' . $posts->random()->hash
+                'images/' . $posts->random()->hash,
             )->assertSuccessful(200);
             $response->assertStatus(200);
         }
         for ($i = 5; $i < 10; $i++) {
             $response = $this->getJson(
-                'images/' . $posts->random()->hash . '?w=500&h=500&fit=crop'
+                'images/' . $posts->random()->hash . '?w=500&h=500&fit=crop',
             );
             $response->assertStatus(200);
         }
@@ -36,7 +36,7 @@ class ImagesTest extends TestCase
             $response = $this->getJson(
                 'images/' .
                     $posts->random()->hash .
-                    '?w=250&h=400&fit=crop&filt=sepia'
+                    '?w=250&h=400&fit=crop&filt=sepia',
             );
             $response->assertStatus(200);
         }
@@ -59,7 +59,7 @@ class ImagesTest extends TestCase
             ->create();
 
         $response = $this->getJson(
-            'images/' . $posts->random()->hash
+            'images/' . $posts->random()->hash,
         )->assertSuccessful(200);
 
         // Get an Access-Control-Allow-Origin header with wildcard '*' in response.

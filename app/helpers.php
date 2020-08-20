@@ -17,7 +17,7 @@ function scriptify($json = [], $store = 'STATE')
             $store .
             ' = ' .
             json_encode($json) .
-            '</script>'
+            '</script>',
     );
 }
 

@@ -20,7 +20,7 @@ class AddLocationToPosts extends Migration
                 ->nullable()
                 ->after('details')
                 ->comment(
-                    'The ISO 3166-2 region code this was submitted from.'
+                    'The ISO 3166-2 region code this was submitted from.',
                 );
         });
     }

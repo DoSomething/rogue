@@ -44,32 +44,32 @@ class SetupCommand extends Command
             $this->chooseEnvironmentVariable(
                 'NORTHSTAR_URL',
                 'Choose a Northstar environment',
-                array_keys($environments)
+                array_keys($environments),
             );
 
             $this->instruction(
-                'You can get these environment variables from Aurora\'s "Clients" page:'
+                'You can get these environment variables from Aurora\'s "Clients" page:',
             );
             $this->instruction(
-                $environments[env('NORTHSTAR_URL')] . '/clients'
+                $environments[env('NORTHSTAR_URL')] . '/clients',
             );
 
             $this->setEnvironmentVariable(
                 'NORTHSTAR_AUTH_ID',
-                'Enter the OAuth Client ID for web sessions'
+                'Enter the OAuth Client ID for web sessions',
             );
             $this->setEnvironmentVariable(
                 'NORTHSTAR_AUTH_SECRET',
-                'Enter the OAuth Client Secret for web sessions'
+                'Enter the OAuth Client Secret for web sessions',
             );
 
             $this->setEnvironmentVariable(
                 'NORTHSTAR_CLIENT_ID',
-                'Enter the OAuth Client ID for machine requests'
+                'Enter the OAuth Client ID for machine requests',
             );
             $this->setEnvironmentVariable(
                 'NORTHSTAR_CLIENT_SECRET',
-                'Enter the OAuth Client Secret for machine requests'
+                'Enter the OAuth Client Secret for machine requests',
             );
         });
 
@@ -77,7 +77,7 @@ class SetupCommand extends Command
 
         $this->runArtisanCommand(
             'gateway:key',
-            'Fetching public key from Northstar'
+            'Fetching public key from Northstar',
         );
 
         $this->runArtisanCommand('migrate', 'Running database migrations');

@@ -182,7 +182,7 @@ class EventTest extends TestCase
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(
             'Requires one of the following roles: admin, staff',
-            $decodedResponse['message']
+            $decodedResponse['message'],
         );
     }
 
@@ -207,7 +207,7 @@ class EventTest extends TestCase
 
         // Hit events index with signup filter and make sure there are 2 events returned.
         $response = $this->withAdminAccessToken()->getJson(
-            'api/v3/events?filter[signup_id]=' . $signup->id
+            'api/v3/events?filter[signup_id]=' . $signup->id,
         );
 
         $response->assertStatus(200);

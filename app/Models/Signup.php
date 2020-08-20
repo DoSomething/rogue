@@ -198,12 +198,12 @@ class Signup extends Model
         // which Customer.io does not support.
         $campaign_cause = Arr::get(
             optional($this->campaign)->getAttributes(),
-            'cause'
+            'cause',
         );
 
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId(
-            $this->campaign_id
+            $this->campaign_id,
         );
 
         return array_merge(
@@ -223,7 +223,7 @@ class Signup extends Model
                 'created_at' => $this->created_at->toIso8601String(),
                 'updated_at' => $this->updated_at->toIso8601String(),
             ],
-            Group::toBlinkPayload($this->group)
+            Group::toBlinkPayload($this->group),
         );
     }
 
@@ -274,7 +274,7 @@ class Signup extends Model
         $user = app(GraphQL::class)->getUserById($userId);
 
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId(
-            $this->campaign_id
+            $this->campaign_id,
         );
 
         return [

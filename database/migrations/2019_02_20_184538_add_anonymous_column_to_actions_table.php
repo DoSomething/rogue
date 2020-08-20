@@ -18,7 +18,7 @@ class AddAnonymousColumnToActionsTable extends Migration
                 ->boolean('anonymous')
                 ->after('scholarship_entry')
                 ->comment(
-                    'Whether or not the post PII should be anonymized via the API.'
+                    'Whether or not the post PII should be anonymized via the API.',
                 );
             $table->dropColumn('active');
         });

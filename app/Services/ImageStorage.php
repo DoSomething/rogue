@@ -47,7 +47,7 @@ class ImageStorage
         // Make sure we're only uploading valid image types
         if (!in_array($extension, ['jpeg', 'png', 'gif'])) {
             throw new UnprocessableEntityHttpException(
-                'Invalid file type. Upload a JPEG, PNG or GIF.'
+                'Invalid file type. Upload a JPEG, PNG or GIF.',
             );
         }
 
@@ -77,7 +77,7 @@ class ImageStorage
     {
         if (!$post->url) {
             throw new InvalidArgumentException(
-                'Cannot edit an image that does not exist.'
+                'Cannot edit an image that does not exist.',
             );
         }
 

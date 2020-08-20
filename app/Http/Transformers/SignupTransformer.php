@@ -74,7 +74,7 @@ class SignupTransformer extends TransformerAbstract
 
         return $this->item(
             $registrar->find($northstar_id),
-            new UserTransformer()
+            new UserTransformer(),
         );
     }
 
@@ -88,7 +88,7 @@ class SignupTransformer extends TransformerAbstract
     {
         return $this->item(
             $signup->getAcceptedQuantity(),
-            new AcceptedQuantityTransformer()
+            new AcceptedQuantityTransformer(),
         );
     }
 }

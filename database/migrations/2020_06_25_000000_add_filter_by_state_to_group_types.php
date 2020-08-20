@@ -19,7 +19,7 @@ class AddFilterByStateToGroupTypes extends Migration
                 ->default(false)
                 ->after('name')
                 ->comment(
-                    'Whether or not group finders for this group type should filter by state.'
+                    'Whether or not group finders for this group type should filter by state.',
                 );
         });
     }

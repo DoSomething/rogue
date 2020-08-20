@@ -42,7 +42,7 @@ class UpdateSignupAndPostCampaignIds extends Command
     public function handle()
     {
         $this->line(
-            'rogue:updatesignupandpostcampaignids: Starting script to update campaign ids!'
+            'rogue:updatesignupandpostcampaignids: Starting script to update campaign ids!',
         );
 
         // Grab all of the campaigns in the campaigns table.
@@ -58,7 +58,7 @@ class UpdateSignupAndPostCampaignIds extends Command
         foreach ($campaigns as $campaign) {
             $this->line(
                 'rogue:updatesignupandpostcampaignids: Updating signups/posts under campaign id: ' .
-                    $campaign->id
+                    $campaign->id,
             );
 
             // Update the all the signups' campaign_id under this campaign to the new $campaign->id

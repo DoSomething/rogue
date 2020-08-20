@@ -28,7 +28,7 @@ class ActionTransformer extends TransformerAbstract
             'action_label' => ActionType::label($action->action_type),
             'time_commitment' => $action->time_commitment,
             'time_commitment_label' => TimeCommitment::label(
-                $action->time_commitment
+                $action->time_commitment,
             ),
             'callpower_campaign_id' => $action->callpower_campaign_id,
             'reportback' => $action->reportback,

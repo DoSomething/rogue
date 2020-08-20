@@ -19,12 +19,12 @@ class AddFilterByLocationToGroupTypesTable extends Migration
                 ->default(false)
                 ->after('name')
                 ->comment(
-                    'Whether or not group finders for this group type should filter by location.'
+                    'Whether or not group finders for this group type should filter by location.',
                 );
         });
 
         DB::statement(
-            'UPDATE group_types SET filter_by_location = filter_by_state'
+            'UPDATE group_types SET filter_by_location = filter_by_state',
         );
     }
 

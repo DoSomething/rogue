@@ -46,10 +46,10 @@ class GroupsController extends Controller
                 'name' => [
                     Rule::unique('groups')->where(
                         'group_type_id',
-                        $request->group_type_id
+                        $request->group_type_id,
                     ),
                 ],
-            ])
+            ]),
         );
 
         $group = Group::create($request->all());

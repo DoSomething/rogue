@@ -61,11 +61,11 @@ class Handler extends ExceptionHandler
         // Re-cast specific exceptions or uniquely render them:
         if ($exception instanceof GlideNotFoundException) {
             $exception = new NotFoundHttpException(
-                'That image could not be found.'
+                'That image could not be found.',
             );
         } elseif ($exception instanceof ModelNotFoundException) {
             $exception = new NotFoundHttpException(
-                'That resource could not be found.'
+                'That resource could not be found.',
             );
         }
 

@@ -32,7 +32,7 @@ class PostModelTest extends TestCase
 
         $this->assertEquals(
             $groupPostWithoutSchool->school_id,
-            $group->school_id
+            $group->school_id,
         );
 
         $groupPostWithSchool = factory(Post::class)
@@ -46,7 +46,7 @@ class PostModelTest extends TestCase
 
         $this->assertNotEquals(
             $groupPostWithSchool->school_id,
-            $group->school_id
+            $group->school_id,
         );
     }
 
@@ -72,11 +72,11 @@ class PostModelTest extends TestCase
         // Make sure the signup and post's updated_at are both updated.
         $this->assertEquals(
             '2017-08-03 16:52:00',
-            (string) $post->fresh()->updated_at
+            (string) $post->fresh()->updated_at,
         );
         $this->assertEquals(
             '2017-08-03 16:52:00',
-            (string) $signup->fresh()->updated_at
+            (string) $signup->fresh()->updated_at,
         );
     }
 
@@ -93,7 +93,7 @@ class PostModelTest extends TestCase
                 $signup->posts()->saveMany(
                     factory(Post::class, 3)
                         ->states('photo', 'accepted')
-                        ->create()
+                        ->create(),
                 );
             });
 
@@ -133,11 +133,11 @@ class PostModelTest extends TestCase
         $this->assertEquals($result['group_type_id'], $group->group_type_id);
         $this->assertEquals(
             $result['group_type_name'],
-            $group->group_type->name
+            $group->group_type->name,
         );
         $this->assertEquals(
             $result['referrer_user_id'],
-            $post->referrer_user_id
+            $post->referrer_user_id,
         );
         $this->assertEquals($result['school_id'], $post->school_id);
 
@@ -149,7 +149,7 @@ class PostModelTest extends TestCase
         // Test expected post->action attributes were added to the Blink payload.
         $this->assertEquals(
             $result['volunteer_credit'],
-            $action->volunteer_credit
+            $action->volunteer_credit,
         );
     }
 
@@ -192,21 +192,21 @@ class PostModelTest extends TestCase
         $this->assertEquals($result['action_id'], $post->action_id);
         $this->assertEquals(
             $result['created_at'],
-            $post->created_at->toIso8601String()
+            $post->created_at->toIso8601String(),
         );
         $this->assertEquals($result['group_id'], $group->id);
         $this->assertEquals($result['group_name'], $group->name);
         $this->assertEquals($result['group_type_id'], $group->group_type->id);
         $this->assertEquals(
             $result['group_type_name'],
-            $group->group_type->name
+            $group->group_type->name,
         );
         $this->assertEquals($result['id'], $post->id);
         $this->assertEquals($result['status'], $post->status);
         $this->assertEquals($result['type'], $post->type);
         $this->assertEquals(
             $result['updated_at'],
-            $post->updated_at->toIso8601String()
+            $post->updated_at->toIso8601String(),
         );
         $this->assertEquals($result['user_id'], $post->northstar_id);
 

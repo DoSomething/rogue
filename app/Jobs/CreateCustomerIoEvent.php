@@ -64,17 +64,17 @@ class CreateCustomerIoEvent implements ShouldQueue
                 $response = $customerIo->trackEvent(
                     $this->userId,
                     $this->eventName,
-                    $this->eventData
+                    $this->eventData,
                 );
 
                 info(
                     "Sent {$this->userId} event to Customer.io for user {$this->userId}",
-                    ['response' => $response]
+                    ['response' => $response],
                 );
             },
             function () {
                 return $this->release(10);
-            }
+            },
         );
     }
 }

@@ -19,7 +19,7 @@ class AddCauseToCampaignsTable extends Migration
                 ->index()
                 ->after('internal_title')
                 ->comment(
-                    'Describes the cause space the campaign is categorized in e.g. animals, bullying, environment'
+                    'Describes the cause space the campaign is categorized in e.g. animals, bullying, environment',
                 );
         });
     }

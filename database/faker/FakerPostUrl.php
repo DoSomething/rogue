@@ -17,12 +17,12 @@ class FakerPostUrl extends Base
         $upload = new UploadedFile(
             $uploadPath,
             basename($uploadPath),
-            'image/jpeg'
+            'image/jpeg',
         );
 
         return app(ImageStorage::class)->put(
             $this->generator->unique()->randomNumber(5),
-            $upload
+            $upload,
         );
     }
 }

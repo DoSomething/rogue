@@ -51,7 +51,7 @@ class PostManager
         $post = $this->repository->create(
             $data,
             $signupId,
-            $authenticatedUserRole
+            $authenticatedUserRole,
         );
 
         // Send to Blink unless 'dont_send_to_blink' is TRUE
@@ -69,7 +69,7 @@ class PostManager
             CreateCustomerIoEvent::dispatch(
                 $post->referrer_user_id,
                 'referral_post_created',
-                $post->getReferralPostEventPayload()
+                $post->getReferralPostEventPayload(),
             );
         }
 
@@ -110,7 +110,7 @@ class PostManager
             CreateCustomerIoEvent::dispatch(
                 $post->referrer_user_id,
                 'referral_post_updated',
-                $post->getReferralPostEventPayload()
+                $post->getReferralPostEventPayload(),
             );
         }
 

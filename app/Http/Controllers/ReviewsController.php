@@ -54,7 +54,7 @@ class ReviewsController extends ApiController
         $reviewedPost = $this->post->review(
             $post,
             $request['status'],
-            $request['comment']
+            $request['comment'],
         );
 
         return $this->item($reviewedPost, 201);

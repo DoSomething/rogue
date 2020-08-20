@@ -27,7 +27,7 @@ class AddSecondaryCausesRunIdImpactDocAndMakeCausesNullableToCampaignsTable
                 ->after('secondary_causes')
                 ->nullable()
                 ->comment(
-                    'Campaign Run Id to reference when we run script to update signup and post ids after legacy campaign migration. This column can be deleted once migration and update script are complete.'
+                    'Campaign Run Id to reference when we run script to update signup and post ids after legacy campaign migration. This column can be deleted once migration and update script are complete.',
                 );
             $table
                 ->string('impact_doc')

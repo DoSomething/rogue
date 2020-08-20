@@ -60,7 +60,7 @@ abstract class TestCase extends BaseTestCase
                     '" in response at ' .
                     $key .
                     ', found: ' .
-                    $actual
+                    $actual,
             );
         }
 

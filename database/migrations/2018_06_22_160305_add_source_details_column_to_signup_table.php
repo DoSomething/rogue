@@ -18,7 +18,7 @@ class AddSourceDetailsColumnToSignupTable extends Migration
                 ->text('source_details')
                 ->after('source')
                 ->comment(
-                    'Extra details about the signup source, like referral source from url query string'
+                    'Extra details about the signup source, like referral source from url query string',
                 );
         });
     }

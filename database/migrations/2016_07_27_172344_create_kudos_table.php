@@ -26,7 +26,7 @@ class CreateKudosTable extends Migration
                 ->integer('file_id')
                 ->index()
                 ->comment(
-                    'The reportback_file.fid that this kudos applies to.'
+                    'The reportback_file.fid that this kudos applies to.',
                 );
             $table
                 ->integer('taxonomy_id')
@@ -36,7 +36,7 @@ class CreateKudosTable extends Migration
 
             $table->unique(
                 ['file_id', 'drupal_id', 'northstar_id', 'taxonomy_id'],
-                'file_drupal_ns_taxonomy_unique'
+                'file_drupal_ns_taxonomy_unique',
             );
         });
     }

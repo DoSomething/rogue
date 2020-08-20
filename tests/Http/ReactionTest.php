@@ -29,7 +29,7 @@ class ReactionTest extends TestCase
             'api/v3/posts/' . $post->id . '/reactions',
             [
                 'northstar_id' => $northstarId,
-            ]
+            ],
         );
 
         $response->assertStatus(200);
@@ -46,7 +46,7 @@ class ReactionTest extends TestCase
             'api/v3/posts/' . $post->id . '/reactions',
             [
                 'northstar_id' => $northstarId,
-            ]
+            ],
         );
 
         // This should now be a 201 code because it was updated.
@@ -79,13 +79,13 @@ class ReactionTest extends TestCase
             'api/v3/posts/' . $post->id . '/reactions',
             [
                 'northstar_id' => $northstarId,
-            ]
+            ],
         );
 
         $response->assertStatus(401);
         $this->assertEquals(
             'Unauthenticated.',
-            $response->decodeResponseJson()['message']
+            $response->decodeResponseJson()['message'],
         );
     }
 
@@ -104,7 +104,7 @@ class ReactionTest extends TestCase
             'api/v3/posts/' . $post->id . '/reactions',
             [
                 'northstar_id' => $this->faker->uuid,
-            ]
+            ],
         );
 
         // Make sure this creates a reaction.
@@ -120,7 +120,7 @@ class ReactionTest extends TestCase
             'api/v3/posts/' . $post->id . '/reactions',
             [
                 'northstar_id' => $this->faker->uuid,
-            ]
+            ],
         );
 
         // Make sure this creates a reaction and increases total_reaction count.
@@ -166,7 +166,7 @@ class ReactionTest extends TestCase
             'api/v3/posts/' . $post->id . '/reactions',
             [
                 'northstar_id' => $this->faker->uuid,
-            ]
+            ],
         );
 
         $response->assertStatus(401);

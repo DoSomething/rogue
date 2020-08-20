@@ -83,7 +83,7 @@ class SignupsController extends ApiController
             $signup = $this->signups->create(
                 $request->all(),
                 $northstarId,
-                $campaignId
+                $campaignId,
             );
         }
 
@@ -161,7 +161,7 @@ class SignupsController extends ApiController
             200,
             [],
             $this->transformer,
-            $request->query('include')
+            $request->query('include'),
         );
     }
 
@@ -191,7 +191,7 @@ class SignupsController extends ApiController
         }
 
         throw new AuthorizationException(
-            'You don\'t have the correct role to update this signup!'
+            'You don\'t have the correct role to update this signup!',
         );
     }
 

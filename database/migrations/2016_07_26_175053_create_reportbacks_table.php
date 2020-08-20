@@ -26,19 +26,19 @@ class CreateReportbacksTable extends Migration
                 ->integer('campaign_id')
                 ->index()
                 ->comment(
-                    'The campaign node id that the user has reported back for.'
+                    'The campaign node id that the user has reported back for.',
                 );
             $table
                 ->integer('campaign_run_id')
                 ->index()
                 ->nullable()
                 ->comment(
-                    'The campaign run id that the user reported back for.'
+                    'The campaign run id that the user reported back for.',
                 );
             $table
                 ->integer('quantity')
                 ->comment(
-                    'The quantity of reportback_nouns reportback_verbed.'
+                    'The quantity of reportback_nouns reportback_verbed.',
                 );
             $table
                 ->text('why_participated')

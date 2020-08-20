@@ -46,7 +46,7 @@ class SendReviewedPostToCustomerIo implements ShouldQueue
         if ($shouldSendToCIO) {
             gateway('blink')->post(
                 'v1/events/user-signup-post-review',
-                $payload
+                $payload,
             );
         }
 
@@ -57,7 +57,7 @@ class SendReviewedPostToCustomerIo implements ShouldQueue
                 $this->post->id .
                 ' ' .
                 $verb .
-                ' to Customer.io'
+                ' to Customer.io',
         );
     }
 }

@@ -40,19 +40,19 @@ class DropReportbacksItems extends Migration
                 ->integer('campaign_id')
                 ->index()
                 ->comment(
-                    'The campaign node id that the user has reported back for.'
+                    'The campaign node id that the user has reported back for.',
                 );
             $table
                 ->integer('campaign_run_id')
                 ->index()
                 ->nullable()
                 ->comment(
-                    'The campaign run id that the user reported back for.'
+                    'The campaign run id that the user reported back for.',
                 );
             $table
                 ->integer('quantity')
                 ->comment(
-                    'The quantity of reportback_nouns reportback_verbed.'
+                    'The quantity of reportback_nouns reportback_verbed.',
                 );
             $table
                 ->text('why_participated')
@@ -81,11 +81,11 @@ class DropReportbacksItems extends Migration
             $table->timestamps();
             $table->unique(
                 ['northstar_id', 'campaign_id', 'campaign_run_id'],
-                'northstar_id_campaign_run'
+                'northstar_id_campaign_run',
             );
             $table->unique(
                 ['drupal_id', 'campaign_id', 'campaign_run_id'],
-                'drupal_id_campaign_run'
+                'drupal_id_campaign_run',
             );
         });
 
@@ -116,7 +116,7 @@ class DropReportbacksItems extends Migration
                 ->ipAddress('remote_addr')
                 ->nullable()
                 ->comment(
-                    'The IP address of the user that submitted the file.'
+                    'The IP address of the user that submitted the file.',
                 );
             $table->timestamps();
 
@@ -150,7 +150,7 @@ class DropReportbacksItems extends Migration
                 ->string('files')
                 ->nullable()
                 ->comment(
-                    'Comma separated list of file fids attached to reportback.'
+                    'Comma separated list of file fids attached to reportback.',
                 );
             $table
                 ->integer('num_files')
@@ -159,13 +159,13 @@ class DropReportbacksItems extends Migration
                 ->ipAddress('remote_addr')
                 ->nullable()
                 ->comment(
-                    'The IP address of the user that submitted the file.'
+                    'The IP address of the user that submitted the file.',
                 );
             $table
                 ->text('reason')
                 ->nullable()
                 ->comment(
-                    'The reason the reoportback item was flagged/promoted'
+                    'The reason the reoportback item was flagged/promoted',
                 );
             $table->timestamps();
 

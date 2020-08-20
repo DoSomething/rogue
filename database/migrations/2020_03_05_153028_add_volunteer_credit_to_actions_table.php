@@ -18,7 +18,7 @@ class AddVolunteerCreditToActionsTable extends Migration
                 ->boolean('volunteer_credit')
                 ->after('collect_school_id')
                 ->comment(
-                    'Whether or not this action qualifies for volunteer credit'
+                    'Whether or not this action qualifies for volunteer credit',
                 );
         });
     }

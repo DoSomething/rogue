@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
                                     'signup_id' => $signup->id,
                                     'campaign_id' => $signup->campaign_id,
                                     'northstar_id' => $signup->northstar_id,
-                                ])
+                                ]),
                         );
 
                         $signup->posts()->saveMany(
@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
                                     'signup_id' => $signup->id,
                                     'campaign_id' => $signup->campaign_id,
                                     'northstar_id' => $signup->northstar_id,
-                                ])
+                                ]),
                         );
 
                         $signup->posts()->saveMany(
@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
                                     'signup_id' => $signup->id,
                                     'campaign_id' => $signup->campaign_id,
                                     'northstar_id' => $signup->northstar_id,
-                                ])
+                                ]),
                         );
                     });
 
@@ -84,7 +84,7 @@ class DatabaseSeeder extends Seeder
                                     'signup_id' => $signup->id,
                                     'campaign_id' => $signup->campaign_id,
                                     'northstar_id' => $signup->northstar_id,
-                                ])
+                                ]),
                         );
 
                         $signup->posts()->saveMany(
@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
                                     'signup_id' => $signup->id,
                                     'campaign_id' => $signup->campaign_id,
                                     'northstar_id' => $signup->northstar_id,
-                                ])
+                                ]),
                         );
                     });
 
@@ -111,7 +111,7 @@ class DatabaseSeeder extends Seeder
                                     'signup_id' => $signup->id,
                                     'campaign_id' => $signup->campaign_id,
                                     'northstar_id' => $signup->northstar_id,
-                                ])
+                                ]),
                         );
                     });
 

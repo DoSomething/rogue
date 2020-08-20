@@ -65,7 +65,7 @@ class ImportMfolGroupsCommand extends Command
         info(
             'rogue:mfol-groups-import: Beginning import for group type id ' .
                 $groupType->id .
-                '.'
+                '.',
         );
 
         foreach ($csv->getRecords() as $record) {
@@ -90,7 +90,7 @@ class ImportMfolGroupsCommand extends Command
                     'Error importing group with ' .
                         $name .
                         ':' .
-                        $e->getMessage()
+                        $e->getMessage(),
                 );
             }
         }
@@ -100,7 +100,7 @@ class ImportMfolGroupsCommand extends Command
                 $numImported .
                 ' imported and ' .
                 $numFailed .
-                ' failed.'
+                ' failed.',
         );
     }
 }

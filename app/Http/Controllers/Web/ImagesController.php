@@ -63,7 +63,7 @@ class ImagesController extends Controller
 
         $response = $server->getImageResponse(
             $post->getMediaPath(),
-            $request->all()
+            $request->all(),
         );
 
         // We want these to be cached in Fastly to reduce load on our servers. We can then
@@ -75,7 +75,7 @@ class ImagesController extends Controller
         // on a subsequent load, so that image rotations/deletions are respected immediately:
         $response->headers->set(
             'Cache-Control',
-            'max-age=31536000, must-revalidate, no-cache, public'
+            'max-age=31536000, must-revalidate, no-cache, public',
         );
 
         return $response;

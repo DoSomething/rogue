@@ -122,7 +122,7 @@ class ActionTest extends TestCase
                 'time_commitment' => $action->time_commitment,
                 'noun' => $action->noun,
                 'verb' => $action->verb,
-            ]
+            ],
         );
 
         // Make sure the action update is persisted.
@@ -155,7 +155,7 @@ class ActionTest extends TestCase
         $response->assertStatus(404);
         $this->assertEquals(
             'That resource could not be found.',
-            $decodedResponse['message']
+            $decodedResponse['message'],
         );
     }
 }

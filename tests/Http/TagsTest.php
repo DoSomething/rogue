@@ -24,7 +24,7 @@ class TagsTest extends TestCase
             'api/v3/posts/' . $post->id . '/tags',
             [
                 'tag_name' => 'Good Submission',
-            ]
+            ],
         );
 
         $response->assertStatus(200);
@@ -37,7 +37,7 @@ class TagsTest extends TestCase
             'api/v3/posts/' . $post->id . '/tags',
             [
                 'tag_name' => 'Good Submission',
-            ]
+            ],
         );
 
         $response->assertStatus(200);
@@ -68,7 +68,7 @@ class TagsTest extends TestCase
 
         $this->assertEquals(
             'Unauthenticated.',
-            $response->decodeResponseJson()['message']
+            $response->decodeResponseJson()['message'],
         );
     }
 
@@ -116,7 +116,7 @@ class TagsTest extends TestCase
             'api/v3/posts/' . $post->id . '/tags',
             [
                 'tag_name' => 'Tag To Delete',
-            ]
+            ],
         );
 
         // Make sure that the tag is deleted, but the other tag is still there
@@ -147,7 +147,7 @@ class TagsTest extends TestCase
             'api/v3/posts/' . $post->id . '/tags',
             [
                 'tag_name' => 'Good Submission',
-            ]
+            ],
         );
 
         $this->assertEquals('2017-10-21 13:05:00', $post->fresh()->updated_at);
@@ -168,7 +168,7 @@ class TagsTest extends TestCase
             'api/v3/posts/' . $posts->first()->id . '/tags',
             [
                 'tag_name' => 'get-outta-here',
-            ]
+            ],
         );
 
         $postsQuery = Post::withoutTag('get-outta-here')->get();

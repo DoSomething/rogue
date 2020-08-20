@@ -103,15 +103,15 @@ class PostsController extends ApiController
             if (
                 filter_var(
                     $filters['volunteer_credit'],
-                    FILTER_VALIDATE_BOOLEAN
+                    FILTER_VALIDATE_BOOLEAN,
                 )
             ) {
                 $query = $query->withVolunteerCredit(
-                    $filters['volunteer_credit']
+                    $filters['volunteer_credit'],
                 );
             } else {
                 $query = $query->withoutVolunteerCredit(
-                    $filters['volunteer_credit']
+                    $filters['volunteer_credit'],
                 );
             }
         }
@@ -160,7 +160,7 @@ class PostsController extends ApiController
             $signup = $this->signups->create(
                 $request->all(),
                 $northstarId,
-                $campaignId
+                $campaignId,
             );
         }
 

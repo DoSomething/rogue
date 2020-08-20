@@ -25,7 +25,7 @@ class MakeBucketAndDetailsColumnsNullable extends Migration
                 ->after('type')
                 ->default('default')
                 ->comment(
-                    'Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throught the life of the campaign.'
+                    'Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throught the life of the campaign.',
                 );
         });
     }
@@ -47,7 +47,7 @@ class MakeBucketAndDetailsColumnsNullable extends Migration
                 ->index()
                 ->after('type')
                 ->comment(
-                    'Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throught the life of the campaign.'
+                    'Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throught the life of the campaign.',
                 );
             $table->dropColumn('action');
         });

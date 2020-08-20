@@ -30,7 +30,7 @@ class CreateActionStatsTable extends Migration
             $table
                 ->unsignedInteger('accepted_quantity')
                 ->comment(
-                    'The sum of accepted post quantity for the school and action.'
+                    'The sum of accepted post quantity for the school and action.',
                 );
             $table->timestamps();
         });

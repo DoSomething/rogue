@@ -12,7 +12,7 @@ class UsersTest extends TestCase
     public function it_should_check_authorization()
     {
         $response = $this->withStandardAccessToken()->deleteJson(
-            '/api/v3/users/5d3630a0fdce2742ff6c64d4'
+            '/api/v3/users/5d3630a0fdce2742ff6c64d4',
         );
         $response->assertStatus(403);
     }
@@ -32,7 +32,7 @@ class UsersTest extends TestCase
             ->first();
 
         $response = $this->withAdminAccessToken()->deleteJson(
-            '/api/v3/users/5d3630a0fdce2742ff6c64d4'
+            '/api/v3/users/5d3630a0fdce2742ff6c64d4',
         );
         $response->assertSuccessful();
 

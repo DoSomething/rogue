@@ -20,7 +20,7 @@ class AddSourceDetailsColumnToPosts extends Migration
                 ->index()
                 ->nullable()
                 ->comment(
-                    'Extra details about the post source, like newsletter ID'
+                    'Extra details about the post source, like newsletter ID',
                 );
         });
     }

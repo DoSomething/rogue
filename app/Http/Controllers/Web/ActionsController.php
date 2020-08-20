@@ -71,7 +71,7 @@ class ActionsController extends Controller
             array_merge_recursive($this->rules, [
                 'campaign_id' => ['required', 'integer', 'exists:campaigns,id'],
                 'callpower_campaign_id' => [Rule::unique('actions')],
-            ])
+            ]),
         );
 
         // Check to see if the action exists before creating one.
@@ -125,7 +125,7 @@ class ActionsController extends Controller
                 'callpower_campaign_id' => [
                     Rule::unique('actions')->ignore($action->id),
                 ],
-            ])
+            ]),
         );
 
         $action->update($request->all());

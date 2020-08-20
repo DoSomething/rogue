@@ -95,7 +95,7 @@ class UpdateSignupAndOrPostField extends Command
                                     ' to ' .
                                     $targetNewValue .
                                     ' for signup ' .
-                                    $signup->id
+                                    $signup->id,
                             );
                         }
 
@@ -103,7 +103,7 @@ class UpdateSignupAndOrPostField extends Command
                         $this->signups->update(
                             $signup,
                             [$targetField => $targetNewValue],
-                            $log
+                            $log,
                         );
                     }
                 });
@@ -133,7 +133,7 @@ class UpdateSignupAndOrPostField extends Command
                                     ' to ' .
                                     $targetNewValue .
                                     ' for post ' .
-                                    $post->id
+                                    $post->id,
                             );
                         }
 
@@ -141,7 +141,7 @@ class UpdateSignupAndOrPostField extends Command
                         $this->posts->update(
                             $post,
                             [$targetField => $targetNewValue],
-                            $log
+                            $log,
                         );
                     }
                 });

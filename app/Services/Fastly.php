@@ -47,7 +47,7 @@ class Fastly extends RestApiClient
         }
 
         $purgeResponse = $this->post(
-            'service/' . $this->service . '/purge/' . $cacheKey
+            'service/' . $this->service . '/purge/' . $cacheKey,
         );
         info('image_cache_purge_successful', ['response' => $purgeResponse]);
     }

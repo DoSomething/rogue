@@ -88,7 +88,7 @@ class ImportSignupsCommand extends Command
                     info(
                         'rogue:signupimport: Signup ' .
                             $existing_signup->id .
-                            ' already exists! Moving on.'
+                            ' already exists! Moving on.',
                     );
                 }
             }

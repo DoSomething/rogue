@@ -39,7 +39,7 @@ class StandardizeCauses extends Command
     public function handle()
     {
         $this->info(
-            'rogue:standardizecauses: Starting to clean up the causes!'
+            'rogue:standardizecauses: Starting to clean up the causes!',
         );
 
         // Grab every campaign that has a cause set
@@ -58,7 +58,7 @@ class StandardizeCauses extends Command
             foreach ($oldCauses as $oldCause) {
                 array_push(
                     $newCauses,
-                    str_replace(' ', '-', strtolower(trim($oldCause)))
+                    str_replace(' ', '-', strtolower(trim($oldCause))),
                 );
             }
             $this->info('--To:' . implode(',', $newCauses));

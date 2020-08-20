@@ -37,7 +37,7 @@ class UpdateReviewsTable extends Migration
             $table
                 ->integer('postable_id')
                 ->comment(
-                    'Postable Id the of the post that has been reviewed.'
+                    'Postable Id the of the post that has been reviewed.',
                 );
             $table->dropColumn('post_id');
         });

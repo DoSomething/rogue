@@ -77,8 +77,8 @@ class PostRepository
                 throw ValidationException::withMessages(
                     array_fill_keys(
                         ['campaign_id', 'post_type', 'name'],
-                        'An action with the given fields does not exist.'
-                    )
+                        'An action with the given fields does not exist.',
+                    ),
                 );
             }
 

@@ -31,22 +31,22 @@ class AddActionsTable extends Migration
                 ->string('post_type', 255)
                 ->index()
                 ->comment(
-                    'The type of post the post is (e.g. photo, text, voter-reg, etc).'
+                    'The type of post the post is (e.g. photo, text, voter-reg, etc).',
                 );
             $table
                 ->boolean('reportback')
                 ->comment(
-                    'Whether or not the post should count as a reportback.'
+                    'Whether or not the post should count as a reportback.',
                 );
             $table
                 ->boolean('civic_action')
                 ->comment(
-                    'Whether or not the post should count as a civic action.'
+                    'Whether or not the post should count as a civic action.',
                 );
             $table
                 ->boolean('scholarship_entry')
                 ->comment(
-                    'Whether or not the post should count as a scholarship entry.'
+                    'Whether or not the post should count as a scholarship entry.',
                 );
             $table
                 ->boolean('active')

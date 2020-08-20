@@ -77,7 +77,7 @@ class BulkReviewPosts extends Command
                     foreach ($posts as $post) {
                         if ($post->id % $logfreq == 0) {
                             info(
-                                'rogue:bulkreviewposts: updating: ' . $post->id
+                                'rogue:bulkreviewposts: updating: ' . $post->id,
                             );
                         }
 
@@ -85,7 +85,7 @@ class BulkReviewPosts extends Command
                         $this->posts->update(
                             $post,
                             ['status' => $newStatus],
-                            $log
+                            $log,
                         );
                         foreach ($tags as $tag) {
                             $post->tag($tag, $log);

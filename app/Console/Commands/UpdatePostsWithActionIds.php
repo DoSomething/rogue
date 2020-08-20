@@ -40,7 +40,7 @@ class UpdatePostsWithActionIds extends Command
     public function handle()
     {
         $this->line(
-            'rogue:updatepostswithactionids: Staring script to add action_ids to posts!'
+            'rogue:updatepostswithactionids: Staring script to add action_ids to posts!',
         );
 
         // Grab all of the actions in the actions table.
@@ -56,7 +56,7 @@ class UpdatePostsWithActionIds extends Command
 
             $this->line(
                 'rogue:updatepostswithactionids: Updated all posts action_ids that have action ' .
-                    $action->id
+                    $action->id,
             );
         }
 

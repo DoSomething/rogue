@@ -53,7 +53,7 @@ class SendPostToCustomerIo implements ShouldQueue
 
             if ($this->log) {
                 logger()->info(
-                    'Post ' . $payload['id'] . ' sent to Customer.io'
+                    'Post ' . $payload['id'] . ' sent to Customer.io',
                 );
             }
         }

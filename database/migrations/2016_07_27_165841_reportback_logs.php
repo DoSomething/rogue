@@ -36,7 +36,7 @@ class ReportbackLogs extends Migration
                 ->string('files')
                 ->nullable()
                 ->comment(
-                    'Comma separated list of file fids attached to reportback.'
+                    'Comma separated list of file fids attached to reportback.',
                 );
             $table
                 ->integer('num_files')
@@ -45,13 +45,13 @@ class ReportbackLogs extends Migration
                 ->ipAddress('remote_addr')
                 ->nullable()
                 ->comment(
-                    'The IP address of the user that submitted the file.'
+                    'The IP address of the user that submitted the file.',
                 );
             $table
                 ->text('reason')
                 ->nullable()
                 ->comment(
-                    'The reason the reoportback item was flagged/promoted'
+                    'The reason the reoportback item was flagged/promoted',
                 );
             $table->timestamps();
         });

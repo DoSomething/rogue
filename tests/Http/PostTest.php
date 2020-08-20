@@ -78,7 +78,7 @@ class PostTest extends TestCase
         // Mock the GraphQL API calls.
         $this->mock(GraphQL::class)->shouldReceive(
             'getUserById',
-            'getCampaignWebsiteByCampaignId'
+            'getCampaignWebsiteByCampaignId',
         );
 
         // Mock the Customer.io API calls.
@@ -102,7 +102,7 @@ class PostTest extends TestCase
                 'details' => json_encode($details),
                 'referrer_user_id' => $referrerUserId,
                 'group_id' => $groupId,
-            ]
+            ],
         );
 
         $response->assertStatus(201);
@@ -173,7 +173,7 @@ class PostTest extends TestCase
                 'location' => $location,
                 'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
                 'details' => json_encode($details),
-            ]
+            ],
         );
 
         $response->assertStatus(201);
@@ -232,7 +232,7 @@ class PostTest extends TestCase
                 'text' => $text,
                 'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
                 'details' => json_encode($details),
-            ]
+            ],
         );
 
         $response->assertStatus(201);
@@ -291,7 +291,7 @@ class PostTest extends TestCase
                 'why_participated' => $why_participated,
                 'text' => $text,
                 'details' => json_encode($details),
-            ]
+            ],
         );
 
         $response->assertStatus(201);
@@ -334,7 +334,7 @@ class PostTest extends TestCase
                 'signup_id' => $signup->id, // This one is okay.
                 'school_id' => 234, // This should be a string.
                 // and we've omitted the required 'type' and 'action' fields!
-            ]
+            ],
         );
 
         $response->assertJsonValidationErrors([
@@ -366,7 +366,7 @@ class PostTest extends TestCase
                 'type' => 'text',
                 'text' => 'Lorem ipsum dolor sit amet.',
                 'location' => 'Can\'t pin me down with your rules!!',
-            ]
+            ],
         );
 
         // We should save the post, but discard the bad location:
@@ -410,7 +410,7 @@ class PostTest extends TestCase
                 'quantity' => $quantity,
                 'text' => $text,
                 'details' => json_encode($details),
-            ]
+            ],
         );
 
         $response->assertStatus(201);
@@ -550,13 +550,13 @@ class PostTest extends TestCase
                 'quantity' => $quantity,
                 'text' => $text,
                 'details' => json_encode($details),
-            ]
+            ],
         );
 
         $response->assertStatus(422);
         $this->assertEquals(
             'The selected type is invalid.',
-            $response->decodeResponseJson()['errors']['type'][0]
+            $response->decodeResponseJson()['errors']['type'][0],
         );
     }
 
@@ -589,7 +589,7 @@ class PostTest extends TestCase
         $response->assertStatus(401);
         $this->assertEquals(
             'Unauthenticated.',
-            $response->decodeResponseJson()['message']
+            $response->decodeResponseJson()['message'],
         );
     }
 
@@ -625,7 +625,7 @@ class PostTest extends TestCase
                 'text' => $text,
                 'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
                 'details' => json_encode($details),
-            ]
+            ],
         );
 
         $response->assertStatus(201);
@@ -663,7 +663,7 @@ class PostTest extends TestCase
                 'text' => $secondText,
                 'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
                 'details' => json_encode($secondDetails),
-            ]
+            ],
         );
 
         $response->assertStatus(201);
@@ -684,7 +684,7 @@ class PostTest extends TestCase
         // Assert that signup quantity is sum of all posts' quantities.
         $this->assertEquals(
             $signup->fresh()->quantity,
-            $quantity + $secondQuantity
+            $quantity + $secondQuantity,
         );
     }
 
@@ -708,7 +708,7 @@ class PostTest extends TestCase
         // Create the post!
         $response = $this->withAccessToken(
             $signup->northstar_id,
-            'user'
+            'user',
         )->postJson('api/v3/posts', [
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
@@ -764,7 +764,7 @@ class PostTest extends TestCase
                 'action_id' => $action->id,
                 'text' => $text,
                 'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            ]
+            ],
         );
 
         $response->assertStatus(201);
@@ -842,7 +842,7 @@ class PostTest extends TestCase
                 'why_participated' => $this->faker->paragraph,
                 'text' => $text,
                 'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            ]
+            ],
         );
 
         $response->assertStatus(201);
@@ -935,70 +935,70 @@ class PostTest extends TestCase
 
         $this->assertArrayNotHasKey(
             'northstar_id',
-            $response->decodeResponseJson()['data'][0]
+            $response->decodeResponseJson()['data'][0],
         );
         $this->assertEquals(
             $regularPost->northstar_id,
-            $response->decodeResponseJson()['data'][1]['northstar_id']
+            $response->decodeResponseJson()['data'][1]['northstar_id'],
         );
 
         // Hit the endpoint with access credentials from another user and should have same results as above.
         $response = $this->withAccessToken($regularPost->northstar_id)->getJson(
-            'api/v3/posts'
+            'api/v3/posts',
         );
         $response->assertStatus(200);
         $this->assertArrayNotHasKey(
             'northstar_id',
-            $response->decodeResponseJson()['data'][0]
+            $response->decodeResponseJson()['data'][0],
         );
         $this->assertEquals(
             $regularPost->northstar_id,
-            $response->decodeResponseJson()['data'][1]['northstar_id']
+            $response->decodeResponseJson()['data'][1]['northstar_id'],
         );
 
         // Hit the endpoint with filter[northstar_id] and no posts should be returned.
         $response = $this->getJson(
-            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id
+            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id,
         );
         $response->assertStatus(200);
         $this->assertEquals(
             0,
-            $response->decodeResponseJson()['meta']['cursor']['count']
+            $response->decodeResponseJson()['meta']['cursor']['count'],
         );
 
         $response = $this->withAccessToken($regularPost->northstar_id)->getJson(
-            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id
+            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id,
         );
         $response->assertStatus(200);
         $this->assertEquals(
             0,
-            $response->decodeResponseJson()['meta']['cursor']['count']
+            $response->decodeResponseJson()['meta']['cursor']['count'],
         );
 
         // Hit the endpoint as the owner of the post and you should be able to see northstar_id for anonymous post.
         $response = $this->withAccessToken(
-            $anonymousPost->northstar_id
+            $anonymousPost->northstar_id,
         )->getJson('api/v3/posts');
         $response->assertStatus(200);
         $this->assertEquals(
             $anonymousPost->northstar_id,
-            $response->decodeResponseJson()['data'][0]['northstar_id']
+            $response->decodeResponseJson()['data'][0]['northstar_id'],
         );
         $this->assertEquals(
             $regularPost->northstar_id,
-            $response->decodeResponseJson()['data'][1]['northstar_id']
+            $response->decodeResponseJson()['data'][1]['northstar_id'],
         );
 
         // Hit the endpoint with filter[northstar_id] and should have same results as above.
         $response = $this->withAccessToken(
-            $anonymousPost->northstar_id
+            $anonymousPost->northstar_id,
         )->getJson(
-            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id
+            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id,
         );
         $response->assertStatus(200);
         $this->assertEquals(
             $anonymousPost->northstar_id,
-            $response->decodeResponseJson()['data'][0]['northstar_id']
+            $response->decodeResponseJson()['data'][0]['northstar_id'],
         );
 
         // Hit the endpoint with admin credentials and you should be able to see northstar_id for anonymous post.
@@ -1006,21 +1006,21 @@ class PostTest extends TestCase
         $response->assertStatus(200);
         $this->assertEquals(
             $anonymousPost->northstar_id,
-            $response->decodeResponseJson()['data'][0]['northstar_id']
+            $response->decodeResponseJson()['data'][0]['northstar_id'],
         );
         $this->assertEquals(
             $regularPost->northstar_id,
-            $response->decodeResponseJson()['data'][1]['northstar_id']
+            $response->decodeResponseJson()['data'][1]['northstar_id'],
         );
 
         // Hit the endpoint with filter[northstar_id] and should have same results as above.
         $response = $this->withAdminAccessToken()->getJson(
-            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id
+            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id,
         );
         $response->assertStatus(200);
         $this->assertEquals(
             $anonymousPost->northstar_id,
-            $response->decodeResponseJson()['data'][0]['northstar_id']
+            $response->decodeResponseJson()['data'][0]['northstar_id'],
         );
     }
 
@@ -1140,7 +1140,7 @@ class PostTest extends TestCase
 
         // Admins should see posts filtered by pending status.
         $response = $this->withAdminAccessToken()->getJson(
-            'api/v3/posts?filter[status]=pending'
+            'api/v3/posts?filter[status]=pending',
         );
 
         $response->assertStatus(200);
@@ -1148,7 +1148,7 @@ class PostTest extends TestCase
 
         // Admins should be able to filter by multiple statuses and see pending and rejected posts.
         $response = $this->withAdminAccessToken()->getJson(
-            'api/v3/posts?filter[status]=pending,rejected'
+            'api/v3/posts?filter[status]=pending,rejected',
         );
 
         $response->assertStatus(200);
@@ -1178,13 +1178,13 @@ class PostTest extends TestCase
             ->create();
 
         $response = $this->getJson(
-            'api/v3/posts?filter[volunteer_credit]=true'
+            'api/v3/posts?filter[volunteer_credit]=true',
         );
         $response->assertSuccessful();
         $response->assertJsonCount(4, 'data');
 
         $response = $this->getJson(
-            'api/v3/posts?filter[volunteer_credit]=false'
+            'api/v3/posts?filter[volunteer_credit]=false',
         );
         $response->assertSuccessful();
         $response->assertJsonCount(7, 'data');
@@ -1322,7 +1322,7 @@ class PostTest extends TestCase
             ->create();
 
         $response = $this->withAccessToken($referrerUserId)->getJson(
-            'api/v3/posts'
+            'api/v3/posts',
         );
         $response->assertStatus(200);
         $response->assertJsonCount(4, 'data');
@@ -1407,7 +1407,7 @@ class PostTest extends TestCase
         $post = factory(Post::class)->create();
 
         $response = $this->withAdminAccessToken()->getJson(
-            'api/v3/posts/' . $post->id
+            'api/v3/posts/' . $post->id,
         );
 
         $response->assertStatus(200);
@@ -1429,7 +1429,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
         $response = $this->withAccessToken($post->northstar_id)->getJson(
-            'api/v3/posts/' . $post->id
+            'api/v3/posts/' . $post->id,
         );
 
         $response->assertStatus(200);
@@ -1479,7 +1479,7 @@ class PostTest extends TestCase
         ]);
 
         $response = $this->withAccessToken($viewer, 'user')->getJson(
-            'api/v3/posts/' . $post->id
+            'api/v3/posts/' . $post->id,
         );
 
         $response->assertStatus(200);
@@ -1514,7 +1514,7 @@ class PostTest extends TestCase
                 'quantity' => 8,
                 'status' => 'accepted',
                 'school_id' => '200426',
-            ]
+            ],
         );
 
         $response->assertStatus(200);
@@ -1547,14 +1547,14 @@ class PostTest extends TestCase
             ->with(
                 $post->referrer_user_id,
                 'referral_post_updated',
-                $post->getReferralPostEventPayload()
+                $post->getReferralPostEventPayload(),
             );
 
         $response = $this->withAdminAccessToken()->patchJson(
             'api/v3/posts/' . $post->id,
             [
                 'status' => 'register-form',
-            ]
+            ],
         );
     }
 
@@ -1576,7 +1576,7 @@ class PostTest extends TestCase
                 'text' => 'new caption',
                 'quantity' => 8,
                 'status' => 'register-form',
-            ]
+            ],
         );
 
         $response->assertJsonValidationErrors(['status']);
@@ -1598,7 +1598,7 @@ class PostTest extends TestCase
             'api/v3/posts/' . $post->id,
             [
                 'school_id' => 8,
-            ]
+            ],
         );
 
         $response->assertJsonValidationErrors(['school_id']);
@@ -1640,7 +1640,7 @@ class PostTest extends TestCase
             [
                 'quantity' => 'this is words not a number!',
                 'text' => 'a' . str_repeat('h', 512), // ahhh...hhhhh!
-            ]
+            ],
         );
 
         $response->assertJsonValidationErrors(['quantity', 'text']);
@@ -1662,7 +1662,7 @@ class PostTest extends TestCase
                 'status' => 'accepted',
                 'location' => 'US-MA',
                 'text' => 'new caption',
-            ]
+            ],
         );
 
         $response->assertStatus(200);
@@ -1693,7 +1693,7 @@ class PostTest extends TestCase
             [
                 'status' => 'accepted',
                 'text' => 'new caption',
-            ]
+            ],
         );
 
         $response->assertStatus(403);
@@ -1719,7 +1719,7 @@ class PostTest extends TestCase
         $this->mock(Fastly::class)->shouldReceive('purge');
 
         $response = $this->withAdminAccessToken()->deleteJson(
-            'api/v3/posts/' . $post->id
+            'api/v3/posts/' . $post->id,
         );
 
         $response->assertStatus(200);
@@ -1727,7 +1727,7 @@ class PostTest extends TestCase
         // Make sure that the post's deleted_at gets persisted in the database.
         $this->assertEquals(
             $post->fresh()->deleted_at->toTimeString(),
-            '14:00:00'
+            '14:00:00',
         );
     }
 
@@ -1745,7 +1745,7 @@ class PostTest extends TestCase
         $response->assertStatus(401);
         $this->assertEquals(
             'Unauthenticated.',
-            $response->decodeResponseJson()['message']
+            $response->decodeResponseJson()['message'],
         );
     }
 
@@ -1852,7 +1852,7 @@ class PostTest extends TestCase
                 'quantity' => $quantity,
                 'text' => $text,
                 'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            ]
+            ],
         );
 
         $response->assertStatus(201);
@@ -1905,7 +1905,7 @@ class PostTest extends TestCase
                 'text' => $text,
                 'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
                 'group_id' => $groupId,
-            ]
+            ],
         );
 
         $response->assertStatus(201);

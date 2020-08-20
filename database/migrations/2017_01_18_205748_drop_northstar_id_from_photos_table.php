@@ -33,7 +33,7 @@ class DropNorthstarIdFromPhotosTable extends Migration
                 ->nullable()
                 ->after('source')
                 ->comment(
-                    'The IP address of the user that submitted the file.'
+                    'The IP address of the user that submitted the file.',
                 );
         });
     }
@@ -68,7 +68,7 @@ class DropNorthstarIdFromPhotosTable extends Migration
                 ->nullable()
                 ->after('source')
                 ->comment(
-                    'The IP address of the user that submitted the file.'
+                    'The IP address of the user that submitted the file.',
                 );
         });
     }

@@ -193,7 +193,7 @@ class Post extends Model
     {
         return $this->hasOne(Reaction::class)->where(
             'northstar_id',
-            auth()->id()
+            auth()->id(),
         );
     }
 
@@ -318,7 +318,7 @@ class Post extends Model
             return str_replace(
                 '/' . config('filesystems.disks.s3.bucket') . '/',
                 '',
-                $path
+                $path,
             );
         }
 
@@ -351,7 +351,7 @@ class Post extends Model
 
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId(
-            $this->campaign_id
+            $this->campaign_id,
         );
 
         // Fetch School information via GraphQL.
@@ -403,7 +403,7 @@ class Post extends Model
                     ? $this->deleted_at->toIso8601String()
                     : null,
             ],
-            Group::toBlinkPayload($this->group)
+            Group::toBlinkPayload($this->group),
         );
     }
 
@@ -436,7 +436,7 @@ class Post extends Model
         if (!$this->tagNames()->contains($tagName)) {
             $tag = Tag::firstOrCreate(
                 ['tag_name' => $tagName],
-                ['tag_slug' => Str::slug($tagName, '-')]
+                ['tag_slug' => Str::slug($tagName, '-')],
             );
 
             $this->tags()->attach($tag);
@@ -555,7 +555,7 @@ class Post extends Model
         return $query
             ->whereIn(
                 'status',
-                array_merge(['accepted'], self::getCompletedVoterRegStatuses())
+                array_merge(['accepted'], self::getCompletedVoterRegStatuses()),
             )
             ->orWhere('northstar_id', auth()->id())
             ->orWhere(function ($query) {
@@ -666,7 +666,7 @@ class Post extends Model
                     'action_id' => $this->action_id,
                     'school_id' => $this->school_id,
                 ],
-                ['impact' => $impact, 'location' => $location]
+                ['impact' => $impact, 'location' => $location],
             );
         }
 
@@ -684,7 +684,7 @@ class Post extends Model
                     'action_id' => $this->action_id,
                     'school_id' => $this->school_id,
                 ],
-                ['impact' => $impact, 'location' => $location]
+                ['impact' => $impact, 'location' => $location],
             );
         }
     }
@@ -711,7 +711,7 @@ class Post extends Model
                 'created_at' => $this->created_at->toIso8601String(),
                 'updated_at' => $this->updated_at->toIso8601String(),
             ],
-            Group::toBlinkPayload($this->group)
+            Group::toBlinkPayload($this->group),
         );
     }
 

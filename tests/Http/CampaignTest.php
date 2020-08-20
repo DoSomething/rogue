@@ -25,7 +25,7 @@ class CampaignTest extends Testcase
         // Make sure the end date is after the start date.
         $firstCampaignEndDate = date(
             'm/d/Y',
-            strtotime('+3 months', strtotime($firstCampaignStartDate))
+            strtotime('+3 months', strtotime($firstCampaignStartDate)),
         );
         // Create a GroupType
         $groupType = factory(GroupType::class)->create();
@@ -110,7 +110,7 @@ class CampaignTest extends Testcase
         $this->assertEquals(5, $decodedResponse['meta']['pagination']['count']);
 
         $response = $this->getJson(
-            'api/v3/campaigns?filter[has_website]=false'
+            'api/v3/campaigns?filter[has_website]=false',
         );
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(3, $decodedResponse['meta']['pagination']['count']);
@@ -131,35 +131,35 @@ class CampaignTest extends Testcase
 
         foreach (array_slice($causes, 0, 3) as $index => $cause) {
             $response = $this->getJson(
-                'api/v3/campaigns?filter[cause]=' . $cause
+                'api/v3/campaigns?filter[cause]=' . $cause,
             );
             $decodedResponse = $response->decodeResponseJson();
 
             $this->assertEquals(
                 1,
-                $decodedResponse['meta']['pagination']['count']
+                $decodedResponse['meta']['pagination']['count'],
             );
             $this->assertEquals(
                 $campaignWithFirstThreeCauses->first()['id'],
-                $decodedResponse['data'][0]['id']
+                $decodedResponse['data'][0]['id'],
             );
         }
 
         // Test that we can filter by multiple causes.
         $response = $this->getJson(
             'api/v3/campaigns?filter[cause]=' .
-                implode(',', array_slice($causes, 0, 3))
+                implode(',', array_slice($causes, 0, 3)),
         );
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
         $this->assertEquals(
             $campaignWithFirstThreeCauses->first()['id'],
-            $decodedResponse['data'][0]['id']
+            $decodedResponse['data'][0]['id'],
         );
 
         // Test that invalid causes are rejected by the filter:
         $response = $this->getJson(
-            'api/v3/campaigns?filter[cause]=this-is-not-a-cause,nor-this!'
+            'api/v3/campaigns?filter[cause]=this-is-not-a-cause,nor-this!',
         );
         $decodedResponse = $response->decodeResponseJson();
         $this->assertEquals(0, $decodedResponse['meta']['pagination']['count']);
@@ -186,7 +186,7 @@ class CampaignTest extends Testcase
         // Then, we'll use the last post's cursor to fetch the remaining two:
         $lastCursor = $json['data'][2]['cursor'];
         $response = $this->withAdminAccessToken()->getJson(
-            $endpoint . '&cursor[after]=' . $lastCursor
+            $endpoint . '&cursor[after]=' . $lastCursor,
         );
 
         $response->assertSuccessful();
@@ -229,7 +229,7 @@ class CampaignTest extends Testcase
         // Then, we'll use the last post's cursor to fetch the remaining two:
         $lastCursor = $response->json()['data'][2]['cursor'];
         $response = $this->withAdminAccessToken()->getJson(
-            $endpoint . '&cursor[after]=' . $lastCursor
+            $endpoint . '&cursor[after]=' . $lastCursor,
         );
 
         $response->assertJson([
@@ -280,7 +280,7 @@ class CampaignTest extends Testcase
                 'impact_doc' => 'https://www.bing.com/',
                 'cause' => ['lgbtq-rights'],
                 'start_date' => '1/1/2018',
-            ]
+            ],
         );
 
         // Make sure the campaign update is persisted.
@@ -312,7 +312,7 @@ class CampaignTest extends Testcase
             'api/v3/campaigns/' . $campaign->id,
             [
                 'contentful_campaign_id' => '123456',
-            ]
+            ],
         );
 
         // Make sure the campaign update is persisted.
@@ -351,7 +351,7 @@ class CampaignTest extends Testcase
             'api/v3/campaigns/' . $campaign->id,
             [
                 'group_type_id' => $groupType->id,
-            ]
+            ],
         );
 
         // Make sure the campaign update is persisted.
@@ -386,7 +386,7 @@ class CampaignTest extends Testcase
             'api/v3/campaigns/' . $campaign->id,
             [
                 'contentful_campaign_id' => 123456, // This should be a string
-            ]
+            ],
         );
 
         $response->assertStatus(422);
@@ -409,7 +409,7 @@ class CampaignTest extends Testcase
             'api/v3/campaigns/' . $campaign->id,
             [
                 'group_type_id' => 'four', // This should be an integer
-            ]
+            ],
         );
 
         $response->assertStatus(422);
@@ -438,7 +438,7 @@ class CampaignTest extends Testcase
         $response->assertStatus(404);
         $this->assertEquals(
             'That resource could not be found.',
-            $decodedResponse['message']
+            $decodedResponse['message'],
         );
     }
 

@@ -150,7 +150,7 @@ class ImportNasspGroupsCommand extends Command
                     'rogue:nassp-groups-import: Error importing group with ' .
                         $name .
                         ':' .
-                        $e->getMessage()
+                        $e->getMessage(),
                 );
             }
         }
@@ -162,7 +162,7 @@ class ImportNasspGroupsCommand extends Command
                 $numSkipped .
                 ' skipped, and ' .
                 $numFailed .
-                ' failed.'
+                ' failed.',
         );
     }
 }

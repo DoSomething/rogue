@@ -60,7 +60,7 @@ class AuthController extends Controller
             $request,
             $response,
             $url,
-            $destination
+            $destination,
         );
     }
 
@@ -74,7 +74,7 @@ class AuthController extends Controller
     {
         return gateway('northstar')->logout(
             $response,
-            $this->redirectAfterLogout
+            $this->redirectAfterLogout,
         );
     }
 }

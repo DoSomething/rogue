@@ -56,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
             function ($attribute, $value, $parameters, $validator) {
                 return preg_match('/^[a-f\d]{24}$/i', $value);
             },
-            'The :attribute must be a valid ObjectID.'
+            'The :attribute must be a valid ObjectID.',
         );
 
         Validator::extend(
@@ -67,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
 
                 return !is_null($subDivisions->getByCode($value));
             },
-            'The :attribute must be a valid ISO-3166-2 region code.'
+            'The :attribute must be a valid ISO-3166-2 region code.',
         );
 
         // Attach the user & request ID to context for all log messages.
@@ -104,7 +104,7 @@ class AppServiceProvider extends ServiceProvider
                 $operator,
                 $second,
                 $type,
-                $where
+                $where,
             );
         });
 
@@ -122,7 +122,7 @@ class AppServiceProvider extends ServiceProvider
                 $first,
                 $operator,
                 $second,
-                'left'
+                'left',
             );
         });
 
@@ -144,7 +144,7 @@ class AppServiceProvider extends ServiceProvider
                 return [$query, []];
             } else {
                 throw new InvalidArgumentException(
-                    'A subquery must be a query builder instance, a Closure, or a string.'
+                    'A subquery must be a query builder instance, a Closure, or a string.',
                 );
             }
         });

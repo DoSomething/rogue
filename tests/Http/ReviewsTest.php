@@ -36,7 +36,7 @@ class ReviewsTest extends TestCase
             [
                 'status' => 'accepted',
                 'comment' => 'Testing 1st review',
-            ]
+            ],
         );
 
         $response->assertStatus(201);
@@ -72,7 +72,7 @@ class ReviewsTest extends TestCase
             [
                 'status' => 'accepted',
                 'comment' => 'Testing 2nd review',
-            ]
+            ],
         );
 
         $this->assertDatabaseHas('campaigns', [
@@ -109,7 +109,7 @@ class ReviewsTest extends TestCase
         $response->assertStatus(401);
         $this->assertEquals(
             'Unauthenticated.',
-            $response->decodeResponseJson()['message']
+            $response->decodeResponseJson()['message'],
         );
     }
 
@@ -149,13 +149,13 @@ class ReviewsTest extends TestCase
             'api/v3/posts/' . $post->id . '/reviews',
             [
                 'status' => 'accepted',
-            ]
+            ],
         );
 
         // Make sure the post's updated_at matches the review time.
         $this->assertEquals(
             '2017-08-03 16:55:00',
-            (string) $post->fresh()->updated_at
+            (string) $post->fresh()->updated_at,
         );
     }
 
@@ -173,7 +173,7 @@ class ReviewsTest extends TestCase
             [
                 'post_id' => 88,
                 'status' => 'accepted',
-            ]
+            ],
         );
 
         $response->assertStatus(404);

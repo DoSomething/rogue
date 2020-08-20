@@ -21,7 +21,7 @@ class AddSourceAndRemoteAddressColumn extends Migration
                 ->ipAddress('remote_addr')
                 ->nullable()
                 ->comment(
-                    'The IP address of the user that submitted the file.'
+                    'The IP address of the user that submitted the file.',
                 );
         });
     }

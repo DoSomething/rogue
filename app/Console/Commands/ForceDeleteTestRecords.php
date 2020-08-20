@@ -54,7 +54,7 @@ class ForceDeleteTestRecords extends Command
         // Force delete all signups created by Ghost Inspector tests, identified by 'why_participated.'
         Signup::where(
             'why_participated',
-            'why_participated_ghost_test'
+            'why_participated_ghost_test',
         )->forceDelete();
 
         // Force delete all posts created by Ghost Inspector tests, identified by caption.

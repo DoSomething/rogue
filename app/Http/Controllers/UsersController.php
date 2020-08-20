@@ -64,7 +64,7 @@ class UsersController extends Controller
                 $posts->count() .
                 ' posts and ' .
                 $signups->count() .
-                ' signups)'
+                ' signups)',
         );
 
         return $this->respond('All signups & posts deleted.');

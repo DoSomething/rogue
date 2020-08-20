@@ -38,7 +38,7 @@ trait TransformsRequests
     ) {
         $collection = new FractalCollection(
             $data,
-            $this->setTransformer($transformer)
+            $this->setTransformer($transformer),
         );
 
         return $this->transform($collection, $code, $meta);
@@ -144,7 +144,7 @@ trait TransformsRequests
 
         $resource = new FractalCollection(
             $paginator->getCollection(),
-            $transformer
+            $transformer,
         );
         $resource->setMeta($meta);
 
@@ -154,7 +154,7 @@ trait TransformsRequests
                 $paginator->currentPage(),
                 $paginator->previousPageUrl(),
                 $paginator->nextPageUrl(),
-                $paginator->count()
+                $paginator->count(),
             );
             $resource->setCursor($cursor);
         } else {

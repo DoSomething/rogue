@@ -103,13 +103,13 @@ class PostTagged extends Notification implements ShouldQueue
                 $adminName .
                     ' just tagged this post as "' .
                     $this->tag->tag_name .
-                    '":'
+                    '":',
             )
             ->attachment(function ($attachment) use ($userName) {
                 $permalink = route(
                     'signups.show',
                     [$this->post->signup_id],
-                    true
+                    true,
                 );
                 $image = $this->post->getMediaUrl();
 
@@ -119,12 +119,12 @@ class PostTagged extends Notification implements ShouldQueue
                             '\'s submission for "' .
                             $this->post->campaign->internal_title .
                             '"',
-                        $permalink
+                        $permalink,
                     )
                     ->fields([
                         'Caption' => Str::limit($this->post->text, 140),
                         'Why Participated' => Str::limit(
-                            $this->post->signup->why_participated
+                            $this->post->signup->why_participated,
                         ),
                     ])
                     ->color(Arr::random(['#fcd116', '#23b7fb', '#4e2b63']));

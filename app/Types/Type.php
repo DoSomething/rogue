@@ -26,7 +26,7 @@ abstract class Type extends Enum
     {
         if (!method_exists(static::class, 'labels')) {
             throw new \InvalidArgumentException(
-                'This type does not have labels.'
+                'This type does not have labels.',
             );
         }
 

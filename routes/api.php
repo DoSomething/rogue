@@ -70,5 +70,5 @@ Route::group(
 
         // users
         Route::delete('users/{id}', 'UsersController@destroy');
-    }
+    },
 );

@@ -52,7 +52,7 @@ class CampaignsController extends Controller
             $request,
             array_merge_recursive($this->rules, [
                 'internal_title' => [Rule::unique('campaigns')],
-            ])
+            ]),
         );
 
         $campaign = Campaign::create($values);
@@ -91,7 +91,7 @@ class CampaignsController extends Controller
                 'internal_title' => [
                     Rule::unique('campaigns')->ignore($campaign->id),
                 ],
-            ])
+            ]),
         );
 
         $campaign->update($values);

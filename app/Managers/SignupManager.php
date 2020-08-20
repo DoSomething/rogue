@@ -53,7 +53,7 @@ class SignupManager
             CreateCustomerIoEvent::dispatch(
                 $signup->referrer_user_id,
                 'referral_signup_created',
-                $signup->getReferralSignupEventPayload()
+                $signup->getReferralSignupEventPayload(),
             );
         }
 

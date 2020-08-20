@@ -163,7 +163,7 @@ class Campaign extends Model
         return $query->where(
             'cause',
             'regexp',
-            '(^|,)' . $causesRegex . '(,|$)'
+            '(^|,)' . $causesRegex . '(,|$)',
         );
     }
 
@@ -188,7 +188,7 @@ class Campaign extends Model
     public function getCauseNames()
     {
         return array_values(
-            array_intersect_key(Cause::labels(), array_flip($this->cause))
+            array_intersect_key(Cause::labels(), array_flip($this->cause)),
         );
     }
 

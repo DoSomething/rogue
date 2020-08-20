@@ -19,7 +19,7 @@ class AddDetailsToSignupsTable extends Migration
                 ->after('source')
                 ->nullable()
                 ->comment(
-                    'Extra details about the signup, like opt-ins or broadcast ID.'
+                    'Extra details about the signup, like opt-ins or broadcast ID.',
                 );
         });
     }

@@ -19,7 +19,7 @@ class AddContentfulCampaignIDToCampaignTable extends Migration
                 ->after('id')
                 ->nullable()
                 ->comment(
-                    'Add the related contentful campaign id when applicable.'
+                    'Add the related contentful campaign id when applicable.',
                 );
         });
     }

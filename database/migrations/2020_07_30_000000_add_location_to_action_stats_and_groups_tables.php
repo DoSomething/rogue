@@ -31,7 +31,7 @@ class AddLocationToActionStatsAndGroupsTables extends Migration
         });
 
         DB::statement(
-            "UPDATE groups SET location = CONCAT('US-', state) WHERE state IS NOT NULL"
+            "UPDATE groups SET location = CONCAT('US-', state) WHERE state IS NOT NULL",
         );
     }
 

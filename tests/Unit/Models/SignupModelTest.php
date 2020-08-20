@@ -28,11 +28,11 @@ class SignupModelTest extends TestCase
         $this->assertEquals($result['group_type_id'], $group->group_type_id);
         $this->assertEquals(
             $result['group_type_name'],
-            $group->group_type->name
+            $group->group_type->name,
         );
         $this->assertEquals(
             $result['referrer_user_id'],
-            $signup->referrer_user_id
+            $signup->referrer_user_id,
         );
     }
 
@@ -70,12 +70,12 @@ class SignupModelTest extends TestCase
 
         $this->assertEquals(
             $result['created_at'],
-            $signup->created_at->toIso8601String()
+            $signup->created_at->toIso8601String(),
         );
         $this->assertEquals($result['id'], $signup->id);
         $this->assertEquals(
             $result['updated_at'],
-            $signup->updated_at->toIso8601String()
+            $signup->updated_at->toIso8601String(),
         );
         $this->assertEquals($result['user_id'], $signup->northstar_id);
         $this->assertEquals($result['campaign_id'], $signup->campaign_id);
