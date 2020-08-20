@@ -15,7 +15,10 @@ class AddCampaignIdToPosts extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->integer('campaign_id')->after('signup_id')->index()
+            $table
+                ->integer('campaign_id')
+                ->after('signup_id')
+                ->index()
                 ->comment('The campaign node ID for this post.');
         });
 

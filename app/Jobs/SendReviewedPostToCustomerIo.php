@@ -44,11 +44,20 @@ class SendReviewedPostToCustomerIo implements ShouldQueue
         $shouldSendToCIO = config('features.blink');
 
         if ($shouldSendToCIO) {
-            gateway('blink')->post('v1/events/user-signup-post-review', $payload);
+            gateway('blink')->post(
+                'v1/events/user-signup-post-review',
+                $payload,
+            );
         }
 
         // Log
         $verb = $shouldSendToCIO ? 'sent' : 'would have been sent';
-        info('Review of post ' . $this->post->id . ' ' . $verb . ' to Customer.io');
+        info(
+            'Review of post ' .
+                $this->post->id .
+                ' ' .
+                $verb .
+                ' to Customer.io',
+        );
     }
 }

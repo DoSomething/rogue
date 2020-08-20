@@ -104,7 +104,13 @@ class Post extends Model
      *
      * @var array
      */
-    public $goodTags = ['good-for-storytelling', 'good-submission', 'good-for-sponsor', 'good-quote', 'good-for-brand'];
+    public $goodTags = [
+        'good-for-storytelling',
+        'good-submission',
+        'good-for-sponsor',
+        'good-quote',
+        'good-for-brand',
+    ];
 
     /**
      * Get a post by its unique hash.
@@ -117,7 +123,7 @@ class Post extends Model
         $result = app(Hashids::class)->decode($hash);
 
         if (empty($result)) {
-            throw new ModelNotFoundException;
+            throw new ModelNotFoundException();
         }
 
         return self::findOrFail($result[0]);
@@ -185,8 +191,10 @@ class Post extends Model
      */
     public function reaction()
     {
-        return $this->hasOne(Reaction::class)
-            ->where('northstar_id', auth()->id());
+        return $this->hasOne(Reaction::class)->where(
+            'northstar_id',
+            auth()->id(),
+        );
     }
 
     /**
@@ -242,11 +250,13 @@ class Post extends Model
     public function getLocationNameAttribute()
     {
         $code = $this->attributes['location'];
-        if (! $code) {
+        if (!$code) {
             return null;
         }
 
-        return Cache::rememberForever('region-'.$code, function () use ($code) {
+        return Cache::rememberForever('region-' . $code, function () use (
+            $code
+        ) {
             $isoCodes = new \Sokil\IsoCodes\IsoCodesFactory();
             $subDivisions = $isoCodes->getSubdivisions();
             $region = $subDivisions->getByCode($code);
@@ -305,7 +315,11 @@ class Post extends Model
 
         // For S3, we store a full AWS URL, sometimes prefixed by bucket directory.
         if (config('filesystems.default') == 's3') {
-            return str_replace('/'. config('filesystems.disks.s3.bucket') . '/', '', $path);
+            return str_replace(
+                '/' . config('filesystems.disks.s3.bucket') . '/',
+                '',
+                $path,
+            );
         }
 
         return null;
@@ -331,10 +345,14 @@ class Post extends Model
 
         // Bypass Campaign->cause accessor method so the value isn't converted to an array
         // which Customer.io does not support.
-        $campaign_cause = optional($this->signup->campaign)->getAttributes()['cause'];
+        $campaign_cause = optional($this->signup->campaign)->getAttributes()[
+            'cause'
+        ];
 
         // Fetch Campaign Website information via GraphQL.
-        $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
+        $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId(
+            $this->campaign_id,
+        );
 
         // Fetch School information via GraphQL.
         if ($this->school_id) {
@@ -344,42 +362,49 @@ class Post extends Model
         // The associated Action for this post.
         $action = $this->actionModel;
 
-        return array_merge([
-            'id' => $this->id,
-            'signup_id' => $this->signup_id,
-            'quantity' => $quantity,
-            'why_participated' => $this->signup->why_participated,
-            'campaign_id' => (string) $this->campaign_id,
-            'campaign_run_id' => (string) $this->signup->campaign_run_id,
-            'campaign_title' => Arr::get($campaignWebsite, 'title'),
-            'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
-            'campaign_cause' => $campaign_cause,
-            'northstar_id' => $this->northstar_id,
-            'type' => $this->type,
-            'action' => $this->getActionName(),
-            'action_id' => $this->action_id,
-            'action_type' => $action['action_type'],
-            'scholarship_entry' => $action['scholarship_entry'],
-            'civic_action' => $action['civic_action'],
-            'quiz' => $action['quiz'],
-            'online' => $action['online'],
-            'time_commitment' => $action['time_commitment'],
-            'volunteer_credit' => $action['volunteer_credit'],
-            'url' => $this->getMediaUrl(),
-            'caption' => $this->text,
-            'text' => $this->text,
-            'status' => $this->status,
-            'remote_addr' => '0.0.0.0',
-            'source' => $this->source,
-            'source_details' => $this->source_details,
-            'details' => $this->details,
-            'referrer_user_id' => $this->referrer_user_id,
-            'school_id' => $this->school_id,
-            'school_name' => isset($school) ? Arr::get($school, 'name') : null,
-            'created_at' => $this->created_at->toIso8601String(),
-            'updated_at' => $this->updated_at->toIso8601String(),
-            'deleted_at' => $this->deleted_at ? $this->deleted_at->toIso8601String() : null,
-        ], Group::toBlinkPayload($this->group));
+        return array_merge(
+            [
+                'id' => $this->id,
+                'signup_id' => $this->signup_id,
+                'quantity' => $quantity,
+                'why_participated' => $this->signup->why_participated,
+                'campaign_id' => (string) $this->campaign_id,
+                'campaign_run_id' => (string) $this->signup->campaign_run_id,
+                'campaign_title' => Arr::get($campaignWebsite, 'title'),
+                'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
+                'campaign_cause' => $campaign_cause,
+                'northstar_id' => $this->northstar_id,
+                'type' => $this->type,
+                'action' => $this->getActionName(),
+                'action_id' => $this->action_id,
+                'action_type' => $action['action_type'],
+                'scholarship_entry' => $action['scholarship_entry'],
+                'civic_action' => $action['civic_action'],
+                'quiz' => $action['quiz'],
+                'online' => $action['online'],
+                'time_commitment' => $action['time_commitment'],
+                'volunteer_credit' => $action['volunteer_credit'],
+                'url' => $this->getMediaUrl(),
+                'caption' => $this->text,
+                'text' => $this->text,
+                'status' => $this->status,
+                'remote_addr' => '0.0.0.0',
+                'source' => $this->source,
+                'source_details' => $this->source_details,
+                'details' => $this->details,
+                'referrer_user_id' => $this->referrer_user_id,
+                'school_id' => $this->school_id,
+                'school_name' => isset($school)
+                    ? Arr::get($school, 'name')
+                    : null,
+                'created_at' => $this->created_at->toIso8601String(),
+                'updated_at' => $this->updated_at->toIso8601String(),
+                'deleted_at' => $this->deleted_at
+                    ? $this->deleted_at->toIso8601String()
+                    : null,
+            ],
+            Group::toBlinkPayload($this->group),
+        );
     }
 
     /**
@@ -408,8 +433,11 @@ class Post extends Model
 
         // Only tag if the tag doesn't exist on the post yet.
         // Otherwise, an integrity constraint violation / duplicate entry error will be thrown.
-        if (! $this->tagNames()->contains($tagName)) {
-            $tag = Tag::firstOrCreate(['tag_name' => $tagName], ['tag_slug' => Str::slug($tagName, '-')]);
+        if (!$this->tagNames()->contains($tagName)) {
+            $tag = Tag::firstOrCreate(
+                ['tag_name' => $tagName],
+                ['tag_slug' => Str::slug($tagName, '-')],
+            );
 
             $this->tags()->attach($tag);
 
@@ -418,7 +446,10 @@ class Post extends Model
 
             info('post_tagged', ['id' => $this->id, 'tag' => $tag->tag_slug]);
 
-            if ((! $this->hasGoodTag()) && in_array($tag->tag_slug, $this->goodTags)) {
+            if (
+                !$this->hasGoodTag() &&
+                in_array($tag->tag_slug, $this->goodTags)
+            ) {
                 $this->notify(new PostTagged($this, $tag));
             }
         }
@@ -448,7 +479,9 @@ class Post extends Model
      */
     public function scopeWithoutTag($query, $tagSlug)
     {
-        return $query->whereDoesntHave('tags', function ($query) use ($tagSlug) {
+        return $query->whereDoesntHave('tags', function ($query) use (
+            $tagSlug
+        ) {
             multipleValueQuery($query, $tagSlug, 'tag_slug');
         });
     }
@@ -519,10 +552,15 @@ class Post extends Model
             return;
         }
 
-        return $query->whereIn('status', array_merge(['accepted'], self::getCompletedVoterRegStatuses()))
+        return $query
+            ->whereIn(
+                'status',
+                array_merge(['accepted'], self::getCompletedVoterRegStatuses()),
+            )
             ->orWhere('northstar_id', auth()->id())
             ->orWhere(function ($query) {
-                $query->whereNotNull('referrer_user_id')
+                $query
+                    ->whereNotNull('referrer_user_id')
                     ->where('referrer_user_id', auth()->id())
                     ->where('type', 'voter-reg');
             });
@@ -535,10 +573,11 @@ class Post extends Model
      */
     public function scopeWithoutAnonymousPosts($query)
     {
-        if (! is_staff_user()) {
-            return $query->whereDoesntHave('actionModel', function ($query) {
-                $query->where('anonymous', true);
-            })
+        if (!is_staff_user()) {
+            return $query
+                ->whereDoesntHave('actionModel', function ($query) {
+                    $query->where('anonymous', true);
+                })
                 ->orWhere('northstar_id', auth()->id());
         }
     }
@@ -550,10 +589,11 @@ class Post extends Model
      */
     public function scopeWithHiddenPosts($query)
     {
-        if (! is_staff_user()) {
-            return $query->whereDoesntHave('tags', function ($query) {
-                $query->where('tag_slug', 'hide-in-gallery');
-            })
+        if (!is_staff_user()) {
+            return $query
+                ->whereDoesntHave('tags', function ($query) {
+                    $query->where('tag_slug', 'hide-in-gallery');
+                })
                 ->orWhere('northstar_id', auth()->id());
         }
     }
@@ -581,7 +621,8 @@ class Post extends Model
      */
     public static function getPostCount(Campaign $campaign, string $status)
     {
-        return (new self)->newModelQuery()
+        return (new self())
+            ->newModelQuery()
             ->where('campaign_id', $campaign->id)
             ->where('status', $status)
             ->whereReviewable()
@@ -596,7 +637,7 @@ class Post extends Model
     public function updateOrCreateActionStats()
     {
         // We currently only save action stats for posts that belong to schools.
-        if (! $this->school_id) {
+        if (!$this->school_id) {
             return;
         }
 
@@ -608,8 +649,12 @@ class Post extends Model
         $location = $this->group ? $this->group->location : null;
 
         // If completed voter-reg post, update school impact as completed count for this action.
-        if ($this->type === 'voter-reg' && in_array($this->status, self::getCompletedVoterRegStatuses())) {
-            $impact = (new self)->newModelQuery()
+        if (
+            $this->type === 'voter-reg' &&
+            in_array($this->status, self::getCompletedVoterRegStatuses())
+        ) {
+            $impact = (new self())
+                ->newModelQuery()
                 ->where('school_id', $this->school_id)
                 ->where('type', 'voter-reg')
                 ->where('action_id', $this->action_id)
@@ -617,22 +662,29 @@ class Post extends Model
                 ->count();
 
             return ActionStat::updateOrCreate(
-                ['action_id' => $this->action_id, 'school_id' => $this->school_id],
-                ['impact' => $impact, 'location' => $location]
+                [
+                    'action_id' => $this->action_id,
+                    'school_id' => $this->school_id,
+                ],
+                ['impact' => $impact, 'location' => $location],
             );
         }
 
         // If approved photo post, update school impact as sum quantity for this action.
         if ($this->type === 'photo' && $this->status === 'accepted') {
-            $impact = (new self)->newModelQuery()
+            $impact = (new self())
+                ->newModelQuery()
                 ->where('action_id', $this->action_id)
                 ->where('school_id', $this->school_id)
                 ->where('status', 'accepted')
                 ->sum('quantity');
 
             return ActionStat::updateOrCreate(
-                ['action_id' => $this->action_id, 'school_id' => $this->school_id],
-                ['impact' => $impact, 'location' => $location]
+                [
+                    'action_id' => $this->action_id,
+                    'school_id' => $this->school_id,
+                ],
+                ['impact' => $impact, 'location' => $location],
             );
         }
     }
@@ -648,16 +700,19 @@ class Post extends Model
         // The associated user for this post.
         $user = app(GraphQL::class)->getUserById($userId);
 
-        return array_merge([
-            'id' => $this->id,
-            'user_id' => $userId,
-            'user_display_name' => Arr::get($user, 'displayName'),
-            'type' => $this->type,
-            'status' => $this->status,
-            'action_id' => $this->action_id,
-            'created_at' => $this->created_at->toIso8601String(),
-            'updated_at' => $this->updated_at->toIso8601String(),
-        ], Group::toBlinkPayload($this->group));
+        return array_merge(
+            [
+                'id' => $this->id,
+                'user_id' => $userId,
+                'user_display_name' => Arr::get($user, 'displayName'),
+                'type' => $this->type,
+                'status' => $this->status,
+                'action_id' => $this->action_id,
+                'created_at' => $this->created_at->toIso8601String(),
+                'updated_at' => $this->updated_at->toIso8601String(),
+            ],
+            Group::toBlinkPayload($this->group),
+        );
     }
 
     /**

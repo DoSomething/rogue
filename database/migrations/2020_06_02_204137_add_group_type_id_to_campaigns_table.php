@@ -14,8 +14,15 @@ class AddGroupTypeIdToCampaignsTable extends Migration
     public function up()
     {
         Schema::table('campaigns', function (Blueprint $table) {
-            $table->unsignedInteger('group_type_id')->nullable()->index()->comment('The group type id the group is for.');
-            $table->foreign('group_type_id')->references('id')->on('group_types');
+            $table
+                ->unsignedInteger('group_type_id')
+                ->nullable()
+                ->index()
+                ->comment('The group type id the group is for.');
+            $table
+                ->foreign('group_type_id')
+                ->references('id')
+                ->on('group_types');
         });
     }
 

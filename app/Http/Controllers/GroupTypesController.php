@@ -18,7 +18,7 @@ class GroupTypesController extends ApiController
      */
     public function __construct()
     {
-        $this->transformer = new GroupTypeTransformer;
+        $this->transformer = new GroupTypeTransformer();
     }
 
     /**

@@ -40,12 +40,16 @@ class SignupsController extends ApiController
     public function __construct(SignupManager $signups)
     {
         $this->signups = $signups;
-        $this->transformer = new SignupTransformer;
+        $this->transformer = new SignupTransformer();
 
         $this->middleware('scopes:activity');
-        $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('auth:api', [
+            'only' => ['store', 'update', 'destroy'],
+        ]);
         $this->middleware('role:admin,staff', ['only' => ['destroy']]);
-        $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('scopes:write', [
+            'only' => ['store', 'update', 'destroy'],
+        ]);
     }
 
     /**
@@ -66,15 +70,21 @@ class SignupsController extends ApiController
         $northstarId = getNorthstarId($request);
 
         // Get the campaign id from the request by campaign_id or action_id.
-        $campaignId = $request['campaign_id'] ? $request['campaign_id'] : Campaign::fromActionId($request['action_id'])->id;
+        $campaignId = $request['campaign_id']
+            ? $request['campaign_id']
+            : Campaign::fromActionId($request['action_id'])->id;
 
         // Check to see if the signup exists before creating one.
         $signup = $this->signups->get($northstarId, $campaignId);
 
         $code = $signup ? 200 : 201;
 
-        if (! $signup) {
-            $signup = $this->signups->create($request->all(), $northstarId, $campaignId);
+        if (!$signup) {
+            $signup = $this->signups->create(
+                $request->all(),
+                $northstarId,
+                $campaignId,
+            );
         }
 
         return $this->item($signup, $code);
@@ -96,7 +106,7 @@ class SignupsController extends ApiController
 
         // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
         if (Str::startsWith($request->query('include'), 'posts')) {
-            $types = (new \League\Fractal\Manager)
+            $types = (new \League\Fractal\Manager())
                 ->parseIncludes($request->query('include'))
                 ->getIncludeParams('posts');
 
@@ -131,20 +141,28 @@ class SignupsController extends ApiController
     {
         // Only allow an admin or the user who owns the signup to see the signup's unapproved posts.
         if (Str::startsWith($request->query('include'), 'posts')) {
-            $types = (new \League\Fractal\Manager)
+            $types = (new \League\Fractal\Manager())
                 ->parseIncludes($request->query('include'))
                 ->getIncludeParams('posts');
 
             $types = $types ? $types->get('type') : null;
 
-            $signup->load(['visiblePosts' => function ($query) use ($types) {
-                if ($types) {
-                    $query->whereIn('type', $types);
-                }
-            }]);
+            $signup->load([
+                'visiblePosts' => function ($query) use ($types) {
+                    if ($types) {
+                        $query->whereIn('type', $types);
+                    }
+                },
+            ]);
         }
 
-        return $this->item($signup, 200, [], $this->transformer, $request->query('include'));
+        return $this->item(
+            $signup,
+            200,
+            [],
+            $this->transformer,
+            $request->query('include'),
+        );
     }
 
     /**
@@ -162,14 +180,19 @@ class SignupsController extends ApiController
         ]);
 
         // Only allow an admin or the user who owns the signup to update.
-        if (token()->role() === 'admin' || auth()->id() === $signup->northstar_id) {
+        if (
+            token()->role() === 'admin' ||
+            auth()->id() === $signup->northstar_id
+        ) {
             // why_participated is the only thing that can be changed
             $this->signups->update($signup, $validatedRequest);
 
             return $this->item($signup);
         }
 
-        throw new AuthorizationException('You don\'t have the correct role to update this signup!');
+        throw new AuthorizationException(
+            'You don\'t have the correct role to update this signup!',
+        );
     }
 
     /**
@@ -187,6 +210,9 @@ class SignupsController extends ApiController
             return $this->respond('Signup deleted.', 200);
         }
 
-        return response()->json(['code' => 500, 'message' => 'There was an error deleting the post']);
+        return response()->json([
+            'code' => 500,
+            'message' => 'There was an error deleting the post',
+        ]);
     }
 }

@@ -14,8 +14,14 @@ class AddPendingCountToCampaigns extends Migration
     public function up()
     {
         Schema::table('campaigns', function (Blueprint $table) {
-            $table->integer('pending_count')->default(0)->after('end_date');
-            $table->integer('accepted_count')->default(0)->after('pending_count');
+            $table
+                ->integer('pending_count')
+                ->default(0)
+                ->after('end_date');
+            $table
+                ->integer('accepted_count')
+                ->default(0)
+                ->after('pending_count');
         });
     }
 

@@ -36,7 +36,9 @@ class CampaignsController extends Controller
      */
     public function create()
     {
-        return view('campaigns.create')->with('causes', Cause::labels())->with('group_types', GroupType::labels());
+        return view('campaigns.create')
+            ->with('causes', Cause::labels())
+            ->with('group_types', GroupType::labels());
     }
 
     /**
@@ -46,9 +48,12 @@ class CampaignsController extends Controller
      */
     public function store(Request $request)
     {
-        $values = $this->validate($request, array_merge_recursive($this->rules, [
-            'internal_title' => [Rule::unique('campaigns')],
-        ]));
+        $values = $this->validate(
+            $request,
+            array_merge_recursive($this->rules, [
+                'internal_title' => [Rule::unique('campaigns')],
+            ]),
+        );
 
         $campaign = Campaign::create($values);
 
@@ -80,9 +85,14 @@ class CampaignsController extends Controller
      */
     public function update(Request $request, Campaign $campaign)
     {
-        $values = $this->validate($request, array_merge_recursive($this->rules, [
-            'internal_title' => [Rule::unique('campaigns')->ignore($campaign->id)],
-        ]));
+        $values = $this->validate(
+            $request,
+            array_merge_recursive($this->rules, [
+                'internal_title' => [
+                    Rule::unique('campaigns')->ignore($campaign->id),
+                ],
+            ]),
+        );
 
         $campaign->update($values);
 

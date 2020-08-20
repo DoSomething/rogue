@@ -23,16 +23,21 @@ class ReviewsTest extends TestCase
         $northstarId = $this->faker->northstar_id;
         $schoolId = $this->faker->school_id;
 
-        $firstPost = factory(Post::class)->states('photo', 'pending')->create([
-            'school_id' => $schoolId,
-        ]);
+        $firstPost = factory(Post::class)
+            ->states('photo', 'pending')
+            ->create([
+                'school_id' => $schoolId,
+            ]);
         $actionId = $firstPost->action_id;
         $campaignId = $firstPost->campaign->id;
 
-        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/' . $firstPost->id . '/reviews', [
-            'status' => 'accepted',
-            'comment' => 'Testing 1st review',
-        ]);
+        $response = $this->withAccessToken($northstarId, 'admin')->postJson(
+            'api/v3/posts/' . $firstPost->id . '/reviews',
+            [
+                'status' => 'accepted',
+                'comment' => 'Testing 1st review',
+            ],
+        );
 
         $response->assertStatus(201);
         Bus::assertDispatched(SendReviewedPostToCustomerIo::class);
@@ -54,16 +59,21 @@ class ReviewsTest extends TestCase
             'school_id' => $schoolId,
         ]);
 
-        $secondPost = factory(Post::class)->states('photo', 'pending')->create([
-            'action_id' => $actionId,
-            'campaign_id' => $campaignId,
-            'school_id' => $schoolId,
-        ]);
+        $secondPost = factory(Post::class)
+            ->states('photo', 'pending')
+            ->create([
+                'action_id' => $actionId,
+                'campaign_id' => $campaignId,
+                'school_id' => $schoolId,
+            ]);
 
-        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/' . $secondPost->id . '/reviews', [
-            'status' => 'accepted',
-            'comment' => 'Testing 2nd review',
-        ]);
+        $response = $this->withAccessToken($northstarId, 'admin')->postJson(
+            'api/v3/posts/' . $secondPost->id . '/reviews',
+            [
+                'status' => 'accepted',
+                'comment' => 'Testing 2nd review',
+            ],
+        );
 
         $this->assertDatabaseHas('campaigns', [
             'id' => $campaignId,
@@ -97,7 +107,10 @@ class ReviewsTest extends TestCase
         ]);
 
         $response->assertStatus(401);
-        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
+        $this->assertEquals(
+            'Unauthenticated.',
+            $response->decodeResponseJson()['message'],
+        );
     }
 
     /**
@@ -132,12 +145,18 @@ class ReviewsTest extends TestCase
 
         // Review the post.
         $northstarId = $this->faker->northstar_id;
-        $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/posts/' . $post->id . '/reviews', [
-            'status' => 'accepted',
-        ]);
+        $this->withAccessToken($northstarId, 'admin')->postJson(
+            'api/v3/posts/' . $post->id . '/reviews',
+            [
+                'status' => 'accepted',
+            ],
+        );
 
         // Make sure the post's updated_at matches the review time.
-        $this->assertEquals('2017-08-03 16:55:00', (string) $post->fresh()->updated_at);
+        $this->assertEquals(
+            '2017-08-03 16:55:00',
+            (string) $post->fresh()->updated_at,
+        );
     }
 
     /**
@@ -149,10 +168,13 @@ class ReviewsTest extends TestCase
     {
         // Review a post that doesn't exist.
         $northstarId = $this->faker->northstar_id;
-        $response = $this->withAccessToken($northstarId, 'admin')->postJson('api/v3/reviews/posts/z/reviews', [
-            'post_id' => 88,
-            'status' => 'accepted',
-        ]);
+        $response = $this->withAccessToken($northstarId, 'admin')->postJson(
+            'api/v3/reviews/posts/z/reviews',
+            [
+                'post_id' => 88,
+                'status' => 'accepted',
+            ],
+        );
 
         $response->assertStatus(404);
     }

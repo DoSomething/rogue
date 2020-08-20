@@ -35,8 +35,11 @@ class RotationController extends Controller
      *
      * @param Filesystem $filesystem
      */
-    public function __construct(Fastly $fastly, ImageStorage $storage, PostTransformer $transformer)
-    {
+    public function __construct(
+        Fastly $fastly,
+        ImageStorage $storage,
+        PostTransformer $transformer
+    ) {
         $this->fastly = $fastly;
         $this->storage = $storage;
         $this->transformer = $transformer;

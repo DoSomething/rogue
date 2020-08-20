@@ -14,7 +14,9 @@ class ImportSignupsCommandTest extends TestCase
         $start_time = $this->mockTime(Carbon::now());
 
         // Run the signup import command
-        $this->artisan('rogue:signupimport', ['path' => 'tests/Console/example-signups.csv']);
+        $this->artisan('rogue:signupimport', [
+            'path' => 'tests/Console/example-signups.csv',
+        ]);
 
         // And see that we stored the two unique signups
         $this->assertDatabaseHas('signups', [

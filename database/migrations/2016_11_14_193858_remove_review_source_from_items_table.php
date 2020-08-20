@@ -25,7 +25,11 @@ class RemoveReviewSourceFromItemsTable extends Migration
     public function down()
     {
         Schema::table('reportback_items', function (Blueprint $table) {
-            $table->string('review_source')->nullable()->comment('Source URL which review was submitted from.')->after('reviewer');
+            $table
+                ->string('review_source')
+                ->nullable()
+                ->comment('Source URL which review was submitted from.')
+                ->after('reviewer');
         });
     }
 }

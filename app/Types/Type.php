@@ -24,8 +24,10 @@ abstract class Type extends Enum
      */
     public static function label($type)
     {
-        if (! method_exists(static::class, 'labels')) {
-            throw new \InvalidArgumentException('This type does not have labels.');
+        if (!method_exists(static::class, 'labels')) {
+            throw new \InvalidArgumentException(
+                'This type does not have labels.',
+            );
         }
 
         return Arr::get(static::labels(), $type);

@@ -39,9 +39,11 @@ class RecountPostsCommand extends Command
      */
     public function handle()
     {
-        $pendingCounts = (new Post)->newModelQuery()
+        $pendingCounts = (new Post())
+            ->newModelQuery()
             ->selectRaw('campaign_id, count(*) as count')
-            ->whereReviewable()->where('status', 'pending')
+            ->whereReviewable()
+            ->where('status', 'pending')
             ->groupBy('campaign_id')
             ->get();
 
@@ -53,9 +55,11 @@ class RecountPostsCommand extends Command
             }
         }
 
-        $acceptedCounts = (new Post)->newModelQuery()
+        $acceptedCounts = (new Post())
+            ->newModelQuery()
             ->selectRaw('campaign_id, count(*) as count')
-            ->whereReviewable()->where('status', 'accepted')
+            ->whereReviewable()
+            ->where('status', 'accepted')
             ->groupBy('campaign_id')
             ->get();
 

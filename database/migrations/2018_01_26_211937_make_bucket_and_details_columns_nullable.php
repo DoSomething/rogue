@@ -14,9 +14,19 @@ class MakeBucketAndDetailsColumnsNullable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->text('details')->nullable()->change();
+            $table
+                ->text('details')
+                ->nullable()
+                ->change();
             $table->dropColumn('action_bucket');
-            $table->string('action')->index()->after('type')->default('default')->comment('Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throught the life of the campaign.');
+            $table
+                ->string('action')
+                ->index()
+                ->after('type')
+                ->default('default')
+                ->comment(
+                    'Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throught the life of the campaign.',
+                );
         });
     }
 
@@ -28,8 +38,17 @@ class MakeBucketAndDetailsColumnsNullable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->text('details')->nullable(false)->change();
-            $table->string('action_bucket')->index()->after('type')->comment('Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throught the life of the campaign.');
+            $table
+                ->text('details')
+                ->nullable(false)
+                ->change();
+            $table
+                ->string('action_bucket')
+                ->index()
+                ->after('type')
+                ->comment(
+                    'Describes the bucket the action is tied to. A campaign could ask for multiple types of actions throught the life of the campaign.',
+                );
             $table->dropColumn('action');
         });
     }

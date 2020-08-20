@@ -13,9 +13,15 @@ class AddUniqueIndexToReportbacksTable extends Migration
     public function up()
     {
         Schema::table('reportbacks', function (Blueprint $table) {
-            $table->unique(['northstar_id', 'campaign_id', 'campaign_run_id'], 'northstar_id_campaign_run');
+            $table->unique(
+                ['northstar_id', 'campaign_id', 'campaign_run_id'],
+                'northstar_id_campaign_run',
+            );
 
-            $table->unique(['drupal_id', 'campaign_id', 'campaign_run_id'], 'drupal_id_campaign_run');
+            $table->unique(
+                ['drupal_id', 'campaign_id', 'campaign_run_id'],
+                'drupal_id_campaign_run',
+            );
         });
     }
 

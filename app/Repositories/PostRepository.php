@@ -49,8 +49,11 @@ class PostRepository
      *
      * @return \Rogue\Models\Post|null
      */
-    public function create(array $data, $signupId, $authenticatedUserRole = null)
-    {
+    public function create(
+        array $data,
+        $signupId,
+        $authenticatedUserRole = null
+    ) {
         $signup = Signup::find($signupId);
 
         // Get the action_id either from the payload or the DB.
@@ -64,14 +67,19 @@ class PostRepository
                 'name' => $data['action'],
             ])->first();
 
-            if (! $action) {
+            if (!$action) {
                 info('action_not_found', [
                     'campaign_id' => $signup->campaign_id,
                     'post_type' => $data['type'],
                     'name' => $data['action'],
                 ]);
 
-                throw ValidationException::withMessages(array_fill_keys(['campaign_id', 'post_type', 'name'], 'An action with the given fields does not exist.'));
+                throw ValidationException::withMessages(
+                    array_fill_keys(
+                        ['campaign_id', 'post_type', 'name'],
+                        'An action with the given fields does not exist.',
+                    ),
+                );
             }
 
             $actionId = $action->id;
@@ -95,12 +103,20 @@ class PostRepository
             'url' => $fileUrl,
             'text' => isset($data['text']) ? $data['text'] : null,
             'location' => isset($data['location']) ? $data['location'] : null,
-            'postal_code' => isset($data['postal_code']) ? $data['postal_code'] : null,
-            'school_id' => isset($data['school_id']) ? $data['school_id'] : null,
+            'postal_code' => isset($data['postal_code'])
+                ? $data['postal_code']
+                : null,
+            'school_id' => isset($data['school_id'])
+                ? $data['school_id']
+                : null,
             'source' => token()->client(),
-            'source_details' => isset($data['source_details']) ? $data['source_details'] : null,
+            'source_details' => isset($data['source_details'])
+                ? $data['source_details']
+                : null,
             'details' => isset($data['details']) ? $data['details'] : null,
-            'referrer_user_id' => isset($data['referrer_user_id']) ? $data['referrer_user_id'] : null,
+            'referrer_user_id' => isset($data['referrer_user_id'])
+                ? $data['referrer_user_id']
+                : null,
             'group_id' => isset($data['group_id']) ? $data['group_id'] : null,
         ]);
 
@@ -118,7 +134,9 @@ class PostRepository
                 $post->status = $data['status'];
             }
 
-            $post->source = isset($data['source']) ? $data['source'] : token()->client();
+            $post->source = isset($data['source'])
+                ? $data['source']
+                : token()->client();
 
             // If there is a created_at property, fill this in (e.g. if created_at is sent when creating a record with the importer app).
             if (isset($data['created_at'])) {
@@ -219,7 +237,7 @@ class PostRepository
     {
         // Check to see if the post already has this tag.
         // If so, no need to add again.
-        if (! $post->tagNames()->contains($tag)) {
+        if (!$post->tagNames()->contains($tag)) {
             $post->tag($tag);
         }
 

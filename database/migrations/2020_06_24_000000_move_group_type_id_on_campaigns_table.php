@@ -23,9 +23,19 @@ class moveGroupTypeIdOnCampaignsTable extends Migration
         });
 
         // Recreate the column in the correct position.
-        Schema::table($tableName, function (Blueprint $table) use ($columnName) {
-            $table->unsignedInteger($columnName)->after('secondary_causes')->nullable()->index()->comment('The group type id the group is for.');
-            $table->foreign($columnName)->references('id')->on('group_types');
+        Schema::table($tableName, function (Blueprint $table) use (
+            $columnName
+        ) {
+            $table
+                ->unsignedInteger($columnName)
+                ->after('secondary_causes')
+                ->nullable()
+                ->index()
+                ->comment('The group type id the group is for.');
+            $table
+                ->foreign($columnName)
+                ->references('id')
+                ->on('group_types');
         });
     }
 

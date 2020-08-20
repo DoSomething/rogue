@@ -23,10 +23,24 @@ class DropReactionReportbackItemTable extends Migration
     public function down()
     {
         Schema::create('reaction_reportback_item', function (Blueprint $table) {
-            $table->integer('reaction_id')->unsigned()->index();
-            $table->foreign('reaction_id')->references('id')->on('reactions')->onDelete('cascade');
-            $table->integer('reportback_item_id')->unsigned()->index();
-            $table->foreign('reportback_item_id')->references('id')->on('reportback_items')->onDelete('cascade');
+            $table
+                ->integer('reaction_id')
+                ->unsigned()
+                ->index();
+            $table
+                ->foreign('reaction_id')
+                ->references('id')
+                ->on('reactions')
+                ->onDelete('cascade');
+            $table
+                ->integer('reportback_item_id')
+                ->unsigned()
+                ->index();
+            $table
+                ->foreign('reportback_item_id')
+                ->references('id')
+                ->on('reportback_items')
+                ->onDelete('cascade');
         });
     }
 }

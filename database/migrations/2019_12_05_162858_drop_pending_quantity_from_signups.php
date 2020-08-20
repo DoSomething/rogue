@@ -26,7 +26,10 @@ class DropPendingQuantityFromSignups extends Migration
     public function down()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->integer('quantity_pending')->nullable()->comment('An unapproved quantity value.');
+            $table
+                ->integer('quantity_pending')
+                ->nullable()
+                ->comment('An unapproved quantity value.');
         });
     }
 }

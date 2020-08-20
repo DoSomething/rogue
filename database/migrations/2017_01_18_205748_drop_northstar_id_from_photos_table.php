@@ -22,9 +22,19 @@ class DropNorthstarIdFromPhotosTable extends Migration
         });
 
         Schema::table('photos', function (Blueprint $table) {
-            $table->string('source')->nullable()->after('status')->comment('Source which reportback file was submitted from.');
+            $table
+                ->string('source')
+                ->nullable()
+                ->after('status')
+                ->comment('Source which reportback file was submitted from.');
 
-            $table->ipAddress('remote_addr')->nullable()->after('source')->comment('The IP address of the user that submitted the file.');
+            $table
+                ->ipAddress('remote_addr')
+                ->nullable()
+                ->after('source')
+                ->comment(
+                    'The IP address of the user that submitted the file.',
+                );
         });
     }
 
@@ -36,16 +46,30 @@ class DropNorthstarIdFromPhotosTable extends Migration
     public function down()
     {
         Schema::table('photos', function (Blueprint $table) {
-            $table->string('northstar_id')->index()->after('id')->comment('The users Northstar ID');
+            $table
+                ->string('northstar_id')
+                ->index()
+                ->after('id')
+                ->comment('The users Northstar ID');
 
             $table->dropColumn('source');
             $table->dropColumn('remote_addr');
         });
 
         Schema::table('photos', function (Blueprint $table) {
-            $table->string('source')->nullable()->after('updated_at')->comment('Source which reportback file was submitted from.');
+            $table
+                ->string('source')
+                ->nullable()
+                ->after('updated_at')
+                ->comment('Source which reportback file was submitted from.');
 
-            $table->ipAddress('remote_addr')->nullable()->after('source')->comment('The IP address of the user that submitted the file.');
+            $table
+                ->ipAddress('remote_addr')
+                ->nullable()
+                ->after('source')
+                ->comment(
+                    'The IP address of the user that submitted the file.',
+                );
         });
     }
 }

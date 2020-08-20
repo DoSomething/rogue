@@ -14,17 +14,25 @@ class AddLocationToActionStatsAndGroupsTables extends Migration
     public function up()
     {
         Schema::table('action_stats', function (Blueprint $table) {
-            $table->string('location', 6)->nullable()->after('school_id');
+            $table
+                ->string('location', 6)
+                ->nullable()
+                ->after('school_id');
             $table->index(['action_id', 'location']);
         });
 
         Schema::table('groups', function (Blueprint $table) {
             // We'll deprecate the state column once all GraphQL queries are changed.
-            $table->string('location', 6)->nullable()->after('state');
+            $table
+                ->string('location', 6)
+                ->nullable()
+                ->after('state');
             $table->index(['group_type_id', 'location']);
         });
 
-        DB::statement("UPDATE groups SET location = CONCAT('US-', state) WHERE state IS NOT NULL");
+        DB::statement(
+            "UPDATE groups SET location = CONCAT('US-', state) WHERE state IS NOT NULL",
+        );
     }
 
     /**

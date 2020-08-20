@@ -62,7 +62,11 @@ class ImportMfolGroupsCommand extends Command
             'name' => 'March For Our Lives',
         ]);
 
-        info('rogue:mfol-groups-import: Beginning import for group type id ' . $groupType->id .'.');
+        info(
+            'rogue:mfol-groups-import: Beginning import for group type id ' .
+                $groupType->id .
+                '.',
+        );
 
         foreach ($csv->getRecords() as $record) {
             $name = $record['Chapter'];
@@ -75,14 +79,28 @@ class ImportMfolGroupsCommand extends Command
 
                 $numImported++;
 
-                info('Imported group', ['id' => $group->id, 'name' => $group->name]);
+                info('Imported group', [
+                    'id' => $group->id,
+                    'name' => $group->name,
+                ]);
             } catch (Exception $e) {
                 $numFailed++;
 
-                info('Error importing group with ' .$name . ':' . $e->getMessage());
+                info(
+                    'Error importing group with ' .
+                        $name .
+                        ':' .
+                        $e->getMessage(),
+                );
             }
         }
 
-        info('rogue:mfol-groups-import: Import completed with ' . $numImported . ' imported and ' . $numFailed . ' failed.');
+        info(
+            'rogue:mfol-groups-import: Import completed with ' .
+                $numImported .
+                ' imported and ' .
+                $numFailed .
+                ' failed.',
+        );
     }
 }

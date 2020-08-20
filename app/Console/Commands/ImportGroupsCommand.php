@@ -51,9 +51,11 @@ class ImportGroupsCommand extends Command
     private function logInfo($message, $data = [])
     {
         // Append the group type ID to the data if we have it set.
-        $data = $this->groupTypeId ? array_merge(['group_type_id' => $this->groupTypeId], $data) : $data;
+        $data = $this->groupTypeId
+            ? array_merge(['group_type_id' => $this->groupTypeId], $data)
+            : $data;
 
-        info('rogue:groups-import: '.$message, $data ?: []);
+        info('rogue:groups-import: ' . $message, $data ?: []);
     }
 
     /**
@@ -65,7 +67,7 @@ class ImportGroupsCommand extends Command
      */
     private function sanitizeValue($record, $key)
     {
-        if (! isset($record[$key])) {
+        if (!isset($record[$key])) {
             return null;
         }
 
@@ -81,7 +83,7 @@ class ImportGroupsCommand extends Command
     {
         $groupTypeName = $this->option('name');
 
-        if (! $groupTypeName) {
+        if (!$groupTypeName) {
             $this->logInfo('Please provide a name option.');
 
             return;
@@ -109,10 +111,12 @@ class ImportGroupsCommand extends Command
             $groupName = $this->sanitizeValue($record, 'name');
             $groupSchoolId = $this->sanitizeValue($record, 'universal_id');
 
-            if (! $groupName) {
+            if (!$groupName) {
                 $numSkipped++;
 
-                $this->logInfo('Skipping row without group name', ['school_id' => $groupSchoolId]);
+                $this->logInfo('Skipping row without group name', [
+                    'school_id' => $groupSchoolId,
+                ]);
 
                 continue;
             }
@@ -122,17 +126,24 @@ class ImportGroupsCommand extends Command
                     'group_type_id' => $this->groupTypeId,
                     'name' => $groupName,
                     'city' => $this->sanitizeValue($record, 'city'),
-                    'location' => isset($record['state']) ? 'US-'.trim($record['state']) : null,
+                    'location' => isset($record['state'])
+                        ? 'US-' . trim($record['state'])
+                        : null,
                     'school_id' => $groupSchoolId,
                 ]);
 
                 $numImported++;
 
-                $this->logInfo('Imported group', ['id' => $group->id, 'name' => $group->name]);
+                $this->logInfo('Imported group', [
+                    'id' => $group->id,
+                    'name' => $group->name,
+                ]);
             } catch (Exception $e) {
                 $numFailed++;
 
-                $this->logInfo('Error: ' . $e->getMessage(), ['name' => $groupName]);
+                $this->logInfo('Error: ' . $e->getMessage(), [
+                    'name' => $groupName,
+                ]);
             }
         }
 

@@ -13,8 +13,14 @@ class AddPostableIdAndTypeToReviewsTable extends Migration
     public function up()
     {
         Schema::table('reviews', function (Blueprint $table) {
-            $table->integer('postable_id')->comment('Postable Id the of the post that has been reviewed.');
-            $table->string('postable_type')->comment('Type of the post that has been reviewed.');
+            $table
+                ->integer('postable_id')
+                ->comment(
+                    'Postable Id the of the post that has been reviewed.',
+                );
+            $table
+                ->string('postable_type')
+                ->comment('Type of the post that has been reviewed.');
         });
     }
 

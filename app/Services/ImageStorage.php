@@ -45,12 +45,22 @@ class ImageStorage
         $contents = file_get_contents($file->getPathname());
 
         // Make sure we're only uploading valid image types
-        if (! in_array($extension, ['jpeg', 'png', 'gif'])) {
-            throw new UnprocessableEntityHttpException('Invalid file type. Upload a JPEG, PNG or GIF.');
+        if (!in_array($extension, ['jpeg', 'png', 'gif'])) {
+            throw new UnprocessableEntityHttpException(
+                'Invalid file type. Upload a JPEG, PNG or GIF.',
+            );
         }
 
         // Create a unique filename for this upload (since we don't know post ID yet).
-        $path = $this->base . $signupId . '-' . md5($contents) . '-' . time() . '.' . $extension;
+        $path =
+            $this->base .
+            $signupId .
+            '-' .
+            md5($contents) .
+            '-' .
+            time() .
+            '.' .
+            $extension;
 
         return $this->write($path, $contents);
     }
@@ -65,8 +75,10 @@ class ImageStorage
      */
     public function edit(Post $post, Image $image)
     {
-        if (! $post->url) {
-            throw new InvalidArgumentException('Cannot edit an image that does not exist.');
+        if (!$post->url) {
+            throw new InvalidArgumentException(
+                'Cannot edit an image that does not exist.',
+            );
         }
 
         $path = $post->getMediaPath();
@@ -87,7 +99,7 @@ class ImageStorage
     {
         $success = Storage::put($path, $contents);
 
-        if (! $success) {
+        if (!$success) {
             throw new HttpException(500, 'Unable to save image.');
         }
 
@@ -108,8 +120,10 @@ class ImageStorage
         // any exception that is thrown while trying to delete and just returns true.
         // see: \Illuminate\Filesystem\FilesystemAdapter::delete().
         // So we check if the file exists first and then try to delete it.
-        if (! Storage::exists($path)) {
-            info('Could not find file when trying to delete.', ['path' => $path]);
+        if (!Storage::exists($path)) {
+            info('Could not find file when trying to delete.', [
+                'path' => $path,
+            ]);
 
             return false;
         }

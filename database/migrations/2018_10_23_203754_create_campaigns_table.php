@@ -15,9 +15,15 @@ class CreateCampaignsTable extends Migration
     {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('internal_title')->comment('Campaign title used internally.');
-            $table->dateTime('start_date')->comment('The start date of the campaign.');
-            $table->dateTime('end_date')->comment('The end date of the campaign.');
+            $table
+                ->string('internal_title')
+                ->comment('Campaign title used internally.');
+            $table
+                ->dateTime('start_date')
+                ->comment('The start date of the campaign.');
+            $table
+                ->dateTime('end_date')
+                ->comment('The end date of the campaign.');
             $table->timestamps();
             $table->softDeletes();
         });

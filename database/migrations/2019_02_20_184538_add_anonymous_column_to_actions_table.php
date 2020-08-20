@@ -14,7 +14,12 @@ class AddAnonymousColumnToActionsTable extends Migration
     public function up()
     {
         Schema::table('actions', function (Blueprint $table) {
-            $table->boolean('anonymous')->after('scholarship_entry')->comment('Whether or not the post PII should be anonymized via the API.');
+            $table
+                ->boolean('anonymous')
+                ->after('scholarship_entry')
+                ->comment(
+                    'Whether or not the post PII should be anonymized via the API.',
+                );
             $table->dropColumn('active');
         });
     }
@@ -28,7 +33,9 @@ class AddAnonymousColumnToActionsTable extends Migration
     {
         Schema::table('actions', function (Blueprint $table) {
             $table->dropColumn('anonymous');
-            $table->boolean('active')->comment('Whether or not the action is active.');
+            $table
+                ->boolean('active')
+                ->comment('Whether or not the action is active.');
         });
     }
 }

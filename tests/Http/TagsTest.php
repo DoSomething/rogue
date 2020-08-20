@@ -20,9 +20,12 @@ class TagsTest extends TestCase
         $post = factory(Post::class)->create();
 
         // Apply the tag to the post
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Submission',
-        ]);
+        $response = $this->withAdminAccessToken()->postJson(
+            'api/v3/posts/' . $post->id . '/tags',
+            [
+                'tag_name' => 'Good Submission',
+            ],
+        );
 
         $response->assertStatus(200);
 
@@ -30,9 +33,12 @@ class TagsTest extends TestCase
         $this->assertContains('Good Submission', $post->tagNames());
 
         // Untag the post
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Submission',
-        ]);
+        $response = $this->withAdminAccessToken()->postJson(
+            'api/v3/posts/' . $post->id . '/tags',
+            [
+                'tag_name' => 'Good Submission',
+            ],
+        );
 
         $response->assertStatus(200);
 
@@ -60,7 +66,10 @@ class TagsTest extends TestCase
 
         $response->assertStatus(401);
 
-        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
+        $this->assertEquals(
+            'Unauthenticated.',
+            $response->decodeResponseJson()['message'],
+        );
     }
 
     /**
@@ -103,9 +112,12 @@ class TagsTest extends TestCase
         $this->assertContains('Tag To Delete', $post->tagNames());
 
         // Send request to remove "Tag To Delete" tag
-        $response = $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Tag To Delete',
-        ]);
+        $response = $this->withAdminAccessToken()->postJson(
+            'api/v3/posts/' . $post->id . '/tags',
+            [
+                'tag_name' => 'Tag To Delete',
+            ],
+        );
 
         // Make sure that the tag is deleted, but the other tag is still there
         $post = $post->fresh();
@@ -131,9 +143,12 @@ class TagsTest extends TestCase
         // Later, apply the tag to the post
         $this->mockTime('10/21/2017 13:05:00');
 
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $post->id . '/tags', [
-            'tag_name' => 'Good Submission',
-        ]);
+        $this->withAdminAccessToken()->postJson(
+            'api/v3/posts/' . $post->id . '/tags',
+            [
+                'tag_name' => 'Good Submission',
+            ],
+        );
 
         $this->assertEquals('2017-10-21 13:05:00', $post->fresh()->updated_at);
     }
@@ -149,9 +164,12 @@ class TagsTest extends TestCase
         $posts = factory(Post::class, 20)->create();
 
         // Later, apply the tag to the post
-        $this->withAdminAccessToken()->postJson('api/v3/posts/' . $posts->first()->id . '/tags', [
-            'tag_name' => 'get-outta-here',
-        ]);
+        $this->withAdminAccessToken()->postJson(
+            'api/v3/posts/' . $posts->first()->id . '/tags',
+            [
+                'tag_name' => 'get-outta-here',
+            ],
+        );
 
         $postsQuery = Post::withoutTag('get-outta-here')->get();
 

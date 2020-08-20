@@ -14,7 +14,10 @@ class GroupTypeTest extends TestCase
 
         // Verify redirected to new resource.
         $this->actingAsAdmin()
-            ->postJson('group-types', ['name' => $name, 'filter_by_state' => true])
+            ->postJson('group-types', [
+                'name' => $name,
+                'filter_by_state' => true,
+            ])
             ->assertStatus(302);
 
         $this->assertDatabaseHas('group_types', [
@@ -46,11 +49,13 @@ class GroupTypeTest extends TestCase
     /** @test */
     public function testUnsettingFilterByState()
     {
-        $groupType = factory(GroupType::class)->create(['filter_by_state' => true]);
+        $groupType = factory(GroupType::class)->create([
+            'filter_by_state' => true,
+        ]);
 
         // Verify redirected upon success.
         $this->actingAsAdmin()
-            ->putJson('group-types/'.$groupType->id, ['name' => 'Test 123'])
+            ->putJson('group-types/' . $groupType->id, ['name' => 'Test 123'])
             ->assertStatus(302);
 
         $this->assertDatabaseHas('group_types', [

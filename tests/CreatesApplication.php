@@ -20,7 +20,7 @@ trait CreatesApplication
      */
     public function createApplication()
     {
-        $this->app = require __DIR__.'/../bootstrap/app.php';
+        $this->app = require __DIR__ . '/../bootstrap/app.php';
 
         $this->app->make(Kernel::class)->bootstrap();
 

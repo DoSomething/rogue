@@ -70,7 +70,12 @@ class Signup extends Model
      * @var array
      */
     public static $sortable = [
-        'campaign_id', 'updated_at', 'northstar_id', 'id', 'quantity', 'source',
+        'campaign_id',
+        'updated_at',
+        'northstar_id',
+        'id',
+        'quantity',
+        'source',
     ];
 
     /**
@@ -118,9 +123,10 @@ class Signup extends Model
     {
         $query = $this->hasMany(Post::class);
 
-        if (! is_staff_user()) {
+        if (!is_staff_user()) {
             $query->where(function ($query) {
-                $query->where('status', 'accepted')
+                $query
+                    ->where('status', 'accepted')
                     ->orWhere('northstar_id', auth()->id());
             });
         }
@@ -133,7 +139,9 @@ class Signup extends Model
      */
     public function pending()
     {
-        return $this->hasMany(Post::class)->where('status', '=', 'pending')->with('tags');
+        return $this->hasMany(Post::class)
+            ->where('status', '=', 'pending')
+            ->with('tags');
     }
 
     /**
@@ -141,7 +149,9 @@ class Signup extends Model
      */
     public function accepted()
     {
-        return $this->hasMany(Post::class)->where('status', '=', 'accepted')->with('tags');
+        return $this->hasMany(Post::class)
+            ->where('status', '=', 'accepted')
+            ->with('tags');
     }
 
     /**
@@ -149,7 +159,9 @@ class Signup extends Model
      */
     public function rejected()
     {
-        return $this->hasMany(Post::class)->where('status', '=', 'rejected')->with('tags');
+        return $this->hasMany(Post::class)
+            ->where('status', '=', 'rejected')
+            ->with('tags');
     }
 
     /**
@@ -184,27 +196,35 @@ class Signup extends Model
 
         // Bypass Campaign->cause accessor method so the value isn't converted to an array
         // which Customer.io does not support.
-        $campaign_cause = Arr::get(optional($this->campaign)->getAttributes(), 'cause');
+        $campaign_cause = Arr::get(
+            optional($this->campaign)->getAttributes(),
+            'cause',
+        );
 
         // Fetch Campaign Website information via GraphQL.
-        $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
+        $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId(
+            $this->campaign_id,
+        );
 
-        return array_merge([
-            'id' => $this->id,
-            'northstar_id' => $this->northstar_id,
-            'campaign_id' => (string) $this->campaign_id,
-            'campaign_run_id' => (string) $this->campaign_run_id,
-            'campaign_title' => Arr::get($campaignWebsite, 'title'),
-            'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
-            'campaign_cause' => $campaign_cause,
-            'quantity' => $quantity,
-            'why_participated' => $this->why_participated,
-            'source' => $this->source,
-            'source_details' => $this->source_details,
-            'referrer_user_id' => $this->referrer_user_id,
-            'created_at' => $this->created_at->toIso8601String(),
-            'updated_at' => $this->updated_at->toIso8601String(),
-        ], Group::toBlinkPayload($this->group));
+        return array_merge(
+            [
+                'id' => $this->id,
+                'northstar_id' => $this->northstar_id,
+                'campaign_id' => (string) $this->campaign_id,
+                'campaign_run_id' => (string) $this->campaign_run_id,
+                'campaign_title' => Arr::get($campaignWebsite, 'title'),
+                'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
+                'campaign_cause' => $campaign_cause,
+                'quantity' => $quantity,
+                'why_participated' => $this->why_participated,
+                'source' => $this->source,
+                'source_details' => $this->source_details,
+                'referrer_user_id' => $this->referrer_user_id,
+                'created_at' => $this->created_at->toIso8601String(),
+                'updated_at' => $this->updated_at->toIso8601String(),
+            ],
+            Group::toBlinkPayload($this->group),
+        );
     }
 
     /**
@@ -236,11 +256,13 @@ class Signup extends Model
      */
     public function scopeWithVisiblePosts($query, $types = null)
     {
-        return $query->with(['visiblePosts' => function ($query) use ($types) {
-            if ($types) {
-                $query->whereIn('type', $types);
-            }
-        }]);
+        return $query->with([
+            'visiblePosts' => function ($query) use ($types) {
+                if ($types) {
+                    $query->whereIn('type', $types);
+                }
+            },
+        ]);
     }
 
     /**
@@ -251,7 +273,9 @@ class Signup extends Model
         $userId = $this->northstar_id;
         $user = app(GraphQL::class)->getUserById($userId);
 
-        $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId($this->campaign_id);
+        $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId(
+            $this->campaign_id,
+        );
 
         return [
             'id' => $this->id,

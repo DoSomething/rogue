@@ -41,10 +41,12 @@ class UpdateSignupAndPostCampaignIds extends Command
      */
     public function handle()
     {
-        $this->line('rogue:updatesignupandpostcampaignids: Starting script to update campaign ids!');
+        $this->line(
+            'rogue:updatesignupandpostcampaignids: Starting script to update campaign ids!',
+        );
 
         // Grab all of the campaigns in the campaigns table.
-        $query = (new Campaign)->newQuery();
+        $query = (new Campaign())->newQuery();
 
         if ($this->option('campaign')) {
             $query = $query->where('id', $this->option('campaign'));
@@ -54,7 +56,10 @@ class UpdateSignupAndPostCampaignIds extends Command
 
         // Update each signup and the signup's post(s) in each campaign with new campaign id.
         foreach ($campaigns as $campaign) {
-            $this->line('rogue:updatesignupandpostcampaignids: Updating signups/posts under campaign id: ' . $campaign->id);
+            $this->line(
+                'rogue:updatesignupandpostcampaignids: Updating signups/posts under campaign id: ' .
+                    $campaign->id,
+            );
 
             // Update the all the signups' campaign_id under this campaign to the new $campaign->id
             DB::table('signups')

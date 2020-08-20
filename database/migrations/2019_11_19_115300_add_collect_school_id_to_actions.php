@@ -14,7 +14,11 @@ class AddCollectSchoolIdToActions extends Migration
     public function up()
     {
         Schema::table('actions', function (Blueprint $table) {
-            $table->boolean('collect_school_id')->after('scholarship_entry')->nullable()->comment('Whether to save user school_id with their post.');
+            $table
+                ->boolean('collect_school_id')
+                ->after('scholarship_entry')
+                ->nullable()
+                ->comment('Whether to save user school_id with their post.');
         });
     }
 

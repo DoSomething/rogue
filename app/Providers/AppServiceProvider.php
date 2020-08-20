@@ -51,16 +51,24 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // Add a custom validator for Mongo ObjectIDs.
-        Validator::extend('objectid', function ($attribute, $value, $parameters, $validator) {
-            return preg_match('/^[a-f\d]{24}$/i', $value);
-        }, 'The :attribute must be a valid ObjectID.');
+        Validator::extend(
+            'objectid',
+            function ($attribute, $value, $parameters, $validator) {
+                return preg_match('/^[a-f\d]{24}$/i', $value);
+            },
+            'The :attribute must be a valid ObjectID.',
+        );
 
-        Validator::extend('iso3166', function ($attribute, $value, $parameters, $validator) {
-            $isoCodes = new \Sokil\IsoCodes\IsoCodesFactory();
-            $subDivisions = $isoCodes->getSubdivisions();
+        Validator::extend(
+            'iso3166',
+            function ($attribute, $value, $parameters, $validator) {
+                $isoCodes = new \Sokil\IsoCodes\IsoCodesFactory();
+                $subDivisions = $isoCodes->getSubdivisions();
 
-            return ! is_null($subDivisions->getByCode($value));
-        }, 'The :attribute must be a valid ISO-3166-2 region code.');
+                return !is_null($subDivisions->getByCode($value));
+            },
+            'The :attribute must be a valid ISO-3166-2 region code.',
+        );
 
         // Attach the user & request ID to context for all log messages.
         // @see https://git.io/JJzwG We may want to set this up using a
@@ -74,19 +82,48 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // Add the 'joinSub' query builder method from Laravel 5.6+. <https://git.io/JeRBw>
-        QueryBuilder::macro('joinSub', function ($query, $as, $first, $operator = null, $second = null, $type = 'inner', $where = false) {
+        QueryBuilder::macro('joinSub', function (
+            $query,
+            $as,
+            $first,
+            $operator = null,
+            $second = null,
+            $type = 'inner',
+            $where = false
+        ) {
             [$query, $bindings] = $this->createSub($query);
 
-            $expression = '('.$query.') as '.$this->grammar->wrapTable($as);
+            $expression =
+                '(' . $query . ') as ' . $this->grammar->wrapTable($as);
 
             $this->addBinding($bindings, 'join');
 
-            return $this->join(new Expression($expression), $first, $operator, $second, $type, $where);
+            return $this->join(
+                new Expression($expression),
+                $first,
+                $operator,
+                $second,
+                $type,
+                $where,
+            );
         });
 
         // Add the 'leftJoinSub' query builder method from Laravel 5.6+. <https://git.io/JeRBr>
-        QueryBuilder::macro('leftJoinSub', function ($query, $as, $first, $operator = null, $second = null) {
-            return $this->joinSub($query, $as, $first, $operator, $second, 'left');
+        QueryBuilder::macro('leftJoinSub', function (
+            $query,
+            $as,
+            $first,
+            $operator = null,
+            $second = null
+        ) {
+            return $this->joinSub(
+                $query,
+                $as,
+                $first,
+                $operator,
+                $second,
+                'left',
+            );
         });
 
         // Add the 'createSub' query builder method from Laravel 5.6+. <https://git.io/JeRB6>
@@ -107,7 +144,7 @@ class AppServiceProvider extends ServiceProvider
                 return [$query, []];
             } else {
                 throw new InvalidArgumentException(
-                    'A subquery must be a query builder instance, a Closure, or a string.'
+                    'A subquery must be a query builder instance, a Closure, or a string.',
                 );
             }
         });

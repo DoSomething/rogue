@@ -14,12 +14,7 @@ class ActionStat extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'action_id',
-        'impact',
-        'location',
-        'school_id',
-    ];
+    protected $fillable = ['action_id', 'impact', 'location', 'school_id'];
 
     /**
      * Attributes that can be queried when filtering.

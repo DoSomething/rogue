@@ -14,7 +14,13 @@ class AddDetailsToSignupsTable extends Migration
     public function up()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->string('details')->after('source')->nullable()->comment('Extra details about the signup, like opt-ins or broadcast ID.');
+            $table
+                ->string('details')
+                ->after('source')
+                ->nullable()
+                ->comment(
+                    'Extra details about the signup, like opt-ins or broadcast ID.',
+                );
         });
     }
 

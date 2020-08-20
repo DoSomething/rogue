@@ -97,19 +97,37 @@ class PostTagged extends Notification implements ShouldQueue
         $userName = $data['user']['displayName'];
         $adminName = $data['admin']['displayName'];
 
-        return (new SlackMessage)
+        return (new SlackMessage())
             ->from('Rogue', ':tonguecat:')
-            ->content($adminName.' just tagged this post as "'.$this->tag->tag_name . '":')
+            ->content(
+                $adminName .
+                    ' just tagged this post as "' .
+                    $this->tag->tag_name .
+                    '":',
+            )
             ->attachment(function ($attachment) use ($userName) {
-                $permalink = route('signups.show', [$this->post->signup_id], true);
+                $permalink = route(
+                    'signups.show',
+                    [$this->post->signup_id],
+                    true,
+                );
                 $image = $this->post->getMediaUrl();
 
-                $attachment->title($userName . '\'s submission for "' . $this->post->campaign->internal_title . '"', $permalink)
-                           ->fields([
-                               'Caption' => Str::limit($this->post->text, 140),
-                               'Why Participated' => Str::limit($this->post->signup->why_participated),
-                           ])
-                            ->color(Arr::random(['#fcd116', '#23b7fb', '#4e2b63']));
+                $attachment
+                    ->title(
+                        $userName .
+                            '\'s submission for "' .
+                            $this->post->campaign->internal_title .
+                            '"',
+                        $permalink,
+                    )
+                    ->fields([
+                        'Caption' => Str::limit($this->post->text, 140),
+                        'Why Participated' => Str::limit(
+                            $this->post->signup->why_participated,
+                        ),
+                    ])
+                    ->color(Arr::random(['#fcd116', '#23b7fb', '#4e2b63']));
 
                 // Do not send images with local URL to Slack (ie: http://rogue.test/images/filename)
                 if ($image && config('app.env') !== 'local') {

@@ -14,7 +14,12 @@ class AddSchoolIdToPosts extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('school_id', 255)->nullable()->after('postal_code')->nullable()->comment('The school ID the post is associated with.');
+            $table
+                ->string('school_id', 255)
+                ->nullable()
+                ->after('postal_code')
+                ->nullable()
+                ->comment('The school ID the post is associated with.');
         });
     }
 

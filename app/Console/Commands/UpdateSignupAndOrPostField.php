@@ -61,8 +61,14 @@ class UpdateSignupAndOrPostField extends Command
         info('rogue:updatefield: Starting script!');
 
         $targetField = $this->argument('target');
-        $targetOldValue = $this->argument('targetOldValue') !== 'NULL' ? $this->argument('targetOldValue') : null;
-        $targetNewValue = $this->argument('targetNewValue') !== 'NULL' ? $this->argument('targetNewValue') : null;
+        $targetOldValue =
+            $this->argument('targetOldValue') !== 'NULL'
+                ? $this->argument('targetOldValue')
+                : null;
+        $targetNewValue =
+            $this->argument('targetNewValue') !== 'NULL'
+                ? $this->argument('targetNewValue')
+                : null;
         $signups = $this->option('signups');
         $posts = $this->option('posts');
         $logfreq = $this->option('logfreq');
@@ -73,16 +79,34 @@ class UpdateSignupAndOrPostField extends Command
             info('rogue:updatefield: Starting to update signups!');
 
             // Get all signups that have "targetOldValue" set as their target and update to "targetNewValue"
-            Signup::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($signups) use ($targetField, $targetNewValue, $logfreq, $log) {
-                foreach ($signups as $signup) {
-                    if ($signup->id % $logfreq == 0) {
-                        info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for signup ' . $signup->id);
-                    }
+            Signup::withTrashed()
+                ->where($targetField, $targetOldValue)
+                ->chunkById(100, function ($signups) use (
+                    $targetField,
+                    $targetNewValue,
+                    $logfreq,
+                    $log
+                ) {
+                    foreach ($signups as $signup) {
+                        if ($signup->id % $logfreq == 0) {
+                            info(
+                                'rogue:updatefield: changing ' .
+                                    $targetField .
+                                    ' to ' .
+                                    $targetNewValue .
+                                    ' for signup ' .
+                                    $signup->id,
+                            );
+                        }
 
-                    // Only log that signup was sent to Quasar if $log is TRUE in interest of space in Papertrail.
-                    $this->signups->update($signup, [$targetField => $targetNewValue], $log);
-                }
-            });
+                        // Only log that signup was sent to Quasar if $log is TRUE in interest of space in Papertrail.
+                        $this->signups->update(
+                            $signup,
+                            [$targetField => $targetNewValue],
+                            $log,
+                        );
+                    }
+                });
 
             // Log that updating signups are finished
             info('rogue:updatefield: Finished updating signups!');
@@ -93,16 +117,34 @@ class UpdateSignupAndOrPostField extends Command
             info('rogue:updatefield: Starting to update posts!');
 
             // Get all posts that have "targetOldValue" set as their target and update to "targetNewValue"
-            Post::withTrashed()->where($targetField, $targetOldValue)->chunkById(100, function ($posts) use ($targetField, $targetNewValue, $logfreq, $log) {
-                foreach ($posts as $post) {
-                    if ($post->id % $logfreq == 0) {
-                        info('rogue:updatefield: changing ' . $targetField . ' to ' . $targetNewValue . ' for post ' . $post->id);
-                    }
+            Post::withTrashed()
+                ->where($targetField, $targetOldValue)
+                ->chunkById(100, function ($posts) use (
+                    $targetField,
+                    $targetNewValue,
+                    $logfreq,
+                    $log
+                ) {
+                    foreach ($posts as $post) {
+                        if ($post->id % $logfreq == 0) {
+                            info(
+                                'rogue:updatefield: changing ' .
+                                    $targetField .
+                                    ' to ' .
+                                    $targetNewValue .
+                                    ' for post ' .
+                                    $post->id,
+                            );
+                        }
 
-                    // Only log that signup was sent to Quasar if $log is TRUE in interest of space in Papertrail.
-                    $this->posts->update($post, [$targetField => $targetNewValue], $log);
-                }
-            });
+                        // Only log that signup was sent to Quasar if $log is TRUE in interest of space in Papertrail.
+                        $this->posts->update(
+                            $post,
+                            [$targetField => $targetNewValue],
+                            $log,
+                        );
+                    }
+                });
 
             // Log that updating posts are finished
             info('rogue:updatefield: Finished updating posts!');

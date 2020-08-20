@@ -15,8 +15,15 @@ class UpdateReactionsTable extends Migration
         Schema::table('reactions', function (Blueprint $table) {
             $table->dropColumn('reactionable_id');
             $table->dropColumn('reactionable_type');
-            $table->integer('post_id')->after('northstar_id')->unsigned();
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table
+                ->integer('post_id')
+                ->after('northstar_id')
+                ->unsigned();
+            $table
+                ->foreign('post_id')
+                ->references('id')
+                ->on('posts')
+                ->onDelete('cascade');
         });
     }
 

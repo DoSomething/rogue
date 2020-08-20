@@ -15,7 +15,10 @@ class GroupTest extends TestCase
 
         // Verify redirected to new resource.
         $this->actingAsAdmin()
-            ->postJson('groups', ['group_type_id' => $groupType->id, 'name' => $name])
+            ->postJson('groups', [
+                'group_type_id' => $groupType->id,
+                'name' => $name,
+            ])
             ->assertStatus(302);
 
         $this->assertDatabaseHas('groups', [
@@ -25,7 +28,10 @@ class GroupTest extends TestCase
 
         // Verify cannot duplicate resource name + group_type_id.
         $this->actingAsAdmin()
-            ->postJson('groups', ['group_type_id' => $groupType->id, 'name' => $name])
+            ->postJson('groups', [
+                'group_type_id' => $groupType->id,
+                'name' => $name,
+            ])
             ->assertStatus(422);
     }
 
@@ -37,7 +43,10 @@ class GroupTest extends TestCase
 
         // Verify redirected to new resource.
         $this->actingAsStaff()
-            ->postJson('groups', ['group_type_id' => $groupType->id, 'name' => $name])
+            ->postJson('groups', [
+                'group_type_id' => $groupType->id,
+                'name' => $name,
+            ])
             ->assertStatus(302);
     }
 }

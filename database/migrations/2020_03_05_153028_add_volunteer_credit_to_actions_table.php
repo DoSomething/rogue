@@ -14,7 +14,12 @@ class AddVolunteerCreditToActionsTable extends Migration
     public function up()
     {
         Schema::table('actions', function (Blueprint $table) {
-            $table->boolean('volunteer_credit')->after('collect_school_id')->comment('Whether or not this action qualifies for volunteer credit');
+            $table
+                ->boolean('volunteer_credit')
+                ->after('collect_school_id')
+                ->comment(
+                    'Whether or not this action qualifies for volunteer credit',
+                );
         });
     }
 

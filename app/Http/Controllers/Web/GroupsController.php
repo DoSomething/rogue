@@ -28,7 +28,9 @@ class GroupsController extends Controller
      */
     public function create($groupTypeId)
     {
-        return view('groups.create')->with(['groupTypeId' => (int) $groupTypeId]);
+        return view('groups.create')->with([
+            'groupTypeId' => (int) $groupTypeId,
+        ]);
     }
 
     /**
@@ -38,9 +40,17 @@ class GroupsController extends Controller
      */
     public function store(Request $request)
     {
-        $values = $this->validate($request, array_merge_recursive($this->rules, [
-            'name' => [Rule::unique('groups')->where('group_type_id', $request->group_type_id)],
-        ]));
+        $values = $this->validate(
+            $request,
+            array_merge_recursive($this->rules, [
+                'name' => [
+                    Rule::unique('groups')->where(
+                        'group_type_id',
+                        $request->group_type_id,
+                    ),
+                ],
+            ]),
+        );
 
         $group = Group::create($request->all());
 

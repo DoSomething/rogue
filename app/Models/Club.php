@@ -27,7 +27,5 @@ class Club extends Model
      *
      * @var array
      */
-    public static $indexes = [
-        'id',
-    ];
+    public static $indexes = ['id'];
 }

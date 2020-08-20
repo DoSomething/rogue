@@ -13,14 +13,38 @@ class AddLogColumnsToEventsTable extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->integer('quantity')->nullable()->after('submission_type');
-            $table->integer('quantity_pending')->nullable()->after('quantity');
-            $table->text('why_participated')->nullable()->after('quantity_pending');
-            $table->text('caption')->nullable()->after('why_participated');
-            $table->text('status')->nullable()->after('caption');
-            $table->text('source')->nullable()->after('status');
-            $table->ipAddress('remote_addr')->nullable()->after('source');
-            $table->text('reason')->nullable()->after('remote_addr');
+            $table
+                ->integer('quantity')
+                ->nullable()
+                ->after('submission_type');
+            $table
+                ->integer('quantity_pending')
+                ->nullable()
+                ->after('quantity');
+            $table
+                ->text('why_participated')
+                ->nullable()
+                ->after('quantity_pending');
+            $table
+                ->text('caption')
+                ->nullable()
+                ->after('why_participated');
+            $table
+                ->text('status')
+                ->nullable()
+                ->after('caption');
+            $table
+                ->text('source')
+                ->nullable()
+                ->after('status');
+            $table
+                ->ipAddress('remote_addr')
+                ->nullable()
+                ->after('source');
+            $table
+                ->text('reason')
+                ->nullable()
+                ->after('remote_addr');
         });
     }
 

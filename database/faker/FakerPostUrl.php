@@ -14,8 +14,15 @@ class FakerPostUrl extends Base
     public function post_url()
     {
         $uploadPath = $this->generator->file(storage_path('fixtures'));
-        $upload = new UploadedFile($uploadPath, basename($uploadPath), 'image/jpeg');
+        $upload = new UploadedFile(
+            $uploadPath,
+            basename($uploadPath),
+            'image/jpeg',
+        );
 
-        return app(ImageStorage::class)->put($this->generator->unique()->randomNumber(5), $upload);
+        return app(ImageStorage::class)->put(
+            $this->generator->unique()->randomNumber(5),
+            $upload,
+        );
     }
 }

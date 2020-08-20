@@ -118,7 +118,9 @@ class EventTest extends TestCase
      */
     public function testDeletingPostViaApiEvent()
     {
-        $post = factory(Post::class)->states('photo', 'accepted')->create();
+        $post = factory(Post::class)
+            ->states('photo', 'accepted')
+            ->create();
 
         // Delete the post via the API.
         $this->mockTime('8/4/2017 18:02:00');
@@ -178,7 +180,10 @@ class EventTest extends TestCase
         $response->assertStatus(403);
 
         $decodedResponse = $response->decodeResponseJson();
-        $this->assertEquals('Requires one of the following roles: admin, staff', $decodedResponse['message']);
+        $this->assertEquals(
+            'Requires one of the following roles: admin, staff',
+            $decodedResponse['message'],
+        );
     }
 
     /**
@@ -201,7 +206,9 @@ class EventTest extends TestCase
         $secondSignup = factory(Signup::class)->create();
 
         // Hit events index with signup filter and make sure there are 2 events returned.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/events?filter[signup_id]=' . $signup->id);
+        $response = $this->withAdminAccessToken()->getJson(
+            'api/v3/events?filter[signup_id]=' . $signup->id,
+        );
 
         $response->assertStatus(200);
 

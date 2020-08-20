@@ -12,7 +12,13 @@ use Illuminate\Support\HtmlString;
  */
 function scriptify($json = [], $store = 'STATE')
 {
-    return new HtmlString('<script type="text/javascript">window.'.$store.' = '.json_encode($json).'</script>');
+    return new HtmlString(
+        '<script type="text/javascript">window.' .
+            $store .
+            ' = ' .
+            json_encode($json) .
+            '</script>',
+    );
 }
 
 /**
@@ -24,7 +30,7 @@ function scriptify($json = [], $store = 'STATE')
 function has_middleware($middleware = null)
 {
     $currentRoute = app('router')->getCurrentRoute();
-    if (! $currentRoute) {
+    if (!$currentRoute) {
         return false;
     }
     if ($middleware) {
@@ -65,7 +71,7 @@ function multipleValueQuery($query, $queryString, $filter)
  */
 function getAgeFromBirthdate($birthdate)
 {
-    if (! $birthdate) {
+    if (!$birthdate) {
         return null;
     }
 
@@ -84,8 +90,14 @@ function getAgeFromBirthdate($birthdate)
  */
 function getNorthstarId($request)
 {
-    if (token()->role() === 'admin' || token()->role() === 'staff' || in_array('admin', token()->scopes())) {
-        return isset($request['northstar_id']) ? $request['northstar_id'] : auth()->id();
+    if (
+        token()->role() === 'admin' ||
+        token()->role() === 'staff' ||
+        in_array('admin', token()->scopes())
+    ) {
+        return isset($request['northstar_id'])
+            ? $request['northstar_id']
+            : auth()->id();
     }
 
     return auth()->id();
@@ -99,7 +111,7 @@ function getNorthstarId($request)
 function is_admin_user(): bool
 {
     // If this is a machine client, then it's de-facto an admin:
-    if (token()->exists() && ! token()->id()) {
+    if (token()->exists() && !token()->id()) {
         return true;
     }
 

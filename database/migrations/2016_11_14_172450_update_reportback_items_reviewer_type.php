@@ -24,7 +24,10 @@ class UpdateReportbackItemsReviewerType extends Migration
     public function down()
     {
         Schema::table('reportback_items', function ($table) {
-            $table->integer('reviewer')->unsigned()->change();
+            $table
+                ->integer('reviewer')
+                ->unsigned()
+                ->change();
         });
     }
 }

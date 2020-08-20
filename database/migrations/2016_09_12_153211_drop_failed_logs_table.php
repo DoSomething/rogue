@@ -31,7 +31,10 @@ class DropFailedLogsTable extends Migration
             $table->string('file_url');
             $table->string('caption');
             $table->string('source');
-            $table->string('op')->nullable()->comment('Operation performed on the reportback.');
+            $table
+                ->string('op')
+                ->nullable()
+                ->comment('Operation performed on the reportback.');
             $table->timestamps();
         });
     }

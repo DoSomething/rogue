@@ -37,25 +37,31 @@ trait WithMocks
         $this->northstarMock = $this->mock(Northstar::class);
         $this->northstarMock->shouldReceive('asClient')->andReturnSelf();
         $this->northstarMock->shouldReceive('asUser')->andReturnSelf();
-        $this->northstarMock->shouldReceive('refreshIfExpired')->andReturnSelf();
-        $this->northstarMock->shouldReceive('getUser')->andReturnUsing(function ($id) {
-            return new NorthstarUser([
-                'id' => $id,
-                'first_name' => $this->faker->firstName,
-                'last_name' => $this->faker->lastName,
-                'birthdate' => $this->faker->date,
-                'email' => $this->faker->email,
-                'mobile' => $this->faker->phoneNumber,
-            ]);
-        });
+        $this->northstarMock
+            ->shouldReceive('refreshIfExpired')
+            ->andReturnSelf();
+        $this->northstarMock
+            ->shouldReceive('getUser')
+            ->andReturnUsing(function ($id) {
+                return new NorthstarUser([
+                    'id' => $id,
+                    'first_name' => $this->faker->firstName,
+                    'last_name' => $this->faker->lastName,
+                    'birthdate' => $this->faker->date,
+                    'email' => $this->faker->email,
+                    'mobile' => $this->faker->phoneNumber,
+                ]);
+            });
 
         // GraphQL Mock
         $this->graphqlMock = $this->mock(GraphQL::class);
 
-        $this->graphqlMock->shouldReceive('getCampaignWebsiteByCampaignId')->andReturn([
-            'title' => 'Test Example Campaign',
-            'slug' => 'test-example-campaign',
-        ]);
+        $this->graphqlMock
+            ->shouldReceive('getCampaignWebsiteByCampaignId')
+            ->andReturn([
+                'title' => 'Test Example Campaign',
+                'slug' => 'test-example-campaign',
+            ]);
 
         $this->graphqlMock->shouldReceive('getSchoolById')->andReturn([
             'name' => 'San Dimas High School',

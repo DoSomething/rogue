@@ -14,7 +14,13 @@ class AddFilterByStateToGroupTypes extends Migration
     public function up()
     {
         Schema::table('group_types', function (Blueprint $table) {
-            $table->boolean('filter_by_state')->default(false)->after('name')->comment('Whether or not group finders for this group type should filter by state.');
+            $table
+                ->boolean('filter_by_state')
+                ->default(false)
+                ->after('name')
+                ->comment(
+                    'Whether or not group finders for this group type should filter by state.',
+                );
         });
     }
 

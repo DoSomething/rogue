@@ -13,7 +13,12 @@ class AddUserColumnToEventsTable extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->string('user')->after('content')->nullable()->index()->comment('Northstar ID of the user who did the action');
+            $table
+                ->string('user')
+                ->after('content')
+                ->nullable()
+                ->index()
+                ->comment('Northstar ID of the user who did the action');
         });
     }
 

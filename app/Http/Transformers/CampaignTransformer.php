@@ -25,7 +25,9 @@ class CampaignTransformer extends TransformerAbstract
             'impact_doc' => $campaign->impact_doc,
             'cause' => $campaign->cause,
             'accepted_count' => $campaign->accepted_count,
-            'pending_count' => is_staff_user() ? $campaign->pending_count : null,
+            'pending_count' => is_staff_user()
+                ? $campaign->pending_count
+                : null,
             'cause_names' => $campaign->getCauseNames(),
             'group_type_id' => $campaign->group_type_id,
             'created_at' => $campaign->created_at->toIso8601String(),

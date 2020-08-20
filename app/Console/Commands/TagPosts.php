@@ -46,7 +46,9 @@ class TagPosts extends Command
 
         if ($posts) {
             foreach ($posts as $post) {
-                $this->info('Tagging post_id: '.$post->id.' as '.$tag->tag_slug);
+                $this->info(
+                    'Tagging post_id: ' . $post->id . ' as ' . $tag->tag_slug,
+                );
                 $post->tag($tag->tag_name);
             }
         }

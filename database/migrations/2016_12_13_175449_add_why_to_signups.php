@@ -13,9 +13,17 @@ class AddWhyToSignups extends Migration
     public function up()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->integer('quantity_pending')->nullable()->comment('An unapproved quantity value.')->change();
+            $table
+                ->integer('quantity_pending')
+                ->nullable()
+                ->comment('An unapproved quantity value.')
+                ->change();
 
-            $table->text('why_participated')->nullable()->comment('An unapproved quantity value.')->after('quantity_pending');
+            $table
+                ->text('why_participated')
+                ->nullable()
+                ->comment('An unapproved quantity value.')
+                ->after('quantity_pending');
         });
     }
 
@@ -27,7 +35,11 @@ class AddWhyToSignups extends Migration
     public function down()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->text('quantity_pending')->nullable()->comment('An unapproved quantity value.')->change();
+            $table
+                ->text('quantity_pending')
+                ->nullable()
+                ->comment('An unapproved quantity value.')
+                ->change();
 
             $table->dropColumn('why_participated');
         });

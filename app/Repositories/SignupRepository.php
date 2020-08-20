@@ -17,15 +17,23 @@ class SignupRepository
     public function create($data, $northstarId, $campaignId)
     {
         // Create the signup
-        $signup = new Signup;
+        $signup = new Signup();
 
         $signup->northstar_id = $northstarId;
         $signup->campaign_id = $campaignId;
-        $signup->why_participated = isset($data['why_participated']) ? $data['why_participated'] : null;
-        $signup->source = isset($data['source']) ? $data['source'] : token()->client();
-        $signup->source_details = isset($data['source_details']) ? $data['source_details'] : null;
+        $signup->why_participated = isset($data['why_participated'])
+            ? $data['why_participated']
+            : null;
+        $signup->source = isset($data['source'])
+            ? $data['source']
+            : token()->client();
+        $signup->source_details = isset($data['source_details'])
+            ? $data['source_details']
+            : null;
         $signup->details = isset($data['details']) ? $data['details'] : null;
-        $signup->referrer_user_id = isset($data['referrer_user_id']) ? $data['referrer_user_id'] : null;
+        $signup->referrer_user_id = isset($data['referrer_user_id'])
+            ? $data['referrer_user_id']
+            : null;
         $signup->group_id = isset($data['group_id']) ? $data['group_id'] : null;
         $signup->save();
 

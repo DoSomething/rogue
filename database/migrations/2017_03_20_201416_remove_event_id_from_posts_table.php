@@ -27,8 +27,16 @@ class RemoveEventIdFromPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->integer('event_id')->unsigned()->index()->comment('The event this post corresponds to.');
-            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table
+                ->integer('event_id')
+                ->unsigned()
+                ->index()
+                ->comment('The event this post corresponds to.');
+            $table
+                ->foreign('event_id')
+                ->references('id')
+                ->on('events')
+                ->onDelete('cascade');
         });
     }
 }

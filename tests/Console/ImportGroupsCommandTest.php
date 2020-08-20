@@ -11,7 +11,10 @@ class ImportGroupsCommandTest extends TestCase
     {
         $name = 'Automated Test Group Type';
 
-        $this->artisan('rogue:groups-import', ['input' => 'tests/Console/example-groups.csv', '--name' => $name]);
+        $this->artisan('rogue:groups-import', [
+            'input' => 'tests/Console/example-groups.csv',
+            '--name' => $name,
+        ]);
 
         $this->assertDatabaseHas('group_types', [
             'name' => $name,

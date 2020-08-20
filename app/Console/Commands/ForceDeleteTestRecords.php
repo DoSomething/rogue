@@ -40,15 +40,22 @@ class ForceDeleteTestRecords extends Command
     public function handle()
     {
         // Force delete all signups created by Runscope, identified by source.
-        Signup::where('source', 'runscope')->orWhere('source', 'runscope-oauth')->forceDelete();
+        Signup::where('source', 'runscope')
+            ->orWhere('source', 'runscope-oauth')
+            ->forceDelete();
 
         // Force delete all posts created by Runscope, identified by source.
-        Post::where('source', 'runscope')->orWhere('source', 'runscope-oauth')->forceDelete();
+        Post::where('source', 'runscope')
+            ->orWhere('source', 'runscope-oauth')
+            ->forceDelete();
 
         $this->info('All Runscope signups and posts deleted.');
 
         // Force delete all signups created by Ghost Inspector tests, identified by 'why_participated.'
-        Signup::where('why_participated', 'why_participated_ghost_test')->forceDelete();
+        Signup::where(
+            'why_participated',
+            'why_participated_ghost_test',
+        )->forceDelete();
 
         // Force delete all posts created by Ghost Inspector tests, identified by caption.
         Post::where('text', 'caption_ghost_test')->forceDelete();

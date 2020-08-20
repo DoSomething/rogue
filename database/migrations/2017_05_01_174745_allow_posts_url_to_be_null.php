@@ -13,7 +13,10 @@ class AllowPostsUrlToBeNull extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('url')->nullable()->change();
+            $table
+                ->string('url')
+                ->nullable()
+                ->change();
         });
     }
 
@@ -25,7 +28,10 @@ class AllowPostsUrlToBeNull extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('url')->nullable(false)->change();
+            $table
+                ->string('url')
+                ->nullable(false)
+                ->change();
         });
     }
 }

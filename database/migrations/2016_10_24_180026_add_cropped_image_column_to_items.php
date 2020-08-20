@@ -13,7 +13,10 @@ class AddCroppedImageColumnToItems extends Migration
     public function up()
     {
         Schema::table('reportback_items', function (Blueprint $table) {
-            $table->string('edited_file_url')->nullable()->after('file_url');
+            $table
+                ->string('edited_file_url')
+                ->nullable()
+                ->after('file_url');
         });
     }
 

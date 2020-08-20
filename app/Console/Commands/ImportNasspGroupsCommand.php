@@ -107,7 +107,7 @@ class ImportNasspGroupsCommand extends Command
 
             try {
                 $city = $this->sanitize($record['city']);
-                $location = 'US-'.$this->sanitize($record['state']);
+                $location = 'US-' . $this->sanitize($record['state']);
                 $schoolId = $this->sanitize($record['universalid']);
 
                 if ($groupTypeId) {
@@ -121,7 +121,11 @@ class ImportNasspGroupsCommand extends Command
 
                     $numImported++;
 
-                    info('rogue:nassp-groups-import: Imported group', ['id' => $group->id, 'group_type_id' => $groupTypeId, 'name' => $group->name]);
+                    info('rogue:nassp-groups-import: Imported group', [
+                        'id' => $group->id,
+                        'group_type_id' => $groupTypeId,
+                        'name' => $group->name,
+                    ]);
                 }
 
                 $nasspGroup = Group::firstOrCreate([
@@ -134,14 +138,31 @@ class ImportNasspGroupsCommand extends Command
 
                 $numImported++;
 
-                info('rogue:nassp-groups-import: Imported group', ['id' => $nasspGroup->id, 'group_type_id' => $nasspGroupType->id, 'name' => $nasspGroup->name]);
+                info('rogue:nassp-groups-import: Imported group', [
+                    'id' => $nasspGroup->id,
+                    'group_type_id' => $nasspGroupType->id,
+                    'name' => $nasspGroup->name,
+                ]);
             } catch (Exception $e) {
                 $numFailed++;
 
-                info('rogue:nassp-groups-import: Error importing group with ' .$name . ':' . $e->getMessage());
+                info(
+                    'rogue:nassp-groups-import: Error importing group with ' .
+                        $name .
+                        ':' .
+                        $e->getMessage(),
+                );
             }
         }
 
-        info('rogue:nassp-groups-import: Import completed with ' . $numImported . ' imported, '. $numSkipped .' skipped, and ' . $numFailed . ' failed.');
+        info(
+            'rogue:nassp-groups-import: Import completed with ' .
+                $numImported .
+                ' imported, ' .
+                $numSkipped .
+                ' skipped, and ' .
+                $numFailed .
+                ' failed.',
+        );
     }
 }

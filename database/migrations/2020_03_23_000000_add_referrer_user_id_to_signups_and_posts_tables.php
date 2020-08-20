@@ -14,10 +14,18 @@ class AddReferrerUserIdToSignupsAndPostsTables extends Migration
     public function up()
     {
         Schema::table('signups', function (Blueprint $table) {
-            $table->string('referrer_user_id')->nullable()->index()->after('source_details');
+            $table
+                ->string('referrer_user_id')
+                ->nullable()
+                ->index()
+                ->after('source_details');
         });
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('referrer_user_id')->nullable()->index()->after('details');
+            $table
+                ->string('referrer_user_id')
+                ->nullable()
+                ->index()
+                ->after('details');
             $table->index(['referrer_user_id', 'type']);
         });
     }

@@ -30,17 +30,10 @@ class PostTest extends TestCase
                 'northstar_id',
                 'type',
                 'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
+                'media' => ['url', 'original_image_url', 'text'],
                 'quantity',
                 'tags' => [],
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
+                'reactions' => ['reacted', 'total'],
                 'status',
                 'details',
                 'location',
@@ -66,14 +59,16 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
-        $location = 'US-'.$this->faker->stateAbbr();
+        $location = 'US-' . $this->faker->stateAbbr();
         $school_id = $this->faker->word;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
         $referrerUserId = $this->faker->northstar_id;
         $groupId = factory(Group::class)->create()->id;
 
         // Create an action to refer to.
-        $action = factory(Action::class)->create(['campaign_id' => $campaignId]);
+        $action = factory(Action::class)->create([
+            'campaign_id' => $campaignId,
+        ]);
 
         // Mock the Blink API calls.
         $this->mock(Blink::class)
@@ -81,29 +76,34 @@ class PostTest extends TestCase
             ->shouldReceive('userSignupPost');
 
         // Mock the GraphQL API calls.
-        $this->mock(GraphQL::class)
-            ->shouldReceive('getUserById', 'getCampaignWebsiteByCampaignId');
+        $this->mock(GraphQL::class)->shouldReceive(
+            'getUserById',
+            'getCampaignWebsiteByCampaignId',
+        );
 
         // Mock the Customer.io API calls.
-        $this->mock(CustomerIo::class)
-            ->shouldReceive('trackEvent');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
-        $response = $this->withAccessToken($northstarId)->json('POST', 'api/v3/posts', [
-            'campaign_id'      => $campaignId,
-            'type'             => $action->post_type,
-            'action'           => $action->name,
-            'action_id'        => $action->id,
-            'quantity'         => $quantity,
-            'why_participated' => $why_participated,
-            'text'             => $text,
-            'location'         => $location,
-            'school_id'        => $school_id,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            'details'          => json_encode($details),
-            'referrer_user_id' => $referrerUserId,
-            'group_id'         => $groupId,
-        ]);
+        $response = $this->withAccessToken($northstarId)->json(
+            'POST',
+            'api/v3/posts',
+            [
+                'campaign_id' => $campaignId,
+                'type' => $action->post_type,
+                'action' => $action->name,
+                'action_id' => $action->id,
+                'quantity' => $quantity,
+                'why_participated' => $why_participated,
+                'text' => $text,
+                'location' => $location,
+                'school_id' => $school_id,
+                'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
+                'details' => json_encode($details),
+                'referrer_user_id' => $referrerUserId,
+                'group_id' => $groupId,
+            ],
+        );
 
         $response->assertStatus(201);
         $this->assertPostStructure($response);
@@ -146,11 +146,13 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
-        $location = 'US-'.$this->faker->stateAbbr();
+        $location = 'US-' . $this->faker->stateAbbr();
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
         // Create an action to refer to.
-        $action = factory(Action::class)->create(['campaign_id' => $campaignId]);
+        $action = factory(Action::class)->create([
+            'campaign_id' => $campaignId,
+        ]);
 
         // Mock the Blink API calls.
         $this->mock(Blink::class)
@@ -158,17 +160,21 @@ class PostTest extends TestCase
             ->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($northstarId)->json('POST', 'api/v3/posts', [
-            'type'             => $action->post_type,
-            'action'           => $action->name,
-            'action_id'        => $action->id,
-            'quantity'         => $quantity,
-            'why_participated' => $why_participated,
-            'text'             => $text,
-            'location'         => $location,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            'details'          => json_encode($details),
-        ]);
+        $response = $this->withAccessToken($northstarId)->json(
+            'POST',
+            'api/v3/posts',
+            [
+                'type' => $action->post_type,
+                'action' => $action->name,
+                'action_id' => $action->id,
+                'quantity' => $quantity,
+                'why_participated' => $why_participated,
+                'text' => $text,
+                'location' => $location,
+                'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
+                'details' => json_encode($details),
+            ],
+        );
 
         $response->assertStatus(201);
         $this->assertPostStructure($response);
@@ -205,24 +211,29 @@ class PostTest extends TestCase
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
-        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id,
+        ]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => $action->post_type,
-            'action'           => $action->name,
-            'action_id'        => $action->id,
-            'quantity'         => $quantity,
-            'why_participated' => $why_participated,
-            'text'             => $text,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            'details'          => json_encode($details),
-        ]);
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'northstar_id' => $signup->northstar_id,
+                'campaign_id' => $signup->campaign_id,
+                'type' => $action->post_type,
+                'action' => $action->name,
+                'action_id' => $action->id,
+                'quantity' => $quantity,
+                'why_participated' => $why_participated,
+                'text' => $text,
+                'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
+                'details' => json_encode($details),
+            ],
+        );
 
         $response->assertStatus(201);
         $this->assertPostStructure($response);
@@ -268,17 +279,20 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => $action->post_type,
-            'action'           => $action->name,
-            'action_id'        => $action->id,
-            'quantity'         => $quantity,
-            'why_participated' => $why_participated,
-            'text'             => $text,
-            'details'          => json_encode($details),
-        ]);
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'northstar_id' => $signup->northstar_id,
+                'campaign_id' => $signup->campaign_id,
+                'type' => $action->post_type,
+                'action' => $action->name,
+                'action_id' => $action->id,
+                'quantity' => $quantity,
+                'why_participated' => $why_participated,
+                'text' => $text,
+                'details' => json_encode($details),
+            ],
+        );
 
         $response->assertStatus(201);
         $this->assertPostStructure($response);
@@ -313,14 +327,22 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
-            'campaign_id' => 'dog', // This should be a numeric ID.
-            'signup_id' => $signup->id, // This one is okay.
-            'school_id' => 234, // This should be a string.
-            // and we've omitted the required 'type' and 'action' fields!
-        ]);
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'campaign_id' => 'dog', // This should be a numeric ID.
+                'signup_id' => $signup->id, // This one is okay.
+                'school_id' => 234, // This should be a string.
+                // and we've omitted the required 'type' and 'action' fields!
+            ],
+        );
 
-        $response->assertJsonValidationErrors(['campaign_id', 'type', 'action', 'school_id']);
+        $response->assertJsonValidationErrors([
+            'campaign_id',
+            'type',
+            'action',
+            'school_id',
+        ]);
     }
 
     /**
@@ -337,12 +359,15 @@ class PostTest extends TestCase
             'post_type' => 'text',
         ]);
 
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
-            'action_id'        => $action->id,
-            'type'             => 'text',
-            'text'             => 'Lorem ipsum dolor sit amet.',
-            'location'         => 'Can\'t pin me down with your rules!!',
-        ]);
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'action_id' => $action->id,
+                'type' => 'text',
+                'text' => 'Lorem ipsum dolor sit amet.',
+                'location' => 'Can\'t pin me down with your rules!!',
+            ],
+        );
 
         // We should save the post, but discard the bad location:
         $response->assertSuccessful();
@@ -374,16 +399,19 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => $action->post_type,
-            'action'           => $action->name,
-            'action_id'        => $action->id,
-            'quantity'         => $quantity,
-            'text'             => $text,
-            'details'          => json_encode($details),
-        ]);
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'northstar_id' => $signup->northstar_id,
+                'campaign_id' => $signup->campaign_id,
+                'type' => $action->post_type,
+                'action' => $action->name,
+                'action_id' => $action->id,
+                'quantity' => $quantity,
+                'text' => $text,
+                'details' => json_encode($details),
+            ],
+        );
 
         $response->assertStatus(201);
         $this->assertPostStructure($response);
@@ -422,14 +450,14 @@ class PostTest extends TestCase
 
         // Create the post!
         $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => 'share-social',
-            'action'           => $action->name,
-            'action_id'        => $action->id,
-            'quantity'         => $quantity,
-            'text'             => $text,
-            'details'          => json_encode($details),
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => 'share-social',
+            'action' => $action->name,
+            'action_id' => $action->id,
+            'quantity' => $quantity,
+            'text' => $text,
+            'details' => json_encode($details),
         ]);
 
         $response->assertStatus(201);
@@ -469,15 +497,15 @@ class PostTest extends TestCase
 
         // Create the post!
         $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => $action->post_type,
-            'action'           => $action->name,
-            'action_id'        => $action->id,
-            'quantity'         => $quantity,
-            'text'             => $text,
-            'details'          => json_encode($details),
-            'status'           => 'pending',
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => $action->post_type,
+            'action' => $action->name,
+            'action_id' => $action->id,
+            'quantity' => $quantity,
+            'text' => $text,
+            'details' => json_encode($details),
+            'status' => 'pending',
         ]);
 
         $response->assertStatus(201);
@@ -512,18 +540,24 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post with an invalid type (not in text, photo, voter-reg, share-social).
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => 'social-share',
-            'action'           => 'test-action',
-            'quantity'         => $quantity,
-            'text'             => $text,
-            'details'          => json_encode($details),
-        ]);
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'northstar_id' => $signup->northstar_id,
+                'campaign_id' => $signup->campaign_id,
+                'type' => 'social-share',
+                'action' => 'test-action',
+                'quantity' => $quantity,
+                'text' => $text,
+                'details' => json_encode($details),
+            ],
+        );
 
         $response->assertStatus(422);
-        $this->assertEquals('The selected type is invalid.', $response->decodeResponseJson()['errors']['type'][0]);
+        $this->assertEquals(
+            'The selected type is invalid.',
+            $response->decodeResponseJson()['errors']['type'][0],
+        );
     }
 
     /**
@@ -542,18 +576,21 @@ class PostTest extends TestCase
 
         // Make sure you also need the activity scope.
         $response = $this->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => 'photo',
-            'action'           => 'test-action',
-            'quantity'         => $quantity,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => 'photo',
+            'action' => 'test-action',
+            'quantity' => $quantity,
             'why_participated' => $this->faker->paragraph,
-            'text'             => $text,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'text' => $text,
+            'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
         ]);
 
         $response->assertStatus(401);
-        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
+        $this->assertEquals(
+            'Unauthenticated.',
+            $response->decodeResponseJson()['message'],
+        );
     }
 
     /**
@@ -567,24 +604,29 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
-        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id,
+        ]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => $action->post_type,
-            'action'           => $action->name,
-            'action_id'        => $action->id,
-            'quantity'         => $quantity,
-            'why_participated' => $this->faker->paragraph,
-            'text'             => $text,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            'details'          => json_encode($details),
-        ]);
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'northstar_id' => $signup->northstar_id,
+                'campaign_id' => $signup->campaign_id,
+                'type' => $action->post_type,
+                'action' => $action->name,
+                'action_id' => $action->id,
+                'quantity' => $quantity,
+                'why_participated' => $this->faker->paragraph,
+                'text' => $text,
+                'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
+                'details' => json_encode($details),
+            ],
+        );
 
         $response->assertStatus(201);
         $this->assertPostStructure($response);
@@ -604,19 +646,25 @@ class PostTest extends TestCase
         // Create a second post without why_participated.
         $secondQuantity = $this->faker->numberBetween(10, 1000);
         $secondText = $this->faker->sentence;
-        $secondDetails = ['source-detail' => 'broadcast-333', 'other' => 'other'];
+        $secondDetails = [
+            'source-detail' => 'broadcast-333',
+            'other' => 'other',
+        ];
 
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => $action->post_type,
-            'action'           => $action->name,
-            'action_id'        => $action->id,
-            'quantity'         => $secondQuantity,
-            'text'             => $secondText,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            'details'          => json_encode($secondDetails),
-        ]);
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'northstar_id' => $signup->northstar_id,
+                'campaign_id' => $signup->campaign_id,
+                'type' => $action->post_type,
+                'action' => $action->name,
+                'action_id' => $action->id,
+                'quantity' => $secondQuantity,
+                'text' => $secondText,
+                'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
+                'details' => json_encode($secondDetails),
+            ],
+        );
 
         $response->assertStatus(201);
         $this->assertPostStructure($response);
@@ -634,7 +682,10 @@ class PostTest extends TestCase
         ]);
 
         // Assert that signup quantity is sum of all posts' quantities.
-        $this->assertEquals($signup->fresh()->quantity, $quantity + $secondQuantity);
+        $this->assertEquals(
+            $signup->fresh()->quantity,
+            $quantity + $secondQuantity,
+        );
     }
 
     /**
@@ -647,22 +698,27 @@ class PostTest extends TestCase
         $signup = factory(Signup::class)->create();
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
-        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id,
+        ]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id, 'user')->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => $action->post_type,
-            'action'           => $action->name,
-            'action_id'        => $action->id,
-            'quantity'         => null,
-            'text'             => $text,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            'details'          => json_encode($details),
+        $response = $this->withAccessToken(
+            $signup->northstar_id,
+            'user',
+        )->postJson('api/v3/posts', [
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => $action->post_type,
+            'action' => $action->name,
+            'action_id' => $action->id,
+            'quantity' => null,
+            'text' => $text,
+            'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'details' => json_encode($details),
         ]);
 
         $response->assertStatus(201);
@@ -690,21 +746,26 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
         $text = $this->faker->sentence;
-        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id,
+        ]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => $action->post_type,
-            'action'           => $action->name,
-            'action_id'        => $action->id,
-            'text'             => $text,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-        ]);
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'northstar_id' => $signup->northstar_id,
+                'campaign_id' => $signup->campaign_id,
+                'type' => $action->post_type,
+                'action' => $action->name,
+                'action_id' => $action->id,
+                'text' => $text,
+                'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            ],
+        );
 
         $response->assertStatus(201);
         $this->assertPostStructure($response);
@@ -738,14 +799,14 @@ class PostTest extends TestCase
 
         // Create the post!
         $response = $this->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => 'photo',
-            'action'           => 'test-action',
-            'quantity'         => $quantity,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => 'photo',
+            'action' => 'test-action',
+            'quantity' => $quantity,
             'why_participated' => $this->faker->paragraph,
-            'text'             => $text,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            'text' => $text,
+            'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
         ]);
 
         $response->assertStatus(401);
@@ -770,16 +831,19 @@ class PostTest extends TestCase
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post without sending an action_id!
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => $action->post_type,
-            'action'           => 'test-action',
-            'quantity'         => $quantity,
-            'why_participated' => $this->faker->paragraph,
-            'text'             => $text,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-        ]);
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'northstar_id' => $signup->northstar_id,
+                'campaign_id' => $signup->campaign_id,
+                'type' => $action->post_type,
+                'action' => 'test-action',
+                'quantity' => $quantity,
+                'why_participated' => $this->faker->paragraph,
+                'text' => $text,
+                'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            ],
+        );
 
         $response->assertStatus(201);
         $this->assertPostStructure($response);
@@ -806,8 +870,12 @@ class PostTest extends TestCase
     public function testPostsIndexAsNonAdminNonOwner()
     {
         // Anonymous requests should only see accepted posts.
-        factory(Post::class, 10)->states('photo', 'accepted')->create();
-        factory(Post::class, 5)->states('photo', 'rejected')->create();
+        factory(Post::class, 10)
+            ->states('photo', 'accepted')
+            ->create();
+        factory(Post::class, 5)
+            ->states('photo', 'rejected')
+            ->create();
 
         $response = $this->getJson('api/v3/posts');
 
@@ -820,28 +888,16 @@ class PostTest extends TestCase
                     'id',
                     'signup_id',
                     'northstar_id',
-                    'media' => [
-                        'url',
-                        'original_image_url',
-                        'text',
-                    ],
+                    'media' => ['url', 'original_image_url', 'text'],
                     'quantity',
-                    'reactions' => [
-                        'reacted',
-                        'total',
-                    ],
+                    'reactions' => ['reacted', 'total'],
                     'status',
                     'created_at',
                     'updated_at',
                 ],
             ],
             'meta' => [
-                'cursor' => [
-                    'current',
-                    'prev',
-                    'next',
-                    'count',
-                ],
+                'cursor' => ['current', 'prev', 'next', 'count'],
             ],
         ]);
     }
@@ -857,15 +913,19 @@ class PostTest extends TestCase
     {
         // Create an accepted post.
         $this->mockTime('8/3/2017 14:00:00');
-        $regularPost = factory(Post::class)->states('photo', 'accepted')->create([
-            'northstar_id' => $this->faker->unique()->northstar_id,
-        ]);
+        $regularPost = factory(Post::class)
+            ->states('photo', 'accepted')
+            ->create([
+                'northstar_id' => $this->faker->unique()->northstar_id,
+            ]);
 
         // And then later, create an anonymous post from another user.
         $this->mockTime('8/3/2017 17:30:00');
-        $anonymousPost = factory(Post::class)->states('photo', 'accepted')->create([
-            'northstar_id' => $this->faker->unique()->northstar_id,
-        ]);
+        $anonymousPost = factory(Post::class)
+            ->states('photo', 'accepted')
+            ->create([
+                'northstar_id' => $this->faker->unique()->northstar_id,
+            ]);
         $anonymousPost->actionModel->anonymous = 1;
         $anonymousPost->actionModel->save();
 
@@ -873,45 +933,95 @@ class PostTest extends TestCase
         $response = $this->getJson('api/v3/posts');
         $response->assertStatus(200);
 
-        $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data'][0]);
-        $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
+        $this->assertArrayNotHasKey(
+            'northstar_id',
+            $response->decodeResponseJson()['data'][0],
+        );
+        $this->assertEquals(
+            $regularPost->northstar_id,
+            $response->decodeResponseJson()['data'][1]['northstar_id'],
+        );
 
         // Hit the endpoint with access credentials from another user and should have same results as above.
-        $response = $this->withAccessToken($regularPost->northstar_id)->getJson('api/v3/posts');
+        $response = $this->withAccessToken($regularPost->northstar_id)->getJson(
+            'api/v3/posts',
+        );
         $response->assertStatus(200);
-        $this->assertArrayNotHasKey('northstar_id', $response->decodeResponseJson()['data'][0]);
-        $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
+        $this->assertArrayNotHasKey(
+            'northstar_id',
+            $response->decodeResponseJson()['data'][0],
+        );
+        $this->assertEquals(
+            $regularPost->northstar_id,
+            $response->decodeResponseJson()['data'][1]['northstar_id'],
+        );
 
         // Hit the endpoint with filter[northstar_id] and no posts should be returned.
-        $response = $this->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response = $this->getJson(
+            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id,
+        );
         $response->assertStatus(200);
-        $this->assertEquals(0, $response->decodeResponseJson()['meta']['cursor']['count']);
+        $this->assertEquals(
+            0,
+            $response->decodeResponseJson()['meta']['cursor']['count'],
+        );
 
-        $response = $this->withAccessToken($regularPost->northstar_id)->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response = $this->withAccessToken($regularPost->northstar_id)->getJson(
+            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id,
+        );
         $response->assertStatus(200);
-        $this->assertEquals(0, $response->decodeResponseJson()['meta']['cursor']['count']);
+        $this->assertEquals(
+            0,
+            $response->decodeResponseJson()['meta']['cursor']['count'],
+        );
 
         // Hit the endpoint as the owner of the post and you should be able to see northstar_id for anonymous post.
-        $response = $this->withAccessToken($anonymousPost->northstar_id)->getJson('api/v3/posts');
+        $response = $this->withAccessToken(
+            $anonymousPost->northstar_id,
+        )->getJson('api/v3/posts');
         $response->assertStatus(200);
-        $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
-        $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
+        $this->assertEquals(
+            $anonymousPost->northstar_id,
+            $response->decodeResponseJson()['data'][0]['northstar_id'],
+        );
+        $this->assertEquals(
+            $regularPost->northstar_id,
+            $response->decodeResponseJson()['data'][1]['northstar_id'],
+        );
 
         // Hit the endpoint with filter[northstar_id] and should have same results as above.
-        $response = $this->withAccessToken($anonymousPost->northstar_id)->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response = $this->withAccessToken(
+            $anonymousPost->northstar_id,
+        )->getJson(
+            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id,
+        );
         $response->assertStatus(200);
-        $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
+        $this->assertEquals(
+            $anonymousPost->northstar_id,
+            $response->decodeResponseJson()['data'][0]['northstar_id'],
+        );
 
         // Hit the endpoint with admin credentials and you should be able to see northstar_id for anonymous post.
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
         $response->assertStatus(200);
-        $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
-        $this->assertEquals($regularPost->northstar_id, $response->decodeResponseJson()['data'][1]['northstar_id']);
+        $this->assertEquals(
+            $anonymousPost->northstar_id,
+            $response->decodeResponseJson()['data'][0]['northstar_id'],
+        );
+        $this->assertEquals(
+            $regularPost->northstar_id,
+            $response->decodeResponseJson()['data'][1]['northstar_id'],
+        );
 
         // Hit the endpoint with filter[northstar_id] and should have same results as above.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id);
+        $response = $this->withAdminAccessToken()->getJson(
+            'api/v3/posts?filter[northstar_id]=' . $anonymousPost->northstar_id,
+        );
         $response->assertStatus(200);
-        $this->assertEquals($anonymousPost->northstar_id, $response->decodeResponseJson()['data'][0]['northstar_id']);
+        $this->assertEquals(
+            $anonymousPost->northstar_id,
+            $response->decodeResponseJson()['data'][0]['northstar_id'],
+        );
     }
 
     /**
@@ -924,9 +1034,13 @@ class PostTest extends TestCase
     public function testPostsIndexAsNonAdminNonOwnerHiddenPosts()
     {
         // Anonymous requests should only see posts that are not tagged with "Hide In Gallery."
-        factory(Post::class, 10)->states('photo', 'accepted')->create();
+        factory(Post::class, 10)
+            ->states('photo', 'accepted')
+            ->create();
 
-        $hiddenPost = factory(Post::class)->states('photo', 'accepted')->create();
+        $hiddenPost = factory(Post::class)
+            ->states('photo', 'accepted')
+            ->create();
         $hiddenPost->tag('Hide In Gallery');
 
         $response = $this->getJson('api/v3/posts');
@@ -945,8 +1059,12 @@ class PostTest extends TestCase
     public function testPostsIndexAsAdmin()
     {
         // Admins should see all posts.
-        factory(Post::class, 10)->states('photo', 'accepted')->create();
-        factory(Post::class, 5)->states('photo', 'rejected')->create();
+        factory(Post::class, 10)
+            ->states('photo', 'accepted')
+            ->create();
+        factory(Post::class, 5)
+            ->states('photo', 'rejected')
+            ->create();
 
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
 
@@ -960,16 +1078,9 @@ class PostTest extends TestCase
                     'northstar_id',
                     'type',
                     'action',
-                    'media' => [
-                        'url',
-                        'original_image_url',
-                        'text',
-                    ],
+                    'media' => ['url', 'original_image_url', 'text'],
                     'quantity',
-                    'reactions' => [
-                        'reacted',
-                        'total',
-                    ],
+                    'reactions' => ['reacted', 'total'],
                     'status',
                     'created_at',
                     'updated_at',
@@ -980,12 +1091,7 @@ class PostTest extends TestCase
                 ],
             ],
             'meta' => [
-                'cursor' => [
-                    'current',
-                    'prev',
-                    'next',
-                    'count',
-                ],
+                'cursor' => ['current', 'prev', 'next', 'count'],
             ],
         ]);
     }
@@ -1000,9 +1106,13 @@ class PostTest extends TestCase
     public function testPostsIndexAsAdminHiddenPosts()
     {
         // Admins should see all posts.
-        factory(Post::class, 10)->states('photo', 'accepted')->create();
+        factory(Post::class, 10)
+            ->states('photo', 'accepted')
+            ->create();
 
-        $hiddenPost = factory(Post::class)->states('photo', 'accepted')->create();
+        $hiddenPost = factory(Post::class)
+            ->states('photo', 'accepted')
+            ->create();
         $hiddenPost->tag('Hide In Gallery');
 
         $response = $this->withAdminAccessToken()->getJson('api/v3/posts');
@@ -1018,18 +1128,28 @@ class PostTest extends TestCase
      */
     public function testPostsIndexFilteredByStatusAsAdmin()
     {
-        factory(Post::class, 1)->states('photo', 'accepted')->create();
-        factory(Post::class, 5)->states('photo', 'pending')->create();
-        factory(Post::class, 7)->states('photo', 'rejected')->create();
+        factory(Post::class, 1)
+            ->states('photo', 'accepted')
+            ->create();
+        factory(Post::class, 5)
+            ->states('photo', 'pending')
+            ->create();
+        factory(Post::class, 7)
+            ->states('photo', 'rejected')
+            ->create();
 
         // Admins should see posts filtered by pending status.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/posts?filter[status]=pending');
+        $response = $this->withAdminAccessToken()->getJson(
+            'api/v3/posts?filter[status]=pending',
+        );
 
         $response->assertStatus(200);
         $response->assertJsonCount(5, 'data');
 
         // Admins should be able to filter by multiple statuses and see pending and rejected posts.
-        $response = $this->withAdminAccessToken()->getJson('api/v3/posts?filter[status]=pending,rejected');
+        $response = $this->withAdminAccessToken()->getJson(
+            'api/v3/posts?filter[status]=pending,rejected',
+        );
 
         $response->assertStatus(200);
         $response->assertJsonCount(12, 'data');
@@ -1047,17 +1167,25 @@ class PostTest extends TestCase
             'volunteer_credit' => true,
         ]);
         // Posts qualifying for volunteer credit:
-        factory(Post::class, 4)->states('photo', 'accepted')->create([
-            'action_id' => $action->id,
-        ]);
+        factory(Post::class, 4)
+            ->states('photo', 'accepted')
+            ->create([
+                'action_id' => $action->id,
+            ]);
         // Posts not qualifying for volunteer credit:
-        factory(Post::class, 7)->states('photo', 'accepted')->create();
+        factory(Post::class, 7)
+            ->states('photo', 'accepted')
+            ->create();
 
-        $response = $this->getJson('api/v3/posts?filter[volunteer_credit]=true');
+        $response = $this->getJson(
+            'api/v3/posts?filter[volunteer_credit]=true',
+        );
         $response->assertSuccessful();
         $response->assertJsonCount(4, 'data');
 
-        $response = $this->getJson('api/v3/posts?filter[volunteer_credit]=false');
+        $response = $this->getJson(
+            'api/v3/posts?filter[volunteer_credit]=false',
+        );
         $response->assertSuccessful();
         $response->assertJsonCount(7, 'data');
     }
@@ -1072,11 +1200,17 @@ class PostTest extends TestCase
     public function testPostsIndexAsOwner()
     {
         $userId = $this->faker->unique()->northstar_id;
-        factory(Post::class, 2)->states('photo', 'pending')->create(['northstar_id' => $userId]);
-        factory(Post::class)->states('photo', 'rejected')->create(['northstar_id' => $userId]);
+        factory(Post::class, 2)
+            ->states('photo', 'pending')
+            ->create(['northstar_id' => $userId]);
+        factory(Post::class)
+            ->states('photo', 'rejected')
+            ->create(['northstar_id' => $userId]);
 
         $otherId = $this->faker->unique()->northstar_id;
-        factory(Post::class, 4)->states('photo', 'rejected')->create(['northstar_id' => $otherId]);
+        factory(Post::class, 4)
+            ->states('photo', 'rejected')
+            ->create(['northstar_id' => $otherId]);
 
         // Owners should be able to see their own posts of any status, but
         // not pending or rejected posts from other users.
@@ -1092,16 +1226,9 @@ class PostTest extends TestCase
                     'northstar_id',
                     'type',
                     'action',
-                    'media' => [
-                        'url',
-                        'original_image_url',
-                        'text',
-                    ],
+                    'media' => ['url', 'original_image_url', 'text'],
                     'quantity',
-                    'reactions' => [
-                        'reacted',
-                        'total',
-                    ],
+                    'reactions' => ['reacted', 'total'],
                     'status',
                     'created_at',
                     'updated_at',
@@ -1112,12 +1239,7 @@ class PostTest extends TestCase
                 ],
             ],
             'meta' => [
-                'cursor' => [
-                    'current',
-                    'prev',
-                    'next',
-                    'count',
-                ],
+                'cursor' => ['current', 'prev', 'next', 'count'],
             ],
         ]);
     }
@@ -1135,17 +1257,23 @@ class PostTest extends TestCase
         $ownerId = $this->faker->unique()->northstar_id;
 
         // Create posts and associate to this $ownerId.
-        $posts = factory(Post::class, 2)->states('photo', 'accepted')->create(['northstar_id' => $ownerId]);
+        $posts = factory(Post::class, 2)
+            ->states('photo', 'accepted')
+            ->create(['northstar_id' => $ownerId]);
 
         // Create a hidden post from the same $ownerId.
-        $hiddenPost = factory(Post::class)->states('photo', 'accepted')->create(['northstar_id' => $ownerId]);
+        $hiddenPost = factory(Post::class)
+            ->states('photo', 'accepted')
+            ->create(['northstar_id' => $ownerId]);
         $hiddenPost->tag('Hide In Gallery');
         $hiddenPost->save();
 
         // Create anothter hidden post by different user.
-        $secondHiddenPost = factory(Post::class)->states('photo', 'accepted')->create([
-            'northstar_id' => $this->faker->unique()->northstar_id,
-        ]);
+        $secondHiddenPost = factory(Post::class)
+            ->states('photo', 'accepted')
+            ->create([
+                'northstar_id' => $this->faker->unique()->northstar_id,
+            ]);
         $secondHiddenPost->tag('Hide In Gallery');
         $secondHiddenPost->save();
 
@@ -1166,20 +1294,36 @@ class PostTest extends TestCase
         $referrerUserId = $this->faker->unique()->northstar_id;
 
         // A referrer can see all of their voter registration referrals.
-        $firstVoterRegReferral = factory(Post::class)->states('voter-reg', 'register-form')->create(['referrer_user_id' => $referrerUserId]);
-        $secondVoterRegReferral = factory(Post::class)->states('voter-reg', 'rejected')->create(['referrer_user_id' => $referrerUserId]);
-        $thirdVoterRegReferral = factory(Post::class)->states('voter-reg', 'step-1')->create(['referrer_user_id' => $referrerUserId]);
+        $firstVoterRegReferral = factory(Post::class)
+            ->states('voter-reg', 'register-form')
+            ->create(['referrer_user_id' => $referrerUserId]);
+        $secondVoterRegReferral = factory(Post::class)
+            ->states('voter-reg', 'rejected')
+            ->create(['referrer_user_id' => $referrerUserId]);
+        $thirdVoterRegReferral = factory(Post::class)
+            ->states('voter-reg', 'step-1')
+            ->create(['referrer_user_id' => $referrerUserId]);
 
         // Add a completed voter reg without a referrer, which is public because it's completed.
-        $publicVoterRegPost = factory(Post::class)->states('voter-reg', 'register-OVR')->create();
+        $publicVoterRegPost = factory(Post::class)
+            ->states('voter-reg', 'register-OVR')
+            ->create();
 
         // Add non-completed voter referrals for a different referrer, which shouldn't be visible.
-        factory(Post::class)->states('voter-reg', 'step-1')->create(['referrer_user_id' => $this->faker->unique()->northstar_id]);
+        factory(Post::class)
+            ->states('voter-reg', 'step-1')
+            ->create([
+                'referrer_user_id' => $this->faker->unique()->northstar_id,
+            ]);
 
         // Add a pending photo post, which shouldn't be visible.
-        factory(Post::class)->states('photo', 'pending')->create();
+        factory(Post::class)
+            ->states('photo', 'pending')
+            ->create();
 
-        $response = $this->withAccessToken($referrerUserId)->getJson('api/v3/posts');
+        $response = $this->withAccessToken($referrerUserId)->getJson(
+            'api/v3/posts',
+        );
         $response->assertStatus(200);
         $response->assertJsonCount(4, 'data');
         $response->assertJsonFragment([
@@ -1217,14 +1361,18 @@ class PostTest extends TestCase
         $response->assertStatus(403);
 
         // Anon user should not be able to see a rejected post if it doesn't belong to them and if they're not an admin.
-        $post = factory(Post::class)->states('photo', 'rejected')->create();
+        $post = factory(Post::class)
+            ->states('photo', 'rejected')
+            ->create();
 
         $response = $this->getJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(403);
 
         // Anon user is able to see an accepted post even if it doesn't belong to them and if they're not an admin.
-        $post = factory(Post::class)->states('photo', 'accepted')->create();
+        $post = factory(Post::class)
+            ->states('photo', 'accepted')
+            ->create();
 
         $response = $this->getJson('api/v3/posts/' . $post->id);
 
@@ -1237,16 +1385,9 @@ class PostTest extends TestCase
                 'northstar_id',
                 'type',
                 'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
+                'media' => ['url', 'original_image_url', 'text'],
                 'quantity',
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
+                'reactions' => ['reacted', 'total'],
                 'status',
                 'created_at',
                 'updated_at',
@@ -1265,7 +1406,9 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withAdminAccessToken()->getJson('api/v3/posts/' . $post->id);
+        $response = $this->withAdminAccessToken()->getJson(
+            'api/v3/posts/' . $post->id,
+        );
 
         $response->assertStatus(200);
 
@@ -1285,7 +1428,9 @@ class PostTest extends TestCase
     public function testPostShowAsOwner()
     {
         $post = factory(Post::class)->create();
-        $response = $this->withAccessToken($post->northstar_id)->getJson('api/v3/posts/' . $post->id);
+        $response = $this->withAccessToken($post->northstar_id)->getJson(
+            'api/v3/posts/' . $post->id,
+        );
 
         $response->assertStatus(200);
         // $this->assertPostStructure($response);
@@ -1297,16 +1442,9 @@ class PostTest extends TestCase
                 'northstar_id',
                 'type',
                 'action',
-                'media' => [
-                    'url',
-                    'original_image_url',
-                    'text',
-                ],
+                'media' => ['url', 'original_image_url', 'text'],
                 'quantity',
-                'reactions' => [
-                    'reacted',
-                    'total',
-                ],
+                'reactions' => ['reacted', 'total'],
                 'status',
                 'created_at',
                 'updated_at',
@@ -1326,13 +1464,23 @@ class PostTest extends TestCase
     public function testPostShowWithReactions()
     {
         $viewer = $this->randomUserId();
-        $post = factory(Post::class)->states('photo', 'accepted')->create();
+        $post = factory(Post::class)
+            ->states('photo', 'accepted')
+            ->create();
 
         // Create two reactions for this post!
-        Reaction::withTrashed()->firstOrCreate(['northstar_id' => $viewer, 'post_id' => $post->id]);
-        Reaction::withTrashed()->firstOrCreate(['northstar_id' => 'someone_else_lol', 'post_id' => $post->id]);
+        Reaction::withTrashed()->firstOrCreate([
+            'northstar_id' => $viewer,
+            'post_id' => $post->id,
+        ]);
+        Reaction::withTrashed()->firstOrCreate([
+            'northstar_id' => 'someone_else_lol',
+            'post_id' => $post->id,
+        ]);
 
-        $response = $this->withAccessToken($viewer, 'user')->getJson('api/v3/posts/' . $post->id);
+        $response = $this->withAccessToken($viewer, 'user')->getJson(
+            'api/v3/posts/' . $post->id,
+        );
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -1359,12 +1507,15 @@ class PostTest extends TestCase
 
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
-            'text' => 'new caption',
-            'quantity' => 8,
-            'status' => 'accepted',
-            'school_id' => '200426',
-        ]);
+        $response = $this->withAdminAccessToken()->patchJson(
+            'api/v3/posts/' . $post->id,
+            [
+                'text' => 'new caption',
+                'quantity' => 8,
+                'status' => 'accepted',
+                'school_id' => '200426',
+            ],
+        );
 
         $response->assertStatus(200);
 
@@ -1392,12 +1543,19 @@ class PostTest extends TestCase
         ]);
 
         $this->mock(CustomerIo::class)
-          ->shouldReceive('trackEvent')
-          ->with($post->referrer_user_id, 'referral_post_updated', $post->getReferralPostEventPayload());
+            ->shouldReceive('trackEvent')
+            ->with(
+                $post->referrer_user_id,
+                'referral_post_updated',
+                $post->getReferralPostEventPayload(),
+            );
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
-            'status' => 'register-form',
-        ]);
+        $response = $this->withAdminAccessToken()->patchJson(
+            'api/v3/posts/' . $post->id,
+            [
+                'status' => 'register-form',
+            ],
+        );
     }
 
     /**
@@ -1412,11 +1570,14 @@ class PostTest extends TestCase
 
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
-            'text' => 'new caption',
-            'quantity' => 8,
-            'status' => 'register-form',
-        ]);
+        $response = $this->withAdminAccessToken()->patchJson(
+            'api/v3/posts/' . $post->id,
+            [
+                'text' => 'new caption',
+                'quantity' => 8,
+                'status' => 'register-form',
+            ],
+        );
 
         $response->assertJsonValidationErrors(['status']);
     }
@@ -1433,9 +1594,12 @@ class PostTest extends TestCase
 
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
-            'school_id' => 8,
-        ]);
+        $response = $this->withAdminAccessToken()->patchJson(
+            'api/v3/posts/' . $post->id,
+            [
+                'school_id' => 8,
+            ],
+        );
 
         $response->assertJsonValidationErrors(['school_id']);
     }
@@ -1471,10 +1635,13 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withAdminAccessToken()->patchJson('api/v3/posts/' . $post->id, [
-            'quantity' => 'this is words not a number!',
-            'text' => 'a' . str_repeat('h', 512), // ahhh...hhhhh!
-        ]);
+        $response = $this->withAdminAccessToken()->patchJson(
+            'api/v3/posts/' . $post->id,
+            [
+                'quantity' => 'this is words not a number!',
+                'text' => 'a' . str_repeat('h', 512), // ahhh...hhhhh!
+            ],
+        );
 
         $response->assertJsonValidationErrors(['quantity', 'text']);
     }
@@ -1489,11 +1656,14 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $response = $this->withAccessToken($post->northstar_id)->patchJson('api/v3/posts/' . $post->id, [
-            'status' => 'accepted',
-            'location' => 'US-MA',
-            'text' => 'new caption',
-        ]);
+        $response = $this->withAccessToken($post->northstar_id)->patchJson(
+            'api/v3/posts/' . $post->id,
+            [
+                'status' => 'accepted',
+                'location' => 'US-MA',
+                'text' => 'new caption',
+            ],
+        );
 
         $response->assertStatus(200);
 
@@ -1502,8 +1672,8 @@ class PostTest extends TestCase
                 'media' => [
                     'text' => 'new caption', // check!
                 ],
-                'location' => 'US-MA',       // check!
-                'status' => 'pending',       // no way, buddy!
+                'location' => 'US-MA', // check!
+                'status' => 'pending', // no way, buddy!
             ],
         ]);
     }
@@ -1518,10 +1688,13 @@ class PostTest extends TestCase
         $user = factory(User::class)->create();
         $post = factory(Post::class)->create();
 
-        $response = $this->withAccessToken($user->id)->patchJson('api/v3/posts/' . $post->id, [
-            'status' => 'accepted',
-            'text' => 'new caption',
-        ]);
+        $response = $this->withAccessToken($user->id)->patchJson(
+            'api/v3/posts/' . $post->id,
+            [
+                'status' => 'accepted',
+                'text' => 'new caption',
+            ],
+        );
 
         $response->assertStatus(403);
 
@@ -1545,12 +1718,17 @@ class PostTest extends TestCase
         // Mock the Fastly API calls.
         $this->mock(Fastly::class)->shouldReceive('purge');
 
-        $response = $this->withAdminAccessToken()->deleteJson('api/v3/posts/' . $post->id);
+        $response = $this->withAdminAccessToken()->deleteJson(
+            'api/v3/posts/' . $post->id,
+        );
 
         $response->assertStatus(200);
 
         // Make sure that the post's deleted_at gets persisted in the database.
-        $this->assertEquals($post->fresh()->deleted_at->toTimeString(), '14:00:00');
+        $this->assertEquals(
+            $post->fresh()->deleted_at->toTimeString(),
+            '14:00:00',
+        );
     }
 
     /**
@@ -1565,7 +1743,10 @@ class PostTest extends TestCase
         $response = $this->deleteJson('api/v3/posts/' . $post->id);
 
         $response->assertStatus(401);
-        $this->assertEquals('Unauthenticated.', $response->decodeResponseJson()['message']);
+        $this->assertEquals(
+            'Unauthenticated.',
+            $response->decodeResponseJson()['message'],
+        );
     }
 
     /**
@@ -1597,7 +1778,8 @@ class PostTest extends TestCase
 
         $details = [
             'hostname' => 'dosomething.turbovote.org',
-            'referral-code' => 'user:5570af2c469c6430068bc501,campaign:8022,source:web',
+            'referral-code' =>
+                'user:5570af2c469c6430068bc501,campaign:8022,source:web',
             'partner-comms-opt-in' => '',
             'created-at' => '2018-01-29T01:59:44Z',
             'updated-at' => '2018-01-29T02:00:17Z',
@@ -1652,21 +1834,26 @@ class PostTest extends TestCase
         // Attributes for the post that we'll create
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
-        $action = factory(Action::class)->create(['campaign_id' => $signup->campaign_id]);
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id,
+        ]);
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($signup->northstar_id)->postJson('api/v3/posts', [
-            'northstar_id'     => $signup->northstar_id,
-            'campaign_id'      => $signup->campaign_id,
-            'type'             => $action->post_type,
-            'action_id'        => $action->id,
-            'quantity'         => $quantity,
-            'text'             => $text,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-        ]);
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'northstar_id' => $signup->northstar_id,
+                'campaign_id' => $signup->campaign_id,
+                'type' => $action->post_type,
+                'action_id' => $action->id,
+                'quantity' => $quantity,
+                'text' => $text,
+                'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            ],
+        );
 
         $response->assertStatus(201);
         $this->assertPostStructure($response);
@@ -1698,23 +1885,28 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
         $campaign_id = factory(Campaign::class)->create()->id;
-        $action = factory(Action::class)->create(['campaign_id' => $campaign_id]);
+        $action = factory(Action::class)->create([
+            'campaign_id' => $campaign_id,
+        ]);
         $northstar_id = $this->faker->northstar_id;
 
         // Mock the Blink API call.
         $this->mock(Blink::class)->shouldReceive('userSignupPost');
 
         // Create the post!
-        $response = $this->withAccessToken($northstar_id)->postJson('api/v3/posts', [
-            'northstar_id'     => $northstar_id,
-            'campaign_id'      => $campaign_id,
-            'type'             => $action->post_type,
-            'action_id'        => $action->id,
-            'quantity'         => $quantity,
-            'text'             => $text,
-            'file'             => UploadedFile::fake()->image('photo.jpg', 450, 450),
-            'group_id'         => $groupId,
-        ]);
+        $response = $this->withAccessToken($northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'northstar_id' => $northstar_id,
+                'campaign_id' => $campaign_id,
+                'type' => $action->post_type,
+                'action_id' => $action->id,
+                'quantity' => $quantity,
+                'text' => $text,
+                'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
+                'group_id' => $groupId,
+            ],
+        );
 
         $response->assertStatus(201);
         $this->assertPostStructure($response);

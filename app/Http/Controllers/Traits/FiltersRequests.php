@@ -13,7 +13,7 @@ trait FiltersRequests
      */
     public function newQuery($class)
     {
-        return (new $class)->newQuery();
+        return (new $class())->newQuery();
     }
 
     /**
@@ -26,7 +26,7 @@ trait FiltersRequests
      */
     public function filter($query, $filters, $indexes)
     {
-        if (! $filters) {
+        if (!$filters) {
             return $query;
         }
 

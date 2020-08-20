@@ -53,15 +53,22 @@ class ReviewSignup extends Command
         $posts = $signup->posts;
         $admin = $this->option('admin');
 
-        $this->info('Updating status of all posts under signup ID '.$signup->id);
-        $this->info('There are ' .$posts->count(). ' posts to update.');
+        $this->info(
+            'Updating status of all posts under signup ID ' . $signup->id,
+        );
+        $this->info('There are ' . $posts->count() . ' posts to update.');
 
         if ($posts) {
             foreach ($posts as $post) {
                 $this->posts->review($post, $status, null, $admin);
             }
 
-            $this->info('All posts under signup ID ' . $signup->id . ' have been updated with a status of ' . $status);
+            $this->info(
+                'All posts under signup ID ' .
+                    $signup->id .
+                    ' have been updated with a status of ' .
+                    $status,
+            );
         } else {
             $this->error('There are no posts under signup ID ' . $signup->id);
         }
