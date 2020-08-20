@@ -6,30 +6,30 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddQuantityColumnToPostsTable extends Migration
 {
-  /**
-   * Run the migrations.
-   *
-   * @return void
-   */
-  public function up()
-  {
-    Schema::table('posts', function (Blueprint $table) {
-      $table
-        ->integer('quantity')
-        ->after('northstar_id')
-        ->nullable();
-    });
-  }
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            $table
+                ->integer('quantity')
+                ->after('northstar_id')
+                ->nullable();
+        });
+    }
 
-  /**
-   * Reverse the migrations.
-   *
-   * @return void
-   */
-  public function down()
-  {
-    Schema::table('posts', function (Blueprint $table) {
-      $table->dropColumn('quantity');
-    });
-  }
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('quantity');
+        });
+    }
 }

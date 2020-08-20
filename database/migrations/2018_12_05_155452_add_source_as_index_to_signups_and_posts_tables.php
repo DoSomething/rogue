@@ -6,35 +6,35 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddSourceAsIndexToSignupsAndPostsTables extends Migration
 {
-  /**
-   * Run the migrations.
-   *
-   * @return void
-   */
-  public function up()
-  {
-    Schema::table('signups', function (Blueprint $table) {
-      $table->index('source');
-    });
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('signups', function (Blueprint $table) {
+            $table->index('source');
+        });
 
-    Schema::table('posts', function (Blueprint $table) {
-      $table->index('source');
-    });
-  }
+        Schema::table('posts', function (Blueprint $table) {
+            $table->index('source');
+        });
+    }
 
-  /**
-   * Reverse the migrations.
-   *
-   * @return void
-   */
-  public function down()
-  {
-    Schema::table('signups', function (Blueprint $table) {
-      $table->dropIndex(['source']);
-    });
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('signups', function (Blueprint $table) {
+            $table->dropIndex(['source']);
+        });
 
-    Schema::table('posts', function (Blueprint $table) {
-      $table->dropIndex(['source']);
-    });
-  }
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropIndex(['source']);
+        });
+    }
 }

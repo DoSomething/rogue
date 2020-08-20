@@ -6,27 +6,27 @@ use Illuminate\Database\Migrations\Migration;
 
 class MakeQuantityIndexOnPosts extends Migration
 {
-  /**
-   * Run the migrations.
-   *
-   * @return void
-   */
-  public function up()
-  {
-    Schema::table('posts', function (Blueprint $table) {
-      $table->index('quantity');
-    });
-  }
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            $table->index('quantity');
+        });
+    }
 
-  /**
-   * Reverse the migrations.
-   *
-   * @return void
-   */
-  public function down()
-  {
-    Schema::table('posts', function (Blueprint $table) {
-      $table->dropIndex('posts_quantity_index');
-    });
-  }
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropIndex('posts_quantity_index');
+        });
+    }
 }

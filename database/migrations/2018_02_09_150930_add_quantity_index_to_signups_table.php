@@ -6,27 +6,27 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddQuantityIndexToSignupsTable extends Migration
 {
-  /**
-   * Run the migrations.
-   *
-   * @return void
-   */
-  public function up()
-  {
-    Schema::table('signups', function (Blueprint $table) {
-      $table->index('quantity');
-    });
-  }
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('signups', function (Blueprint $table) {
+            $table->index('quantity');
+        });
+    }
 
-  /**
-   * Reverse the migrations.
-   *
-   * @return void
-   */
-  public function down()
-  {
-    Schema::table('signups', function (Blueprint $table) {
-      $table->dropIndex(['quantity']);
-    });
-  }
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('signups', function (Blueprint $table) {
+            $table->dropIndex(['quantity']);
+        });
+    }
 }

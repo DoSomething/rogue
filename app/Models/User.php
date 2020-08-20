@@ -9,48 +9,48 @@ use DoSomething\Gateway\Contracts\NorthstarUserContract;
 
 class User extends Authenticatable implements NorthstarUserContract
 {
-  use HasNorthstarToken, Notifiable;
+    use HasNorthstarToken, Notifiable;
 
-  /*
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
-  protected $fillable = [];
+    /*
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [];
 
-  /**
-   * Check to see if this user matches one of the given roles.
-   *
-   * @param  array|mixed $roles - role(s) to check
-   * @return bool
-   */
-  public function hasRole($roles)
-  {
-    // Prepare an array of roles to check.
-    // e.g. $user->hasRole('admin') => ['admin']
-    //      $user->hasRole('admin, 'staff') => ['admin', 'staff']
-    $roles = is_array($roles) ? $roles : func_get_args();
+    /**
+     * Check to see if this user matches one of the given roles.
+     *
+     * @param  array|mixed $roles - role(s) to check
+     * @return bool
+     */
+    public function hasRole($roles)
+    {
+        // Prepare an array of roles to check.
+        // e.g. $user->hasRole('admin') => ['admin']
+        //      $user->hasRole('admin, 'staff') => ['admin', 'staff']
+        $roles = is_array($roles) ? $roles : func_get_args();
 
-    return in_array($this->role, $roles);
-  }
+        return in_array($this->role, $roles);
+    }
 
-  /**
-   * Get the name of the unique identifier for the user.
-   *
-   * @return string
-   */
-  public function getAuthIdentifierName()
-  {
-    return 'northstar_id';
-  }
+    /**
+     * Get the name of the unique identifier for the user.
+     *
+     * @return string
+     */
+    public function getAuthIdentifierName()
+    {
+        return 'northstar_id';
+    }
 
-  /**
-   * Get the unique identifier for the user.
-   *
-   * @return mixed
-   */
-  public function getAuthIdentifier()
-  {
-    return $this->getAttribute($this->getAuthIdentifierName());
-  }
+    /**
+     * Get the unique identifier for the user.
+     *
+     * @return mixed
+     */
+    public function getAuthIdentifier()
+    {
+        return $this->getAttribute($this->getAuthIdentifierName());
+    }
 }
