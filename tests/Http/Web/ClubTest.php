@@ -70,6 +70,21 @@ class ClubTest extends TestCase
     }
 
     /**
+     * test validation for creating a club with a duplicate leader_id.
+     *
+     * POST /clubs
+     * @return void
+     */
+    public function testCreatingAClubWithDuplicateLeaderId()
+    {
+        $club = factory(Club::class)->create();
+
+        $this->actingAsAdmin()
+            ->postJson('clubs', ['name' => $this->faker->company, 'leader_id' => $club->leaderId])
+            ->assertJsonValidationErrors(['leader_id']);
+    }
+
+    /**
      * Test for updating a club successfully.
      *
      * PATCH /clubs/:id
