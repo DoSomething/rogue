@@ -8,7 +8,7 @@ use Rogue\Models\Club;
 class ClubTest extends TestCase
 {
     /**
-     * test that admin can create a new club.
+     * Test that admin can create a new club.
      *
      * POST /clubs
      * @return void
@@ -30,7 +30,7 @@ class ClubTest extends TestCase
     }
 
     /**
-     * test that staff can create a new club.
+     * Test that staff can create a new club.
      *
      * POST /clubs
      * @return void
@@ -52,7 +52,7 @@ class ClubTest extends TestCase
     }
 
     /**
-     * test validation for creating a club.
+     * Test validation for creating a club.
      *
      * POST /clubs
      * @return void
