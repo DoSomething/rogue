@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('images/{hash}', 'Web\ImagesController@show');
 
 // v3 routes
-Route::group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function () {
+Route::group(
+  ['prefix' => 'api/v3', 'middleware' => ['guard:api']],
+  function () {
     // signups
     Route::post('signups', 'SignupsController@store');
     Route::get('signups', 'SignupsController@index');
@@ -68,4 +70,5 @@ Route::group(['prefix' => 'api/v3', 'middleware' => ['guard:api']], function () 
 
     // users
     Route::delete('users/{id}', 'UsersController@destroy');
-});
+  }
+);

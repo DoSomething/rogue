@@ -6,29 +6,37 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddFilterByLocationToGroupTypesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::table('group_types', function (Blueprint $table) {
-            $table->boolean('filter_by_location')->default(false)->after('name')->comment('Whether or not group finders for this group type should filter by location.');
-        });
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::table('group_types', function (Blueprint $table) {
+      $table
+        ->boolean('filter_by_location')
+        ->default(false)
+        ->after('name')
+        ->comment(
+          'Whether or not group finders for this group type should filter by location.'
+        );
+    });
 
-        DB::statement('UPDATE group_types SET filter_by_location = filter_by_state');
-    }
+    DB::statement(
+      'UPDATE group_types SET filter_by_location = filter_by_state'
+    );
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('group_types', function (Blueprint $table) {
-            $table->dropColumn('filter_by_location');
-        });
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::table('group_types', function (Blueprint $table) {
+      $table->dropColumn('filter_by_location');
+    });
+  }
 }

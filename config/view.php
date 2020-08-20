@@ -1,8 +1,7 @@
 <?php
 
 return [
-
-    /*
+  /*
     |--------------------------------------------------------------------------
     | View Storage Paths
     |--------------------------------------------------------------------------
@@ -13,11 +12,9 @@ return [
     |
     */
 
-    'paths' => [
-        realpath(base_path('resources/views')),
-    ],
+  'paths' => [realpath(base_path('resources/views'))],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Compiled View Path
     |--------------------------------------------------------------------------
@@ -28,9 +25,8 @@ return [
     |
     */
 
-    'compiled' => env(
-        'VIEW_COMPILED_PATH',
-        realpath(storage_path('framework/views'))
-    ),
-
+  'compiled' => env(
+    'VIEW_COMPILED_PATH',
+    realpath(storage_path('framework/views'))
+  ),
 ];

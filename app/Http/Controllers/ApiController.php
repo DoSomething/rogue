@@ -7,5 +7,5 @@ use Rogue\Http\Controllers\Controller as BaseController;
 
 class ApiController extends BaseController
 {
-    use FiltersRequests;
+  use FiltersRequests;
 }

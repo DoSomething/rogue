@@ -1,8 +1,7 @@
 <?php
 
 return [
-
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Default Filesystem Disk
     |--------------------------------------------------------------------------
@@ -13,9 +12,9 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+  'default' => env('FILESYSTEM_DRIVER', 'local'),
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Default Cloud Filesystem Disk
     |--------------------------------------------------------------------------
@@ -26,9 +25,9 @@ return [
     |
     */
 
-    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+  'cloud' => env('FILESYSTEM_CLOUD', 's3'),
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------
@@ -41,30 +40,27 @@ return [
     |
     */
 
-    'disks' => [
-
-        'local' => [
-            'driver' => 'local',
-            'root' => storage_path('app'),
-        ],
-
-        'public' => [
-            'driver' => 'local',
-            'root' => public_path('storage'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
-        ],
-
-        's3' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_S3_REGION', 'us-east-1'),
-            'bucket' => env('AWS_S3_BUCKET'),
-            'url' => env('AWS_S3_URL'),
-            'endpoint' => env('AWS_S3_URL'),
-        ],
-
+  'disks' => [
+    'local' => [
+      'driver' => 'local',
+      'root' => storage_path('app'),
     ],
 
+    'public' => [
+      'driver' => 'local',
+      'root' => public_path('storage'),
+      'url' => env('APP_URL') . '/storage',
+      'visibility' => 'public',
+    ],
+
+    's3' => [
+      'driver' => 's3',
+      'key' => env('AWS_ACCESS_KEY_ID'),
+      'secret' => env('AWS_SECRET_ACCESS_KEY'),
+      'region' => env('AWS_S3_REGION', 'us-east-1'),
+      'bucket' => env('AWS_S3_BUCKET'),
+      'url' => env('AWS_S3_URL'),
+      'endpoint' => env('AWS_S3_URL'),
+    ],
+  ],
 ];

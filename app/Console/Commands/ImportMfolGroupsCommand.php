@@ -10,79 +10,89 @@ use Illuminate\Console\Command;
 
 class ImportMfolGroupsCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'rogue:mfol-groups-import {path}';
+  /**
+   * The name and signature of the console command.
+   *
+   * @var string
+   */
+  protected $signature = 'rogue:mfol-groups-import {path}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Create March For Our Lives groups from a CSV.';
+  /**
+   * The console command description.
+   *
+   * @var string
+   */
+  protected $description = 'Create March For Our Lives groups from a CSV.';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+  /**
+   * Create a new command instance.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+    parent::__construct();
+  }
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
-    {
-        $path = $this->argument('path');
+  /**
+   * Execute the console command.
+   *
+   * @return mixed
+   */
+  public function handle()
+  {
+    $path = $this->argument('path');
 
-        info('rogue:mfol-groups-import: Loading csv from ' . $path);
+    info('rogue:mfol-groups-import: Loading csv from ' . $path);
 
-        // Make a local copy of the CSV.
-        $temp = tempnam(sys_get_temp_dir(), 'command_csv');
+    // Make a local copy of the CSV.
+    $temp = tempnam(sys_get_temp_dir(), 'command_csv');
 
-        file_put_contents($temp, fopen($this->argument('path'), 'r'));
+    file_put_contents($temp, fopen($this->argument('path'), 'r'));
 
-        // Load CSV contents.
-        $csv = Reader::createFromPath($temp, 'r');
+    // Load CSV contents.
+    $csv = Reader::createFromPath($temp, 'r');
 
-        $csv->setHeaderOffset(0);
+    $csv->setHeaderOffset(0);
 
-        $numImported = 0;
-        $numFailed = 0;
+    $numImported = 0;
+    $numFailed = 0;
 
-        $groupType = GroupType::firstOrCreate([
-            'name' => 'March For Our Lives',
+    $groupType = GroupType::firstOrCreate([
+      'name' => 'March For Our Lives',
+    ]);
+
+    info(
+      'rogue:mfol-groups-import: Beginning import for group type id ' .
+        $groupType->id .
+        '.'
+    );
+
+    foreach ($csv->getRecords() as $record) {
+      $name = $record['Chapter'];
+
+      try {
+        $group = Group::firstOrCreate([
+          'group_type_id' => $groupType->id,
+          'name' => $name,
         ]);
 
-        info('rogue:mfol-groups-import: Beginning import for group type id ' . $groupType->id .'.');
+        $numImported++;
 
-        foreach ($csv->getRecords() as $record) {
-            $name = $record['Chapter'];
+        info('Imported group', ['id' => $group->id, 'name' => $group->name]);
+      } catch (Exception $e) {
+        $numFailed++;
 
-            try {
-                $group = Group::firstOrCreate([
-                    'group_type_id' => $groupType->id,
-                    'name' => $name,
-                ]);
-
-                $numImported++;
-
-                info('Imported group', ['id' => $group->id, 'name' => $group->name]);
-            } catch (Exception $e) {
-                $numFailed++;
-
-                info('Error importing group with ' .$name . ':' . $e->getMessage());
-            }
-        }
-
-        info('rogue:mfol-groups-import: Import completed with ' . $numImported . ' imported and ' . $numFailed . ' failed.');
+        info('Error importing group with ' . $name . ':' . $e->getMessage());
+      }
     }
+
+    info(
+      'rogue:mfol-groups-import: Import completed with ' .
+        $numImported .
+        ' imported and ' .
+        $numFailed .
+        ' failed.'
+    );
+  }
 }

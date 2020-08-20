@@ -15,190 +15,200 @@ use Rogue\Http\Controllers\Traits\FiltersRequests;
 
 class PostsController extends ApiController
 {
-    use FiltersRequests;
+  use FiltersRequests;
 
-    /**
-     * The post manager instance.
-     *
-     * @var \Rogue\Managers\PostManager
-     */
-    protected $posts;
+  /**
+   * The post manager instance.
+   *
+   * @var \Rogue\Managers\PostManager
+   */
+  protected $posts;
 
-    /**
-     * The SignupManager instance.
-     *
-     * @var \Rogue\Managers\SignupManager
-     */
-    protected $signups;
+  /**
+   * The SignupManager instance.
+   *
+   * @var \Rogue\Managers\SignupManager
+   */
+  protected $signups;
 
-    /**
-     * @var \Rogue\Http\Transformers\PostTransformer;
-     */
-    protected $transformer;
+  /**
+   * @var \Rogue\Http\Transformers\PostTransformer;
+   */
+  protected $transformer;
 
-    /**
-     * Use cursor pagination for these routes.
-     *
-     * @var bool
-     */
-    protected $useCursorPagination = true;
+  /**
+   * Use cursor pagination for these routes.
+   *
+   * @var bool
+   */
+  protected $useCursorPagination = true;
 
-    /**
-     * Create a controller instance.
-     *
-     * @param PostManager $posts
-     * @param SignupManager $signups
-     * @param PostTransformer $transformer
-     */
-    public function __construct(PostManager $posts, SignupManager $signups, PostTransformer $transformer)
-    {
-        $this->posts = $posts;
-        $this->signups = $signups;
-        $this->transformer = $transformer;
+  /**
+   * Create a controller instance.
+   *
+   * @param PostManager $posts
+   * @param SignupManager $signups
+   * @param PostTransformer $transformer
+   */
+  public function __construct(
+    PostManager $posts,
+    SignupManager $signups,
+    PostTransformer $transformer
+  ) {
+    $this->posts = $posts;
+    $this->signups = $signups;
+    $this->transformer = $transformer;
 
-        $this->middleware('scopes:activity');
-        $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
-        $this->middleware('role:admin,staff', ['only' => ['destroy']]);
-        $this->middleware('scopes:write', ['only' => ['store', 'update', 'destroy']]);
+    $this->middleware('scopes:activity');
+    $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
+    $this->middleware('role:admin,staff', ['only' => ['destroy']]);
+    $this->middleware('scopes:write', [
+      'only' => ['store', 'update', 'destroy'],
+    ]);
+  }
+
+  /**
+   * Returns Posts, filtered by params, if provided.
+   * GET /posts
+   *
+   * @param Request $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function index(Request $request)
+  {
+    $query = $this->newQuery(Post::class);
+
+    if (has_include($request, 'signup')) {
+      // Eagerly load the `signup` relationship.
+      $query->with('signup');
     }
 
-    /**
-     * Returns Posts, filtered by params, if provided.
-     * GET /posts
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(Request $request)
-    {
-        $query = $this->newQuery(Post::class);
+    $filters = $request->query('filter');
+    $query = $this->filter($query, $filters, Post::$indexes);
 
-        if (has_include($request, 'signup')) {
-            // Eagerly load the `signup` relationship.
-            $query->with('signup');
-        }
+    // Only allow admins, staff, or owner to see un-approved posts from other users.
+    $query = $query->whereVisible();
 
-        $filters = $request->query('filter');
-        $query = $this->filter($query, $filters, Post::$indexes);
+    // Only return posts tagged "Hide In Gallery" if staff user or if is owner of the post.
+    $query = $query->withHiddenPosts();
 
-        // Only allow admins, staff, or owner to see un-approved posts from other users.
-        $query = $query->whereVisible();
-
-        // Only return posts tagged "Hide In Gallery" if staff user or if is owner of the post.
-        $query = $query->withHiddenPosts();
-
-        // If tag param is passed, only return posts that have that tag.
-        if (Arr::has($filters, 'tag')) {
-            $query = $query->withTag($filters['tag']);
-        }
-
-        if (Arr::has($filters, 'volunteer_credit')) {
-            if (filter_var($filters['volunteer_credit'], FILTER_VALIDATE_BOOLEAN)) {
-                $query = $query->withVolunteerCredit($filters['volunteer_credit']);
-            } else {
-                $query = $query->withoutVolunteerCredit($filters['volunteer_credit']);
-            }
-        }
-
-        // If the northstar_id param is passed, only allow admins, staff, or owner to see anonymous posts.
-        if (Arr::has($filters, 'northstar_id')) {
-            $query = $query->withoutAnonymousPosts();
-        }
-
-        // This endpoint always returns posts in reverse chronological order. We'll
-        // therefore "force" the query string so that we can use it in `getCursor`.
-        // @TODO: There must be a more elegant way of doing this...
-        $query->orderBy('created_at', 'desc')
-            ->orderBy('id', 'asc');
-
-        $request->query->set('orderBy', 'created_at,desc');
-
-        // Experimental: Allow paginating by cursor (e.g. `?cursor[after]=OTAxNg==`):
-        if ($cursor = Arr::get($request->query('cursor'), 'after')) {
-            $query->whereAfterCursor($cursor);
-
-            // Using 'cursor' implies cursor pagination:
-            $this->useCursorPagination = true;
-        }
-
-        return $this->paginatedCollection($query, $request);
+    // If tag param is passed, only return posts that have that tag.
+    if (Arr::has($filters, 'tag')) {
+      $query = $query->withTag($filters['tag']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  PostRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(PostRequest $request)
-    {
-        $northstarId = getNorthstarId($request);
-
-        // Get the campaign id from the request by campaign_id or action_id.
-        $campaignId = $request['campaign_id'] ? $request['campaign_id'] : Campaign::fromActionId($request['action_id'])->id;
-
-        $signup = $this->signups->get($northstarId, $campaignId);
-
-        if (! $signup) {
-            $signup = $this->signups->create($request->all(), $northstarId, $campaignId);
-        }
-
-        $post = $this->posts->create($request->all(), $signup->id);
-
-        return $this->item($post, 201, [], null, 'signup');
+    if (Arr::has($filters, 'volunteer_credit')) {
+      if (filter_var($filters['volunteer_credit'], FILTER_VALIDATE_BOOLEAN)) {
+        $query = $query->withVolunteerCredit($filters['volunteer_credit']);
+      } else {
+        $query = $query->withoutVolunteerCredit($filters['volunteer_credit']);
+      }
     }
 
-    /**
-     * Returns a specific post.
-     * GET /posts/:id
-     *
-     * @param \Rogue\Models\Post $post
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show(Post $post)
-    {
-        // Only allow an admin or the user who owns the post to see their own unapproved posts.
-        $this->authorize('show', $post);
-
-        return $this->item($post);
+    // If the northstar_id param is passed, only allow admins, staff, or owner to see anonymous posts.
+    if (Arr::has($filters, 'northstar_id')) {
+      $query = $query->withoutAnonymousPosts();
     }
 
-    /**
-     * Updates a specific post.
-     * PATCH /posts/:id
-     *
-     * @param PostRequest $request
-     * @param \Rogue\Models\Post $post
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update(PostRequest $request, Post $post)
-    {
-        // Only allow an admin/staff or the user who owns the post to update.
-        $this->authorize('update', $post);
+    // This endpoint always returns posts in reverse chronological order. We'll
+    // therefore "force" the query string so that we can use it in `getCursor`.
+    // @TODO: There must be a more elegant way of doing this...
+    $query->orderBy('created_at', 'desc')->orderBy('id', 'asc');
 
-        $validatedRequest = $request->validated();
+    $request->query->set('orderBy', 'created_at,desc');
 
-        // But don't allow user's to review their own posts.
-        if (! Gate::allows('review', $post)) {
-            unset($validatedRequest['status']);
-        }
+    // Experimental: Allow paginating by cursor (e.g. `?cursor[after]=OTAxNg==`):
+    if ($cursor = Arr::get($request->query('cursor'), 'after')) {
+      $query->whereAfterCursor($cursor);
 
-        $this->posts->update($post, $validatedRequest);
-
-        return $this->item($post);
+      // Using 'cursor' implies cursor pagination:
+      $this->useCursorPagination = true;
     }
 
-    /**
-     * Delete a post.
-     * DELETE /posts/:id
-     *
-     * @param \Rogue\Models\Post $post
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy(Post $post)
-    {
-        $this->posts->destroy($post);
+    return $this->paginatedCollection($query, $request);
+  }
 
-        return $this->respond('Post deleted.', 200);
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  PostRequest  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(PostRequest $request)
+  {
+    $northstarId = getNorthstarId($request);
+
+    // Get the campaign id from the request by campaign_id or action_id.
+    $campaignId = $request['campaign_id']
+      ? $request['campaign_id']
+      : Campaign::fromActionId($request['action_id'])->id;
+
+    $signup = $this->signups->get($northstarId, $campaignId);
+
+    if (!$signup) {
+      $signup = $this->signups->create(
+        $request->all(),
+        $northstarId,
+        $campaignId
+      );
     }
+
+    $post = $this->posts->create($request->all(), $signup->id);
+
+    return $this->item($post, 201, [], null, 'signup');
+  }
+
+  /**
+   * Returns a specific post.
+   * GET /posts/:id
+   *
+   * @param \Rogue\Models\Post $post
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function show(Post $post)
+  {
+    // Only allow an admin or the user who owns the post to see their own unapproved posts.
+    $this->authorize('show', $post);
+
+    return $this->item($post);
+  }
+
+  /**
+   * Updates a specific post.
+   * PATCH /posts/:id
+   *
+   * @param PostRequest $request
+   * @param \Rogue\Models\Post $post
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function update(PostRequest $request, Post $post)
+  {
+    // Only allow an admin/staff or the user who owns the post to update.
+    $this->authorize('update', $post);
+
+    $validatedRequest = $request->validated();
+
+    // But don't allow user's to review their own posts.
+    if (!Gate::allows('review', $post)) {
+      unset($validatedRequest['status']);
+    }
+
+    $this->posts->update($post, $validatedRequest);
+
+    return $this->item($post);
+  }
+
+  /**
+   * Delete a post.
+   * DELETE /posts/:id
+   *
+   * @param \Rogue\Models\Post $post
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function destroy(Post $post)
+  {
+    $this->posts->destroy($post);
+
+    return $this->respond('Post deleted.', 200);
+  }
 }

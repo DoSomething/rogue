@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Route;
  */
 
 // Homepage & FAQ
-Route::view('/', 'pages.home')->middleware('guest')->name('login');
+Route::view('/', 'pages.home')
+  ->middleware('guest')
+  ->name('login');
 Route::view('faq', 'pages.faq');
 
 // Authentication
@@ -22,49 +24,55 @@ Route::get('logout', 'AuthController@getLogout');
 // @TODO: These should be updated to client-side routes!
 Route::resource('actions', 'ActionsController', ['except' => 'show']);
 Route::get('campaigns/{id}/actions/create', 'ActionsController@create');
-Route::resource('campaigns', 'CampaignsController', ['except' => ['index', 'show']]);
-Route::resource('group-types', 'GroupTypesController', ['except' => ['index', 'show']]);
+Route::resource('campaigns', 'CampaignsController', [
+  'except' => ['index', 'show'],
+]);
+Route::resource('group-types', 'GroupTypesController', [
+  'except' => ['index', 'show'],
+]);
 Route::get('group-types/{id}/groups/create', 'GroupsController@create');
-Route::resource('groups', 'GroupsController', ['except' => ['create', 'index', 'show']]);
+Route::resource('groups', 'GroupsController', [
+  'except' => ['create', 'index', 'show'],
+]);
 
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
-    // Actions
-    Route::view('action-stats', 'app');
+  // Actions
+  Route::view('action-stats', 'app');
 
-    // Actions
-    Route::view('actions/{id}', 'app');
+  // Actions
+  Route::view('actions/{id}', 'app');
 
-    // Campaigns
-    Route::view('campaigns', 'app');
-    Route::view('campaigns/{id}', 'app');
-    Route::view('campaigns/{id}/{status}', 'app');
+  // Campaigns
+  Route::view('campaigns', 'app');
+  Route::view('campaigns/{id}', 'app');
+  Route::view('campaigns/{id}/{status}', 'app');
 
-    // Groups
-    Route::view('groups', 'app');
-    Route::view('groups/{id}', 'app');
-    Route::view('groups/{id}/posts', 'app');
+  // Groups
+  Route::view('groups', 'app');
+  Route::view('groups/{id}', 'app');
+  Route::view('groups/{id}/posts', 'app');
 
-    // Group Types
-    Route::view('group-types', 'app');
-    Route::view('group-types/{id}', 'app');
+  // Group Types
+  Route::view('group-types', 'app');
+  Route::view('group-types/{id}', 'app');
 
-    // Posts
-    Route::view('posts', 'app');
-    Route::view('posts/{id}', 'app')->name('posts.show');
+  // Posts
+  Route::view('posts', 'app');
+  Route::view('posts/{id}', 'app')->name('posts.show');
 
-    // Schools
-    Route::view('schools/{id}', 'app')->name('schools.show');
+  // Schools
+  Route::view('schools/{id}', 'app')->name('schools.show');
 
-    // Signups
-    Route::view('signups', 'app');
-    Route::view('signups/{id}', 'app')->name('signups.show');
+  // Signups
+  Route::view('signups', 'app');
+  Route::view('signups/{id}', 'app')->name('signups.show');
 
-    // Users
-    Route::view('users', 'app')->name('users.index');
-    Route::view('users/{id}', 'app')->name('users.show');
-    Route::view('users/{id}/posts', 'app')->name('users.show');
-    Route::view('users/{id}/referrals', 'app')->name('users.show');
+  // Users
+  Route::view('users', 'app')->name('users.index');
+  Route::view('users/{id}', 'app')->name('users.show');
+  Route::view('users/{id}/posts', 'app')->name('users.show');
+  Route::view('users/{id}/referrals', 'app')->name('users.show');
 });
 
 // Admin image routes:

@@ -6,27 +6,27 @@ use Illuminate\Database\Migrations\Migration;
 
 class RenameCaptionToTextInPostsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->renameColumn('caption', 'text');
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::table('posts', function (Blueprint $table) {
+      $table->renameColumn('caption', 'text');
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->renameColumn('text', 'caption');
-        });
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::table('posts', function (Blueprint $table) {
+      $table->renameColumn('text', 'caption');
+    });
+  }
 }

@@ -12,7 +12,13 @@ use Illuminate\Support\HtmlString;
  */
 function scriptify($json = [], $store = 'STATE')
 {
-    return new HtmlString('<script type="text/javascript">window.'.$store.' = '.json_encode($json).'</script>');
+  return new HtmlString(
+    '<script type="text/javascript">window.' .
+      $store .
+      ' = ' .
+      json_encode($json) .
+      '</script>'
+  );
 }
 
 /**
@@ -23,15 +29,15 @@ function scriptify($json = [], $store = 'STATE')
  */
 function has_middleware($middleware = null)
 {
-    $currentRoute = app('router')->getCurrentRoute();
-    if (! $currentRoute) {
-        return false;
-    }
-    if ($middleware) {
-        return in_array($middleware, $currentRoute->middleware());
-    }
+  $currentRoute = app('router')->getCurrentRoute();
+  if (!$currentRoute) {
+    return false;
+  }
+  if ($middleware) {
+    return in_array($middleware, $currentRoute->middleware());
+  }
 
-    return $currentRoute->middleware() ? true : false;
+  return $currentRoute->middleware() ? true : false;
 }
 
 /**
@@ -44,19 +50,19 @@ function has_middleware($middleware = null)
  */
 function multipleValueQuery($query, $queryString, $filter)
 {
-    $values = explode(',', $queryString);
+  $values = explode(',', $queryString);
 
-    if (count($values) > 1) {
-        // For the first `where` query, we want to limit results... from then on,
-        // we want to append (e.g. `SELECT * (WHERE _ OR WHERE _ OR WHERE _)` and (WHERE _ OR WHERE _))
-        $query->where(function ($query) use ($values, $filter) {
-            foreach ($values as $value) {
-                $query->orWhere($filter, $value);
-            }
-        });
-    } else {
-        $query->where($filter, $values[0], 'and');
-    }
+  if (count($values) > 1) {
+    // For the first `where` query, we want to limit results... from then on,
+    // we want to append (e.g. `SELECT * (WHERE _ OR WHERE _ OR WHERE _)` and (WHERE _ OR WHERE _))
+    $query->where(function ($query) use ($values, $filter) {
+      foreach ($values as $value) {
+        $query->orWhere($filter, $value);
+      }
+    });
+  } else {
+    $query->where($filter, $values[0], 'and');
+  }
 }
 
 /**
@@ -65,14 +71,14 @@ function multipleValueQuery($query, $queryString, $filter)
  */
 function getAgeFromBirthdate($birthdate)
 {
-    if (! $birthdate) {
-        return null;
-    }
+  if (!$birthdate) {
+    return null;
+  }
 
-    $birthdate = new Carbon($birthdate);
-    $now = new Carbon();
+  $birthdate = new Carbon($birthdate);
+  $now = new Carbon();
 
-    return $birthdate->diffInYears($now);
+  return $birthdate->diffInYears($now);
 }
 
 /**
@@ -84,11 +90,17 @@ function getAgeFromBirthdate($birthdate)
  */
 function getNorthstarId($request)
 {
-    if (token()->role() === 'admin' || token()->role() === 'staff' || in_array('admin', token()->scopes())) {
-        return isset($request['northstar_id']) ? $request['northstar_id'] : auth()->id();
-    }
+  if (
+    token()->role() === 'admin' ||
+    token()->role() === 'staff' ||
+    in_array('admin', token()->scopes())
+  ) {
+    return isset($request['northstar_id'])
+      ? $request['northstar_id']
+      : auth()->id();
+  }
 
-    return auth()->id();
+  return auth()->id();
 }
 
 /**
@@ -98,12 +110,12 @@ function getNorthstarId($request)
  */
 function is_admin_user(): bool
 {
-    // If this is a machine client, then it's de-facto an admin:
-    if (token()->exists() && ! token()->id()) {
-        return true;
-    }
+  // If this is a machine client, then it's de-facto an admin:
+  if (token()->exists() && !token()->id()) {
+    return true;
+  }
 
-    return optional(auth()->user())->role === 'admin';
+  return optional(auth()->user())->role === 'admin';
 }
 
 /**
@@ -113,7 +125,7 @@ function is_admin_user(): bool
  */
 function is_staff_user(): bool
 {
-    return is_admin_user() || optional(auth()->user())->role === 'staff';
+  return is_admin_user() || optional(auth()->user())->role === 'staff';
 }
 
 /**
@@ -123,7 +135,7 @@ function is_staff_user(): bool
  */
 function is_owner($resource): bool
 {
-    return auth()->id() === $resource->northstar_id;
+  return auth()->id() === $resource->northstar_id;
 }
 
 /**
@@ -134,17 +146,17 @@ function is_owner($resource): bool
  */
 function has_include($request, $include)
 {
-    if ($request->query('include')) {
-        $includes = $request->query('include');
+  if ($request->query('include')) {
+    $includes = $request->query('include');
 
-        if (is_string($includes)) {
-            $includes = explode(',', $request->query('include'));
-        }
-
-        return in_array($include, $includes);
+    if (is_string($includes)) {
+      $includes = explode(',', $request->query('include'));
     }
 
-    return false;
+    return in_array($include, $includes);
+  }
+
+  return false;
 }
 
 /**
@@ -155,7 +167,7 @@ function has_include($request, $include)
  */
 function convert_to_date($value, $timezone = 'UTC')
 {
-    $date = (new Carbon($value))->format('Y-m-d');
+  $date = (new Carbon($value))->format('Y-m-d');
 
-    return new Carbon($date, $timezone);
+  return new Carbon($date, $timezone);
 }

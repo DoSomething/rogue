@@ -10,27 +10,27 @@ use Rogue\Http\Controllers\Controller;
 
 class OriginalsController extends Controller
 {
-    /**
-     * Create a controller instance.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+  /**
+   * Create a controller instance.
+   */
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  Post $post
-     * @param  Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post, Request $request)
-    {
-        $this->authorize('viewAll', $post);
+  /**
+   * Display the specified resource.
+   *
+   * @param  Post $post
+   * @param  Request $request
+   * @return \Illuminate\Http\Response
+   */
+  public function show(Post $post, Request $request)
+  {
+    $this->authorize('viewAll', $post);
 
-        $image = Storage::get($post->getMediaPath());
+    $image = Storage::get($post->getMediaPath());
 
-        return Image::make($image)->response();
-    }
+    return Image::make($image)->response();
+  }
 }
