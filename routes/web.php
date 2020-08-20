@@ -34,6 +34,7 @@ Route::get('group-types/{id}/groups/create', 'GroupsController@create');
 Route::resource('groups', 'GroupsController', [
     'except' => ['create', 'index', 'show'],
 ]);
+Route::resource('clubs', 'ClubsController', ['except' => ['index', 'show', 'destroy']]);
 
 // Client-side routes:
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
