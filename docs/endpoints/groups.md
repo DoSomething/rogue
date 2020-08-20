@@ -8,29 +8,29 @@ GET /api/v3/groups
 
 ### Optional Query Parameters
 
-- **filter[group_type_id]** _(integer)_
+-   **filter[group_type_id]** _(integer)_
 
-  - Filter results by Group Type ID or ID's.
+    -   Filter results by Group Type ID or ID's.
 
-- **filter[id]** _(integer)_
+-   **filter[id]** _(integer)_
 
-  - Filter results by Group ID or ID's.
+    -   Filter results by Group ID or ID's.
 
-- **filter[location]** _(string)_
+-   **filter[location]** _(string)_
 
-  - Filter results by given location, e.g. `filter[state]=US-SC`.
+    -   Filter results by given location, e.g. `filter[state]=US-SC`.
 
-- **filter[name]** _(string)_
+-   **filter[name]** _(string)_
 
-  - Filter results by names that include the given filter, e.g. `filter[name]=New`.
+    -   Filter results by names that include the given filter, e.g. `filter[name]=New`.
 
-- **filter[school_id]** _(string)_
+-   **filter[school_id]** _(string)_
 
-  - Filter results by given school_id, e.g. `filter[external_id]=13000419`.
+    -   Filter results by given school_id, e.g. `filter[external_id]=13000419`.
 
-- **filter[state]** _(string)_ -- Deprecated
+-   **filter[state]** _(string)_ -- Deprecated
 
-  - Filter results by given state, e.g. `filter[state]=SC`.
+    -   Filter results by given state, e.g. `filter[state]=SC`.
 
 Example Response:
 
