@@ -69,7 +69,6 @@ class ClubTest extends TestCase
             ])->assertJsonValidationErrors(['name', 'leader_id', 'location', 'city', 'school_id']);
     }
 
-
     /**
      * Test for updating a club successfully.
      *
