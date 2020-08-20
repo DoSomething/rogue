@@ -23,6 +23,7 @@ class ClubTest extends TestCase
             ->postJson('clubs', ['name' => $name, 'leader_id' => $leaderId])
             ->assertStatus(302);
 
+        // Make sure the club is persisted in the database.
         $this->assertDatabaseHas('clubs', [
             'name' => $name,
             'leader_id' => $leaderId,
@@ -45,6 +46,7 @@ class ClubTest extends TestCase
             ->postJson('clubs', ['name' => $name, 'leader_id' => $leaderId])
             ->assertStatus(302);
 
+        // Make sure the club is persisted in the database.
         $this->assertDatabaseHas('clubs', [
             'name' => $name,
             'leader_id' => $leaderId,
@@ -110,7 +112,7 @@ class ClubTest extends TestCase
 
         $response->assertStatus(302);
 
-        // Make sure that the clubt's updated attributes are persisted in the database.
+        // Make sure that the club's updated attributes are persisted in the database.
         $this->assertEquals($club->fresh()->name, $name);
         $this->assertEquals($club->fresh()->leader_id, $leaderId);
         $this->assertEquals($club->fresh()->location, $location);
@@ -137,7 +139,7 @@ class ClubTest extends TestCase
 
         $response->assertStatus(302);
 
-        // Make sure that the clubt's updated attributes are persisted in the database.
+        // Make sure that the club's updated attributes are persisted in the database.
         $this->assertEquals($club->fresh()->name, $name);
         $this->assertEquals($club->fresh()->leader_id, $club->leader_id);
     }
