@@ -4,6 +4,7 @@ namespace Rogue\Http\Controllers\Web;
 
 use Rogue\Models\Club;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
 
 class ClubsController extends Controller
@@ -18,7 +19,6 @@ class ClubsController extends Controller
 
         $this->rules = [
             'name' => 'required|string|max:255',
-            'leader_id' => 'required|objectid|unique:clubs',
             'city' => 'nullable|string',
             'location' => 'nullable|iso3166',
             'school_id' => 'nullable|string|max:255',
@@ -40,7 +40,9 @@ class ClubsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, $this->rules);
+        $this->validate($request, array_merge_recursive($this->rules, [
+            'leader_id' => 'required|objectid|unique:clubs',
+        ]));
 
         $club = Club::create($request->all());
 
@@ -70,7 +72,9 @@ class ClubsController extends Controller
      */
     public function update(Club $club, Request $request)
     {
-        $this->validate($request, $this->rules);
+        $this->validate($request, array_merge_recursive($this->rules, [
+            'leader_id' => [ 'required', 'objectid', Rule::unique('clubs')->ignore($club) ],
+        ]));
 
         $club->update($request->all());
 
