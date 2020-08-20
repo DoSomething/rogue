@@ -129,26 +129,17 @@ class ClubTest extends TestCase
         $club = factory(Club::class)->create();
 
         $name = $this->faker->company;
-        $location = 'US-' . $this->faker->stateAbbr;
-        $city = $this->faker->city;
-        $schooolId = $this->faker->school->school_id;
 
         $response = $this->actingAsAdmin()->patchJson('clubs/' . $club->id, [
             'name' => $name,
             'leader_id' => $club->leader_id,
-            'location' => $location,
-            'city' => $city,
-            'school_id' => $schooolId,
         ]);
 
         $response->assertStatus(302);
 
         // Make sure that the clubt's updated attributes are persisted in the database.
         $this->assertEquals($club->fresh()->name, $name);
-        $this->assertEquals($club->fresh()->leader_id, $leaderId);
-        $this->assertEquals($club->fresh()->location, $location);
-        $this->assertEquals($club->fresh()->city, $city);
-        $this->assertEquals($club->fresh()->school_id, $schooolId);
+        $this->assertEquals($club->fresh()->leader_id, $club->leader_id);
     }
 
     /**
