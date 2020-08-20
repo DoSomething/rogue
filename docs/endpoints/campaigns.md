@@ -8,11 +8,11 @@ GET /api/v3/campaigns
 
 ### Optional Query Parameters
 
--   **filter[column]** _(string)_
-    -   Filter results by the given column: `id`, `is_open`, `has_website`, `causes`
-    -   You can filter by more than one value for the ID column, e.g. `/campaigns?filter[id]=121,122`
-    -   Set the `has_website` filter to `true` (`filter[has_website]=true`) to yield campaign with their `contentful_campaign_id` field populated. Filter for campaigns _without_ the field set with `filter[has_website]=false`.
-    -   The `has_cause` filter (`/campaigns?filter[causes]=education`) will return campaigns _including_ the specified causes (you can filter by more then one value e.g. `filter[causes]=education,healthcare`).
+- **filter[column]** _(string)_
+  - Filter results by the given column: `id`, `is_open`, `has_website`, `causes`
+  - You can filter by more than one value for the ID column, e.g. `/campaigns?filter[id]=121,122`
+  - Set the `has_website` filter to `true` (`filter[has_website]=true`) to yield campaign with their `contentful_campaign_id` field populated. Filter for campaigns _without_ the field set with `filter[has_website]=false`.
+  - The `has_cause` filter (`/campaigns?filter[causes]=education`) will return campaigns _including_ the specified causes (you can filter by more then one value e.g. `filter[causes]=education,healthcare`).
 
 Example Response:
 
@@ -79,8 +79,8 @@ Example Response:
 PUT /api/v3/campaigns/:campaign_id
 ```
 
--   **contentful_campaign_id**: (string)
-    The campaign id from contentful where this campaign is being used.
+- **contentful_campaign_id**: (string)
+  The campaign id from contentful where this campaign is being used.
 
 Example request body:
 

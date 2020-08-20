@@ -10,9 +10,9 @@ GET /api/v3/actions
 
 ### Optional Query Parameters
 
--   **filter[column]** _(string)_
-    -   Filter results by the given column: `id`, `campaign_id`, `callpower_campaign_id`
-    -   You can filter by more than one value for a column, e.g. `/actions?filter[id]=121,122`
+- **filter[column]** _(string)_
+  - Filter results by the given column: `id`, `campaign_id`, `callpower_campaign_id`
+  - You can filter by more than one value for a column, e.g. `/actions?filter[id]=121,122`
 
 Example Response:
 

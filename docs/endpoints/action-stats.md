@@ -10,14 +10,14 @@ GET /api/v3/action-stats
 
 ### Optional Query Parameters
 
--   **filter[column]** _(string)_
+- **filter[column]** _(string)_
 
-    -   Filter results by column. Supported columns: `action_id`, `location`, `school_id`
-    -   Use commas to filter by multiple values in a column, e.g. `/action-stats?filter[action_id]=121,122`
+  - Filter results by column. Supported columns: `action_id`, `location`, `school_id`
+  - Use commas to filter by multiple values in a column, e.g. `/action-stats?filter[action_id]=121,122`
 
--   **orderBy** _(string)_
-    -   Order results by column. Supported columns: `id`, `impact`
-    -   e.g. `/action-stats?orderBy=impact,desc`
+- **orderBy** _(string)_
+  - Order results by column. Supported columns: `id`, `impact`
+  - e.g. `/action-stats?orderBy=impact,desc`
 
 Example Response:
 
