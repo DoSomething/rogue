@@ -45,7 +45,7 @@ class ClubsController extends Controller
         $club = Club::create($request->all());
 
         // Log that a club was created.
-        info('club', ['id' => $club->id]);
+        info('club_created', ['id' => $club->id]);
 
         return redirect('clubs/'. $club->id .'/edit')->with('status', 'Club successfully created!');
     }
