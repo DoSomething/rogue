@@ -1,4 +1,4 @@
-# Rogue [![StyleCI](https://styleci.io/repos/64166359/shield?style=flat-rounded)](https://styleci.io/repos/64166359)
+# Rogue
 
 This is **Rogue**, the DoSomething.org user activity service. Rogue is built using [Laravel 6](https://laravel.com/docs/6.x) and [React](http://reactjs.com).
 
