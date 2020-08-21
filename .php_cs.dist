@@ -13,6 +13,6 @@ $finder = Finder::create()
     ])
     ->notName('*.blade.php')
     // Specific excluded files. Refer to file for details.
-    ->notName('database/migrations/2018_11_16_200157*.php');
+    ->notName('2018_11_16_200157*.php');
 
 return configure($finder, ['base' => 'laravel-prettier']);
