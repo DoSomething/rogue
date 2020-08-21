@@ -3,16 +3,16 @@
 namespace Rogue\Models;
 
 use Hashids\Hashids;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Rogue\Services\GraphQL;
 use Rogue\Models\Traits\HasCursor;
 use Rogue\Notifications\PostTagged;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Rogue\Services\GraphQL;
 
 class Post extends Model
 {
@@ -542,7 +542,7 @@ class Post extends Model
      * - authenticated user is a staffer
      * - the post status is accepted
      * - authenticated user is owner of post
-     * - the post is type voter-reg, status is register-*, and authenticated user is the referrer
+     * - the post is type voter-reg, status is register-*, and authenticated user is the referrer.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */

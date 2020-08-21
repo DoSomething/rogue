@@ -2,9 +2,9 @@
 
 namespace Rogue\Console\Commands;
 
+use Illuminate\Console\Command;
 use League\Csv\Reader;
 use Rogue\Models\Action;
-use Illuminate\Console\Command;
 
 class ImportPrePostMetaDataActions extends Command
 {

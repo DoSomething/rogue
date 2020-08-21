@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Requests;
 
-use Rogue\Types\PostType;
 use Illuminate\Validation\Rule;
+use Rogue\Types\PostType;
 
 class PostRequest extends Request
 {
@@ -78,7 +78,7 @@ class PostRequest extends Request
     }
 
     /**
-     * Get the allowed statuses for the type of post
+     * Get the allowed statuses for the type of post.
      *
      * @param string $type
      * @return string

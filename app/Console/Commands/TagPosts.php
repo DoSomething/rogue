@@ -2,9 +2,9 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Tag;
-use Rogue\Models\Post;
 use Illuminate\Console\Command;
+use Rogue\Models\Post;
+use Rogue\Models\Tag;
 
 class TagPosts extends Command
 {

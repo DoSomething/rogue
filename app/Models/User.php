@@ -2,10 +2,10 @@
 
 namespace Rogue\Models;
 
-use Illuminate\Notifications\Notifiable;
+use DoSomething\Gateway\Contracts\NorthstarUserContract;
 use DoSomething\Gateway\Laravel\HasNorthstarToken;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use DoSomething\Gateway\Contracts\NorthstarUserContract;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements NorthstarUserContract
 {

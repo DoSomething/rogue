@@ -2,11 +2,11 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Post;
-use Rogue\Models\Signup;
 use Illuminate\Console\Command;
 use Rogue\Managers\PostManager;
 use Rogue\Managers\SignupManager;
+use Rogue\Models\Post;
+use Rogue\Models\Signup;
 
 class UpdateSignupAndOrPostField extends Command
 {

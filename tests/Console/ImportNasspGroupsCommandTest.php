@@ -2,9 +2,9 @@
 
 namespace Tests\Console;
 
-use Tests\TestCase;
 use Rogue\Models\Group;
 use Rogue\Models\GroupType;
+use Tests\TestCase;
 
 class ImportNasspGroupsCommandTest extends TestCase
 {

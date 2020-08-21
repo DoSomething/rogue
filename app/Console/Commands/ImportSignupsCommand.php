@@ -3,10 +3,10 @@
 namespace Rogue\Console\Commands;
 
 use Carbon\Carbon;
-use League\Csv\Reader;
-use Rogue\Models\Signup;
 use Illuminate\Console\Command;
+use League\Csv\Reader;
 use Rogue\Jobs\SendSignupToCustomerIo;
+use Rogue\Models\Signup;
 
 class ImportSignupsCommand extends Command
 {

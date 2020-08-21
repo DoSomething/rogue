@@ -2,24 +2,24 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
-use Rogue\Models\Post;
-use Rogue\Models\User;
-use Rogue\Models\Group;
+use DoSomething\Gateway\Blink;
+use Illuminate\Http\UploadedFile;
 use Rogue\Models\Action;
-use Rogue\Models\Signup;
 use Rogue\Models\Campaign;
+use Rogue\Models\Group;
+use Rogue\Models\Post;
 use Rogue\Models\Reaction;
+use Rogue\Models\Signup;
+use Rogue\Models\User;
+use Rogue\Services\CustomerIo;
 use Rogue\Services\Fastly;
 use Rogue\Services\GraphQL;
-use DoSomething\Gateway\Blink;
-use Rogue\Services\CustomerIo;
-use Illuminate\Http\UploadedFile;
+use Tests\TestCase;
 
 class PostTest extends TestCase
 {
     /**
-     * Helper function to assert post structure
+     * Helper function to assert post structure.
      */
     public function assertPostStructure($response)
     {
@@ -813,7 +813,7 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test creating a post without sending an action_id
+     * Test creating a post without sending an action_id.
      *
      * @return void
      */
@@ -1764,7 +1764,7 @@ class PostTest extends TestCase
     }
 
     /**
-     * Test creating voter-reg post
+     * Test creating voter-reg post.
      *
      * @return void
      */

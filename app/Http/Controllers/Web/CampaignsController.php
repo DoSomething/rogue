@@ -2,12 +2,12 @@
 
 namespace Rogue\Http\Controllers\Web;
 
-use Rogue\Types\Cause;
-use Rogue\Models\Campaign;
-use Rogue\Models\GroupType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
+use Rogue\Models\Campaign;
+use Rogue\Models\GroupType;
+use Rogue\Types\Cause;
 
 class CampaignsController extends Controller
 {

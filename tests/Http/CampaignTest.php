@@ -2,12 +2,12 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
-use Rogue\Models\Post;
-use Rogue\Types\Cause;
+use Illuminate\Support\Facades\Artisan;
 use Rogue\Models\Campaign;
 use Rogue\Models\GroupType;
-use Illuminate\Support\Facades\Artisan;
+use Rogue\Models\Post;
+use Rogue\Types\Cause;
+use Tests\TestCase;
 
 class CampaignTest extends Testcase
 {

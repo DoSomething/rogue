@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Transformers;
 
-use Rogue\Models\Group;
 use League\Fractal\TransformerAbstract;
+use Rogue\Models\Group;
 
 class GroupTransformer extends TransformerAbstract
 {

@@ -2,8 +2,8 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
 use Rogue\Models\Post;
+use Tests\TestCase;
 
 class TagsTest extends TestCase
 {
@@ -92,7 +92,7 @@ class TagsTest extends TestCase
     }
 
     /**
-     * Test deleting one tag on a post only deletes that tag
+     * Test deleting one tag on a post only deletes that tag.
      *
      * POST /posts/:post_id/tag
      * @return void
@@ -131,7 +131,7 @@ class TagsTest extends TestCase
     }
 
     /**
-     * Test post updated_at is updated when a new tag is applied to it
+     * Test post updated_at is updated when a new tag is applied to it.
      *
      * @return void
      */
@@ -154,7 +154,7 @@ class TagsTest extends TestCase
     }
 
     /**
-     * Test withoutTag scope
+     * Test withoutTag scope.
      *
      * @return void
      */

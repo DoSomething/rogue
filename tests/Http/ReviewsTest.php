@@ -2,10 +2,10 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
-use Rogue\Models\Post;
 use Illuminate\Support\Facades\Bus;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
+use Rogue\Models\Post;
+use Tests\TestCase;
 
 class ReviewsTest extends TestCase
 {

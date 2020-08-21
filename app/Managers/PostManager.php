@@ -2,12 +2,12 @@
 
 namespace Rogue\Managers;
 
-use Rogue\Models\Post;
-use Rogue\Services\Fastly;
-use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Jobs\CreateCustomerIoEvent;
-use Rogue\Repositories\PostRepository;
+use Rogue\Jobs\SendPostToCustomerIo;
 use Rogue\Jobs\SendReviewedPostToCustomerIo;
+use Rogue\Models\Post;
+use Rogue\Repositories\PostRepository;
+use Rogue\Services\Fastly;
 
 class PostManager
 {
@@ -26,7 +26,7 @@ class PostManager
     protected $repository;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param PostRepository $posts
      * @param Blink $blink

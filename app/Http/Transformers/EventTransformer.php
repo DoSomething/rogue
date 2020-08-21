@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Transformers;
 
-use Rogue\Models\Event;
 use League\Fractal\TransformerAbstract;
+use Rogue\Models\Event;
 
 class EventTransformer extends TransformerAbstract
 {

@@ -2,9 +2,9 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
+use Tests\TestCase;
 
 class UsersTest extends TestCase
 {

@@ -2,11 +2,11 @@
 
 namespace Rogue\Services;
 
-use Rogue\Models\Post;
-use Intervention\Image\Image;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\File\File;
 use Intervention\Image\Facades\Image as ImageManager;
+use Intervention\Image\Image;
+use Rogue\Models\Post;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 

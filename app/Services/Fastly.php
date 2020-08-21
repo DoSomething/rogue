@@ -2,8 +2,8 @@
 
 namespace Rogue\Services;
 
-use Rogue\Models\Post;
 use DoSomething\Gateway\Common\RestApiClient;
+use Rogue\Models\Post;
 
 class Fastly extends RestApiClient
 {
@@ -36,7 +36,7 @@ class Fastly extends RestApiClient
     }
 
     /**
-     * Purge object from Fastly cache based on give cache key
+     * Purge object from Fastly cache based on give cache key.
      *
      * @param $cacheKey String
      */

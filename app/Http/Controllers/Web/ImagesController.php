@@ -2,15 +2,15 @@
 
 namespace Rogue\Http\Controllers\Web;
 
-use Rogue\Models\Post;
+use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use League\Flysystem\Filesystem as Flysystem;
+use League\Flysystem\Memory\MemoryAdapter;
+use League\Glide\Responses\LaravelResponseFactory;
 use League\Glide\ServerFactory;
 use Rogue\Http\Controllers\Controller;
-use League\Flysystem\Memory\MemoryAdapter;
-use League\Flysystem\Filesystem as Flysystem;
-use Illuminate\Contracts\Filesystem\Filesystem;
-use League\Glide\Responses\LaravelResponseFactory;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Rogue\Models\Post;
 
 class ImagesController extends Controller
 {

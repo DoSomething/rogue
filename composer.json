@@ -39,7 +39,8 @@
     "laravel/tinker": "^2.0",
     "mockery/mockery": "^1.0",
     "nunomaduro/collision": "^3.0",
-    "phpunit/phpunit": "^8.0"
+    "phpunit/phpunit": "^8.0",
+    "weerd/php-style": "^1.1"
   },
   "config": {
     "optimize-autoloader": true,
@@ -70,6 +71,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
+    "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
     "post-autoload-dump": [
       "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
       "@php artisan package:discover --ansi"

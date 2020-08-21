@@ -3,12 +3,12 @@
 namespace Rogue\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Rogue\Services\CustomerIo;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Redis;
+use Rogue\Services\CustomerIo;
 
 class CreateCustomerIoEvent implements ShouldQueue
 {

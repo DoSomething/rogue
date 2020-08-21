@@ -1,9 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
+// This file is excluded from PHPCS Fixer formatting:
+// The class name is so long Prettier bumps the extends to following line,
+// violating the PSR-12 standard.
+// @see https://www.php-fig.org/psr/psr-12/#41-extends-and-implements
 class AddSecondaryCausesRunIdImpactDocAndMakeCausesNullableToCampaignsTable
     extends Migration
 {

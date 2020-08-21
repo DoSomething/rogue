@@ -2,10 +2,10 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Models\Campaign;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Rogue\Http\Transformers\CampaignTransformer;
+use Rogue\Models\Campaign;
 
 class CampaignsController extends ApiController
 {
@@ -93,7 +93,7 @@ class CampaignsController extends ApiController
 
     /**
      * Updates a specific campaign
-     * PATCH /api/campaigns/:id
+     * PATCH /api/campaigns/:id.
      *
      * @param Request $request
      * @param  \Rogue\Models\Campaign  $campaign
