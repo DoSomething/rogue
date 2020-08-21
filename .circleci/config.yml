@@ -48,6 +48,9 @@ jobs:
             - node_modules
             - ~/.cache/Cypress
       - run: npm run build
+      - run:
+          name: check php code style
+          command: vendor/bin/php-cs-fixer fix --dry-run --no-interaction --verbose
       - run: php artisan key:generate
       - run:
           name: run phpunit tests
