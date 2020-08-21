@@ -2,8 +2,8 @@
 
 namespace Rogue\Policies;
 
-use Rogue\Models\Campaign;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Rogue\Models\Campaign;
 
 class CampaignPolicy
 {

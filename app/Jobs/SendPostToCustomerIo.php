@@ -2,13 +2,13 @@
 
 namespace Rogue\Jobs;
 
-use Rogue\Models\Post;
-use Illuminate\Bus\Queueable;
 use DoSomething\Gateway\Blink;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Rogue\Models\Post;
 
 class SendPostToCustomerIo implements ShouldQueue
 {

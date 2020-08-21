@@ -2,8 +2,8 @@
 
 namespace Tests\Console;
 
-use Tests\TestCase;
 use Rogue\Models\Campaign;
+use Tests\TestCase;
 
 class StandardizeCausesCommandTest extends TestCase
 {

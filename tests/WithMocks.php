@@ -3,10 +3,10 @@
 namespace Tests;
 
 use Carbon\Carbon;
-use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Northstar;
-use Illuminate\Support\Facades\Storage;
 use DoSomething\Gateway\Resources\NorthstarUser;
+use Illuminate\Support\Facades\Storage;
+use Rogue\Services\GraphQL;
 
 trait WithMocks
 {

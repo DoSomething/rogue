@@ -1,7 +1,7 @@
 <?php
 
-use Rogue\Models\Post;
 use Illuminate\Database\Migrations\Migration;
+use Rogue\Models\Post;
 
 class MoveTaggingTaggedToPostTag extends Migration
 {

@@ -2,12 +2,12 @@
 
 namespace Rogue\Providers;
 
-use Rogue\Models\Post;
+use Illuminate\Support\ServiceProvider;
+use Rogue\Jobs\RejectPost;
 use Rogue\Models\Event;
+use Rogue\Models\Post;
 use Rogue\Models\Review;
 use Rogue\Models\Signup;
-use Rogue\Jobs\RejectPost;
-use Illuminate\Support\ServiceProvider;
 
 class ModelServiceProvider extends ServiceProvider
 {

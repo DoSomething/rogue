@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Transformers;
 
-use Rogue\Models\Reaction;
 use League\Fractal\TransformerAbstract;
+use Rogue\Models\Reaction;
 
 class ReactionTransformer extends TransformerAbstract
 {

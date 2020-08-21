@@ -2,11 +2,11 @@
 
 namespace Rogue\Http\Transformers;
 
-use Rogue\Models\Action;
-use Rogue\Types\PostType;
-use Rogue\Types\ActionType;
-use Rogue\Types\TimeCommitment;
 use League\Fractal\TransformerAbstract;
+use Rogue\Models\Action;
+use Rogue\Types\ActionType;
+use Rogue\Types\PostType;
+use Rogue\Types\TimeCommitment;
 
 class ActionTransformer extends TransformerAbstract
 {

@@ -2,10 +2,10 @@
 
 namespace Tests\Console;
 
-use Tests\TestCase;
+use Rogue\Models\Campaign;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
-use Rogue\Models\Campaign;
+use Tests\TestCase;
 
 class UpdateSignupAndPostCampaignIdsCommandTest extends TestCase
 {

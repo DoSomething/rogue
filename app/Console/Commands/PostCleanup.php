@@ -3,9 +3,9 @@
 namespace Rogue\Console\Commands;
 
 use DB;
-use Rogue\Models\Post;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Rogue\Models\Post;
 
 class PostCleanup extends Command
 {

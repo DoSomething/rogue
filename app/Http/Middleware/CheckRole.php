@@ -3,10 +3,10 @@
 namespace Rogue\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
+use DoSomething\Gateway\Server\Middleware\RequireRole;
 use DoSomething\Gateway\Server\Token;
 use Illuminate\Auth\Access\AuthorizationException;
-use DoSomething\Gateway\Server\Middleware\RequireRole;
+use Illuminate\Contracts\Auth\Guard;
 
 class CheckRole extends RequireRole
 {

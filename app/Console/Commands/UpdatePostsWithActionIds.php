@@ -3,8 +3,8 @@
 namespace Rogue\Console\Commands;
 
 use DB;
-use Rogue\Models\Action;
 use Illuminate\Console\Command;
+use Rogue\Models\Action;
 
 class UpdatePostsWithActionIds extends Command
 {

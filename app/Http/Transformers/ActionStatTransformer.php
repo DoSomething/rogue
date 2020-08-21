@@ -2,8 +2,8 @@
 
 namespace Rogue\Http\Transformers;
 
-use Rogue\Models\ActionStat;
 use League\Fractal\TransformerAbstract;
+use Rogue\Models\ActionStat;
 
 class ActionStatTransformer extends TransformerAbstract
 {

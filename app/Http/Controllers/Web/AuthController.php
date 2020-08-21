@@ -3,9 +3,9 @@
 namespace Rogue\Http\Controllers\Web;
 
 use Illuminate\Support\Arr;
-use Rogue\Http\Controllers\Controller;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Rogue\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {

@@ -1,8 +1,8 @@
 <?php
 
 use Faker\Generator;
-use League\Csv\Reader;
 use Faker\Provider\Base;
+use League\Csv\Reader;
 
 class FakerSchoolId extends Base
 {

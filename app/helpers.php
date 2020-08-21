@@ -42,7 +42,7 @@ function has_middleware($middleware = null)
 
 /**
  * Runs query where there are multiple values provided from a comma-separated list.
- * e.g. `filter[tag]=good-quote,hide-in-gallery,good-submission`
+ * e.g. `filter[tag]=good-quote,hide-in-gallery,good-submission`.
  * @param query $query
  * @param string $queryString
  * @param string $filter
@@ -160,7 +160,7 @@ function has_include($request, $include)
 }
 
 /**
- * Converts a date to a specific format and timezone
+ * Converts a date to a specific format and timezone.
  *
  * @param $value
  * @param $timezone str

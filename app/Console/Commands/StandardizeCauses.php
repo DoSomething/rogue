@@ -2,8 +2,8 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Campaign;
 use Illuminate\Console\Command;
+use Rogue\Models\Campaign;
 
 class StandardizeCauses extends Command
 {

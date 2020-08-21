@@ -2,9 +2,9 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Models\Action;
 use Illuminate\Http\Request;
 use Rogue\Http\Transformers\ActionTransformer;
+use Rogue\Models\Action;
 
 class ActionsController extends ApiController
 {

@@ -2,9 +2,9 @@
 
 namespace Rogue\Console\Commands;
 
-use Rogue\Models\Signup;
 use Illuminate\Console\Command;
 use Rogue\Managers\PostManager;
+use Rogue\Models\Signup;
 
 class ReviewSignup extends Command
 {

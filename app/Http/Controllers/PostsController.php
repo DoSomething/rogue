@@ -2,16 +2,16 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Models\Post;
-use Rogue\Models\Campaign;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use Rogue\Managers\PostManager;
-use Rogue\Managers\SignupManager;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
+use Rogue\Http\Controllers\Traits\FiltersRequests;
 use Rogue\Http\Requests\PostRequest;
 use Rogue\Http\Transformers\PostTransformer;
-use Rogue\Http\Controllers\Traits\FiltersRequests;
+use Rogue\Managers\PostManager;
+use Rogue\Managers\SignupManager;
+use Rogue\Models\Campaign;
+use Rogue\Models\Post;
 
 class PostsController extends ApiController
 {
@@ -71,7 +71,7 @@ class PostsController extends ApiController
 
     /**
      * Returns Posts, filtered by params, if provided.
-     * GET /posts
+     * GET /posts.
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -171,7 +171,7 @@ class PostsController extends ApiController
 
     /**
      * Returns a specific post.
-     * GET /posts/:id
+     * GET /posts/:id.
      *
      * @param \Rogue\Models\Post $post
      * @return \Illuminate\Http\JsonResponse
@@ -186,7 +186,7 @@ class PostsController extends ApiController
 
     /**
      * Updates a specific post.
-     * PATCH /posts/:id
+     * PATCH /posts/:id.
      *
      * @param PostRequest $request
      * @param \Rogue\Models\Post $post
@@ -211,7 +211,7 @@ class PostsController extends ApiController
 
     /**
      * Delete a post.
-     * DELETE /posts/:id
+     * DELETE /posts/:id.
      *
      * @param \Rogue\Models\Post $post
      * @return \Illuminate\Http\JsonResponse

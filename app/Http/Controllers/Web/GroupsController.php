@@ -2,10 +2,10 @@
 
 namespace Rogue\Http\Controllers\Web;
 
-use Rogue\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
+use Rogue\Models\Group;
 
 class GroupsController extends Controller
 {

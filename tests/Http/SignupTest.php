@@ -2,15 +2,15 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
-use Rogue\Models\Post;
-use Rogue\Models\User;
-use Rogue\Models\Group;
-use Rogue\Models\Signup;
-use Illuminate\Support\Str;
-use Rogue\Services\GraphQL;
 use DoSomething\Gateway\Blink;
+use Illuminate\Support\Str;
+use Rogue\Models\Group;
+use Rogue\Models\Post;
+use Rogue\Models\Signup;
+use Rogue\Models\User;
 use Rogue\Services\CustomerIo;
+use Rogue\Services\GraphQL;
+use Tests\TestCase;
 
 class SignupTest extends TestCase
 {
@@ -1019,7 +1019,7 @@ class SignupTest extends TestCase
     }
 
     /**
-     * Test that a signup cannot be deleted without activity scope
+     * Test that a signup cannot be deleted without activity scope.
      *
      * @return void
      */

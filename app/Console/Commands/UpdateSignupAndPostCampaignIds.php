@@ -3,10 +3,10 @@
 namespace Rogue\Console\Commands;
 
 use DB;
+use Illuminate\Console\Command;
+use Rogue\Models\Campaign;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
-use Rogue\Models\Campaign;
-use Illuminate\Console\Command;
 
 class UpdateSignupAndPostCampaignIds extends Command
 {

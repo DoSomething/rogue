@@ -2,10 +2,10 @@
 
 namespace Rogue\Http\Controllers;
 
-use Rogue\Models\Group;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Rogue\Http\Transformers\GroupTransformer;
+use Rogue\Models\Group;
 
 class GroupsController extends ApiController
 {

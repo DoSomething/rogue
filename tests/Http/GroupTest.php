@@ -2,9 +2,9 @@
 
 namespace Tests\Http;
 
-use Tests\TestCase;
 use Rogue\Models\Group;
 use Rogue\Models\GroupType;
+use Tests\TestCase;
 
 class GroupTest extends TestCase
 {

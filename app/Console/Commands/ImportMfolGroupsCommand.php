@@ -3,10 +3,10 @@
 namespace Rogue\Console\Commands;
 
 use Exception;
+use Illuminate\Console\Command;
 use League\Csv\Reader;
 use Rogue\Models\Group;
 use Rogue\Models\GroupType;
-use Illuminate\Console\Command;
 
 class ImportMfolGroupsCommand extends Command
 {

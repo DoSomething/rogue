@@ -3,14 +3,14 @@
 namespace Rogue\Http\Transformers;
 
 use Gate;
+use League\Fractal\TransformerAbstract;
 use Rogue\Models\Signup;
 use Rogue\Services\Registrar;
-use League\Fractal\TransformerAbstract;
 
 class SignupTransformer extends TransformerAbstract
 {
     /**
-     * List of resources possible to include
+     * List of resources possible to include.
      *
      * @var array
      */
@@ -48,7 +48,7 @@ class SignupTransformer extends TransformerAbstract
     }
 
     /**
-     * Include posts
+     * Include posts.
      *
      * @param \Rogue\Models\Signup $signup
      * @return \League\Fractal\Resource\Collection
@@ -62,7 +62,7 @@ class SignupTransformer extends TransformerAbstract
     }
 
     /**
-     * Include the user data (optionally)
+     * Include the user data (optionally).
      *
      * @param \Rogue\Models\Signup $signup
      * @return \League\Fractal\Resource\Item
@@ -79,7 +79,7 @@ class SignupTransformer extends TransformerAbstract
     }
 
     /**
-     * Include accepted quantity
+     * Include accepted quantity.
      *
      * @param \Rogue\Models\Signup $signup
      * @return \League\Fractal\Resource\Collection

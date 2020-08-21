@@ -2,9 +2,9 @@
 
 namespace Rogue\Providers;
 
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Rogue\Events\PostTagged;
 use Rogue\Listeners\SendTaggedNotification;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {
