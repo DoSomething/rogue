@@ -2,8 +2,8 @@
 
 namespace Tests\Http\Web;
 
-use Tests\TestCase;
 use Rogue\Models\Club;
+use Tests\TestCase;
 
 class ClubTest extends TestCase
 {
@@ -68,7 +68,14 @@ class ClubTest extends TestCase
                 'location' => 'wakanda', // This should be an iso3166 string.
                 'city' => 789, // This should be a string.
                 'school_id' => 101112, // This should be a string.
-            ])->assertJsonValidationErrors(['name', 'leader_id', 'location', 'city', 'school_id']);
+            ])
+            ->assertJsonValidationErrors([
+                'name',
+                'leader_id',
+                'location',
+                'city',
+                'school_id',
+            ]);
     }
 
     /**
@@ -82,7 +89,10 @@ class ClubTest extends TestCase
         $club = factory(Club::class)->create();
 
         $this->actingAsAdmin()
-            ->postJson('clubs', ['name' => $this->faker->company, 'leader_id' => $club->leaderId])
+            ->postJson('clubs', [
+                'name' => $this->faker->company,
+                'leader_id' => $club->leaderId,
+            ])
             ->assertJsonValidationErrors(['leader_id']);
     }
 
@@ -161,6 +171,13 @@ class ClubTest extends TestCase
                 'location' => 'wakanda', // This should be an iso3166 string.
                 'city' => 789, // This should be a string.
                 'school_id' => 101112, // This should be a string.
-            ])->assertJsonValidationErrors(['name', 'leader_id', 'location', 'city', 'school_id']);
+            ])
+            ->assertJsonValidationErrors([
+                'name',
+                'leader_id',
+                'location',
+                'city',
+                'school_id',
+            ]);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Rogue\Http\Controllers\Web;
 
-use Rogue\Models\Club;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Rogue\Http\Controllers\Controller;
+use Rogue\Models\Club;
 
 class ClubsController extends Controller
 {
@@ -40,16 +40,22 @@ class ClubsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, array_merge_recursive($this->rules, [
-            'leader_id' => 'required|objectid|unique:clubs',
-        ]));
+        $this->validate(
+            $request,
+            array_merge_recursive($this->rules, [
+                'leader_id' => 'required|objectid|unique:clubs',
+            ]),
+        );
 
         $club = Club::create($request->all());
 
         // Log that a club was created.
         info('club_created', ['id' => $club->id]);
 
-        return redirect('clubs/'. $club->id .'/edit')->with('status', 'Club successfully created!');
+        return redirect('clubs/' . $club->id . '/edit')->with(
+            'status',
+            'Club successfully created!',
+        );
     }
 
     /**
@@ -72,15 +78,24 @@ class ClubsController extends Controller
      */
     public function update(Club $club, Request $request)
     {
-        $this->validate($request, array_merge_recursive($this->rules, [
-            'leader_id' => [ 'required', 'objectid', Rule::unique('clubs')->ignore($club) ],
-        ]));
+        $this->validate(
+            $request,
+            array_merge_recursive($this->rules, [
+                'leader_id' => [
+                    'required',
+                    'objectid',
+                    Rule::unique('clubs')->ignore($club),
+                ],
+            ]),
+        );
 
         $club->update($request->all());
 
         // Log that a club was updated.
         info('club_updated', ['id' => $club->id]);
 
-        return redirect()->back()->with('status', 'Club successfully updated!');
+        return redirect()
+            ->back()
+            ->with('status', 'Club successfully updated!');
     }
 }
