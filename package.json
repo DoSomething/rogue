@@ -9,7 +9,7 @@
     "clean": "rm -rf public/dist",
     "test": "jest --watch",
     "test:ci": "jest",
-    "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "npm run build && npm run build:docs",
     "lint": "eslint --fix --ext .js resources/assets",
     "format": "npm run format:css && npm run format:js && npm run format:md && npm run format:php",
     "format:css": "prettier --write \"resources/**/*.{css,scss}\"",
