@@ -48,24 +48,6 @@
                 </template>
             </larecipe-dropdown>
             {{-- /versions dropdown --}}
-
-            @auth
-                {{-- account --}}
-                <larecipe-dropdown>
-                    <larecipe-button type="white" class="ml-2">
-                        {{ auth()->user()->name ?? 'Account' }} <i class="fa fa-angle-down"></i>
-                    </larecipe-button>
-
-                    <template slot="list">
-                        <form action="/logout" method="POST">
-                            {{ csrf_field() }}
-
-                            <button type="submit" class="py-2 px-4 text-white bg-danger inline-flex"><i class="fa fa-power-off mr-2"></i> Logout</button>
-                        </form>
-                    </template>
-                </larecipe-dropdown>
-                {{-- /account --}}
-            @endauth
         </div>
     </nav>
 </div>
