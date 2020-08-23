@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content="Docusaurus v2.0.0-alpha.61" />
+    <title data-react-helmet="true">API Overview | Rogue Documentation</title>
+    <meta
+      data-react-helmet="true"
+      name="twitter:card"
+      content="summary_large_image"
+    />
+    <meta
+      data-react-helmet="true"
+      property="og:title"
+      content="API Overview | Rogue Documentation"
+    />
+    <meta
+      data-react-helmet="true"
+      name="description"
+      content="These endpoints use OAuth 2 to authenticate. More information here"
+    />
+    <meta
+      data-react-helmet="true"
+      property="og:description"
+      content="These endpoints use OAuth 2 to authenticate. More information here"
+    />
+    <meta
+      data-react-helmet="true"
+      property="og:url"
+      content="https://your-docusaurus-test-site.com/build/docs/api/overview"
+    />
+    <link
+      data-react-helmet="true"
+      rel="shortcut icon"
+      href="/build/img/favicon.ico"
+    />
+    <link
+      data-react-helmet="true"
+      rel="canonical"
+      href="https://your-docusaurus-test-site.com/build/docs/api/overview"
+    />
+    <link rel="stylesheet" href="/build/styles.7e5b3484.css" />
+    <link rel="preload" href="/build/styles.1a25ecd0.js" as="script" />
+    <link rel="preload" href="/build/runtime~main.8e7c6d6b.js" as="script" />
+    <link rel="preload" href="/build/main.7bdb0e64.js" as="script" />
+    <link rel="preload" href="/build/1.9a4c95df.js" as="script" />
+    <link rel="preload" href="/build/2.ed8e71ce.js" as="script" />
+    <link rel="preload" href="/build/3.4fbaca59.js" as="script" />
+    <link rel="preload" href="/build/1be78505.8a36bd67.js" as="script" />
+    <link rel="preload" href="/build/33.8255ba99.js" as="script" />
+    <link rel="preload" href="/build/55ed6db3.0d1dcd15.js" as="script" />
+    <link rel="preload" href="/build/17896441.070c6069.js" as="script" />
+    <link rel="preload" href="/build/65df3d35.e09033f8.js" as="script" />
+  </head>
+  <body>
+    <script>
+      !(function() {
+        function t(t) {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+        var e = (function() {
+          var t = null;
+          try {
+            t = localStorage.getItem('theme');
+          } catch (t) {}
+          return t;
+        })();
+        t(null !== e ? e : 'light');
+      })();
+    </script>
+    <div id="__docusaurus">
+      <nav class="navbar navbar--light navbar--fixed-top">
+        <div class="navbar__inner">
+          <div class="navbar__items">
+            <div
+              aria-label="Navigation bar toggle"
+              class="navbar__toggle"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                viewBox="0 0 30 30"
+                role="img"
+                focusable="false"
+              >
+                <title>Menu</title>
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                  d="M4 7h22M4 15h22M4 23h22"
+                ></path>
+              </svg>
+            </div>
+            <a class="navbar__brand" href="/build/"
+              ><img
+                class="navbar__logo"
+                src="/build/img/logo.svg"
+                alt="My Site Logo"
+              /><strong class="navbar__title">Rogue</strong></a
+            ><a
+              aria-current="page"
+              class="navbar__item navbar__link navbar__link--active"
+              href="/build/docs/"
+              >Docs</a
+            ><a class="navbar__item navbar__link" href="/build/blog">Blog</a>
+          </div>
+          <div class="navbar__items navbar__items--right">
+            <a
+              href="https://github.com/facebook/docusaurus"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="navbar__item navbar__link"
+              >GitHub</a
+            >
+            <div
+              class="react-toggle react-toggle--disabled displayOnlyInLargeViewport_2aTZ"
+            >
+              <div class="react-toggle-track">
+                <div class="react-toggle-track-check">
+                  <span class="toggle_BsTx">🌜</span>
+                </div>
+                <div class="react-toggle-track-x">
+                  <span class="toggle_BsTx">🌞</span>
+                </div>
+              </div>
+              <div class="react-toggle-thumb"></div>
+              <input
+                type="checkbox"
+                disabled=""
+                aria-label="Dark mode toggle"
+                class="react-toggle-screenreader-only"
+              />
+            </div>
+          </div>
+        </div>
+        <div role="presentation" class="navbar-sidebar__backdrop"></div>
+        <div class="navbar-sidebar">
+          <div class="navbar-sidebar__brand">
+            <a class="navbar__brand" href="/build/"
+              ><img
+                class="navbar__logo"
+                src="/build/img/logo.svg"
+                alt="My Site Logo"
+              /><strong class="navbar__title">Rogue</strong></a
+            >
+          </div>
+          <div class="navbar-sidebar__items">
+            <div class="menu">
+              <ul class="menu__list">
+                <li class="menu__list-item">
+                  <a
+                    aria-current="page"
+                    class="menu__link navbar__link--active"
+                    href="/build/docs/"
+                    >Docs</a
+                  >
+                </li>
+                <li class="menu__list-item">
+                  <a class="menu__link" href="/build/blog">Blog</a>
+                </li>
+                <li class="menu__list-item">
+                  <a
+                    href="https://github.com/facebook/docusaurus"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="menu__link"
+                    >GitHub</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="main-wrapper">
+        <div class="docPage_2gpo">
+          <div class="docSidebarContainer_3_JD" role="complementary">
+            <div class="sidebar_2urC">
+              <div class="menu menu--responsive menu_5FrY">
+                <button
+                  aria-label="Open Menu"
+                  aria-haspopup="true"
+                  class="button button--secondary button--sm menu__button"
+                  type="button"
+                >
+                  <svg
+                    aria-label="Menu"
+                    class="sidebarMenuIcon_Dm3K"
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    width="24"
+                    viewBox="0 0 32 32"
+                    role="img"
+                    focusable="false"
+                  >
+                    <title>Menu</title>
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-miterlimit="10"
+                      stroke-width="2"
+                      d="M4 7h22M4 15h22M4 23h22"
+                    ></path>
+                  </svg>
+                </button>
+                <ul class="menu__list">
+                  <li class="menu__list-item menu__list-item--collapsed">
+                    <a class="menu__link menu__link--sublist" href="#!"
+                      >Development</a
+                    >
+                    <ul class="menu__list">
+                      <li class="menu__list-item">
+                        <a
+                          class="menu__link"
+                          tabindex="-1"
+                          href="/build/docs/development/overview"
+                          >Overview</a
+                        >
+                      </li>
+                      <li class="menu__list-item">
+                        <a
+                          class="menu__link"
+                          tabindex="-1"
+                          href="/build/docs/development/contributing"
+                          >Contributing</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="menu__list-item">
+                    <a
+                      class="menu__link menu__link--sublist menu__link--active"
+                      href="#!"
+                      >API Endpoints</a
+                    >
+                    <ul class="menu__list">
+                      <li class="menu__list-item">
+                        <a
+                          aria-current="page"
+                          class="menu__link menu__link--active active"
+                          tabindex="0"
+                          href="/build/docs/api/overview"
+                          >Overview</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="menu__list-item menu__list-item--collapsed">
+                    <a class="menu__link menu__link--sublist" href="#!"
+                      >Docusaurus Examples</a
+                    >
+                    <ul class="menu__list">
+                      <li class="menu__list-item">
+                        <a class="menu__link" tabindex="-1" href="/build/docs/"
+                          >Style Guide</a
+                        >
+                      </li>
+                      <li class="menu__list-item">
+                        <a
+                          class="menu__link"
+                          tabindex="-1"
+                          href="/build/docs/doc2"
+                          >Document Number 2</a
+                        >
+                      </li>
+                      <li class="menu__list-item">
+                        <a
+                          class="menu__link"
+                          tabindex="-1"
+                          href="/build/docs/doc3"
+                          >This is Document Number 3</a
+                        >
+                      </li>
+                      <li class="menu__list-item">
+                        <a
+                          class="menu__link"
+                          tabindex="-1"
+                          href="/build/docs/mdx"
+                          >Powered by MDX</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <main class="docMainContainer_3EyW">
+            <div class="container padding-vert--lg docItemWrapper_1EkI">
+              <div class="row">
+                <div class="col docItemCol_2ASc">
+                  <div class="docItemContainer_3QWW">
+                    <article>
+                      <header>
+                        <h1 class="docTitle_1Lrw">API Overview</h1>
+                      </header>
+                      <div class="markdown">
+                        <p>
+                          These endpoints use OAuth 2 to authenticate.
+                          <a
+                            href="https://github.com/DoSomething/northstar/blob/master/documentation/authentication.md"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >More information here</a
+                          >
+                        </p>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="signups"
+                          ></a
+                          >Signups<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#signups"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><code>POST /api/v3/signups</code></td>
+                              <td>Create a signup</td>
+                            </tr>
+                            <tr>
+                              <td><code>GET /api/v3/signups</code></td>
+                              <td>Get signups</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>GET /api/v3/signups/:signup_id</code>
+                              </td>
+                              <td>Get a signup</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>PATCH /api/v3/signups/:signup_id</code>
+                              </td>
+                              <td>Update a signup</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>DELETE /api/v3/signups/:signup_id</code>
+                              </td>
+                              <td>Delete a signup</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="posts"
+                          ></a
+                          >Posts<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#posts"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><code>POST /api/v3/posts</code></td>
+                              <td>Create a post</td>
+                            </tr>
+                            <tr>
+                              <td><code>GET /api/v3/posts</code></td>
+                              <td>Get posts</td>
+                            </tr>
+                            <tr>
+                              <td><code>GET /api/v3/posts/:post_id</code></td>
+                              <td>Get a post</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>DELETE /api/v3/posts/:post_id</code>
+                              </td>
+                              <td>Delete a post</td>
+                            </tr>
+                            <tr>
+                              <td><code>PATCH /api/v3/posts/:post_id</code></td>
+                              <td>Update a post</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="reactions"
+                          ></a
+                          >Reactions<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#reactions"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code
+                                  >POST /api/v3/posts/:post_id/reactions</code
+                                >
+                              </td>
+                              <td>Create or update a Reaction</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code
+                                  >GET /api/v3/posts/:post_id/reactions</code
+                                >
+                              </td>
+                              <td>Get all reactions of a post</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="reviews"
+                          ></a
+                          >Reviews<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#reviews"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>POST /api/v3/posts/:post_id/reviews</code>
+                              </td>
+                              <td>Create or update a Review</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="tags"
+                          ></a
+                          >Tags<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#tags"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>POST /api/v3/posts/:post_id/tags</code>
+                              </td>
+                              <td>Tag or Untag a Post</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="events"
+                          ></a
+                          >Events<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#events"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><code>GET /api/v3/events</code></td>
+                              <td>Get all events</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="campaigns"
+                          ></a
+                          >Campaigns<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#campaigns"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><code>GET /api/v3/campaigns</code></td>
+                              <td>Get campaigns</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>GET /api/v3/campaigns/:campaign_id</code>
+                              </td>
+                              <td>Get a campaign</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="actions"
+                          ></a
+                          >Actions<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#actions"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><code>GET /api/v3/actions</code></td>
+                              <td>Get actions</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>GET /api/v3/actions/:action_id</code>
+                              </td>
+                              <td>Get an action</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="action-stats"
+                          ></a
+                          >Action Stats<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#action-stats"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><code>GET /api/v3/action-stats</code></td>
+                              <td>Get action stats</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="groups"
+                          ></a
+                          >Groups<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#groups"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><code>GET /api/v3/groups</code></td>
+                              <td>Get groups</td>
+                            </tr>
+                            <tr>
+                              <td><code>GET /api/v3/groups/:group_id</code></td>
+                              <td>Get a group</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="group-types"
+                          ></a
+                          >Group Types<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#group-types"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><code>GET /api/v3/group-types</code></td>
+                              <td>Get group types]</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code
+                                  >GET /api/v3/group-types/:group_type_id</code
+                                >
+                              </td>
+                              <td>Get a group type]</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h2>
+                          <a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="anchor enhancedAnchor_2cZh"
+                            id="users"
+                          ></a
+                          >Users<a
+                            aria-hidden="true"
+                            tabindex="-1"
+                            class="hash-link"
+                            href="#users"
+                            title="Direct link to heading"
+                            >#</a
+                          >
+                        </h2>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Endpoint</th>
+                              <th>Functionality</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>DELETE /api/v3/users/:user_id</code>
+                              </td>
+                              <td>Delete a user&#x27;s activity</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </article>
+                    <div class="margin-vert--xl">
+                      <div class="row">
+                        <div class="col">
+                          <a
+                            href="https://github.com/facebook/docusaurus/edit/master/website/docs/api/overview.md"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            ><svg
+                              fill="currentColor"
+                              height="1.2em"
+                              width="1.2em"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 40 40"
+                              style="margin-right:0.3em;vertical-align:sub"
+                            >
+                              <g>
+                                <path
+                                  d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"
+                                ></path>
+                              </g></svg
+                            >Edit this page</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="margin-vert--lg">
+                      <nav
+                        class="pagination-nav"
+                        aria-label="Blog list page navigation"
+                      >
+                        <div class="pagination-nav__item">
+                          <a
+                            class="pagination-nav__link"
+                            href="/build/docs/development/contributing"
+                            ><div class="pagination-nav__sublabel">
+                              Previous
+                            </div>
+                            <div class="pagination-nav__label">
+                              « Contributing
+                            </div></a
+                          >
+                        </div>
+                        <div
+                          class="pagination-nav__item pagination-nav__item--next"
+                        >
+                          <a class="pagination-nav__link" href="/build/docs/"
+                            ><div class="pagination-nav__sublabel">Next</div>
+                            <div class="pagination-nav__label">
+                              Style Guide »
+                            </div></a
+                          >
+                        </div>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col--3">
+                  <div class="tableOfContents_3klQ">
+                    <ul
+                      class="table-of-contents table-of-contents__left-border"
+                    >
+                      <li>
+                        <a href="#signups" class="table-of-contents__link"
+                          >Signups</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#posts" class="table-of-contents__link"
+                          >Posts</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#reactions" class="table-of-contents__link"
+                          >Reactions</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#reviews" class="table-of-contents__link"
+                          >Reviews</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#tags" class="table-of-contents__link">Tags</a>
+                      </li>
+                      <li>
+                        <a href="#events" class="table-of-contents__link"
+                          >Events</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#campaigns" class="table-of-contents__link"
+                          >Campaigns</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#actions" class="table-of-contents__link"
+                          >Actions</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#action-stats" class="table-of-contents__link"
+                          >Action Stats</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#groups" class="table-of-contents__link"
+                          >Groups</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#group-types" class="table-of-contents__link"
+                          >Group Types</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#users" class="table-of-contents__link"
+                          >Users</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+      <footer class="footer footer--dark">
+        <div class="container">
+          <div class="row footer__links">
+            <div class="col footer__col">
+              <h4 class="footer__title">Docs</h4>
+              <ul class="footer__items">
+                <li class="footer__item">
+                  <a class="footer__link-item" href="/build/docs/"
+                    >Style Guide</a
+                  >
+                </li>
+                <li class="footer__item">
+                  <a class="footer__link-item" href="/build/docs/doc2/"
+                    >Second Doc</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="col footer__col">
+              <h4 class="footer__title">Community</h4>
+              <ul class="footer__items">
+                <li class="footer__item">
+                  <a
+                    href="https://stackoverflow.com/questions/tagged/docusaurus"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="footer__link-item"
+                    >Stack Overflow</a
+                  >
+                </li>
+                <li class="footer__item">
+                  <a
+                    href="https://discordapp.com/invite/docusaurus"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="footer__link-item"
+                    >Discord</a
+                  >
+                </li>
+                <li class="footer__item">
+                  <a
+                    href="https://twitter.com/docusaurus"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="footer__link-item"
+                    >Twitter</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="col footer__col">
+              <h4 class="footer__title">More</h4>
+              <ul class="footer__items">
+                <li class="footer__item">
+                  <a class="footer__link-item" href="/build/blog">Blog</a>
+                </li>
+                <li class="footer__item">
+                  <a
+                    href="https://github.com/facebook/docusaurus"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="footer__link-item"
+                    >GitHub</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="text--center">
+            <div>Copyright © 2020 My Project, Inc. Built with Docusaurus.</div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/build/styles.1a25ecd0.js"></script>
+    <script src="/build/runtime~main.8e7c6d6b.js"></script>
+    <script src="/build/main.7bdb0e64.js"></script>
+    <script src="/build/1.9a4c95df.js"></script>
+    <script src="/build/2.ed8e71ce.js"></script>
+    <script src="/build/3.4fbaca59.js"></script>
+    <script src="/build/1be78505.8a36bd67.js"></script>
+    <script src="/build/33.8255ba99.js"></script>
+    <script src="/build/55ed6db3.0d1dcd15.js"></script>
+    <script src="/build/17896441.070c6069.js"></script>
+    <script src="/build/65df3d35.e09033f8.js"></script>
+  </body>
+</html>
