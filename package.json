@@ -19,7 +19,7 @@
     "format:php": "prettier --write \"{app,config,database,resources,routes,tests}/**/*.php\" \"!resources/views/**\""
   },
   "engines": {
-    "node": "8.x",
+    "node": "10.x",
     "npm": "6.x"
   },
   "husky": {
