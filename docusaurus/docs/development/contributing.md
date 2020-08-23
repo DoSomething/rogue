@@ -27,9 +27,9 @@ When contributing to Rogue, follow these steps:
 - Create a [Pull Request](https://help.github.com/articles/about-pull-requests/) that compares your branch to `master` and add `DoSomething/team-bleed` as a reviewer.
 - Members of #Team-Bleed will then review your proposed changes in a timely manner. There might be questions, comments, or suggestions that need to be addressed before final approval is recieved.
 - Once everything looks OK your PR will be officially approved and if all the CLI integrations have passed you will be free to merge your code.
-- Click the green `Merge` button and your code will be merged into master. See the [Deployments](/{{route}}/{{version}}/development/deployments.md) for information about our deployment process.
+- Click the green `Merge` button and your code will be merged into master. See the **Deployments** for information about our deployment process.
 
-For local development instuctions [see here](/docs/development/installation.md)
+For local development instuctions **see here**.
 
 ### Guidelines
 
