@@ -49,7 +49,7 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.2",
     "@babel/runtime": "^7.5.4",
-    "@docusaurus/core": "^2.0.0-alpha.40",
+    "@docusaurus/core": "^2.0.0-alpha.61",
     "@dosomething/forge": "^6.9.1",
     "@dosomething/gateway": "^2.0.1",
     "apollo-cache-inmemory": "^1.6.3",
