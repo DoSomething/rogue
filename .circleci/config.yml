@@ -48,7 +48,7 @@ jobs:
             - node_modules
             - ~/.cache/Cypress
       - run: npm run build
-      - run: npm run build:docs
+      - run: npm run docs
       - run:
           name: check php code style
           command: vendor/bin/php-cs-fixer fix --dry-run --no-interaction --verbose
