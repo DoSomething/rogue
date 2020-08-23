@@ -2,10 +2,10 @@
   "private": true,
   "scripts": {
     "start": "npm run clean && webpack --env=development --hide-modules --watch",
-    "start:docs": "cd docusaurus && npm run start",
+    "start:docs": "cd docusaurus && npm install && npm run start",
     "build": "npm run clean && webpack  --env=production",
     "build:dev": "npm run clean && webpack --env=development",
-    "build:docs": "cd docusaurus && npm run build && cd ..",
+    "build:docs": "cd docusaurus && npm install && npm run build",
     "clean": "rm -rf public/dist",
     "test": "jest --watch",
     "test:ci": "jest",
@@ -49,7 +49,6 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.2",
     "@babel/runtime": "^7.5.4",
-    "@docusaurus/core": "^2.0.0-alpha.61",
     "@dosomething/forge": "^6.9.1",
     "@dosomething/gateway": "^2.0.1",
     "apollo-cache-inmemory": "^1.6.3",
