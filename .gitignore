@@ -11,6 +11,7 @@
 .env.backup
 .php_cs.cache
 .phpunit.result.cache
+.vscode
 
 Homestead.json
 Homestead.yaml

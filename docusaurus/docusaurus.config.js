@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Rogue Documentations',
+  title: 'Rogue Documentation',
   tagline: 'Documentation for Rogue, the DoSomething activity service.',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/build/',
@@ -9,7 +9,7 @@ module.exports = {
   projectName: 'rogue', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'My Site',
+      title: 'Rogue',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
