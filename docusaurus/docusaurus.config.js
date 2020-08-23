@@ -1,12 +1,12 @@
 module.exports = {
-  title: 'My Site',
-  tagline: 'The tagline of my site',
+  title: 'Rogue Documentations',
+  tagline: 'Documentation for Rogue, the DoSomething activity service.',
   url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  baseUrl: '/build/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'DoSomething', // Usually your GitHub org/user name.
+  projectName: 'rogue', // Usually your repo name.
   themeConfig: {
     navbar: {
       title: 'My Site',

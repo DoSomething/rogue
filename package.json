@@ -4,6 +4,7 @@
     "start": "npm run clean && webpack --env=development --hide-modules --watch",
     "build": "npm run clean && webpack  --env=production",
     "build:dev": "npm run clean && webpack --env=development",
+    "build:docs": "cd docusaurus && npm run build && cd ..",
     "clean": "rm -rf public/dist",
     "test": "jest --watch",
     "test:ci": "jest",
