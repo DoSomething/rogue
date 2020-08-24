@@ -68,6 +68,10 @@ Route::group(
         Route::get('group-types', 'GroupTypesController@index');
         Route::get('group-types/{groupType}', 'GroupTypesController@show');
 
+        // clubs
+        Route::get('clubs', 'ClubsController@index');
+        Route::get('clubs/{club}', 'ClubsController@show');
+
         // users
         Route::delete('users/{id}', 'UsersController@destroy');
     },
