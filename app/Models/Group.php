@@ -21,7 +21,6 @@ class Group extends Model
         'location',
         'name',
         'school_id',
-        'state',
     ];
 
     /**
@@ -32,13 +31,7 @@ class Group extends Model
      *
      * @var array
      */
-    public static $indexes = [
-        'group_type_id',
-        'id',
-        'location',
-        'school_id',
-        'state',
-    ];
+    public static $indexes = ['group_type_id', 'id', 'location', 'school_id'];
 
     /**
      * Attributes that we can sort by with the '?orderBy' query parameter.
