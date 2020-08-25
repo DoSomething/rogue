@@ -25,7 +25,7 @@ class ClubTest extends TestCase
 
     /**
      * Test that we can filter clubs by name.
-     * GET /api/v3/campaigns
+     * GET /api/v3/campaigns.
      * @return void
      */
     public function testClubIndexNameFilter()
