@@ -81,6 +81,13 @@ These endpoints use OAuth 2 to authenticate. [More information here](https://git
 | `GET /api/v3/group-types`                | [Get group types](group-types.md#index) |
 | `GET /api/v3/group-types/:group_type_id` | [Get a group type](group-types.md#show) |
 
+#### Clubs
+
+| Endpoint                     | Functionality               |
+| ---------------------------- | --------------------------- |
+| `GET /api/v3/clubs`          | [Get clubs](clubs.md#index) |
+| `GET /api/v3/clubs/:club_id` | [Get a club](clubs.md#show) |
+
 #### Users
 
 | Endpoint                        | Functionality                        |
