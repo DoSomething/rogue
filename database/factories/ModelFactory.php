@@ -225,7 +225,7 @@ $factory->define(GroupType::class, function (Generator $faker) {
         'name' =>
             'National ' . Str::title($faker->unique()->jobTitle) . ' Society',
         'filter_by_location' => true,
-        'filter_by_state' => true,
+        'filter_by_location' => true,
     ];
 });
 
