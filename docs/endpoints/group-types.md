@@ -6,8 +6,6 @@
 GET /api/v3/group-types
 ```
 
-Note: The `filter_by_state` field will soon be removed, deprecated by `filter_by_location`.
-
 Example Response:
 
 ```
@@ -17,7 +15,6 @@ Example Response:
       "id": 1,
       "name": "March For Our Lives",
       "filter_by_location": false,
-      "filter_by_state": false,
       "created_at": "2019-12-04T21:28:26+00:00",
       "updated_at": "2019-12-04T22:33:03+00:00"
     },
@@ -25,7 +22,6 @@ Example Response:
       "id": 2,
       "name": "College Board",
       "filter_by_location": true,
-      "filter_by_state": true,
       "created_at": "2019-12-04T22:05:29+00:00",
       "updated_at": "2019-12-04T22:05:29+00:00"
     }
@@ -58,7 +54,6 @@ Example Response:
     "id": 1,
     "name": "March For Our Lives",
     "filter_by_location": false,
-    "filter_by_state": false,
     "created_at": "2019-12-04T21:28:26+00:00",
     "updated_at": "2019-12-04T22:33:03+00:00"
   };
