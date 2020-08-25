@@ -6,6 +6,7 @@ use Faker\Generator;
 use Illuminate\Support\Str;
 use Rogue\Models\Action;
 use Rogue\Models\Campaign;
+use Rogue\Models\Club;
 use Rogue\Models\Group;
 use Rogue\Models\GroupType;
 use Rogue\Models\Post;
@@ -249,5 +250,16 @@ $factory->state(Group::class, 'school', function (Generator $faker) {
         'city' => $school->city,
         'location' => $school->location,
         'school_id' => $school->school_id,
+    ];
+});
+
+// Club Factory
+$factory->define(Club::class, function (Generator $faker) {
+    return [
+        'leader_id' => $this->faker->unique()->northstar_id,
+        'name' => Str::title($faker->company),
+        'city' => $faker->city,
+        'location' => 'US-' . $faker->stateAbbr,
+        'school_id' => $faker->school->school_id,
     ];
 });
