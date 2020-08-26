@@ -14,8 +14,6 @@ class GroupType extends Model
      */
     protected $casts = [
         'filter_by_location' => 'boolean',
-        // This field will eventually be deprecated by filter_by_location.
-        'filter_by_state' => 'boolean',
     ];
 
     /**
@@ -23,12 +21,7 @@ class GroupType extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'filter_by_location',
-        // This field will eventually be deprecated by filter_by_location.
-        'filter_by_state',
-        'name',
-    ];
+    protected $fillable = ['filter_by_location', 'name'];
 
     protected static function boot()
     {

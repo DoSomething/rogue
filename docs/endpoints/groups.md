@@ -28,10 +28,6 @@ GET /api/v3/groups
 
   - Filter results by given school_id, e.g. `filter[external_id]=13000419`.
 
-- **filter[state]** _(string)_ -- Deprecated
-
-  - Filter results by given state, e.g. `filter[state]=SC`.
-
 Example Response:
 
 ```
@@ -42,7 +38,6 @@ Example Response:
       "group_type_id": 1,
       "name": "A C Flora High School",
       "city": "Charleston",
-      "state": "SC",
       "location": "US-SC",
       "school_id": "3600737",
       "goal": 150,
@@ -54,7 +49,6 @@ Example Response:
       "group_type_id": 1,
       "name": "Afton Central School",
       "city": "Afton",
-      "state": "NY",
       "location": "US-NY",
       "school_id": null,
       "goal": null,
@@ -91,7 +85,6 @@ Example Response:
     "group_type_id": 1,
     "name": "A C Flora High School",
     "city": "Charleston",
-    "state": "SC",
     "location": "US-SC",
     "school_id": "3600737",
     "goal": 150,

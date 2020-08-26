@@ -16,13 +16,13 @@ class GroupTypeTest extends TestCase
         $this->actingAsAdmin()
             ->postJson('group-types', [
                 'name' => $name,
-                'filter_by_state' => true,
+                'filter_by_location' => true,
             ])
             ->assertStatus(302);
 
         $this->assertDatabaseHas('group_types', [
             'name' => $name,
-            'filter_by_state' => 1,
+            'filter_by_location' => 1,
         ]);
 
         // Verify cannot duplicate resource name.
@@ -50,7 +50,7 @@ class GroupTypeTest extends TestCase
     public function testUnsettingFilterByState()
     {
         $groupType = factory(GroupType::class)->create([
-            'filter_by_state' => true,
+            'filter_by_location' => true,
         ]);
 
         // Verify redirected upon success.
@@ -60,7 +60,7 @@ class GroupTypeTest extends TestCase
 
         $this->assertDatabaseHas('group_types', [
             'id' => $groupType->id,
-            'filter_by_state' => 0,
+            'filter_by_location' => 0,
         ]);
     }
 }

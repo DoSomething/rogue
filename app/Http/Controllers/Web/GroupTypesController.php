@@ -44,7 +44,7 @@ class GroupTypesController extends Controller
             ]),
         );
         // @see ActionsController->fillInOmittedCheckboxes
-        $values['filter_by_state'] = $request->has('filter_by_state');
+        $values['filter_by_location'] = $request->has('filter_by_location');
 
         $groupType = GroupType::create($values);
 
@@ -81,7 +81,7 @@ class GroupTypesController extends Controller
             ]),
         );
         // @see ActionsController->fillInOmittedCheckboxes
-        $values['filter_by_state'] = $request->has('filter_by_state');
+        $values['filter_by_location'] = $request->has('filter_by_location');
 
         $groupType->update($values);
 

@@ -20,7 +20,6 @@ class GroupTransformer extends TransformerAbstract
             'group_type_id' => $group->group_type_id,
             'name' => $group->name,
             'city' => $group->city,
-            'state' => $group->state,
             'location' => $group->location,
             'school_id' => $group->school_id,
             'goal' => $group->goal,

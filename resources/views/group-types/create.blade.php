@@ -17,7 +17,7 @@
 
                     <div class="form-item">
                         <label class="field-label">Group Finder</label>
-                        @include('forms.option', ['name' => 'filter_by_state', 'label' => 'Filter by state'])
+                        @include('forms.option', ['name' => 'filter_by_location', 'label' => 'Filter by location'])
                     </div>
 
                     <ul class="form-actions -inline -padded">
