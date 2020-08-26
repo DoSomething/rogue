@@ -24,6 +24,41 @@ class ClubTest extends TestCase
     }
 
     /**
+     * Test that we can filter clubs by name.
+     * GET /api/v3/campaigns.
+     * @return void
+     */
+    public function testClubIndexNameFilter()
+    {
+        $clubNames = [
+            'Batman Begins',
+            'Bipartisan',
+            'Brave New World',
+            'If I Never Knew You',
+            'San Dimas High School',
+            'Santa Claus',
+        ];
+
+        foreach ($clubNames as $clubName) {
+            factory(Club::class)->create([
+                'name' => $clubName,
+            ]);
+        }
+
+        $response = $this->getJson('api/v3/clubs?filter[name]=new');
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+        $this->assertEquals(2, $decodedResponse['meta']['pagination']['count']);
+
+        $response = $this->getJson('api/v3/clubs?filter[name]=san');
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+        $this->assertEquals(3, $decodedResponse['meta']['pagination']['count']);
+    }
+
+    /**
      * Test that a GET request to /api/v3/clubs/:id returns the intended club.
      *
      * @return void

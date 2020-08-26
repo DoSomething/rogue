@@ -33,6 +33,10 @@ class ClubsController extends ApiController
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, Club::$indexes);
 
+        if (isset($filters['name'])) {
+            $query->where('name', 'LIKE', '%' . $filters['name'] . '%');
+        }
+
         return $this->paginatedCollection($query, $request);
     }
 

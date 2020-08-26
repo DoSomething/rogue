@@ -12,6 +12,10 @@ GET /api/v3/clubs
 
   - Filter results by Club ID or ID's.
 
+- **filter[name]** _(string)_
+
+  - Filter results by names that include the given filter, e.g. `filter[name]=Oakland`.
+
 Example Response:
 
 ```

@@ -116,6 +116,12 @@ class CampaignTest extends Testcase
         $this->assertEquals(3, $decodedResponse['meta']['pagination']['count']);
     }
 
+    /**
+     * Test that we can filter campaigns by cause.
+     *
+     * GET /api/v3/campaigns
+     * @return void
+     */
     public function testCauseFilteredCampaignIndex()
     {
         $causes = Cause::all();
