@@ -2,12 +2,15 @@
   "private": true,
   "scripts": {
     "start": "npm run clean && webpack --env=development --hide-modules --watch",
+    "start:docs": "cd docusaurus && npm install && npm run start",
     "build": "npm run clean && webpack  --env=production",
     "build:dev": "npm run clean && webpack --env=development",
+    "docs": "cd docusaurus && npm install && npm run build",
+    "docs:dev": "cd docusaurus && npm install && npm run build:dev",
     "clean": "rm -rf public/dist",
     "test": "jest --watch",
     "test:ci": "jest",
-    "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "npm run build && npm run docs",
     "lint": "eslint --fix --ext .js resources/assets",
     "format": "npm run format:css && npm run format:js && npm run format:md && npm run format:php",
     "format:css": "prettier --write \"resources/**/*.{css,scss}\"",
@@ -16,7 +19,7 @@
     "format:php": "prettier --write \"{app,config,database,resources,routes,tests}/**/*.php\" \"!resources/views/**\""
   },
   "engines": {
-    "node": "8.x",
+    "node": "10.x",
     "npm": "6.x"
   },
   "husky": {

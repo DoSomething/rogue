@@ -1,5 +1,6 @@
 /node_modules
 /public/assets/**
+/public/build
 /public/dist
 /public/storage
 /storage/debugbar
@@ -10,6 +11,7 @@
 .env.backup
 .php_cs.cache
 .phpunit.result.cache
+.vscode
 
 Homestead.json
 Homestead.yaml
