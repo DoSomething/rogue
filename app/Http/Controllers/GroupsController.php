@@ -35,7 +35,7 @@ class GroupsController extends ApiController
         $query = $this->filter($query, $filters, Group::$indexes);
 
         if (isset($filters['name'])) {
-            $query->where('name', 'REGEXP', $filters['name']);
+            $query->where('name', 'LIKE', '%' . $filters['name'] . '%');
         }
 
         // This endpoint always returns groups in alphabetical order by name. We'll
