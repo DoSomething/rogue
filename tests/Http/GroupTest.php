@@ -50,8 +50,8 @@ class GroupTest extends TestCase
         $response->assertStatus(200);
         $this->assertEquals(3, $decodedResponse['meta']['pagination']['count']);
 
-        // Test special characters:
-        $response = $this->getJson('api/v3/groups?filter[name]=g\\');
+        // Test for encoded special characters.
+        $response = $this->getJson('api/v3/groups?filter[name]=g%5C');
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
