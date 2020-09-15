@@ -130,6 +130,7 @@ class ImportGroupsCommand extends Command
                     'city' => isset($groupCity)
                         ? ucwords(strtolower($groupCity))
                         : null,
+                    // Convert US State abbreviation to ISO 3166 format.
                     'location' => isset($record['state'])
                         ? 'US-' . trim($record['state'])
                         : null,
