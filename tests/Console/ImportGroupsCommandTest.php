@@ -47,5 +47,12 @@ class ImportGroupsCommandTest extends TestCase
         $this->assertDatabaseMissing('groups', [
             'school_id' => '4400188',
         ]);
+        // Check that uppercase city name is converted to Title Case.
+        $this->assertDatabaseHas('groups', [
+            'name' => 'Woods Cross High School',
+            'group_type_id' => $groupTypeId,
+            'city' => 'Woods Cross',
+            'location' => 'US-UT',
+        ]);
     }
 }
