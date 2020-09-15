@@ -110,6 +110,7 @@ class ImportGroupsCommand extends Command
         foreach ($csv->getRecords() as $record) {
             $groupName = $this->sanitizeValue($record, 'name');
             $groupSchoolId = $this->sanitizeValue($record, 'universal_id');
+            $groupCity = $this->sanitizeValue($record, 'city');
 
             if (!$groupName) {
                 $numSkipped++;
@@ -125,7 +126,10 @@ class ImportGroupsCommand extends Command
                 $group = Group::firstOrCreate([
                     'group_type_id' => $this->groupTypeId,
                     'name' => $groupName,
-                    'city' => $this->sanitizeValue($record, 'city'),
+                    // Convert any uppercase city names to Title Case.
+                    'city' => isset($groupCity)
+                        ? ucwords(strtolower($groupCity))
+                        : null,
                     'location' => isset($record['state'])
                         ? 'US-' . trim($record['state'])
                         : null,
