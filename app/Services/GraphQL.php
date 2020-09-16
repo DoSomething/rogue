@@ -14,6 +14,7 @@ class GraphQL
         $this->client = ClientBuilder::build(config('services.graphql.url'), [
             'headers' => [
                 'apollographql-client-name' => 'rogue',
+                'authorization' => 'Bearer ' . token()->jwt(),
             ],
         ]);
     }
