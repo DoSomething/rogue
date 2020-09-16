@@ -64,6 +64,7 @@ class PostTransformer extends TransformerAbstract
             $response['referrer_user_id'] = $post->referrer_user_id;
             $response['group_id'] = $post->group_id;
             $response['school_id'] = $post->school_id;
+            $response['club_id'] = $post->club_id;
         }
 
         return $response;
