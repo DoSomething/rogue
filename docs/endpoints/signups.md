@@ -72,6 +72,7 @@ When using `?include=posts`, anonymous requests will only return accepted posts.
 - **filter[column]** _(string)_
   - Filter results by a column. Available columns:
     - `campaign_id`
+    - `club_id`
     - `group_id`
     - `id`
     - `quantity`
@@ -110,6 +111,7 @@ Example Response:
       "details": null,
       "referrer_user_id" : null,
       "group_id": null,
+      "club_id": 12,
     },
     {
       "id": 2,
@@ -124,6 +126,7 @@ Example Response:
       "details": null,
       "referrer_user_id" : null,
       "group_id": 11,
+      "club_id": null,
     },
   ],
   "meta": {
