@@ -28,6 +28,7 @@ class Signup extends Model
      */
     protected $fillable = [
         'campaign_id',
+        'club_id',
         'created_at',
         'details',
         'group_id',
@@ -50,6 +51,7 @@ class Signup extends Model
      */
     public static $indexes = [
         'campaign_id',
+        'club_id',
         'group_id',
         'id',
         'quantity',
