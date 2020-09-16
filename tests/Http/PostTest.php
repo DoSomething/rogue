@@ -38,6 +38,7 @@ class PostTest extends TestCase
                 'details',
                 'location',
                 'school_id',
+                'club_id',
                 'source',
                 'remote_addr',
                 'created_at',
