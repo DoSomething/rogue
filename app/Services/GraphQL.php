@@ -11,7 +11,22 @@ class GraphQL
      */
     public function __construct()
     {
-        $this->client = ClientBuilder::build(config('services.graphql.url'));
+        $headers = [
+            // Identify this client for Apollo GraphQL metrics (https://bit.ly/35Vf3F1).
+            'apollographql-client-name' => 'rogue',
+        ];
+
+        // If we have an authorization token (machine clients), assign the authorization header for
+        // our GraphQL client so that we can request gated fields.
+        if (token()->exists()) {
+            $headers = array_merge($headers, [
+                'authorization' => 'Bearer ' . token()->jwt(),
+            ]);
+        }
+
+        $this->client = ClientBuilder::build(config('services.graphql.url'), [
+            'headers' => $headers,
+        ]);
     }
 
     /**
