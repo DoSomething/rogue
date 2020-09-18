@@ -3,9 +3,30 @@
 namespace Rogue\Observers;
 
 use Rogue\Models\Signup;
+use Rogue\Services\GraphQL;
+
+const USER_CLUB_ID_QUERY = '
+    query UserClubIdQuery($userId: String!) {
+        user(id: $userId) {
+            clubId
+        }
+    }
+';
 
 class SignupObserver
 {
+    /**
+     * Query to get the user's club_id.
+     *
+     * @param string $userId
+     * @return array
+     */
+    public function queryForUser($userId)
+    {
+        return app(GraphQL::class)->query(USER_CLUB_ID_QUERY, [
+            'userId' => $userId,
+        ]);
+    }
 
     /**
      * Handle the Signup "creating" event.
