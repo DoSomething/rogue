@@ -4,10 +4,12 @@ namespace Tests\Http;
 
 use DoSomething\Gateway\Blink;
 use Illuminate\Support\Str;
+use Rogue\Models\Club;
 use Rogue\Models\Group;
 use Rogue\Models\Post;
 use Rogue\Models\Signup;
 use Rogue\Models\User;
+use Rogue\Observers\SignupObserver;
 use Rogue\Services\CustomerIo;
 use Rogue\Services\GraphQL;
 use Tests\TestCase;
@@ -127,6 +129,47 @@ class SignupTest extends TestCase
                 'northstar_id' => $northstarId,
                 'campaign_id' => $campaignId,
                 'referrer_user_id' => $referrerUserId,
+            ],
+        ]);
+    }
+
+    /**
+     * Test that a POST request to /signups creates a new signup with the Northstar user's club_id if set.
+     *
+     * POST /api/v3/signups
+     * @return void
+     */
+    public function testCreatingASignupForUserWithClubId()
+    {
+        $northstarId = $this->faker->northstar_id;
+        $campaignId = $this->faker->randomNumber(4);
+        $clubId = factory(Club::class)->create()->id;
+
+        $this->mock(Blink::class)->shouldReceive('userSignup');
+
+        $this->mock(SignupObserver::class)
+            ->makePartial()
+            ->shouldReceive('queryForUser')
+            ->andReturn([
+                'user' => ['clubId' => $clubId],
+            ]);
+
+        // Mock the Customer.io API calls.
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
+
+        $response = $this->withAccessToken($northstarId)->postJson(
+            'api/v3/signups',
+            [
+                'campaign_id' => $campaignId,
+            ],
+        );
+
+        $response->assertStatus(201);
+        $response->assertJson([
+            'data' => [
+                'northstar_id' => $northstarId,
+                'campaign_id' => $campaignId,
+                'club_id' => $clubId,
             ],
         ]);
     }
