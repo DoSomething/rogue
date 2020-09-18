@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use InvalidArgumentException;
 use Rogue\Models\Post;
+use Rogue\Models\Signup;
 use Rogue\Observers\PostObserver;
+use Rogue\Observers\SignupObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Attach model observer(s):
         Post::observe(PostObserver::class);
+        Signup::observe(SignupObserver::class);
 
         $this->app->singleton(Hashids::class, function ($app) {
             return new Hashids(config('app.key'), 10);
