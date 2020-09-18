@@ -36,5 +36,12 @@ class SignupObserver
      */
     public function creating(Signup $signup)
     {
+        if (!$signup->club_id) {
+            $data = $this->queryForUser($signup->northstar_id);
+
+            if ($club_id = data_get($data, 'user.clubId')) {
+                $signup->club_id = $club_id;
+            }
+        }
     }
 }
