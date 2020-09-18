@@ -24,6 +24,11 @@ class PostObserver
         if ($post->group_id && !$post->school_id && ($group = $post->group)) {
             $post->school_id = $group->school_id;
         }
+
+        // If the post's signup has a club_id, save it on the post as well.
+        if (!$post->club_id && $post->signup->club_id) {
+            $post->club_id = $post->signup->club_id;
+        }
     }
 
     /**
