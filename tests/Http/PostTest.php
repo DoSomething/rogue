@@ -6,6 +6,7 @@ use DoSomething\Gateway\Blink;
 use Illuminate\Http\UploadedFile;
 use Rogue\Models\Action;
 use Rogue\Models\Campaign;
+use Rogue\Models\Club;
 use Rogue\Models\Group;
 use Rogue\Models\Post;
 use Rogue\Models\Reaction;
@@ -1862,6 +1863,57 @@ class PostTest extends TestCase
         $this->assertDatabaseHas('posts', [
             'signup_id' => $signup->id,
             'group_id' => $signup->group_id,
+            'northstar_id' => $signup->northstar_id,
+            'campaign_id' => $signup->campaign_id,
+            'type' => $action->post_type,
+            'action' => $action->name,
+            'action_id' => $action->id,
+            'status' => 'pending',
+            'quantity' => $quantity,
+        ]);
+    }
+
+    /**
+     * Test that when a post is created for a signup with a club_id
+     * the club_id is saved to the post as well.
+     *
+     * @return void
+     */
+    public function testCreatingAPostForSignupWithClubId()
+    {
+        $clubId = factory(Club::class)->create()->id;
+        $signup = factory(Signup::class)->create(['club_id' => $clubId]);
+
+        // Attributes for the post that we'll create
+        $quantity = $this->faker->numberBetween(10, 1000);
+        $text = $this->faker->sentence;
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id,
+        ]);
+
+        // Mock the Blink API call.
+        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+
+        // Create the post!
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'northstar_id' => $signup->northstar_id,
+                'campaign_id' => $signup->campaign_id,
+                'type' => $action->post_type,
+                'action_id' => $action->id,
+                'quantity' => $quantity,
+                'text' => $text,
+                'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
+            ],
+        );
+
+        $response->assertStatus(201);
+        $this->assertPostStructure($response);
+
+        $this->assertDatabaseHas('posts', [
+            'signup_id' => $signup->id,
+            'club_id' => $signup->club_id,
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'type' => $action->post_type,
