@@ -1881,6 +1881,9 @@ class PostTest extends TestCase
      */
     public function testCreatingAPostForSignupWithClubId()
     {
+        // Turn on the feature flag for tracking club_ids.
+        config(['features.track_club_id' => 'true']);
+
         $clubId = factory(Club::class)->create()->id;
         $signup = factory(Signup::class)->create(['club_id' => $clubId]);
 

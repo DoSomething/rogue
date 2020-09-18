@@ -26,7 +26,11 @@ class PostObserver
         }
 
         // If the post's signup has a club_id, save it on the post as well.
-        if (!$post->club_id && $post->signup->club_id) {
+        if (
+            config('features.track_club_id') &&
+            !$post->club_id &&
+            $post->signup->club_id
+        ) {
             $post->club_id = $post->signup->club_id;
         }
     }

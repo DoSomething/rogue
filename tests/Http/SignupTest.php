@@ -141,6 +141,9 @@ class SignupTest extends TestCase
      */
     public function testCreatingASignupForUserWithClubId()
     {
+        // Turn on the feature flag for tracking club_ids.
+        config(['features.track_club_id' => 'true']);
+
         $northstarId = $this->faker->northstar_id;
         $campaignId = $this->faker->randomNumber(4);
         $clubId = factory(Club::class)->create()->id;

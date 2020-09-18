@@ -36,7 +36,7 @@ class SignupObserver
      */
     public function creating(Signup $signup)
     {
-        if (!$signup->club_id) {
+        if (config('features.track_club_id') && !$signup->club_id) {
             $data = $this->queryForUser($signup->northstar_id);
 
             if ($club_id = data_get($data, 'user.clubId')) {
