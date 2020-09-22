@@ -42,6 +42,7 @@ class SignupTransformer extends TransformerAbstract
             $response['details'] = $signup->details;
             $response['referrer_user_id'] = $signup->referrer_user_id;
             $response['group_id'] = $signup->group_id;
+            $response['club_id'] = $signup->club_id;
         }
 
         return $response;

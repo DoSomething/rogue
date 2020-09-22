@@ -74,6 +74,9 @@ Posts are returned in reverse chronological order.
 - **filter[volunteer_credit]** _(boolean)_
   - Filter for posts (un)qualified for volunteer credit (where the associated action's volunteer_credit field is true/false.)
   - e.g. `/posts?filter[volunteer_credit]=true`
+- **filter[club_id]** _(string)_
+  - The club id to filter the response by.
+  - e.g. `/posts?filter[club_id]=1`
 - **include** _(string)_
   - Include additional related records in the response: `signup`, `siblings`
   - e.g. `/posts?include=signup,siblings`
@@ -107,6 +110,7 @@ Example Response:
             "school_id": null,
             "referrer_user_id": null,
             "group_id": null,
+            "club_id": null,
             "created_at": "2016-11-30T21:21:24+00:00",
             "updated_at": "2017-08-02T14:11:26+00:00"
         },
@@ -133,6 +137,7 @@ Example Response:
             "school_id": null,
             "referrer_user_id": null,
             "group_id": null,
+            "club_id": null,
             "created_at": "2016-02-10T16:19:25+00:00",
             "updated_at": "2017-08-02T14:11:35+00:00"
             "action_details": {
@@ -197,6 +202,7 @@ Example Response:
     "school_id": "3600052",
     "referrer_user_id": null,
     "group_id": null,
+    "club_id": null,
     "created_at": "2019-01-23T19:42:07+00:00",
     "updated_at": "2019-01-23T19:42:07+00:00"
     "action_details": {
@@ -296,6 +302,7 @@ Example Response:
     "location_name": "New York",
     "school_id": "3600052",
     "referrer_user_id": "559442cca59dbfca578b4bed",
+    "club_id": null,
     "created_at": "2018-12-06T21:44:15+00:00",
     "updated_at": "2018-12-06T21:44:15+00:00",
     "tags": [],

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use DoSomething\Gateway\Northstar;
 use DoSomething\Gateway\Resources\NorthstarUser;
 use Illuminate\Support\Facades\Storage;
+use Rogue\Observers\SignupObserver;
 use Rogue\Services\GraphQL;
 
 trait WithMocks
@@ -69,6 +70,14 @@ trait WithMocks
 
         $this->graphqlMock->shouldReceive('getUserById')->andReturn([
             'displayName' => 'Daisy D.',
+        ]);
+
+        // Signup Observer partial Mock. (To mock the GraphQL query method).
+        $this->signupObserverMock = $this->mock(
+            SignupObserver::class,
+        )->makePartial();
+        $this->signupObserverMock->shouldReceive('queryForUser')->andReturn([
+            'user' => ['clubId' => null],
         ]);
     }
 
