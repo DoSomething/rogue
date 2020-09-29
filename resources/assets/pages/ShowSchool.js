@@ -16,7 +16,7 @@ const SHOW_SCHOOL_QUERY = gql`
       id
       name
       city
-      state
+      location
     }
     groups(schoolId: $id) {
       id
@@ -48,7 +48,7 @@ const ShowSchool = () => {
 
   if (!data.school) return <NotFound title={title} type="school" />;
 
-  const { city, name, state } = data.school;
+  const { city, name, location } = data.school;
 
   const groupList = data.groups.length ? (
     <ul>
@@ -74,7 +74,7 @@ const ShowSchool = () => {
             details={{
               ID: id,
               City: city,
-              State: state,
+              Location: location,
               Groups: groupList,
             }}
           />
