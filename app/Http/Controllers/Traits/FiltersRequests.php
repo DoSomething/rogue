@@ -35,12 +35,14 @@ trait FiltersRequests
             $excludedValues = $filters['exclude'];
             unset($filters['exclude']);
 
-            // If there is an exclude_by_field filter, remove from $filters and save the value.
-            // Example: filter[exclude]=1200537,3618101&filter[exclude_field]=school_id
+            /**
+             * If there is an exclude_by_field filter, remove from $filters and save the value,
+             * Else default to exclude by an 'id' field.
+             * Example: filter[exclude]=1200537,3618101&filter[exclude_field]=school_id
+             */
             if (array_key_exists('exclude_by_field', $filters)) {
                 $excludeByField = $filters['exclude_by_field'];
                 unset($filters['exclude_by_field']);
-                // Else default to exclude by an 'id' field.
             } else {
                 $excludeByField = 'id';
             }
