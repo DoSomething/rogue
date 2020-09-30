@@ -73,5 +73,15 @@ class ActionStatsTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
+
+        // Verify no errors are thrown when using a groupBy query.
+        $response = $this->getJson(
+            'api/v3/action-stats?orderBy=impact,desc&filter[group_type_id]=' .
+                $secondGroupTypeId,
+        );
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
+        $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
     }
 }
