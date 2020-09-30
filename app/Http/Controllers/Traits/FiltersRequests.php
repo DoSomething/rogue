@@ -88,6 +88,10 @@ trait FiltersRequests
      */
     public function orderBy($query, $orderBy, $indexes)
     {
+        // We specify the table name of our 'id' in case the query is joining on tables.
+        $tableName = $query->getModel()->getTable();
+        $idField = $tableName . '.id';
+
         if ($orderBy) {
             [$column, $direction] = explode(',', $orderBy, 2);
 
@@ -97,20 +101,14 @@ trait FiltersRequests
                 // If we have multiple items with the same '$column' value,
                 // use ID as a secondary sort column to ensure stable sort.
                 if ($column != 'id') {
-                    $query->orderBy('id', 'asc');
+                    $query->orderBy($idField, 'asc');
                 }
             }
         } else {
-            /**
-             * If we don't specify an ordering in the query, we should default
-             * to order by ID. (Fun fact: MySQL makes no guarantees of ordering
-             * if we don't include this in the query!)
-             *
-             * We specify the table name of our 'id' in case the query is joining on tables.
-             */
-            $tableName = $query->getModel()->getTable();
-
-            $query->orderBy($tableName . '.id', 'asc');
+            // If we don't specify an ordering in the query, we should default
+            // to order by ID. (Fun fact: MySQL makes no guarantees of ordering
+            // if we don't include this in the query!)
+            $query->orderBy($idField, 'asc');
         }
 
         return $query;
