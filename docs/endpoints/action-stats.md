@@ -23,7 +23,7 @@ GET /api/v3/action-stats
 - **filter[exclude_by_field]** _(string)_
 
   - The field to exclude by, if an `exclude` filter is also set.
-  - e.g. `/acion-stats?filter[exclude]=US-AL,US-HI&filter[exclude_by_field]=location`
+  - e.g. `/action-stats?filter[exclude]=US-AL,US-HI&filter[exclude_by_field]=location`
 
 - **filter[group_type_id]** _(int)_
 
