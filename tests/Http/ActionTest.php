@@ -71,7 +71,7 @@ class ActionTest extends TestCase
     public function testActionIndex()
     {
         // Create five actions.
-        $first = factory(Action::class, 5)->create();
+        factory(Action::class, 5)->create();
 
         $response = $this->getJson('api/v3/actions');
         $decodedResponse = $response->decodeResponseJson();
