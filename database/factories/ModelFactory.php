@@ -264,9 +264,9 @@ $factory->define(Club::class, function (Generator $faker) {
     ];
 });
 
-// Action Stat Factory
+// ActionStat Factory
 $factory->define(ActionStat::class, function (Generator $faker) {
-    $school = $faker->school;
+    $school = $faker->unique()->school;
 
     return [
         'school_id' => $school->school_id,
