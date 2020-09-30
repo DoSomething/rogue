@@ -101,9 +101,13 @@ trait FiltersRequests
                 }
             }
         } else {
-            // If we don't specify an ordering in the query, we should default
-            // to order by ID. (Fun fact: MySQL makes no guarantees of ordering
-            // if we don't include this in the query!)
+            /**
+             * If we don't specify an ordering in the query, we should default
+             * to order by ID. (Fun fact: MySQL makes no guarantees of ordering
+             * if we don't include this in the query!)
+             *
+             * We specify the table name of our 'id' in case the query is joining on tables.
+             */
             $tableName = $query->getModel()->getTable();
 
             $query->orderBy($tableName . '.id', 'asc');
