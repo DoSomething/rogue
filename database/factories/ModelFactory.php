@@ -5,6 +5,7 @@
 use Faker\Generator;
 use Illuminate\Support\Str;
 use Rogue\Models\Action;
+use Rogue\Models\ActionStat;
 use Rogue\Models\Campaign;
 use Rogue\Models\Club;
 use Rogue\Models\Group;
@@ -225,7 +226,6 @@ $factory->define(GroupType::class, function (Generator $faker) {
         'name' =>
             'National ' . Str::title($faker->unique()->jobTitle) . ' Society',
         'filter_by_location' => true,
-        'filter_by_location' => true,
     ];
 });
 
@@ -261,5 +261,19 @@ $factory->define(Club::class, function (Generator $faker) {
         'city' => $faker->city,
         'location' => 'US-' . $faker->stateAbbr,
         'school_id' => $faker->school->school_id,
+    ];
+});
+
+// ActionStat Factory
+$factory->define(ActionStat::class, function (Generator $faker) {
+    $school = $faker->unique()->school;
+
+    return [
+        'school_id' => $school->school_id,
+        'location' => $school->location,
+        'action_id' => function () {
+            return factory(Action::class)->create()->id;
+        },
+        'impact' => $faker->randomNumber(2),
     ];
 });

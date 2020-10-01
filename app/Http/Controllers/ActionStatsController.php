@@ -34,6 +34,10 @@ class ActionStatsController extends ApiController
         $filters = $request->query('filter');
         $query = $this->filter($query, $filters, ActionStat::$indexes);
 
+        if (Arr::has($filters, 'group_type_id')) {
+            $query = $query->inGroupTypeId($filters['group_type_id']);
+        }
+
         // Allow ordering results:
         $orderBy = $request->query('orderBy');
         $query = $this->orderBy($query, $orderBy, ActionStat::$sortable);

@@ -35,4 +35,18 @@ class ActionStat extends Model
      * @var array
      */
     public static $sortable = ['id', 'impact'];
+
+    /**
+     * Scope a query to only include schools that have groups in given group type ID.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  int  $groupTypeId
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeInGroupTypeId($query, $groupTypeId)
+    {
+        return $query
+            ->join('groups', 'action_stats.school_id', '=', 'groups.school_id')
+            ->where('groups.group_type_id', '=', $groupTypeId);
+    }
 }

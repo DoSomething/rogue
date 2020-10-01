@@ -10,10 +10,25 @@ GET /api/v3/action-stats
 
 ### Optional Query Parameters
 
-- **filter[column]** _(string)_
+- **filter[action_id]** _(integer)_
 
-  - Filter results by column. Supported columns: `action_id`, `location`, `school_id`
-  - Use commas to filter by multiple values in a column, e.g. `/action-stats?filter[action_id]=121,122`
+  - The action id to filter by.
+  - e.g. `/action-stats?filter[action_id]=954`
+
+- **filter[group_type_id]** _(int)_
+
+  - The group type id to filter the response by, joining on [`groups`](../groups.md) by `school_id`.
+  - e.g. `/action-stats?filter[location]=US-NY`
+
+- **filter[location]** _(string)_
+
+  - The location to filter the response by.
+  - e.g. `/action-stats?filter[location]=US-NY`
+
+- **filter[school_id]** _(string)_
+
+  - The school id to filter the response by.
+  - e.g. `/action-stats?filter[school_id]=4809500`
 
 - **orderBy** _(string)_
   - Order results by column. Supported columns: `id`, `impact`

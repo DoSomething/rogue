@@ -63,7 +63,7 @@ class ActionTest extends TestCase
     }
 
     /**
-     * Test that a GET request to /api/v3/actions returns an index of all campaigns.
+     * Test that a GET request to /api/v3/actions returns an index of all actions.
      *
      * GET /api/v3/actions
      * @return void
@@ -71,7 +71,7 @@ class ActionTest extends TestCase
     public function testActionIndex()
     {
         // Create five actions.
-        $first = factory(Action::class, 5)->create();
+        factory(Action::class, 5)->create();
 
         $response = $this->getJson('api/v3/actions');
         $decodedResponse = $response->decodeResponseJson();
