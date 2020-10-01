@@ -60,7 +60,8 @@ trait FiltersRequests
         }
 
         if ($excludedValues) {
-            $query->whereNotIn($excludeByField, explode(',', $excludedValues));
+            // @TODO - Only excludes `id` fields, we could update this to be more flexible.
+            $query->whereNotIn('id', explode(',', $excludedValues));
         }
 
         return $query;
