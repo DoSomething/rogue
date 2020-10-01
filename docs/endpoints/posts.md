@@ -55,12 +55,9 @@ Posts are returned in reverse chronological order.
 - **filter[created_at]** _(timestamp)_
   - The created_at date to filter the response by.
   - e.g. `/posts?filter[created_at]=2017-04-28 01:46:45`
-- **filter[exclude]** _(integer|string)_
-  - The id(s) to exclude in response. If `exclude_by_field` filter is not set, this defaults to filter by the post id.
+- **filter[exclude]** _(integer)_
+  - The post id(s) to exclude in response.
   - e.g. `/posts?filter[exclude]=2,3,4`
-- **filter[exclude_by_field]** _(string)_
-  - The field to exclude by, if an `exclude` filter is also set.
-  - e.g. `/posts?filter[exclude]=US-AL,US-HI&filter[exclude_by_field]=location`
 - **filter[tag]** _(string)_
   - The tag(s) to filter the response by.
   - Tag is passed in as tag_slug.

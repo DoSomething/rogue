@@ -15,16 +15,6 @@ GET /api/v3/action-stats
   - The action id to filter by.
   - e.g. `/action-stats?filter[action_id]=954`
 
-- **filter[exclude]** _(integer|string)_
-
-  - The id(s) to exclude in response. If `exclude_by_field` filter is not set, this defaults to filter by the action stat id.
-  - e.g. `/action-stats?filter[exclude]=2,3,4`
-
-- **filter[exclude_by_field]** _(string)_
-
-  - The field to exclude by, if an `exclude` filter is also set.
-  - e.g. `/action-stats?filter[exclude]=US-AL,US-HI&filter[exclude_by_field]=location`
-
 - **filter[group_type_id]** _(int)_
 
   - The group type id to filter the response by, joining on [`groups`](../groups.md) by `school_id`.
