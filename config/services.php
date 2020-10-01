@@ -51,6 +51,12 @@ return [
         'password' => env('BLINK_PASSWORD'),
     ],
 
+    'customerio' => [
+        'url' => 'https://track.customer.io/api/v1/',
+        'username' => env('CUSTOMER_IO_USERNAME'),
+        'password' => env('CUSTOMER_IO_PASSWORD'),
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

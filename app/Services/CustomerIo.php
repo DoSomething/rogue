@@ -25,6 +25,16 @@ class CustomerIo
     }
 
     /**
+     * Is Customer.io enabled for this app?
+     *
+     * @return bool
+     */
+    protected function enabled(): bool
+    {
+        return config('features.blink');
+    }
+
+    /**
      * Track Customer.io event for given user with given name and data.
      * @see https://customer.io/docs/api/#apitrackeventsevent_add
      *
@@ -32,16 +42,32 @@ class CustomerIo
      * @param string $eventName
      * @param array $eventData
      */
-    public function trackEvent($userId, $eventName, $eventData = [])
+    public function trackEvent(string $userId, $eventName, $eventData = [])
     {
-        $payload = ['name' => $eventName];
+        if (!$this->enabled()) {
+            info('Event would have been sent to Customer.io', [
+                'id' => $userId,
+                'name' => $eventName,
+                'data' => $eventData,
+            ]);
 
-        foreach ($eventData as $key => $value) {
-            $payload["data[$key]"] = $value;
+            return;
         }
 
-        return $this->client->post('customers/' . $userId . '/events', [
-            'form_params' => $payload,
+        $response = $this->client->post('customers/' . $userId . '/events', [
+            'json' => ['name' => $eventName, 'data' => $eventData],
+        ]);
+
+        // For this endpoint, any status besides 200 means something is wrong:
+        if ($response->getStatusCode() !== 200) {
+            throw new Exception(
+                'Customer.io error: ' . (string) $response->getBody(),
+            );
+        }
+
+        info('Event sent to Customer.io', [
+            'id' => $userId,
+            'name' => $eventName,
         ]);
     }
 }
