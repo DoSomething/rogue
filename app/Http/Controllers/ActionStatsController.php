@@ -32,10 +32,27 @@ class ActionStatsController extends ApiController
         $query = $this->newQuery(ActionStat::class);
 
         $filters = $request->query('filter');
-        $query = $this->filter($query, $filters, ActionStat::$indexes);
+
+        /**
+         * Because we may be joining on groups, which also have location and school_id columns, we
+         * specify our table name to avoid integrity constraint violations for ambiguous clauses.
+         */
+        $tableName = $query->getModel()->getTable();
+
+        if (Arr::has($filters, 'action_id')) {
+            $query->where('action_id', $filters['action_id']);
+        }
+
+        if (Arr::has($filters, 'location')) {
+            $query->where($tableName . '.location', $filters['location']);
+        }
 
         if (Arr::has($filters, 'group_type_id')) {
             $query = $query->inGroupTypeId($filters['group_type_id']);
+        }
+
+        if (Arr::has($filters, 'school_id')) {
+            $query->where($tableName . '.school_id', $filters['school_id']);
         }
 
         // Allow ordering results:
