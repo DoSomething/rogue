@@ -30,7 +30,6 @@ class ActionStatsController extends ApiController
     public function index(Request $request)
     {
         $query = $this->newQuery(ActionStat::class);
-        $tableName = $query->getModel()->getTable();
 
         $filters = $request->query('filter');
 
@@ -38,6 +37,7 @@ class ActionStatsController extends ApiController
          * Because we may be joining on groups, which also have location and school_id columns, we
          * specify our table name to avoid integrity constraint violations for ambiguous clauses.
          */
+        $tableName = $query->getModel()->getTable();
 
         if (Arr::has($filters, 'action_id')) {
             $query->where('action_id', $filters['action_id']);
