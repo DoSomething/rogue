@@ -2,17 +2,25 @@
 
 namespace Rogue\Jobs;
 
-use DoSomething\Gateway\Blink;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Redis;
 use Rogue\Models\Post;
+use Rogue\Services\CustomerIo;
 
 class SendPostToCustomerIo implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * Delete the job if its models no longer exist.
+     *
+     * @var bool
+     */
+    public $deleteWhenMissingModels = true;
 
     /**
      * The post to send to Customer.io.
@@ -22,21 +30,13 @@ class SendPostToCustomerIo implements ShouldQueue
     protected $post;
 
     /**
-     * Whether or not to log that this Post was sent to Customer.io, via Blink.
-     *
-     * @var bool
-     */
-    protected $log;
-
-    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Post $post, $log = true)
+    public function __construct(Post $post)
     {
         $this->post = $post;
-        $this->log = $log;
     }
 
     /**
@@ -44,18 +44,25 @@ class SendPostToCustomerIo implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Blink $blink)
+    public function handle(CustomerIo $customerIo)
     {
-        // Check if the post still exists before sending (might have been deleted immediately if created in Runscope test).
-        if ($this->post && $this->post->signup) {
-            $payload = $this->post->toBlinkPayload();
-            $blink->userSignupPost($payload);
+        $throttler = Redis::throttle('customerio')
+            ->allow(10)
+            ->every(1);
 
-            if ($this->log) {
-                logger()->info(
-                    'Post ' . $payload['id'] . ' sent to Customer.io',
+        $throttler->then(
+            // Rate limit Customer.io API requests to 10/s:
+            function () use ($customerIo) {
+                $customerIo->trackEvent(
+                    $this->post->northstar_id,
+                    'campaign_signup_post',
+                    $this->post->toCustomerIoPayload(),
                 );
-            }
-        }
+            },
+            // If we  can't obtain a lock, release to queue:
+            function () {
+                return $this->release(10);
+            },
+        );
     }
 }

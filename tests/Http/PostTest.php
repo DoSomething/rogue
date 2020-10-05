@@ -73,14 +73,13 @@ class PostTest extends TestCase
         ]);
 
         // Mock the Blink API calls.
-        $this->mock(Blink::class)
-            ->shouldReceive('userSignup')
-            ->shouldReceive('userSignupPost');
+        $this->mock(Blink::class)->shouldReceive('userSignup');
 
         // Mock the GraphQL API calls.
         $this->mock(GraphQL::class)->shouldReceive(
             'getUserById',
             'getCampaignWebsiteByCampaignId',
+            'getSchoolById',
         );
 
         // Mock the Customer.io API calls.
@@ -157,9 +156,8 @@ class PostTest extends TestCase
         ]);
 
         // Mock the Blink API calls.
-        $this->mock(Blink::class)
-            ->shouldReceive('userSignup')
-            ->shouldReceive('userSignupPost');
+        $this->mock(Blink::class)->shouldReceive('userSignup');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAccessToken($northstarId)->json(
@@ -217,8 +215,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
         ]);
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson(
@@ -277,8 +274,7 @@ class PostTest extends TestCase
             'post_type' => 'text',
         ]);
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson(
@@ -397,8 +393,7 @@ class PostTest extends TestCase
             'post_type' => 'share-social',
         ]);
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson(
@@ -447,8 +442,7 @@ class PostTest extends TestCase
             'post_type' => 'share-social',
         ]);
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
@@ -494,8 +488,7 @@ class PostTest extends TestCase
             'post_type' => 'share-social',
         ]);
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
@@ -538,8 +531,7 @@ class PostTest extends TestCase
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post with an invalid type (not in text, photo, voter-reg, share-social).
         $response = $this->withAccessToken($signup->northstar_id)->postJson(
@@ -573,8 +565,7 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Make sure you also need the activity scope.
         $response = $this->postJson('api/v3/posts', [
@@ -610,8 +601,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
         ]);
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson(
@@ -704,8 +694,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
         ]);
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAccessToken(
@@ -752,8 +741,7 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
         ]);
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson(
@@ -796,8 +784,7 @@ class PostTest extends TestCase
         $quantity = $this->faker->numberBetween(10, 1000);
         $text = $this->faker->sentence;
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->postJson('api/v3/posts', [
@@ -829,8 +816,7 @@ class PostTest extends TestCase
             'name' => 'test-action',
         ]);
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post without sending an action_id!
         $response = $this->withAccessToken($signup->northstar_id)->postJson(
@@ -1507,7 +1493,7 @@ class PostTest extends TestCase
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         $response = $this->withAdminAccessToken()->patchJson(
             'api/v3/posts/' . $post->id,
@@ -1570,7 +1556,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         $response = $this->withAdminAccessToken()->patchJson(
             'api/v3/posts/' . $post->id,
@@ -1594,7 +1580,7 @@ class PostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         $response = $this->withAdminAccessToken()->patchJson(
             'api/v3/posts/' . $post->id,
@@ -1617,7 +1603,7 @@ class PostTest extends TestCase
         $post = factory(Post::class)->create();
         $signup = $post->signup;
 
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         $response = $this->patchJson('api/v3/posts/' . $post->id, [
             'text' => 'new caption',
@@ -1794,7 +1780,7 @@ class PostTest extends TestCase
         ];
 
         // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAdminAccessToken()->postJson('api/v3/posts', [
@@ -1841,7 +1827,7 @@ class PostTest extends TestCase
         ]);
 
         // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson(
@@ -1895,7 +1881,7 @@ class PostTest extends TestCase
         ]);
 
         // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAccessToken($signup->northstar_id)->postJson(
@@ -1947,7 +1933,7 @@ class PostTest extends TestCase
         $northstar_id = $this->faker->northstar_id;
 
         // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignupPost');
+        $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
         $response = $this->withAccessToken($northstar_id)->postJson(

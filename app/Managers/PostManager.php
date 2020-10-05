@@ -61,7 +61,7 @@ class PostManager
         );
 
         // Save the new post in Customer.io, via Blink.
-        if (config('features.blink') && $shouldSendToCustomerIo) {
+        if ($shouldSendToCustomerIo) {
             SendPostToCustomerIo::dispatch($post);
         }
 
@@ -102,8 +102,8 @@ class PostManager
             $data['dont_send_to_blink']
         );
 
-        if (config('features.blink') && $shouldSendToCustomerIo) {
-            SendPostToCustomerIo::dispatch($post, $log);
+        if ($shouldSendToCustomerIo) {
+            SendPostToCustomerIo::dispatch($post);
         }
 
         if ($post->referrer_user_id && $shouldSendToCustomerIo) {

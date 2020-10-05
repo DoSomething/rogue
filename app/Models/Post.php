@@ -340,7 +340,7 @@ class Post extends Model
      *
      * @return array
      */
-    public function toBlinkPayload()
+    public function toCustomerIoPayload()
     {
         // Blink expects quantity to be a number.
         $quantity = $this->quantity === null ? 0 : $this->quantity;
@@ -366,9 +366,10 @@ class Post extends Model
 
         return array_merge(
             [
-                'id' => $this->id,
+                'version' => 3, // TODO: Is this used anywhere in Customer.io?
+                'id' => (string) $this->id,
                 'signup_id' => $this->signup_id,
-                'quantity' => $quantity,
+                'quantity' => (int) $quantity,
                 'why_participated' => $this->signup->why_participated,
                 'campaign_id' => (string) $this->campaign_id,
                 'campaign_run_id' => (string) $this->signup->campaign_run_id,
@@ -399,11 +400,9 @@ class Post extends Model
                 'school_name' => isset($school)
                     ? Arr::get($school, 'name')
                     : null,
-                'created_at' => $this->created_at->toIso8601String(),
-                'updated_at' => $this->updated_at->toIso8601String(),
-                'deleted_at' => $this->deleted_at
-                    ? $this->deleted_at->toIso8601String()
-                    : null,
+                'created_at' => $this->created_at->timestamp,
+                'updated_at' => $this->updated_at->timestamp,
+                'deleted_at' => optional($this->deleted_at)->timestamp,
             ],
             Group::toBlinkPayload($this->group),
         );

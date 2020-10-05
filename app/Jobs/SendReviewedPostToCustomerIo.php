@@ -38,7 +38,7 @@ class SendReviewedPostToCustomerIo implements ShouldQueue
     public function handle()
     {
         // Format the payload
-        $payload = $this->post->toBlinkPayload();
+        $payload = $this->post->toCustomerIoPayload();
 
         // Send to Customer.io
         $shouldSendToCIO = config('features.blink');
