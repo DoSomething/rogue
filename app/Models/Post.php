@@ -366,6 +366,7 @@ class Post extends Model
 
         return array_merge(
             [
+                'version' => 3, // TODO: Is this used anywhere in Customer.io?
                 'id' => (string) $this->id,
                 'signup_id' => $this->signup_id,
                 'quantity' => (int) $quantity,
