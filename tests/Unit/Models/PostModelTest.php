@@ -126,7 +126,7 @@ class PostModelTest extends TestCase
             'school_id' => $this->faker->school_id,
         ]);
 
-        $result = $post->toBlinkPayload();
+        $result = $post->toCustomerIoPayload();
 
         $this->assertEquals($result['group_id'], $group->id);
         $this->assertEquals($result['group_name'], $group->name);
@@ -162,7 +162,7 @@ class PostModelTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $result = $post->toBlinkPayload();
+        $result = $post->toCustomerIoPayload();
 
         $this->assertEquals($result['group_id'], null);
         $this->assertEquals($result['group_name'], null);

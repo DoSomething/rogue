@@ -56,7 +56,7 @@ class SendPostToCustomerIo implements ShouldQueue
                 $customerIo->trackEvent(
                     $this->post->northstar_id,
                     'campaign_signup_post',
-                    $this->post->toBlinkPayload(),
+                    $this->post->toCustomerIoPayload(),
                 );
             },
             // If we  can't obtain a lock, release to queue:
