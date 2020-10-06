@@ -15,6 +15,13 @@ class SendReviewedPostToCustomerIo implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * Delete the job if its models no longer exist.
+     *
+     * @var bool
+     */
+    public $deleteWhenMissingModels = true;
+
+    /**
      * The post to send to Customer.io.
      *
      * @var Post
