@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Rogue\Models\Post;
+use Rogue\Services\CustomerIo;
 
 class SendReviewedPostToCustomerIo implements ShouldQueue
 {
@@ -35,29 +36,25 @@ class SendReviewedPostToCustomerIo implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(CustomerIo $customerIo)
     {
-        // Format the payload
-        $payload = $this->post->toCustomerIoPayload();
+        $throttler = Redis::throttle('customerio')
+            ->allow(10)
+            ->every(1);
 
-        // Send to Customer.io
-        $shouldSendToCIO = config('features.blink');
-
-        if ($shouldSendToCIO) {
-            gateway('blink')->post(
-                'v1/events/user-signup-post-review',
-                $payload,
-            );
-        }
-
-        // Log
-        $verb = $shouldSendToCIO ? 'sent' : 'would have been sent';
-        info(
-            'Review of post ' .
-                $this->post->id .
-                ' ' .
-                $verb .
-                ' to Customer.io',
+        $throttler->then(
+            // Rate limit Customer.io API requests to 10/s:
+            function () use ($customerIo) {
+                $customerIo->trackEvent(
+                    $this->post->northstar_id,
+                    'campaign_review',
+                    $this->post->toCustomerIoPayload(),
+                );
+            },
+            // If we  can't obtain a lock, release to queue:
+            function () {
+                return $this->release(10);
+            },
         );
     }
 }
