@@ -2,22 +2,16 @@
 
 namespace Rogue\Jobs;
 
-use DoSomething\Gateway\Blink;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use Rogue\Jobs\Middleware\CustomerIoRateLimit;
 use Rogue\Models\Signup;
+use Rogue\Services\CustomerIo;
 
-class SendSignupToCustomerIo implements ShouldQueue
+class SendSignupToCustomerIo extends Job
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     /**
-     * The signup to send to Blink.
+     * The signup to send to Customer.io.
      *
-     * @var Signup
+     * @var Post
      */
     protected $signup;
 
@@ -32,25 +26,25 @@ class SendSignupToCustomerIo implements ShouldQueue
     }
 
     /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array
+     */
+    public function middleware()
+    {
+        return [new CustomerIoRateLimit()];
+    }
+
+    /**
      * Execute the job.
      *
      * @return void
      */
-    public function handle(Blink $blink)
+    public function handle(CustomerIo $customerIo)
     {
-        // Check if the signup still exists before sending (might have been deleted immediately if created in Runscope test).
-        if ($this->signup) {
-            $payload = $this->signup->toBlinkPayload();
+        $userId = $this->signup->northstar_id;
+        $payload = $this->signup->toCustomerIoPayload();
 
-            // @TODO: update other places we call this to not check for config('features.blink')
-            $shouldSend = config('features.blink');
-            if ($shouldSend) {
-                $blink->userSignup($payload);
-            }
-
-            // Log
-            $verb = $shouldSend ? 'sent' : 'would have been sent';
-            info('Signup ' . $payload['id'] . ' ' . $verb . ' to Customer.io');
-        }
+        $customerIo->trackEvent($userId, 'campaign_signup', $payload);
     }
 }

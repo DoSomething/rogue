@@ -191,7 +191,7 @@ class Signup extends Model
      *
      * @return array
      */
-    public function toBlinkPayload()
+    public function toCustomerIoPayload()
     {
         // Blink expects quantity to be a number.
         $quantity = $this->quantity === null ? 0 : $this->quantity;
