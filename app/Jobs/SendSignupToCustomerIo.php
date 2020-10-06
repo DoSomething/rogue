@@ -11,7 +11,7 @@ class SendSignupToCustomerIo extends Job
     /**
      * The signup to send to Customer.io.
      *
-     * @var Post
+     * @var Signup
      */
     protected $signup;
 
