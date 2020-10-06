@@ -2,26 +2,12 @@
 
 namespace Rogue\Jobs;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Redis;
+use Rogue\Jobs\Middleware\CustomerIoRateLimit;
 use Rogue\Models\Post;
 use Rogue\Services\CustomerIo;
 
-class SendPostToCustomerIo implements ShouldQueue
+class SendPostToCustomerIo extends Job
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * Delete the job if its models no longer exist.
-     *
-     * @var bool
-     */
-    public $deleteWhenMissingModels = true;
-
     /**
      * The post to send to Customer.io.
      *
@@ -40,29 +26,25 @@ class SendPostToCustomerIo implements ShouldQueue
     }
 
     /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array
+     */
+    public function middleware()
+    {
+        return [new CustomerIoRateLimit()];
+    }
+
+    /**
      * Execute the job.
      *
      * @return void
      */
     public function handle(CustomerIo $customerIo)
     {
-        $throttler = Redis::throttle('customerio')
-            ->allow(10)
-            ->every(1);
+        $userId = $this->post->northstar_id;
+        $payload = $this->post->toCustomerIoPayload();
 
-        $throttler->then(
-            // Rate limit Customer.io API requests to 10/s:
-            function () use ($customerIo) {
-                $customerIo->trackEvent(
-                    $this->post->northstar_id,
-                    'campaign_signup_post',
-                    $this->post->toCustomerIoPayload(),
-                );
-            },
-            // If we  can't obtain a lock, release to queue:
-            function () {
-                return $this->release(10);
-            },
-        );
+        $customerIo->trackEvent($userId, 'campaign_signup_post', $payload);
     }
 }
