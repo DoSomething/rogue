@@ -2,17 +2,10 @@
 
 namespace Rogue\Jobs;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Rogue\Models\Post;
 
-class RejectPost implements ShouldQueue
+class RejectPost extends Job
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     /**
      * The post to reject.
      *
@@ -40,7 +33,6 @@ class RejectPost implements ShouldQueue
         $this->post->status = 'rejected';
         $this->post->save();
 
-        // Log
         info('Automatically rejected post ' . $this->post->id);
     }
 }

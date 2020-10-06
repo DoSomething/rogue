@@ -2,17 +2,12 @@
 
 namespace Rogue\Jobs;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use Rogue\Jobs\Middleware\CustomerIoRateLimit;
 use Rogue\Models\Post;
+use Rogue\Services\CustomerIo;
 
-class SendReviewedPostToCustomerIo implements ShouldQueue
+class SendReviewedPostToCustomerIo extends Job
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     /**
      * The post to send to Customer.io.
      *
@@ -31,33 +26,25 @@ class SendReviewedPostToCustomerIo implements ShouldQueue
     }
 
     /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array
+     */
+    public function middleware()
+    {
+        return [new CustomerIoRateLimit()];
+    }
+
+    /**
      * Execute the job.
      *
      * @return void
      */
-    public function handle()
+    public function handle(CustomerIo $customerIo)
     {
-        // Format the payload
+        $userId = $this->post->northstar_id;
         $payload = $this->post->toCustomerIoPayload();
 
-        // Send to Customer.io
-        $shouldSendToCIO = config('features.blink');
-
-        if ($shouldSendToCIO) {
-            gateway('blink')->post(
-                'v1/events/user-signup-post-review',
-                $payload,
-            );
-        }
-
-        // Log
-        $verb = $shouldSendToCIO ? 'sent' : 'would have been sent';
-        info(
-            'Review of post ' .
-                $this->post->id .
-                ' ' .
-                $verb .
-                ' to Customer.io',
-        );
+        $customerIo->trackEvent($userId, 'campaign_review', $payload);
     }
 }
