@@ -15,7 +15,7 @@ class CustomerIoRateLimit
      */
     public function handle($job, $next)
     {
-        // Rate limit
+        // Rate limit to 10 requests/second.
         $throttler = Redis::throttle('customerio')
             ->allow(10)
             ->every(1);
