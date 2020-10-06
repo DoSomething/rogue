@@ -225,7 +225,7 @@ class Signup extends Model
                 'created_at' => $this->created_at->toIso8601String(),
                 'updated_at' => $this->updated_at->toIso8601String(),
             ],
-            Group::toBlinkPayload($this->group),
+            Group::toCustomerIoPayload($this->group),
         );
     }
 

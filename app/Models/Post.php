@@ -404,7 +404,7 @@ class Post extends Model
                 'updated_at' => $this->updated_at->timestamp,
                 'deleted_at' => optional($this->deleted_at)->timestamp,
             ],
-            Group::toBlinkPayload($this->group),
+            Group::toCustomerIoPayload($this->group),
         );
     }
 
@@ -712,7 +712,7 @@ class Post extends Model
                 'created_at' => $this->created_at->toIso8601String(),
                 'updated_at' => $this->updated_at->toIso8601String(),
             ],
-            Group::toBlinkPayload($this->group),
+            Group::toCustomerIoPayload($this->group),
         );
     }
 
