@@ -4,7 +4,7 @@ namespace Rogue\Jobs\Middleware;
 
 use Illuminate\Support\Facades\Redis;
 
-class RateLimited
+class CustomerIoRateLimit
 {
     /**
      * Process the queued job.
