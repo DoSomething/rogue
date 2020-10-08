@@ -2,6 +2,7 @@
 
 namespace Rogue\Services;
 
+use Guzzle\Exceptions\ClientException;
 use Rogue\Models\Signup;
 use RuntimeException;
 
@@ -51,9 +52,17 @@ class Gambit
             return;
         }
 
-        $this->client->post('/api/v2/messages?origin=signup', [
-            'json' => $payload,
-        ]);
+        try {
+            $response = $this->client->post('/api/v2/messages?origin=signup', [
+                'json' => $payload,
+            ]);
+        } catch (ClientException $exception) {
+            // We expect to get 422s for any users who sign up for a campaign but don't
+            // have a mobile on their profile. These should not count as failures.
+            if ($response->getStatusCode() !== 422) {
+                throw $e;
+            }
+        }
 
         info('Signup sent to Gambit.', ['id' => $signup->id]);
     }
