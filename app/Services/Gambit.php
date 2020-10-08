@@ -60,7 +60,7 @@ class Gambit
             // We expect to get 422s for any users who sign up for a campaign but don't
             // have a mobile on their profile. These should not count as failures.
             if ($response->getStatusCode() !== 422) {
-                throw $e;
+                throw $exception;
             }
         }
 
