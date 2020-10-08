@@ -2,7 +2,7 @@
 
 namespace Rogue\Services;
 
-use Guzzle\Exceptions\ClientException;
+use GuzzleHttp\Exception\ClientException;
 use Rogue\Models\Signup;
 use RuntimeException;
 
