@@ -73,7 +73,7 @@ class Group extends Model
      * @param Group $group
      * @return array
      */
-    public static function toBlinkPayload(?self $group)
+    public static function toCustomerIoPayload(?self $group)
     {
         return [
             'group_id' => $group ? $group->id : null,

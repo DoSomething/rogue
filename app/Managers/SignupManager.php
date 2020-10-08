@@ -4,6 +4,7 @@ namespace Rogue\Managers;
 
 use Rogue\Jobs\CreateCustomerIoEvent;
 use Rogue\Jobs\SendSignupToCustomerIo;
+use Rogue\Jobs\SendSignupToGambit;
 use Rogue\Repositories\SignupRepository;
 
 class SignupManager
@@ -44,9 +45,14 @@ class SignupManager
             $data['dont_send_to_blink']
         );
 
-        // Save the new signup in Customer.io, via Blink.
-        if (config('features.blink') && $shouldSendToCustomerIo) {
+        // Send the new signup to Customer.io:
+        if ($shouldSendToCustomerIo) {
             SendSignupToCustomerIo::dispatch($signup);
+        }
+
+        // If this wasn't triggered via SMS, send to Gambit:
+        if (!preg_match('/(sms|gambit)/', $signup->source)) {
+            SendSignupToGambit::dispatch($signup);
         }
 
         if ($signup->referrer_user_id && $shouldSendToCustomerIo) {

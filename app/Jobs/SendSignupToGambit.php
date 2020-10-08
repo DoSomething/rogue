@@ -2,11 +2,11 @@
 
 namespace Rogue\Jobs;
 
-use Rogue\Jobs\Middleware\CustomerIoRateLimit;
+use Rogue\Jobs\Middleware\GambitRateLimit;
 use Rogue\Models\Signup;
-use Rogue\Services\CustomerIo;
+use Rogue\Services\Gambit;
 
-class SendSignupToCustomerIo extends Job
+class SendSignupToGambit extends Job
 {
     /**
      * The signup to send to Customer.io.
@@ -32,7 +32,7 @@ class SendSignupToCustomerIo extends Job
      */
     public function middleware()
     {
-        return [new CustomerIoRateLimit()];
+        return [new GambitRateLimit()];
     }
 
     /**
@@ -40,11 +40,8 @@ class SendSignupToCustomerIo extends Job
      *
      * @return void
      */
-    public function handle(CustomerIo $customerIo)
+    public function handle(Gambit $gambit)
     {
-        $userId = $this->signup->northstar_id;
-        $payload = $this->signup->toCustomerIoPayload();
-
-        $customerIo->trackEvent($userId, 'campaign_signup', $payload);
+        $gambit->relaySignup($this->signup);
     }
 }

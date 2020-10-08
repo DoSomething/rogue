@@ -191,7 +191,7 @@ class Signup extends Model
      *
      * @return array
      */
-    public function toBlinkPayload()
+    public function toCustomerIoPayload()
     {
         // Blink expects quantity to be a number.
         $quantity = $this->quantity === null ? 0 : $this->quantity;
@@ -222,10 +222,10 @@ class Signup extends Model
                 'source' => $this->source,
                 'source_details' => $this->source_details,
                 'referrer_user_id' => $this->referrer_user_id,
-                'created_at' => $this->created_at->toIso8601String(),
-                'updated_at' => $this->updated_at->toIso8601String(),
+                'created_at' => optional($this->created_at)->timestamp,
+                'updated_at' => optional($this->updated_at)->timestamp,
             ],
-            Group::toBlinkPayload($this->group),
+            Group::toCustomerIoPayload($this->group),
         );
     }
 

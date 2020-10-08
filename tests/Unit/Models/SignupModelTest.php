@@ -9,7 +9,7 @@ use Tests\TestCase;
 class SignupModelTest extends TestCase
 {
     /**
-     * Test expected payload for Blink.
+     * Test expected payload for Customer.io.
      *
      * @return void
      */
@@ -21,7 +21,7 @@ class SignupModelTest extends TestCase
             'referrer_user_id' => $this->faker->northstar_id,
         ]);
 
-        $result = $signup->toBlinkPayload();
+        $result = $signup->toCustomerIoPayload();
 
         $this->assertEquals($result['group_id'], $group->id);
         $this->assertEquals($result['group_name'], $group->name);
@@ -45,7 +45,7 @@ class SignupModelTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
 
-        $result = $signup->toBlinkPayload();
+        $result = $signup->toCustomerIoPayload();
 
         $this->assertEquals($result['group_id'], null);
         $this->assertEquals($result['group_name'], null);

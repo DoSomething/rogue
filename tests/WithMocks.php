@@ -7,6 +7,7 @@ use DoSomething\Gateway\Northstar;
 use DoSomething\Gateway\Resources\NorthstarUser;
 use Illuminate\Support\Facades\Storage;
 use Rogue\Observers\SignupObserver;
+use Rogue\Services\Gambit;
 use Rogue\Services\GraphQL;
 
 trait WithMocks
@@ -53,6 +54,10 @@ trait WithMocks
                     'mobile' => $this->faker->phoneNumber,
                 ]);
             });
+
+        // Gambit Mock
+        $this->gambitMock = $this->mock(Gambit::class);
+        $this->gambitMock->shouldReceive('relaySignup');
 
         // GraphQL Mock
         $this->graphqlMock = $this->mock(GraphQL::class);
