@@ -336,7 +336,7 @@ class Post extends Model
     }
 
     /**
-     * Transform the post model for Blink.
+     * Transform this post for Customer.io.
      *
      * @return array
      */
@@ -395,7 +395,7 @@ class Post extends Model
                 'updated_at' => $this->updated_at->timestamp,
                 'deleted_at' => optional($this->deleted_at)->timestamp,
             ],
-            Group::toCustomerIoPayload($this->group),
+            optional($this->group)->toCustomerIoPayload() ?: [],
         );
     }
 
@@ -689,6 +689,7 @@ class Post extends Model
     public function getReferralPostEventPayload()
     {
         $userId = $this->northstar_id;
+
         // The associated user for this post.
         $user = app(GraphQL::class)->getUserById($userId);
 
@@ -700,10 +701,10 @@ class Post extends Model
                 'type' => $this->type,
                 'status' => $this->status,
                 'action_id' => $this->action_id,
-                'created_at' => $this->created_at->toIso8601String(),
-                'updated_at' => $this->updated_at->toIso8601String(),
+                'created_at' => $this->created_at->timestamp,
+                'updated_at' => $this->updated_at->timestamp,
             ],
-            Group::toCustomerIoPayload($this->group),
+            optional($this->group)->toCustomerIoPayload() ?: [],
         );
     }
 

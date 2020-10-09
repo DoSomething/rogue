@@ -225,7 +225,7 @@ class Signup extends Model
                 'created_at' => optional($this->created_at)->timestamp,
                 'updated_at' => optional($this->updated_at)->timestamp,
             ],
-            Group::toCustomerIoPayload($this->group),
+            optional($this->group)->toCustomerIoPayload() ?: [],
         );
     }
 

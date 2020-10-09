@@ -154,26 +154,6 @@ class PostModelTest extends TestCase
     }
 
     /**
-     * Test expected payload when various attributes are not set.
-     *
-     * @return void
-     */
-    public function testBlinkPayloadForNullValues()
-    {
-        $post = factory(Post::class)->create();
-
-        $result = $post->toCustomerIoPayload();
-
-        $this->assertEquals($result['group_id'], null);
-        $this->assertEquals($result['group_name'], null);
-        $this->assertEquals($result['group_type_id'], null);
-        $this->assertEquals($result['group_type_name'], null);
-        $this->assertEquals($result['school_id'], null);
-        $this->assertEquals($result['school_name'], null);
-        $this->assertEquals($result['referrer_user_id'], null);
-    }
-
-    /**
      * Test expected payload for a referral post event.
      *
      * @return void
@@ -192,7 +172,7 @@ class PostModelTest extends TestCase
         $this->assertEquals($result['action_id'], $post->action_id);
         $this->assertEquals(
             $result['created_at'],
-            $post->created_at->toIso8601String(),
+            $post->created_at->timestamp,
         );
         $this->assertEquals($result['group_id'], $group->id);
         $this->assertEquals($result['group_name'], $group->name);
@@ -206,7 +186,7 @@ class PostModelTest extends TestCase
         $this->assertEquals($result['type'], $post->type);
         $this->assertEquals(
             $result['updated_at'],
-            $post->updated_at->toIso8601String(),
+            $post->updated_at->timestamp,
         );
         $this->assertEquals($result['user_id'], $post->northstar_id);
 
