@@ -372,7 +372,6 @@ class Post extends Model
                 'quantity' => (int) $quantity,
                 'why_participated' => $this->signup->why_participated,
                 'campaign_id' => (string) $this->campaign_id,
-                'campaign_run_id' => (string) $this->signup->campaign_run_id,
                 'campaign_title' => Arr::get($campaignWebsite, 'title'),
                 'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
                 'campaign_cause' => $campaign_cause,
