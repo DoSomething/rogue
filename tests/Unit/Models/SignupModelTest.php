@@ -37,24 +37,6 @@ class SignupModelTest extends TestCase
     }
 
     /**
-     * Test expected payload when various attributes are not set.
-     *
-     * @return void
-     */
-    public function testBlinkPayloadForNullValues()
-    {
-        $signup = factory(Signup::class)->create();
-
-        $result = $signup->toCustomerIoPayload();
-
-        $this->assertEquals($result['group_id'], null);
-        $this->assertEquals($result['group_name'], null);
-        $this->assertEquals($result['group_type_id'], null);
-        $this->assertEquals($result['group_type_name'], null);
-        $this->assertEquals($result['referrer_user_id'], null);
-    }
-
-    /**
      * Test expected payload for a referral signup event.
      *
      * @return void

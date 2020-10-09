@@ -68,18 +68,19 @@ class Group extends Model
     }
 
     /**
-     * Returns Customer.io payload attributes for given group, if exists.
+     * Transform this group for Customer.io.
      *
-     * @param Group $group
      * @return array
      */
-    public static function toCustomerIoPayload(?self $group)
+    public function toCustomerIoPayload()
     {
         return [
-            'group_id' => $group ? $group->id : null,
-            'group_name' => $group ? $group->name : null,
-            'group_type_id' => $group ? $group->group_type->id : null,
-            'group_type_name' => $group ? $group->group_type->name : null,
+            // Note: These fields will be merged in with post & signup events, and so
+            // it's important to prefix them all with 'group_' to avoid conflicts!
+            'group_id' => $this->id,
+            'group_name' => $this->name,
+            'group_type_id' => $this->group_type->id,
+            'group_type_name' => $this->group_type->name,
         ];
     }
 }

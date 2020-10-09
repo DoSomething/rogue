@@ -336,21 +336,12 @@ class Post extends Model
     }
 
     /**
-     * Transform the post model for Blink.
+     * Transform this post for Customer.io.
      *
      * @return array
      */
     public function toCustomerIoPayload()
     {
-        // Blink expects quantity to be a number.
-        $quantity = $this->quantity === null ? 0 : $this->quantity;
-
-        // Bypass Campaign->cause accessor method so the value isn't converted to an array
-        // which Customer.io does not support.
-        $campaign_cause = optional($this->signup->campaign)->getAttributes()[
-            'cause'
-        ];
-
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId(
             $this->campaign_id,
@@ -361,32 +352,32 @@ class Post extends Model
             $school = app(GraphQL::class)->getSchoolById($this->school_id);
         }
 
-        // The associated Action for this post.
         $action = $this->actionModel;
+        $signup = optional($this->signup);
+        $campaign = optional($signup->campaign);
 
         return array_merge(
             [
                 'version' => 3, // TODO: Is this used anywhere in Customer.io?
                 'id' => (string) $this->id,
                 'signup_id' => $this->signup_id,
-                'quantity' => (int) $quantity,
-                'why_participated' => $this->signup->why_participated,
+                'quantity' => (int) $this->quantity,
+                'why_participated' => $signup->why_participated,
                 'campaign_id' => (string) $this->campaign_id,
-                'campaign_run_id' => (string) $this->signup->campaign_run_id,
                 'campaign_title' => Arr::get($campaignWebsite, 'title'),
                 'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
-                'campaign_cause' => $campaign_cause,
+                'campaign_cause' => implode(',', $campaign->cause),
                 'northstar_id' => $this->northstar_id,
                 'type' => $this->type,
                 'action' => $this->getActionName(),
                 'action_id' => $this->action_id,
-                'action_type' => $action['action_type'],
-                'scholarship_entry' => $action['scholarship_entry'],
-                'civic_action' => $action['civic_action'],
-                'quiz' => $action['quiz'],
-                'online' => $action['online'],
-                'time_commitment' => $action['time_commitment'],
-                'volunteer_credit' => $action['volunteer_credit'],
+                'action_type' => $action->action_type,
+                'scholarship_entry' => $action->scholarship_entry,
+                'civic_action' => $action->civic_action,
+                'quiz' => $action->quiz,
+                'online' => $action->online,
+                'time_commitment' => $action->time_commitment,
+                'volunteer_credit' => $action->volunteer_credit,
                 'url' => $this->getMediaUrl(),
                 'caption' => $this->text,
                 'text' => $this->text,
@@ -404,7 +395,7 @@ class Post extends Model
                 'updated_at' => $this->updated_at->timestamp,
                 'deleted_at' => optional($this->deleted_at)->timestamp,
             ],
-            Group::toCustomerIoPayload($this->group),
+            optional($this->group)->toCustomerIoPayload() ?: [],
         );
     }
 
@@ -698,6 +689,7 @@ class Post extends Model
     public function getReferralPostEventPayload()
     {
         $userId = $this->northstar_id;
+
         // The associated user for this post.
         $user = app(GraphQL::class)->getUserById($userId);
 
@@ -709,10 +701,10 @@ class Post extends Model
                 'type' => $this->type,
                 'status' => $this->status,
                 'action_id' => $this->action_id,
-                'created_at' => $this->created_at->toIso8601String(),
-                'updated_at' => $this->updated_at->toIso8601String(),
+                'created_at' => $this->created_at->timestamp,
+                'updated_at' => $this->updated_at->timestamp,
             ],
-            Group::toCustomerIoPayload($this->group),
+            optional($this->group)->toCustomerIoPayload() ?: [],
         );
     }
 
