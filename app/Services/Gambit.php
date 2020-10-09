@@ -53,13 +53,17 @@ class Gambit
         }
 
         try {
-            $response = $this->client->post('/api/v2/messages?origin=signup', [
+            $this->client->post('/api/v2/messages?origin=signup', [
                 'json' => $payload,
             ]);
         } catch (ClientException $exception) {
-            // We expect to get 422s for any users who sign up for a campaign but don't
-            // have a mobile on their profile. These should not count as failures.
-            if ($response->getStatusCode() !== 422) {
+            $response = $exception->getResponse();
+
+            if ($response->getStatusCode() === 422) {
+                // We expect to get 422s from this endpoint for any users who sign up for
+                // a campaign but don't have a mobile on their profile or are unsubscribed
+                // from text messages. These should not be counted as failures!
+            } else {
                 throw $exception;
             }
         }
