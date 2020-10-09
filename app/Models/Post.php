@@ -342,9 +342,6 @@ class Post extends Model
      */
     public function toCustomerIoPayload()
     {
-        // Blink expects quantity to be a number.
-        $quantity = $this->quantity === null ? 0 : $this->quantity;
-
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId(
             $this->campaign_id,
@@ -364,7 +361,7 @@ class Post extends Model
                 'version' => 3, // TODO: Is this used anywhere in Customer.io?
                 'id' => (string) $this->id,
                 'signup_id' => $this->signup_id,
-                'quantity' => (int) $quantity,
+                'quantity' => (int) $this->quantity,
                 'why_participated' => $signup->why_participated,
                 'campaign_id' => (string) $this->campaign_id,
                 'campaign_title' => Arr::get($campaignWebsite, 'title'),
