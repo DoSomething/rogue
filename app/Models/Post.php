@@ -361,8 +361,9 @@ class Post extends Model
             $school = app(GraphQL::class)->getSchoolById($this->school_id);
         }
 
-        // The associated Action for this post.
         $action = $this->actionModel;
+        $signup = optional($this->signup);
+        $campaign = optional($signup->campaign);
 
         return array_merge(
             [
@@ -370,7 +371,7 @@ class Post extends Model
                 'id' => (string) $this->id,
                 'signup_id' => $this->signup_id,
                 'quantity' => (int) $quantity,
-                'why_participated' => $this->signup->why_participated,
+                'why_participated' => $signup->why_participated,
                 'campaign_id' => (string) $this->campaign_id,
                 'campaign_title' => Arr::get($campaignWebsite, 'title'),
                 'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
