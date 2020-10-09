@@ -366,7 +366,7 @@ class Post extends Model
                 'campaign_id' => (string) $this->campaign_id,
                 'campaign_title' => Arr::get($campaignWebsite, 'title'),
                 'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
-                'campaign_cause' => implode(',', $campaign->cause),
+                'campaign_cause' => implode(',', $campaign->cause ?: []),
                 'northstar_id' => $this->northstar_id,
                 'type' => $this->type,
                 'action' => $this->getActionName(),

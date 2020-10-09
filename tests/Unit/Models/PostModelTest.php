@@ -154,6 +154,23 @@ class PostModelTest extends TestCase
     }
 
     /**
+     * Test expected payload for Customer.io, even if the
+     * post's signup has been deleted.
+     *
+     * @return void
+     */
+    public function testCustomerIoPayloadWithoutSignup()
+    {
+        $post = factory(Post::class)->create();
+        $post->signup->delete();
+
+        $payload = $post->fresh()->toCustomerIoPayload();
+
+        $this->assertArrayHasKey('id', $payload);
+        $this->assertEquals('', $payload['campaign_cause']);
+    }
+
+    /**
      * Test expected payload for a referral post event.
      *
      * @return void
