@@ -16,6 +16,9 @@ GET /api/v3/clubs
 
   - Filter results by names that include the given filter, e.g. `filter[name]=Oakland`.
 
+- **cursor[after]** _(string)_
+  - Get results _after_ specified cursor (Base-64 encoded ID of Club).
+
 Example Response:
 
 ```
