@@ -3,9 +3,12 @@
 namespace Rogue\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Rogue\Models\Traits\HasCursor;
 
 class Club extends Model
 {
+    use HasCursor;
+
     /**
      * The attributes that are mass assignable.
      *

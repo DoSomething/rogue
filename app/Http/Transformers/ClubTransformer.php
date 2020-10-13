@@ -24,6 +24,7 @@ class ClubTransformer extends TransformerAbstract
             'school_id' => $club->school_id,
             'created_at' => $club->created_at->toIso8601String(),
             'updated_at' => $club->updated_at->toIso8601String(),
+            'cursor' => $club->getCursor(),
         ];
     }
 }

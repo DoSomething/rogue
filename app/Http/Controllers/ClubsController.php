@@ -3,6 +3,7 @@
 namespace Rogue\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Rogue\Http\Transformers\ClubTransformer;
 use Rogue\Models\Club;
 
@@ -35,6 +36,11 @@ class ClubsController extends ApiController
 
         if (isset($filters['name'])) {
             $query->where('name', 'LIKE', '%' . $filters['name'] . '%');
+        }
+
+        if ($cursor = Arr::get($request->query('cursor'), 'after')) {
+            $query->whereAfterCursor($cursor);
+            $this->useCursorPagination = true;
         }
 
         return $this->paginatedCollection($query, $request);
