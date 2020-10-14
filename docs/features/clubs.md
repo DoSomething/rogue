@@ -26,6 +26,10 @@ The full list of clubs can be viewed at https://activity.dosomething.org/clubs. 
 
 You can view and update a user's `club_id` field via their profile page on our [admin site](https://admin.dosomething.org/users).
 
+## Joining a club
+
+Over on our website, users can join a club via an embedded [Current Club Block](https://dosomething.gitbook.io/phoenix-documentation/development/content-types/current-club-block).
+
 ## Tracking Impact
 
 Any Signups or Posts created for a user associated with a club will track the Clubs ID in the `club_id` field of the Signup/Post.
