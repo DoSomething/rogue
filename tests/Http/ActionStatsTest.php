@@ -9,6 +9,8 @@ use Tests\TestCase;
 
 class ActionStatsTest extends TestCase
 {
+    protected $url = 'api/v3/action-stats';
+
     /**
      * Test that a GET request to /api/v3/action-stats returns an index of all action stats.
      *
@@ -140,5 +142,38 @@ class ActionStatsTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertEquals(1, $decodedResponse['meta']['pagination']['count']);
+    }
+
+    /**
+     * Test expected results for filtering by group ID and after cursor.
+     *
+     * @return void
+     */
+    public function testGroupTypeIdFilterAndCursor()
+    {
+        // Create five action stats.
+        $actionStats = factory(ActionStat::class, 5)->create();
+        // Create a group with our first action stat's school.
+        $group = factory(Group::class)->create([
+            'school_id' => $actionStats[0]->school_id,
+        ]);
+
+        // Find a cursor to search by.
+        $response = $this->getJson($this->url);
+
+        $decodedResponse = $response->decodeResponseJson();
+        $firstCursor = $decodedResponse['data'][0]['cursor'];
+
+        // Verify no errors are thrown when additionally filtering by group_type_id.
+        $response = $this->getJson(
+            $this->url .
+                '?filter[group_type_id]=' .
+                $group->group_type_id .
+                '&cursor[after]=' .
+                $firstCursor,
+        );
+        $decodedResponse = $response->decodeResponseJson();
+
+        $response->assertStatus(200);
     }
 }
