@@ -4,6 +4,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 
 import { env } from './helpers';
 import graphql from './graphql';
+import ShowClub from './pages/ShowClub';
 import ShowPost from './pages/ShowPost';
 import ShowUser from './pages/ShowUser';
 import PostIndex from './pages/PostIndex';
@@ -44,6 +45,9 @@ const Application = () => {
           <Redirect from="/campaigns/:id/inbox" to="/campaigns/:id/pending" />
           <Route path="/campaigns/:id/:status">
             <ShowCampaign />
+          </Route>
+          <Route path="/clubs/:id">
+            <ShowClub />
           </Route>
           <Route path="/groups" exact>
             <GroupTypeIndex />
