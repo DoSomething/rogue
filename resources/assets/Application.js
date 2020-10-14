@@ -9,6 +9,7 @@ import ShowPost from './pages/ShowPost';
 import ShowUser from './pages/ShowUser';
 import PostIndex from './pages/PostIndex';
 import UserIndex from './pages/UserIndex';
+import ClubIndex from './pages/ClubIndex';
 import ShowGroup from './pages/ShowGroup';
 import ShowAction from './pages/ShowAction';
 import ShowSignup from './pages/ShowSignup';
@@ -45,6 +46,9 @@ const Application = () => {
           <Redirect from="/campaigns/:id/inbox" to="/campaigns/:id/pending" />
           <Route path="/campaigns/:id/:status">
             <ShowCampaign />
+          </Route>
+          <Route path="/clubs" exact>
+            <ClubIndex />
           </Route>
           <Route path="/clubs/:id">
             <ShowClub />
