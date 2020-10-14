@@ -3,6 +3,8 @@
 This is **Rogue**, the DoSomething.org user activity service. Rogue is built using [Laravel 6](https://laravel.com/docs/6.x) and [React](http://reactjs.com).
 
 - [API Documentation](./endpoints)
+- [Development](./development)
+- [Features](./features)
 
 ### Getting Started
 
