@@ -20,11 +20,15 @@ Clubs can be edited by visiting the edit page using the Club ID e.g. https://act
 
 ## Viewing a club
 
-Currently, clubs can only be viewed through the API using the Club ID e.g. https://activity.dosomething.org/api/v3/clubs/1
+The full list of clubs can be viewed at https://activity.dosomething.org/clubs. Individual clubs via appending the ID, e.g. https://activity.dosomething.org/clubs/1.
 
 ## Updating a user's club
 
 You can view and update a user's `club_id` field via their profile page on our [admin site](https://admin.dosomething.org/users).
+
+## Joining a club
+
+Over on our website, users can join a club via an embedded [Current Club Block](https://dosomething.gitbook.io/phoenix-documentation/development/content-types/current-club-block).
 
 ## Tracking Impact
 
