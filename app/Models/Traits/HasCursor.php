@@ -42,6 +42,12 @@ trait HasCursor
 
         $orderBy = request()->query('orderBy');
 
+        /**
+         * Because we may be joining tables, specify the base query table name
+         * to avoid integrity constraint violations for ambiguous clauses.
+         */
+        $idField = $query->getModel()->getTable() . '.id';
+
         // If we're sorting by anything other than ID, things get a lil' tricky. First,
         // we'll extract the sorted column & direction from the `?orderBy` query string:
         if ($orderBy && $orderBy !== 'id,asc' && !is_null($sortCursor)) {
@@ -57,14 +63,14 @@ trait HasCursor
                 $query->where($column, $operator, $sortCursor);
                 $query->orWhere([
                     [$column, '=', $sortCursor],
-                    ['id', '>', $id],
+                    [$idField, '>', $id],
                 ]);
 
                 // @TODO: This gets a lot more complicated if the sorted column can have nulls...
             }
         } else {
             // Otherwise, treat as a plain ID cursor... easy!
-            $query->where('id', '>', $id);
+            $query->where($idField, '>', $id);
         }
     }
 }
