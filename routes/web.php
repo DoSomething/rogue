@@ -53,6 +53,10 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::view('campaigns/{id}', 'app');
     Route::view('campaigns/{id}/{status}', 'app');
 
+    // Clubs
+    Route::view('clubs', 'app');
+    Route::view('clubs/{id}', 'app');
+
     // Groups
     Route::view('groups', 'app');
     Route::view('groups/{id}', 'app');
