@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 
 import Empty from './Empty';
 import { updateQuery } from '../helpers';
+import ErrorBlock from './utilities/ErrorBlock';
 import EntityLabel from './utilities/EntityLabel';
 import SortableHeading from './utilities/SortableHeading';
 
@@ -106,12 +107,7 @@ const CampaignsTable = ({ isOpen, filter }) => {
   }, [filter, endCursor]);
 
   if (error) {
-    return (
-      <div className="text-center">
-        <p>There was an error. :(</p>
-        <code>{JSON.stringify(error)}</code>
-      </div>
-    );
+    return <ErrorBlock error={error} />;
   }
 
   if (noFilteredResults && !hasNextPage) {

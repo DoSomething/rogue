@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
 import Empty from './Empty';
+import ErrorBlock from './utilities/ErrorBlock';
 import EntityLabel from './utilities/EntityLabel';
 import { updateQuery } from '../helpers';
 
@@ -51,13 +52,7 @@ const ClubsTable = ({ filter }) => {
     fetchMore({ variables: { cursor: endCursor }, updateQuery });
 
   if (error) {
-    return (
-      <div className="text-center">
-        <p>There was an error. :(</p>
-
-        <code>{JSON.stringify(error)}</code>
-      </div>
-    );
+    return <ErrorBlock error={error} />;
   }
 
   if (noResults && !hasNextPage) {
