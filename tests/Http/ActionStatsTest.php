@@ -21,7 +21,7 @@ class ActionStatsTest extends TestCase
         // Create five action stats.
         factory(ActionStat::class, 5)->create();
 
-        $response = $this->getJson('api/v3/action-stats');
+        $response = $this->getJson($this->url);
         $decodedResponse = $response->decodeResponseJson();
 
         $response->assertStatus(200);
@@ -68,7 +68,7 @@ class ActionStatsTest extends TestCase
         $this->assertEquals(2, $decodedResponse['meta']['pagination']['count']);
 
         $response = $this->getJson(
-            'api/v3/action-stats?filter[group_type_id]=' . $secondGroupTypeId,
+            $this->url . '?filter[group_type_id]=' . $secondGroupTypeId,
         );
         $decodedResponse = $response->decodeResponseJson();
 
@@ -77,7 +77,8 @@ class ActionStatsTest extends TestCase
 
         // Verify no errors are thrown when using a groupBy query.
         $response = $this->getJson(
-            'api/v3/action-stats?orderBy=impact,desc&filter[group_type_id]=' .
+            $this->url .
+                '?orderBy=impact,desc&filter[group_type_id]=' .
                 $secondGroupTypeId,
         );
         $decodedResponse = $response->decodeResponseJson();
@@ -123,8 +124,7 @@ class ActionStatsTest extends TestCase
         ]);
 
         $response = $this->getJson(
-            'api/v3/action-stats?filter[location]=' .
-                $firstActionStat->location,
+            $this->url . '?filter[location]=' . $firstActionStat->location,
         );
         $decodedResponse = $response->decodeResponseJson();
 
@@ -133,7 +133,8 @@ class ActionStatsTest extends TestCase
 
         // Verify no errors are thrown when additionally filtering by group_type_id.
         $response = $this->getJson(
-            'api/v3/action-stats?orderBy=impact,desc&filter[group_type_id]=' .
+            $this->url .
+                '?orderBy=impact,desc&filter[group_type_id]=' .
                 $firstGroupTypeId .
                 '&filter[location]=' .
                 $firstActionStat->location,
