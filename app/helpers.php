@@ -52,6 +52,12 @@ function multipleValueQuery($query, $queryString, $filter)
 {
     $values = explode(',', $queryString);
 
+    /**
+     * Because we may be joining tables, specify the base query table name
+     * to avoid integrity constraint violations for ambiguous clauses.
+     */
+    $filter = $query->getModel()->getTable() . '.' . $filter;
+
     if (count($values) > 1) {
         // For the first `where` query, we want to limit results... from then on,
         // we want to append (e.g. `SELECT * (WHERE _ OR WHERE _ OR WHERE _)` and (WHERE _ OR WHERE _))
