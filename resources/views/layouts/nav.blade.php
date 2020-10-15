@@ -16,6 +16,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/clubs">
+                        <strong class="navigation__title">Clubs</strong>
+                        <span class="navigation__subtitle">Review & edit</span>
+                    </a>
+                </li>
+                <li>
                     <a href="/faq">
                         <strong class="navigation__title">FAQ</strong>
                         <span class="navigation__subtitle">How do I...</span>
