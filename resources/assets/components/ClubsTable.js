@@ -21,7 +21,7 @@ const CLUBS_QUERY = gql`
           leaderId
           leader {
             id
-            firstName
+            displayName
           }
           schoolId
         }
@@ -88,7 +88,7 @@ const ClubsTable = ({ filter }) => {
               {node.leader ? (
                 <EntityLabel
                   id={node.leader.id}
-                  name={node.leader.firstName}
+                  name={node.leader.displayName}
                   path="users"
                 />
               ) : (
