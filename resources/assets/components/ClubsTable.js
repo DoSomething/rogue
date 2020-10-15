@@ -18,6 +18,7 @@ const CLUBS_QUERY = gql`
           name
           city
           location
+          leaderId
           leader {
             id
             firstName
@@ -84,11 +85,15 @@ const ClubsTable = ({ filter }) => {
             </td>
             <td>{node.city ? `${node.city}, ${node.location}` : null}</td>
             <td>
-              <EntityLabel
-                id={node.leader.id}
-                name={node.leader.firstName}
-                path="users"
-              />
+              {node.leader ? (
+                <EntityLabel
+                  id={node.leader.id}
+                  name={node.leader.firstName}
+                  path="users"
+                />
+              ) : (
+                node.leaderId
+              )}
             </td>
             <td>
               {node.schoolId ? (
