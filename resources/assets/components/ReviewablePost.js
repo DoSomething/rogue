@@ -36,6 +36,7 @@ export const ReviewablePostFragment = gql`
     createdAt
     source
     details
+    clubId
     groupId
     referrerUserId
     schoolId
@@ -205,6 +206,11 @@ const ReviewablePost = ({ post }) => {
                 </Link>
               ) : (
                 '-'
+              ),
+              Club: post.clubId ? (
+                <Link to={`/clubs/${post.clubId}`}>{post.clubId}</Link>
+              ) : (
+                '--'
               ),
               Group: post.groupId ? (
                 <Link to={`/groups/${post.groupId}`}>{post.groupId}</Link>

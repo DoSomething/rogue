@@ -25,6 +25,10 @@ const SIGNUPS_TABLE_QUERY = gql`
             id
             internalTitle
           }
+          club {
+            id
+            name
+          }
           groupId
           group {
             id
@@ -98,6 +102,8 @@ const SignupsTable = ({ campaignId, groupId }) => {
             {campaignId ? null : <td>Campaign</td>}
 
             {groupId ? null : <td>Group</td>}
+
+            <td>Club</td>
           </tr>
         </thead>
         <tbody>
@@ -134,6 +140,18 @@ const SignupsTable = ({ campaignId, groupId }) => {
                   ) : null}
                 </td>
               )}
+
+              <td>
+                {node.club ? (
+                  <EntityLabel
+                    id={node.club.id}
+                    name={node.club.name}
+                    path="clubs"
+                  />
+                ) : (
+                  '--'
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
