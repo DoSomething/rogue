@@ -14,6 +14,7 @@ const SHOW_CLUB_QUERY = gql`
       name
       city
       location
+      leaderId
       leader {
         id
         displayName
@@ -55,8 +56,10 @@ const ShowClub = () => {
               Name: name,
               City: city || '--',
               Location: location || '--',
-              Leader: (
+              Leader: leader ? (
                 <Link to={`/users/${leader.id}`}>{leader.displayName}</Link>
+              ) : (
+                leaderId
               ),
               School: schoolId ? (
                 <Link to={`/schools/${schoolId}`}>{schoolId}</Link>
