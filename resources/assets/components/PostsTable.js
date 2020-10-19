@@ -36,6 +36,10 @@ const POSTS_INDEX_QUERY = gql`
             id
             internalTitle
           }
+          club {
+            id
+            name
+          }
           groupId
           group {
             id
@@ -106,6 +110,8 @@ const PostsTable = ({ campaignId, groupId, referrerUserId, userId }) => {
             <td>Status</td>
 
             {groupId ? null : <td>Group</td>}
+
+            <td>Club</td>
           </tr>
         </thead>
         <tbody>
@@ -148,6 +154,16 @@ const PostsTable = ({ campaignId, groupId, referrerUserId, userId }) => {
                   ) : null}
                 </td>
               )}
+
+              <td>
+                {node.club ? (
+                  <EntityLabel
+                    id={node.club.id}
+                    name={node.club.name}
+                    path="clubs"
+                  />
+                ) : null}
+              </td>
             </tr>
           ))}
         </tbody>
