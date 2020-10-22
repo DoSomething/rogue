@@ -193,17 +193,12 @@ class Signup extends Model
      */
     public function toCustomerIoPayload()
     {
-        // Bypass Campaign->cause accessor method so the value isn't converted to an array
-        // which Customer.io does not support.
-        $campaign_cause = Arr::get(
-            optional($this->campaign)->getAttributes(),
-            'cause',
-        );
-
         // Fetch Campaign Website information via GraphQL.
         $campaignWebsite = app(GraphQL::class)->getCampaignWebsiteByCampaignId(
             $this->campaign_id,
         );
+
+        $campaign = optional($this->campaign);
 
         return array_merge(
             [
@@ -213,7 +208,7 @@ class Signup extends Model
                 'campaign_run_id' => (string) $this->campaign_run_id,
                 'campaign_title' => Arr::get($campaignWebsite, 'title'),
                 'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
-                'campaign_cause' => $campaign_cause,
+                'campaign_cause' => implode(',', $campaign->cause ?: []),
                 'quantity' => (int) $this->quantity,
                 'why_participated' => $this->why_participated,
                 'source' => $this->source,
