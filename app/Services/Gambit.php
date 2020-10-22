@@ -63,6 +63,10 @@ class Gambit
                 // We expect to get 422s from this endpoint for any users who sign up for
                 // a campaign but don't have a mobile on their profile or are unsubscribed
                 // from text messages. These should not be counted as failures!
+            } elseif ($response->getStatusCode() === 400) {
+                // We expect to get 400s from this endpoint for any users who sign up for
+                // a campaign & have a mobile, but the mobile number is undeliverable. Since
+                // this likely won't change, this shouldn't be counted as a failure!
             } else {
                 throw $exception;
             }
