@@ -109,11 +109,11 @@ class PostModelTest extends TestCase
     }
 
     /**
-     * Test expected payload for Blink.
+     * Test expected payload for Customer.io.
      *
      * @return void
      */
-    public function testBlinkPayload()
+    public function testCustomerIoPayload()
     {
         $action = factory(Action::class)->create([
             'volunteer_credit' => true,
@@ -146,7 +146,7 @@ class PostModelTest extends TestCase
         $this->assertEquals($result['campaign_title'], 'Test Example Campaign');
         $this->assertEquals($result['school_name'], 'San Dimas High School');
 
-        // Test expected post->action attributes were added to the Blink payload.
+        // Test expected post->action attributes were added to the Customer.io payload.
         $this->assertEquals(
             $result['volunteer_credit'],
             $action->volunteer_credit,

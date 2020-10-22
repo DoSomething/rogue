@@ -187,7 +187,7 @@ class Signup extends Model
     }
 
     /**
-     * Transform the signup model for Blink.
+     * Transform this signup for Customer.io.
      *
      * @return array
      */

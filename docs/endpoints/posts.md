@@ -265,7 +265,7 @@ Optional params:
 - **group_id** (int).
   The Group ID that this post should be associated with.
 - **dont_send_to_blink** (boolean).
-  If included and true, the data for this Post will not be sent to Blink.
+  If included and true, the data for this Post will not be sent to Customer.io.
 - **created_at** (timestamp).
   If admin and included, the timestamp to set the `created_at` date to. This would be used in a case when we're importing data from the importer app (e.g. `voter-reg` posts, historical FB share posts, etc.).
 

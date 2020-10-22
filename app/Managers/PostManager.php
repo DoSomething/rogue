@@ -29,7 +29,7 @@ class PostManager
      * Constructor.
      *
      * @param PostRepository $posts
-     * @param Blink $blink
+     * @param Fastly $fastly
      */
     public function __construct(PostRepository $posts, Fastly $fastly)
     {
@@ -54,13 +54,12 @@ class PostManager
             $authenticatedUserRole,
         );
 
-        // Send to Blink unless 'dont_send_to_blink' is TRUE
+        // Send to Customer.io unless 'dont_send_to_blink' is TRUE
         $shouldSendToCustomerIo = !(
             array_key_exists('dont_send_to_blink', $data) &&
             $data['dont_send_to_blink']
         );
 
-        // Save the new post in Customer.io, via Blink.
         if ($shouldSendToCustomerIo) {
             SendPostToCustomerIo::dispatch($post);
         }
