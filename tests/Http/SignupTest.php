@@ -2,7 +2,6 @@
 
 namespace Tests\Http;
 
-use DoSomething\Gateway\Blink;
 use Illuminate\Support\Str;
 use Rogue\Models\Club;
 use Rogue\Models\Group;
@@ -26,9 +25,6 @@ class SignupTest extends TestCase
     {
         $northstarId = $this->faker->northstar_id;
         $campaignId = $this->faker->randomNumber(4);
-
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignup');
 
         $response = $this->withAccessToken($northstarId)->postJson(
             'api/v3/signups',
@@ -72,8 +68,6 @@ class SignupTest extends TestCase
         $campaignId = $this->faker->randomNumber(4);
         $group = factory(Group::class)->create();
 
-        $this->mock(Blink::class)->shouldReceive('userSignup');
-
         $response = $this->withAccessToken($northstarId)->postJson(
             'api/v3/signups',
             [
@@ -103,8 +97,6 @@ class SignupTest extends TestCase
         $northstarId = $this->faker->northstar_id;
         $referrerUserId = $this->faker->northstar_id;
         $campaignId = $this->faker->randomNumber(4);
-
-        $this->mock(Blink::class)->shouldReceive('userSignup');
 
         // Mock the GraphQL API calls.
         $this->mock(GraphQL::class)->shouldReceive(
@@ -148,8 +140,6 @@ class SignupTest extends TestCase
         $campaignId = $this->faker->randomNumber(4);
         $clubId = factory(Club::class)->create()->id;
 
-        $this->mock(Blink::class)->shouldReceive('userSignup');
-
         $this->mock(SignupObserver::class)
             ->makePartial()
             ->shouldReceive('queryForUser')
@@ -189,8 +179,6 @@ class SignupTest extends TestCase
         $referrerUserId = 'hacker';
         $campaignId = $this->faker->randomNumber(4);
 
-        $this->mock(Blink::class)->shouldReceive('userSignup');
-
         $response = $this->withAccessToken($northstarId)->postJson(
             'api/v3/signups',
             [
@@ -214,9 +202,6 @@ class SignupTest extends TestCase
         $northstarId = $this->faker->northstar_id;
         $campaignId = Str::random(22);
 
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignup');
-
         $response = $this->postJson('api/v3/signups', [
             'campaign_id' => $campaignId,
             'details' => 'affiliate-messaging',
@@ -239,9 +224,6 @@ class SignupTest extends TestCase
     public function testNotCreatingDuplicateSignups()
     {
         $signup = factory(Signup::class)->create();
-
-        // Mock the Blink API call.
-        $this->mock(Blink::class)->shouldReceive('userSignup');
 
         $response = $this->withAccessToken($signup->northstar_id)->postJson(
             'api/v3/signups',

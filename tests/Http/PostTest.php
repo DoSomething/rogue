@@ -2,7 +2,6 @@
 
 namespace Tests\Http;
 
-use DoSomething\Gateway\Blink;
 use Illuminate\Http\UploadedFile;
 use Rogue\Models\Action;
 use Rogue\Models\Campaign;
@@ -71,9 +70,6 @@ class PostTest extends TestCase
         $action = factory(Action::class)->create([
             'campaign_id' => $campaignId,
         ]);
-
-        // Mock the Blink API calls.
-        $this->mock(Blink::class)->shouldReceive('userSignup');
 
         // Mock the GraphQL API calls.
         $this->mock(GraphQL::class)->shouldReceive(
@@ -155,8 +151,6 @@ class PostTest extends TestCase
             'campaign_id' => $campaignId,
         ]);
 
-        // Mock the Blink API calls.
-        $this->mock(Blink::class)->shouldReceive('userSignup');
         $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
@@ -1779,7 +1773,6 @@ class PostTest extends TestCase
             'sms subscribed' => 'TRUE',
         ];
 
-        // Mock the Blink API call.
         $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
@@ -1826,7 +1819,6 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
         ]);
 
-        // Mock the Blink API call.
         $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
@@ -1880,7 +1872,6 @@ class PostTest extends TestCase
             'campaign_id' => $signup->campaign_id,
         ]);
 
-        // Mock the Blink API call.
         $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
@@ -1932,7 +1923,6 @@ class PostTest extends TestCase
         ]);
         $northstar_id = $this->faker->northstar_id;
 
-        // Mock the Blink API call.
         $this->mock(CustomerIo::class)->shouldReceive('trackEvent');
 
         // Create the post!
