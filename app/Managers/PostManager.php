@@ -54,17 +54,10 @@ class PostManager
             $authenticatedUserRole,
         );
 
-        // Send to Customer.io unless 'dont_send_to_blink' is TRUE
-        $shouldSendToCustomerIo = !(
-            array_key_exists('dont_send_to_blink', $data) &&
-            $data['dont_send_to_blink']
-        );
+        // Send post event(s) to Customer.io for messaging:
+        SendPostToCustomerIo::dispatch($post);
 
-        if ($shouldSendToCustomerIo) {
-            SendPostToCustomerIo::dispatch($post);
-        }
-
-        if ($post->referrer_user_id && $shouldSendToCustomerIo) {
+        if ($post->referrer_user_id) {
             CreateCustomerIoEvent::dispatch(
                 $post->referrer_user_id,
                 'referral_post_created',
@@ -94,18 +87,10 @@ class PostManager
     {
         $post = $this->repository->update($post, $data);
 
-        // Save the new post in Customer.io, via Blink,
-        // unless 'dont_send_to_blink' is TRUE.
-        $shouldSendToCustomerIo = !(
-            array_key_exists('dont_send_to_blink', $data) &&
-            $data['dont_send_to_blink']
-        );
+        // Send post event(s) to Customer.io for messaging:
+        SendPostToCustomerIo::dispatch($post);
 
-        if ($shouldSendToCustomerIo) {
-            SendPostToCustomerIo::dispatch($post);
-        }
-
-        if ($post->referrer_user_id && $shouldSendToCustomerIo) {
+        if ($post->referrer_user_id) {
             CreateCustomerIoEvent::dispatch(
                 $post->referrer_user_id,
                 'referral_post_updated',

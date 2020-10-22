@@ -38,23 +38,15 @@ class SignupManager
     {
         $signup = $this->signup->create($data, $northstarId, $campaignId);
 
-        // Send to Customer.io unless 'dont_send_to_blink' is TRUE
-        $shouldSendToCustomerIo = !(
-            array_key_exists('dont_send_to_blink', $data) &&
-            $data['dont_send_to_blink']
-        );
-
-        // Send the new signup to Customer.io:
-        if ($shouldSendToCustomerIo) {
-            SendSignupToCustomerIo::dispatch($signup);
-        }
+        // Send signup event(s) to Customer.io for messaging:
+        SendSignupToCustomerIo::dispatch($signup);
 
         // If this wasn't triggered via SMS, send to Gambit:
         if (!preg_match('/(sms|gambit)/', $signup->source)) {
             SendSignupToGambit::dispatch($signup);
         }
 
-        if ($signup->referrer_user_id && $shouldSendToCustomerIo) {
+        if ($signup->referrer_user_id) {
             CreateCustomerIoEvent::dispatch(
                 $signup->referrer_user_id,
                 'referral_signup_created',
