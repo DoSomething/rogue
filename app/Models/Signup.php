@@ -193,9 +193,6 @@ class Signup extends Model
      */
     public function toCustomerIoPayload()
     {
-        // Blink expects quantity to be a number.
-        $quantity = $this->quantity === null ? 0 : $this->quantity;
-
         // Bypass Campaign->cause accessor method so the value isn't converted to an array
         // which Customer.io does not support.
         $campaign_cause = Arr::get(
@@ -217,7 +214,7 @@ class Signup extends Model
                 'campaign_title' => Arr::get($campaignWebsite, 'title'),
                 'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
                 'campaign_cause' => $campaign_cause,
-                'quantity' => $quantity,
+                'quantity' => (int) $this->quantity,
                 'why_participated' => $this->why_participated,
                 'source' => $this->source,
                 'source_details' => $this->source_details,
