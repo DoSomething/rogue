@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'blink' => env('DS_ENABLE_BLINK'),
+    'customer_io' => env('DS_ENABLE_CUSTOMER_IO'),
     'gambit' => env('DS_ENABLE_GAMBIT_RELAY', false),
     'track_club_id' => env('DS_ENABLE_TRACK_CLUB_IDS', false),
 ];

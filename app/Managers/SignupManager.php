@@ -20,7 +20,6 @@ class SignupManager
      * Constructor.
      *
      * @param SignupRepository $signup
-     * @param Blink $blink
      */
     public function __construct(SignupRepository $signup)
     {
@@ -39,7 +38,7 @@ class SignupManager
     {
         $signup = $this->signup->create($data, $northstarId, $campaignId);
 
-        // Send to Blink unless 'dont_send_to_blink' is TRUE
+        // Send to Customer.io unless 'dont_send_to_blink' is TRUE
         $shouldSendToCustomerIo = !(
             array_key_exists('dont_send_to_blink', $data) &&
             $data['dont_send_to_blink']

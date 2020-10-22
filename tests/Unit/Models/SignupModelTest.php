@@ -13,7 +13,7 @@ class SignupModelTest extends TestCase
      *
      * @return void
      */
-    public function testBlinkPayload()
+    public function testCustomerIoPayload()
     {
         $group = factory(Group::class)->create();
         $signup = factory(Signup::class)->create([
