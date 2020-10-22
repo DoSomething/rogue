@@ -24,8 +24,6 @@ POST /api/v3/signups
   The referring User ID that this signup should be associated with.
 - **group_id**: (int) optional.
   The Group ID that this signup should be associated with.
-- **dont_send_to_blink** (boolean) optional.
-  If included and true, the data for this Signup will not be sent to Customer.io.
 - **created_at**: (string) optional.
   `Y-m-d H:i:s` format. When the signup was created.
 - **updated_at**: (string) optional.
