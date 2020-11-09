@@ -210,7 +210,7 @@ class Signup extends Model
                 'campaign_slug' => Arr::get($campaignWebsite, 'slug'),
                 'campaign_cause' => implode(',', $campaign->cause ?: []),
                 'quantity' => (int) $this->quantity,
-                'why_participated' => $this->why_participated,
+                'why_participated' => strip_tags($this->why_participated),
                 'source' => $this->source,
                 'source_details' => $this->source_details,
                 'referrer_user_id' => $this->referrer_user_id,
