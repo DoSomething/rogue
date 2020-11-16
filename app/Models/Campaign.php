@@ -327,7 +327,7 @@ class Campaign extends Model
         }
 
         // Add boolean attribute for filtering website campaigns.
-        $array['has_website'] = !is_null($this->contentful_campaign_id);
+        $array['has_website'] = isset($this->contentful_campaign_id);
 
         // Only send data we want to search against.
         return Arr::only($array, [
