@@ -37,5 +37,19 @@ class CampaignTest extends TestCase
             $searchableArray['end_date'],
             $campaign->end_date->timestamp,
         );
+
+        // There should be a computed boolean determining if the campaign is a Website Campaign.
+        // With a non-populated contentful_campaign_id:
+        $this->assertEquals($searchableArray['has_website'], false);
+
+        // With a populated contentful_campaign_id:
+        $websiteCampaign = factory(Campaign::class)->create([
+            'contentful_campaign_id' => '123',
+        ]);
+
+        $this->assertEquals(
+            $websiteCampaign->toSearchableArray()['has_website'],
+            true,
+        );
     }
 }
