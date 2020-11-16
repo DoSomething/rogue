@@ -326,6 +326,9 @@ class Campaign extends Model
             $array[$date] = optional($this->{$date})->timestamp;
         }
 
+        // Add boolean attribute for filtering website campaigns.
+        $array['has_website'] = isset($this->contentful_campaign_id);
+
         // Only send data we want to search against.
         return Arr::only($array, [
             'accepted_count',
@@ -333,6 +336,7 @@ class Campaign extends Model
             'contentful_campaign_id',
             'cause',
             'end_date',
+            'has_website',
             'id',
             'internal_title',
             'pending_count',
