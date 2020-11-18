@@ -329,6 +329,9 @@ class Campaign extends Model
         // Add boolean attribute for filtering website campaigns.
         $array['has_website'] = isset($this->contentful_campaign_id);
 
+        // Adds boolean attribute for filtering open/closed campaigns.
+        $array['is_evergreen'] = is_null($this->end_date);
+
         // Only send data we want to search against.
         return Arr::only($array, [
             'accepted_count',
@@ -339,6 +342,7 @@ class Campaign extends Model
             'has_website',
             'id',
             'internal_title',
+            'is_evergreen',
             'pending_count',
             'secondary_causes',
             'start_date',
