@@ -270,7 +270,7 @@ class Campaign extends Model
     /**
      * Accessor for determining if this campaign has an associated website.
      *
-     * @return boolean
+     * @return bool
      */
     public function getHasWebsiteAttribute()
     {
@@ -281,7 +281,7 @@ class Campaign extends Model
     /**
      * Accessor for determining if this campaign is evergreen.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsEvergreenAttribute()
     {
