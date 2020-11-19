@@ -61,5 +61,17 @@ class CampaignTest extends TestCase
             $evergreenWebsiteCampaign->toSearchableArray()['is_evergreen'],
             true,
         );
+
+        // We should only index the first 20 actions of the campaign.
+        $multiActionCampaign = factory(Campaign::class)->create();
+
+        factory(Action::class, 30)->create([
+            'campaign_id' => $multiActionCampaign->id,
+        ]);
+
+        $this->assertEquals(
+            $multiActionCampaign->toSearchableArray()['actions']->count(),
+            20,
+        );
     }
 }
