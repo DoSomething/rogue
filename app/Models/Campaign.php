@@ -331,8 +331,12 @@ class Campaign extends Model
     {
         $array = $this->toArray();
 
+        // Only index the first 20 actions to prevent exceeding the permitted Algolia entry size (10kb).
+        // (A select few campaigns contain an overwhelming amount of actions. https://bit.ly/38WOlgq).
+        $actions = $this->actions->slice(0, 20);
+
         // Append data from Action model relationship.
-        $array['actions'] = $this->actions->map(function ($data) {
+        $array['actions'] = $actions->map(function ($data) {
             return Arr::only($data->toArray(), [
                 'action_type',
                 'anonymous',
