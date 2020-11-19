@@ -16,6 +16,13 @@ class Campaign extends Model
     use HasCursor, Searchable, SoftDeletes;
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['has_website', 'is_evergreen'];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -261,6 +268,28 @@ class Campaign extends Model
     }
 
     /**
+     * Accessor for determining if this campaign has an associated website.
+     *
+     * @return bool
+     */
+    public function getHasWebsiteAttribute()
+    {
+        // If we have an assigned contentful campaign ID, there should be an associated website.
+        return isset($this->attributes['contentful_campaign_id']);
+    }
+
+    /**
+     * Accessor for determining if this campaign is evergreen.
+     *
+     * @return bool
+     */
+    public function getIsEvergreenAttribute()
+    {
+        // If we don't have an assigned end date, this campaign is evergreen.
+        return is_null($this->attributes['end_date']);
+    }
+
+    /**
      * Gets campaign by action_id.
      *
      * @param $actionId
@@ -325,12 +354,6 @@ class Campaign extends Model
         foreach ($this->dates as $date) {
             $array[$date] = optional($this->{$date})->timestamp;
         }
-
-        // Add boolean attribute for filtering website campaigns.
-        $array['has_website'] = isset($this->contentful_campaign_id);
-
-        // Adds boolean attribute for filtering open/closed campaigns.
-        $array['is_evergreen'] = is_null($this->end_date);
 
         // Only send data we want to search against.
         return Arr::only($array, [
