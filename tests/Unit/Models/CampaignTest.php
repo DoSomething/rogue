@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use Rogue\Models\Action;
 use Rogue\Models\Campaign;
+use Rogue\Models\GroupType;
 use Tests\TestCase;
 
 class CampaignTest extends TestCase
@@ -41,25 +42,30 @@ class CampaignTest extends TestCase
         // There should be computed boolean attributes determining:
         // - if the campaign is a Website Campaign
         // - if the campaign is evergreen (has no end date)
+        // - if the campaign is a group campaign
         //
         // With a non-populated contentful_campaign_id:
-        $this->assertEquals($searchableArray['has_website'], false);
+        $this->assertFalse($searchableArray['has_website']);
         // With a populated end_date:
-        $this->assertEquals($searchableArray['is_evergreen'], false);
+        $this->assertFalse($searchableArray['is_evergreen']);
+        // Without a group_type_id:
+        $this->assertFalse($searchableArray['is_group_campaign']);
 
         // With a populated contentful_campaign_id and no end_date.
         $evergreenWebsiteCampaign = factory(Campaign::class)->create([
             'contentful_campaign_id' => '123',
             'end_date' => null,
+            'group_type_id' => factory(GroupType::class)->create()->id,
         ]);
 
-        $this->assertEquals(
+        $this->assertTrue(
             $evergreenWebsiteCampaign->toSearchableArray()['has_website'],
-            true,
         );
-        $this->assertEquals(
+        $this->assertTrue(
             $evergreenWebsiteCampaign->toSearchableArray()['is_evergreen'],
-            true,
+        );
+        $this->assertTrue(
+            $evergreenWebsiteCampaign->toSearchableArray()['is_group_campaign'],
         );
 
         // We should only index the first 20 actions of the campaign.
