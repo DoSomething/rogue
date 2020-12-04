@@ -380,6 +380,7 @@ class Campaign extends Model
             'id',
             'internal_title',
             'is_evergreen',
+            'is_group_campaign',
             'pending_count',
             'secondary_causes',
             'start_date',
