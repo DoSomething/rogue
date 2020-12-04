@@ -20,7 +20,7 @@ class Campaign extends Model
      *
      * @var array
      */
-    protected $appends = ['has_website', 'is_evergreen'];
+    protected $appends = ['has_website', 'is_evergreen', 'is_group_campaign'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -287,6 +287,16 @@ class Campaign extends Model
     {
         // If we don't have an assigned end date, this campaign is evergreen.
         return is_null($this->attributes['end_date']);
+    }
+
+    /**
+     * Accessor for determining if this campaign is associated with a specific Group Type.
+     *
+     * @return bool
+     */
+    public function getIsGroupCampaignAttribute()
+    {
+        return isset($this->attributes['group_type_id']);
     }
 
     /**
