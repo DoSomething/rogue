@@ -45,11 +45,11 @@ class CampaignTest extends TestCase
         // - if the campaign is a group campaign
         //
         // With a non-populated contentful_campaign_id:
-        $this->assertEquals($searchableArray['has_website'], false);
+        $this->assertFalse($searchableArray['has_website']);
         // With a populated end_date:
-        $this->assertEquals($searchableArray['is_evergreen'], false);
+        $this->assertFalse($searchableArray['is_evergreen']);
         // Without a group_type_id:
-        $this->assertEquals($searchableArray['is_group_campaign'], false);
+        $this->assertFalse($searchableArray['is_group_campaign']);
 
         // With a populated contentful_campaign_id and no end_date.
         $evergreenWebsiteCampaign = factory(Campaign::class)->create([
@@ -58,17 +58,14 @@ class CampaignTest extends TestCase
             'group_type_id' => factory(GroupType::class)->create()->id,
         ]);
 
-        $this->assertEquals(
+        $this->assertTrue(
             $evergreenWebsiteCampaign->toSearchableArray()['has_website'],
-            true,
         );
-        $this->assertEquals(
+        $this->assertTrue(
             $evergreenWebsiteCampaign->toSearchableArray()['is_evergreen'],
-            true,
         );
-        $this->assertEquals(
+        $this->assertTrue(
             $evergreenWebsiteCampaign->toSearchableArray()['is_group_campaign'],
-            true,
         );
 
         // We should only index the first 20 actions of the campaign.
