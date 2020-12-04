@@ -42,7 +42,7 @@ class CampaignTest extends TestCase
         // There should be computed boolean attributes determining:
         // - if the campaign is a Website Campaign
         // - if the campaign is evergreen (has no end date)
-        // - if the campaign is a group campain
+        // - if the campaign is a group campaign
         //
         // With a non-populated contentful_campaign_id:
         $this->assertEquals($searchableArray['has_website'], false);
