@@ -51,7 +51,12 @@
                         @include('forms.option', ['name' => 'reportback', 'label' => 'Reportback'])
                         @include('forms.option', ['name' => 'civic_action', 'label' => 'Civic Action'])
                         @include('forms.option', ['name' => 'scholarship_entry', 'label' => 'Scholarship Entry'])
-                        @include('forms.option', ['name' => 'volunteer_credit', 'label' => 'Volunteer Credit'])
+                        <label class="option -checkbox">
+                            <input type="checkbox" name="volunteer_credit">
+                            <span class="option__indicator"></span>
+                            <span>Volunteer Credit <em>(read more about how Volunteer Credits work <a href="https://docs.google.com/document/d/1QG_jC6bKtzp4wSVuQAKPlinM62ALlyl1XQKZyKdB06g/edit#" target="_blank">here</a>)</em></span>
+                        </label>
+                        {{-- @include('forms.option', ['name' => 'volunteer_credit', 'label' => 'Volunteer Credit (read more about how Volunteer Credits work here)']) --}}
                         @include('forms.option', ['name' => 'anonymous', 'label' => 'Anonymous'])
                         @include('forms.option', ['name' => 'online', 'label' => 'Online Action'])
                         @include('forms.option', ['name' => 'quiz', 'label' => 'Quiz Action'])
