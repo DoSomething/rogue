@@ -56,7 +56,7 @@
                         @include('forms.option', ['name' => 'civic_action', 'label' => 'Civic Action', 'value' => $action->civic_action])
                         @include('forms.option', ['name' => 'scholarship_entry', 'label' => 'Scholarship Entry', 'value' => $action->scholarship_entry])
                         <label class="option -checkbox">
-                            <input type="checkbox" name="volunteer_credit">
+                            <input type="checkbox" name="volunteer_credit" {{ old("volunteer_credit", ! empty($action->volunteer_credit)) ? 'checked' : '' }}>
                             <span class="option__indicator"></span>
                             <span>Volunteer Credit <em>(read more about how Volunteer Credits work <a href="https://docs.google.com/document/d/1QG_jC6bKtzp4wSVuQAKPlinM62ALlyl1XQKZyKdB06g/edit#" target="_blank">here</a>)</em></span>
                         </label>
