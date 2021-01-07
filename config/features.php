@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'customer_io' => env('DS_ENABLE_CUSTOMER_IO'),
+    'customer_io' => env('DS_ENABLE_CUSTOMER_IO', false),
     'gambit' => env('DS_ENABLE_GAMBIT_RELAY', false),
     'track_club_id' => env('DS_ENABLE_TRACK_CLUB_IDS', false),
 ];
