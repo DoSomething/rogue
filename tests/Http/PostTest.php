@@ -32,6 +32,7 @@ class PostTest extends TestCase
                 'action',
                 'media' => ['url', 'original_image_url', 'text'],
                 'quantity',
+                'hours_spent',
                 'tags' => [],
                 'reactions' => ['reacted', 'total'],
                 'status',
@@ -202,6 +203,7 @@ class PostTest extends TestCase
     {
         $signup = factory(Signup::class)->create();
         $quantity = $this->faker->numberBetween(10, 1000);
+        $hours_spent = $this->faker->randomFloat(2, 0.1, 999999.99);
         $why_participated = $this->faker->paragraph;
         $text = $this->faker->sentence;
         $details = ['source-detail' => 'broadcast-123', 'other' => 'other'];
@@ -221,6 +223,7 @@ class PostTest extends TestCase
                 'action' => $action->name,
                 'action_id' => $action->id,
                 'quantity' => $quantity,
+                'hours_spent' => $hours_spent,
                 'why_participated' => $why_participated,
                 'text' => $text,
                 'file' => UploadedFile::fake()->image('photo.jpg', 450, 450),
@@ -240,6 +243,7 @@ class PostTest extends TestCase
             'action_id' => $action->id,
             'status' => 'pending',
             'quantity' => $quantity,
+            'hours_spent' => $hours_spent,
             'details' => json_encode($details),
         ]);
 
@@ -310,9 +314,9 @@ class PostTest extends TestCase
     }
 
     /**
-     * test validation for updating a post.
+     * test validation for creating a post.
      *
-     * patch /api/v3/posts/195
+     * post /api/v3/posts
      * @return void
      */
     public function testCreatingAPostWithValidationErrors()
@@ -335,6 +339,53 @@ class PostTest extends TestCase
             'action',
             'school_id',
         ]);
+    }
+
+    /**
+     * test validation for creating a post with invalid hours_spent.
+     *
+     * post /api/v3/posts
+     * @return void
+     */
+    public function testCreatingAPostWithInvalidHoursSpent()
+    {
+        $signup = factory(Signup::class)->create();
+        $action = factory(Action::class)->create([
+            'campaign_id' => $signup->campaign_id,
+        ]);
+
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'type' => 'photo',
+                'action_id' => $action->id,
+                'hours_spent' => 'one hundred', // This should be a number.
+            ],
+        );
+
+        $response->assertJsonValidationErrors(['hours_spent']);
+
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'type' => 'photo',
+                'action_id' => $action->id,
+                'hours_spent' => 1000000, // This is higher then our permitted maximum of 999999.99.
+            ],
+        );
+
+        $response->assertJsonValidationErrors(['hours_spent']);
+
+        $response = $this->withAccessToken($signup->northstar_id)->postJson(
+            'api/v3/posts',
+            [
+                'type' => 'photo',
+                'action_id' => $action->id,
+                'hours_spent' => 0, // This should be a minimum of 0.1.
+            ],
+        );
+
+        $response->assertJsonValidationErrors(['hours_spent']);
     }
 
     /**
