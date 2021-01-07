@@ -100,6 +100,7 @@ Example Response:
                 "text": null
             },
             "quantity": "12",
+            "hours_spent": "1.5",
             "reactions": {
                 "reacted": true,
                 "total": 2
@@ -127,6 +128,7 @@ Example Response:
                 "text": "Perhaps you CAN be of some assistance, Bill"
             },
             "quantity": "12",
+            "hours_spent": null,
             "reactions": {
                 "reacted": false,
                 "total": 8
@@ -191,7 +193,8 @@ Example Response:
       "original_image_url": "http://rogue.test/storage/uploads/reportback-items/63517-676c9c02029df581d3668ae869d937b8-1548272527.jpeg?time=1548449546",
       "text": "Sequi praesentium labore sed velit et velit pariatur."
       },
-    "quantity": 23,
+    "quantity": "23",
+    "hours_spent": "1.5",
     "reactions": {
     "reacted": false,
     "total": 0
@@ -248,6 +251,8 @@ Optional params:
 
 - **quantity**: (int|nullable).
   The number of reportback nouns verbed. Can be `null`.
+- **hours_spent**: (decimal|nullable|)
+  The number of hours the user spent on this action. Can be `null`.
 - **why_participated**: (string).
   The reason why the user participated.
 - **text**: (string).
@@ -291,6 +296,7 @@ Example Response:
         "text": "to test"
     },
     "quantity": "6",
+    "hours_spent": "1.5",
     "reactions": {
         "reacted": false,
         "total": null
@@ -405,6 +411,7 @@ Example response:
           "text": "Here is a brand new caption"
       },
       "quantity": "7",
+      "hours_spent": "1.25"
       "tags": [],
       "reactions": {
           "reacted": false,
