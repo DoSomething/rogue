@@ -30,6 +30,7 @@ export const ReviewablePostFragment = gql`
     ...TagButton
     ...QuantityForm
     quantity
+    hoursSpent
     text
     type
     url
@@ -198,8 +199,9 @@ const ReviewablePost = ({ post }) => {
               ),
               Type: post.type,
               Source: post.source,
-              Location: post.location,
+              Location: post.location || '-',
               Submitted: formatDateTime(post.createdAt),
+              'Hours Spent': post.hoursSpent || '-',
               Referrer: post.referrerUserId ? (
                 <Link to={`/users/${post.referrerUserId}`}>
                   {post.referrerUserId}
@@ -210,7 +212,7 @@ const ReviewablePost = ({ post }) => {
               Club: post.clubId ? (
                 <Link to={`/clubs/${post.clubId}`}>{post.clubId}</Link>
               ) : (
-                '--'
+                '-'
               ),
               Group: post.groupId ? (
                 <Link to={`/groups/${post.groupId}`}>{post.groupId}</Link>
