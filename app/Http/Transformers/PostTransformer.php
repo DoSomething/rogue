@@ -38,6 +38,7 @@ class PostTransformer extends TransformerAbstract
                 'text' => $post->text,
             ],
             'quantity' => $post->quantity,
+            'hours_spent' => $post->hours_spent,
             'reactions' => [
                 'reacted' => !empty($post->reaction),
                 'total' => $post->reactions_count,

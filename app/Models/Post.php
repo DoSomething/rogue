@@ -50,6 +50,7 @@ class Post extends Model
         'club_id',
         'details',
         'group_id',
+        'hours_spent',
         'id',
         'location',
         'postal_code',

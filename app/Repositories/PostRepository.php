@@ -97,6 +97,9 @@ class PostRepository
             'northstar_id' => $signup->northstar_id,
             'campaign_id' => $signup->campaign_id,
             'quantity' => isset($data['quantity']) ? $data['quantity'] : null,
+            'hours_spent' => isset($data['hours_spent'])
+                ? $data['hours_spent']
+                : null,
             'type' => $action->post_type,
             'action' => $action->name,
             'action_id' => $actionId,
