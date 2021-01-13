@@ -363,6 +363,7 @@ class Post extends Model
                 'id' => (string) $this->id,
                 'signup_id' => $this->signup_id,
                 'quantity' => (int) $this->quantity,
+                'hours_spent' => (float) $this->hours_spent,
                 'why_participated' => strip_tags($signup->why_participated),
                 'campaign_id' => (string) $this->campaign_id,
                 'campaign_title' => Arr::get($campaignWebsite, 'title'),
