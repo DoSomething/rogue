@@ -45,7 +45,7 @@ class ImageStorage
         $contents = file_get_contents($file->getPathname());
 
         // Make sure we're only uploading valid image types
-        if (!in_array($extension, ['jpeg', 'png', 'gif'])) {
+        if (!in_array($extension, ['jpeg', 'jpg', 'png', 'gif'])) {
             throw new UnprocessableEntityHttpException(
                 'Invalid file type. Upload a JPEG, PNG or GIF.',
             );
