@@ -8,6 +8,7 @@
     "ext-bcmath": "*",
     "ext-exif": "*",
     "ext-gd": "*",
+    "ext-gettext": "*",
     "ext-newrelic": "*",
     "algolia/algoliasearch-client-php": "^2.6",
     "aws/aws-sdk-php-laravel": "^3.1",
