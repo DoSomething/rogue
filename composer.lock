@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd4a8ab1b18c8d069091177b29c8dcb7",
+    "content-hash": "a32dc3e47d4fe44f4028a5074301e1d4",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -1580,16 +1580,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.20.11",
+            "version": "v6.20.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "29c831df184f1dff7ee1444352472b037241d340"
+                "reference": "49f9db00a754517f07d365ee5b0806df82e37029"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/29c831df184f1dff7ee1444352472b037241d340",
-                "reference": "29c831df184f1dff7ee1444352472b037241d340",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/49f9db00a754517f07d365ee5b0806df82e37029",
+                "reference": "49f9db00a754517f07d365ee5b0806df82e37029",
                 "shasum": ""
             },
             "require": {
@@ -1725,7 +1725,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2021-01-13T13:36:19+00:00"
+            "time": "2021-01-15T15:35:47+00:00"
         },
         {
             "name": "laravel/scout",
@@ -9182,6 +9182,7 @@
         "ext-bcmath": "*",
         "ext-exif": "*",
         "ext-gd": "*",
+        "ext-gettext": "*",
         "ext-newrelic": "*"
     },
     "platform-dev": [],
