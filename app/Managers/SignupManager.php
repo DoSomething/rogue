@@ -4,7 +4,6 @@ namespace Rogue\Managers;
 
 use Rogue\Jobs\CreateCustomerIoEvent;
 use Rogue\Jobs\SendSignupToCustomerIo;
-use Rogue\Jobs\SendSignupToGambit;
 use Rogue\Repositories\SignupRepository;
 
 class SignupManager
@@ -40,11 +39,6 @@ class SignupManager
 
         // Send signup event(s) to Customer.io for messaging:
         SendSignupToCustomerIo::dispatch($signup);
-
-        // If this wasn't triggered via SMS, send to Gambit:
-        if (!preg_match('/(sms|gambit)/', $signup->source)) {
-            SendSignupToGambit::dispatch($signup);
-        }
 
         if ($signup->referrer_user_id) {
             CreateCustomerIoEvent::dispatch(
