@@ -83,12 +83,6 @@ return [
         'service_id' => env('FASTLY_SERVICE_ID'),
     ],
 
-    'gambit' => [
-        'url' => env('GAMBIT_URL'),
-        'user' => env('GAMBIT_USERNAME'),
-        'password' => env('GAMBIT_PASSWORD'),
-    ],
-
     'graphql' => [
         'url' => env('GRAPHQL_URL'),
     ],
