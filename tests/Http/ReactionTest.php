@@ -2,9 +2,9 @@
 
 namespace Tests\Http;
 
-use Rogue\Models\Post;
-use Rogue\Models\Reaction;
-use Rogue\Models\Signup;
+use App\Models\Post;
+use App\Models\Reaction;
+use App\Models\Signup;
 use Tests\TestCase;
 
 class ReactionTest extends TestCase

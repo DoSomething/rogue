@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Jobs\Middleware;
+namespace App\Jobs\Middleware;
 
 use Illuminate\Support\Facades\Redis;
 

@@ -1,17 +1,17 @@
 <?php
 
-namespace Rogue\Managers;
+namespace App\Managers;
 
-use Rogue\Jobs\CreateCustomerIoEvent;
-use Rogue\Jobs\SendSignupToCustomerIo;
-use Rogue\Repositories\SignupRepository;
+use App\Jobs\CreateCustomerIoEvent;
+use App\Jobs\SendSignupToCustomerIo;
+use App\Repositories\SignupRepository;
 
 class SignupManager
 {
     /*
      * SignupRepository Instance
      *
-     * @var Rogue\Repositories\SignupRepository;
+     * @var App\Repositories\SignupRepository;
      */
     protected $signup;
 
@@ -60,10 +60,10 @@ class SignupManager
     /**
      * Handles all business logic around updating signups.
      *
-     * @param Rogue\Models\Signup $signup
+     * @param App\Models\Signup $signup
      * @param array $data
      * @param bool $log
-     * @return Rogue\Models\Signup $model
+     * @return App\Models\Signup $model
      */
     public function update($signup, $data, $log = true)
     {
@@ -101,7 +101,7 @@ class SignupManager
      *
      * @param  string $northstarId
      * @param  int $campaignId
-     * @return \Rogue\Models\Signup|null
+     * @return \App\Models\Signup|null
      */
     public function get($northstarId, $campaignId)
     {

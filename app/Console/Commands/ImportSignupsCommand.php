@@ -1,12 +1,12 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Jobs\SendSignupToCustomerIo;
+use App\Models\Signup;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use League\Csv\Reader;
-use Rogue\Jobs\SendSignupToCustomerIo;
-use Rogue\Models\Signup;
 
 class ImportSignupsCommand extends Command
 {

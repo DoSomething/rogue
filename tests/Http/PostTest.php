@@ -2,18 +2,18 @@
 
 namespace Tests\Http;
 
+use App\Models\Action;
+use App\Models\Campaign;
+use App\Models\Club;
+use App\Models\Group;
+use App\Models\Post;
+use App\Models\Reaction;
+use App\Models\Signup;
+use App\Models\User;
+use App\Services\CustomerIo;
+use App\Services\Fastly;
+use App\Services\GraphQL;
 use Illuminate\Http\UploadedFile;
-use Rogue\Models\Action;
-use Rogue\Models\Campaign;
-use Rogue\Models\Club;
-use Rogue\Models\Group;
-use Rogue\Models\Post;
-use Rogue\Models\Reaction;
-use Rogue\Models\Signup;
-use Rogue\Models\User;
-use Rogue\Services\CustomerIo;
-use Rogue\Services\Fastly;
-use Rogue\Services\GraphQL;
 use Tests\TestCase;
 
 class PostTest extends TestCase

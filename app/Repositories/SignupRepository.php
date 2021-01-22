@@ -1,8 +1,8 @@
 <?php
 
-namespace Rogue\Repositories;
+namespace App\Repositories;
 
-use Rogue\Models\Signup;
+use App\Models\Signup;
 
 class SignupRepository
 {
@@ -12,7 +12,7 @@ class SignupRepository
      * @param  array $data
      * @param  string $northstarId
      * @param  int $campaignId
-     * @return \Rogue\Models\Signup|null
+     * @return \App\Models\Signup|null
      */
     public function create($data, $northstarId, $campaignId)
     {
@@ -45,7 +45,7 @@ class SignupRepository
      *
      * @param array $data
      * @param array $data
-     * @return \Rogue\Models\Signup
+     * @return \App\Models\Signup
      */
     public function update($signup, $data)
     {
@@ -59,7 +59,7 @@ class SignupRepository
      *
      * @param  string $northstarId
      * @param  int $campaignId
-     * @return \Rogue\Models\Signup|null
+     * @return \App\Models\Signup|null
      */
     public function get($northstarId, $campaignId)
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Rogue\Providers;
+namespace App\Providers;
 
+use App\Jobs\RejectPost;
+use App\Models\Event;
+use App\Models\Post;
+use App\Models\Review;
+use App\Models\Signup;
 use Illuminate\Support\ServiceProvider;
-use Rogue\Jobs\RejectPost;
-use Rogue\Models\Event;
-use Rogue\Models\Post;
-use Rogue\Models\Review;
-use Rogue\Models\Signup;
 
 class ModelServiceProvider extends ServiceProvider
 {

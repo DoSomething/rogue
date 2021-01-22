@@ -1,11 +1,11 @@
 <?php
 
-namespace Rogue\Http\Controllers\Web;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
+use App\Models\Club;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Rogue\Http\Controllers\Controller;
-use Rogue\Models\Club;
 
 class ClubsController extends Controller
 {
@@ -61,7 +61,7 @@ class ClubsController extends Controller
     /**
      * Edit an existing club.
      *
-     * @param  \Rogue\Models\Club  $club
+     * @param  \App\Models\Club  $club
      */
     public function edit(Club $club)
     {
@@ -73,7 +73,7 @@ class ClubsController extends Controller
     /**
      * Update the specified club in storage.
      *
-     * @param  \Rogue\Models\Club  $club
+     * @param  \App\Models\Club  $club
      * @param  \Illuminate\Http\Request  $request
      */
     public function update(Club $club, Request $request)

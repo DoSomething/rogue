@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Managers\PostManager;
+use App\Models\Post;
 use Illuminate\Console\Command;
-use Rogue\Managers\PostManager;
-use Rogue\Models\Post;
 
 class BulkReviewPosts extends Command
 {
@@ -32,7 +32,7 @@ class BulkReviewPosts extends Command
     /**
      * The Post Manager instance.
      *
-     * @var Rogue\Managers\PostManager
+     * @var App\Managers\PostManager
      */
     protected $posts;
 

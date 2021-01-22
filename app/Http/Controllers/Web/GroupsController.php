@@ -1,11 +1,11 @@
 <?php
 
-namespace Rogue\Http\Controllers\Web;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Rogue\Http\Controllers\Controller;
-use Rogue\Models\Group;
 
 class GroupsController extends Controller
 {
@@ -63,7 +63,7 @@ class GroupsController extends Controller
     /**
      * Edit an existing group.
      *
-     * @param  \Rogue\Models\Group  $group
+     * @param  \App\Models\Group  $group
      */
     public function edit(Group $group)
     {
@@ -75,7 +75,7 @@ class GroupsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Rogue\Models\Group  $group
+     * @param  \App\Models\Group  $group
      * @param  \Illuminate\Http\Request  $request
      */
     public function update(Group $group, Request $request)

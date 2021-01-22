@@ -1,11 +1,11 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace App\Http\Transformers;
 
+use App\Models\Signup;
+use App\Services\Registrar;
 use Gate;
 use League\Fractal\TransformerAbstract;
-use Rogue\Models\Signup;
-use Rogue\Services\Registrar;
 
 class SignupTransformer extends TransformerAbstract
 {
@@ -19,7 +19,7 @@ class SignupTransformer extends TransformerAbstract
     /**
      * Transform resource data.
      *
-     * @param \Rogue\Models\Signup $signup
+     * @param \App\Models\Signup $signup
      * @return array
      */
     public function transform(Signup $signup)
@@ -51,7 +51,7 @@ class SignupTransformer extends TransformerAbstract
     /**
      * Include posts.
      *
-     * @param \Rogue\Models\Signup $signup
+     * @param \App\Models\Signup $signup
      * @return \League\Fractal\Resource\Collection
      */
     public function includePosts(Signup $signup)
@@ -65,7 +65,7 @@ class SignupTransformer extends TransformerAbstract
     /**
      * Include the user data (optionally).
      *
-     * @param \Rogue\Models\Signup $signup
+     * @param \App\Models\Signup $signup
      * @return \League\Fractal\Resource\Item
      */
     public function includeUser(Signup $signup)
@@ -82,7 +82,7 @@ class SignupTransformer extends TransformerAbstract
     /**
      * Include accepted quantity.
      *
-     * @param \Rogue\Models\Signup $signup
+     * @param \App\Models\Signup $signup
      * @return \League\Fractal\Resource\Collection
      */
     public function includeAcceptedQuantity(Signup $signup)

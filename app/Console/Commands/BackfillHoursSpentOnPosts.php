@@ -1,9 +1,9 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Models\Post;
 use Illuminate\Console\Command;
-use Rogue\Models\Post;
 
 class BackfillHoursSpentOnPosts extends Command
 {

@@ -1,24 +1,24 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Transformers\PostTransformer;
+use App\Models\Post;
+use App\Repositories\PostRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Rogue\Http\Transformers\PostTransformer;
-use Rogue\Models\Post;
-use Rogue\Repositories\PostRepository;
 
 class TagsController extends ApiController
 {
     /**
      * The post service instance.
      *
-     * @var Rogue\Repositories\PostRepository
+     * @var App\Repositories\PostRepository
      */
     protected $post;
 
     /**
-     * @var Rogue\Http\Transformers\PostTransformer;
+     * @var App\Http\Transformers\PostTransformer;
      */
     protected $transformer;
 

@@ -1,17 +1,17 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\FiltersRequests;
+use App\Http\Requests\PostRequest;
+use App\Http\Transformers\PostTransformer;
+use App\Managers\PostManager;
+use App\Managers\SignupManager;
+use App\Models\Campaign;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
-use Rogue\Http\Controllers\Traits\FiltersRequests;
-use Rogue\Http\Requests\PostRequest;
-use Rogue\Http\Transformers\PostTransformer;
-use Rogue\Managers\PostManager;
-use Rogue\Managers\SignupManager;
-use Rogue\Models\Campaign;
-use Rogue\Models\Post;
 
 class PostsController extends ApiController
 {
@@ -20,19 +20,19 @@ class PostsController extends ApiController
     /**
      * The post manager instance.
      *
-     * @var \Rogue\Managers\PostManager
+     * @var \App\Managers\PostManager
      */
     protected $posts;
 
     /**
      * The SignupManager instance.
      *
-     * @var \Rogue\Managers\SignupManager
+     * @var \App\Managers\SignupManager
      */
     protected $signups;
 
     /**
-     * @var \Rogue\Http\Transformers\PostTransformer;
+     * @var \App\Http\Transformers\PostTransformer;
      */
     protected $transformer;
 
@@ -173,7 +173,7 @@ class PostsController extends ApiController
      * Returns a specific post.
      * GET /posts/:id.
      *
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Post $post)
@@ -189,7 +189,7 @@ class PostsController extends ApiController
      * PATCH /posts/:id.
      *
      * @param PostRequest $request
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(PostRequest $request, Post $post)
@@ -213,7 +213,7 @@ class PostsController extends ApiController
      * Delete a post.
      * DELETE /posts/:id.
      *
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Post $post)

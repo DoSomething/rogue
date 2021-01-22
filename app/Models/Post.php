@@ -1,7 +1,10 @@
 <?php
 
-namespace Rogue\Models;
+namespace App\Models;
 
+use App\Models\Traits\HasCursor;
+use App\Notifications\PostTagged;
+use App\Services\GraphQL;
 use Hashids\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -10,9 +13,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Rogue\Models\Traits\HasCursor;
-use Rogue\Notifications\PostTagged;
-use Rogue\Services\GraphQL;
 
 class Post extends Model
 {

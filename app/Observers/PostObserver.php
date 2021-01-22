@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Observers;
+namespace App\Observers;
 
-use Rogue\Models\Group;
-use Rogue\Models\Post;
+use App\Models\Group;
+use App\Models\Post;
 
 class PostObserver
 {
     /**
      * Handle the Post "creating" event.
      *
-     * @param  \Rogue\Models\Post  $post
+     * @param  \App\Models\Post  $post
      * @return void
      */
     public function creating(Post $post)
@@ -38,7 +38,7 @@ class PostObserver
     /**
      * Handle the Post "created" event.
      *
-     * @param  \Rogue\Models\Post  $post
+     * @param  \App\Models\Post  $post
      * @return void
      */
     public function created(Post $post)
@@ -49,7 +49,7 @@ class PostObserver
     /**
      * Handle the Post "updated" event.
      *
-     * @param  \Rogue\Models\Post  $post
+     * @param  \App\Models\Post  $post
      * @return void
      */
     public function updated(Post $post)

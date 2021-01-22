@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Console\Command;
-use Rogue\Models\Post;
-use Rogue\Models\Tag;
 
 class TagPosts extends Command
 {

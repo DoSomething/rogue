@@ -1,12 +1,12 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Models\Group;
+use App\Models\GroupType;
 use Exception;
 use Illuminate\Console\Command;
 use League\Csv\Reader;
-use Rogue\Models\Group;
-use Rogue\Models\GroupType;
 
 class ImportGroupsCommand extends Command
 {

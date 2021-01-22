@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Providers;
+namespace App\Providers;
 
+use App\Events\PostTagged;
+use App\Listeners\SendTaggedNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Rogue\Events\PostTagged;
-use Rogue\Listeners\SendTaggedNotification;
 
 class EventServiceProvider extends ServiceProvider
 {

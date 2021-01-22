@@ -1,15 +1,15 @@
 <?php
 
-namespace Rogue\Models;
+namespace App\Models;
 
+use App\Models\Traits\HasCursor;
+use App\Types\Cause;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Laravel\Scout\Searchable;
-use Rogue\Models\Traits\HasCursor;
-use Rogue\Types\Cause;
 
 class Campaign extends Model
 {

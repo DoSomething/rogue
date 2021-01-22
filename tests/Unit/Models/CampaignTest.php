@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models;
 
-use Rogue\Models\Action;
-use Rogue\Models\Campaign;
-use Rogue\Models\GroupType;
+use App\Models\Action;
+use App\Models\Campaign;
+use App\Models\GroupType;
 use Tests\TestCase;
 
 class CampaignTest extends TestCase

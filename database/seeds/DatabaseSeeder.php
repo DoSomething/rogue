@@ -1,10 +1,10 @@
 <?php
 
+use App\Models\Action;
+use App\Models\Campaign;
+use App\Models\Post;
+use App\Models\Signup;
 use Illuminate\Database\Seeder;
-use Rogue\Models\Action;
-use Rogue\Models\Campaign;
-use Rogue\Models\Post;
-use Rogue\Models\Signup;
 
 class DatabaseSeeder extends Seeder
 {

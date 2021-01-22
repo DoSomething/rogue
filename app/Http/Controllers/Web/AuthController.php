@@ -1,11 +1,11 @@
 <?php
 
-namespace Rogue\Http\Controllers\Web;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Rogue\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {

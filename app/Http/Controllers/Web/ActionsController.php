@@ -1,14 +1,14 @@
 <?php
 
-namespace Rogue\Http\Controllers\Web;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
+use App\Models\Action;
+use App\Types\ActionType;
+use App\Types\PostType;
+use App\Types\TimeCommitment;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Rogue\Http\Controllers\Controller;
-use Rogue\Models\Action;
-use Rogue\Types\ActionType;
-use Rogue\Types\PostType;
-use Rogue\Types\TimeCommitment;
 
 class ActionsController extends Controller
 {
@@ -95,7 +95,7 @@ class ActionsController extends Controller
     /**
      * Edit an existing action.
      *
-     * @param  \Rogue\Models\Action  $action
+     * @param  \App\Models\Action  $action
      * @param  $campaignId
      */
     public function edit(Action $action)
@@ -112,7 +112,7 @@ class ActionsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Rogue\Models\Action  $action
+     * @param  \App\Models\Action  $action
      * @param  \Illuminate\Http\Request  $request
      */
     public function update(Action $action, Request $request)
@@ -139,7 +139,7 @@ class ActionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Rogue\Models\Action  $action
+     * @param  \App\Models\Action  $action
      */
     public function destroy(Action $action)
     {

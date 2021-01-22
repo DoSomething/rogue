@@ -2,15 +2,15 @@
 
 namespace Tests\Http;
 
+use App\Models\Club;
+use App\Models\Group;
+use App\Models\Post;
+use App\Models\Signup;
+use App\Models\User;
+use App\Observers\SignupObserver;
+use App\Services\CustomerIo;
+use App\Services\GraphQL;
 use Illuminate\Support\Str;
-use Rogue\Models\Club;
-use Rogue\Models\Group;
-use Rogue\Models\Post;
-use Rogue\Models\Signup;
-use Rogue\Models\User;
-use Rogue\Observers\SignupObserver;
-use Rogue\Services\CustomerIo;
-use Rogue\Services\GraphQL;
 use Tests\TestCase;
 
 class SignupTest extends TestCase

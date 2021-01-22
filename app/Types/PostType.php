@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Types;
+namespace App\Types;
 
 class PostType extends Type
 {

@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Rogue\Models\Post;
 
 class AddCampaignIdToPosts extends Migration
 {

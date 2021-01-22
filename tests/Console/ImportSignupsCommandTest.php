@@ -2,8 +2,8 @@
 
 namespace Tests\Console;
 
+use App\Models\Signup;
 use Carbon\Carbon;
-use Rogue\Models\Signup;
 use Tests\TestCase;
 
 class ImportSignupsCommandTest extends TestCase

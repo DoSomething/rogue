@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Jobs;
+namespace App\Jobs;
 
-use Rogue\Jobs\Middleware\CustomerIoRateLimit;
-use Rogue\Models\Signup;
-use Rogue\Services\CustomerIo;
+use App\Jobs\Middleware\CustomerIoRateLimit;
+use App\Models\Signup;
+use App\Services\CustomerIo;
 
 class SendSignupToCustomerIo extends Job
 {

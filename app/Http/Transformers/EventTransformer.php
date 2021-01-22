@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace App\Http\Transformers;
 
+use App\Models\Event;
 use League\Fractal\TransformerAbstract;
-use Rogue\Models\Event;
 
 class EventTransformer extends TransformerAbstract
 {
     /**
      * Transform resource data.
      *
-     * @param \Rogue\Models\Event $event
+     * @param \App\Models\Event $event
      * @return array
      */
     public function transform(Event $event)

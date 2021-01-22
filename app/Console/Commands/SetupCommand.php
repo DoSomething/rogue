@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
 use DFurnes\Environmentalist\ConfiguresApplication;
 use Illuminate\Console\Command;

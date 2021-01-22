@@ -1,12 +1,12 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Managers\PostManager;
+use App\Managers\SignupManager;
+use App\Models\Post;
+use App\Models\Signup;
 use Illuminate\Console\Command;
-use Rogue\Managers\PostManager;
-use Rogue\Managers\SignupManager;
-use Rogue\Models\Post;
-use Rogue\Models\Signup;
 
 class UpdateSignupAndOrPostField extends Command
 {
@@ -27,14 +27,14 @@ class UpdateSignupAndOrPostField extends Command
     /**
      * The Signup Manager instance.
      *
-     * @var Rogue\Managers\SignupManager
+     * @var App\Managers\SignupManager
      */
     protected $signups;
 
     /**
      * The Post Manager instance.
      *
-     * @var Rogue\Managers\PostManager
+     * @var App\Managers\PostManager
      */
     protected $posts;
 

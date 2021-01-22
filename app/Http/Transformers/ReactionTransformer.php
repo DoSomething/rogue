@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace App\Http\Transformers;
 
+use App\Models\Reaction;
 use League\Fractal\TransformerAbstract;
-use Rogue\Models\Reaction;
 
 class ReactionTransformer extends TransformerAbstract
 {
     /**
      * Transform the resource data.
      *
-     * @param \Rogue\Models\Reaction $reaction
+     * @param \App\Models\Reaction $reaction
      * @return array
      */
     public function transform(Reaction $reaction)

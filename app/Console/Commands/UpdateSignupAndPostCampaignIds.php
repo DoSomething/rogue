@@ -1,12 +1,12 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Models\Campaign;
+use App\Models\Post;
+use App\Models\Signup;
 use DB;
 use Illuminate\Console\Command;
-use Rogue\Models\Campaign;
-use Rogue\Models\Post;
-use Rogue\Models\Signup;
 
 class UpdateSignupAndPostCampaignIds extends Command
 {

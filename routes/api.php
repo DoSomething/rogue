@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
  * contains the "api" middleware group. Now create something great!
  *
  * @var \Illuminate\Routing\Router $router
- * @see \Rogue\Providers\RouteServiceProvider
+ * @see \App\Providers\RouteServiceProvider
  */
 
 // Assets

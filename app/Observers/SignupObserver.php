@@ -1,9 +1,9 @@
 <?php
 
-namespace Rogue\Observers;
+namespace App\Observers;
 
-use Rogue\Models\Signup;
-use Rogue\Services\GraphQL;
+use App\Models\Signup;
+use App\Services\GraphQL;
 
 const USER_CLUB_ID_QUERY = '
     query UserClubIdQuery($userId: String!) {
@@ -31,7 +31,7 @@ class SignupObserver
     /**
      * Handle the Signup "creating" event.
      *
-     * @param  \Rogue\Models\Signup  $signup
+     * @param  \App\Models\Signup  $signup
      * @return void
      */
     public function creating(Signup $signup)

@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Managers\PostManager;
+use App\Models\Signup;
 use Illuminate\Console\Command;
-use Rogue\Managers\PostManager;
-use Rogue\Models\Signup;
 
 class ReviewSignup extends Command
 {
@@ -25,7 +25,7 @@ class ReviewSignup extends Command
     /**
      * The Post manager instance.
      *
-     * @var Rogue\Managers\PostManager
+     * @var App\Managers\PostManager
      */
     protected $posts;
 

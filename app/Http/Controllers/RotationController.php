@@ -1,12 +1,12 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Transformers\PostTransformer;
+use App\Models\Post;
+use App\Services\Fastly;
+use App\Services\ImageStorage;
 use Illuminate\Http\Request;
-use Rogue\Http\Transformers\PostTransformer;
-use Rogue\Models\Post;
-use Rogue\Services\Fastly;
-use Rogue\Services\ImageStorage;
 use Storage;
 
 class RotationController extends Controller

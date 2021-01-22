@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Models\Traits;
+namespace App\Models\Traits;
 
 trait HasCursor
 {

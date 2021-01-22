@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Services;
+namespace App\Services;
 
 use Softonic\GraphQL\ClientBuilder;
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Transformers\ActionStatTransformer;
+use App\Models\ActionStat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Rogue\Http\Transformers\ActionStatTransformer;
-use Rogue\Models\ActionStat;
 
 class ActionStatsController extends ApiController
 {
     /**
-     * @var Rogue\Http\Transformers\ActionTransformer;
+     * @var App\Http\Transformers\ActionTransformer;
      */
     protected $transformer;
 

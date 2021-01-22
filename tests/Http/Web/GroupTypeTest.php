@@ -2,7 +2,7 @@
 
 namespace Tests\Http\Web;
 
-use Rogue\Models\GroupType;
+use App\Models\GroupType;
 use Tests\TestCase;
 
 class GroupTypeTest extends TestCase

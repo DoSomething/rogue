@@ -1,21 +1,21 @@
 <?php
 
-namespace Rogue\Repositories;
+namespace App\Repositories;
 
+use App\Models\Action;
+use App\Models\Post;
+use App\Models\Review;
+use App\Models\Signup;
+use App\Services\ImageStorage;
 use Illuminate\Validation\ValidationException;
 use Intervention\Image\Facades\Image;
-use Rogue\Models\Action;
-use Rogue\Models\Post;
-use Rogue\Models\Review;
-use Rogue\Models\Signup;
-use Rogue\Services\ImageStorage;
 
 class PostRepository
 {
     /**
      * Image storage service (either disk or S3).
      *
-     * @var \Rogue\Services\ImageStorage
+     * @var \App\Services\ImageStorage
      */
     protected $storage;
 
@@ -33,7 +33,7 @@ class PostRepository
      * Find a post by post_id and return associated signup and tags.
      *
      * @param int $id
-     * @return \Rogue\Models\Post
+     * @return \App\Models\Post
      */
     public function find($id)
     {
@@ -47,7 +47,7 @@ class PostRepository
      * @param  int $signupId
      * @param  string $authenticatedUserRole
      *
-     * @return \Rogue\Models\Post|null
+     * @return \App\Models\Post|null
      */
     public function create(
         array $data,
@@ -160,7 +160,7 @@ class PostRepository
     /**
      * Update an existing Post.
      *
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @param array $data
      *
      * @return Post

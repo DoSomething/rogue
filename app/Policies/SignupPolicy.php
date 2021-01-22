@@ -1,9 +1,9 @@
 <?php
 
-namespace Rogue\Policies;
+namespace App\Policies;
 
+use App\Models\Signup;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Rogue\Models\Signup;
 
 class SignupPolicy
 {
@@ -13,7 +13,7 @@ class SignupPolicy
      * Determine if the full signup should be displayed.
      *
      * @param  Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  Rogue\Models\Signup $signup
+     * @param  App\Models\Signup $signup
      * @return bool
      */
     public function viewAll($user, Signup $signup)

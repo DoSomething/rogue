@@ -2,12 +2,12 @@
 
 namespace Tests;
 
+use App\Observers\SignupObserver;
+use App\Services\GraphQL;
 use Carbon\Carbon;
 use DoSomething\Gateway\Northstar;
 use DoSomething\Gateway\Resources\NorthstarUser;
 use Illuminate\Support\Facades\Storage;
-use Rogue\Observers\SignupObserver;
-use Rogue\Services\GraphQL;
 
 trait WithMocks
 {

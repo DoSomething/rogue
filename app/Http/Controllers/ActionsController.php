@@ -1,15 +1,15 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Transformers\ActionTransformer;
+use App\Models\Action;
 use Illuminate\Http\Request;
-use Rogue\Http\Transformers\ActionTransformer;
-use Rogue\Models\Action;
 
 class ActionsController extends ApiController
 {
     /**
-     * @var Rogue\Http\Transformers\ActionTransformer;
+     * @var App\Http\Transformers\ActionTransformer;
      */
     protected $transformer;
 
@@ -39,7 +39,7 @@ class ActionsController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \Rogue\Models\Action  $action
+     * @param  \App\Models\Action  $action
      * @return \Illuminate\Http\Response
      */
     public function show(Action $action)

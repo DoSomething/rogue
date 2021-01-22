@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Notifications;
+namespace App\Notifications;
 
+use App\Models\Post;
+use App\Models\Tag;
+use App\Services\GraphQL;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Rogue\Models\Post;
-use Rogue\Models\Tag;
-use Rogue\Services\GraphQL;
 
 const USER_AND_REVIEWER_QUERY = '
     query UserAndReviewerQuery($userId: String!, $adminId: String!) {
@@ -37,14 +37,14 @@ class PostTagged extends Notification implements ShouldQueue
     /*
      * Post Instance
      *
-     * @var Rogue\Models\Post;
+     * @var App\Models\Post;
      */
     public $post;
 
     /*
      * Tag Instance
      *
-     * @var Rogue\Models\Tag;
+     * @var App\Models\Tag;
      */
     public $tag;
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace App\Http\Transformers;
 
+use App\Models\Campaign;
 use League\Fractal\TransformerAbstract;
-use Rogue\Models\Campaign;
 
 class CampaignTransformer extends TransformerAbstract
 {
     /**
      * Transform resource data.
      *
-     * @param \Rogue\Models\Campaign $campaign
+     * @param \App\Models\Campaign $campaign
      * @return array
      */
     public function transform(Campaign $campaign)

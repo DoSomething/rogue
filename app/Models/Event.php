@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,7 +40,7 @@ class Event extends Model
     public function scopeForSignup($query, $id)
     {
         return $query
-            ->where('eventable_type', 'Rogue\Models\Signup')
+            ->where('eventable_type', 'App\Models\Signup')
             ->where('eventable_id', $id);
     }
 }

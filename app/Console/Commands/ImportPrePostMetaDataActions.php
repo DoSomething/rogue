@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Models\Action;
 use Illuminate\Console\Command;
 use League\Csv\Reader;
-use Rogue\Models\Action;
 
 class ImportPrePostMetaDataActions extends Command
 {

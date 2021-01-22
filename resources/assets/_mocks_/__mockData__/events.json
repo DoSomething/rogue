@@ -3,7 +3,7 @@
     {
       "event_id": 1,
       "eventable_id": 251696,
-      "event_type": "Rogue\\Models\\Signup",
+      "event_type": "App\\Models\\Signup",
       "content": {
         "northstar_id": "55a52808469c64d53d8ba746",
         "campaign_id": "4",
@@ -23,7 +23,7 @@
     {
       "event_id": 2,
       "eventable_id": 251697,
-      "event_type": "Rogue\\Models\\Signup",
+      "event_type": "App\\Models\\Signup",
       "content": {
         "northstar_id": "55a52809469c64d53d8ba74a",
         "campaign_id": "36",

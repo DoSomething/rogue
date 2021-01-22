@@ -2,8 +2,8 @@
 
 namespace Tests\Http;
 
-use Rogue\Models\Post;
-use Rogue\Models\Signup;
+use App\Models\Post;
+use App\Models\Signup;
 use Tests\TestCase;
 
 class EventTest extends TestCase
@@ -21,7 +21,7 @@ class EventTest extends TestCase
 
         // Make sure we created an event for the signup creation.
         $this->assertDatabaseHas('events', [
-            'eventable_type' => 'Rogue\Models\Signup',
+            'eventable_type' => 'App\Models\Signup',
             'created_at' => '2017-08-03 17:02:00',
         ]);
     }
@@ -44,13 +44,13 @@ class EventTest extends TestCase
 
         // Make sure we created an event for the signup creation.
         $this->assertDatabaseHas('events', [
-            'eventable_type' => 'Rogue\Models\Signup',
+            'eventable_type' => 'App\Models\Signup',
             'created_at' => '2017-08-03 17:02:00',
         ]);
 
         // Make sure we also created an event for the signup update.
         $this->assertDatabaseHas('events', [
-            'eventable_type' => 'Rogue\Models\Signup',
+            'eventable_type' => 'App\Models\Signup',
             'created_at' => '2017-08-04 18:02:00',
         ]);
     }
@@ -68,7 +68,7 @@ class EventTest extends TestCase
 
         // Make sure we created an event for the post creation.
         $this->assertDatabaseHas('events', [
-            'eventable_type' => 'Rogue\Models\Post',
+            'eventable_type' => 'App\Models\Post',
             'created_at' => '2017-08-03 17:02:00',
         ]);
     }
@@ -94,19 +94,19 @@ class EventTest extends TestCase
 
         // Make sure we created an event for the post creation.
         $this->assertDatabaseHas('events', [
-            'eventable_type' => 'Rogue\Models\Post',
+            'eventable_type' => 'App\Models\Post',
             'created_at' => '2017-08-03 17:02:00',
         ]);
 
         // Make sure we also created an event for the post update.
         $this->assertDatabaseHas('events', [
-            'eventable_type' => 'Rogue\Models\Post',
+            'eventable_type' => 'App\Models\Post',
             'created_at' => '2017-08-04 18:02:00',
         ]);
 
         // Make sure a signup event wasn't created when the post was updated.
         $this->assertDatabaseMissing('events', [
-            'eventable_type' => 'Rogue\Models\Signup',
+            'eventable_type' => 'App\Models\Signup',
             'created_at' => '2017-08-04 18:02:00',
         ]);
     }
@@ -128,7 +128,7 @@ class EventTest extends TestCase
 
         // Make sure an event is created when the post is deleted.
         $this->assertDatabaseHas('events', [
-            'eventable_type' => 'Rogue\Models\Post',
+            'eventable_type' => 'App\Models\Post',
             'created_at' => '2017-08-04 18:02:00',
         ]);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Models;
+namespace App\Models;
 
 use DoSomething\Gateway\Contracts\NorthstarUserContract;
 use DoSomething\Gateway\Laravel\HasNorthstarToken;

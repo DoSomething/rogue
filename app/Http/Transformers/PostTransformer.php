@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace App\Http\Transformers;
 
+use App\Models\Post;
 use Gate;
 use League\Fractal\TransformerAbstract;
-use Rogue\Models\Post;
 
 class PostTransformer extends TransformerAbstract
 {
@@ -20,7 +20,7 @@ class PostTransformer extends TransformerAbstract
     /**
      * Transform resource data.
      *
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @return array
      */
     public function transform(Post $post)
@@ -74,7 +74,7 @@ class PostTransformer extends TransformerAbstract
     /**
      * Include the signup.
      *
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @return \League\Fractal\Resource\Collection
      */
     public function includeSignup(Post $post)
@@ -91,7 +91,7 @@ class PostTransformer extends TransformerAbstract
     /**
      * Include the siblings.
      *
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @return \League\Fractal\Resource\Collection
      */
     public function includeSiblings(Post $post)
@@ -102,7 +102,7 @@ class PostTransformer extends TransformerAbstract
     /**
      * Include the action.
      *
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @return \League\Fractal\Resource\Collection
      */
     public function includeActionDetails(Post $post)

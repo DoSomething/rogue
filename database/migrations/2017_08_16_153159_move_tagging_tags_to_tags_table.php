@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
-use Rogue\Models\Tag;
 
 class MoveTaggingTagsToTagsTable extends Migration
 {

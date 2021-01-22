@@ -1,11 +1,11 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
-use Rogue\Models\Post;
-use Rogue\Models\Signup;
-use Rogue\Services\Fastly;
-use Rogue\Services\ImageStorage;
+use App\Models\Post;
+use App\Models\Signup;
+use App\Services\Fastly;
+use App\Services\ImageStorage;
 
 class UsersController extends Controller
 {

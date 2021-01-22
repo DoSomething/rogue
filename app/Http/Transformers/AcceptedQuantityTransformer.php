@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace App\Http\Transformers;
 
 use League\Fractal\TransformerAbstract;
 

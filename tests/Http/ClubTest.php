@@ -2,7 +2,7 @@
 
 namespace Tests\Http;
 
-use Rogue\Models\Club;
+use App\Models\Club;
 use Tests\TestCase;
 
 class ClubTest extends TestCase

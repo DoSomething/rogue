@@ -2,9 +2,9 @@
 
 namespace Tests\Http;
 
+use App\Jobs\SendReviewedPostToCustomerIo;
+use App\Models\Post;
 use Illuminate\Support\Facades\Bus;
-use Rogue\Jobs\SendReviewedPostToCustomerIo;
-use Rogue\Models\Post;
 use Tests\TestCase;
 
 class ReviewsTest extends TestCase

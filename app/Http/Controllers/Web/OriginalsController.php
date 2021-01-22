@@ -1,11 +1,11 @@
 <?php
 
-namespace Rogue\Http\Controllers\Web;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
-use Rogue\Http\Controllers\Controller;
-use Rogue\Models\Post;
 use Storage;
 
 class OriginalsController extends Controller

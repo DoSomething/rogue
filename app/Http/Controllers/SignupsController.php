@@ -1,27 +1,27 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Transformers\SignupTransformer;
+use App\Managers\SignupManager;
+use App\Models\Campaign;
+use App\Models\Signup;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Rogue\Http\Transformers\SignupTransformer;
-use Rogue\Managers\SignupManager;
-use Rogue\Models\Campaign;
-use Rogue\Models\Signup;
 
 class SignupsController extends ApiController
 {
     /**
-     * @var Rogue\Http\Transformers\SignupTransformer;
+     * @var App\Http\Transformers\SignupTransformer;
      */
     protected $transformer;
 
     /**
      * The signup manager instance.
      *
-     * @var \Rogue\Manager\SignupManager
+     * @var \App\Manager\SignupManager
      */
     protected $signups;
 
@@ -134,7 +134,7 @@ class SignupsController extends ApiController
      * GET /signups/:id.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Rogue\Models\Signup $signup
+     * @param \App\Models\Signup $signup
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request, Signup $signup)
@@ -170,7 +170,7 @@ class SignupsController extends ApiController
      * PATCH /signups/:id.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Rogue\Models\Signup $signup
+     * @param \App\Models\Signup $signup
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Signup $signup)
@@ -199,7 +199,7 @@ class SignupsController extends ApiController
      * Delete a signup.
      * DELETE /signups/:id.
      *
-     * @param \Rogue\Models\Signup $signup
+     * @param \App\Models\Signup $signup
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Signup $signup)

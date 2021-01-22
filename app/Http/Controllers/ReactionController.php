@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Transformers\ReactionTransformer;
+use App\Models\Post;
+use App\Models\Reaction;
 use Illuminate\Http\Request;
-use Rogue\Http\Transformers\ReactionTransformer;
-use Rogue\Models\Post;
-use Rogue\Models\Reaction;
 
 class ReactionController extends ApiController
 {
     /**
-     * @var Rogue\Http\Transformers\ReactionTransformer;
+     * @var App\Http\Transformers\ReactionTransformer;
      */
     protected $transformer;
 
@@ -37,7 +37,7 @@ class ReactionController extends ApiController
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Post $post)
@@ -79,7 +79,7 @@ class ReactionController extends ApiController
      * GET /post/:post_id/reactions.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @return Illuminate\Http\Response
      */
     public function index(Request $request, Post $post)

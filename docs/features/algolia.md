@@ -43,7 +43,7 @@ The Application ID can be found in the [API Keys section](https://www.algolia.co
 The environment specific secret can be found in the list of [All API Keys](https://www.algolia.com/apps/P5JW2OEUP0/api-keys/restricted).
 
 To intiate the batch import on a specific environment, run the following command on the server assigning the specific Heroku application environment via the `-a` flag, e.g.:
-`heroku run php artisan scout:import "Rogue\\\Models\\\Campaign" -a dosomething-rogue-qa`
+`heroku run php artisan scout:import "App\\\Models\\\Campaign" -a dosomething-rogue-qa`
 
 (You can omit the Heroku portion on your local environment of course).
 
