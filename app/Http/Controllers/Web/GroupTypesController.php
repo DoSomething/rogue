@@ -1,11 +1,11 @@
 <?php
 
-namespace Rogue\Http\Controllers\Web;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
+use App\Models\GroupType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Rogue\Http\Controllers\Controller;
-use Rogue\Models\GroupType;
 
 class GroupTypesController extends Controller
 {
@@ -57,7 +57,7 @@ class GroupTypesController extends Controller
     /**
      * Edit an existing action.
      *
-     * @param  \Rogue\Models\GroupType  $groupType
+     * @param  \App\Models\GroupType  $groupType
      */
     public function edit(GroupType $groupType)
     {
@@ -69,7 +69,7 @@ class GroupTypesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Rogue\Models\GroupType  $groupType
+     * @param  \App\Models\GroupType  $groupType
      * @param  \Illuminate\Http\Request  $request
      */
     public function update(GroupType $groupType, Request $request)

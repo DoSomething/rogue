@@ -2,8 +2,8 @@
 
 namespace Tests\Http;
 
-use Rogue\Models\Action;
-use Rogue\Models\Campaign;
+use App\Models\Action;
+use App\Models\Campaign;
 use Tests\TestCase;
 
 class ActionTest extends TestCase

@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Policies;
+namespace App\Policies;
 
+use App\Models\Post;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Rogue\Models\Post;
 
 class PostPolicy
 {
@@ -14,7 +14,7 @@ class PostPolicy
      * Determine if the full post should be displayed.
      *
      * @param  Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  Rogue\Models\Post $post
+     * @param  App\Models\Post $post
      * @return bool
      */
     public function viewAll($user, Post $post)
@@ -26,7 +26,7 @@ class PostPolicy
      * Determine if the given post can be seen by the user.
      *
      * @param  Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  Rogue\Models\Post $post
+     * @param  App\Models\Post $post
      * @return bool
      */
     public function show(?Authenticatable $user, Post $post)
@@ -42,7 +42,7 @@ class PostPolicy
      * Determine if the given post can be updated by the user.
      *
      * @param  Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  Rogue\Models\Post $post
+     * @param  App\Models\Post $post
      * @return bool
      */
     public function update($user, Post $post)
@@ -54,7 +54,7 @@ class PostPolicy
      * Determine if the given post can be reviewed by the user.
      *
      * @param  Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  Rogue\Models\Post $post
+     * @param  App\Models\Post $post
      * @return bool
      */
     public function review($user, Post $post)

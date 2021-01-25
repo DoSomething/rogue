@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Transformers\CampaignTransformer;
+use App\Models\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Rogue\Http\Transformers\CampaignTransformer;
-use Rogue\Models\Campaign;
 
 class CampaignsController extends ApiController
 {
     /**
-     * @var Rogue\Http\Transformers\CampaignTransformer;
+     * @var App\Http\Transformers\CampaignTransformer;
      */
     protected $transformer;
 
@@ -83,7 +83,7 @@ class CampaignsController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \Rogue\Models\Campaign  $campaign
+     * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
     public function show(Campaign $campaign, Request $request)
@@ -96,7 +96,7 @@ class CampaignsController extends ApiController
      * PATCH /api/campaigns/:id.
      *
      * @param Request $request
-     * @param  \Rogue\Models\Campaign  $campaign
+     * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, Campaign $campaign)

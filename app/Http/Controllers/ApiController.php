@@ -1,9 +1,9 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
-use Rogue\Http\Controllers\Controller as BaseController;
-use Rogue\Http\Controllers\Traits\FiltersRequests;
+use App\Http\Controllers\Controller as BaseController;
+use App\Http\Controllers\Traits\FiltersRequests;
 
 class ApiController extends BaseController
 {

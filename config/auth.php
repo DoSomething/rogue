@@ -66,7 +66,7 @@ return [
     'providers' => [
         'local' => [
             'driver' => 'eloquent',
-            'model' => Rogue\Models\User::class,
+            'model' => App\Models\User::class,
         ],
 
         'northstar' => [
@@ -105,5 +105,5 @@ return [
         ],
     ],
 
-    'model' => Rogue\Models\User::class,
+    'model' => App\Models\User::class,
 ];

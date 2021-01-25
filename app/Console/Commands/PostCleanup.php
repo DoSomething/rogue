@@ -1,11 +1,11 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Models\Post;
 use DB;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use Rogue\Models\Post;
 
 class PostCleanup extends Command
 {

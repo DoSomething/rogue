@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Transformers\EventTransformer;
+use App\Models\Event;
 use Illuminate\Http\Request;
-use Rogue\Http\Transformers\EventTransformer;
-use Rogue\Models\Event;
 
 class EventsController extends ApiController
 {

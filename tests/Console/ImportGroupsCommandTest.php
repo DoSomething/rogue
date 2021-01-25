@@ -2,7 +2,7 @@
 
 namespace Tests\Console;
 
-use Rogue\Models\GroupType;
+use App\Models\GroupType;
 use Tests\TestCase;
 
 class ImportGroupsCommandTest extends TestCase

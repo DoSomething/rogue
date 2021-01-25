@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace App\Http\Transformers;
 
+use App\Models\ActionStat;
 use League\Fractal\TransformerAbstract;
-use Rogue\Models\ActionStat;
 
 class ActionStatTransformer extends TransformerAbstract
 {
     /**
      * Transform resource data.
      *
-     * @param \Rogue\Models\ActionStat $actionStat
+     * @param \App\Models\ActionStat $actionStat
      * @return array
      */
     public function transform(ActionStat $actionStat)

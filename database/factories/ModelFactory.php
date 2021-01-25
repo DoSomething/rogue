@@ -2,22 +2,22 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Models\Action;
+use App\Models\ActionStat;
+use App\Models\Campaign;
+use App\Models\Club;
+use App\Models\Group;
+use App\Models\GroupType;
+use App\Models\Post;
+use App\Models\Reaction;
+use App\Models\Signup;
+use App\Models\User;
+use App\Types\ActionType;
+use App\Types\Cause;
+use App\Types\PostType;
+use App\Types\TimeCommitment;
 use Faker\Generator;
 use Illuminate\Support\Str;
-use Rogue\Models\Action;
-use Rogue\Models\ActionStat;
-use Rogue\Models\Campaign;
-use Rogue\Models\Club;
-use Rogue\Models\Group;
-use Rogue\Models\GroupType;
-use Rogue\Models\Post;
-use Rogue\Models\Reaction;
-use Rogue\Models\Signup;
-use Rogue\Models\User;
-use Rogue\Types\ActionType;
-use Rogue\Types\Cause;
-use Rogue\Types\PostType;
-use Rogue\Types\TimeCommitment;
 
 /*
  * Here you may define all of your model factories. Model factories give

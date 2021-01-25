@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Managers\SignupManager;
+use App\Models\Signup;
 use Illuminate\Console\Command;
-use Rogue\Managers\SignupManager;
-use Rogue\Models\Signup;
 
 class UpdateSignup extends Command
 {
@@ -25,7 +25,7 @@ class UpdateSignup extends Command
     /**
      * The signup manager instance.
      *
-     * @var Rogue\Managers\SignupManager
+     * @var App\Managers\SignupManager
      */
     protected $signups;
 

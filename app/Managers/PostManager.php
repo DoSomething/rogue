@@ -1,27 +1,27 @@
 <?php
 
-namespace Rogue\Managers;
+namespace App\Managers;
 
-use Rogue\Jobs\CreateCustomerIoEvent;
-use Rogue\Jobs\SendPostToCustomerIo;
-use Rogue\Jobs\SendReviewedPostToCustomerIo;
-use Rogue\Models\Post;
-use Rogue\Repositories\PostRepository;
-use Rogue\Services\Fastly;
+use App\Jobs\CreateCustomerIoEvent;
+use App\Jobs\SendPostToCustomerIo;
+use App\Jobs\SendReviewedPostToCustomerIo;
+use App\Models\Post;
+use App\Repositories\PostRepository;
+use App\Services\Fastly;
 
 class PostManager
 {
     /**
      * The Fastly API client.
      *
-     * @var Rogue\Services\Fastly
+     * @var App\Services\Fastly
      */
     protected $fastly;
 
     /*
      * The post repository.
      *
-     * @var Rogue\Repositories\PostRepository;
+     * @var App\Repositories\PostRepository;
      */
     protected $repository;
 
@@ -44,7 +44,7 @@ class PostManager
      * @param int $signupId
      * @param string $authenticatedUserRole
      *
-     * @return \Rogue\Models\Post
+     * @return \App\Models\Post
      */
     public function create($data, $signupId, $authenticatedUserRole = null)
     {
@@ -78,10 +78,10 @@ class PostManager
     /**
      * Handles all business logic around updating posts.
      *
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @param array $data
      * @param bool $log
-     * @return \Rogue\Models\Post
+     * @return \App\Models\Post
      */
     public function update($post, $data, $log = true)
     {
@@ -112,9 +112,9 @@ class PostManager
     /**
      * Handles all business logic around reviewing posts.
      *
-     * @param \Rogue\Models\Post $post
+     * @param \App\Models\Post $post
      * @param array $data
-     * @return \Rogue\Models\Post
+     * @return \App\Models\Post
      */
     public function review($post, $data, $comment = null, $admin = null)
     {

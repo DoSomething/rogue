@@ -2,8 +2,8 @@
 
 namespace Tests\Http;
 
-use Rogue\Models\Group;
-use Rogue\Models\GroupType;
+use App\Models\Group;
+use App\Models\GroupType;
 use Tests\TestCase;
 
 class GroupTest extends TestCase

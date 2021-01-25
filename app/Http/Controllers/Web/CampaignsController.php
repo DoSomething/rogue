@@ -1,13 +1,13 @@
 <?php
 
-namespace Rogue\Http\Controllers\Web;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
+use App\Models\Campaign;
+use App\Models\GroupType;
+use App\Types\Cause;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Rogue\Http\Controllers\Controller;
-use Rogue\Models\Campaign;
-use Rogue\Models\GroupType;
-use Rogue\Types\Cause;
 
 class CampaignsController extends Controller
 {
@@ -66,7 +66,7 @@ class CampaignsController extends Controller
     /**
      * Edit a specific campaign page.
      *
-     * @param  \Rogue\Models\Campaign  $campaign
+     * @param  \App\Models\Campaign  $campaign
      */
     public function edit(Campaign $campaign)
     {
@@ -81,7 +81,7 @@ class CampaignsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Rogue\Models\Campaign  $campaign
+     * @param  \App\Models\Campaign  $campaign
      */
     public function update(Request $request, Campaign $campaign)
     {
@@ -105,7 +105,7 @@ class CampaignsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Rogue\Models\Campaign  $campaign
+     * @param  \App\Models\Campaign  $campaign
      */
     public function destroy(Campaign $campaign)
     {

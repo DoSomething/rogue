@@ -170,12 +170,12 @@ return [
         /*
          * Application Service Providers...
          */
-        Rogue\Providers\AppServiceProvider::class,
-        Rogue\Providers\AuthServiceProvider::class,
-        Rogue\Providers\BroadcastServiceProvider::class,
-        Rogue\Providers\EventServiceProvider::class,
-        Rogue\Providers\RouteServiceProvider::class,
-        Rogue\Providers\ModelServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
+        App\Providers\ModelServiceProvider::class,
     ],
 
     /*

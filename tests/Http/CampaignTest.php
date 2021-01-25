@@ -2,11 +2,11 @@
 
 namespace Tests\Http;
 
+use App\Models\Campaign;
+use App\Models\GroupType;
+use App\Models\Post;
+use App\Types\Cause;
 use Illuminate\Support\Facades\Artisan;
-use Rogue\Models\Campaign;
-use Rogue\Models\GroupType;
-use Rogue\Models\Post;
-use Rogue\Types\Cause;
 use Tests\TestCase;
 
 class CampaignTest extends Testcase

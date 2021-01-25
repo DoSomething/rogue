@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace App\Http\Transformers;
 
+use App\Models\GroupType;
 use League\Fractal\TransformerAbstract;
-use Rogue\Models\GroupType;
 
 class GroupTypeTransformer extends TransformerAbstract
 {
     /**
      * Transform resource data.
      *
-     * @param \Rogue\Models\GroupType $groupType
+     * @param \App\Models\GroupType $groupType
      * @return array
      */
     public function transform(GroupType $groupType)

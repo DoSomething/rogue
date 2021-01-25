@@ -1,14 +1,14 @@
 <?php
 
-namespace Rogue\Providers;
+namespace App\Providers;
 
+use App\Models\Campaign;
+use App\Models\Post;
+use App\Models\Signup;
+use App\Policies\CampaignPolicy;
+use App\Policies\PostPolicy;
+use App\Policies\SignupPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Rogue\Models\Campaign;
-use Rogue\Models\Post;
-use Rogue\Models\Signup;
-use Rogue\Policies\CampaignPolicy;
-use Rogue\Policies\PostPolicy;
-use Rogue\Policies\SignupPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {

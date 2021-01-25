@@ -20,7 +20,7 @@ Example Response:
     {
       "event_id": 1117,
       "eventable_id": 18,
-      "event_type": "Rogue\\Models\\Signup",
+      "event_type": "App\\Models\\Signup",
       "content": {
         "id": "18",
         "northstar_id": "574dace47f43c21f1e0d674c",
@@ -40,7 +40,7 @@ Example Response:
     {
       "event_id": 747,
       "eventable_id": 18,
-      "event_type": "Rogue\\Models\\Signup",
+      "event_type": "App\\Models\\Signup",
       "content": {
         "id": "18",
         "northstar_id": "574dace47f43c21f1e0d674c",

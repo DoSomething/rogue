@@ -1,9 +1,9 @@
 <?php
 
-namespace Rogue\Services;
+namespace App\Services;
 
+use App\Models\Post;
 use DoSomething\Gateway\Common\RestApiClient;
-use Rogue\Models\Post;
 
 class Fastly extends RestApiClient
 {

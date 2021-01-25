@@ -2,7 +2,7 @@
 
 namespace Tests\Http;
 
-use Rogue\Models\Post;
+use App\Models\Post;
 use Tests\TestCase;
 
 class ImagesTest extends TestCase

@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Rogue\Models\User;
+use App\Models\User;
 
 trait WithAuthentication
 {

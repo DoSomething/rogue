@@ -1,7 +1,7 @@
 <?php
 
+use App\Services\ImageStorage;
 use Faker\Provider\Base;
-use Rogue\Services\ImageStorage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FakerPostUrl extends Base

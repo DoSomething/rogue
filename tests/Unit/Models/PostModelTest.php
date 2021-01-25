@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Models;
 
-use Rogue\Models\Action;
-use Rogue\Models\Group;
-use Rogue\Models\Post;
-use Rogue\Models\Signup;
+use App\Models\Action;
+use App\Models\Group;
+use App\Models\Post;
+use App\Models\Signup;
 use Tests\TestCase;
 
 class PostModelTest extends TestCase

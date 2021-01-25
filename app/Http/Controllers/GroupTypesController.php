@@ -1,15 +1,15 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Transformers\GroupTypeTransformer;
+use App\Models\GroupType;
 use Illuminate\Http\Request;
-use Rogue\Http\Transformers\GroupTypeTransformer;
-use Rogue\Models\GroupType;
 
 class GroupTypesController extends ApiController
 {
     /**
-     * @var Rogue\Http\Transformers\GroupTypeTransformer;
+     * @var App\Http\Transformers\GroupTypeTransformer;
      */
     protected $transformer;
 
@@ -36,7 +36,7 @@ class GroupTypesController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \Rogue\Models\GroupType  $groupType
+     * @param  \App\Models\GroupType  $groupType
      * @return \Illuminate\Http\Response
      */
     public function show(GroupType $groupType)

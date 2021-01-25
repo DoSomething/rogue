@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Controllers\Traits;
+namespace App\Http\Controllers\Traits;
 
 use League\Fractal\Manager;
 use League\Fractal\Pagination\Cursor;

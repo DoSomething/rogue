@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Models;
 
-use Rogue\Models\Group;
-use Rogue\Models\Signup;
+use App\Models\Group;
+use App\Models\Signup;
 use Tests\TestCase;
 
 class SignupModelTest extends TestCase

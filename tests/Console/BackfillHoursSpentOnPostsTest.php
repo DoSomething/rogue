@@ -2,7 +2,7 @@
 
 namespace Tests\Console;
 
-use Rogue\Models\Post;
+use App\Models\Post;
 use Tests\TestCase;
 
 class BackfillHoursSpentOnPostsTest extends TestCase

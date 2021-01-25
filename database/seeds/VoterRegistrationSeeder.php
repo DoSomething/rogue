@@ -1,11 +1,11 @@
 <?php
 
+use App\Models\Action;
+use App\Models\Campaign;
+use App\Models\Group;
+use App\Models\GroupType;
+use App\Models\Post;
 use Illuminate\Database\Seeder;
-use Rogue\Models\Action;
-use Rogue\Models\Campaign;
-use Rogue\Models\Group;
-use Rogue\Models\GroupType;
-use Rogue\Models\Post;
 
 class VoterRegistrationSeeder extends Seeder
 {

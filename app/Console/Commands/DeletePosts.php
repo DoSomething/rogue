@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Managers\PostManager;
+use App\Models\Post;
 use Illuminate\Console\Command;
-use Rogue\Managers\PostManager;
-use Rogue\Models\Post;
 
 class DeletePosts extends Command
 {

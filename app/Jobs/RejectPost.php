@@ -1,8 +1,8 @@
 <?php
 
-namespace Rogue\Jobs;
+namespace App\Jobs;
 
-use Rogue\Models\Post;
+use App\Models\Post;
 
 class RejectPost extends Job
 {

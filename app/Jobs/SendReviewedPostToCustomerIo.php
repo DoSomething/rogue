@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Jobs;
+namespace App\Jobs;
 
-use Rogue\Jobs\Middleware\CustomerIoRateLimit;
-use Rogue\Models\Post;
-use Rogue\Services\CustomerIo;
+use App\Jobs\Middleware\CustomerIoRateLimit;
+use App\Models\Post;
+use App\Services\CustomerIo;
 
 class SendReviewedPostToCustomerIo extends Job
 {

@@ -1,23 +1,23 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Transformers\PostTransformer;
+use App\Managers\PostManager;
+use App\Models\Post;
 use Illuminate\Http\Request;
-use Rogue\Http\Transformers\PostTransformer;
-use Rogue\Managers\PostManager;
-use Rogue\Models\Post;
 
 class ReviewsController extends ApiController
 {
     /**
      * The post manager instance.
      *
-     * @var Rogue\Managers\PostManager
+     * @var App\Managers\PostManager
      */
     protected $post;
 
     /**
-     * @var \Rogue\Http\Transformers\PostTransformer
+     * @var \App\Http\Transformers\PostTransformer
      */
     protected $transformer;
 

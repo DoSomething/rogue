@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace App\Http\Transformers;
 
 use League\Fractal\TransformerAbstract;
 
@@ -9,7 +9,7 @@ class UserTransformer extends TransformerAbstract
     /**
      * Transform resource data.
      *
-     * @param \Rogue\Models\User $user
+     * @param \App\Models\User $user
      *
      * @return array
      */

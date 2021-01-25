@@ -1,10 +1,10 @@
 <?php
 
-namespace Rogue\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Models\Action;
 use DB;
 use Illuminate\Console\Command;
-use Rogue\Models\Action;
 
 class UpdatePostsWithActionIds extends Command
 {

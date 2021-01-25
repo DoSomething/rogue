@@ -62,7 +62,7 @@
       "app/helpers.php"
     ],
     "psr-4": {
-      "Rogue\\": "app/"
+      "App\\": "app/"
     }
   },
   "autoload-dev": {

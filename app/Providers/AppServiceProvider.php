@@ -1,7 +1,11 @@
 <?php
 
-namespace Rogue\Providers;
+namespace App\Providers;
 
+use App\Models\Post;
+use App\Models\Signup;
+use App\Observers\PostObserver;
+use App\Observers\SignupObserver;
 use Closure;
 use Hashids\Hashids;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -12,10 +16,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use InvalidArgumentException;
-use Rogue\Models\Post;
-use Rogue\Models\Signup;
-use Rogue\Observers\PostObserver;
-use Rogue\Observers\SignupObserver;
 
 class AppServiceProvider extends ServiceProvider
 {

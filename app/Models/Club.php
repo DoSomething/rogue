@@ -1,9 +1,9 @@
 <?php
 
-namespace Rogue\Models;
+namespace App\Models;
 
+use App\Models\Traits\HasCursor;
 use Illuminate\Database\Eloquent\Model;
-use Rogue\Models\Traits\HasCursor;
 
 class Club extends Model
 {

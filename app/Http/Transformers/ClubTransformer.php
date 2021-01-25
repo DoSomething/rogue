@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Http\Transformers;
+namespace App\Http\Transformers;
 
+use App\Models\Club;
 use League\Fractal\TransformerAbstract;
-use Rogue\Models\Club;
 
 class ClubTransformer extends TransformerAbstract
 {
     /**
      * Transform resource data.
      *
-     * @param \Rogue\Models\Club $club
+     * @param \App\Models\Club $club
      * @return array
      */
     public function transform(Club $club)

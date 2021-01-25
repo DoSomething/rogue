@@ -1,9 +1,9 @@
 <?php
 
-namespace Rogue\Policies;
+namespace App\Policies;
 
+use App\Models\Campaign;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Rogue\Models\Campaign;
 
 class CampaignPolicy
 {
@@ -13,7 +13,7 @@ class CampaignPolicy
      * Determine if the given post can be updated by the user.
      *
      * @param  Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  Rogue\Models\Campaign $campaign
+     * @param  App\Models\Campaign $campaign
      * @return bool
      */
     public function update($user, Campaign $campaign)

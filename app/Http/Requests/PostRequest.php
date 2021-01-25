@@ -1,9 +1,9 @@
 <?php
 
-namespace Rogue\Http\Requests;
+namespace App\Http\Requests;
 
+use App\Types\PostType;
 use Illuminate\Validation\Rule;
-use Rogue\Types\PostType;
 
 class PostRequest extends Request
 {

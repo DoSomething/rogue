@@ -1,6 +1,6 @@
 <?php
 
-namespace Rogue\Types;
+namespace App\Types;
 
 use Illuminate\Support\Arr;
 use MyCLabs\Enum\Enum;

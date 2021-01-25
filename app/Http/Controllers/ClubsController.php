@@ -1,16 +1,16 @@
 <?php
 
-namespace Rogue\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Transformers\ClubTransformer;
+use App\Models\Club;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Rogue\Http\Transformers\ClubTransformer;
-use Rogue\Models\Club;
 
 class ClubsController extends ApiController
 {
     /**
-     * @var Rogue\Http\Transformers\ClubTransformer;
+     * @var App\Http\Transformers\ClubTransformer;
      */
     protected $transformer;
 
@@ -49,7 +49,7 @@ class ClubsController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \Rogue\Models\Club  $club
+     * @param  \App\Models\Club  $club
      * @return \Illuminate\Http\Response
      */
     public function show(Club $club)
