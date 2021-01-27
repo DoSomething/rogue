@@ -116,12 +116,22 @@ function getNorthstarId($request)
  */
 function is_admin_user(): bool
 {
+    $tokenExists = token()->exists();
+
+    logger('is_admin_user', ['tokenExists' => $tokenExists]);
+
     // If this is a machine client, then it's de-facto an admin:
-    if (token()->exists() && !token()->id()) {
+    if ($tokenExists && !token()->id()) {
+        logger('is_admin_user', ['isMachine' => true]);
+
         return true;
     }
 
-    return optional(auth()->user())->role === 'admin';
+    $result = optional(auth()->user())->role === 'admin';
+
+    logger('is_admin_user', ['result' => $result]);
+
+    return $result;
 }
 
 /**

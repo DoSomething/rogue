@@ -25,6 +25,8 @@ class PostTransformer extends TransformerAbstract
      */
     public function transform(Post $post)
     {
+        logger('post transform', ['test' => 1]);
+
         $response = [
             'id' => $post->id,
             'signup_id' => $post->signup_id,
@@ -66,6 +68,8 @@ class PostTransformer extends TransformerAbstract
             $response['group_id'] = $post->group_id;
             $response['school_id'] = $post->school_id;
             $response['club_id'] = $post->club_id;
+
+            logger('post viewAll', $response);
         }
 
         return $response;
