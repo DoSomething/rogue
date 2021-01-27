@@ -17,7 +17,7 @@ class PostPolicy
      * @param  App\Models\Post $post
      * @return bool
      */
-    public function viewAll(?Authenticatable $user, Post $post)
+    public function viewAll($user = null, Post $post)
     {
         $result = is_staff_user() || is_owner($post);
 
