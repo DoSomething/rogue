@@ -16,7 +16,7 @@ class SignupPolicy
      * @param  App\Models\Signup $signup
      * @return bool
      */
-    public function viewAll($user = null, Signup $signup)
+    public function viewAll(?Authenticatable $user, Signup $signup)
     {
         return is_staff_user() || is_owner($signup);
     }
