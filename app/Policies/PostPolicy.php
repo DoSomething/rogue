@@ -19,7 +19,11 @@ class PostPolicy
      */
     public function viewAll($user, Post $post)
     {
-        return is_staff_user() || is_owner($post);
+        $result = is_staff_user() || is_owner($post);
+
+        logger('viewAll', ['result' => $result]);
+
+        return $result;
     }
 
     /**
