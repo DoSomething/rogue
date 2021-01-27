@@ -19,7 +19,11 @@ class PostPolicy
      */
     public function viewAll(?Authenticatable $user, Post $post)
     {
-        return is_staff_user() || is_owner($post);
+        $result = is_staff_user() || is_owner($post);
+
+        logger('PostPolicy viewAll', ['result' => $result]);
+
+        return $result;
     }
 
     /**
