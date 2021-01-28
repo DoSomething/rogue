@@ -369,6 +369,12 @@ class Campaign extends Model
             $array[$date] = optional($this->{$date})->timestamp;
         }
 
+        // If a campaign doesn't have an end date, we'll set a far-future one in
+        // Algolia to allow filtering. More context: <https://git.io/JfxTA>
+        if (empty($array['end_date'])) {
+            $array['end_date'] = 2147483647; // January 19th 2038
+        }
+
         // Only send data we want to search against.
         return Arr::only($array, [
             'accepted_count',

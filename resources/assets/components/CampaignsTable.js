@@ -12,15 +12,14 @@ import SortableHeading from './utilities/SortableHeading';
 
 const CAMPAIGNS_QUERY = gql`
   query CampaignsIndexQuery(
-    $isOpen: Boolean!
-    $orderBy: String!
+    $isOpen: Boolean
+    $filter: String
     $cursor: String
   ) {
-    campaigns: paginatedCampaigns(
+    campaigns: searchCampaigns(
       isOpen: $isOpen
-      orderBy: $orderBy
-      after: $cursor
-      first: 80
+      term: $filter
+      cursor: $cursor
     ) {
       edges {
         cursor
@@ -29,9 +28,6 @@ const CAMPAIGNS_QUERY = gql`
           internalTitle
           pendingCount
           acceptedCount
-          causes {
-            name
-          }
         }
       }
       pageInfo {
@@ -41,36 +37,6 @@ const CAMPAIGNS_QUERY = gql`
     }
   }
 `;
-
-/**
- * Filter the given campaigns by current search term.
- *
- * @param  {Object} data - GraphQL response
- * @return {Object}
- */
-const filterCampaigns = (data, filter) => {
-  const search = filter.toLowerCase();
-
-  if (!data) {
-    return [];
-  }
-
-  if (filter === '') {
-    return data.campaigns.edges;
-  }
-
-  return data.campaigns.edges.filter(campaign => {
-    const { id, internalTitle, causes } = campaign.node;
-
-    const matchesId = id.toString().includes(search);
-    const matchesTitle = internalTitle.toLowerCase().includes(search);
-    const matchesCause = causes.some(cause =>
-      cause.name.toLowerCase().includes(search),
-    );
-
-    return matchesId || matchesTitle || matchesCause;
-  });
-};
 
 /**
  * This component handles fetching & paginating a list of
@@ -83,11 +49,11 @@ const CampaignsTable = ({ isOpen, filter }) => {
   const [orderBy, setOrderBy] = useState('pending_count,desc');
 
   const { error, loading, data, fetchMore } = useQuery(CAMPAIGNS_QUERY, {
-    variables: { isOpen, orderBy },
+    variables: { filter, isOpen /* orderBy */ },
     notifyOnNetworkStatusChange: true,
   });
 
-  const campaigns = filterCampaigns(data, filter);
+  const campaigns = data ? data.campaigns.edges : [];
   const noFilteredResults = campaigns.length === 0 && !loading;
   const { endCursor, hasNextPage } = get(data, 'campaigns.pageInfo', {});
 
@@ -98,13 +64,6 @@ const CampaignsTable = ({ isOpen, filter }) => {
       updateQuery,
     });
   };
-
-  // If we're filtering results & can load more, do so automatically:
-  useEffect(() => {
-    if (filter !== '' && !loading && hasNextPage) {
-      handleViewMore();
-    }
-  }, [filter, endCursor]);
 
   if (error) {
     return <ErrorBlock error={error} />;
